@@ -13,9 +13,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class DeploymentExtendedData
+    public partial class DeploymentData
     {
-        internal static DeploymentExtendedData DeserializeDeploymentExtendedData(JsonElement element)
+        internal static DeploymentData DeserializeDeploymentData(JsonElement element)
         {
             Optional<string> location = default;
             Optional<DeploymentPropertiesExtended> properties = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new DeploymentExtendedData(id, name, type, location.Value, properties.Value, Optional.ToDictionary(tags));
+            return new DeploymentData(id, name, type, location.Value, properties.Value, Optional.ToDictionary(tags));
         }
     }
 }

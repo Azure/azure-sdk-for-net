@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class DeploymentExtendedContainerTests : ResourcesTestBase
+    public class DeploymentContainerTests : ResourcesTestBase
     {
-        public DeploymentExtendedContainerTests(bool isAsync)
+        public DeploymentContainerTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-C-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
-            Assert.AreEqual(deployExName, deploymentExtended.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(null, deploymentExtendedData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, null));
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            Assert.AreEqual(deployExName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeployments().CreateOrUpdateAsync(deployExName, null));
         }
 
         [TestCase]
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-L-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            _ = await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData);
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            _ = await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData);
             int count = 0;
-            await foreach (var tempDeploymentExtended in rg.GetDeploymentExtendeds().GetAllAsync())
+            await foreach (var tempDeployment in rg.GetDeployments().GetAllAsync())
             {
                 count++;
             }
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-G-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
-            DeploymentExtended getDeploymentExtended = await rg.GetDeploymentExtendeds().GetAsync(deployExName);
-            AssertValidDeploymentExtended(deploymentExtended, getDeploymentExtended);
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            Deployment getDeployment = await rg.GetDeployments().GetAsync(deployExName);
+            AssertValidDeployment(deployment, getDeployment);
         }
 
-        private static void AssertValidDeploymentExtended(DeploymentExtended model, DeploymentExtended getResult)
+        private static void AssertValidDeployment(Deployment model, Deployment getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);

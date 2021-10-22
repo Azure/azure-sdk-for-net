@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class DeploymentExtendedOperationsTests : ResourcesTestBase
+    public class DeploymentOperationsTests : ResourcesTestBase
     {
-        public DeploymentExtendedOperationsTests(bool isAsync)
+        public DeploymentOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-D-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
-            await deploymentExtended.DeleteAsync();
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deploymentExtended.GetAsync());
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            await deployment.DeleteAsync();
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
     }
