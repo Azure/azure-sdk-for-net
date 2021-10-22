@@ -229,7 +229,7 @@ namespace Azure.ResourceManager
                 }
                 if (_defaultSubscription is null)
                 {
-                    throw new Exception("No subscriptions found for the given credentials");
+                    throw new InvalidOperationException("No subscriptions found for the given credentials");
                 }
                 return _defaultSubscription;
             }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager
                 }
                 if (_defaultSubscription is null)
                 {
-                    throw new Exception("No subscriptions found for the given credentials");
+                    throw new InvalidOperationException("No subscriptions found for the given credentials");
                 }
                 return _defaultSubscription;
             }
