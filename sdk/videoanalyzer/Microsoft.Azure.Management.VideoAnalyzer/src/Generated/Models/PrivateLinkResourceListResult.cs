@@ -11,28 +11,32 @@
 namespace Microsoft.Azure.Management.VideoAnalyzer.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The input to the sync storage keys request.
+    /// A list of private link resources
     /// </summary>
-    public partial class SyncStorageKeysInput
+    public partial class PrivateLinkResourceListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SyncStorageKeysInput class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        public SyncStorageKeysInput()
+        public PrivateLinkResourceListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SyncStorageKeysInput class.
+        /// Initializes a new instance of the PrivateLinkResourceListResult
+        /// class.
         /// </summary>
-        /// <param name="id">The ID of the storage account resource.</param>
-        public SyncStorageKeysInput(string id = default(string))
+        /// <param name="value">Array of private link resources</param>
+        public PrivateLinkResourceListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>))
         {
-            Id = id;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +46,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the storage account resource.
+        /// Gets or sets array of private link resources
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateLinkResource> Value { get; set; }
 
     }
 }

@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
     using System.Linq;
 
     /// <summary>
-    /// Video streaming token grants access to the video streaming URLs which
-    /// can be used by an compatible HLS or DASH player.
+    /// "Video content token grants access to the video content URLs."
     /// </summary>
-    public partial class VideoStreamingToken
+    public partial class VideoContentToken
     {
         /// <summary>
-        /// Initializes a new instance of the VideoStreamingToken class.
+        /// Initializes a new instance of the VideoContentToken class.
         /// </summary>
-        public VideoStreamingToken()
+        public VideoContentToken()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VideoStreamingToken class.
+        /// Initializes a new instance of the VideoContentToken class.
         /// </summary>
-        /// <param name="expirationDate">The streaming token expiration date in
+        /// <param name="expirationDate">The content token expiration date in
         /// ISO8601 format (eg. 2021-01-01T00:00:00Z).</param>
-        /// <param name="token">The streaming token value to be added to the
-        /// video streaming URL as the value for a "token" query string
+        /// <param name="token">The content token value to be added to the
+        /// video content URL as the value for the "token" query string
         /// parameter. The token is specific to a single video.</param>
-        public VideoStreamingToken(System.DateTime expirationDate = default(System.DateTime), string token = default(string))
+        public VideoContentToken(System.DateTime expirationDate = default(System.DateTime), string token = default(string))
         {
             ExpirationDate = expirationDate;
             Token = token;
@@ -48,15 +47,15 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the streaming token expiration date in ISO8601 format (eg.
+        /// Gets the content token expiration date in ISO8601 format (eg.
         /// 2021-01-01T00:00:00Z).
         /// </summary>
         [JsonProperty(PropertyName = "expirationDate")]
         public System.DateTime ExpirationDate { get; private set; }
 
         /// <summary>
-        /// Gets the streaming token value to be added to the video streaming
-        /// URL as the value for a "token" query string parameter. The token is
+        /// Gets the content token value to be added to the video content URL
+        /// as the value for the "token" query string parameter. The token is
         /// specific to a single video.
         /// </summary>
         [JsonProperty(PropertyName = "token")]
