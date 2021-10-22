@@ -23,7 +23,6 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642\",\r\n  \"name\": \"sqlcrudtest-5642\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-5642\": \"2018-07-12 15:37:12Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "237"
@@ -62,6 +61,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642\",\r\n  \"name\": \"sqlcrudtest-5642\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-5642\": \"2018-07-12 15:37:12Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -87,7 +87,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertLogicalServer\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "74"
@@ -138,6 +137,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertLogicalServer\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -151,7 +151,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -199,6 +198,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -212,7 +212,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -260,6 +259,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -273,7 +273,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -321,6 +320,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -334,7 +334,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -382,6 +381,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"5e43ce11-7884-4307-8e78-9f73892c1873\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:37:19.647Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -395,7 +395,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-5731.database.windows.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731\",\r\n  \"name\": \"sqlcrudtest-5731\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -440,6 +439,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-5731.database.windows.net\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731\",\r\n  \"name\": \"sqlcrudtest-5731\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -465,7 +465,6 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
           "0"
@@ -513,6 +512,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 202
     },
     {
@@ -526,7 +526,6 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"kind\": \"BlobStorage\",\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Storage/storageAccounts/sqlblobauditingtest8227\",\r\n  \"name\": \"sqlblobauditingtest8227\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": [],\r\n      \"defaultAction\": \"Allow\"\r\n    },\r\n    \"trustedDirectories\": [\r\n      \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    ],\r\n    \"supportsHttpsTrafficOnly\": false,\r\n    \"encryption\": {\r\n      \"services\": {\r\n        \"file\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-07-12T15:38:35.9229708Z\"\r\n        },\r\n        \"blob\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-07-12T15:38:35.9229708Z\"\r\n        }\r\n      },\r\n      \"keySource\": \"Microsoft.Storage\"\r\n    },\r\n    \"accessTier\": \"Cool\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2018-07-12T15:38:35.8447792Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n      \"table\": \"https://sqlblobauditingtest8227.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"westus2\",\r\n    \"statusOfPrimary\": \"available\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -571,6 +570,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"kind\": \"BlobStorage\",\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Storage/storageAccounts/sqlblobauditingtest8227\",\r\n  \"name\": \"sqlblobauditingtest8227\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"westus2\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": [],\r\n      \"defaultAction\": \"Allow\"\r\n    },\r\n    \"trustedDirectories\": [\r\n      \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    ],\r\n    \"supportsHttpsTrafficOnly\": false,\r\n    \"encryption\": {\r\n      \"services\": {\r\n        \"file\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-07-12T15:38:35.9229708Z\"\r\n        },\r\n        \"blob\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2018-07-12T15:38:35.9229708Z\"\r\n        }\r\n      },\r\n      \"keySource\": \"Microsoft.Storage\"\r\n    },\r\n    \"accessTier\": \"Cool\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2018-07-12T15:38:35.8447792Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n      \"table\": \"https://sqlblobauditingtest8227.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"westus2\",\r\n    \"statusOfPrimary\": \"available\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -590,7 +590,6 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Wbg1odTf7EtZKj6df+CXcEAYPj4CInalIDBKUVt6t2JraN4nX4PeIhtmZ7LZyCK5ct/DdFN6DdiE8zYzkmRPLw==\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"J3B0+THCJrw2ksip0ow1dEq9M/XswbTrhQIFTnrYmplaYiyEqhR/pJZGCefNSfmRRkY5v+jzUHYuEMhPAJtPqA==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -635,13 +634,14 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/auditingSettings/default?api-version=2017-03-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2NhMjRlYzgtOTliNS00YWE3LTlmZjYtNDg2ZTg4NmYzMDRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTU2NDIvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01NzMxL2F1ZGl0aW5nU2V0dGluZ3MvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE3LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"Wbg1odTf7EtZKj6df+CXcEAYPj4CInalIDBKUVt6t2JraN4nX4PeIhtmZ7LZyCK5ct/DdFN6DdiE8zYzkmRPLw==\",\r\n    \"retentionDays\": 1,\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"Sanitized\",\r\n    \"retentionDays\": 1,\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -660,7 +660,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerEngineAuditingPolicy\",\r\n  \"startTime\": \"2018-07-12T15:38:54.607Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "87"
@@ -711,6 +710,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerEngineAuditingPolicy\",\r\n  \"startTime\": \"2018-07-12T15:38:54.607Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -724,7 +724,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"a5a51bf4-7717-4e1b-91de-29e318322a9a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:38:54.607Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -769,6 +768,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"a5a51bf4-7717-4e1b-91de-29e318322a9a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:38:54.607Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -782,7 +782,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/auditingSettings\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -827,6 +826,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/auditingSettings\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -846,7 +846,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/auditingSettings\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -891,13 +890,14 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/auditingSettings\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/extendedAuditingSettings/default?api-version=2017-03-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2NhMjRlYzgtOTliNS00YWE3LTlmZjYtNDg2ZTg4NmYzMDRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTU2NDIvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01NzMxL2V4dGVuZGVkQXVkaXRpbmdTZXR0aW5ncy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTctMDMtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"Wbg1odTf7EtZKj6df+CXcEAYPj4CInalIDBKUVt6t2JraN4nX4PeIhtmZ7LZyCK5ct/DdFN6DdiE8zYzkmRPLw==\",\r\n    \"retentionDays\": 1,\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"Sanitized\",\r\n    \"retentionDays\": 1,\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -916,7 +916,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerEngineAuditingPolicy\",\r\n  \"startTime\": \"2018-07-12T15:39:56.543Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "87"
@@ -967,6 +966,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerEngineAuditingPolicy\",\r\n  \"startTime\": \"2018-07-12T15:39:56.543Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -980,7 +980,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"69d11ca0-7f91-46f3-bfb6-f7052d31ec93\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:39:56.543Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1025,6 +1024,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"69d11ca0-7f91-46f3-bfb6-f7052d31ec93\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:39:56.543Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1038,7 +1038,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/extendedAuditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/extendedAuditingSettings\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1083,6 +1082,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/extendedAuditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/extendedAuditingSettings\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1102,7 +1102,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/extendedAuditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/extendedAuditingSettings\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1147,6 +1146,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"predicateExpression\": \"statement = 'select 1'\",\r\n    \"state\": \"Enabled\",\r\n    \"storageEndpoint\": \"https://sqlblobauditingtest8227.blob.core.windows.net/\",\r\n    \"retentionDays\": 1,\r\n    \"auditActionsAndGroups\": [\r\n      \"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"FAILED_DATABASE_AUTHENTICATION_GROUP\",\r\n      \"BATCH_COMPLETED_GROUP\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false,\r\n    \"queueDelayMs\": 1000,\r\n    \"isAzureMonitorTargetEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/cca24ec8-99b5-4aa7-9ff6-486e886f304c/resourceGroups/sqlcrudtest-5642/providers/Microsoft.Sql/servers/sqlcrudtest-5731/extendedAuditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/extendedAuditingSettings\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1166,7 +1166,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"DropLogicalServer\",\r\n  \"startTime\": \"2018-07-12T15:40:58.757Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "72"
@@ -1217,6 +1216,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"DropLogicalServer\",\r\n  \"startTime\": \"2018-07-12T15:40:58.757Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -1230,7 +1230,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"745a4925-cfc0-4636-bc04-05ccab07c587\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:40:58.757Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1278,6 +1277,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"745a4925-cfc0-4636-bc04-05ccab07c587\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-12T15:40:58.757Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1291,7 +1291,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.18.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
           "0"
@@ -1330,6 +1329,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     },
     {
@@ -1349,7 +1349,6 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
           "0"
@@ -1391,6 +1390,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     },
     {
@@ -1410,7 +1410,6 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
           "0"
@@ -1452,6 +1451,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 202
     }
   ],

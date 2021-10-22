@@ -23,7 +23,6 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518\",\r\n  \"name\": \"sqlcrudtest-5518\",\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-5518\": \"2018-03-28 02:29:31Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "240"
@@ -62,6 +61,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518\",\r\n  \"name\": \"sqlcrudtest-5518\",\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-5518\": \"2018-03-28 02:29:31Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -87,7 +87,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertLogicalServer\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "73"
@@ -138,6 +137,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertLogicalServer\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -151,7 +151,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -199,6 +198,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -212,7 +212,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -260,6 +259,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -273,7 +273,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -321,6 +320,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -334,7 +334,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -382,6 +381,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -395,7 +395,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -443,6 +442,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -456,7 +456,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -504,6 +503,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -517,7 +517,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -565,6 +564,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"2e278324-d0e9-4903-b0d1-e0696d21de1d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-03-28T02:29:40.75Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -578,7 +578,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1189.database.windows.net\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189\",\r\n  \"name\": \"sqlcrudtest-1189\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -623,6 +622,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1189.database.windows.net\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189\",\r\n  \"name\": \"sqlcrudtest-1189\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -648,7 +648,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "76"
@@ -699,6 +698,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -712,7 +712,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -760,6 +759,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -773,7 +773,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -821,6 +820,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -834,7 +834,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -882,6 +881,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -895,7 +895,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -943,6 +942,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -956,7 +956,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1004,6 +1003,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"name\": \"9a96ee4f-0f68-4bc2-b889-034c4ab5701c\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-03-28T02:31:42.517Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1017,7 +1017,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 10\r\n  },\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 268435456000,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"2be3b2be-9253-4192-adf9-bf94cf9530e9\",\r\n    \"creationDate\": \"2018-03-28T02:31:42.72Z\",\r\n    \"currentServiceObjectiveName\": \"S0\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"defaultSecondaryLocation\": \"North Europe\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"earliestRestoreDate\": \"2018-03-28T03:02:57.783Z\",\r\n    \"readScale\": \"Disabled\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\",\r\n  \"name\": \"syncagentcrudtest-1550\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1062,6 +1061,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 10\r\n  },\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": 268435456000,\r\n    \"status\": \"Online\",\r\n    \"databaseId\": \"2be3b2be-9253-4192-adf9-bf94cf9530e9\",\r\n    \"creationDate\": \"2018-03-28T02:31:42.72Z\",\r\n    \"currentServiceObjectiveName\": \"S0\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"defaultSecondaryLocation\": \"North Europe\",\r\n    \"catalogCollation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"zoneRedundant\": false,\r\n    \"earliestRestoreDate\": \"2018-03-28T03:02:57.783Z\",\r\n    \"readScale\": \"Disabled\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\",\r\n  \"name\": \"syncagentcrudtest-1550\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1087,7 +1087,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"CreateSyncAgent\",\r\n  \"startTime\": \"2018-03-28T02:32:59.11Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "69"
@@ -1135,6 +1134,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"CreateSyncAgent\",\r\n  \"startTime\": \"2018-03-28T02:32:59.11Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -1148,7 +1148,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"syncDatabaseId\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\"\r\n  },\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "447"
@@ -1190,6 +1189,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"syncDatabaseId\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\"\r\n  },\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -1209,7 +1209,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"syncDatabaseId\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\",\r\n    \"state\": \"NeverConnected\",\r\n    \"isUpToDate\": true,\r\n    \"expiryTime\": \"9999-12-31T23:59:59.9999999Z\",\r\n    \"version\": \"4.2.0.0\"\r\n  },\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1254,6 +1253,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"syncDatabaseId\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\",\r\n    \"state\": \"NeverConnected\",\r\n    \"isUpToDate\": true,\r\n    \"expiryTime\": \"9999-12-31T23:59:59.9999999Z\",\r\n    \"version\": \"4.2.0.0\"\r\n  },\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1273,7 +1273,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"syncDatabaseId\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/databases/syncagentcrudtest-1550\",\r\n        \"state\": \"NeverConnected\",\r\n        \"isUpToDate\": true,\r\n        \"expiryTime\": \"9999-12-31T23:59:59.9999999Z\",\r\n        \"version\": \"4.2.0.0\"\r\n      },\r\n      \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n      \"name\": \"syncagentcrudtest4404\",\r\n      \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1318,6 +1317,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1337,7 +1337,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"syncAgentKey\": \"dcb47595-dbc7-4859-8132-cac14f7eec4c:a4KVTD8lUdgxEAxC0WviWHTghhTGz6UYRohMuLHzp8Q=:c3FsY3J1ZHRlc3QtMTE4OS5kYXRhYmFzZS53aW5kb3dzLm5ldOKBh3N5bmNhZ2VudGNydWR0ZXN0LTE1NTA=\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1382,6 +1381,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"syncAgentKey\": \"dcb47595-dbc7-4859-8132-cac14f7eec4c:a4KVTD8lUdgxEAxC0WviWHTghhTGz6UYRohMuLHzp8Q=:c3FsY3J1ZHRlc3QtMTE4OS5kYXRhYmFzZS53aW5kb3dzLm5ldOKBh3N5bmNhZ2VudGNydWR0ZXN0LTE1NTA=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1401,7 +1401,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"syncAgentKey\": \"dcb47595-dbc7-4859-8132-cac14f7eec4c:hG11mq22i57KNzEV4aU8MHleL9JLl2TKnUG4ybSizhw=:c3FsY3J1ZHRlc3QtMTE4OS5kYXRhYmFzZS53aW5kb3dzLm5ldOKBh3N5bmNhZ2VudGNydWR0ZXN0LTE1NTA=\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1446,6 +1445,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"syncAgentKey\": \"dcb47595-dbc7-4859-8132-cac14f7eec4c:hG11mq22i57KNzEV4aU8MHleL9JLl2TKnUG4ybSizhw=:c3FsY3J1ZHRlc3QtMTE4OS5kYXRhYmFzZS53aW5kb3dzLm5ldOKBh3N5bmNhZ2VudGNydWR0ZXN0LTE1NTA=\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1465,7 +1465,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1510,6 +1509,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1529,7 +1529,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"DropSyncAgent\",\r\n  \"startTime\": \"2018-03-28T02:33:18Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "64"
@@ -1577,6 +1576,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"operation\": \"DropSyncAgent\",\r\n  \"startTime\": \"2018-03-28T02:33:18Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -1590,7 +1590,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1635,6 +1634,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1648,7 +1648,6 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1693,6 +1692,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {},\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/resourceGroups/sqlcrudtest-5518/providers/Microsoft.Sql/servers/sqlcrudtest-1189/syncAgents/syncagentcrudtest4404\",\r\n  \"name\": \"syncagentcrudtest4404\",\r\n  \"type\": \"Microsoft.Sql/servers/syncAgents\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1712,7 +1712,6 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
           "0"
@@ -1754,6 +1753,7 @@
           "nosniff"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 202
     }
   ],
