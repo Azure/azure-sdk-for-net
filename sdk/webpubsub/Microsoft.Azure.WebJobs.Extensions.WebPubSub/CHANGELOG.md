@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0
+## 1.0.0 (Unreleased)
 
 ### Features Added
 - Add `Connection` attribute to input binding and trigger binding to support upstream validations.
