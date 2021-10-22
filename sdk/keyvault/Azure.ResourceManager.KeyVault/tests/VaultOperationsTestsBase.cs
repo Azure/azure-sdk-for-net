@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             Client = GetArmClient();
-            DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaults();
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            DeletedVaultContainer = subscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Location = "North Central US";
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            var rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultContainer = ResourceGroup.GetVaults();
