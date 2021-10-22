@@ -16,8 +16,9 @@ using Microsoft.Rest;
 using System;
 using System.Threading.Tasks;
 ```
-#### New (Azure.ResourceManager._ Preview)
-```C# Snippet:Using_Statements
+#### New (Azure.ResourceManager._ Beta)
+<!---Snippet:Using_Statements-->
+```C#
 using System;
 using System.Linq;
 using Azure.Identity;
@@ -39,7 +40,8 @@ NetworkManagementClient networkClient = new NetworkManagementClient(credentials)
 ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
 ```
 #### New
-```C# Snippet:Construct_Client
+<!---Snippet:Construct_Client-->
+```C#
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the `DefaultSubscription` and start managing your resources. 
@@ -61,18 +63,19 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
     });
 ```
 #### New
-```C# Snippet:Create_ResourceGroup
+<!---Snippet:Create_ResourceGroup-->
+```C#
 Subscription subscription = armClient.DefaultSubscription;
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 Location location = Location.WestUS2;
 string rgName = "QuickStartRG";
 
 ResourceGroupData rgData = new ResourceGroupData(location);
-ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
+ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
 ResourceGroup resourceGroup = rgCreateLro.Value;
 ```
-The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscription. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResourceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
+The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionCollection` to manage the resources in a particular subscription. In this example, a `resourceGroupCollection` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupCollection. With that `ResourceGroup` you will be able to get the resource collections to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
 The new preview SDK also provides some common classes to represent commonly-used constructs, like `Location`, and allows you to use them directly throughout the APIs, making it easier to discover how to properly configure resources.
 
@@ -100,7 +103,8 @@ AvailabilitySet asCreateOrUpdateResponse = computeClient.AvailabilitySets.Create
 string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/{aSetName}";
 ```
 #### New
-```C# Snippet:Create_AvailabilitySet
+<!---Snippet:Create_AvailabilitySet-->
+```C#
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
 AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
@@ -108,7 +112,7 @@ AvailabilitySet aset = asetCreateLro.Value;
 string asetId = aset.Id;
 ```
 
-Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsContainer returned from the `GetAvailabilitySets()` extension method instead of using another client. 
+Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client. 
 
 ### Create a Virtual Network and Subnet
 #### Old
@@ -139,7 +143,8 @@ VirtualNetwork putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rg
 VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
 #### New
-```C# Snippet:Create_Vnet_and_Subnet
+<!---Snippet:Create_Vnet_and_Subnet-->
+```C#
 string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
 AddressSpace addressSpace = new AddressSpace();
@@ -161,7 +166,7 @@ VirtualNetworkCreateOrUpdateOperation vnetCreateLro = await resourceGroup.GetVir
 VirtualNetwork vnet = vnetCreateLro.Value;
 ```
 
-In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
+In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
 
 ### Create a Security Group
 #### Old
@@ -176,7 +181,8 @@ NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.Create
 NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
 #### New
-```C# Snippet:Create_NetworkSecurityGroup
+<!---Snippet:Create_NetworkSecurityGroup-->
+```C#
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
 NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
@@ -212,7 +218,8 @@ NetworkInterface putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate
 NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
-```C# Snippet:Create_NetworkInterface
+<!---Snippet:Create_NetworkInterface-->
+```C#
 string nicName = vmName + "_nic";
 NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
 {
@@ -284,7 +291,8 @@ inputVM.NetworkProfile = vmNetworkProfile;
 VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 ```
 #### New
-```C# Snippet:Create_VirtualMachine
+<!---Snippet:Create_VirtualMachine-->
+```C#
 VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OsProfile.AdminUsername = "admin-username";
 vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
@@ -299,7 +307,7 @@ VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsyn
 Console.WriteLine("VM ID: " + vm.Id);
 ```
 
-Finally, as it can be seen here, from the resource group you can get the Virtual Machine container and create a new one using the `VirtualMachineData` for the parameters.
+Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
 
 ## Next steps
 Check out [more examples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.

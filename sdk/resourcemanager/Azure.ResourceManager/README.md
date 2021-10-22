@@ -60,7 +60,7 @@ This represents a full resource client object which contains a **Data** property
 It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
 since everything is returned as a full resource client now.
 
-```csharp
+```C#
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 string rgName = "myResourceGroup";
 ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
@@ -94,7 +94,7 @@ For most things, the parent will be a **ResourceGroup**. However, each parent / 
 ## Putting it all together
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
- ```csharp
+ ```C#
 // First we construct our armClient
 var armClient = new ArmClient(new DefaultAzureCredential());
 
@@ -153,7 +153,7 @@ Console.WriteLine($"Subnet: {id.Name}");
 Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
-```csharp
+```C#
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
@@ -180,7 +180,7 @@ This approach required a lot of code and 3 API calls to Azure. The same can be d
 
 So, the previous example would end up looking like this:
 
-```csharp
+```C#
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
 // We construct a new armClient to work with
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());

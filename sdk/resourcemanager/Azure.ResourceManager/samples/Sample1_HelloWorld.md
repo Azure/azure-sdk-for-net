@@ -29,8 +29,8 @@ Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
 
 From here, it is possible to get the resource groups from the retrieved subscription:
 
-```C# Snippet:Hello_World_ResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+```C# Snippet:Hello_World_ResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 ```
 
 ## Next stepts

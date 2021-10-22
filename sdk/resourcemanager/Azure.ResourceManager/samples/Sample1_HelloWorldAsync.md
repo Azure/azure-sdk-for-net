@@ -31,8 +31,8 @@ With the `Async` suffix on methods that perform API calls, it's possible to diff
 
 From here, it is possible to get the resource groups from the retrieved subscription:
 
-```C# Snippet:Hello_World_Async_ResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+```C# Snippet:Hello_World_Async_ResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
