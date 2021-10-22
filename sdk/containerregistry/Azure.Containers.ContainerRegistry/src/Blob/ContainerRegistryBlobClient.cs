@@ -338,9 +338,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
                 Response rawResponse = response.GetRawResponse();
-                ManifestMediaType mediaType = rawResponse.Headers.ContentType;
 
-                string digest = options.Digest ?? response.Value.Config.Digest;
+                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
@@ -375,7 +375,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
 
-                string digest = options.Digest ?? response.Value.Config.Digest;
+                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(rawResponse, "The requested digest does not match the digest of the received manifest.");
@@ -384,7 +385,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
-                return Response.FromValue(new DownloadManifestResult(OciBlobDescriptor.ComputeDigest(rawResponse.ContentStream), manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
