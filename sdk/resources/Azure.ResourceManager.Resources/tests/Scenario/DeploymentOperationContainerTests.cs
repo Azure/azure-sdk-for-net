@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
             int count = 0;
-            await foreach (var tempDeploymentOperation in deploymentExtended.GetDeploymentOperations().GetAllAsync())
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperations().GetAllAsync())
             {
                 count++;
             }
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
-            await foreach (var tempDeploymentOperation in deploymentExtended.GetDeploymentOperations().GetAllAsync())
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperations().GetAllAsync())
             {
-                DeploymentOperation getDeploymentOperation = await deploymentExtended.GetDeploymentOperations().GetAsync(tempDeploymentOperation.Data.OperationId);
+                DeploymentOperation getDeploymentOperation = await deployment.GetDeploymentOperations().GetAsync(tempDeploymentOperation.Data.OperationId);
                 AssertValidDeploymentOperation(tempDeploymentOperation, getDeploymentOperation);
             }
         }

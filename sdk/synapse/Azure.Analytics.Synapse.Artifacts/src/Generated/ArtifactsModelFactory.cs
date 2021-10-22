@@ -14,16 +14,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
-        /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = null, string name = null, string type = null)
-        {
-            return new Resource(id, name, type);
-        }
-
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -33,6 +23,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static AzureEntityResource AzureEntityResource(string id = null, string name = null, string type = null, string etag = null)
         {
             return new AzureEntityResource(id, name, type, etag);
+        }
+
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(string id = null, string name = null, string type = null)
+        {
+            return new Resource(id, name, type);
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>

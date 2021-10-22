@@ -390,6 +390,51 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISparkConfigurationsOperations SparkConfigurations { get; private set; }
 
         /// <summary>
+        /// Gets the IKustoOperations.
+        /// </summary>
+        public virtual IKustoOperations KustoOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolOperations.
+        /// </summary>
+        public virtual IKustoPoolOperations KustoPool { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolsOperations.
+        /// </summary>
+        public virtual IKustoPoolsOperations KustoPools { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolChildResourceOperations.
+        /// </summary>
+        public virtual IKustoPoolChildResourceOperations KustoPoolChildResource { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        public virtual IKustoPoolAttachedDatabaseConfigurationsOperations KustoPoolAttachedDatabaseConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasesOperations.
+        /// </summary>
+        public virtual IKustoPoolDatabasesOperations KustoPoolDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDataConnectionsOperations.
+        /// </summary>
+        public virtual IKustoPoolDataConnectionsOperations KustoPoolDataConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolPrincipalAssignmentsOperations.
+        /// </summary>
+        public virtual IKustoPoolPrincipalAssignmentsOperations KustoPoolPrincipalAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IKustoPoolDatabasePrincipalAssignmentsOperations.
+        /// </summary>
+        public virtual IKustoPoolDatabasePrincipalAssignmentsOperations KustoPoolDatabasePrincipalAssignments { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -694,6 +739,15 @@ namespace Microsoft.Azure.Management.Synapse
             IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
             SparkConfiguration = new SparkConfigurationOperations(this);
             SparkConfigurations = new SparkConfigurationsOperations(this);
+            KustoOperations = new KustoOperations(this);
+            KustoPool = new KustoPoolOperations(this);
+            KustoPools = new KustoPoolsOperations(this);
+            KustoPoolChildResource = new KustoPoolChildResourceOperations(this);
+            KustoPoolAttachedDatabaseConfigurations = new KustoPoolAttachedDatabaseConfigurationsOperations(this);
+            KustoPoolDatabases = new KustoPoolDatabasesOperations(this);
+            KustoPoolDataConnections = new KustoPoolDataConnectionsOperations(this);
+            KustoPoolPrincipalAssignments = new KustoPoolPrincipalAssignmentsOperations(this);
+            KustoPoolDatabasePrincipalAssignments = new KustoPoolDatabasePrincipalAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -736,6 +790,10 @@ namespace Microsoft.Azure.Management.Synapse
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntimeStatus>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Database>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Database>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnection>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataConnection>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Azure.Storage.Test.Shared;
 using ShareClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Files.Shares.ShareServiceClient,
     Azure.Storage.Files.Shares.ShareClientOptions>;
@@ -13,6 +13,22 @@ namespace Azure.Storage.Files.Shares.Tests
 {
     public static class ClientBuilderExtensions
     {
+        /// <summary>
+        /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
+        /// setup to generate <see cref="ShareClientBuilder"/>s.
+        /// </summary>
+        /// <param name="tenants"><see cref="TenantConfigurationBuilder"/> powering this client builder.</param>
+        /// <param name="serviceVersion">Service version for clients to target.</param>
+        public static ShareClientBuilder GetNewShareClientBuilder(TenantConfigurationBuilder tenants, ShareClientOptions.ServiceVersion serviceVersion)
+            => new ShareClientBuilder(
+                ServiceEndpoint.File,
+                tenants,
+                (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
+                (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
+                default, // file shares don't suppot oauth
+                (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
+                () => new ShareClientOptions(serviceVersion));
+
         public static string GetNewShareName(this ShareClientBuilder clientBuilder)
             => $"test-share-{clientBuilder.Recording.Random.NewGuid()}";
         public static string GetNewDirectoryName(this ShareClientBuilder clientBuilder)

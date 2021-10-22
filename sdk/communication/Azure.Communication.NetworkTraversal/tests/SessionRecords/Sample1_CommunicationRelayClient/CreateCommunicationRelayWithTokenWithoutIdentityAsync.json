@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/networktraversal/:issueRelayConfiguration?api-version=2021-06-21-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-39c7f859d40a484298aa3fd3ee5cbce7-440d4aefcd19544d-00",
+        "User-Agent": "azsdk-net-Communication.NetworkTraversal/1.0.0-alpha.20211011.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22471 )",
+        "x-ms-client-request-id": "4b7be8d01ab466042b070bfa03d8e699",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-02-22-preview1, 2021-06-21-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 16 Oct 2021 19:44:18 GMT",
+        "MS-CV": "oAWWfXanjkeCW3f\u002Bq2axBg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0kitrYQAAAAAQp7qrCN1ERoS/M19YTxdFV1NURURHRTA4MTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "4b7be8d01ab466042b070bfa03d8e699",
+        "X-Processing-Time": "23ms"
+      },
+      "ResponseBody": {
+        "expiresOn": "2021-10-16T19:44:18.2469011\u002B00:00",
+        "iceServers": [
+          {
+            "urls": [
+              "stun:world.relay.skype.com:3478",
+              "turn:world.relay.skype.com:3478"
+            ],
+            "username": "BQAANooCrFEB18RYSTKLWGqk0nknznoVNP5hVxK9HAUAAAAMARCsgNlqhd5IsZldo6P6NifIAvoGj7KkAZEZddF1Af\u002BY3s13/cI=",
+            "credential": "Sanitized"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "910454501"
+  }
+}

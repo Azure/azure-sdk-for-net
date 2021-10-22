@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
             Response<Subnet> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);
-            Assert.AreEqual(getSubnetResponse.Value.Data.RouteTable.Id, getRouteTableResponse.Value.Id);
+            Assert.AreEqual(getSubnetResponse.Value.Data.RouteTable.Id, getRouteTableResponse.Value.Id.ToString());
 
             // Get RouteTable
             getRouteTableResponse = await routeTableContainer.GetAsync(routeTableName);
             Assert.AreEqual(1, getRouteTableResponse.Value.Data.Subnets.Count);
-            Assert.AreEqual(getSubnetResponse.Value.Id, getRouteTableResponse.Value.Data.Subnets[0].Id);
+            Assert.AreEqual(getSubnetResponse.Value.Id.ToString(), getRouteTableResponse.Value.Data.Subnets[0].Id);
         }
     }
 }

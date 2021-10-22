@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Account
                 throw new ArgumentNullException(nameof(collectionName));
             }
 
-            return new PurviewCollection(Pipeline, _tokenCredential, endpoint, collectionName, apiVersion, _clientDiagnostics);
+            return new PurviewCollection(Pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion, _clientDiagnostics);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.Account
         /// <returns>A service client for interacting with a resource set rule.</returns>
         public virtual PurviewResourceSetRule GetResourceSetRuleClient()
         {
-            return new PurviewResourceSetRule(Pipeline, _tokenCredential, endpoint, apiVersion, _clientDiagnostics);
+            return new PurviewResourceSetRule(Pipeline, _tokenCredential, _endpoint, _apiVersion, _clientDiagnostics);
         }
     }
 }

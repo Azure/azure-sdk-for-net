@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Tests
             var peering = new VirtualNetworkPeeringData()
             {
                 AllowForwardedTraffic = true,
-                RemoteVirtualNetwork = new SubResource { Id = putVnet2.Value.Id }
+                RemoteVirtualNetwork = new WritableSubResource { Id = putVnet2.Value.Id }
             };
 
             // Create Peering

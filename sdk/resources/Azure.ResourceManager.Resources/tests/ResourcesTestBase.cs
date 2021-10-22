@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
-        protected static Deployment CreateDeploymentExtendedData(DeploymentProperties deploymentProperties) => new Deployment(deploymentProperties);
+        protected static DeploymentInput CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentInput(deploymentProperties);
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {

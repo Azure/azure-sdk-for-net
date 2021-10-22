@@ -74,4 +74,4 @@ await applicationDefinition.DeleteAsync();
 
 
 ## Next steps
-Take a look at the [Managing Deployment Extended](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resources/Azure.ResourceManager.Resources/samples/Sample2_ManagingDeploymentExtendeds.md) samples.
+Take a look at the [Managing Deployments](https://github.com/Yao725/azure-sdk-for-net/blob/fix-issue-24840/sdk/resources/Azure.ResourceManager.Resources/samples/Sample2_ManagingDeployments.md) samples.
