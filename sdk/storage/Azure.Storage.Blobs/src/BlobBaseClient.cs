@@ -1260,7 +1260,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (UsingClientSideEncryption)
                     {
-                        options ??= new BlobDownloadOptions();
+                        options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
                         options.Range = BlobClientSideDecryptor.GetEncryptedBlobRange(options.Range);
                     }
 
@@ -1279,6 +1279,8 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ETag etag = response.Value.Details.ETag;
                     BlobRequestConditions conditionsWithEtag = options?.Conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
+                    options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
+                    options.Conditions = conditionsWithEtag;
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
@@ -1394,13 +1396,17 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
-            if ((options?.Range ?? default) != default || startOffset != 0)
+            if ((options?.Range ?? default) != default)
             {
                 pageRange = new HttpRange(
                     options.Range.Offset + startOffset,
                     options.Range.Length.HasValue ?
                         options.Range.Length.Value - startOffset :
                         (long?)null);
+            }
+            else if (startOffset != 0)
+            {
+                pageRange = new HttpRange(startOffset);
             }
 
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
