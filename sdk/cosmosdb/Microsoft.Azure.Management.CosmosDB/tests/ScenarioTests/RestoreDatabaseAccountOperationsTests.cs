@@ -8,117 +8,87 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
+    [Collection("TestCollection")]
     public class RestoreDatabaseAccountOperationsTests
     {
-        const string location = TestConstants.Location1;
-        // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string sourceDatabaseAccountName = "sqltestaccount1234";
+        public readonly TestFixture fixture;
+
+        public RestoreDatabaseAccountOperationsTests(TestFixture fixture)
+        {
+            this.fixture = fixture;
+        }
 
         [Fact]
         public async Task RestoreDatabaseAccountTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start(this.GetType()))
+            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
+
+            var restorableAccounts = (await this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(this.fixture.Location)).ToList();
+            var restorableDatabaseAccount = restorableAccounts.
+                SingleOrDefault(account => account.AccountName.Equals(databaseAccountName, StringComparison.OrdinalIgnoreCase));
+
+            DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-                ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler1);
-                string restoredatabaseAccountName = TestUtilities.GenerateName(prefix: "restoredaccountname");
-
-                DatabaseAccountGetResults databaseAccount = null;
-                bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(sourceDatabaseAccountName).GetAwaiter().GetResult().Body;
-                if (!isDatabaseNameExists)
+                Location = this.fixture.Location,
+                Tags = new Dictionary<string, string>
                 {
-                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters1 = new DatabaseAccountCreateUpdateParameters
-                    {
-                        Location = location,
-                        Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location> { new Location { LocationName = location } },
-                        BackupPolicy = new ContinuousModeBackupPolicy(),
-                    };
-
-                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, sourceDatabaseAccountName, databaseAccountCreateUpdateParameters1).GetAwaiter().GetResult().Body;
-                    Assert.Equal(databaseAccount.Name, sourceDatabaseAccountName);
+                    {"key1","value1"},
+                    {"key2","value2"}
+                },
+                Kind = "GlobalDocumentDB",
+                Locations = new List<Location>
+                {
+                    new Location(locationName: this.fixture.Location)
+                },
+                CreateMode = CreateMode.Restore,
+                RestoreParameters = new RestoreParameters()
+                {
+                    RestoreMode = "PointInTime",
+                    RestoreTimestampInUtc = DateTime.UtcNow,
+                    RestoreSource = restorableDatabaseAccount.Id
                 }
-                databaseAccount = await cosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, sourceDatabaseAccountName);
+            };
+            var restoredAccountName = TestUtilities.GenerateName("restoredaccount");
 
-                DateTime restoreTs = DateTime.UtcNow;
-
-                List<RestorableDatabaseAccountGetResult> restorableAccounts = (await cosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(location)).ToList();
-                RestorableDatabaseAccountGetResult restorableDatabaseAccount = restorableAccounts.
-                    SingleOrDefault(account => account.AccountName.Equals(databaseAccount.Name, StringComparison.OrdinalIgnoreCase));
-
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
-                {
-                    Location = location,
-                    Tags = new Dictionary<string, string>
-                    {
-                        {"key1","value1"},
-                        {"key2","value2"}
-                    },
-                    Kind = "GlobalDocumentDB",
-                    Locations = new List<Location>
-                    {
-                        new Location(locationName: location)
-                    },
-                    CreateMode = CreateMode.Restore,
-                    RestoreParameters = new RestoreParameters()
-                    {
-                        RestoreMode = "PointInTime",
-                        RestoreTimestampInUtc = restoreTs,
-                        RestoreSource = restorableDatabaseAccount.Id
-                    }
-                };
-
-                DatabaseAccountGetResults restoredDatabaseAccount = (await cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, restoredatabaseAccountName, databaseAccountCreateUpdateParameters)).Body;
-                Assert.NotNull(restoredDatabaseAccount);
-                Assert.NotNull(restoredDatabaseAccount.RestoreParameters);
-                Assert.Equal(restoredDatabaseAccount.RestoreParameters.RestoreSource.ToLower(), restorableDatabaseAccount.Id.ToLower());
-                Assert.True(restoredDatabaseAccount.BackupPolicy is ContinuousModeBackupPolicy);
-            }
-        }
+            DatabaseAccountGetResults restoredDatabaseAccount = (await this.fixture.CosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(
+                this.fixture.ResourceGroupName, restoredAccountName, databaseAccountCreateUpdateParameters)).Body;
+            Assert.NotNull(restoredDatabaseAccount);
+            Assert.NotNull(restoredDatabaseAccount.RestoreParameters);
+            Assert.Equal(restoredDatabaseAccount.RestoreParameters.RestoreSource.ToLower(), restorableDatabaseAccount.Id.ToLower());
+            Assert.True(restoredDatabaseAccount.BackupPolicy is ContinuousModeBackupPolicy);
+       }
 
         [Fact]
-        public async Task RestoreDatabaseAccountFeedTests()
+        public async Task RestorableDatabaseAccountFeedTests()
         {
-            RecordedDelegatingHandler handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
-
-                await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-sql-stage-source", ApiType.Sql, 1);
-                await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-mongo32-stage-source", ApiType.MongoDB, 1);
-                await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-mongo36-stage-source", ApiType.MongoDB, 1);
-            }
+            await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql), ApiType.Sql, 1);
+            await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32), ApiType.MongoDB, 1);
+            await RestorableDatabaseAccountFeedTestHelperAsync(this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36), ApiType.MongoDB, 1);
         }
 
-        private async Task RestoreDatabaseAccountFeedTestHelperAsync(
-            CosmosDBManagementClient cosmosDBManagementClient,
+        private async Task RestorableDatabaseAccountFeedTestHelperAsync(
             string sourceDatabaseAccountName,
             string sourceApiType,
             int expectedRestorableLocationCount)
         {
-            DatabaseAccountGetResults sourceDatabaseAccount = await CreateDatabaseAccountIfNotExists(cosmosDBManagementClient, sourceDatabaseAccountName, location, sourceApiType);
+            var client = this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts;
 
-            List<RestorableDatabaseAccountGetResult> restorableAccountsFromGlobalFeed = (await cosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(location)).ToList();
+            var restorableAccountsFromGlobalFeed = (await client.ListByLocationAsync(this.fixture.Location)).ToList();
 
-            //List<RestorableDatabaseAccountGetResult> restorableAccounts = (await cosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(westus2)).ToList();
+            var sourceDatabaseAccount = await this.fixture.CosmosDBManagementClient.DatabaseAccounts.GetAsync(this.fixture.ResourceGroupName, sourceDatabaseAccountName);
+
             RestorableDatabaseAccountGetResult restorableDatabaseAccount = restorableAccountsFromGlobalFeed.
                 Single(account => account.Name.Equals(sourceDatabaseAccount.InstanceId, StringComparison.OrdinalIgnoreCase));
 
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
             List<RestorableDatabaseAccountGetResult> restorableAccountsFromRegionalFeed =
-                (await cosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(location)).ToList();
+                (await client.ListByLocationAsync(this.fixture.Location)).ToList();
 
             restorableDatabaseAccount = restorableAccountsFromRegionalFeed.
                 Single(account => account.Name.Equals(sourceDatabaseAccount.InstanceId, StringComparison.OrdinalIgnoreCase));
@@ -126,7 +96,7 @@ namespace CosmosDB.Tests.ScenarioTests
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
             restorableDatabaseAccount =
-                await cosmosDBManagementClient.RestorableDatabaseAccounts.GetByLocationAsync(location, sourceDatabaseAccount.InstanceId);
+                await client.GetByLocationAsync(this.fixture.Location, sourceDatabaseAccount.InstanceId);
 
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
         }
@@ -144,44 +114,86 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(sourceDatabaseAccount.Name, restorableDatabaseAccount.AccountName);
         }
 
-        private static async Task<DatabaseAccountGetResults> CreateDatabaseAccountIfNotExists(
-            CosmosDBManagementClient cosmosDBManagementClient,
-            string databaseAccountName,
-            string armLocation,
-            string kind)
+
+        [Fact]
+        public void RetrieveContinuousBackupInfoTest()
         {
-            bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
-            String databaseKind = null;
-            List<Location> locations = null;
-            if (kind == ApiType.Sql)
-            {
-                databaseKind = DatabaseAccountKind.GlobalDocumentDB;
-                locations = new List<Location> { new Location { LocationName = TestConstants.Location1 }, new Location { LocationName = TestConstants.Location2 }, new Location { LocationName = TestConstants.Location3 } };
-            }
-            else if (kind == ApiType.MongoDB)
-            {
-                databaseKind = DatabaseAccountKind.MongoDB;
-                locations = new List<Location> { new Location { LocationName = TestConstants.Location1 }, new Location { LocationName = TestConstants.Location2 } };
-            }
+            var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
-            DatabaseAccountGetResults databaseAccount = null;
-            if (!isDatabaseNameExists)
+            ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(this.fixture.Location);
+            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
+
+            var databaseName = TestUtilities.GenerateName("sqlDatabase");
+            client.BeginCreateUpdateSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, new SqlDatabaseCreateUpdateParameters
             {
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                Resource = new SqlDatabaseResource { Id = databaseName },
+                Options = new CreateUpdateOptions()
+            });
+
+            var containerName = TestUtilities.GenerateName("sqlContainer");
+                        SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters()
+            {
+                Resource = new SqlContainerResource(containerName, partitionKey: new ContainerPartitionKey(new List<String>() { "/id" })),
+                Options = new CreateUpdateOptions
                 {
-                    Location = armLocation,
-                    Kind = databaseKind,
-                    Locations = locations,
-                    BackupPolicy = new ContinuousModeBackupPolicy(),
-                    CreateMode = CreateMode.Default
-                };
+                    Throughput = 400
+                }
+            };
+            SqlContainerGetResults createContainerResult = client.CreateUpdateSqlContainer(
+                this.fixture.ResourceGroupName,
+                databaseAccountName,
+                databaseName,
+                containerName,
+                sqlContainerCreateUpdateParameters);
+            Assert.NotNull(createContainerResult);
+            Assert.NotNull(createContainerResult.Id);
 
-                databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.Equal(databaseAccount.Name, databaseAccountName);
-            }
-            databaseAccount = await cosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            BackupInformation backupInformation = client.RetrieveContinuousBackupInformation(
+                this.fixture.ResourceGroupName,
+                databaseAccountName,
+                databaseName,
+                containerName,
+                restoreLocation);
 
-            return databaseAccount;
+            Assert.NotNull(backupInformation);
+            Assert.NotNull(backupInformation.ContinuousBackupInformation);
+            var lastRestorableTimestampString = backupInformation.ContinuousBackupInformation.LatestRestorableTimestamp;
+            Assert.True(Int32.TryParse(lastRestorableTimestampString, out int lastRestorableTimestamp), String.Format("LastRestorableTimestamp '{0}' is not an integer.", lastRestorableTimestampString));
+            Assert.True(lastRestorableTimestamp > 0);
+            int prevRestoreTime = Int32.Parse(backupInformation.ContinuousBackupInformation.LatestRestorableTimestamp);
+
+            ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters()
+            {
+                Resource = new ThroughputSettingsResource()
+                {
+                    Throughput = 4000
+                }
+            };
+            ThroughputSettingsGetResults throughputSettingsGetResults = client.UpdateSqlContainerThroughput(
+                this.fixture.ResourceGroupName,
+                databaseAccountName,
+                databaseName,
+                containerName,
+                throughputSettingsUpdateParameters);
+            Assert.NotNull(throughputSettingsGetResults);
+            Assert.NotNull(throughputSettingsGetResults.Id);
+
+            backupInformation = client.RetrieveContinuousBackupInformation(
+                this.fixture.ResourceGroupName,
+                databaseAccountName,
+                databaseName,
+                containerName,
+                restoreLocation);
+
+            Assert.NotNull(backupInformation);
+            Assert.NotNull(backupInformation.ContinuousBackupInformation);
+            lastRestorableTimestampString = backupInformation.ContinuousBackupInformation.LatestRestorableTimestamp;
+            Assert.True(Int32.TryParse(lastRestorableTimestampString, out lastRestorableTimestamp), String.Format("LastRestorableTimestamp '{}' is not an integer.", lastRestorableTimestampString));
+            Assert.True(lastRestorableTimestamp > 0);
+
+            Assert.True(Int32.Parse(backupInformation.ContinuousBackupInformation.LatestRestorableTimestamp) >= prevRestoreTime);
+
+            client.DeleteSqlContainer(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName);
         }
     }
 }

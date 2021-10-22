@@ -13,126 +13,106 @@ using System.Collections.Specialized;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
+    [Collection("TestCollection")]
     public class MongoResourcesOperationsTests
     {
-        const string location = TestConstants.Location1;
-        // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db003";
+        public TestFixture fixture;
 
-        const string databaseName = "databaseName3668";
-        const string databaseName2 = "databaseName23668";
-        const string collectionName = "collectionName3668";
-
-        const string mongoDatabaseThroughputType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings";
-
-        const int sampleThroughput = 700;
-
-        Dictionary<string, string> additionalProperties = new Dictionary<string, string>
+        public MongoResourcesOperationsTests(TestFixture fixture)
         {
-            {"foo","bar" }
-        };
-        Dictionary<string, string> tags = new Dictionary<string, string>
-        {
-            {"key3","value3"},
-            {"key4","value4"}
-        };
+            this.fixture = fixture;
+        }   
 
         [Fact]
         public void MongoCRUDTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start(this.GetType()))
+            string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36);
+            var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+
+            string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");
+            string databaseName2 = TestUtilities.GenerateName(prefix: "mongoDb");
+            string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+            const string mongoDatabaseThroughputType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings";
+
+            const int sampleThroughput = 700;
+
+            Dictionary<string, string> additionalProperties = new Dictionary<string, string>
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+                {"foo","bar" }
+            };
+                Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                {"key3","value3"},
+                {"key4","value4"}
+            };
 
-                bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
+            MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+            {
+                Resource = new MongoDBDatabaseResource { Id = databaseName },
+                Options = new CreateUpdateOptions()
+            };
 
-                DatabaseAccountGetResults databaseAccount = null;
-                if (!isDatabaseNameExists)
+            MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+            Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+            Assert.NotNull(mongoDBDatabaseGetResults);
+
+            MongoDBDatabaseGetResults mongoDBDatabaseGetResults1 = mongoClient.GetMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+            Assert.NotNull(mongoDBDatabaseGetResults1);
+            Assert.Equal(databaseName, mongoDBDatabaseGetResults1.Name);
+
+            VerifyEqualMongoDBDatabases(mongoDBDatabaseGetResults, mongoDBDatabaseGetResults1);
+
+            MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters2 = new MongoDBDatabaseCreateUpdateParameters
+            {
+                Resource = new MongoDBDatabaseResource { Id = databaseName2 },
+                Options = new CreateUpdateOptions
                 {
-                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
-                    {
-                        Location = location,
-                        Kind = DatabaseAccountKind.MongoDB,
-                        Locations = new List<Location>
-                        {
-                            {new Location(locationName: location) }
-                        }
-                    };
-
-                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                    Assert.Equal(databaseAccount.Name, databaseAccountName);
+                    Throughput = sampleThroughput
                 }
+            };
 
-                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+            MongoDBDatabaseGetResults mongoDBDatabaseGetResults2 = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName2, mongoDBDatabaseCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+            Assert.NotNull(mongoDBDatabaseGetResults2);
+            Assert.Equal(databaseName2, mongoDBDatabaseGetResults2.Name);
+
+            IEnumerable<MongoDBDatabaseGetResults> mongoDBDatabases = mongoClient.ListMongoDBDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+            Assert.NotNull(mongoDBDatabases);
+
+            ThroughputSettingsGetResults throughputSettingsGetResults = mongoClient.GetMongoDBDatabaseThroughputWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName2).GetAwaiter().GetResult().Body;
+            Assert.NotNull(throughputSettingsGetResults);
+            Assert.NotNull(throughputSettingsGetResults.Name);
+            Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
+            Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
+
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
+            MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+            {
+                Resource = new MongoDBCollectionResource
                 {
-                    Resource = new MongoDBDatabaseResource {Id = databaseName},
-                    Options = new CreateUpdateOptions()
-                };
+                    Id = collectionName,
+                    ShardKey = dict
+                },
+                Options = new CreateUpdateOptions()
+            };
 
-                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
-                Assert.NotNull(mongoDBDatabaseGetResults);
+            MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+            Assert.NotNull(mongoDBCollectionGetResults);
+            VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
 
-                MongoDBDatabaseGetResults mongoDBDatabaseGetResults1 = cosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
-                Assert.NotNull(mongoDBDatabaseGetResults1);
-                Assert.Equal(databaseName, mongoDBDatabaseGetResults1.Name);
+            IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+            Assert.NotNull(mongoDBCollections);
 
-                VerifyEqualMongoDBDatabases(mongoDBDatabaseGetResults, mongoDBDatabaseGetResults1);
+            foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+            {
+                mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
+            }
 
-                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters2 = new MongoDBDatabaseCreateUpdateParameters
-                {
-                    Resource = new MongoDBDatabaseResource { Id = databaseName2 },
-                    Options = new CreateUpdateOptions
-                    {
-                        Throughput = sampleThroughput
-                    }
-                };
-
-                MongoDBDatabaseGetResults mongoDBDatabaseGetResults2 = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, mongoDBDatabaseCreateUpdateParameters2).GetAwaiter().GetResult().Body;
-                Assert.NotNull(mongoDBDatabaseGetResults2);
-                Assert.Equal(databaseName2, mongoDBDatabaseGetResults2.Name);
-
-                IEnumerable<MongoDBDatabaseGetResults> mongoDBDatabases = cosmosDBManagementClient.MongoDBResources.ListMongoDBDatabasesWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-                Assert.NotNull(mongoDBDatabases);
-
-                ThroughputSettingsGetResults throughputSettingsGetResults = cosmosDBManagementClient.MongoDBResources.GetMongoDBDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2).GetAwaiter().GetResult().Body;
-                Assert.NotNull(throughputSettingsGetResults);
-                Assert.NotNull(throughputSettingsGetResults.Name);
-                Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
-                Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
-
-                Dictionary<string, string> dict = new Dictionary<string, string>();
-                dict.Add("partitionKey", PartitionKind.Hash.ToString());
-
-                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
-                {
-                    Resource = new MongoDBCollectionResource
-                    {
-                        Id = collectionName,
-                        ShardKey = dict
-                    },
-                    Options = new CreateUpdateOptions()
-                };
-
-                MongoDBCollectionGetResults mongoDBCollectionGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.NotNull(mongoDBCollectionGetResults);
-                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
-
-                IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
-                Assert.NotNull(mongoDBCollections);
-
-                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
-                {
-                    cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
-                }
-
-                foreach (MongoDBDatabaseGetResults mongoDBDatabase in mongoDBDatabases)
-                {
-                    cosmosDBManagementClient.MongoDBResources.DeleteMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, mongoDBDatabase.Name);
-                }
+            foreach (MongoDBDatabaseGetResults mongoDBDatabase in mongoDBDatabases)
+            {
+                mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, mongoDBDatabase.Name);
             }
         }
 
