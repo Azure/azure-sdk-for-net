@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Api Version set base parameters
+    /// API Version set base parameters
     /// </summary>
     public partial class ApiVersionSetEntityBase
     {

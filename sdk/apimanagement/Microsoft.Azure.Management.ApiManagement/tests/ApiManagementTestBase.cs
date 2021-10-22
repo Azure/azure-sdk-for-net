@@ -241,12 +241,30 @@ namespace ApiManagement.Tests
                         new RepresentationContract
                         {
                             ContentType = "text/plain",
-                            Sample = "sample_" + TestUtilities.GenerateName(),
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }
                         },
                         new RepresentationContract
                         {
                             ContentType = "application/xml",
-                            Sample = "sample_" + TestUtilities.GenerateName(),
+                                                        Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            },
                         }
                     }
                 },
@@ -261,13 +279,29 @@ namespace ApiManagement.Tests
                             new RepresentationContract
                             {
                                 ContentType = "application/json",
-                                Sample = "sample_" + TestUtilities.GenerateName()
-                            },
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }                            },
                             new RepresentationContract
                             {
                                 ContentType = "application/xml",
-                                Sample = "sample_" + TestUtilities.GenerateName()
-                            }
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }                            }
                         }
                     }
                 }

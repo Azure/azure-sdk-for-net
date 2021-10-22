@@ -10,51 +10,15 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Protocol.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Protocol
+    public static class Protocol
     {
-        [EnumMember(Value = "http")]
-        Http,
-        [EnumMember(Value = "https")]
-        Https
-    }
-    internal static class ProtocolEnumExtension
-    {
-        internal static string ToSerializedValue(this Protocol? value)
-        {
-            return value == null ? null : ((Protocol)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this Protocol value)
-        {
-            switch( value )
-            {
-                case Protocol.Http:
-                    return "http";
-                case Protocol.Https:
-                    return "https";
-            }
-            return null;
-        }
-
-        internal static Protocol? ParseProtocol(this string value)
-        {
-            switch( value )
-            {
-                case "http":
-                    return Protocol.Http;
-                case "https":
-                    return Protocol.Https;
-            }
-            return null;
-        }
+        public const string Http = "http";
+        public const string Https = "https";
+        public const string Ws = "ws";
+        public const string Wss = "wss";
     }
 }

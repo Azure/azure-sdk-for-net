@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Api Operation Entity Base Contract details.
+    /// API Operation Entity Base Contract details.
     /// </summary>
     public partial class OperationEntityBaseContract
     {

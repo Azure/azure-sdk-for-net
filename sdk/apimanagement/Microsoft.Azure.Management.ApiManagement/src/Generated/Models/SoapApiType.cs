@@ -21,8 +21,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         public const string SoapToRest = "http";
         /// <summary>
-        /// Imports the Soap API having a SOAP front end.
+        /// Imports the SOAP API having a SOAP front end.
         /// </summary>
         public const string SoapPassThrough = "soap";
+        /// <summary>
+        /// Imports the API having a Websocket front end.
+        /// </summary>
+        public const string WebSocket = "websocket";
+        /// <summary>
+        /// Imports the API having a GraphQL front end.
+        /// </summary>
+        public const string GraphQL = "graphql";
     }
 }

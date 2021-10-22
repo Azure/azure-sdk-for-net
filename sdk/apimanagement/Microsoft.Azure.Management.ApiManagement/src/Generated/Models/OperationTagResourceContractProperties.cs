@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="id">Identifier of the operation in form
         /// /operations/{operationId}.</param>
         /// <param name="name">Operation name.</param>
-        /// <param name="apiName">Api Name.</param>
-        /// <param name="apiRevision">Api Revision.</param>
-        /// <param name="apiVersion">Api Version.</param>
+        /// <param name="apiName">API Name.</param>
+        /// <param name="apiRevision">API Revision.</param>
+        /// <param name="apiVersion">API Version.</param>
         /// <param name="description">Operation Description.</param>
         /// <param name="method">A Valid HTTP Operation Method. Typical Http
         /// Methods like GET, PUT, POST but not limited by only them.</param>
@@ -75,19 +75,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets api Name.
+        /// Gets API Name.
         /// </summary>
         [JsonProperty(PropertyName = "apiName")]
         public string ApiName { get; private set; }
 
         /// <summary>
-        /// Gets api Revision.
+        /// Gets API Revision.
         /// </summary>
         [JsonProperty(PropertyName = "apiRevision")]
         public string ApiRevision { get; private set; }
 
         /// <summary>
-        /// Gets api Version.
+        /// Gets API Version.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersion")]
         public string ApiVersion { get; private set; }
