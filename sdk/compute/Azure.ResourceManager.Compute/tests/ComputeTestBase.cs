@@ -14,8 +14,6 @@ namespace Azure.ResourceManager.Compute.Tests
     {
         protected Location DefaultLocation => Location.WestUS2;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
-
         public ComputeTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -33,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<ResourceGroup> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
-            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

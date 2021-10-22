@@ -112,7 +112,8 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(setName2, input);
 
             AvailabilitySet set1 = null, set2 = null;
-            await foreach (var availabilitySet in DefaultSubscription.GetAvailabilitySetsAsync())
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            await foreach (var availabilitySet in subscription.GetAvailabilitySetsAsync())
             {
                 if (availabilitySet.Data.Name == setName1)
                     set1 = availabilitySet;
