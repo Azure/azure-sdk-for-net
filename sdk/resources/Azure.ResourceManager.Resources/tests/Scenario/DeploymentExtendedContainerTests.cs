@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-C-");
             Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-L-");
             Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
@@ -57,7 +59,8 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-G-");
             Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());

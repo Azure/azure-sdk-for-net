@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupContainer
