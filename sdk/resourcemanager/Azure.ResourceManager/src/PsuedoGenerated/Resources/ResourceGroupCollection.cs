@@ -378,10 +378,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary>
-        /// Iterates through all resource groups.
-        /// </summary>
-        public IEnumerator<ResourceGroup> GetEnumerator()
+        IEnumerator<ResourceGroup> IEnumerable<ResourceGroup>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -391,11 +388,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        /// <summary>
-        /// Iterates through all resource groups.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public IAsyncEnumerator<ResourceGroup> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<ResourceGroup> IAsyncEnumerable<ResourceGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
