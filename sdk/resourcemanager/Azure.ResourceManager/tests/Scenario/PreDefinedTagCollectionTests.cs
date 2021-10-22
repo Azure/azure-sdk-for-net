@@ -12,11 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class PreDefinedTagCollectionTests : ResourceManagerTestBase
+    public class PredefinedTagCollectionTests : ResourceManagerTestBase
     {
         private PredefinedTag _predefinedTag;
 
-        public PreDefinedTagCollectionTests(bool isAsync)
+        public PredefinedTagCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
