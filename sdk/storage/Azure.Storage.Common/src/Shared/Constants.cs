@@ -174,6 +174,7 @@ namespace Azure.Storage
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
             public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
