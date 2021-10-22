@@ -5,9 +5,6 @@ using System.Text.Json;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    ///  OnvifDevice model.
-    /// </summary>
     public partial class OnvifDevice
     {
         /// <summary>

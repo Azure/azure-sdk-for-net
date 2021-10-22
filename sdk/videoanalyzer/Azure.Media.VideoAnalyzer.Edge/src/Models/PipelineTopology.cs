@@ -5,9 +5,6 @@ using System.Text.Json;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    ///  Deserialize PipelineTopology.
-    /// </summary>
     public partial class PipelineTopology
     {
         /// <summary>

@@ -3,9 +3,6 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    ///  Represents the RemoteDeviceAdapterSetRequestBody body.
-    /// </summary>
     public partial class RemoteDeviceAdapterSetRequest
     {
         /// <summary>

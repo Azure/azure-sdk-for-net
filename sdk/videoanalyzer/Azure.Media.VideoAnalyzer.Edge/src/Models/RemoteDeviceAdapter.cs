@@ -5,9 +5,6 @@ using System.Text.Json;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    ///  RemoteDeviceAdapter model.
-    /// </summary>
     public partial class RemoteDeviceAdapter
     {
         /// <summary>

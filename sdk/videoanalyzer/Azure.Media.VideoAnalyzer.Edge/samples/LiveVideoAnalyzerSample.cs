@@ -30,8 +30,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 
-            this._serviceClient = serviceClient;
-            this._registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+            _serviceClient = serviceClient;
+            _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         {
             try
             {
-                // create a pipeline topology and live pipeline
+                //create a pipeline topology and live pipeline
                 var pipelineTopology = BuildPipelineTopology();
                 var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
@@ -127,10 +127,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
         protected async Task<Device> GetOrAddIoTDeviceAsync(string iotDeviceName)
         {
-            var iotDevice = await this._registryManager.GetDeviceAsync(iotDeviceName);
+            var iotDevice = await _registryManager.GetDeviceAsync(iotDeviceName);
             if (iotDevice == null)
             {
-                iotDevice = await this._registryManager.AddDeviceAsync(new Device(iotDeviceName));
+                iotDevice = await _registryManager.AddDeviceAsync(new Device(iotDeviceName));
             }
 
             return iotDevice;

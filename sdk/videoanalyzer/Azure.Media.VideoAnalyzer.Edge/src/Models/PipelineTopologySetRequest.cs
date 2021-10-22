@@ -3,9 +3,6 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    ///  Represents the PipelineTopologySetRequest body.
-    /// </summary>
     public partial class PipelineTopologySetRequest
     {
         /// <summary>
