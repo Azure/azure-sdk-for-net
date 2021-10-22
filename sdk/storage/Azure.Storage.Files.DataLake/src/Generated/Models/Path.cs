@@ -24,10 +24,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="owner"></param>
         /// <param name="group"></param>
         /// <param name="permissions"></param>
-        /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
         /// <param name="contentLength"></param>
         /// <param name="isDirectory"></param>
-        internal Path(string name, DateTimeOffset? lastModified, string eTag, string owner, string group, string permissions, string encryptionScope, string contentLength, string isDirectory)
+        internal Path(string name, DateTimeOffset? lastModified, string eTag, string owner, string group, string permissions, string contentLength, string isDirectory)
         {
             Name = name;
             LastModified = lastModified;
@@ -35,7 +34,6 @@ namespace Azure.Storage.Files.DataLake.Models
             Owner = owner;
             Group = group;
             Permissions = permissions;
-            EncryptionScope = encryptionScope;
             ContentLength = contentLength;
             IsDirectory = isDirectory;
         }
@@ -52,8 +50,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Group { get; }
         /// <summary> Gets the permissions. </summary>
         public string Permissions { get; }
-        /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>
-        public string EncryptionScope { get; }
         /// <summary> Gets the content length. </summary>
         public string ContentLength { get; }
         /// <summary> Gets the is directory. </summary>
