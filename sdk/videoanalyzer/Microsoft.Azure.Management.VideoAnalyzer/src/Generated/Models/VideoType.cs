@@ -33,12 +33,20 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// continuous or discontinuous. An archive is discontinuous when there
         /// are gaps in the recording due to various reasons, such as the live
         /// pipeline being stopped, camera being disconnected or due to the use
-        /// of event based recordings through the use of a signal gate.
-        /// Finally, there is no limit to the archive duration and new video
-        /// data can be appended to the existing archive at any time, as long
-        /// as the same video codec and codec parameters are being used.
+        /// of event based recordings through the use of a signal gate. There
+        /// is no limit to the archive duration and new video data can be
+        /// appended to the existing archive at any time, as long as the same
+        /// video codec and codec parameters are being used. Videos of this
+        /// type are suitable for appending and long term archival.
         /// </summary>
         public static readonly VideoType Archive = "Archive";
+
+        /// <summary>
+        /// File represents a video which is stored as a single media file,
+        /// such as MP4. Videos of this type are suitable to be downloaded for
+        /// external consumption.
+        /// </summary>
+        public static readonly VideoType File = "File";
 
 
         /// <summary>
