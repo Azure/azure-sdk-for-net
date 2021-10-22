@@ -246,10 +246,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
 
             Assert.IsNotNull(RecognizeLinkedEntitiesActionsResults);
-            Assert.AreEqual(2, RecognizeLinkedEntitiesActionsResults.Count);
 
-            Assert.AreEqual("RecognizeLinkedEntitiesWithDisabledServiceLogs", RecognizeLinkedEntitiesActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("RecognizeLinkedEntities", RecognizeLinkedEntitiesActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "RecognizeLinkedEntities", "RecognizeLinkedEntitiesWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, RecognizeLinkedEntitiesActionsResults.Select(result => result.ActionName));
         }
 
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)

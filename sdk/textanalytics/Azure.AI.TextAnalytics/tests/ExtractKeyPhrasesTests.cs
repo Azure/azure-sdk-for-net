@@ -228,10 +228,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
 
             Assert.IsNotNull(ExtractKeyPhrasesActionsResults);
-            Assert.AreEqual(2, ExtractKeyPhrasesActionsResults.Count);
 
-            Assert.AreEqual("ExtractKeyPhrasesWithDisabledServiceLogs", ExtractKeyPhrasesActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("ExtractKeyPhrases", ExtractKeyPhrasesActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "ExtractKeyPhrases", "ExtractKeyPhrasesWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, ExtractKeyPhrasesActionsResults.Select(result => result.ActionName));
         }
 
         private void ValidateInDocumenResult(KeyPhraseCollection keyPhrases, int minKeyPhrasesCount = default)

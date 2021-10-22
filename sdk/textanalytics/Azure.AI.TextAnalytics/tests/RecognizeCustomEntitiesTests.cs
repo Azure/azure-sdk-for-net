@@ -274,10 +274,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesActionsResults = resultCollection.RecognizeCustomEntitiesResults;
 
             Assert.IsNotNull(RecognizeCustomEntitiesActionsResults);
-            Assert.AreEqual(2, RecognizeCustomEntitiesActionsResults.Count);
 
-            Assert.AreEqual("RecognizeCustomEntitiesWithDisabledServiceLogs", RecognizeCustomEntitiesActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("RecognizeCustomEntities", RecognizeCustomEntitiesActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "RecognizeCustomEntities", "RecognizeCustomEntitiesWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, RecognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)

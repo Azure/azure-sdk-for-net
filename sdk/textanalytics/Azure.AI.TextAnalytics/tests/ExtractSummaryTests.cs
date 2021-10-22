@@ -306,10 +306,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryActionsResults = resultCollection.ExtractSummaryResults;
 
             Assert.IsNotNull(ExtractSummaryActionsResults);
-            Assert.AreEqual(2, ExtractSummaryActionsResults.Count);
 
-            Assert.AreEqual("ExtractSummaryWithDisabledServiceLogs", ExtractSummaryActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("ExtractSummary", ExtractSummaryActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "ExtractSummary", "ExtractSummaryWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, ExtractSummaryActionsResults.Select(result => result.ActionName));
         }
 
         private void ValidateSummaryDocumentResult(SummarySentenceCollection sentences, SummarySentencesOrder expectedOrder)

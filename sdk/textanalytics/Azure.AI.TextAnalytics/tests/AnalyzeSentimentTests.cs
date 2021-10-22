@@ -465,10 +465,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
 
             Assert.IsNotNull(AnalyzeSentimentActionsResults);
-            Assert.AreEqual(2, AnalyzeSentimentActionsResults.Count);
 
-            Assert.AreEqual("AnalyzeSentimentWithDisabledServiceLogs", AnalyzeSentimentActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("AnalyzeSentiment", AnalyzeSentimentActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "AnalyzeSentiment", "AnalyzeSentimentWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
         }
 
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)

@@ -243,10 +243,9 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionsResults = resultCollection.MultiCategoryClassifyResults;
 
             Assert.IsNotNull(multiCategoryClassifyActionsResults);
-            Assert.AreEqual(2, multiCategoryClassifyActionsResults.Count);
 
-            Assert.AreEqual("MultiCategoryClassifyWithDisabledServiceLogs", multiCategoryClassifyActionsResults.ElementAt(0).ActionName);
-            Assert.AreEqual("MultiCategoryClassify", multiCategoryClassifyActionsResults.ElementAt(1).ActionName);
+            IList<string> expected = new List<string> { "MultiCategoryClassify", "MultiCategoryClassifyWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, multiCategoryClassifyActionsResults.Select(result => result.ActionName));
         }
 
         private void ValidateSummaryDocumentResult(ClassificationCategoryCollection classificationCollection)
