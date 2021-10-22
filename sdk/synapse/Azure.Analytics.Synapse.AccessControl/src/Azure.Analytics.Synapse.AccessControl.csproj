@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Access Control client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.AccessControl</AssemblyTitle>
     <Version>1.0.0-preview.6</Version>
     <PackageTags>Microsoft Azure Synapse Access Control;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <NoWarn>
       $(NoWarn);
       SA1649;
@@ -18,8 +18,6 @@
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Core.Experimental"/>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -38,6 +36,10 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

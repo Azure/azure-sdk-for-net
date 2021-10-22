@@ -5,6 +5,8 @@
 ### Features Added
 
 ### Breaking Changes
+- Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
+- Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
 
 ### Bugs Fixed
 

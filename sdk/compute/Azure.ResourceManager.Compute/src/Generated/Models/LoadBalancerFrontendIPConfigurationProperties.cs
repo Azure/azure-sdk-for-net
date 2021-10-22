@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service IP Configuration. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPAddress"> The reference to the public ip address resource. </param>
         /// <param name="subnet"> The reference to the virtual network subnet resource. </param>
         /// <param name="privateIPAddress"> The virtual network private IP address of the IP configuration. </param>
-        internal LoadBalancerFrontendIPConfigurationProperties(SubResource publicIPAddress, SubResource subnet, string privateIPAddress)
+        internal LoadBalancerFrontendIPConfigurationProperties(WritableSubResource publicIPAddress, WritableSubResource subnet, string privateIPAddress)
         {
             PublicIPAddress = publicIPAddress;
             Subnet = subnet;
@@ -27,9 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The reference to the public ip address resource. </summary>
-        public SubResource PublicIPAddress { get; set; }
+        public WritableSubResource PublicIPAddress { get; set; }
         /// <summary> The reference to the virtual network subnet resource. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> The virtual network private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
     }

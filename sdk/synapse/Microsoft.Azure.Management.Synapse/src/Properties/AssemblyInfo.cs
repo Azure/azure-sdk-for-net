@@ -22,4 +22,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Microsoft Azure Synapse Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Synapse Analytics.")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.2.0.0")]
+[assembly: AssemblyFileVersion("2.3.0.0")]

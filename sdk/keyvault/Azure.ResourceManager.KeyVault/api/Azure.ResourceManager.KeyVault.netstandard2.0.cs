@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         public MhsmPrivateEndpointConnectionData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public string Etag { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         public PrivateEndpointConnectionData() { }
         public string Etag { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -508,12 +508,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.MhsmipRule> IpRules { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.MhsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
-    }
-    public partial class MhsmPrivateEndpoint
-    {
-        public MhsmPrivateEndpoint() { }
-        public string Id { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworkRules { get { throw null; } }
     }
     public partial class MhsmPrivateEndpointConnectionDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.MhsmPrivateEndpointConnectionData>
     {
@@ -531,7 +526,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class MhsmPrivateEndpointConnectionItem
     {
         internal MhsmPrivateEndpointConnectionItem() { }
-        public Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -566,11 +561,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.ActionsRequired? ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
-    }
-    public partial class MhsmVirtualNetworkRule
-    {
-        public MhsmVirtualNetworkRule(string id) { }
-        public string Id { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkRuleAction : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleAction>
@@ -624,11 +614,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermissions> Secrets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermissions> Storage { get { throw null; } }
     }
-    public partial class PrivateEndpoint
-    {
-        public PrivateEndpoint() { }
-        public string Id { get { throw null; } }
-    }
     public partial class PrivateEndpointConnectionDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData>
     {
         protected PrivateEndpointConnectionDeleteOperation() { }
@@ -642,11 +627,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.PrivateEndpointConnectionData>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateEndpointConnectionItem : Azure.ResourceManager.Resources.Models.SubResource
+    public partial class PrivateEndpointConnectionItem
     {
         internal PrivateEndpointConnectionItem() { }
         public string Etag { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -978,9 +964,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Vault>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.KeyVault.Vault>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualNetworkRule : Azure.ResourceManager.Resources.Models.WritableSubResource
+    public partial class VirtualNetworkRule
     {
-        public VirtualNetworkRule() { }
+        public VirtualNetworkRule(string id) { }
+        public string Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
     }
 }

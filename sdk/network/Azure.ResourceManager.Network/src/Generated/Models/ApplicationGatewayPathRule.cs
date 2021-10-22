@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Path rule of URL path map of an application gateway. </summary>
-    public partial class ApplicationGatewayPathRule : WritableSubResource
+    public partial class ApplicationGatewayPathRule : SubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the path rule that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, SubResource backendAddressPool, SubResource backendHttpSettings, SubResource redirectConfiguration, SubResource rewriteRuleSet, ProvisioningState? provisioningState, SubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Path rules of URL path map. </summary>
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
-        public SubResource BackendAddressPool { get; set; }
+        public WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Backend http settings resource of URL path map path rule. </summary>
-        public SubResource BackendHttpSettings { get; set; }
+        public WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Redirect configuration resource of URL path map path rule. </summary>
-        public SubResource RedirectConfiguration { get; set; }
+        public WritableSubResource RedirectConfiguration { get; set; }
         /// <summary> Rewrite rule set resource of URL path map path rule. </summary>
-        public SubResource RewriteRuleSet { get; set; }
+        public WritableSubResource RewriteRuleSet { get; set; }
         /// <summary> The provisioning state of the path rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public SubResource FirewallPolicy { get; set; }
+        public WritableSubResource FirewallPolicy { get; set; }
     }
 }

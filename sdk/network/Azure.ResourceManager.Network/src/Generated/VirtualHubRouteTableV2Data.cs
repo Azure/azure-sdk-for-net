@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualHubRouteTableV2 data model. </summary>
-    public partial class VirtualHubRouteTableV2Data : WritableSubResource
+    public partial class VirtualHubRouteTableV2Data : SubResource
     {
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         public VirtualHubRouteTableV2Data()
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>

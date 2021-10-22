@@ -4,12 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
-    public class DisposingShare : IAsyncDisposable
+    public class DisposingShare : IDisposingContainer<ShareClient>
     {
-        public ShareClient Share { get; private set; }
+        public ShareClient Share => Container;
+
+        public ShareClient Container { get; private set; }
 
         public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
         {
@@ -19,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public DisposingShare(ShareClient share)
         {
-            Share = share;
+            Container = share;
         }
 
         public async ValueTask DisposeAsync()
@@ -29,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 try
                 {
                     await Share.DeleteIfExistsAsync();
-                    Share = null;
+                    Container = null;
                 }
                 catch
                 {

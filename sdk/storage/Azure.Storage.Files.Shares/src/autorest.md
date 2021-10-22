@@ -7,6 +7,8 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-10-02/file.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ### Don't include share name, directory, or file name in path - we have direct URIs.
