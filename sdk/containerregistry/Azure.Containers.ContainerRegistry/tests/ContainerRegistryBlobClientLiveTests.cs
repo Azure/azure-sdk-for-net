@@ -97,6 +97,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
 
+            // var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
             string digest = uploadResult.Value.Digest;
 
