@@ -4,6 +4,7 @@
 // using ApiManagement.Management.Tests;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -106,12 +107,30 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string newOperationRequestParamType = "string";
 
                     string newOperationRequestRepresentationContentType = TestUtilities.GenerateName("newOperationRequestRepresentationContentType");
-                    string newOperationRequestRepresentationSample = TestUtilities.GenerateName("newOperationRequestRepresentationSample");
+                    var newOperationRequestRepresentationExample = new Dictionary<string, ParameterExampleContract>
+                    {
+                        ["default"] = new ParameterExampleContract
+                        {
+                            Description = "My default request example",
+                            ExternalValue = "https://contoso.com",
+                            Summary = "Just an example",
+                            Value = "default"
+                        }
+                    };
 
                     string newOperationResponseDescription = TestUtilities.GenerateName("newOperationResponseDescription");
                     int newOperationResponseStatusCode = 1980785443;
                     string newOperationResponseRepresentationContentType = TestUtilities.GenerateName("newOperationResponseRepresentationContentType");
-                    string newOperationResponseRepresentationSample = TestUtilities.GenerateName("newOperationResponseRepresentationSample");
+                    var newOperationResponseRepresentationExample = new Dictionary<string, ParameterExampleContract>
+                    {
+                        ["default"] = new ParameterExampleContract
+                        {
+                            Description = "My default request example",
+                            ExternalValue = "https://contoso.com",
+                            Summary = "Just an example",
+                            Value = "default"
+                        }
+                    };
 
                     var newOperation = new OperationContract
                     {
@@ -151,7 +170,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             new RepresentationContract
                             {
                                 ContentType = newOperationRequestRepresentationContentType,
-                                Sample = newOperationRequestRepresentationSample
+                                Examples = newOperationRequestRepresentationExample
                             }
                         }
                         },
@@ -166,7 +185,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 new RepresentationContract
                                 {
                                     ContentType = newOperationResponseRepresentationContentType,
-                                    Sample = newOperationResponseRepresentationSample
+                                    Examples = newOperationResponseRepresentationExample
                                 }
                             }
                         }
@@ -224,7 +243,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiOperationResponse.Request.Representations);
                     Assert.Equal(1, apiOperationResponse.Request.Representations.Count);
                     Assert.Equal(newOperationRequestRepresentationContentType, apiOperationResponse.Request.Representations[0].ContentType);
-                    Assert.Equal(newOperationRequestRepresentationSample, apiOperationResponse.Request.Representations[0].Sample);
+                    Assert.Equal(newOperationRequestRepresentationExample, apiOperationResponse.Request.Representations[0].Examples);
 
                     Assert.NotNull(apiOperationResponse.Responses);
                     Assert.Equal(1, apiOperationResponse.Responses.Count);
@@ -233,7 +252,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiOperationResponse.Responses[0].Representations);
                     Assert.Equal(1, apiOperationResponse.Responses[0].Representations.Count);
                     Assert.Equal(newOperationResponseRepresentationContentType, apiOperationResponse.Responses[0].Representations[0].ContentType);
-                    Assert.Equal(newOperationResponseRepresentationSample, apiOperationResponse.Responses[0].Representations[0].Sample);
+                    Assert.Equal(newOperationResponseRepresentationExample, apiOperationResponse.Responses[0].Representations[0].Examples);
 
                     // get the Api Operation Etag
                     ApiOperationGetEntityTagHeaders operationTag = await testBase.client.ApiOperation.GetEntityTagAsync(
@@ -306,7 +325,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponse.Request.Representations);
                     Assert.Equal(1, getResponse.Request.Representations.Count);
                     Assert.Equal(newOperationRequestRepresentationContentType, getResponse.Request.Representations[0].ContentType);
-                    Assert.Equal(newOperationRequestRepresentationSample, getResponse.Request.Representations[0].Sample);
+                    Assert.Equal(newOperationRequestRepresentationExample, getResponse.Request.Representations[0].Examples);
 
                     Assert.NotNull(getResponse.Responses);
                     Assert.Equal(1, getResponse.Responses.Count);
@@ -315,7 +334,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponse.Responses[0].Representations);
                     Assert.Equal(1, getResponse.Responses[0].Representations.Count);
                     Assert.Equal(newOperationResponseRepresentationContentType, getResponse.Responses[0].Representations[0].ContentType);
-                    Assert.Equal(newOperationResponseRepresentationSample, getResponse.Responses[0].Representations[0].Sample);
+                    Assert.Equal(newOperationResponseRepresentationExample, getResponse.Responses[0].Representations[0].Examples);
 
                     // get the tag again
                     operationTag = await testBase.client.ApiOperation.GetEntityTagAsync(

@@ -46,7 +46,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var revisionId = TestUtilities.GenerateName("revisionId");
                 var portalRevisionContract = new PortalRevisionContract
                 {
-                    Description = new string('a', 99)
+                    Description = new string('a', 99),
+                    IsCurrent = true
                 };
 
                 // create portal revision 

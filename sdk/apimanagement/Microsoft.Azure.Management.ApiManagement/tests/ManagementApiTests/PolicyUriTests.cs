@@ -50,7 +50,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = TestUtilities.GenerateName("description"),
                             Path = TestUtilities.GenerateName("path"),
                             ServiceUrl = "https://echoapi.cloudapp.net/echo",
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http }
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http }
                         });
 
                     Assert.NotNull(createdApiContract);
