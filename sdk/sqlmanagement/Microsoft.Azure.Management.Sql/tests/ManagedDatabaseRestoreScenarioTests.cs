@@ -274,7 +274,7 @@ namespace Sql.Tests
                 ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
 
                 string testStorageContainerUri = "https://backupscxteam.blob.core.windows.net/clients";
-                string testStorageContainerSasToken = "?sp=rl&st=2021-10-13T10:35:08Z&se=2021-10-14T18:35:08Z&spr=https&sv=2020-08-04&sr=c&sig=1ay%2FJ5WkEILwrg6XhcrMYltaXDBqCibZCr5FA9WsGTU%3D";
+                string testStorageContainerSasToken = "?sp=rl&st=2021-10-21T10:54:59Z&se=2021-10-28T18:54:59Z&spr=https&sv=2020-08-04&sr=c&sig=jDr2p5WXcJ92eMzKmpWwuPA0CeKYC35Yh%2FK0UsHyZUQ%3D";
                 string databaseName = SqlManagementTestUtilities.GenerateName(_testPrefix);
 
                 // Start external backup restore.
@@ -333,7 +333,7 @@ namespace Sql.Tests
                     // No need to sleep if we are playing back the recording.
                     if (HttpMockServer.Mode == HttpRecorderMode.Record)
                     {
-                        Thread.Sleep(TimeSpan.FromSeconds(30));
+                        Thread.Sleep(TimeSpan.FromSeconds(60));
                     }
 
                     return false;

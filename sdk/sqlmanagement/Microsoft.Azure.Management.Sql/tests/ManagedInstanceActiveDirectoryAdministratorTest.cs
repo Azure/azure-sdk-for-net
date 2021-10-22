@@ -15,7 +15,7 @@ namespace Sql.Tests
 {
 	public class ManagedInstanceActiveDirectoryAdministratorTest
 	{
-		[Fact]
+		[Fact(Skip = "Needs to be executed manually due to setup difficulty.")]
 		public void TestSetManagedInstanceActiveDirectoryAdministrator()
 		{
 			string aadAdmin = "aadadmin";

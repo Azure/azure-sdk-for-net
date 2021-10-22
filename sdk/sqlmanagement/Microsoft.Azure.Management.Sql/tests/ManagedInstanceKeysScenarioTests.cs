@@ -17,7 +17,7 @@ namespace Sql.Tests
 {
     public class ManagedInstanceKeysScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Cannot create Key Vault due permissions. Getting Forbidden error response.")]
         public void TestCreateUpdateDropManagedInstanceKeys()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
