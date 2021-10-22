@@ -3,6 +3,7 @@
 
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
@@ -59,9 +60,53 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            ValidateManifest(downloadResult.Value.Manifest);
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadOciManifestStream()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+
+            // Act
+            string payload = "" +
+                "{" +
+                    "\"schemaVersion\":2," +
+                    "\"config\":" +
+                    "{" +
+                        "\"mediaType\":\"application/vnd.acme.rocket.config\"," +
+                        "\"size\":171," +
+                        "\"digest\":\"sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8\"" +
+                    "}," +
+                    "\"layers\":" +
+                    "[" +
+                        "{" +
+                            "\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\"," +
+                            "\"size\":28," +
+                            "\"digest\":\"sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed\"" +
+                        "}" +
+                    "]" +
+                "}";
+
+            using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
+
+            var uploadResult = await client.UploadManifestAsync(manifest);
+            string digest = uploadResult.Value.Digest;
+
+            // Assert
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -87,9 +132,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var digest = uploadResult.Value.Digest;
 
             // Assert
-            var downloadResult = await client.DownloadManifestAsync(digest);
-            Assert.AreEqual(digest, downloadResult.Value.Digest);
-            ValidateManifest(downloadResult.Value.Manifest);
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
 
             var artifact = metadataClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -97,6 +144,68 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(1, count);
             var firstTag = await tags.FirstAsync();
             Assert.AreEqual(tag, firstTag.Name);
+
+            // Clean up
+            await client.DeleteManifestAsync(digest);
+        }
+
+        [RecordedTest]
+        public async Task CanUploadOciManifestStreamWithTag()
+        {
+            // Arrange
+            string repository = "oci-artifact";
+            var client = CreateBlobClient(repository);
+            var metadataClient = CreateClient();
+            string tag = "v1";
+
+            await UploadManifestPrerequisites(client);
+
+            // Act
+            string payload = "" +
+                "{" +
+                    "\"schemaVersion\":2," +
+                    "\"config\":" +
+                    "{" +
+                        "\"mediaType\":\"application/vnd.acme.rocket.config\"," +
+                        "\"size\":171," +
+                        "\"digest\":\"sha256:d25b42d3dbad5361ed2d909624d899e7254a822c9a632b582ebd3a44f9b0dbc8\"" +
+                    "}," +
+                    "\"layers\":" +
+                    "[" +
+                        "{" +
+                            "\"mediaType\":\"application/vnd.oci.image.layer.v1.tar\"," +
+                            "\"size\":28," +
+                            "\"digest\":\"sha256:654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed\"" +
+                        "}" +
+                    "]" +
+                "}";
+
+            using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
+            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions()
+            {
+                Tag = tag
+            });
+            var digest = uploadResult.Value.Digest;
+
+            // Assert
+            DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
+
+            var artifact = metadataClient.GetArtifact(repository, digest);
+            var tags = artifact.GetTagPropertiesCollectionAsync();
+            var count = await tags.CountAsync();
+            Assert.AreEqual(1, count);
+            var firstTag = await tags.FirstAsync();
+            Assert.AreEqual(tag, firstTag.Name);
+
+            downloadOptions = new DownloadManifestOptions(tag, null);
+            using var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            Assert.AreEqual(digest, downloadResultValue.Digest);
+            ValidateManifest(downloadResultValue.Manifest);
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -163,6 +272,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await client.DeleteBlobAsync(digest);
+            downloadResult.Value.Dispose();
         }
     }
 }

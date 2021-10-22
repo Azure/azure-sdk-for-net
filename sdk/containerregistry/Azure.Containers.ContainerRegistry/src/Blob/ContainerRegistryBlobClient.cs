@@ -84,7 +84,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual string RepositoryName => _repositoryName;
 
         /// <summary>
-        /// Upload a manifest for an OCI Artifact.
+        /// Uploads a manifest for an OCI Artifact.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -100,9 +100,56 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var stream = SerializeManifest(manifest);
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(stream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                var manifestStream = SerializeManifest(manifest);
+                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
+                string tagOrDigest = options.Tag ?? manifestDigest;
+
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
+                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                }
+
+                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads a manifest for an OCI Artifact.
+        /// </summary>
+        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<UploadManifestResult> UploadManifest(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+
+            options ??= new UploadManifestOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            scope.Start();
+            try
+            {
+                using Stream stream = new MemoryStream();
+                manifestStream.CopyTo(stream);
+                manifestStream.Position = 0;
+                stream.Position = 0;
+
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = _restClient.CreateManifest(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+
+                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                }
+
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,9 +176,56 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var stream = SerializeManifest(manifest);
-                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(stream);
-                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                var manifestStream = SerializeManifest(manifest);
+                string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
+                string tagOrDigest = options.Tag ?? manifestDigest;
+
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+
+                if (!manifestDigest.Equals(response.Headers.DockerContentDigest, StringComparison.Ordinal))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                }
+
+                return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads a manifest for an OCI artifact.
+        /// </summary>
+        /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
+        /// <param name="options">Options for configuring the upload operation.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(manifestStream, nameof(manifestStream));
+
+            options ??= new UploadManifestOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(UploadManifest)}");
+            scope.Start();
+            try
+            {
+                using Stream stream = new MemoryStream();
+                await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
+                manifestStream.Position = 0;
+                stream.Position = 0;
+
+                string tagOrDigest = options.Tag ?? OciBlobDescriptor.ComputeDigest(manifestStream);
+                ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, manifestStream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+
+                if (!ValidateDigest(stream, response.Headers.DockerContentDigest))
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(response, "The digest in the response does not match the digest of the uploaded manifest.");
+                }
+
                 return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,6 +241,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Utf8JsonWriter jsonWriter = new Utf8JsonWriter(stream);
             ((IUtf8JsonSerializable)manifest).Write(jsonWriter);
             jsonWriter.Flush();
+
+            stream.Position = 0;
+
             return stream;
         }
 
@@ -225,22 +322,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download the manifest for an OCI Artifact.
+        /// Downloads the manifest for an OCI artifact.
         /// </summary>
-        /// <param name="digest">The digest of the manifest to download.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual Response<DownloadManifestResult> DownloadManifest(string digest, CancellationToken cancellationToken = default)
+        /// <param name="options">Options for the operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual Response<DownloadManifestResult> DownloadManifest(DownloadManifestOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
                 Response rawResponse = response.GetRawResponse();
-                ManifestMediaType mediaType = rawResponse.Headers.ContentType;
+
+                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
@@ -249,7 +347,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
+
+                rawResponse.ContentStream.Position = 0;
+
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {
@@ -259,22 +360,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Download the manifest for an OCI Artifact.
+        /// Downloads the manifest for an OCI artifact.
         /// </summary>
-        /// <param name="digest">The digest of the manifest to download.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(string digest, CancellationToken cancellationToken = default)
+        /// <param name="options">Options for the download operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>The download manifest result.</returns>
+        public virtual async Task<Response<DownloadManifestResult>> DownloadManifestAsync(DownloadManifestOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryBlobClient)}.{nameof(DownloadManifest)}");
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
-                ManifestMediaType mediaType = rawResponse.Headers.ContentType;
+
+                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
                 if (!ValidateDigest(rawResponse.ContentStream, digest))
                 {
@@ -283,7 +385,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-                return Response.FromValue(new DownloadManifestResult(digest, manifest), rawResponse);
+
+                rawResponse.ContentStream.Position = 0;
+
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
             {

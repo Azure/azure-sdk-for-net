@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2021-10-13)
 
 ### Features Added
 
+- Added an overload for `UploadManifest(Async) method that takes the manifest `Stream` as an input.
+- Added methods in `ContainerRegistryModelFactory` that create instances of `DownloadBlobResult`, `DownloadManifestResult`, `UploadBlobResult` and `UploadManifestResult` for mocking.
+- Added `DownloadManifestOptions` type to allow callers to  pass-in either a tag or a digest in `DownloadManifest(Async)`.
+- Added `ManifestStream` as a property in `DownloadManifestResult` that contains the raw manifest stream from the service response.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed `DownloadManifest(Async)` method to take `DownloadManifestOptions` as an input parameter. This allows callers to pass-in either a tag or a digest as the manifest identifier.
 
 ## 1.1.0-beta.1 (2021-09-07)
 
