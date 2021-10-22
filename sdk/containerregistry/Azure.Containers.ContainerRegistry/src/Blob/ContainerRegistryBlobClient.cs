@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -349,6 +348,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
+                rawResponse.ContentStream.Position = 0;
+
                 return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }
             catch (Exception e)
@@ -384,6 +385,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 using var document = JsonDocument.Parse(rawResponse.ContentStream);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
+
+                rawResponse.ContentStream.Position = 0;
 
                 return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
             }

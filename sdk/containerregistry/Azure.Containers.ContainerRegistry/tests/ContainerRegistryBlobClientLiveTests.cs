@@ -62,6 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.Manifest);
 
@@ -103,6 +104,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.Manifest);
 
@@ -132,6 +134,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.Manifest);
 
@@ -187,6 +190,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.Manifest);
 
@@ -199,6 +203,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             downloadOptions = new DownloadManifestOptions(tag, null);
             using var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
+            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest(downloadResultValue.Manifest);
 
