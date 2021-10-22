@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(filterName, filters[0].Data.Name);
             Assert.IsEmpty(filters[0].Data.Rules);
 
-            var allFilters = await ArmClient.DefaultSubscription.GetRouteFiltersAsync().ToEnumerableAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
             Assert.True(allFilters.Any(f => filterName == f.Data.Name && f.Data.Rules.Count == 0));
 
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete filter
             await filter.DeleteAsync();
-            allFilters = await ArmClient.DefaultSubscription.GetRouteFiltersAsync().ToEnumerableAsync();
+            allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
 

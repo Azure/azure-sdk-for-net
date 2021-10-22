@@ -160,7 +160,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[0].Etag, getListNicResponse.First().Data.IpConfigurations[0].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = ArmClient.DefaultSubscription.GetNetworkInterfacesAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 
@@ -391,7 +392,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = ArmClient.DefaultSubscription.GetNetworkInterfacesAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 
@@ -710,7 +712,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = ArmClient.DefaultSubscription.GetNetworkInterfacesAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 

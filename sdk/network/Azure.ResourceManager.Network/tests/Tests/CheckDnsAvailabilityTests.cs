@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task CheckDnsAvailabilityTest()
         {
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");
-
-            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await ArmClient.DefaultSubscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await subscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
 
             Assert.True(dnsNameAvailability.Value.Available);
         }

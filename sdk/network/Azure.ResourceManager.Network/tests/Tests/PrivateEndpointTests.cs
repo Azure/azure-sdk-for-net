@@ -151,7 +151,8 @@ namespace Azure.ResourceManager.Network.Tests
             await privateEndpoint.DeleteAsync();
 
             // list all
-            privateEndpoints = (await ArmClient.DefaultSubscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            privateEndpoints = (await subscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
             Assert.That(privateEndpoints, Has.None.Matches<PrivateEndpoint>(p => p.Data.Name == name));
         }
 
@@ -188,7 +189,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
             var privateDnsZoneResourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}";
-            privateDnsZone = ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            privateDnsZone = subscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupContainer = privateEndpoint.GetPrivateDnsZoneGroups();
@@ -240,7 +242,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task AvailablePrivateEndpointTypeTest()
         {
-            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            var types = await subscription.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
 
@@ -248,7 +251,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
-            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync( resourceGroup.Data.Name, TestEnvironment.Location).ToEnumerableAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            var types = await subscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync( resourceGroup.Data.Name, TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

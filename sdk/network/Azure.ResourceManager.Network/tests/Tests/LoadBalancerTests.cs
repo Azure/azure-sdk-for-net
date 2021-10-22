@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = ArmClient.DefaultSubscription.GetLoadBalancersAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.AreEqual(lbName, listLoadBalancerSubscription[0].Data.Name);
@@ -461,7 +462,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = ArmClient.DefaultSubscription.GetLoadBalancersAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
@@ -631,7 +633,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = ArmClient.DefaultSubscription.GetLoadBalancersAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);

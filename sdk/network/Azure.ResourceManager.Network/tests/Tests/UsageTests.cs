@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<Usage> usagesResponseAP = ArmClient.DefaultSubscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<Usage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
             List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);

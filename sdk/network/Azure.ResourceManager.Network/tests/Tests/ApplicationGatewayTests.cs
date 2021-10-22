@@ -682,7 +682,8 @@ namespace Azure.ResourceManager.Network.Tests
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
             // Get available WAF rule sets (validate first result set/group)
-            Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> availableWAFRuleSets = await ArmClient.DefaultSubscription.GetApplicationGatewayAvailableWafRuleSetsAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> availableWAFRuleSets = await subscription.GetApplicationGatewayAvailableWafRuleSetsAsync();
             Assert.NotNull(availableWAFRuleSets);
             Assert.IsNotEmpty(availableWAFRuleSets.Value);
             Assert.NotNull(availableWAFRuleSets.Value[0].Name);
@@ -694,17 +695,17 @@ namespace Azure.ResourceManager.Network.Tests
             // Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
-            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslOptionAsync();
+            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await subscription.GetApplicationGatewayAvailableSslOptionAsync();
             Assert.NotNull(sslOptions.Value.DefaultPolicy);
             Assert.NotNull(sslOptions.Value.AvailableCipherSuites);
             Assert.NotNull(sslOptions.Value.AvailableCipherSuites[20]);
 
-            AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync();
+            AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = subscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync();
             IAsyncEnumerator<ApplicationGatewaySslPredefinedPolicy> enumerator = policies.GetAsyncEnumerator();
             Assert.True(enumerator.MoveNextAsync().Result);
             Assert.NotNull(enumerator.Current.Name);
 
-            Task<Response<ApplicationGatewaySslPredefinedPolicy>> policy = ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslPredefinedPolicyAsync(ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501.ToString());
+            Task<Response<ApplicationGatewaySslPredefinedPolicy>> policy = subscription.GetApplicationGatewayAvailableSslPredefinedPolicyAsync(ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501.ToString());
             Assert.NotNull(policy.Result.Value.MinProtocolVersion);
             Assert.NotNull(policy.Result.Value.CipherSuites);
             Assert.NotNull(policy.Result.Value.CipherSuites[20]);

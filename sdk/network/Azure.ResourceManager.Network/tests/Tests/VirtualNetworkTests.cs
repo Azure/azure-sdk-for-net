@@ -82,7 +82,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(subnet2Name, getAllVnets.ElementAt(0).Data.Subnets[1].Name);
 
             // Get all Vnets in a subscription
-            AsyncPageable<VirtualNetwork> getAllVnetInSubscriptionAP = ArmClient.DefaultSubscription.GetVirtualNetworksAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            AsyncPageable<VirtualNetwork> getAllVnetInSubscriptionAP = subscription.GetVirtualNetworksAsync();
             List<VirtualNetwork> getAllVnetInSubscription = await getAllVnetInSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getAllVnetInSubscription);
 

@@ -104,7 +104,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            ddosProtectionPlans = await subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
         }
 

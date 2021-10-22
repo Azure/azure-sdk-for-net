@@ -103,7 +103,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(applicationSecurityGroups);
 
             // list all
-            applicationSecurityGroups = await ArmClient.DefaultSubscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            applicationSecurityGroups = await subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
         }
 
