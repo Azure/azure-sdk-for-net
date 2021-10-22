@@ -84,7 +84,12 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2021-02-12 service version.
             /// </summary>
-            V2021_02_12 = 10
+            V2021_02_12 = 10,
+
+            /// <summary>
+            /// The V2021-04-10 service version.
+            /// </summary>
+            V2021_04_10
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
