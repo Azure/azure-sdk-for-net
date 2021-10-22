@@ -117,6 +117,8 @@ namespace Azure.Storage
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_12_06,
                 Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_02_12 =>
                             Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_02_12,
+                Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_04_10 =>
+                            Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2021_04_10,
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };
 #endif
