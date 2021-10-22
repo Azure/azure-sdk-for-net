@@ -72,12 +72,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MinCapacity", 0);
             }
-            if (MaxCapacity != null)
+            if (MaxCapacity < 2)
             {
-                if (MaxCapacity < 2)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxCapacity", 2);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxCapacity", 2);
             }
         }
     }
