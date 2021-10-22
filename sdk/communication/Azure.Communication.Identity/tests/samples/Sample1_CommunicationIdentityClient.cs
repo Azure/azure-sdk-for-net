@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public void ExchangeTeamsToken()
+        public void ExchangeTeamsUserAadToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
@@ -162,7 +162,7 @@ namespace Azure.Communication.Identity.Samples
             var client = CreateClientWithConnectionString();
 
             #region  Snippet:ExchangeTeamsToken
-            Response<AccessToken> tokenResponse = client.ExchangeTeamsToken(teamsToken);
+            Response<AccessToken> tokenResponse = client.ExchangeTeamsUserAadToken(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:ExchangeTeamsToken
@@ -170,7 +170,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task ExchangeTeamsTokenAsync()
+        public async Task ExchangeTeamsUserAadTokenAsync()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -180,7 +180,7 @@ namespace Azure.Communication.Identity.Samples
             var client = CreateClientWithConnectionString();
 
             #region  Snippet:ExchangeTeamsTokenAsync
-            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:ExchangeTeamsTokenAsync
