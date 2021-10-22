@@ -7,26 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
     public class PreDefinedTagCollectionTests : ResourceManagerTestBase
     {
+        private PredefinedTag _predefinedTag;
+
         public PreDefinedTagCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [OneTimeTearDown]
-        protected async Task GlobalTagCleanupAsync()
+        [TearDown]
+        protected async Task TagCleanupAsync()
         {
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
-            var listResult = (await collection.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
-            foreach (var item in listResult)
-            {
-                await item.DeleteAsync(item.Data.TagName).ConfigureAwait(false);
-            };
+            if (_predefinedTag != null)
+                _ = await _predefinedTag.DeleteAsync(_predefinedTag.Data.TagName);
         }
 
         [Test, Order(1)]
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.Tests
             var tagName = Recording.GenerateAssetName("tagName");
             var collection = Client.DefaultSubscription.GetPredefinedTags();
             var result = await collection.CreateOrUpdateAsync(tagName);
+            _predefinedTag = result.Value;
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Tests
             var tagName = Recording.GenerateAssetName("tagName");
             var collection = Client.DefaultSubscription.GetPredefinedTags();
             var result = await collection.CreateOrUpdateAsync(tagName);
+            _predefinedTag = result.Value;
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
         }
 
@@ -53,7 +54,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
+            var tagName = Recording.GenerateAssetName("tagName");
             var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var tagLro = await collection.CreateOrUpdateAsync(tagName);
+            _predefinedTag = tagLro.Value;
             var result = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
             var expectTag = result.Where(x => x.Data.TagName.StartsWith("tagName")).FirstOrDefault();
