@@ -18,7 +18,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             this.fixture = fixture;
         }
-            
+
         [Fact]
         public void DatabaseAccountCRUDTests()
         {
@@ -182,13 +182,9 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void DatabaseAccountLocationsTest()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-
-                IEnumerable<LocationGetResult> locationGetResults = cosmosDBManagementClient.Locations.List();
+                IEnumerable<LocationGetResult> locationGetResults = this.fixture.CosmosDBManagementClient.Locations.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
                 Assert.True(locationGetResults.Count() > 0);
                 foreach (LocationGetResult locationGetResult in locationGetResults)
                 {
@@ -198,7 +194,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.NotNull(locationGetResult.Properties.SupportsAvailabilityZone);
                 }
 
-                LocationGetResult currentLocationGetResult = cosmosDBManagementClient.Locations.Get("centralus");
+                LocationGetResult currentLocationGetResult = this.fixture.CosmosDBManagementClient.Locations.GetWithHttpMessagesAsync("centralus").GetAwaiter().GetResult().Body;
                 Assert.NotNull(currentLocationGetResult.Name);
                 Assert.NotNull(currentLocationGetResult.Properties.BackupStorageRedundancies);
                 Assert.NotNull(currentLocationGetResult.Properties.IsResidencyRestricted);

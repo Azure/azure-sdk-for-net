@@ -488,12 +488,12 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlAccountBackupPolicyTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
-
+                CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
+                string location = this.fixture.Location;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql, enablePitr: false);
+                var resourceGroupName = this.fixture.ResourceGroupName;
                 {
                     DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                     {
