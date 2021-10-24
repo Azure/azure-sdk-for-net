@@ -82,16 +82,16 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, string query, CancellationToken cancellationToken = default) =>
-            AnalyzeConversationAsync(new AnalyzeConversationOptions(projectName, deploymentName, query), cancellationToken);
+            AnalyzeConversationAsync(new ConversationAnalysisOptions(projectName, deploymentName, query), cancellationToken);
 
         /// <summary>Analyzes a conversational utterance.</summary>
         /// <param name="options">
-        /// An <see cref="AnalyzeConversationOptions"/> containing the <see cref="AnalyzeConversationOptions.ProjectName"/>,
-        /// <see cref="AnalyzeConversationOptions.DeploymentName"/>, <see cref="AnalyzeConversationOptions.Query"/>, and other options to analyze.</param>
+        /// An <see cref="ConversationAnalysisOptions"/> containing the <see cref="ConversationAnalysisOptions.ProjectName"/>,
+        /// <see cref="ConversationAnalysisOptions.DeploymentName"/>, <see cref="ConversationAnalysisOptions.Query"/>, and other options to analyze.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(AnalyzeConversationOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(ConversationAnalysisOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -119,16 +119,16 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, string query, CancellationToken cancellationToken = default) =>
-            AnalyzeConversation(new AnalyzeConversationOptions(projectName, deploymentName, query), cancellationToken);
+            AnalyzeConversation(new ConversationAnalysisOptions(projectName, deploymentName, query), cancellationToken);
 
         /// <summary>Analyzes a conversational utterance.</summary>
         /// <param name="options">
-        /// An <see cref="AnalyzeConversationOptions"/> containing the <see cref="AnalyzeConversationOptions.ProjectName"/>,
-        /// <see cref="AnalyzeConversationOptions.DeploymentName"/>, <see cref="AnalyzeConversationOptions.Query"/>, and other options to analyze.</param>
+        /// An <see cref="ConversationAnalysisOptions"/> containing the <see cref="ConversationAnalysisOptions.ProjectName"/>,
+        /// <see cref="ConversationAnalysisOptions.DeploymentName"/>, <see cref="ConversationAnalysisOptions.Query"/>, and other options to analyze.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(AnalyzeConversationOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(ConversationAnalysisOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
