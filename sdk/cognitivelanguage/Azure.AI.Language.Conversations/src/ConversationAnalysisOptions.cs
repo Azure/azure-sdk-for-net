@@ -2,32 +2,37 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    [CodeGenModel("AnalyzeConversationOptions")]
-    public partial class AnalyzeConversationOptions
+    /// <summary> The request body. </summary>
+    [CodeGenModel("ConversationAnalysisOptions")]
+    public partial class ConversationAnalysisOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeConversationOptions"/> class.
+        /// Initializes a new instance of the <see cref="ConversationAnalysisOptions"/> class.
         /// </summary>
         /// <param name="projectName">The name of the project to use.</param>
         /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "production".</param>
         /// <param name="query">The conversation utterance to be analyzed.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
-        public AnalyzeConversationOptions(string projectName, string deploymentName, string query) : this(query)
+        public ConversationAnalysisOptions(string projectName, string deploymentName, string query) : this(query)
         {
             ProjectName = Argument.CheckNotNull(projectName, nameof(projectName));
             DeploymentName = Argument.CheckNotNull(deploymentName, nameof(deploymentName));
         }
 
-        internal AnalyzeConversationOptions(string query)
+        internal ConversationAnalysisOptions(string query)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
 
             Query = query;
-            Parameters = new ChangeTrackingDictionary<string, Models.AnalyzeParameters>();
+            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
         }
 
         /// <summary>

@@ -31,10 +31,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 "We'll have 2 plates of seared salmon nigiri.");
 #endif
 
-            DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
+            ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
             Console.WriteLine("Intents:");
-            foreach (DeepstackIntent intent in deepstackPrediction.Intents)
+            foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
                 Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Console.WriteLine("Entities:");
-            foreach (DeepstackEntity entity in deepstackPrediction.Entities)
+            foreach (ConversationEntity entity in conversationPrediction.Entities)
             {
                 Console.WriteLine($"Category: {entity.Category}");
                 Console.WriteLine($"Text: {entity.Text}");
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Order"));
         }
 
         [AsyncOnly]
@@ -77,10 +77,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 "We'll have 2 plates of seared salmon nigiri.");
 #endif
 
-            DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
+            ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
             Console.WriteLine("Intents:");
-            foreach (DeepstackIntent intent in deepstackPrediction.Intents)
+            foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category:{intent.Category}");
                 Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Console.WriteLine("Entities:");
-            foreach (DeepstackEntity entity in deepstackPrediction.Entities)
+            foreach (ConversationEntity entity in conversationPrediction.Entities)
             {
                 Console.WriteLine($"Category: {entity.Category}");
                 Console.WriteLine($"Text: {entity.Text}");
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Order"));
         }
     }
 }

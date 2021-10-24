@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationWithLanguage()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                SpanishText)
@@ -58,20 +58,20 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationsDeepstack()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
 
             Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
 
-            DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
+            ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
 
-            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Order"));
 
-            IList<string> entitiesText = deepstackPrediction.Entities.Select(entity => entity.Text).ToList();
+            IList<string> entitiesText = conversationPrediction.Entities.Select(entity => entity.Text).ToList();
             Assert.That(entitiesText, Has.Count.EqualTo(2));
             Assert.That(entitiesText, Is.EquivalentTo(ExpectedOutput));
         }
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public void AnalyzeConversationsInvalidArgument()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
               TestEnvironment.ProjectName,
               TestEnvironment.DeploymentName,
               "");

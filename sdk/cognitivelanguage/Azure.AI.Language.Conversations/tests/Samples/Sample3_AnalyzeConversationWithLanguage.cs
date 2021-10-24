@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                 "Menu",
                 "production", 
                 "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                 TestEnvironment.ProjectName,
                 TestEnvironment.DeploymentName,
                 "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 
 #if SNIPPET
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                 "Menu",
                 "production",
                 "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
 #else
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                 TestEnvironment.ProjectName,
                 TestEnvironment.DeploymentName,
                 "Tendremos 2 platos de nigiri de salmón braseado.")
