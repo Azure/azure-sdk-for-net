@@ -132,7 +132,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // patch the subscription
                     string patchedName = TestUtilities.GenerateName("patchedName");
-                    string patchedPk = TestUtilities.GenerateName("patchedPk");
+                    string patchedPk = "Test12345"; //TODO
                     string patchedSk = TestUtilities.GenerateName("patchedSk");
                     var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
