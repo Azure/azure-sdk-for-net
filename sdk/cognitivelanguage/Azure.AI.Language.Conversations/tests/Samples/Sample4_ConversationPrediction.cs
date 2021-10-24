@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationDeepstack
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPrediction
 
 #if SNIPPET
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationDeepstackAsync
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPredictionAsync
 
 #if SNIPPET
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(

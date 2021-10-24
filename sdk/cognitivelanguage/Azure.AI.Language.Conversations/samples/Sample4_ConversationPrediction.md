@@ -1,4 +1,4 @@
-# Ask a question
+# Analyze a conversation
 
 This sample demonstrates how to analyze an utterance. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
@@ -15,7 +15,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationDeepstack
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPrediction
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
     "Menu",
     "production",
@@ -45,7 +45,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationDeepstackAsync
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPredictionAsync
 Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
     "Menu",
     "production",
