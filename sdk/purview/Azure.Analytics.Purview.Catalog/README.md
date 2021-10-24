@@ -34,7 +34,7 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewCatalogClient(new Url("https://<my-account-name>.catalog.purview.azure.com"), credential);
+var client = new PurviewCatalogClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 ## Key concepts
@@ -66,7 +66,7 @@ The following section shows you how to initialize and authenticate your client, 
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.catalog.purview.azure.com"), credential);
+var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var response = await client.Types.GetAllTypeDefinitionsAsync();
 var responseDocument = JsonDocument.Parse(response.Content);

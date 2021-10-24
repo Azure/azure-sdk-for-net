@@ -68,7 +68,7 @@ Console.WriteLine($"Expires On: {expiresOn}");
 The `CommunicationIdentityClient` can be used to exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
 
 ```C# Snippet:ExchangeTeamsToken
-Response<AccessToken> tokenResponse = client.ExchangeTeamsToken(teamsToken);
+Response<AccessToken> tokenResponse = client.ExchangeTeamsUserAadToken(teamsToken);
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
