@@ -44,11 +44,6 @@ directive:
           "AzureKey": []
         }
     ];
-
-# Temporary until common.json#/parameters/DeploymentNameQueryParameter is updated.
-- from: swagger-document
-  where: $.parameters
-  transform: $.DeploymentNameQueryParameter.required = true;
 ```
 
 ### C# customizations
