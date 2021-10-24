@@ -21,10 +21,10 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
     "production",
     "We'll have 2 plates of seared salmon nigiri.");
 
-DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
+ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
 Console.WriteLine("Intents:");
-foreach (DeepstackIntent intent in deepstackPrediction.Intents)
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category:{intent.Category}");
     Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
@@ -32,7 +32,7 @@ foreach (DeepstackIntent intent in deepstackPrediction.Intents)
 }
 
 Console.WriteLine("Entities:");
-foreach (DeepstackEntity entity in deepstackPrediction.Entities)
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
     Console.WriteLine($"Category: {entity.Category}");
     Console.WriteLine($"Text: {entity.Text}");
@@ -51,10 +51,10 @@ Response<AnalyzeConversationResult> response = await client.AnalyzeConversationA
     "production",
     "We'll have 2 plates of seared salmon nigiri.");
 
-DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
+ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
 Console.WriteLine("Intents:");
-foreach (DeepstackIntent intent in deepstackPrediction.Intents)
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category:{intent.Category}");
     Console.WriteLine($"Confidence Score:{intent.ConfidenceScore}");
@@ -62,7 +62,7 @@ foreach (DeepstackIntent intent in deepstackPrediction.Intents)
 }
 
 Console.WriteLine("Entities:");
-foreach (DeepstackEntity entity in deepstackPrediction.Entities)
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
     Console.WriteLine($"Category: {entity.Category}");
     Console.WriteLine($"Text: {entity.Text}");
