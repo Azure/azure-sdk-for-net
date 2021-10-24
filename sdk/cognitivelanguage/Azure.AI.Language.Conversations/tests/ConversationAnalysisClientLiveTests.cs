@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversationsDeepstack()
+        public async Task AnalyzeConversationsWithConversationPrediction()
         {
             ConversationAnalysisOptions options = new ConversationAnalysisOptions(
                TestEnvironment.ProjectName,

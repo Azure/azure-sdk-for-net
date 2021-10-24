@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void AnalyzeConversationDeepstack()
+        public void AnalyzeConversationWithConversationPredictionResult()
         {
             ConversationAnalysisClient client = Client;
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationDeepstackAsync()
+        public async Task AnalyzeConversationWithConversationPredictionResultAsync()
         {
             ConversationAnalysisClient client = Client;
 
