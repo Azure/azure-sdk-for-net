@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DSTargetIntentResult
+    public partial class NoneLinkedTargetIntentResult
     {
-        internal static DSTargetIntentResult DeserializeDSTargetIntentResult(JsonElement element)
+        internal static NoneLinkedTargetIntentResult DeserializeNoneLinkedTargetIntentResult(JsonElement element)
         {
-            Optional<DeepstackResult> result = default;
+            Optional<ConversationResult> result = default;
             TargetKind targetKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Models
                         result = null;
                         continue;
                     }
-                    result = DeepstackResult.DeserializeDeepstackResult(property.Value);
+                    result = ConversationResult.DeserializeConversationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetKind"))
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new DSTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
+            return new NoneLinkedTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
         }
     }
 }

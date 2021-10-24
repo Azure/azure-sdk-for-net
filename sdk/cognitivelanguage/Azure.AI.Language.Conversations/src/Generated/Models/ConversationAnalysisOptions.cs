@@ -7,14 +7,26 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The request body. </summary>
-    public partial class AnalyzeConversationOptions
+    public partial class ConversationAnalysisOptions
     {
+        /// <summary> Initializes a new instance of ConversationAnalysisOptions. </summary>
+        /// <param name="query"> The conversation utterance to be analyzed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        public ConversationAnalysisOptions(string query)
+        {
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
+            Query = query;
+            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
+        }
 
         /// <summary> The conversation utterance to be analyzed. </summary>
         public string Query { get; }
@@ -27,6 +39,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> If true, the query will be kept by the service for customers to further review, to improve the model quality. </summary>
         public bool? IsLoggingEnabled { get; set; }
         /// <summary> A dictionary representing the input for each target project. </summary>
-        public IDictionary<string, AnalyzeParameters> Parameters { get; }
+        public IDictionary<string, AnalysisParameters> Parameters { get; }
     }
 }

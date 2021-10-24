@@ -11,39 +11,39 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DeepstackPrediction
+    public partial class ConversationPrediction
     {
-        internal static DeepstackPrediction DeserializeDeepstackPrediction(JsonElement element)
+        internal static ConversationPrediction DeserializeConversationPrediction(JsonElement element)
         {
-            IReadOnlyList<DeepstackIntent> intents = default;
-            IReadOnlyList<DeepstackEntity> entities = default;
-            ProjectKind projectType = default;
+            IReadOnlyList<ConversationIntent> intents = default;
+            IReadOnlyList<ConversationEntity> entities = default;
+            ProjectKind projectKind = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("intents"))
                 {
-                    List<DeepstackIntent> array = new List<DeepstackIntent>();
+                    List<ConversationIntent> array = new List<ConversationIntent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeepstackIntent.DeserializeDeepstackIntent(item));
+                        array.Add(ConversationIntent.DeserializeConversationIntent(item));
                     }
                     intents = array;
                     continue;
                 }
                 if (property.NameEquals("entities"))
                 {
-                    List<DeepstackEntity> array = new List<DeepstackEntity>();
+                    List<ConversationEntity> array = new List<ConversationEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeepstackEntity.DeserializeDeepstackEntity(item));
+                        array.Add(ConversationEntity.DeserializeConversationEntity(item));
                     }
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("projectType"))
+                if (property.NameEquals("projectKind"))
                 {
-                    projectType = new ProjectKind(property.Value.GetString());
+                    projectKind = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new DeepstackPrediction(projectType, topIntent.Value, intents, entities);
+            return new ConversationPrediction(projectKind, topIntent.Value, intents, entities);
         }
     }
 }

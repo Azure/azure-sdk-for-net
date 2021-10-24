@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DeepstackEntity
+    public partial class ConversationEntity
     {
-        internal static DeepstackEntity DeserializeDeepstackEntity(JsonElement element)
+        internal static ConversationEntity DeserializeConversationEntity(JsonElement element)
         {
             string category = default;
             string text = default;
             int offset = default;
             int length = default;
             float confidenceScore = default;
-            Optional<IReadOnlyList<DeepStackEntityResolution>> resolution = default;
+            Optional<IReadOnlyList<string>> listKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"))
@@ -48,23 +48,23 @@ namespace Azure.AI.Language.Conversations.Models
                     confidenceScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("listKeys"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeepStackEntityResolution> array = new List<DeepStackEntityResolution>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeepStackEntityResolution.DeserializeDeepStackEntityResolution(item));
+                        array.Add(item.GetString());
                     }
-                    resolution = array;
+                    listKeys = array;
                     continue;
                 }
             }
-            return new DeepstackEntity(category, text, offset, length, confidenceScore, Optional.ToList(resolution));
+            return new ConversationEntity(category, text, offset, length, confidenceScore, Optional.ToList(listKeys));
         }
     }
 }

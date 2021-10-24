@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DeepstackIntent
+    public partial class ConversationIntent
     {
-        internal static DeepstackIntent DeserializeDeepstackIntent(JsonElement element)
+        internal static ConversationIntent DeserializeConversationIntent(JsonElement element)
         {
             string category = default;
             float confidenceScore = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new DeepstackIntent(category, confidenceScore);
+            return new ConversationIntent(category, confidenceScore);
         }
     }
 }

@@ -10,25 +10,26 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class TargetIntentResult
+    public partial class ConversationTargetIntentResult
     {
-        internal static TargetIntentResult DeserializeTargetIntentResult(JsonElement element)
+        internal static ConversationTargetIntentResult DeserializeConversationTargetIntentResult(JsonElement element)
         {
-            if (element.TryGetProperty("targetKind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "conversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
-                    case "luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element);
-                    case "non_linked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element);
-                    case "question_answering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element);
-                }
-            }
+            Optional<ConversationResult> result = default;
             TargetKind targetKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("result"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        result = null;
+                        continue;
+                    }
+                    result = ConversationResult.DeserializeConversationResult(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("targetKind"))
                 {
                     targetKind = new TargetKind(property.Value.GetString());
@@ -45,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new TargetIntentResult(targetKind, apiVersion.Value, confidenceScore);
+            return new ConversationTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
         }
     }
 }

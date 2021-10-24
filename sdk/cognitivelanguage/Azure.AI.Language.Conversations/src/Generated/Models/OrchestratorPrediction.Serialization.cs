@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class WorkflowPrediction
+    public partial class OrchestratorPrediction
     {
-        internal static WorkflowPrediction DeserializeWorkflowPrediction(JsonElement element)
+        internal static OrchestratorPrediction DeserializeOrchestratorPrediction(JsonElement element)
         {
             IReadOnlyDictionary<string, TargetIntentResult> intents = default;
-            ProjectKind projectType = default;
+            ProjectKind projectKind = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,9 +30,9 @@ namespace Azure.AI.Language.Conversations.Models
                     intents = dictionary;
                     continue;
                 }
-                if (property.NameEquals("projectType"))
+                if (property.NameEquals("projectKind"))
                 {
-                    projectType = new ProjectKind(property.Value.GetString());
+                    projectKind = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Models
                     continue;
                 }
             }
-            return new WorkflowPrediction(projectType, topIntent.Value, intents);
+            return new OrchestratorPrediction(projectKind, topIntent.Value, intents);
         }
     }
 }

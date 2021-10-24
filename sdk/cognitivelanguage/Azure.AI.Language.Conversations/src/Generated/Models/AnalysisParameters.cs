@@ -7,11 +7,11 @@
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> This is the parameter set of either the conversation application itself or one of the target services. </summary>
-    public partial class AnalyzeParameters
+    /// <summary> This is the parameter set of either the Orchestration project itself or one of the target services. </summary>
+    public partial class AnalysisParameters
     {
-        /// <summary> Initializes a new instance of AnalyzeParameters. </summary>
-        public AnalyzeParameters()
+        /// <summary> Initializes a new instance of AnalysisParameters. </summary>
+        public AnalysisParameters()
         {
         }
 

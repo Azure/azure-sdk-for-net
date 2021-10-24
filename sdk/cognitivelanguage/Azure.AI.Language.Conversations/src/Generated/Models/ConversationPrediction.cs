@@ -11,14 +11,14 @@ using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Represents the prediction section of a LUIS Deepstack project. </summary>
-    public partial class DeepstackPrediction : BasePrediction
+    /// <summary> Represents the prediction section of a Conversation project. </summary>
+    public partial class ConversationPrediction : BasePrediction
     {
-        /// <summary> Initializes a new instance of DeepstackPrediction. </summary>
+        /// <summary> Initializes a new instance of ConversationPrediction. </summary>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intents"/> or <paramref name="entities"/> is null. </exception>
-        internal DeepstackPrediction(IEnumerable<DeepstackIntent> intents, IEnumerable<DeepstackEntity> entities)
+        internal ConversationPrediction(IEnumerable<ConversationIntent> intents, IEnumerable<ConversationEntity> entities)
         {
             if (intents == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.AI.Language.Conversations.Models
             ProjectKind = Models.ProjectKind.Conversation;
         }
 
-        /// <summary> Initializes a new instance of DeepstackPrediction. </summary>
+        /// <summary> Initializes a new instance of ConversationPrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
-        internal DeepstackPrediction(ProjectKind projectKind, string topIntent, IReadOnlyList<DeepstackIntent> intents, IReadOnlyList<DeepstackEntity> entities) : base(projectKind, topIntent)
+        internal ConversationPrediction(ProjectKind projectKind, string topIntent, IReadOnlyList<ConversationIntent> intents, IReadOnlyList<ConversationEntity> entities) : base(projectKind, topIntent)
         {
             Intents = intents;
             Entities = entities;
@@ -47,8 +47,8 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> The intent classification results. </summary>
-        public IReadOnlyList<DeepstackIntent> Intents { get; }
+        public IReadOnlyList<ConversationIntent> Intents { get; }
         /// <summary> The entity extraction results. </summary>
-        public IReadOnlyList<DeepstackEntity> Entities { get; }
+        public IReadOnlyList<ConversationEntity> Entities { get; }
     }
 }

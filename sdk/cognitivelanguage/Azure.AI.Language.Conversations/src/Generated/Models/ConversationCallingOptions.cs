@@ -7,11 +7,11 @@
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> The option to set to call a LUIS Deepstack project. </summary>
-    public partial class DeepstackCallingOptions
+    /// <summary> The option to set to call a Conversation project. </summary>
+    public partial class ConversationCallingOptions
     {
-        /// <summary> Initializes a new instance of DeepstackCallingOptions. </summary>
-        public DeepstackCallingOptions()
+        /// <summary> Initializes a new instance of ConversationCallingOptions. </summary>
+        public ConversationCallingOptions()
         {
         }
 

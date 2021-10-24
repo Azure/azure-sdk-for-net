@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DeepstackResult
+    public partial class ConversationResult
     {
-        internal static DeepstackResult DeserializeDeepstackResult(JsonElement element)
+        internal static ConversationResult DeserializeConversationResult(JsonElement element)
         {
             string query = default;
             Optional<string> detectedLanguage = default;
-            DeepstackPrediction prediction = default;
+            ConversationPrediction prediction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -31,11 +31,11 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("prediction"))
                 {
-                    prediction = DeepstackPrediction.DeserializeDeepstackPrediction(property.Value);
+                    prediction = ConversationPrediction.DeserializeConversationPrediction(property.Value);
                     continue;
                 }
             }
-            return new DeepstackResult(query, detectedLanguage.Value, prediction);
+            return new ConversationResult(query, detectedLanguage.Value, prediction);
         }
     }
 }

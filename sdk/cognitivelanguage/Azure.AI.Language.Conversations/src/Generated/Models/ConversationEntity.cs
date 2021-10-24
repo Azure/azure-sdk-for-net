@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> The entity extraction result of a LUIS Deepstack project. </summary>
-    public partial class DeepstackEntity
+    /// <summary> The entity extraction result of a Conversation project. </summary>
+    public partial class ConversationEntity
     {
-        /// <summary> Initializes a new instance of DeepstackEntity. </summary>
+        /// <summary> Initializes a new instance of ConversationEntity. </summary>
         /// <param name="category"> The entity category. </param>
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidenceScore"> The entity confidence score. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="text"/> is null. </exception>
-        internal DeepstackEntity(string category, string text, int offset, int length, float confidenceScore)
+        internal ConversationEntity(string category, string text, int offset, int length, float confidenceScore)
         {
             if (category == null)
             {
@@ -37,24 +37,24 @@ namespace Azure.AI.Language.Conversations.Models
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Resolution = new ChangeTrackingList<DeepStackEntityResolution>();
+            ListKeys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DeepstackEntity. </summary>
+        /// <summary> Initializes a new instance of ConversationEntity. </summary>
         /// <param name="category"> The entity category. </param>
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidenceScore"> The entity confidence score. </param>
-        /// <param name="resolution"> A array with extra information about the entity. </param>
-        internal DeepstackEntity(string category, string text, int offset, int length, float confidenceScore, IReadOnlyList<DeepStackEntityResolution> resolution)
+        /// <param name="listKeys"> List of keys. </param>
+        internal ConversationEntity(string category, string text, int offset, int length, float confidenceScore, IReadOnlyList<string> listKeys)
         {
             Category = category;
             Text = text;
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Resolution = resolution;
+            ListKeys = listKeys;
         }
 
         /// <summary> The entity category. </summary>
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Models
         public int Length { get; }
         /// <summary> The entity confidence score. </summary>
         public float ConfidenceScore { get; }
-        /// <summary> A array with extra information about the entity. </summary>
-        public IReadOnlyList<DeepStackEntityResolution> Resolution { get; }
+        /// <summary> List of keys. </summary>
+        public IReadOnlyList<string> ListKeys { get; }
     }
 }

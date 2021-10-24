@@ -9,14 +9,14 @@ using System;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> The response returned by a LUIS Deepstack project. </summary>
-    public partial class DeepstackResult
+    /// <summary> The response returned by a Conversation project. </summary>
+    public partial class ConversationResult
     {
-        /// <summary> Initializes a new instance of DeepstackResult. </summary>
+        /// <summary> Initializes a new instance of ConversationResult. </summary>
         /// <param name="query"> The same query given in request. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="prediction"/> is null. </exception>
-        internal DeepstackResult(string query, DeepstackPrediction prediction)
+        internal ConversationResult(string query, ConversationPrediction prediction)
         {
             if (query == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.AI.Language.Conversations.Models
             Prediction = prediction;
         }
 
-        /// <summary> Initializes a new instance of DeepstackResult. </summary>
+        /// <summary> Initializes a new instance of ConversationResult. </summary>
         /// <param name="query"> The same query given in request. </param>
         /// <param name="detectedLanguage"> The detected language from the query. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
-        internal DeepstackResult(string query, string detectedLanguage, DeepstackPrediction prediction)
+        internal ConversationResult(string query, string detectedLanguage, ConversationPrediction prediction)
         {
             Query = query;
             DetectedLanguage = detectedLanguage;
@@ -47,6 +47,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> The detected language from the query. </summary>
         public string DetectedLanguage { get; }
         /// <summary> The predicted result for the query. </summary>
-        public DeepstackPrediction Prediction { get; }
+        public ConversationPrediction Prediction { get; }
     }
 }
