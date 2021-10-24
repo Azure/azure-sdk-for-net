@@ -54,6 +54,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(repository, nameof(repository));
 
+            if (options.Audience == null)
+            {
+                throw new InvalidOperationException($"{nameof(ContainerRegistryClientOptions.Audience)} property must be set to initialize a {nameof(ContainerRegistryBlobClient)}.");
+            }
+
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repository;
