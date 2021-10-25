@@ -97,6 +97,23 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "skus",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
