@@ -92,6 +92,7 @@ namespace Azure.Core.Tests
             await requestTask;
 
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/?api-version=v2&sas=REDACTED"));
+            CollectionAssert.IsEmpty(activity.Tags.Where(kvp => kvp.Value.Contains("secret")));
         }
 
         [Test]
