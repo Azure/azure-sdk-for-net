@@ -65,7 +65,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 #### New
 <!---Snippet:Create_ResourceGroup-->
 ```C#
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 Location location = Location.WestUS2;

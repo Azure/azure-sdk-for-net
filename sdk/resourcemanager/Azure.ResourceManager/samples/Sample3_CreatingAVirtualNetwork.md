@@ -19,7 +19,8 @@ Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-ResourceGroupCollection rgCollection = armClient.DefaultSubscription.GetResourceGroups();
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
 string rgName = "myResourceGroup";
 ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
