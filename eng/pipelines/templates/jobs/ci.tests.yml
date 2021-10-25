@@ -49,7 +49,11 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
-      - script: 'dotnet dev-certs https --trust'
+      - pwsh: |
+          sudo dotnet dev-certs https --clean
+          sudo dotnet dev-certs https --trust
+        displayName: 'Trust certificate'
+        condition: contains(variables['OSVmImage'], 'mac')
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
