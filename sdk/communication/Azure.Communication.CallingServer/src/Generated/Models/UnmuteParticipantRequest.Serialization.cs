@@ -17,6 +17,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("identifier");
             writer.WriteObjectValue(Identifier);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
+            }
             writer.WriteEndObject();
         }
     }

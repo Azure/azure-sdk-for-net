@@ -22,11 +22,8 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("alternateCallerId");
                 writer.WriteObjectValue(AlternateCallerId);
             }
-            if (Optional.IsDefined(Participant))
-            {
-                writer.WritePropertyName("participant");
-                writer.WriteObjectValue(Participant);
-            }
+            writer.WritePropertyName("participant");
+            writer.WriteObjectValue(Participant);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");

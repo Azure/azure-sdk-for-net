@@ -828,7 +828,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateTransferRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId, string userToUserInformation, string operationContext, string callbackUri)
+        internal HttpMessage CreateTransferRequest(string callConnectionId, CommunicationIdentifierModel targetParticipant, string targetCallConnectionId, string userToUserInformation, string operationContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -847,8 +847,7 @@ namespace Azure.Communication.CallingServer
                 TargetParticipant = targetParticipant,
                 TargetCallConnectionId = targetCallConnectionId,
                 UserToUserInformation = userToUserInformation,
-                OperationContext = operationContext,
-                CallbackUri = callbackUri
+                OperationContext = operationContext
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -862,22 +861,26 @@ namespace Azure.Communication.CallingServer
         /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
         /// <param name="operationContext"> The operation context. </param>
-        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> TransferAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TransferCallResult>> TransferAsync(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext, callbackUri);
+            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        TransferCallResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TransferCallResult.DeserializeTransferCallResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -889,22 +892,26 @@ namespace Azure.Communication.CallingServer
         /// <param name="targetCallConnectionId"> The call connection id to replace the current call with. This parameter should be used for consultative transfer. </param>
         /// <param name="userToUserInformation"> The user to user information. </param>
         /// <param name="operationContext"> The operation context. </param>
-        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response Transfer(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public Response<TransferCallResult> Transfer(string callConnectionId, CommunicationIdentifierModel targetParticipant = null, string targetCallConnectionId = null, string userToUserInformation = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext, callbackUri);
+            using var message = CreateTransferRequest(callConnectionId, targetParticipant, targetCallConnectionId, userToUserInformation, operationContext);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        TransferCallResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TransferCallResult.DeserializeTransferCallResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1077,7 +1084,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId, CommunicationIdentifierModel participant, string operationContext, string callbackUri)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, CommunicationIdentifierModel participant, PhoneNumberIdentifierModel alternateCallerId, string operationContext, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1091,10 +1098,9 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new AddParticipantRequestInternal()
+            var model = new AddParticipantRequestInternal(participant)
             {
                 AlternateCallerId = alternateCallerId,
-                Participant = participant,
                 OperationContext = operationContext,
                 CallbackUri = callbackUri
             };
@@ -1106,20 +1112,24 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
         /// <param name="participant"> The participant to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<AddParticipantResult>> AddParticipantAsync(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participant"/> is null. </exception>
+        public async Task<Response<AddParticipantResult>> AddParticipantAsync(string callConnectionId, CommunicationIdentifierModel participant, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, alternateCallerId, participant, operationContext, callbackUri);
+            using var message = CreateAddParticipantRequest(callConnectionId, participant, alternateCallerId, operationContext, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1137,20 +1147,24 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
         /// <param name="participant"> The participant to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<AddParticipantResult> AddParticipant(string callConnectionId, PhoneNumberIdentifierModel alternateCallerId = null, CommunicationIdentifierModel participant = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participant"/> is null. </exception>
+        public Response<AddParticipantResult> AddParticipant(string callConnectionId, CommunicationIdentifierModel participant, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, alternateCallerId, participant, operationContext, callbackUri);
+            using var message = CreateAddParticipantRequest(callConnectionId, participant, alternateCallerId, operationContext, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1545,7 +1559,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateMuteParticipantRequest(string callConnectionId, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateMuteParticipantRequest(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1559,7 +1573,10 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new MuteParticipantRequest(identifier);
+            var model = new MuteParticipantRequest(identifier)
+            {
+                OperationContext = operationContext
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -1569,9 +1586,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Mute participant in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant to be muted in the call. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> MuteParticipantAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public async Task<Response> MuteParticipantAsync(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1582,7 +1600,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateMuteParticipantRequest(callConnectionId, identifier);
+            using var message = CreateMuteParticipantRequest(callConnectionId, identifier, operationContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1596,9 +1614,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Mute participant in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant to be muted in the call. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public Response MuteParticipant(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public Response MuteParticipant(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1609,7 +1628,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateMuteParticipantRequest(callConnectionId, identifier);
+            using var message = CreateMuteParticipantRequest(callConnectionId, identifier, operationContext);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1620,7 +1639,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateUnmuteParticipantRequest(string callConnectionId, CommunicationIdentifierModel identifier)
+        internal HttpMessage CreateUnmuteParticipantRequest(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1634,7 +1653,10 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new UnmuteParticipantRequest(identifier);
+            var model = new UnmuteParticipantRequest(identifier)
+            {
+                OperationContext = operationContext
+            };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -1644,9 +1666,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Unmute participant in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant to be unmuted in the call. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public async Task<Response> UnmuteParticipantAsync(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public async Task<Response> UnmuteParticipantAsync(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1657,7 +1680,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateUnmuteParticipantRequest(callConnectionId, identifier);
+            using var message = CreateUnmuteParticipantRequest(callConnectionId, identifier, operationContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1671,9 +1694,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> Unmute participant in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="identifier"> The identifier of the participant to be unmuted in the call. </param>
+        /// <param name="operationContext"> The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="identifier"/> is null. </exception>
-        public Response UnmuteParticipant(string callConnectionId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        public Response UnmuteParticipant(string callConnectionId, CommunicationIdentifierModel identifier, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -1684,7 +1708,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(identifier));
             }
 
-            using var message = CreateUnmuteParticipantRequest(callConnectionId, identifier);
+            using var message = CreateUnmuteParticipantRequest(callConnectionId, identifier, operationContext);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

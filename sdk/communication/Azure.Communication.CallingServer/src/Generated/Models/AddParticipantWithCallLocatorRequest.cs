@@ -15,15 +15,21 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of AddParticipantWithCallLocatorRequest. </summary>
         /// <param name="callLocator"> The call locator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public AddParticipantWithCallLocatorRequest(CallLocatorModel callLocator)
+        /// <param name="participant"> The participant to be added to the call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="participant"/> is null. </exception>
+        public AddParticipantWithCallLocatorRequest(CallLocatorModel callLocator, CommunicationIdentifierModel participant)
         {
             if (callLocator == null)
             {
                 throw new ArgumentNullException(nameof(callLocator));
             }
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
 
             CallLocator = callLocator;
+            Participant = participant;
         }
 
         /// <summary> The call locator. </summary>
@@ -31,7 +37,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> The alternate identity of source participant. </summary>
         public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
         /// <summary> The participant to be added to the call. </summary>
-        public CommunicationIdentifierModel Participant { get; set; }
+        public CommunicationIdentifierModel Participant { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

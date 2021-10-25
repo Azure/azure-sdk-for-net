@@ -15,24 +15,24 @@ namespace Azure.Communication.CallingServer
     internal partial class AnswerCallRequest
     {
         /// <summary> Initializes a new instance of AnswerCallRequest. </summary>
-        /// <param name="callbackUri"> The callback uri. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/> is null. </exception>
-        public AnswerCallRequest(string callbackUri)
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
+        public AnswerCallRequest(string incomingCallContext)
         {
-            if (callbackUri == null)
+            if (incomingCallContext == null)
             {
-                throw new ArgumentNullException(nameof(callbackUri));
+                throw new ArgumentNullException(nameof(incomingCallContext));
             }
 
-            CallbackUri = callbackUri;
+            IncomingCallContext = incomingCallContext;
             RequestedMediaTypes = new ChangeTrackingList<CallMediaType>();
             RequestedCallEvents = new ChangeTrackingList<CallingEventSubscriptionType>();
         }
 
         /// <summary> The context associated with the call. </summary>
-        public string IncomingCallContext { get; set; }
+        public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; }
+        public string CallbackUri { get; set; }
         /// <summary> The requested modalities. </summary>
         public IList<CallMediaType> RequestedMediaTypes { get; }
         /// <summary> The requested call events to subscribe to. </summary>
