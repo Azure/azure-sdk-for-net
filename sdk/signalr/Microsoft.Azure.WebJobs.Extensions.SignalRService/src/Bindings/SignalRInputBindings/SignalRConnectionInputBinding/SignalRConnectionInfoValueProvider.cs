@@ -10,14 +10,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class SignalRConnectionInfoValueProvider : IValueProvider
     {
-        private readonly SignalRConnectionInfo info;
-        private readonly string invokeString;
+        private readonly SignalRConnectionInfo _info;
+        private readonly string _invokeString;
+
+        public Type Type { get; }
 
         // todo: fix invoke string in another PR
         public SignalRConnectionInfoValueProvider(SignalRConnectionInfo info, Type type, string invokeString)
         {
-            this.info = info;
-            this.invokeString = invokeString;
+            _info = info;
+            _invokeString = invokeString;
             Type = type;
         }
 
@@ -28,23 +30,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public string ToInvokeString()
         {
-            return invokeString;
+            return _invokeString;
         }
-
-        public Type Type { get; }
 
         private object GetUserTypeInfo()
         {
             if (Type == typeof(JObject))
             {
-                return JObject.FromObject(info);
+                return JObject.FromObject(_info);
             }
             if (Type == typeof(string))
             {
-                return JObject.FromObject(info).ToString();
+                return JObject.FromObject(_info).ToString();
             }
 
-            return info;
+            return _info;
         }
     }
 }

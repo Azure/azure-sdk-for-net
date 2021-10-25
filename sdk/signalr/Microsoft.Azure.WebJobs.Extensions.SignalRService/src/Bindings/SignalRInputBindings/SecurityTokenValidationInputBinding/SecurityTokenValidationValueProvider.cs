@@ -9,24 +9,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class SecurityTokenValidationValueProvider : IValueProvider
     {
-        private readonly SecurityTokenResult result;
-        private readonly string invokeString;
+        private readonly SecurityTokenResult _result;
+        private readonly string _invokeString;
 
         // todo: fix invoke string in another PR
         public SecurityTokenValidationValueProvider(SecurityTokenResult result, string invokeString)
         {
-            this.result = result;
-            this.invokeString = invokeString;
+            _result = result;
+            _invokeString = invokeString;
         }
 
         public Task<object> GetValueAsync()
         {
-            return Task.FromResult<object>(result);
+            return Task.FromResult<object>(_result);
         }
 
         public string ToInvokeString()
         {
-            return invokeString;
+            return _invokeString;
         }
 
         public Type Type => typeof(SecurityTokenResult);
