@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -13,14 +14,22 @@ namespace Azure.Communication.CallingServer
     internal partial class AddParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
-        public AddParticipantRequestInternal()
+        /// <param name="participant"> The participant to be added to the call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
+        public AddParticipantRequestInternal(CommunicationIdentifierModel participant)
         {
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
+
+            Participant = participant;
         }
 
         /// <summary> The alternate identity of source participant. </summary>
         public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
         /// <summary> The participant to be added to the call. </summary>
-        public CommunicationIdentifierModel Participant { get; set; }
+        public CommunicationIdentifierModel Participant { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

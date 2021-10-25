@@ -28,5 +28,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The identifier of the participant to be unmuted in the call. </summary>
         public CommunicationIdentifierModel Identifier { get; }
+        /// <summary> The operation context. </summary>
+        public string OperationContext { get; set; }
     }
 }

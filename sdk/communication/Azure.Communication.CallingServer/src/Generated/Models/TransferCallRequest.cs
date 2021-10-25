@@ -25,7 +25,5 @@ namespace Azure.Communication.CallingServer
         public string UserToUserInformation { get; set; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI. </summary>
-        public string CallbackUri { get; set; }
     }
 }
