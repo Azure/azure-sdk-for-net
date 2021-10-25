@@ -33,13 +33,11 @@
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
     "sdk/compute/*/api/*.cs",
-    "sdk/containerregistry/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
@@ -67,6 +65,7 @@
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
     "lucene",
     "mgmt",
@@ -143,7 +142,9 @@
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "setsas",
+        "mhsm",
+        "mhsmip"
       ]
     },
     {

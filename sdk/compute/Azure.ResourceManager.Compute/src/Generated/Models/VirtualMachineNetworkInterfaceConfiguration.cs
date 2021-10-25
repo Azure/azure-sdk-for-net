@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="dscpConfiguration"></param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, SubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, SubResource dscpConfiguration)
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
         {
             Name = name;
             Primary = primary;
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> The network security group. </summary>
-        public SubResource NetworkSecurityGroup { get; set; }
+        public WritableSubResource NetworkSecurityGroup { get; set; }
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         public VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
         /// <summary> Specifies the IP configurations of the network interface. </summary>
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
         /// <summary> Gets or sets the dscp configuration. </summary>
-        public SubResource DscpConfiguration { get; set; }
+        public WritableSubResource DscpConfiguration { get; set; }
     }
 }

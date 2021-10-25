@@ -124,8 +124,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             else
             {
-                // standard namespaces either use 256KB or 1000KB when in Canary
-                Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1000);
+                // standard namespaces either use 256KB or 1024KB when in Canary
+                Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1024);
             }
 
             AssertQueueOptions(queueOptions, createdQueue);
@@ -238,8 +238,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             else
             {
-                // standard namespaces use 256KB
-                Assert.AreEqual(256, createdTopic.MaxMessageSizeInKilobytes);
+                // standard namespaces either use 256KB or 1024KB when in Canary
+                Assert.LessOrEqual(createdTopic.MaxMessageSizeInKilobytes, 1024);
             }
 
             AssertTopicOptions(options, createdTopic);

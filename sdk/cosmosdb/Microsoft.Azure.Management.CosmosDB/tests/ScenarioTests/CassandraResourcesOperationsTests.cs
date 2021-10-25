@@ -26,6 +26,15 @@ namespace CosmosDB.Tests.ScenarioTests
         const string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
         const int sampleThroughput = 700;
 
+        // cassandra view
+        // create account with capabilities EnableCassandra, CassandraEnableMaterializedViews
+        // update account property enableMaterializedViews
+        // update account config overrides CassandraEnableMaterializedViews 
+        const string viewdatabaseAccountName = "db8193";
+        const string viewkeyspaceName = "viewkeyspacename";
+        const string viewtableName = "viewsrctablename";
+        const string viewName = "viewName";
+
         Dictionary<string, string> additionalProperties = new Dictionary<string, string>
         {
             {"foo","bar" }
@@ -52,7 +61,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     return;
                 }
-
+                
                 CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
                 {
                     Resource = new CassandraKeyspaceResource { Id = keyspaceName },
@@ -124,6 +133,60 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     cosmosDBManagementClient.CassandraResources.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, cassandraKeyspace.Name);
                 }
+
+                //cassandra views test
+                cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
+                {
+                    Resource = new CassandraKeyspaceResource { Id = viewkeyspaceName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                cassandraKeyspaceGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName, cassandraKeyspaceCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaceGetResults);
+                Assert.Equal(viewkeyspaceName, cassandraKeyspaceGetResults.Name);
+
+                cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters
+                {
+                    Resource = new CassandraTableResource
+                    {
+                        Id = viewtableName,
+                        Schema = new CassandraSchema
+                        {
+                            Columns = new List<Column> { new Column { Name = "columna", Type = "ascii" }, new Column { Name = "columnb", Type = "Text" }, new Column { Name = "columnc", Type = "Bigint" } },
+                            PartitionKeys = new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columna" } }
+                        }
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+                cassandraTableGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraTableWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName, viewtableName, cassandraTableCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraTableGetResults);
+
+                CassandraViewCreateUpdateParameters cassandraViewCreateUpdateParameters = new CassandraViewCreateUpdateParameters
+                {
+                    Resource = new CassandraViewResource
+                    {
+                        Id = viewName,
+                        ViewDefinition = "SELECT * FROM viewkeyspacename.viewsrctablename WHERE columna IS NOT NULL AND columnc IS NOT NULL PRIMARY KEY (columnc, columna)"
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+                CassandraViewGetResults cassandraViewGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraViewWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName, viewName, cassandraViewCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                IEnumerable<CassandraViewGetResults> cassandraViews = cosmosDBManagementClient.CassandraResources.ListCassandraViewsWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraViews);
+
+                foreach(CassandraViewGetResults cassandraView in cassandraViews)
+                {
+                    cosmosDBManagementClient.CassandraResources.DeleteCassandraViewWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, viewkeyspaceName, cassandraView.Name);
+                }
+
+                cassandraKeyspaces = cosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaces);
+
+                foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
+                {
+                    cosmosDBManagementClient.CassandraResources.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, viewdatabaseAccountName, cassandraKeyspace.Name);
+                }
             }
         }
 
@@ -148,6 +211,12 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 Assert.Equal(cassandraTableGetResults.Resource.Schema.PartitionKeys[i].Name, cassandraTableCreateUpdateParameters.Resource.Schema.PartitionKeys[i].Name);
             }
+        }
+
+        private void VerifyCassandraViewCreation(CassandraViewGetResults cassandraViewGetResults, CassandraViewCreateUpdateParameters cassandraViewCreateUpdateParameters)
+        {
+            Assert.Equal(cassandraViewGetResults.Resource.Id, cassandraViewCreateUpdateParameters.Resource.Id);
+            Assert.Equal(cassandraViewGetResults.Resource.ViewDefinition, cassandraViewCreateUpdateParameters.Resource.ViewDefinition);
         }
 
         private void VerifyEqualCassandraDatabases(CassandraKeyspaceGetResults expectedValue, CassandraKeyspaceGetResults actualValue)

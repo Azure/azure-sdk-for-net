@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24552")]
         public async Task ManageCustomModels()
         {
             string endpoint = TestEnvironment.Endpoint;

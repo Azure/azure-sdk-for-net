@@ -71,7 +71,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// information (for two pass flows).</param>
         /// <param name="recoveryAvailabilityZone">The recovery availability
         /// zone.</param>
-        public A2AReplicationIntentDetails(string recoveryAvailabilityType, string fabricObjectId = default(string), string primaryLocation = default(string), string recoveryLocation = default(string), string recoverySubscriptionId = default(string), IList<A2AProtectionIntentDiskInputDetails> vmDisks = default(IList<A2AProtectionIntentDiskInputDetails>), IList<A2AProtectionIntentManagedDiskInputDetails> vmManagedDisks = default(IList<A2AProtectionIntentManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), ProtectionProfileCustomDetails protectionProfile = default(ProtectionProfileCustomDetails), StorageAccountCustomDetails primaryStagingStorageAccount = default(StorageAccountCustomDetails), RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = default(RecoveryAvailabilitySetCustomDetails), RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = default(RecoveryVirtualNetworkCustomDetails), RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = default(RecoveryProximityPlacementGroupCustomDetails), string autoProtectionOfDataDisk = default(string), string multiVmGroupName = default(string), string multiVmGroupId = default(string), StorageAccountCustomDetails recoveryBootDiagStorageAccount = default(StorageAccountCustomDetails), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string))
+        /// <param name="agentAutoUpdateStatus">A value indicating whether the
+        /// auto update is enabled. Possible values include: 'Disabled',
+        /// 'Enabled'</param>
+        /// <param name="automationAccountArmId">The automation account arm
+        /// id.</param>
+        /// <param name="automationAccountAuthenticationType">A value
+        /// indicating the type authentication to use for automation Account.
+        /// Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'</param>
+        public A2AReplicationIntentDetails(string recoveryAvailabilityType, string fabricObjectId = default(string), string primaryLocation = default(string), string recoveryLocation = default(string), string recoverySubscriptionId = default(string), IList<A2AProtectionIntentDiskInputDetails> vmDisks = default(IList<A2AProtectionIntentDiskInputDetails>), IList<A2AProtectionIntentManagedDiskInputDetails> vmManagedDisks = default(IList<A2AProtectionIntentManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), ProtectionProfileCustomDetails protectionProfile = default(ProtectionProfileCustomDetails), StorageAccountCustomDetails primaryStagingStorageAccount = default(StorageAccountCustomDetails), RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = default(RecoveryAvailabilitySetCustomDetails), RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = default(RecoveryVirtualNetworkCustomDetails), RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = default(RecoveryProximityPlacementGroupCustomDetails), string autoProtectionOfDataDisk = default(string), string multiVmGroupName = default(string), string multiVmGroupId = default(string), StorageAccountCustomDetails recoveryBootDiagStorageAccount = default(StorageAccountCustomDetails), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), string agentAutoUpdateStatus = default(string), string automationAccountArmId = default(string), string automationAccountAuthenticationType = default(string))
         {
             FabricObjectId = fabricObjectId;
             PrimaryLocation = primaryLocation;
@@ -92,6 +101,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             DiskEncryptionInfo = diskEncryptionInfo;
             RecoveryAvailabilityZone = recoveryAvailabilityZone;
             RecoveryAvailabilityType = recoveryAvailabilityType;
+            AgentAutoUpdateStatus = agentAutoUpdateStatus;
+            AutomationAccountArmId = automationAccountArmId;
+            AutomationAccountAuthenticationType = automationAccountAuthenticationType;
             CustomInit();
         }
 
@@ -215,6 +227,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAvailabilityType")]
         public string RecoveryAvailabilityType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the auto update is enabled.
+        /// Possible values include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "agentAutoUpdateStatus")]
+        public string AgentAutoUpdateStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the automation account arm id.
+        /// </summary>
+        [JsonProperty(PropertyName = "automationAccountArmId")]
+        public string AutomationAccountArmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the type authentication to use for
+        /// automation Account. Possible values include: 'RunAsAccount',
+        /// 'SystemAssignedIdentity'
+        /// </summary>
+        [JsonProperty(PropertyName = "automationAccountAuthenticationType")]
+        public string AutomationAccountAuthenticationType { get; set; }
 
         /// <summary>
         /// Validate the object.
