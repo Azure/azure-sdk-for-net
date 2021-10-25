@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     context.CurrentResult.Message.Contains("ErrorCode: NotSupported"))
                 {
                     string line = context.CurrentResult.Message.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)?[0];
-                    context.CurrentResult.SetResult(ResultState.Ignored, line ?? "The feature under test is not supported");
+                    context.CurrentResult.SetResult(ResultState.Ignored, "The feature under test is not supported." + Environment.NewLine + line ?? string.Empty);
                 }
 
                 return context.CurrentResult;
