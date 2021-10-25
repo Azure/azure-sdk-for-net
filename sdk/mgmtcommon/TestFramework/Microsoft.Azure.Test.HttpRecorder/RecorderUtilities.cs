@@ -229,11 +229,22 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 object original = JsonConvert.DeserializeObject(str);
                 JToken parsed = JToken.Parse(original.ToString());
 
+                int count = 0;
                 foreach (var (jsonPath, sanitizer) in RecordedTestSanitizer.JsonPathSanitizers)
                 {
                     foreach (JToken token in parsed.SelectTokens(jsonPath))
                     {
-                        token.Replace(sanitizer(token));
+                        //token.Replace(sanitizer(token));
+                        if (count == 0)
+                        {
+                            token.Replace("Test12345");
+                            count++;
+                        }
+                        if (count == 1)
+                        {
+                            token.Replace("default");
+                            count--;
+                        }
                     }
                 }
                 return JsonConvert.SerializeObject(parsed, Formatting.Indented);

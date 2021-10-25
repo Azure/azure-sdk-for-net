@@ -14,7 +14,8 @@ namespace Track1TestRecordingSanitizer
 {
     public class RecordedTestSanitizer
     {
-        public const string SanitizeValue = "Test12345";
+        public const string SanitizeValue = "default";
+        public const string SanitizeValue2 = "test12345";
         public static List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers = new List<(string JsonPath, Func<JToken, JToken> Sanitizer)>();// { get; }
 
         /// <summary>
@@ -30,17 +31,17 @@ namespace Track1TestRecordingSanitizer
         {
             // Lazy sanitize fields in the request and response bodies
             AddJsonPathSanitizer("$..primaryKey");
-            AddJsonPathSanitizer("$..secondaryKey");
-            AddJsonPathSanitizer("$..key1");
-            AddJsonPathSanitizer("$..key2");
-            AddJsonPathSanitizer("$..primaryConnectionString");
-            AddJsonPathSanitizer("$..secondaryConnectionString");
-            AddJsonPathSanitizer("$..connectionString");
-            AddJsonPathSanitizer("$..packageUrl");
-            AddJsonPathSanitizer("$..accessSAS");
-            AddJsonPathSanitizer("$..value");
-            AddJsonPathSanitizer("$..accessKey");
-            AddJsonPathSanitizer("$..validationKey");
+            //AddJsonPathSanitizer("$..displayName");
+            //AddJsonPathSanitizer("$..key1");
+            //AddJsonPathSanitizer("$..key2");
+            //AddJsonPathSanitizer("$..primaryConnectionString");
+            //AddJsonPathSanitizer("$..secondaryConnectionString");
+            //AddJsonPathSanitizer("$..connectionString");
+            //AddJsonPathSanitizer("$..packageUrl");
+            //AddJsonPathSanitizer("$..accessSAS");
+            //AddJsonPathSanitizer("$..value");
+            //AddJsonPathSanitizer("$..accessKey");
+            //AddJsonPathSanitizer("$..validationKey");
         }
 
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
@@ -53,6 +54,7 @@ namespace Track1TestRecordingSanitizer
         public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
         {
             JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
+            JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue2))));
         }
     }
 }

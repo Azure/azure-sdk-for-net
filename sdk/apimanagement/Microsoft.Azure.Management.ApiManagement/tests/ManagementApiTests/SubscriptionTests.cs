@@ -85,9 +85,9 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 try
                 {
-                    string newSubscriptionName = TestUtilities.GenerateName("newSubscriptionName");
-                    string newSubscriptionPk = TestUtilities.GenerateName("newSubscriptionPK");
-                    string newSubscriptionSk = TestUtilities.GenerateName("newSubscriptionSK");
+                    string newSubscriptionName = "default";
+                    string newSubscriptionPk = "Test12345";
+                    string newSubscriptionSk = "aabbccdd";
                     var newSubscriptionState = SubscriptionState.Active;
 
                     var newSubscriptionCreate = new SubscriptionCreateParameters(
@@ -131,9 +131,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(2, productSubscriptions.Count());
 
                     // patch the subscription
-                    string patchedName = TestUtilities.GenerateName("patchedName");
-                    string patchedPk = "Test12345"; //TODO
-                    string patchedSk = TestUtilities.GenerateName("patchedSk");
+                    string patchedName = "default";
+                    string patchedPk = "1Test12345"; //TODO - need to find a way to sanitize primaryKey and primaryKey1 must be different, currently in recording patchedPk and newSubscriptionPk are the same
+                    string patchedSk = "aabbccdd";//TestUtilities.GenerateName("patchedSk");
                     var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
                     testBase.client.Subscription.Update(
