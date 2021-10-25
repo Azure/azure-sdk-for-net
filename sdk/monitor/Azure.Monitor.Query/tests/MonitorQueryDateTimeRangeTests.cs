@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         public void ToStringDurationTests()
         {
             var duration = TimeSpan.FromMinutes(23);
-            Assert.AreEqual("PT23M", new MonitorQueryTimeRange(duration).ToIsoString());
+            Assert.AreEqual("PT23M", new QueryTimeRange(duration).ToIsoString());
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
         {
             var duration = TimeSpan.FromMinutes(23);
             var endTime = new DateTimeOffset(2021, 5, 4, 3, 2, 1, TimeSpan.Zero);
-            Assert.AreEqual("PT23M/2021-05-04T03:02:01.0000000Z", new MonitorQueryTimeRange(duration, endTime).ToIsoString());
+            Assert.AreEqual("PT23M/2021-05-04T03:02:01.0000000Z", new QueryTimeRange(duration, endTime).ToIsoString());
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
         {
             var startTime = new DateTimeOffset(2021, 5, 4, 3, 2, 1, TimeSpan.Zero);
             var duration = TimeSpan.FromMinutes(23);
-            Assert.AreEqual("2021-05-04T03:02:01.0000000Z/PT23M", new MonitorQueryTimeRange(startTime, duration).ToIsoString());
+            Assert.AreEqual("2021-05-04T03:02:01.0000000Z/PT23M", new QueryTimeRange(startTime, duration).ToIsoString());
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
             var startTime = new DateTimeOffset(2021, 1, 2, 3, 4, 5, TimeSpan.Zero);
             var endTime = new DateTimeOffset(2021, 5, 4, 3, 2, 1, TimeSpan.Zero);
 
-            Assert.AreEqual("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z", new MonitorQueryTimeRange(startTime, endTime).ToIsoString());
+            Assert.AreEqual("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z", new QueryTimeRange(startTime, endTime).ToIsoString());
         }
 
         [TestCase("PT23M")]
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests
         [TestCase("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z")]
         public void CanRoundtrip(string range)
         {
-            Assert.AreEqual(range, MonitorQueryTimeRange.Parse(range).ToIsoString());
+            Assert.AreEqual(range, QueryTimeRange.Parse(range).ToIsoString());
         }
 
         [RunOnlyOnPlatforms(Windows = true, Reason = "Default formatting differs between platforms.")]
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
         [TestCase("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z", "Start: 1/2/2021 3:04:05 AM +00:00 End: 5/4/2021 3:02:01 AM +00:00")]
         public void ToStringFormats(string range, string expected)
         {
-            Assert.AreEqual(expected, MonitorQueryTimeRange.Parse(range).ToString());
+            Assert.AreEqual(expected, QueryTimeRange.Parse(range).ToString());
         }
 
         [TestCase("A")]
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
         [TestCase("1000000-05-04T03:02:01.0000000Z/PT23M")]
         public void ParseThrowsFormatExceptionForInvalidInput(string range)
         {
-            var ex = Assert.Throws<FormatException>(() => MonitorQueryTimeRange.Parse(range));
+            var ex = Assert.Throws<FormatException>(() => QueryTimeRange.Parse(range));
             StringAssert.StartsWith("Unable to parse the DateTimeRange value.", ex.Message);
         }
     }

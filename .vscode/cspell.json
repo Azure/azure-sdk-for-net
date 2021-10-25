@@ -33,17 +33,14 @@
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
     "sdk/compute/*/api/*.cs",
-    "sdk/containerregistry/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
-    "sdk/network/*/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -58,6 +55,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
@@ -67,6 +65,7 @@
     "expando",
     "finalizer",
     "finalizers",
+    "illumos",
     "ints",
     "lucene",
     "mgmt",
@@ -98,8 +97,43 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/network/**/*.cs",
+      "words": [
+        "Ddos",
+        "ddos",
+        "Dscp",
+        "dscp",
+        "Mbps",
+        "Snat",
+        "Nics",
+        "Fqdns",
+        "Unprepare",
+        "Skus",
+        "WAFV",
+        "Eapmscha",
+        "Eaptls",
+        "TLSDHEDSS", 
+        "TLSDHERSA",
+        "Dnat",
+        "Azfw",
+        "Vxlan",
+        "Ipconfiguration",
+        "Owasp",
+        "Conditon",
+        "Pfsmm",
+        "Sstp"
+      ]
     },
     {
       "filename": "**/sdk/keyvault/**/*.cs",
@@ -108,7 +142,9 @@
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "setsas",
+        "mhsm",
+        "mhsmip"
       ]
     },
     {

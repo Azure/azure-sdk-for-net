@@ -114,10 +114,10 @@ Response revokeResponse = client.RevokeTokens(user);
 Response deleteResponse = client.DeleteUser(user);
 ```
 
-### Exchange access token
+### Exchanging AAD access token of a Teams User for a Communication Identity access token
 
-```C# Snippet:ExchangeTeamsToken
-Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+```C# Snippet:ExchangeTeamsTokenAsync
+Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(teamsToken);
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```

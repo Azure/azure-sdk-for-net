@@ -13,8 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class PublicIpPrefixTests
-        : NetworkServiceClientTestBase
+    public class PublicIpPrefixTests : NetworkServiceClientTestBase
     {
         public PublicIpPrefixTests(bool isAsync) : base(isAsync)
         {

@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JobPropertiesStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobPropertiesStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobPropertiesStatus(string value)
         {

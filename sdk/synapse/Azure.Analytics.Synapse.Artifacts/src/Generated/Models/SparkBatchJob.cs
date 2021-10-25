@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="appInfo"> The detailed application info. </param>
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
-        internal SparkBatchJob(SparkBatchJobState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkBatchJobResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, string state, IReadOnlyList<string> logLines)
+        internal SparkBatchJob(SparkBatchJobState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkBatchJobResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines)
         {
             LivyInfo = livyInfo;
             Name = name;
@@ -65,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LogLines = logLines;
         }
 
+        /// <summary> Gets the livy info. </summary>
         public SparkBatchJobState LivyInfo { get; }
         /// <summary> The batch name. </summary>
         public string Name { get; }
@@ -97,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The detailed application info. </summary>
         public IReadOnlyDictionary<string, string> AppInfo { get; }
         /// <summary> The batch state. </summary>
-        public string State { get; }
+        public LivyStates? State { get; }
         /// <summary> The log lines. </summary>
         public IReadOnlyList<string> LogLines { get; }
     }

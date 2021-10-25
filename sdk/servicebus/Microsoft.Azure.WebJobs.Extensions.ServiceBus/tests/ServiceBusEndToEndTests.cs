@@ -9,9 +9,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -376,6 +379,102 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Category("DynamicConcurrency")]
+        public async Task DynamicConcurrencyTest()
+        {
+            DynamicConcurrencyTestJob.InvocationCount = 0;
+
+            var host = BuildHost<DynamicConcurrencyTestJob>(b =>
+            {
+                b.ConfigureWebJobs(b =>
+                 {
+                     b.Services.AddOptions<ConcurrencyOptions>().Configure(options =>
+                     {
+                         options.DynamicConcurrencyEnabled = true;
+
+                         // ensure on each test run we work up from 1
+                         options.SnapshotPersistenceEnabled = false;
+                     });
+                 }).ConfigureLogging((context, b) =>
+                 {
+                     // ensure we get all concurrency logs
+                     b.SetMinimumLevel(LogLevel.Debug);
+                 });
+            }, startHost: false);
+
+            using (host)
+            {
+                // ensure initial concurrency is 1
+                MethodInfo methodInfo = typeof(DynamicConcurrencyTestJob).GetMethod("ProcessMessage", BindingFlags.Public | BindingFlags.Static);
+                string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
+                var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
+                var concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+
+                // write a bunch of messages in batch
+                int numMessages = 500;
+                string[] messages = new string[numMessages];
+                for (int i = 0; i < numMessages; i++)
+                {
+                    messages[i] = Guid.NewGuid().ToString();
+                }
+                await WriteQueueMessages(messages);
+
+                // start the host and wait for all messages to be processed
+                await host.StartAsync();
+                await TestHelpers.Await(() =>
+                {
+                    return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
+                });
+
+                // ensure we've dynamically increased concurrency
+                concurrencyStatus = concurrencyManager.GetStatus(functionId);
+                Assert.GreaterOrEqual(concurrencyStatus.CurrentConcurrency, 10);
+
+                // check a few of the concurrency logs
+                var concurrencyLogs = host.GetTestLoggerProvider().GetAllLogMessages().Where(p => p.Category == LogCategories.Concurrency).Select(p => p.FormattedMessage).ToList();
+                int concurrencyIncreaseLogCount = concurrencyLogs.Count(p => p.Contains("ProcessMessage Increasing concurrency"));
+                Assert.GreaterOrEqual(concurrencyIncreaseLogCount, 3);
+
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValue()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBinding>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValueAsString()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBindingAsString>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
         public async Task MessageDrainingQueue()
         {
             await TestSingleDrainMode<DrainModeTestJobQueue>(true);
@@ -614,6 +713,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"LockAcquisitionTimeout\": \"",
                 "  \"LockPeriod\": \"00:00:15\",",
                 "  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"",
+                "}",
+                "ConcurrencyOptions",
+                "{",
+                "  \"DynamicConcurrencyEnabled\": false,",
+                "  \"CPUThreshold\": 0.8,",
+                "  \"MaximumFunctionConcurrency\": 500,",
+                "  \"SnapshotPersistenceEnabled\": true",
                 "}",
             }.OrderBy(p => p).ToArray();
 
@@ -1015,6 +1121,39 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"Input({input})");
                 _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBinding
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage input)
+            {
+                input.GetRawAmqpMessage().Body.TryGetValue(out object value);
+                Assert.AreEqual("foobar", value);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBindingAsString
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] string input)
+            {
+                Assert.AreEqual("foobar", input);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class DynamicConcurrencyTestJob
+        {
+            public static int InvocationCount;
+
+            public static async Task ProcessMessage([ServiceBusTrigger(FirstQueueNameKey)] string message, ILogger logger)
+            {
+                await Task.Delay(250);
+
+                Interlocked.Increment(ref InvocationCount);
             }
         }
 

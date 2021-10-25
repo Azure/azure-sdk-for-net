@@ -12,9 +12,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public const string DiagnosticIdAttribute = "Diagnostic-Id";
 
-        /// <summary>The attribute which represents the type of diagnostics information.</summary>
-        public const string TypeAttribute = "kind";
-
         /// <summary>The attribute which represents the Azure service to associate with diagnostics information.</summary>
         public const string ServiceContextAttribute = "component";
 
@@ -26,18 +23,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>The value which identifies the Service Bus diagnostics context.</summary>
         public const string ServiceBusServiceContext = "servicebus";
-
-        /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
-        public const string KindAttribute = "kind";
-
-        /// <summary>The value which identifies activities related to receiving or processing messages.</summary>
-        public const string ConsumerKind = "consumer";
-
-        /// <summary>The value which identifies the message client scope kind.</summary>
-        public const string ClientKind = "client";
-
-        /// <summary>The value which identifies an Service Bus entity producer as the type associated with the diagnostics information.</summary>
-        public const string ProducerKind = "producer";
 
         /// <summary>
         ///   The activity name associated with events.

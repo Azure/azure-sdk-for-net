@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         [Test]
         [RecordedTest]
-        public async Task AddTag()
+        public async Task AddRemoveTag()
         {
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
@@ -585,6 +585,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //verify the tag is added successfully
             Assert.AreEqual(account.Data.Tags.Count, 1);
+
+            //remove tag
+            account = await account.RemoveTagAsync("key");
+
+            //verify the tag is removed successfully
+            Assert.AreEqual(account.Data.Tags.Count, 0);
         }
 
         [Test]
@@ -613,6 +619,259 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //get all deleted accounts
             List<DeletedAccount> deletedAccounts = await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
             Assert.NotNull(deletedAccounts);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateUpdateGetDeleteBlobInventoryPolicy()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            BlobInventoryPolicyContainer blobInventoryPolicyContainer = account.GetBlobInventoryPolicies();
+
+            //create a blob container
+            string containerName = Recording.GenerateAssetName("testblob");
+            BlobContainerData data = new BlobContainerData();
+            BlobServiceContainer blobServiceContainer = account.GetBlobServices();
+            BlobService blobService = await blobServiceContainer.GetAsync("default");
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
+            BlobContainer container = (await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData())).Value;
+
+            //prepare schema fields
+            string[] BlobSchemaField = new string[] {"Name", "Creation-Time", "Last-Modified", "Content-Length", "Content-MD5", "BlobType", "AccessTier", "AccessTierChangeTime",
+                     "Snapshot", "VersionId", "IsCurrentVersion", "Metadata", "LastAccessTime"};
+            string[] ContainerSchemaField = new string[] { "Name", "Last-Modified", "Metadata", "LeaseStatus", "LeaseState", "LeaseDuration", "PublicAccess", "HasImmutabilityPolicy", "HasLegalHold" };
+
+            List<string> blobSchemaFields1 = new List<string>(BlobSchemaField);
+            List<string> blobSchemaFields2 = new List<string>();
+            blobSchemaFields2.Add("Name");
+            List<string> containerSchemaFields1 = new List<string>(ContainerSchemaField);
+            List<string> containerSchemaFields2 = new List<string>();
+            containerSchemaFields2.Add("Name");
+
+            // prepare policy objects,the type of policy rule should always be Inventory
+            List<BlobInventoryPolicyRule> ruleList = new List<BlobInventoryPolicyRule>();
+            BlobInventoryPolicyRule rule1 = new BlobInventoryPolicyRule(true, "rule1", containerName,
+                new BlobInventoryPolicyDefinition(
+                    filters: new BlobInventoryPolicyFilter(
+                        blobTypes: new List<string>(new string[] { "blockBlob" }),
+                        prefixMatch: new List<string>(new string[] { "prefix1", "prefix2" }),
+                        includeBlobVersions: true,
+                        includeSnapshots: true),
+                    format: Format.Csv,
+                    schedule: Schedule.Weekly,
+                    objectType: ObjectType.Blob,
+                    schemaFields: blobSchemaFields1));
+
+            BlobInventoryPolicyRule rule2 = new BlobInventoryPolicyRule(true, "rule2", containerName,
+                new BlobInventoryPolicyDefinition(
+                    format: Format.Csv,
+                    schedule: Schedule.Daily,
+                    objectType: ObjectType.Container,
+                    schemaFields: containerSchemaFields1));
+
+            BlobInventoryPolicyRule rule3 = new BlobInventoryPolicyRule(true, "rule3", containerName,
+                new BlobInventoryPolicyDefinition(
+                    format: Format.Parquet,
+                    schedule: Schedule.Weekly,
+                    objectType: ObjectType.Container,
+                    schemaFields: containerSchemaFields2));
+            ruleList.Add(rule1);
+            ruleList.Add(rule2);
+            BlobInventoryPolicySchema policy = new BlobInventoryPolicySchema(true, "Inventory", ruleList);
+            BlobInventoryPolicyData parameter = new BlobInventoryPolicyData()
+            {
+                Policy = policy
+            };
+
+            //create and get policy, the name of blob inventory policy should always be default
+            BlobInventoryPolicy blobInventoryPolicy = (await blobInventoryPolicyContainer.CreateOrUpdateAsync("default", parameter)).Value;
+            blobInventoryPolicy = await blobInventoryPolicyContainer.GetAsync("default");
+            Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 2);
+
+            //update policy
+            ruleList.Add(rule3);
+            BlobInventoryPolicySchema policy2 = new BlobInventoryPolicySchema(true, "Inventory", ruleList);
+            BlobInventoryPolicyData parameter2 = new BlobInventoryPolicyData()
+            {
+                Policy = policy2
+            };
+            blobInventoryPolicy = (await blobInventoryPolicyContainer.CreateOrUpdateAsync("default", parameter2)).Value;
+            Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 3);
+
+            //delete policy
+            await blobInventoryPolicy.DeleteAsync();
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task SetGetDeleteManagementPolicy()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            ManagementPolicyContainer managementPolicyContainer = account.GetManagementPolicies();
+
+            //Enable LAT
+            BlobServiceContainer blobServiceContainer = account.GetBlobServices();
+            BlobService blobService = await blobServiceContainer.GetAsync("Default");
+            blobService.Data.LastAccessTimeTrackingPolicy = new LastAccessTimeTrackingPolicy(true);
+            _ = await blobService.SetServicePropertiesAsync(blobService.Data);
+
+            // create ManagementPolicy to set, the type of policy rule should always be Lifecycle
+            List<ManagementPolicyRule> rules = new List<ManagementPolicyRule>();
+            ManagementPolicyAction action = new ManagementPolicyAction()
+            {
+                BaseBlob = new ManagementPolicyBaseBlob()
+                {
+                    Delete = new DateAfterModification(1000, null)
+                }
+            };
+            ManagementPolicyDefinition definition1 = new ManagementPolicyDefinition(action)
+            {
+                Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob", "appendBlob" }),
+            };
+            ManagementPolicyRule rule1 = new ManagementPolicyRule("rule1", "Lifecycle", definition1);
+            rules.Add(rule1);
+
+            ManagementPolicyDefinition definition2 = new ManagementPolicyDefinition(action)
+            {
+                Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "appendBlob" }),
+            };
+            ManagementPolicyRule rule2 = new ManagementPolicyRule("rule2", "Lifecycle", definition2);
+            rules.Add(rule2);
+
+            ManagementPolicyDefinition definition3 = new ManagementPolicyDefinition(action)
+            {
+                Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
+            };
+            ManagementPolicyRule rule3 = new ManagementPolicyRule("rule3", "Lifecycle", definition3);
+            rules.Add(rule3);
+
+            ManagementPolicyData parameter = new ManagementPolicyData()
+            {
+                Policy = new ManagementPolicySchema(rules)
+            };
+
+            //set management policy, the policy name should always be default
+            ManagementPolicy managementPolicy = (await managementPolicyContainer.CreateOrUpdateAsync("default", parameter)).Value;
+            Assert.NotNull(managementPolicy);
+            Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
+
+            //delete namagement policy
+            await managementPolicy.DeleteAsync();
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateUpdateGetEncryptionScope()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            EncryptionScopeContainer encryptionScopeContainer = account.GetEncryptionScopes();
+
+            //create encryption scope
+            EncryptionScopeData parameter = new EncryptionScopeData()
+            {
+                Source = EncryptionScopeSource.MicrosoftStorage,
+                State = EncryptionScopeState.Enabled,
+                RequireInfrastructureEncryption = false
+            };
+            EncryptionScope encryptionScope = (await encryptionScopeContainer.CreateOrUpdateAsync("scope", parameter)).Value;
+            Assert.AreEqual("scope", encryptionScope.Id.Name);
+            Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScope.Data.State);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
+
+            //patch encryption scope
+            encryptionScope.Data.State = EncryptionScopeState.Disabled;
+            encryptionScope = await encryptionScope.PatchAsync(encryptionScope.Data);
+            Assert.AreEqual(encryptionScope.Data.State, EncryptionScopeState.Disabled);
+
+            //get all encryption scopes
+            List<EncryptionScope> encryptionScopes = await encryptionScopeContainer.GetAllAsync().ToEnumerableAsync();
+            encryptionScope = encryptionScopes.First();
+            Assert.AreEqual("scope", encryptionScope.Id.Name);
+            Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScope.Data.State);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetAllPrivateEndPointConnections()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            PrivateEndpointConnectionContainer privateEndpointConnectionContainer = account.GetPrivateEndpointConnections();
+
+            //get all private endpoint connections
+            List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionContainer.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(privateEndpointConnections);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetAllPrivateLinkResources()
+        {
+            //create resource group and storage account
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //get all private link resources
+            Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
+            Assert.NotNull(privateLinkResources.Value);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task ListStorageAccountsInSubscription()
+        {
+            //create 2 resource groups and 2 storage accounts
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup1 = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup1.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters);
+
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroup resourceGroup2 = await CreateResourceGroupAsync();
+            storageAccountContainer = resourceGroup2.GetStorageAccounts();
+            await storageAccountContainer.CreateOrUpdateAsync(accountName2, parameters);
+
+            //validate two storage accounts
+            StorageAccount account1 = null;
+            StorageAccount account2 = null;
+            await foreach (StorageAccount account in DefaultSubscription.GetStorageAccountsAsync())
+            {
+                if (account.Id.Name == accountName1)
+                    account1 = account;
+                if (account.Id.Name == accountName2)
+                    account2 = account;
+            }
+            VerifyAccountProperties(account1, true);
+            VerifyAccountProperties(account2, true);
+            Assert.AreEqual(account1.Id.ResourceGroupName, resourceGroup1.Id.Name);
+            Assert.AreEqual(account2.Id.ResourceGroupName, resourceGroup2.Id.Name);
+
+            await account1.DeleteAsync();
+            await account2.DeleteAsync();
         }
     }
 }

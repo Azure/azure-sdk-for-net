@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineScaleSetVMExtension data model. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionData : Resources.Models.SubResource
+    public partial class VirtualMachineScaleSetVMExtensionData : SubResourceReadOnly
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionData. </summary>
         public VirtualMachineScaleSetVMExtensionData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>

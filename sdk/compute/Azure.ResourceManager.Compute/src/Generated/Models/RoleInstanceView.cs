@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomain { get; }
         /// <summary> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </summary>
         public string PrivateId { get; }
+        /// <summary> Gets the statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }
     }
 }

@@ -10,21 +10,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private const string AzureWebsiteSku = "WEBSITE_SKU";
         private const string DynamicSku = "Dynamic";
 
-        private static readonly Lazy<bool> s_isDynamicSku = new Lazy<bool>(() =>
+        private static readonly Lazy<bool> s_isDynamicSku = new Lazy<bool>(() => ReadIsDynamicSku());
+        private static readonly Lazy<int> s_processorCount = new Lazy<int>(() => GetProcessorCount(IsDynamicSku));
+
+        private static bool ReadIsDynamicSku()
         {
             string sku = Environment.GetEnvironmentVariable(AzureWebsiteSku);
-            return sku != null && sku == DynamicSku;
-        });
+            return string.Equals(sku, DynamicSku, StringComparison.OrdinalIgnoreCase);
+        }
 
-        private static readonly Lazy<int> s_processorCount = new Lazy<int>(() =>
+        private static int GetProcessorCount(bool isDynamicSku)
         {
             int processorCount = 1;
-            if (!IsDynamicSku)
+            if (!isDynamicSku)
             {
                 processorCount = Environment.ProcessorCount;
             }
             return processorCount;
-        });
+        }
 
         public static bool IsDynamicSku => s_isDynamicSku.Value;
 

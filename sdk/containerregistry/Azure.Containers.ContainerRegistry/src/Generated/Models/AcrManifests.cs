@@ -38,6 +38,7 @@ namespace Azure.Containers.ContainerRegistry
         public string Repository { get; }
         /// <summary> List of manifests. </summary>
         public IReadOnlyList<ManifestAttributesBase> Manifests { get; }
+        /// <summary> Gets the link. </summary>
         public string Link { get; }
     }
 }
