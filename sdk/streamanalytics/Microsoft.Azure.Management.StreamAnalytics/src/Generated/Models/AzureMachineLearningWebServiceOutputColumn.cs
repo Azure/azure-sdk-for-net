@@ -17,31 +17,31 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// Describes an output column for the Azure Machine Learning web service
     /// endpoint.
     /// </summary>
-    public partial class AzureMachineLearningServiceOutputColumn
+    public partial class AzureMachineLearningWebServiceOutputColumn
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceOutputColumn class.
+        /// AzureMachineLearningWebServiceOutputColumn class.
         /// </summary>
-        public AzureMachineLearningServiceOutputColumn()
+        public AzureMachineLearningWebServiceOutputColumn()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureMachineLearningServiceOutputColumn class.
+        /// AzureMachineLearningWebServiceOutputColumn class.
         /// </summary>
         /// <param name="name">The name of the output column.</param>
         /// <param name="dataType">The (Azure Machine Learning supported) data
-        /// type of the output column.</param>
-        /// <param name="mapTo">The zero based index of the function parameter
-        /// this input maps to.</param>
-        public AzureMachineLearningServiceOutputColumn(string name = default(string), string dataType = default(string), int? mapTo = default(int?))
+        /// type of the output column. A list of valid  Azure Machine Learning
+        /// data types are described at
+        /// https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx
+        /// .</param>
+        public AzureMachineLearningWebServiceOutputColumn(string name = default(string), string dataType = default(string))
         {
             Name = name;
             DataType = dataType;
-            MapTo = mapTo;
             CustomInit();
         }
 
@@ -58,17 +58,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 
         /// <summary>
         /// Gets or sets the (Azure Machine Learning supported) data type of
-        /// the output column.
+        /// the output column. A list of valid  Azure Machine Learning data
+        /// types are described at
+        /// https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx .
         /// </summary>
         [JsonProperty(PropertyName = "dataType")]
         public string DataType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zero based index of the function parameter this
-        /// input maps to.
-        /// </summary>
-        [JsonProperty(PropertyName = "mapTo")]
-        public int? MapTo { get; set; }
 
     }
 }

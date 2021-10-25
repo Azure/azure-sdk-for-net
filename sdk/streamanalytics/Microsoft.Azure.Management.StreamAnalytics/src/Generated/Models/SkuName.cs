@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
 
     /// <summary>
-    /// Defines values for StreamingJobSkuName.
+    /// Defines values for SkuName.
     /// </summary>
-    public static class StreamingJobSkuName
+    public static class SkuName
     {
         public const string Standard = "Standard";
     }

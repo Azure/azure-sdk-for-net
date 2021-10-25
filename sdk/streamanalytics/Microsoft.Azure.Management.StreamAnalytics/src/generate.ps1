@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "streamanalytics/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "streamanalytics/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork zesluo -SpecsRepoBranch zeshi/asa1018 -SdkRepoRootPath C:\ZeshiLuo\azure-sdk-for-net-1\sdk

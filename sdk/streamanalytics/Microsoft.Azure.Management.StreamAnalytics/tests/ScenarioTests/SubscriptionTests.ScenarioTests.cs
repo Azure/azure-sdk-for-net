@@ -19,9 +19,7 @@ namespace StreamAnalytics.Tests
                 var streamAnalyticsManagementClient = this.GetStreamAnalyticsManagementClient(context);
 
                 SubscriptionQuotasListResult quotaListResult = streamAnalyticsManagementClient.Subscriptions.ListQuotas("westus");
-                Assert.Equal(1, quotaListResult.Value.Count);
-                Assert.Equal(0, quotaListResult.Value.Single().CurrentCount);
-                Assert.Equal(200, quotaListResult.Value.Single().MaxCount);
+                Assert.Equal(2, quotaListResult.Value.Count);
             }
         }
     }

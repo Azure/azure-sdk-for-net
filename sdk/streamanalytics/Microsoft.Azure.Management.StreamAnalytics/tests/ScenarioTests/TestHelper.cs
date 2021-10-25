@@ -127,9 +127,9 @@ namespace StreamAnalytics.Tests
                         { "key3", "value3" }
                     },
                 Location = TestHelper.DefaultLocation,
-                Sku = new StreamingJobSku()
+                Sku = new Sku()
                 {
-                    Name = StreamingJobSkuName.Standard
+                    Name = SkuName.Standard
                 }
             };
         }

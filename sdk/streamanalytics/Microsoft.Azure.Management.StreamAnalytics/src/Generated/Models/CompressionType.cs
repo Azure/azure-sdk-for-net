@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
 
     /// <summary>
-    /// Defines values for ClusterSkuName.
+    /// Defines values for CompressionType.
     /// </summary>
-    public static class ClusterSkuName
+    public static class CompressionType
     {
-        /// <summary>
-        /// The default SKU.
-        /// </summary>
-        public const string Default = "Default";
+        public const string None = "None";
+        public const string GZip = "GZip";
+        public const string Deflate = "Deflate";
     }
 }
