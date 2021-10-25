@@ -49,6 +49,25 @@ namespace Azure.Core.Experimental.Tests.Models
             return DeserializePet(JsonDocument.Parse(response.Content.ToMemory()));
         }
 
+        // Cast from BinaryData to Pet
+        public static implicit operator Pet(BinaryData binaryData)
+        {
+            //// [X] TODO: Add in HLC error semantics
+            //// [X] TODO: Use response.IsError
+            //// [X] TODO: Use throw new ResponseFailedException(response);
+
+            //// TODO: When we move this functionality out of Experimental into Core, it will be replaced by
+            //// > if (response.IsError)
+            //if (response.IsError())
+            //{
+            //    // TODO: When we move this functionality out of Experimental into Core, it will be replaced by
+            //    // > throw new RequestFailedException(response);
+            //    throw response.CreateRequestFailedException();
+            //}
+
+            return DeserializePet(JsonDocument.Parse(binaryData.ToMemory()));
+        }
+
         private static Pet DeserializePet(JsonDocument document)
         {
             return new Pet(

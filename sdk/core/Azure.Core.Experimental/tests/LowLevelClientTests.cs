@@ -213,7 +213,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanGetPageableResponseFromLlcGetMethodAsync()
+        public async Task CanGetPageableResponse_LlcMethodAsync()
         {
             var page1Response = new MockResponse(200);
             page1Response.SetContent(
@@ -245,6 +245,40 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(3, count);
         }
+
+        //[Test]
+        //public async Task CanGetPageableResponse_GrowUpHelperMethodAsync()
+        //{
+        //    var page1Response = new MockResponse(200);
+        //    page1Response.SetContent(
+        //    @"{
+        //        ""value"": [
+        //             { ""name"": ""snoopy"", ""species"": ""beagle"" },
+        //             { ""name"": ""lassie"", ""species"": ""collie"" }
+        //        ],
+        //        ""nextLink"": ""https://example.petstore.com""
+        //    }");
+
+        //    var page2Response = new MockResponse(200);
+        //    page2Response.SetContent(
+        //    @"{
+        //        ""value"": [
+        //             { ""name"": ""rintintin"", ""species"": ""german shepherd"" }
+        //        ]
+        //    }");
+
+        //    var mockTransport = new MockTransport(page1Response, page2Response);
+        //    PetStoreClient client = CreateClient(mockTransport);
+
+        //    AsyncPageable<Pet> pets = client.GetPetsAsync();
+        //    int count = 0;
+        //    await foreach (var pet in pets)
+        //    {
+        //        count++;
+        //    }
+
+        //    Assert.AreEqual(3, count);
+        //}
 
         #region Helpers
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
