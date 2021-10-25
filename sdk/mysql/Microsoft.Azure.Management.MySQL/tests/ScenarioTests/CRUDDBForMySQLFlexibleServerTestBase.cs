@@ -19,7 +19,7 @@ namespace MySQL.Tests.ScenarioTests
 
         public CRUDDBForMySQLFlexibleServerTestBase()
         {
-            ResourceGroupName = "mysqlsdkrg";
+            ResourceGroupName = "mysqlnetsdkrg";
             ServerName = "mysqlsdkflexserver";
 
         }
@@ -33,7 +33,7 @@ namespace MySQL.Tests.ScenarioTests
                 resourceGroup.Name,
                 serverName,
                 new FlexibleServersModels.Server(location: resourceGroup.Location,
-                            sku: new FlexibleServersModels.Sku("Standard_D4s_v3", "GeneralPurpose"),
+                            sku: new FlexibleServersModels.Sku("Standard_B1ms", "Burstable"),
                             administratorLogin: "testUser",
                             administratorLoginPassword: "testPassword1!",
                             version: "5.7",
