@@ -38,10 +38,11 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
-        public void GetTagsOperation()
+        public async Task GetTagsOperation()
         {
             _predefinedTag = null;
-            var operation = Client.GetPreDefinedTag($"/subscriptions/{Client.DefaultSubscription.Id.SubscriptionId}/tagNames/fakeTagName");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false); 
+            var operation = Client.GetPreDefinedTag($"/subscriptions/{subscription.Id.SubscriptionId}/tagNames/fakeTagName");
             string subscriptionId;
             Assert.IsTrue(operation.Id.TryGetSubscriptionId(out subscriptionId));
             Assert.AreEqual(subscriptionId, TestEnvironment.SubscriptionId);
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         public async Task ValueTest()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             _predefinedTag = preDefinedTagOp.Value;
             // Assert create tag value
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Tests
         public async Task DeleteTag()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             _predefinedTag = preDefinedTagOp.Value;
             await _predefinedTag.DeleteAsync(tagName).ConfigureAwait(false);
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Tests
         public async Task StartDelete()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var preDefinedTagOp = await collection.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             _predefinedTag = preDefinedTagOp.Value;
             await _predefinedTag.DeleteAsync(tagName, false).ConfigureAwait(false);

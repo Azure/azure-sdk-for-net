@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
         {
             var foo = await Client.GetSubscriptions().GetIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsNull(foo.Value);
-            string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
+            string subscriptionId = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Id.SubscriptionId;
             Subscription subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.NotNull(subscription);
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            string subscriptionId = subscription.Id.SubscriptionId;
             Subscription result = await Client.GetSubscriptions().GetAsync(subscriptionId).ConfigureAwait(false);
             Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
 
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         {
             var expectFalse = await Client.GetSubscriptions().CheckIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsFalse(expectFalse);
-            string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
+            string subscriptionId = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Id.SubscriptionId;
             var expectTrue = await Client.GetSubscriptions().CheckIfExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.IsTrue(expectTrue);
         }

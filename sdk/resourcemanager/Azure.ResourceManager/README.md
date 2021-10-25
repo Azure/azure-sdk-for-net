@@ -63,7 +63,8 @@ since everything is returned as a full resource client now.
 ```C#
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 string rgName = "myResourceGroup";
-ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup rg = await subscription.GetResourceGroups().GetAsync(rgName);
 await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
 {
     //previously we would have to take the resourceGroupName and the vmName from the vm object
@@ -100,7 +101,8 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 
 // Next we get a resource group object
 // ResourceGroup is a [Resource] object from above
-ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 // Next we get the collection for the virtual machines
 // vmCollection is a [Resource]Collection object from above
@@ -204,7 +206,7 @@ Before these methods were introduced you would need to catch the `RequestFailedE
 
 ```C# Snippet:Readme_OldCheckIfExistsRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 try
@@ -222,7 +224,7 @@ Now with these convenience methods we can simply do the following.
 
 ```C# Snippet:Readme_CheckIfExistssRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
@@ -245,7 +247,7 @@ Another way to do this is by using `GetIfExists()` which will avoid the race con
 
 ```C# Snippet:Readme_TryGetRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 
 ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
@@ -296,7 +298,7 @@ await foreach (ResourceGroup rg in rgCollection.GetAllAsync())
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
 // Note: Resource group named 'myRgName' should exist for this example to work.
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 resourceGroup = await resourceGroup.AddTagAsync("key", "value");
@@ -305,7 +307,7 @@ resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 ### Delete a resource group
 ```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 await resourceGroup.DeleteAsync();

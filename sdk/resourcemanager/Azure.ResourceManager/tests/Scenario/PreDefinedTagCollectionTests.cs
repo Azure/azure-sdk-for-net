@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Create()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var result = await collection.CreateOrUpdateAsync(tagName);
             _predefinedTag = result.Value;
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
         public async Task StartCreate()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var result = await collection.CreateOrUpdateAsync(tagName);
             _predefinedTag = result.Value;
             Assert.IsTrue(result.Value.Data.TagName.Equals(tagName));
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var collection = Client.DefaultSubscription.GetPredefinedTags();
+            var collection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetPredefinedTags();
             var tagLro = await collection.CreateOrUpdateAsync(tagName);
             _predefinedTag = tagLro.Value;
             var result = await collection.GetAllAsync().ToEnumerableAsync();

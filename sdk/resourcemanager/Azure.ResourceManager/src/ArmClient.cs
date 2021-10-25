@@ -111,16 +111,12 @@ namespace Azure.ResourceManager
             ClientOptions = options.Clone();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
-            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
-                ? GetDefaultSubscription()
-                : GetSubscriptions().Get(defaultSubscriptionId);
+            _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
+                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
-        /// <summary>
-        /// Gets the default Azure subscription.
-        /// </summary>
-        public virtual Subscription DefaultSubscription { get; private set; }
+        private Subscription _defaultSubscription;
 
         /// <summary>
         /// Gets the Azure Resource Manager client options.
@@ -207,12 +203,78 @@ namespace Azure.ResourceManager
             return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
-        private Subscription GetDefaultSubscription()
+        /// <summary>
+        /// Gets the default subscription.
+        /// </summary>
+        /// <returns> Resource operations of the Subscription. </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            var sub = GetSubscriptions().GetAll().FirstOrDefault();
-            if (sub is null)
-                throw new Exception("No subscriptions found for the given credentials");
-            return sub;
+            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            scope.Start();
+            try
+            {
+                if (_defaultSubscription == null)
+                {
+                    _defaultSubscription = GetSubscriptions().GetAll(cancellationToken).FirstOrDefault();
+                }
+                else if (_defaultSubscription.HasData)
+                {
+                    return _defaultSubscription;
+                }
+                else
+                {
+                    _defaultSubscription = _defaultSubscription.Get(cancellationToken);
+                }
+                if (_defaultSubscription is null)
+                {
+                    throw new InvalidOperationException("No subscriptions found for the given credentials");
+                }
+                return _defaultSubscription;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default subscription.
+        /// </summary>
+        /// <returns> Resource operations of the Subscription. </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
+            scope.Start();
+            try
+            {
+                if (_defaultSubscription == null)
+                {
+                    _defaultSubscription = await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false);
+                }
+                else if (_defaultSubscription.HasData)
+                {
+                    return _defaultSubscription;
+                }
+                else
+                {
+                    _defaultSubscription = await _defaultSubscription.GetAsync(cancellationToken).ConfigureAwait(false);
+                }
+                if (_defaultSubscription is null)
+                {
+                    throw new InvalidOperationException("No subscriptions found for the given credentials");
+                }
+                return _defaultSubscription;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -275,12 +337,12 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var genericRespirceOperations = new ChangeTrackingList<GenericResource>();
+            var genericResourceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericRespirceOperations.Add(new GenericResource(DefaultSubscription, id));
+                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), id));
             }
-            return genericRespirceOperations;
+            return genericResourceOperations;
         }
 
         /// <summary>
@@ -295,7 +357,7 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return new GenericResource(DefaultSubscription, id);
+            return new GenericResource(GetDefaultSubscription(), id);
         }
 
         /// <summary>
@@ -345,7 +407,7 @@ namespace Azure.ResourceManager
         public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
 
         /// <summary>
-        /// Gets the managmeent group operations object associated with the id.
+        /// Gets the management group operations object associated with the id.
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_DefaultSubscription
         }
@@ -35,10 +35,22 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
+        public void GettingSpecifiedDefaultSubscription()
+        {
+            #region Snippet:Hello_World_SpecifyDefaultSubscription
+            string defaultSubscriptionId = "your-subscription-id";
+            ArmClient armClient = new ArmClient(defaultSubscriptionId, new DefaultAzureCredential());
+            Subscription subscription = armClient.GetDefaultSubscription();
+            Console.WriteLine(subscription.Id);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void RetrieveResourceGroupCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             #region Snippet:Hello_World_ResourceGroupCollection
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             #endregion Snippet:Hello_World_ResourceGroupCollection
