@@ -67,7 +67,7 @@ namespace CosmosDB.Tests
             Gremlin
         }
         
-        public string GetDatabaseAccountName(AccountType accountType)
+        public string GetDatabaseAccountName(AccountType accountType, bool enablePitr = true)
         {
             string accountName;
             if (!this.accounts.TryGetValue(accountType, out accountName))
@@ -75,21 +75,24 @@ namespace CosmosDB.Tests
                 if (accountType == AccountType.Sql)
                 {
                     accountName = CreateDatabaseAccount(
-                        kind: DatabaseAccountKind.GlobalDocumentDB
+                        kind: DatabaseAccountKind.GlobalDocumentDB,
+                        enablePitr: enablePitr
                     );
                 }
                 else if (accountType == AccountType.Mongo32)
                 {
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
-                        serverVersion: "3.2"
+                        serverVersion: "3.2",
+                        enablePitr: enablePitr
                     );
                 }
                 else if (accountType == AccountType.Mongo36)
                 {
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
-                        serverVersion: "3.6"
+                        serverVersion: "3.6",
+                        enablePitr: enablePitr
                     );
                 }
                 else if (accountType == AccountType.Table)
