@@ -33,9 +33,9 @@ After we have the resource group created, we can create a namespace
 
 ```C# Snippet:Managing_EventHubs_CreateNamespace
 string namespaceName = "myNamespace";
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(location))).Value;
-EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubContainer eventHubContainer = eHNamespace.GetEventHubs();
 ```
 
 Now that we have the namespace, we can manage the event hubs inside this namespace.
@@ -44,42 +44,42 @@ Now that we have the namespace, we can manage the event hubs inside this namespa
 
 ```C# Snippet:Managing_EventHubs_CreateEventHub
 string eventhubName = "myEventhub";
-Eventhub eventhub = (await eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
+EventHub eventHub = (await eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
 ```
 
 ***List all event hubs***
 
 ```C# Snippet:Managing_EventHubs_ListEventHubs
-await foreach (Eventhub eventhub in eventhubContainer.GetAllAsync())
+await foreach (EventHub eventHub in eventHubContainer.GetAllAsync())
 {
-    Console.WriteLine(eventhub.Id.Name);
+    Console.WriteLine(eventHub.Id.Name);
 }
 ```
 
 ***Get an event hub***
 
 ```C# Snippet:Managing_EventHubs_GetEventHub
-Eventhub eventhub = await eventhubContainer.GetAsync("myEventhub");
+EventHub eventHub = await eventHubContainer.GetAsync("myEventHub");
 ```
 
 ***Try to get an event hub if it exists***
 
 ```C# Snippet:Managing_EventHubs_GetEventHubIfExists
-Eventhub eventhub = await eventhubContainer.GetIfExistsAsync("foo");
-if (eventhub != null)
+EventHub eventHub = await eventHubContainer.GetIfExistsAsync("foo");
+if (eventHub != null)
 {
-    Console.WriteLine("eventhub 'foo' exists");
+    Console.WriteLine("eventHub 'foo' exists");
 }
-if (await eventhubContainer.CheckIfExistsAsync("bar"))
+if (await eventHubContainer.CheckIfExistsAsync("bar"))
 {
-    Console.WriteLine("eventhub 'bar' exists");
+    Console.WriteLine("eventHub 'bar' exists");
 }
 ```
 
 ***Delete an event hub***
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub
-Eventhub eventhub = await eventhubContainer.GetAsync("myEventhub");
-await eventhub.DeleteAsync();
+EventHub eventHub = await eventHubContainer.GetAsync("myEventhub");
+await eventHub.DeleteAsync();
 ```
 

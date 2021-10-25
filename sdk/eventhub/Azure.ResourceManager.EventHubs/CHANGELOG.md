@@ -91,7 +91,7 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
-EHNamespaceData parameters = new EHNamespaceData(Location.WestUS)
+EventHubNamespaceData parameters = new EventHubNamespaceData(Location.WestUS)
 {
     Sku = new Sku(SkuName.Standard)
     {
@@ -100,12 +100,12 @@ EHNamespaceData parameters = new EHNamespaceData(Location.WestUS)
 };
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
-EHNamespaceContainer eHNamespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = eHNamespaceContainer.CreateOrUpdate(namespaceName, parameters).Value;
+EventHubNamespaceContainer eHNamespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = eHNamespaceContainer.CreateOrUpdate(namespaceName, parameters).Value;
 
 //create eventhub
-EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
-EventhubData eventhubData = new EventhubData()
+EventHubContainer eventHubContainer = eventHubNamespace.GetEventHubs();
+EventHubData eventHubData = new EventHubData()
 {
     MessageRetentionInDays = 4,
     PartitionCount = 4,
@@ -126,7 +126,7 @@ EventhubData eventhubData = new EventhubData()
         SkipEmptyArchives = true
     }
 };
-Eventhub eventhub = eventhubContainer.CreateOrUpdate(eventhubName, eventhubData).Value;
+EventHub eventHub = eventHubContainer.CreateOrUpdate(eventhubName, eventHubData).Value;
 ```
 
 #### Object Model Changes

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventhubData : IUtf8JsonSerializable
+    public partial class EventHubData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventhubData DeserializeEventhubData(JsonElement element)
+        internal static EventHubData DeserializeEventHubData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventhubData(id, name, type, systemData, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
+            return new EventHubData(id, name, type, systemData, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
         }
     }
 }

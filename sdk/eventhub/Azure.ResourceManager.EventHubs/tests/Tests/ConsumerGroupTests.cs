@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public class ConsumerGroupTests : EventHubTestBase
     {
         private ResourceGroup _resourceGroup;
-        private Eventhub _eventhub;
+        private EventHub _eventHub;
         private ConsumerGroupContainer _consumerGroupContainer;
         public ConsumerGroupTests(bool isAsync) : base(isAsync)
         {
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(DefaultLocation))).Value;
-            EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
+            EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
+            EventHubNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubContainer eventhubContainer = eHNamespace.GetEventHubs();
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            _eventhub = (await eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
-            _consumerGroupContainer = _eventhub.GetConsumerGroups();
+            _eventHub = (await eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+            _consumerGroupContainer = _eventHub.GetConsumerGroups();
         }
         [TearDown]
         public async Task ClearNamespaces()
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-                List<EHNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
-                foreach (EHNamespace eHNamespace in namespaceList)
+                EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
+                List<EventHubNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
-                    await eHNamespace.DeleteAsync();
+                    await eventHubNamespace.DeleteAsync();
                 }
                 _resourceGroup = null;
             }

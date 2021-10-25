@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
 {
     public class Sample1_ManageEventhubs
     {
-        private EventhubContainer eventhubContainer;
+        private EventHubContainer eventHubContainer;
 
         [SetUp]
         public async Task CreateNamespace()
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #endregion
             #region Snippet:Managing_EventHubs_CreateNamespace
             string namespaceName = "myNamespace";
-            EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-            EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(location))).Value;
-            EventhubContainer eventhubContainer = eHNamespace.GetEventhubs();
+            EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+            EventHubNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+            EventHubContainer eventHubContainer = eHNamespace.GetEventHubs();
             #endregion
-            this.eventhubContainer = eventhubContainer;
+            this.eventHubContainer = eventHubContainer;
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         {
             #region Snippet:Managing_EventHubs_CreateEventHub
             string eventhubName = "myEventhub";
-            Eventhub eventhub = (await eventhubContainer.CreateOrUpdateAsync(eventhubName, new EventhubData())).Value;
+            EventHub eventHub = (await eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
             #endregion
         }
 
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_EventHubs_ListEventHubs
-            await foreach (Eventhub eventhub in eventhubContainer.GetAllAsync())
+            await foreach (EventHub eventHub in eventHubContainer.GetAllAsync())
             {
-                Console.WriteLine(eventhub.Id.Name);
+                Console.WriteLine(eventHub.Id.Name);
             }
             #endregion
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_EventHubs_GetEventHub
-            Eventhub eventhub = await eventhubContainer.GetAsync("myEventhub");
+            EventHub eventHub = await eventHubContainer.GetAsync("myEventHub");
             #endregion
         }
 
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         public async Task GetIfExist()
         {
             #region Snippet:Managing_EventHubs_GetEventHubIfExists
-            Eventhub eventhub = await eventhubContainer.GetIfExistsAsync("foo");
-            if (eventhub != null)
+            EventHub eventHub = await eventHubContainer.GetIfExistsAsync("foo");
+            if (eventHub != null)
             {
-                Console.WriteLine("eventhub 'foo' exists");
+                Console.WriteLine("eventHub 'foo' exists");
             }
-            if (await eventhubContainer.CheckIfExistsAsync("bar"))
+            if (await eventHubContainer.CheckIfExistsAsync("bar"))
             {
-                Console.WriteLine("eventhub 'bar' exists");
+                Console.WriteLine("eventHub 'bar' exists");
             }
             #endregion
         }
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         public async Task Delete()
         {
             #region Snippet:Managing_EventHubs_DeleteEventHub
-            Eventhub eventhub = await eventhubContainer.GetAsync("myEventhub");
-            await eventhub.DeleteAsync();
+            EventHub eventHub = await eventHubContainer.GetAsync("myEventhub");
+            await eventHub.DeleteAsync();
             #endregion
         }
     }

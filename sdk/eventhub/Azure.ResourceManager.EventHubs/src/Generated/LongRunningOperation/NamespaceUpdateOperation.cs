@@ -16,25 +16,25 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceUpdateOperation : Operation<EHNamespace>
+    public partial class NamespaceUpdateOperation : Operation<EventHubNamespace>
     {
-        private readonly OperationOrResponseInternals<EHNamespace> _operation;
+        private readonly OperationOrResponseInternals<EventHubNamespace> _operation;
 
         /// <summary> Initializes a new instance of NamespaceUpdateOperation for mocking. </summary>
         protected NamespaceUpdateOperation()
         {
         }
 
-        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<EHNamespaceData> response)
+        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<EventHubNamespaceData> response)
         {
-            _operation = new OperationOrResponseInternals<EHNamespace>(Response.FromValue(new EHNamespace(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<EventHubNamespace>(Response.FromValue(new EventHubNamespace(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override EHNamespace Value => _operation.Value;
+        public override EventHubNamespace Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EHNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHubNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EHNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHubNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

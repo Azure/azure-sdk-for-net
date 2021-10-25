@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<ClusterData>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHubClusterData>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        ClusterData value = default;
+                        EventHubClusterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterData.DeserializeClusterData(document.RootElement);
+                        value = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ClusterData)null, message.Response);
+                    return Response.FromValue((EventHubClusterData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public Response<ClusterData> Get(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<EventHubClusterData> Get(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -250,19 +250,19 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        ClusterData value = default;
+                        EventHubClusterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterData.DeserializeClusterData(document.RootElement);
+                        value = EventHubClusterData.DeserializeEventHubClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ClusterData)null, message.Response);
+                    return Response.FromValue((EventHubClusterData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string clusterName, ClusterData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string clusterName, EventHubClusterData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string clusterName, ClusterData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters for creating a eventhub cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string clusterName, ClusterData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string clusterName, ClusterData parameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string clusterName, EventHubClusterData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceGroupName, string clusterName, ClusterData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string resourceGroupName, string clusterName, ClusterData parameters, CancellationToken cancellationToken = default)
+        public Response Update(string resourceGroupName, string clusterName, EventHubClusterData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public async Task<Response<EHNamespaceIdListResult>> GetNamespacesAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHubNamespaceIdListResult>> GetNamespacesAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -567,9 +567,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EHNamespaceIdListResult value = default;
+                        EventHubNamespaceIdListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
+                        value = EventHubNamespaceIdListResult.DeserializeEventHubNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        public Response<EHNamespaceIdListResult> GetNamespaces(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<EventHubNamespaceIdListResult> GetNamespaces(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -599,9 +599,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EHNamespaceIdListResult value = default;
+                        EventHubNamespaceIdListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EHNamespaceIdListResult.DeserializeEHNamespaceIdListResult(document.RootElement);
+                        value = EventHubNamespaceIdListResult.DeserializeEventHubNamespaceIdListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

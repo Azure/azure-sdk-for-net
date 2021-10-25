@@ -18,27 +18,27 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of Eventhub and their operations over a EHNamespace. </summary>
-    public partial class EventhubContainer : ArmContainer
+    /// <summary> A class representing collection of EventHub and their operations over a EventHubNamespace. </summary>
+    public partial class EventHubContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EventHubsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EventhubContainer"/> class for mocking. </summary>
-        protected EventhubContainer()
+        /// <summary> Initializes a new instance of the <see cref="EventHubContainer"/> class for mocking. </summary>
+        protected EventHubContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of EventhubContainer class. </summary>
+        /// <summary> Initializes a new instance of EventHubContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal EventhubContainer(ArmResource parent) : base(parent)
+        internal EventHubContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new EventHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => EHNamespace.ResourceType;
+        protected override ResourceType ValidResourceType => EventHubNamespace.ResourceType;
 
         // Container level operations.
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual EventHubCreateOrUpdateOperation CreateOrUpdate(string eventHubName, EventhubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual EventHubCreateOrUpdateOperation CreateOrUpdate(string eventHubName, EventHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (eventHubName == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<EventHubCreateOrUpdateOperation> CreateOrUpdateAsync(string eventHubName, EventhubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<EventHubCreateOrUpdateOperation> CreateOrUpdateAsync(string eventHubName, EventHubData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (eventHubName == null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<Eventhub> Get(string eventHubName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHub> Get(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.Get");
             scope.Start();
             try
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Eventhub(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHub(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<Eventhub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<EventHub>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.Get");
             scope.Start();
             try
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Eventhub(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHub(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<Eventhub> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHub> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.EventHubs
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<Eventhub>(null, response.GetRawResponse())
-                    : Response.FromValue(new Eventhub(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<EventHub>(null, response.GetRawResponse())
+                    : Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<Eventhub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<EventHub>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.EventHubs
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<Eventhub>(null, response.GetRawResponse())
-                    : Response.FromValue(new Eventhub(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<EventHub>(null, response.GetRawResponse())
+                    : Response.FromValue(new EventHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventhubContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -266,17 +266,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Eventhub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Eventhub> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHub> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<Eventhub> FirstPageFunc(int? pageSizeHint)
+            Page<EventHub> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restClient.GetAllByNamespace(Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<Eventhub> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventHub> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restClient.GetAllByNamespaceNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,17 +306,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Eventhub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Eventhub> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHub" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHub> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Eventhub>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHub>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restClient.GetAllByNamespaceAsync(Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,14 +324,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<Eventhub>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventHub>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventhubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restClient.GetAllByNamespaceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Eventhub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -343,6 +343,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, Eventhub, EventhubData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, EventHub, EventHubData> Construct() { }
     }
 }

@@ -18,7 +18,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of AuthorizationRuleNamespace and their operations over a EHNamespace. </summary>
+    /// <summary> A class representing collection of AuthorizationRuleNamespace and their operations over a EventHubNamespace. </summary>
     public partial class AuthorizationRuleNamespaceContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => EHNamespace.ResourceType;
+        protected override ResourceType ValidResourceType => EventHubNamespace.ResourceType;
 
         // Container level operations.
 

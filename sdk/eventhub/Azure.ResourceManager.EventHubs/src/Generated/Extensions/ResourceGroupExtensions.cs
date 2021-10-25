@@ -12,23 +12,23 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Cluster
-        /// <summary> Gets an object representing a ClusterContainer along with the instance operations that can be performed on it. </summary>
+        #region EventHubCluster
+        /// <summary> Gets an object representing a EventHubClusterContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ClusterContainer" /> object. </returns>
-        public static ClusterContainer GetClusters(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="EventHubClusterContainer" /> object. </returns>
+        public static EventHubClusterContainer GetEventHubClusters(this ResourceGroup resourceGroup)
         {
-            return new ClusterContainer(resourceGroup);
+            return new EventHubClusterContainer(resourceGroup);
         }
         #endregion
 
-        #region EHNamespace
-        /// <summary> Gets an object representing a EHNamespaceContainer along with the instance operations that can be performed on it. </summary>
+        #region EventHubNamespace
+        /// <summary> Gets an object representing a EventHubNamespaceContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="EHNamespaceContainer" /> object. </returns>
-        public static EHNamespaceContainer GetEHNamespaces(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="EventHubNamespaceContainer" /> object. </returns>
+        public static EventHubNamespaceContainer GetEventHubNamespaces(this ResourceGroup resourceGroup)
         {
-            return new EHNamespaceContainer(resourceGroup);
+            return new EventHubNamespaceContainer(resourceGroup);
         }
         #endregion
     }

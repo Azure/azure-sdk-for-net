@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-                List<EHNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
-                foreach (EHNamespace eHNamespace in namespaceList)
+                EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
+                List<EventHubNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
-                    await eHNamespace.DeleteAsync();
+                    await eventHubNamespace.DeleteAsync();
                 }
                 _resourceGroup = null;
             }
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespaceContainer namespaceContainer = _resourceGroup.GetEHNamespaces();
-            EHNamespace eHNamespace1 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new EHNamespaceData(DefaultLocation))).Value;
+            EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
+            EventHubNamespace eHNamespace1 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EHNamespace eHNamespace2 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName2, new EHNamespaceData(Location.EastUS))).Value;
+            EventHubNamespace eHNamespace2 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName2, new EventHubNamespaceData(Location.EastUS))).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");

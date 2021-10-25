@@ -18,9 +18,9 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates a namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceCreateOrUpdateOperation : Operation<EHNamespace>, IOperationSource<EHNamespace>
+    public partial class NamespaceCreateOrUpdateOperation : Operation<EventHubNamespace>, IOperationSource<EventHubNamespace>
     {
-        private readonly OperationInternals<EHNamespace> _operation;
+        private readonly OperationInternals<EventHubNamespace> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal NamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EHNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
+            _operation = new OperationInternals<EventHubNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override EHNamespace Value => _operation.Value;
+        public override EventHubNamespace Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EHNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHubNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<EHNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHubNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        EHNamespace IOperationSource<EHNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHubNamespace IOperationSource<EventHubNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new EHNamespace(_operationBase, EHNamespaceData.DeserializeEHNamespaceData(document.RootElement));
+            return new EventHubNamespace(_operationBase, EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement));
         }
 
-        async ValueTask<EHNamespace> IOperationSource<EHNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHubNamespace> IOperationSource<EventHubNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new EHNamespace(_operationBase, EHNamespaceData.DeserializeEHNamespaceData(document.RootElement));
+            return new EventHubNamespace(_operationBase, EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement));
         }
     }
 }

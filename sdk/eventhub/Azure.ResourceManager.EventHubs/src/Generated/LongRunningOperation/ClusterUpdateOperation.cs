@@ -18,9 +18,9 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Modifies mutable properties on the Event Hubs Cluster. This operation is idempotent. </summary>
-    public partial class ClusterUpdateOperation : Operation<Cluster>, IOperationSource<Cluster>
+    public partial class ClusterUpdateOperation : Operation<EventHubCluster>, IOperationSource<EventHubCluster>
     {
-        private readonly OperationInternals<Cluster> _operation;
+        private readonly OperationInternals<EventHubCluster> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal ClusterUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Cluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClusterUpdateOperation");
+            _operation = new OperationInternals<EventHubCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClusterUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Cluster Value => _operation.Value;
+        public override EventHubCluster Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Cluster>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHubCluster>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Cluster>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHubCluster>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Cluster IOperationSource<Cluster>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHubCluster IOperationSource<EventHubCluster>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new Cluster(_operationBase, ClusterData.DeserializeClusterData(document.RootElement));
+            return new EventHubCluster(_operationBase, EventHubClusterData.DeserializeEventHubClusterData(document.RootElement));
         }
 
-        async ValueTask<Cluster> IOperationSource<Cluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHubCluster> IOperationSource<EventHubCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new Cluster(_operationBase, ClusterData.DeserializeClusterData(document.RootElement));
+            return new EventHubCluster(_operationBase, EventHubClusterData.DeserializeEventHubClusterData(document.RootElement));
         }
     }
 }

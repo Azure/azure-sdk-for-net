@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             ResourceType type = default;
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<DefaultAction> defaultAction = default;
-            Optional<IList<NWRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<NWRuleSetIpRules>> ipRules = default;
+            Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
+            Optional<IList<NetworkRuleSetIpRules>> ipRules = default;
             Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NWRuleSetVirtualNetworkRules> array = new List<NWRuleSetVirtualNetworkRules>();
+                            List<NetworkRuleSetVirtualNetworkRules> array = new List<NetworkRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NWRuleSetVirtualNetworkRules.DeserializeNWRuleSetVirtualNetworkRules(item));
+                                array.Add(NetworkRuleSetVirtualNetworkRules.DeserializeNetworkRuleSetVirtualNetworkRules(item));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NWRuleSetIpRules> array = new List<NWRuleSetIpRules>();
+                            List<NetworkRuleSetIpRules> array = new List<NetworkRuleSetIpRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NWRuleSetIpRules.DeserializeNWRuleSetIpRules(item));
+                                array.Add(NetworkRuleSetIpRules.DeserializeNetworkRuleSetIpRules(item));
                             }
                             ipRules = array;
                             continue;

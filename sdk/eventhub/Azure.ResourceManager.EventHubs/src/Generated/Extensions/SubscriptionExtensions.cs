@@ -23,30 +23,30 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region Cluster
+        #region EventHubCluster
         private static ClustersRestOperations GetClustersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ClustersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the Clusters for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the EventHubClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Cluster> GetClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventHubCluster> GetEventHubClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<Cluster>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<EventHubCluster>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Cluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.EventHubs
                         throw;
                     }
                 }
-                async Task<Page<Cluster>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<EventHubCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new Cluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -74,24 +74,24 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> Lists the Clusters for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the EventHubClusters for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Cluster> GetClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EventHubCluster> GetEventHubClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetClustersRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<Cluster> FirstPageFunc(int? pageSizeHint)
+                Page<EventHubCluster> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Cluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.EventHubs
                         throw;
                     }
                 }
-                Page<Cluster> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<EventHubCluster> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetClusters");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubClusters");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new Cluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -119,59 +119,59 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> Filters the list of Clusters for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EventHubClusters for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetClusterByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetEventHubClusterByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Cluster.ResourceType);
+            ResourceFilterCollection filters = new(EventHubCluster.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Clusters for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EventHubClusters for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetClusterByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetEventHubClusterByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(Cluster.ResourceType);
+            ResourceFilterCollection filters = new(EventHubCluster.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
         #endregion
 
-        #region EHNamespace
+        #region EventHubNamespace
         private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the EHNamespaces for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the EventHubNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EHNamespace> GetEHNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventHubNamespace> GetEventHubNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<EHNamespace>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<EventHubNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.EventHubs
                         throw;
                     }
                 }
-                async Task<Page<EHNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<EventHubNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -199,24 +199,24 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> Lists the EHNamespaces for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the EventHubNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EHNamespace> GetEHNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<EventHubNamespace> GetEventHubNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<EHNamespace> FirstPageFunc(int? pageSizeHint)
+                Page<EventHubNamespace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAll(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -224,14 +224,14 @@ namespace Azure.ResourceManager.EventHubs
                         throw;
                     }
                 }
-                Page<EHNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<EventHubNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEHNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetEventHubNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EHNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -244,30 +244,30 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> Filters the list of EHNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EventHubNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetEHNamespaceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetEventHubNamespaceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(EHNamespace.ResourceType);
+            ResourceFilterCollection filters = new(EventHubNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of EHNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of EventHubNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetEHNamespaceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetEventHubNamespaceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(EHNamespace.ResourceType);
+            ResourceFilterCollection filters = new(EventHubNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

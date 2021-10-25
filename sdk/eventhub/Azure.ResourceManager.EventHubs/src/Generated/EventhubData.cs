@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the Eventhub data model. </summary>
-    public partial class EventhubData : Resource
+    /// <summary> A class representing the EventHub data model. </summary>
+    public partial class EventHubData : Resource
     {
-        /// <summary> Initializes a new instance of EventhubData. </summary>
-        public EventhubData()
+        /// <summary> Initializes a new instance of EventHubData. </summary>
+        public EventHubData()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventhubData. </summary>
+        /// <summary> Initializes a new instance of EventHubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal EventhubData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
         {
             SystemData = systemData;
             PartitionIds = partitionIds;

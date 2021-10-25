@@ -16,25 +16,25 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
-    public partial class EventHubCreateOrUpdateOperation : Operation<Eventhub>
+    public partial class EventHubCreateOrUpdateOperation : Operation<EventHub>
     {
-        private readonly OperationOrResponseInternals<Eventhub> _operation;
+        private readonly OperationOrResponseInternals<EventHub> _operation;
 
         /// <summary> Initializes a new instance of EventHubCreateOrUpdateOperation for mocking. </summary>
         protected EventHubCreateOrUpdateOperation()
         {
         }
 
-        internal EventHubCreateOrUpdateOperation(ArmResource operationsBase, Response<EventhubData> response)
+        internal EventHubCreateOrUpdateOperation(ArmResource operationsBase, Response<EventHubData> response)
         {
-            _operation = new OperationOrResponseInternals<Eventhub>(Response.FromValue(new Eventhub(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<EventHub>(Response.FromValue(new EventHub(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Eventhub Value => _operation.Value;
+        public override EventHub Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Eventhub>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EventHub>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Eventhub>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EventHub>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

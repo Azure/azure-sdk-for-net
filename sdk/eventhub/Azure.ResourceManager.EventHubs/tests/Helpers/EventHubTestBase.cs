@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected EventHubTestBase(bool isAsync) : base(isAsync)
+        protected EventHubTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Playback)
         {
             Sanitizer = new EventHubRecordedTestSanitizer();
         }
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             return namespaceName;
         }
 
-        public static void VerifyNamespaceProperties(EHNamespace eHNamespace, bool useDefaults)
+        public static void VerifyNamespaceProperties(EventHubNamespace eventHubNamespace, bool useDefaults)
         {
-            Assert.NotNull(eHNamespace);
-            Assert.NotNull(eHNamespace.Id);
-            Assert.NotNull(eHNamespace.Id.Name);
-            Assert.NotNull(eHNamespace.Data);
-            Assert.NotNull(eHNamespace.Data.Location);
-            Assert.NotNull(eHNamespace.Data.CreatedAt);
-            Assert.NotNull(eHNamespace.Data.Sku);
+            Assert.NotNull(eventHubNamespace);
+            Assert.NotNull(eventHubNamespace.Id);
+            Assert.NotNull(eventHubNamespace.Id.Name);
+            Assert.NotNull(eventHubNamespace.Data);
+            Assert.NotNull(eventHubNamespace.Data.Location);
+            Assert.NotNull(eventHubNamespace.Data.CreatedAt);
+            Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, eHNamespace.Data.Location);
-                Assert.AreEqual(SkuTier.Standard, eHNamespace.Data.Sku.Tier);
+                Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
+                Assert.AreEqual(SkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
             }
         }
     }

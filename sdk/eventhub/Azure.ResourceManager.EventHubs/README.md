@@ -59,36 +59,36 @@ Then we can create a namespace inside this resource group.
 
 ```C# Snippet:Managing_Namespaces_CreateNamespace
 string namespaceName = "myNamespace";
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
 Location location = Location.EastUS2;
-EHNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EHNamespaceData(location))).Value;
+EventHubNamespace eventHubNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
 
 ```C# Snippet:Managing_Namespaces_ListNamespaces
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-await foreach (EHNamespace eHNamespace in namespaceContainer.GetAllAsync())
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+await foreach (EventHubNamespace eventHubNamespace in namespaceContainer.GetAllAsync())
 {
-    Console.WriteLine(eHNamespace.Id.Name);
+    Console.WriteLine(eventHubNamespace.Id.Name);
 }
 ```
 
 ### Get a namespace
 
 ```C# Snippet:Managing_Namespaces_GetNamespace
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = await namespaceContainer.GetAsync("myNamespace");
-Console.WriteLine(eHNamespace.Id.Name);
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = await namespaceContainer.GetAsync("myNamespace");
+Console.WriteLine(eventHubNamespace.Id.Name);
 ```
 
 ### Try to get a namespace if it exists
 
 
 ```C# Snippet:Managing_Namespaces_GetNamespaceIfExists
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = await namespaceContainer.GetIfExistsAsync("foo");
-if (eHNamespace != null)
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = await namespaceContainer.GetIfExistsAsync("foo");
+if (eventHubNamespace != null)
 {
     Console.WriteLine("namespace 'foo' exists");
 }
@@ -100,17 +100,17 @@ if (await namespaceContainer.CheckIfExistsAsync("bar"))
 
 ### Delete a namespace
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = await namespaceContainer.GetAsync("myNamespace");
-await eHNamespace.DeleteAsync();
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = await namespaceContainer.GetAsync("myNamespace");
+await eventHubNamespace.DeleteAsync();
 ```
 
 ### Add a tag to the namespace
 
 ```C# Snippet:Managing_Namespaces_AddTag
-EHNamespaceContainer namespaceContainer = resourceGroup.GetEHNamespaces();
-EHNamespace eHNamespace = await namespaceContainer.GetAsync("myNamespace");
-await eHNamespace.AddTagAsync("key","value");
+EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eventHubNamespace = await namespaceContainer.GetAsync("myNamespace");
+await eventHubNamespace.AddTagAsync("key","value");
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/yukun-dong/azure-sdk-for-net/tree/eventhub-2018-01-preview/sdk/eventhub/Azure.ResourceManager.EventHubs/samples) we have available.

@@ -36,6 +36,27 @@ operation-group-to-parent:
     AvailableClusters: subscriptions
 operation-group-is-extension: NamespaceAuthorizationRules;DisasterRecoveryConfigAuthorizationRules;EventHubAuthorizationRules
 directive:
+    - rename-model:
+        from: Eventhub
+        to: EventHub
+    - rename-model:
+        from: EHNamespace
+        to: EventHubNamespace
+    - rename-model:
+        from: Cluster
+        to: EventHubCluster
+    - rename-model:
+        from: EHNamespaceIdListResult
+        to: EventHubNamespaceIdListResult
+    - rename-model:
+        from: EHNamespaceListResult
+        to: EventHubNamespaceListResult
+    - rename-model:
+        from: NWRuleSetIpRules
+        to: NetworkRuleSetIpRules
+    - rename-model:
+        from: NWRuleSetVirtualNetworkRules
+        to: NetworkRuleSetVirtualNetworkRules
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"
