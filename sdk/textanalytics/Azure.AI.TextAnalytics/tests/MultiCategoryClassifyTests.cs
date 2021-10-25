@@ -212,6 +212,42 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(multiCategoryClassifyResults, includeStatistics: true);
         }
 
+        [RecordedTest]
+        public async Task MultiCategoryClassifyWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>()
+                {
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "MultiCategoryClassifyWithDisabledServiceLogs"
+                    },
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    {
+                        ActionName = "MultiCategoryClassify"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionsResults = resultCollection.MultiCategoryClassifyResults;
+
+            Assert.IsNotNull(multiCategoryClassifyActionsResults);
+
+            IList<string> expected = new List<string> { "MultiCategoryClassify", "MultiCategoryClassifyWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, multiCategoryClassifyActionsResults.Select(result => result.ActionName));
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategoryCollection classificationCollection)
         {
             Assert.IsNotNull(classificationCollection.Warnings);

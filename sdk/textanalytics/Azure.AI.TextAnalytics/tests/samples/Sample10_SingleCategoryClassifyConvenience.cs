@@ -78,6 +78,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (SingleCategoryClassifyActionResult classificationActionResults in singleClassificationActionResults)
                 {
+                    Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
                     foreach (SingleCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
                     {
                         Console.WriteLine($"  Class category \"{documentResults.Classification.Category}\" predicted with a confidence score of {documentResults.Classification.ConfidenceScore}.");

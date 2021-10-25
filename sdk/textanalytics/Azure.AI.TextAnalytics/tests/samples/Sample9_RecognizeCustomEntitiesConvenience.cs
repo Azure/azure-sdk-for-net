@@ -79,6 +79,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
                 IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
                 foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
                 {
+                    Console.WriteLine($" Action name: {customEntitiesActionResult.ActionName}");
                     int docNumber = 1;
                     foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
                     {

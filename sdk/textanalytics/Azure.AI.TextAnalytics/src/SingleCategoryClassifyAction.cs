@@ -46,5 +46,10 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         public bool? DisableServiceLogs { get; set; }
+
+        /// <summary>
+        /// Gets or sets a name for this action. If not provided, the service will generate one.
+        /// </summary>
+        public string ActionName { get; set; }
     }
 }

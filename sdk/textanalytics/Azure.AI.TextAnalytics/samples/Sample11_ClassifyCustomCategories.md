@@ -70,6 +70,7 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 
     foreach (MultiCategoryClassifyActionResult classificationActionResults in multiClassificationActionResults)
     {
+        Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
         foreach (MultiCategoryClassifyResult documentResults in classificationActionResults.DocumentsResults)
         {
             if (documentResults.Classifications.Count > 0)

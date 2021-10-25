@@ -201,8 +201,9 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var result = TextAnalyticsModelFactory.ExtractSummaryResultCollection(new List<ExtractSummaryResult>(), default, default);
             var completedOn = DateTimeOffset.UtcNow;
+            string actionName = "ExtractSummary";
 
-            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(result, completedOn);
+            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(result, actionName, completedOn);
 
             Assert.AreEqual(result, actionResult.DocumentsResults);
             Assert.AreEqual(completedOn, actionResult.CompletedOn);
@@ -217,8 +218,9 @@ namespace Azure.AI.TextAnalytics.Tests
             var completedOn = DateTimeOffset.UtcNow;
             var code = "code";
             var message = "message";
+            string actionName = "ExtractSummary";
 
-            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(completedOn, code, message);
+            var actionResult = TextAnalyticsModelFactory.ExtractSummaryActionResult(actionName, completedOn, code, message);
 
             Assert.Throws<InvalidOperationException>(() => _ = actionResult.DocumentsResults);
             Assert.AreEqual(completedOn, actionResult.CompletedOn);

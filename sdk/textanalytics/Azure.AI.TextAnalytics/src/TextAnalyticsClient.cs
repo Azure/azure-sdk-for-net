@@ -2396,7 +2396,6 @@ namespace Azure.AI.TextAnalytics
 
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2422,7 +2421,6 @@ namespace Azure.AI.TextAnalytics
 
         private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2487,23 +2485,6 @@ namespace Azure.AI.TextAnalytics
                 tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
             }
             return tasks;
-        }
-
-        private static void ValidateActions(TextAnalyticsActions actions)
-        {
-            if (actions.RecognizePiiEntitiesActions?.Count > 1 ||
-                actions.RecognizeEntitiesActions?.Count > 1 ||
-                actions.RecognizeLinkedEntitiesActions?.Count > 1 ||
-                actions.ExtractKeyPhrasesActions?.Count > 1 ||
-                actions.AnalyzeSentimentActions?.Count > 1 ||
-                actions.ExtractSummaryActions?.Count > 1 ||
-                actions.RecognizeCustomEntitiesActions?.Count > 1 ||
-                actions.SingleCategoryClassifyActions?.Count > 1 ||
-                actions.MultiCategoryClassifyActions?.Count > 1
-                )
-            {
-                throw new ArgumentException("Multiple of the same action is not currently supported.");
-            }
         }
 
         #endregion
