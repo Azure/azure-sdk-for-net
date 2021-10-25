@@ -11,7 +11,7 @@ namespace Sql.Tests
 {
     public class InstancePoolCrudScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Due long running setup")]
         public void TestCreateUpdateGetDropInstancePool()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
