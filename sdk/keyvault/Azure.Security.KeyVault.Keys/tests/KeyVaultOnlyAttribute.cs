@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -37,16 +38,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             public override TestResult Execute(TestExecutionContext context)
             {
-                try
-                {
-                    return innerCommand.Execute(context);
-                }
-                catch (RequestFailedException ex)
-                {
-                    KeysTestBase.IgnoreIfNotSupported(ex);
+                context.CurrentResult = innerCommand.Execute(context);
 
-                    throw;
+                if (context.CurrentResult.ResultState.Status == TestStatus.Failed &&
+                    context.CurrentResult.Message.Contains(typeof(RequestFailedException).FullName) &&
+                    context.CurrentResult.Message.Contains("Status: 400") &&
+                    context.CurrentResult.Message.Contains("ErrorCode: NotSupported"))
+                {
+                    string line = context.CurrentResult.Message.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)?[0];
+                    context.CurrentResult.SetResult(ResultState.Ignored, line ?? "The feature under test is not supported");
                 }
+
+                return context.CurrentResult;
             }
         }
     }
