@@ -151,10 +151,11 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task EnumerableInterface()
         {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgOp.Value;
             int count = 0;
-            await foreach(var rgFromList in Client.DefaultSubscription.GetResourceGroups())
+            await foreach(var rgFromList in subscription.GetResourceGroups())
             {
                 count++;
             }

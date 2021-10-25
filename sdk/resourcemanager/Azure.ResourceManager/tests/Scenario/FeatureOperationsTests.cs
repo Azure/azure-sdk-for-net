@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Provider provider = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            Provider provider = await subscription.GetProviders().GetAsync("Microsoft.Compute");
             Feature featureFromCollection = await GetFirst(provider.GetFeatures().GetAllAsync());
             Feature feature = await featureFromCollection.GetAsync();
             Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
