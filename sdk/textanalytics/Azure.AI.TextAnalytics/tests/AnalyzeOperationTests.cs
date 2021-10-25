@@ -301,7 +301,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment);
         }
 
-        [Ignore("issue: results in an internal server error")]
+        [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
             TextAnalyticsClient client = GetClient();
