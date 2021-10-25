@@ -203,7 +203,7 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             options ??= TableClientOptions.DefaultOptions;
-            _endpoint = GetEndpointWithoutTableName(connString.TableStorageUri.PrimaryUri, tableName);
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(connString.TableStorageUri.PrimaryUri, tableName);
 
             TableSharedKeyPipelinePolicy policy = null;
             if (connString.Credentials is TableSharedKeyCredential credential)
@@ -250,7 +250,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(_endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -288,7 +288,7 @@ namespace Azure.Data.Tables
 
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
-            _endpoint = GetEndpointWithoutTableName(endpoint, tableName);
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, tableName);
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(_endpoint);
             options ??= TableClientOptions.DefaultOptions;
 
@@ -1602,22 +1602,6 @@ namespace Azure.Data.Tables
         {
             _batchGuid = batchGuid;
             _changesetGuid = changesetGuid;
-        }
-
-        private static Uri GetEndpointWithoutTableName(Uri endpoint, string tableName)
-        {
-            if (!endpoint.AbsolutePath.Contains(tableName))
-            {
-                return endpoint;
-            }
-            var endpointString = endpoint.AbsoluteUri;
-            var indexOfTableName = endpointString.LastIndexOf("/" + tableName, StringComparison.OrdinalIgnoreCase);
-            if (indexOfTableName <= 0)
-            {
-                return endpoint;
-            }
-            endpointString = endpointString.Remove(indexOfTableName, tableName.Length + 1);
-            return new Uri(endpointString);
         }
     }
 }

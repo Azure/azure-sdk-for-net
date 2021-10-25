@@ -245,12 +245,13 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
-            _endpoint = endpoint;
+            var builder = new TableUriBuilder(endpoint);
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, builder.Tablename);
             options ??= TableClientOptions.DefaultOptions;
-            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
-            var endpointString = endpoint.AbsoluteUri;
-            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
+            var endpointString = _endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
             _pipeline = HttpPipelineBuilder.Build(
                 options,
@@ -269,12 +270,13 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            _endpoint = endpoint;
+            var builder = new TableUriBuilder(endpoint);
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, builder.Tablename);
             options ??= TableClientOptions.DefaultOptions;
-            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
-            var endpointString = endpoint.AbsoluteUri;
-            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
+            var endpointString = _endpoint.AbsoluteUri;
+            string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
             HttpPipelinePolicy authPolicy = policy switch
             {
