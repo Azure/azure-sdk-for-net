@@ -10,15 +10,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class SignalRConnectionInfoValueProvider : IValueProvider
     {
-        private SignalRConnectionInfo info;
-        private string invokeString;
+        private readonly SignalRConnectionInfo info;
+        private readonly string invokeString;
 
         // todo: fix invoke string in another PR
         public SignalRConnectionInfoValueProvider(SignalRConnectionInfo info, Type type, string invokeString)
         {
             this.info = info;
             this.invokeString = invokeString;
-            this.Type = type;
+            Type = type;
         }
 
         public Task<object> GetValueAsync()

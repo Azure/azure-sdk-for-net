@@ -27,11 +27,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             this.securityTokenValidator = securityTokenValidator;
             this.signalRConnectionInfoConfigurer = signalRConnectionInfoConfigurer;
-            this.managerStore = StaticServiceHubContextStore.ServiceManagerStore;
-            this.userType = context.Parameter.ParameterType;
+            managerStore = StaticServiceHubContextStore.ServiceManagerStore;
+            userType = context.Parameter.ParameterType;
         }
 
-        protected async override Task<IValueProvider> BuildAsync(SignalRConnectionInfoAttribute attrResolved,
+        protected override async Task<IValueProvider> BuildAsync(SignalRConnectionInfoAttribute attrResolved,
             IReadOnlyDictionary<string, object> bindingData)
         {
             var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, managerStore).ConfigureAwait(false);

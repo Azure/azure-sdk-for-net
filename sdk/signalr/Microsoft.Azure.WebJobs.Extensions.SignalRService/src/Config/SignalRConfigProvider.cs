@@ -13,7 +13,6 @@ using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -35,10 +34,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             ISecurityTokenValidator securityTokenValidator = null,
             ISignalRConnectionInfoConfigurer signalRConnectionInfoConfigurer = null)
         {
-            this.logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("SignalR"));
+            logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("SignalR"));
             this.nameResolver = nameResolver;
             this.serviceManagerStore = serviceManagerStore;
-            this._dispatcher = new SignalRTriggerDispatcher();
+            _dispatcher = new SignalRTriggerDispatcher();
             inputBindingProvider = new InputBindingProvider(configuration, nameResolver, securityTokenValidator, signalRConnectionInfoConfigurer);
         }
 

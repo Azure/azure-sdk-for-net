@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             if (convertItem.GetType() == typeof(SignalRMessage))
             {
-                SignalRMessage message = convertItem as SignalRMessage;
+                var message = convertItem as SignalRMessage;
                 var data = new SignalRData
                 {
                     Target = message.Target,
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
             else if (convertItem.GetType() == typeof(SignalRGroupAction))
             {
-                SignalRGroupAction groupAction = convertItem as SignalRGroupAction;
+                var groupAction = convertItem as SignalRGroupAction;
 
                 if (!string.IsNullOrEmpty(groupAction.ConnectionId))
                 {
