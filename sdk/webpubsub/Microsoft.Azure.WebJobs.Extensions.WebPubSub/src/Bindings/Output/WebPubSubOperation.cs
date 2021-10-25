@@ -4,7 +4,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
 {
     /// <summary>
     /// Abstract class of operation to invoke service.
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return GetType().Name;
             }
-            set
+            internal set
             {
                 // used in type-less for deserialize.
                 _ = value;
