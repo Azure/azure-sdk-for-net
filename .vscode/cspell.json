@@ -38,7 +38,6 @@
     "sdk/dns/*/api/*.cs",
     "sdk/eventgrid/*/api/*.cs",
     "sdk/insights/*/api/*.cs",
-    "sdk/keyvault/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/*/api/*.cs",
@@ -143,7 +142,9 @@
         "getsas",
         "listsas",
         "oaep",
-        "setsas"
+        "setsas",
+        "mhsm",
+        "mhsmip"
       ]
     },
     {
