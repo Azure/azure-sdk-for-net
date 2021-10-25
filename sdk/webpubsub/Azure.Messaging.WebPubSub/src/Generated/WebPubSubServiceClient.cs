@@ -19,8 +19,8 @@ namespace Azure.Messaging.WebPubSub
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly string _endpoint;
         private readonly string _hub;
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -40,6 +40,18 @@ namespace Azure.Messaging.WebPubSub
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   token: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
         /// }
         /// </code>
         /// 
@@ -73,6 +85,18 @@ namespace Azure.Messaging.WebPubSub
         ///   token: string
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -93,12 +117,101 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close the connections in the hub. </summary>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the hub. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseAllConnectionsRequest(excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -123,6 +236,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -145,6 +273,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -167,6 +310,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -190,6 +348,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -213,6 +386,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -237,6 +425,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -261,6 +464,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -283,6 +501,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -305,6 +538,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response GroupExistsImpl(string group, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -323,6 +571,84 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections in the specific group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections in the group. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseGroupConnectionsRequest(group, excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -330,6 +656,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -355,6 +696,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -378,6 +734,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -401,6 +772,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -424,6 +810,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -447,6 +848,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -469,6 +885,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -491,6 +922,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response UserExistsImpl(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -509,12 +955,105 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Close connections for the specific user. </summary>
+        /// <param name="userId"> The user Id. </param>
+        /// <param name="excluded"> Exclude these connectionIds when closing the connections for the user. </param>
+        /// <param name="reason"> The reason closing the client connection. </param>
+        /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCloseUserConnectionsRequest(userId, excluded, reason);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -539,6 +1078,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -562,6 +1116,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -585,6 +1154,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response AddUserToGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -608,6 +1192,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -631,6 +1230,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response RemoveUserFromGroup(string group, string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -653,6 +1267,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -675,6 +1304,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response RemoveUserFromAllGroups(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -699,6 +1343,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -723,6 +1382,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -747,6 +1421,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -771,6 +1460,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -795,6 +1499,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -819,6 +1538,21 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   code: string,
+        ///   message: string,
+        ///   target: string,
+        ///   details: [ErrorDetail],
+        ///   inner: {
+        ///     code: string,
+        ///     inner: InnerError
+        ///   }
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -843,7 +1577,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:generateToken", false);
@@ -862,13 +1596,38 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -878,7 +1637,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
@@ -889,11 +1648,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -906,7 +1663,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
@@ -917,11 +1674,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -934,16 +1689,14 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -954,7 +1707,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
@@ -963,12 +1716,10 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("reason", reason, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -978,17 +1729,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1001,17 +1750,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1024,17 +1771,45 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseGroupConnectionsRequest(string group, IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1044,7 +1819,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
@@ -1057,11 +1832,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1074,7 +1847,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
@@ -1087,11 +1860,9 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("excluded", param, true);
                 }
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1104,18 +1875,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1126,19 +1895,17 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1148,17 +1915,45 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateCloseUserConnectionsRequest(string userId, IEnumerable<string> excluded, string reason)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/:closeConnections", false);
+            if (excluded != null)
+            {
+                foreach (var param in excluded)
+                {
+                    uri.AppendQuery("excluded", param, true);
+                }
+            }
+            if (reason != null)
+            {
+                uri.AppendQuery("reason", reason, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1168,17 +1963,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1191,17 +1984,15 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:send", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "text/plain");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier202.Instance;
@@ -1214,18 +2005,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1236,19 +2025,17 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1258,18 +2045,16 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1279,7 +2064,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1290,11 +2075,9 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
@@ -1305,7 +2088,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1316,12 +2099,10 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
@@ -1331,7 +2112,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/permissions/", false);
@@ -1342,11 +2123,9 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
@@ -1360,6 +2139,19 @@ namespace Azure.Messaging.WebPubSub
                 return message.Response.Status switch
                 {
                     200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
                     _ => true
                 };
             }
