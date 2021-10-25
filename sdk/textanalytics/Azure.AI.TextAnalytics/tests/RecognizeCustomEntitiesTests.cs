@@ -80,11 +80,10 @@ namespace Azure.AI.TextAnalytics.Tests
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
             await operation.WaitForCompletionAsync();
-
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_document1ExpectedOutput);
+            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
         }
 
         [RecordedTest]
