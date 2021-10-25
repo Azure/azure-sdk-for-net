@@ -276,6 +276,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // index is deleted when our SearchResources goes out of scope.
                 cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
 
+#if SNIPPET
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
                 // Create SearchIndexerClient options
                 SearchClientOptions options = new SearchClientOptions()
@@ -293,6 +294,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 // Create a new SearchIndexerClient with options
                 indexerClient = new SearchIndexerClient(endpoint, credential, options);
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
+#endif
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Skillset
                 // Translate English descriptions to French.
