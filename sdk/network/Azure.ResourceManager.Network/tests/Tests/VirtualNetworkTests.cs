@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
@@ -15,17 +16,20 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class VirtualNetworkTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
+
         public VirtualNetworkTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         [Test]
@@ -82,8 +86,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(subnet2Name, getAllVnets.ElementAt(0).Data.Subnets[1].Name);
 
             // Get all Vnets in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            AsyncPageable<VirtualNetwork> getAllVnetInSubscriptionAP = subscription.GetVirtualNetworksAsync();
+            AsyncPageable<VirtualNetwork> getAllVnetInSubscriptionAP = _subscription.GetVirtualNetworksAsync();
             List<VirtualNetwork> getAllVnetInSubscription = await getAllVnetInSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getAllVnetInSubscription);
 

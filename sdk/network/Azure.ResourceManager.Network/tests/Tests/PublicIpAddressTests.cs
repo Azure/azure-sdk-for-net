@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -70,7 +71,6 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
@@ -136,7 +137,6 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
@@ -155,6 +155,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTestIPv6()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
@@ -196,7 +197,6 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);

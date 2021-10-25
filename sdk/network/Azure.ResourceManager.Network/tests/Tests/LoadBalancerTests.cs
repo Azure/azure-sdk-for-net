@@ -16,23 +16,26 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class LoadBalancerTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
         public LoadBalancerTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         [Test]
         [RecordedTest]
         public async Task LoadBalancerApiTest()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -187,7 +190,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
@@ -316,6 +318,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task LoadBalancerApiTestWithDynamicIp()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -462,7 +465,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
@@ -485,6 +487,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task LoadBalancerApiTestWithStaticIp()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -633,7 +636,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Verify List LoadBalancer subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
             List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);

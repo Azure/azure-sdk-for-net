@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
+            var _ = await client.GetDefaultSubscriptionAsync(); // TODO: hack to avoid mismatch of recordings so we don't need to re-record for the change. Remove when you need to run live tests next time.
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
             VirtualNetwork vnet = await _resourceGroup.GetVirtualNetworks().GetAsync(_subnetIdentifier.Parent.Name);
             _subnet = await vnet.GetSubnets().GetAsync(_subnetIdentifier.Name);

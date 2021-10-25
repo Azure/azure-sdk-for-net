@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
@@ -15,17 +16,20 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class PublicIpPrefixTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
+
         public PublicIpPrefixTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         public async Task<PublicIPPrefixContainer> GetContainer()

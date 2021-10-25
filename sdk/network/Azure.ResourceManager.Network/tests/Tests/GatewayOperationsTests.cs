@@ -19,17 +19,19 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class GatewayOperationsTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
         public GatewayOperationsTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         private enum TestEnvironmentSettings

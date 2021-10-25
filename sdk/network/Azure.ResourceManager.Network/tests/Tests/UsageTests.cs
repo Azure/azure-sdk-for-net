@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task UsageTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -47,7 +48,6 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<Usage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
             List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated

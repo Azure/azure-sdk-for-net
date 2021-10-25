@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task NetworkSecurityGroupApiTest()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -84,7 +85,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
 
             // List NSG in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<NetworkSecurityGroup> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroup> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNsgSubsciptionResponse);
@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task NetworkSecurityGroupWithRulesApiTest()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -177,7 +178,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
 
             // List NSG in a subscription
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<NetworkSecurityGroup> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
             List<NetworkSecurityGroup> listNsgSubsciptionResponse = await listNsgSubsciptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNsgSubsciptionResponse);

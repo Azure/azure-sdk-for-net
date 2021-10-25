@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task RouteFilterApiTest()
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var filterContainer = await GetContainer();
 
             // Create route filter
@@ -59,7 +60,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(filterName, filters[0].Data.Name);
             Assert.IsEmpty(filters[0].Data.Rules);
 
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
             Assert.True(allFilters.Any(f => filterName == f.Data.Name && f.Data.Rules.Count == 0));

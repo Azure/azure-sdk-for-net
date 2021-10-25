@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task ApplicationSecurityGroupApiTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var container = await GetContainer();
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
@@ -103,7 +104,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(applicationSecurityGroups);
 
             // list all
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             applicationSecurityGroups = await subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
         }
