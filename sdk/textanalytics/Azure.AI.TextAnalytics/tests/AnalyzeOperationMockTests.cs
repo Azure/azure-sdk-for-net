@@ -865,10 +865,10 @@ namespace Azure.AI.TextAnalytics.Tests
             var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(7, operation.ActionsFailed);
+            Assert.AreEqual(9, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(7, operation.ActionsTotal);
+            Assert.AreEqual(9, operation.ActionsTotal);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
