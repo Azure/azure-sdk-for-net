@@ -47,7 +47,7 @@ dotnet add package Microsoft.Azure.Devices
     | 1.0.0-beta.2 | 1.0                        |
     | 1.0.0-beta.3 | 1.0                        |
     | 1.0.0-beta.4 | 1.0                        |
-    | 1.1.0-beta.5 | 1.1                        |
+    | 1.0.0-beta.5 | 1.1                        |
 
 ### Creating a pipeline topology and making requests
 
