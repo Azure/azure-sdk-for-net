@@ -7,6 +7,7 @@ Namespaces for this example:
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -28,8 +29,7 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the WebPubSub inside this resource group.
@@ -37,50 +37,50 @@ Now that we have the resource group created, we can manage the WebPubSub inside 
 ***Create a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_CreateWebPubSub
-// First we need to get the WebPubSub container from the resource group
 WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
-// Use the same location as the resource group
+
 string webPubSubName = "myWebPubSubName";
+
+// Use the same location as the resource group
 IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
 categories.Add(new LiveTraceCategory("category-01", "true"));
+
 ACLAction aCLAction = new ACLAction("Deny");
 IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
 IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
 deny.Add(new WebPubSubRequestType("RESTAPI"));
 NetworkACL publicNetwork = new NetworkACL(allow, deny);
 IList<PrivateEndpointACL> privateEndpoints = new List<PrivateEndpointACL>();
+
 List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
 {
     new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
 };
 WebPubSubResourceData data = new WebPubSubResourceData(Location.WestUS2)
 {
-    // You can specify many options for the WebPubSub in here
     Sku = new ResourceSku("Standard_S1"),
     LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
     NetworkACLs = new WebPubSubNetworkACLs(aCLAction, publicNetwork, privateEndpoints),
     ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
 };
-WebPubSubCreateOrUpdateOperation webPubSubLro = await webPubSubResourceContainer.CreateOrUpdateAsync(webPubSubName, data);
-WebPubSubResource webPubSub = webPubSubLro.Value;
+
+WebPubSubResource webPubSub = await (await webPubSubResourceContainer.CreateOrUpdateAsync(webPubSubName, data)).WaitForCompletionAsync();
 ```
 
 ***Get a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_GetWebPubSub
-// First we need to get the WebPubSub container from the resource group
 WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
-// Now we can get the WebPubSub with GetAsync()
+
 WebPubSubResource webPubSub = await webPubSubResourceContainer.GetAsync("myWebPubSubName");
-Console.WriteLine(webPubSub.Data);
+Console.WriteLine(webPubSub.Data.Name);
 ```
 
 ***List all WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_ListAllWebPubSub
-
-// First we need to get the WebPubSub container from the resource group
 WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
+
 AsyncPageable<WebPubSubResource> response = webPubSubResourceContainer.GetAllAsync();
 await foreach (WebPubSubResource WebPubSubResource in response)
 {
@@ -91,10 +91,8 @@ await foreach (WebPubSubResource WebPubSubResource in response)
 ***Delete a WebPubSub***
 
 ```C# Snippet:Managing_WebPubSub_DeleteWebPubSub
-// First we need to get the WebPubSub container from the resource group
 WebPubSubResourceContainer webPubSubResourceContainer = resourceGroup.GetWebPubSubResources();
-// Now we can get the WebPubSub with GetAsync()
+
 WebPubSubResource webPubSub = await webPubSubResourceContainer.GetAsync("myWebPubSubName");
-// With DeleteAsync(), we can delete the WebPubSub
 await webPubSub.DeleteAsync();
 ```
