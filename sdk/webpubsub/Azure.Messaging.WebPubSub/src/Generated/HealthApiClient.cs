@@ -18,7 +18,7 @@ namespace Azure.Messaging.WebPubSub
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly Uri _endpoint;
+        private readonly string _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -30,11 +30,15 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Initializes a new instance of HealthApiClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public HealthApiClient(Uri endpoint = null, WebPubSubServiceClientOptions options = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
         {
-            endpoint ??= new Uri("");
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             options ??= new WebPubSubServiceClientOptions();
 
@@ -90,12 +94,9 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/api/health", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;

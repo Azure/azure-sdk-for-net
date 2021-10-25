@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/testRg1/providers/Microsoft.Compute/virtualMachines/testVm1/providers/Microsoft.RecoveryServices/replicationEligibilityResults?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Rlc3RSZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy9yZXBsaWNhdGlvbkVsaWdpYmlsaXR5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/testRg1/providers/Microsoft.Compute/virtualMachines/testVm1/providers/Microsoft.RecoveryServices/replicationEligibilityResults?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL3Rlc3RSZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy9yZXBsaWNhdGlvbkVsaWdpYmlsaXR5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.5.0"
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.6.0"
         ]
       },
       "ResponseHeaders": {
@@ -52,7 +52,7 @@
           "CENTRALUSEUAP:20210327T235731Z:61b605b4-4859-4b64-b32b-4989d371e49c"
         ],
         "Date": [
-          "Thu, 19 Aug 2021 09:18:45 GMT"
+          "Wed, 13 Oct 2021 18:57:08 GMT"
         ],
         "Content-Length": [
           "389"
@@ -68,7 +68,9 @@
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+
+  },
   "Variables": {
     "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }
