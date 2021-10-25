@@ -106,6 +106,7 @@
                     DataCenterLocation = this.fixture.Location,
                     DelegatedSubnetId = subnetId,
                     NodeCount = 3,
+                    Sku = "Standard_E8s_v4"
                 }
             };
             this.output.WriteLine($"Creating data center {dcName}. Put request:");

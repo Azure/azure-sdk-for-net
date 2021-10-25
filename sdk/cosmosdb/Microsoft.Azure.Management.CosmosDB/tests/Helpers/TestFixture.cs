@@ -69,7 +69,6 @@ namespace CosmosDB.Tests
         
         public string GetDatabaseAccountName(AccountType accountType)
         {
-
             string accountName;
             if (!this.accounts.TryGetValue(accountType, out accountName))
             {
