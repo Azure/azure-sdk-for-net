@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Orbital.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Contact Profile Link Channel
+    /// </summary>
     public partial class ContactProfileLinkChannel
     {
         /// <summary>
@@ -28,6 +31,14 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// </summary>
         /// <param name="centerFrequencyMHz">Center Frequency in MHz</param>
         /// <param name="bandwidthMHz">Bandwidth in MHz</param>
+        /// <param name="modulationConfiguration">Configuration for
+        /// modulation</param>
+        /// <param name="demodulationConfiguration">Configuration for
+        /// demodulation</param>
+        /// <param name="encodingConfiguration">Configuration for
+        /// encoding</param>
+        /// <param name="decodingConfiguration">Configuration for
+        /// decoding</param>
         public ContactProfileLinkChannel(double centerFrequencyMHz, double bandwidthMHz, EndPoint endPoint, string modulationConfiguration = default(string), string demodulationConfiguration = default(string), string encodingConfiguration = default(string), string decodingConfiguration = default(string))
         {
             CenterFrequencyMHz = centerFrequencyMHz;
@@ -63,21 +74,25 @@ namespace Microsoft.Azure.Management.Orbital.Models
         public EndPoint EndPoint { get; set; }
 
         /// <summary>
+        /// Gets or sets configuration for modulation
         /// </summary>
         [JsonProperty(PropertyName = "modulationConfiguration")]
         public string ModulationConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets configuration for demodulation
         /// </summary>
         [JsonProperty(PropertyName = "demodulationConfiguration")]
         public string DemodulationConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets configuration for encoding
         /// </summary>
         [JsonProperty(PropertyName = "encodingConfiguration")]
         public string EncodingConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets configuration for decoding
         /// </summary>
         [JsonProperty(PropertyName = "decodingConfiguration")]
         public string DecodingConfiguration { get; set; }

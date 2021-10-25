@@ -16,26 +16,26 @@ namespace Microsoft.Azure.Management.Orbital.Models
     using System.Linq;
 
     /// <summary>
-    /// Response for the ListSpacecrafts API service call.
+    /// Response for an API service call that lists the resource IDs of
+    /// resources associated with another resource.
     /// </summary>
-    public partial class SpacecraftListResult
+    public partial class ResourceIdListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SpacecraftListResult class.
+        /// Initializes a new instance of the ResourceIdListResult class.
         /// </summary>
-        public SpacecraftListResult()
+        public ResourceIdListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpacecraftListResult class.
+        /// Initializes a new instance of the ResourceIdListResult class.
         /// </summary>
-        /// <param name="value">A list of spacecraft resources in a resource
-        /// group.</param>
+        /// <param name="value">A list of Azure Resource IDs.</param>
         /// <param name="nextLink">The URL to get the next set of
         /// results.</param>
-        public SpacecraftListResult(IList<Spacecraft> value = default(IList<Spacecraft>), string nextLink = default(string))
+        public ResourceIdListResult(IList<ResourceIdListResultValueItem> value = default(IList<ResourceIdListResultValueItem>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Orbital.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of spacecraft resources in a resource group.
+        /// Gets or sets a list of Azure Resource IDs.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Spacecraft> Value { get; set; }
+        public IList<ResourceIdListResultValueItem> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Orbital.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Contact Instance Properties
+    /// </summary>
     public partial class ContactInstanceProperties
     {
         /// <summary>

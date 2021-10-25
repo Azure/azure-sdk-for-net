@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Orbital.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Contact Profile link
+    /// </summary>
     public partial class ContactProfileLink
     {
         /// <summary>
@@ -33,6 +36,7 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// 'linearHorizontal'</param>
         /// <param name="direction">Direction (uplink or downlink). Possible
         /// values include: 'uplink', 'downlink'</param>
+        /// <param name="channels">Contact Profile Link Channel</param>
         /// <param name="gainOverTemperature">Gain To Noise Temperature in
         /// db/K.</param>
         /// <param name="eirpdBW">Effective Isotropic Radiated Power (EIRP) in
@@ -80,6 +84,7 @@ namespace Microsoft.Azure.Management.Orbital.Models
         public double? EirpdBW { get; set; }
 
         /// <summary>
+        /// Gets or sets contact Profile Link Channel
         /// </summary>
         [JsonProperty(PropertyName = "channels")]
         public IList<ContactProfileLinkChannel> Channels { get; set; }

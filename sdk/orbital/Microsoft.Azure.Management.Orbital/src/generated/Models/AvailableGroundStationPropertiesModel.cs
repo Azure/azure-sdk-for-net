@@ -10,32 +10,27 @@
 
 namespace Microsoft.Azure.Management.Orbital.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// GroundStations available to schedule Contacts
+    /// Properties object for Available groundstation.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AvailableGroundStation
+    public partial class AvailableGroundStationPropertiesModel
     {
         /// <summary>
-        /// Initializes a new instance of the AvailableGroundStation class.
+        /// Initializes a new instance of the
+        /// AvailableGroundStationPropertiesModel class.
         /// </summary>
-        public AvailableGroundStation()
+        public AvailableGroundStationPropertiesModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AvailableGroundStation class.
+        /// Initializes a new instance of the
+        /// AvailableGroundStationPropertiesModel class.
         /// </summary>
-        /// <param name="id">Id of groundStation</param>
-        /// <param name="name">Name of the ground station.</param>
-        /// <param name="location">Azure region</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="city">City of ground station.</param>
         /// <param name="providerName">Ground station provider name.</param>
         /// <param name="longitudeDegrees">Longitude of the ground station in
@@ -43,12 +38,8 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// <param name="latitudeDegrees">Latitude of the ground station in
         /// decimal degrees.</param>
         /// <param name="altitudeMeters">Altitude of the ground station</param>
-        public AvailableGroundStation(string id = default(string), string name = default(string), string location = default(string), string type = default(string), string city = default(string), string providerName = default(string), double? longitudeDegrees = default(double?), double? latitudeDegrees = default(double?), double? altitudeMeters = default(double?))
+        public AvailableGroundStationPropertiesModel(string city = default(string), string providerName = default(string), double? longitudeDegrees = default(double?), double? latitudeDegrees = default(double?), double? altitudeMeters = default(double?))
         {
-            Id = id;
-            Name = name;
-            Location = location;
-            Type = type;
             City = city;
             ProviderName = providerName;
             LongitudeDegrees = longitudeDegrees;
@@ -63,57 +54,33 @@ namespace Microsoft.Azure.Management.Orbital.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of groundStation
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets name of the ground station.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets or sets azure region
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
         /// Gets or sets city of ground station.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.city")]
+        [JsonProperty(PropertyName = "city")]
         public string City { get; set; }
 
         /// <summary>
         /// Gets or sets ground station provider name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.providerName")]
+        [JsonProperty(PropertyName = "providerName")]
         public string ProviderName { get; set; }
 
         /// <summary>
         /// Gets or sets longitude of the ground station in decimal degrees.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.longitudeDegrees")]
+        [JsonProperty(PropertyName = "longitudeDegrees")]
         public double? LongitudeDegrees { get; set; }
 
         /// <summary>
         /// Gets or sets latitude of the ground station in decimal degrees.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.latitudeDegrees")]
+        [JsonProperty(PropertyName = "latitudeDegrees")]
         public double? LatitudeDegrees { get; set; }
 
         /// <summary>
         /// Gets or sets altitude of the ground station
         /// </summary>
-        [JsonProperty(PropertyName = "properties.altitudeMeters")]
+        [JsonProperty(PropertyName = "altitudeMeters")]
         public double? AltitudeMeters { get; set; }
 
     }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Orbital.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Spacecraft Link
+    /// </summary>
     public partial class SpacecraftLink
     {
         /// <summary>

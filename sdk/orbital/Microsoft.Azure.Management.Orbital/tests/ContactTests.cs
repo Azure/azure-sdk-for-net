@@ -133,10 +133,10 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                     var putContact = azureOrbitalClient.Orbital.CreateContact(resourceGroupName,
                         spacecraftName,
                         contactName,
-                        new ContactsProperties()
+                        new Contact()
                         {
-                            ReservationStartTime = (DateTime)firstAvailableContact.Properties.RxStartTime,
-                            ReservationEndTime = (DateTime)firstAvailableContact.Properties.RxEndTime,
+                            ReservationStartTime = (DateTime)firstAvailableContact.RxStartTime,
+                            ReservationEndTime = (DateTime)firstAvailableContact.RxEndTime,
                             GroundStationName = groundStationName,
                             ContactProfile = new ContactsPropertiesContactProfile(contactProfile.Id),
                         });
@@ -147,11 +147,11 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                     Assert.Equal(contactName, getContact.Name);
 
                     var listContact = azureOrbitalClient.Orbital.ListContactsBySpacecraftName(resourceGroupName, spacecraftName);
-                    Assert.Single(listContact.Value);
+                    Assert.Single(listContact);
 
                     azureOrbitalClient.Orbital.DeleteContact(resourceGroupName, spacecraftName, contactName);
                     listContact = azureOrbitalClient.Orbital.ListContactsBySpacecraftName(resourceGroupName, spacecraftName);
-                    Assert.Empty(listContact.Value);
+                    Assert.Empty(listContact);
                 }
             }
         }

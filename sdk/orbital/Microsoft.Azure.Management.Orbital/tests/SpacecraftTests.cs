@@ -70,19 +70,19 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 Assert.Equal(tleLine2, getSpacecraft.TleLine2);
                 Assert.NotNull(getSpacecraft.Links);
 
-                var listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
+                var listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName) as List<Spacecraft>;
 
-                Assert.Single(listSpacecraftsByResourceGroup.Value);
-                Assert.Equal(spacecraftName, listSpacecraftsByResourceGroup.Value[0].Name);
-                Assert.Equal(noradId, listSpacecraftsByResourceGroup.Value[0].NoradId);
-                Assert.Equal(titleLine, listSpacecraftsByResourceGroup.Value[0].TitleLine);
-                Assert.Equal(tleLine1, listSpacecraftsByResourceGroup.Value[0].TleLine1);
-                Assert.Equal(tleLine2, listSpacecraftsByResourceGroup.Value[0].TleLine2);
-                Assert.NotNull(listSpacecraftsByResourceGroup.Value[0].Links);
+                Assert.Single(listSpacecraftsByResourceGroup);
+                Assert.Equal(spacecraftName, listSpacecraftsByResourceGroup[0].Name);
+                Assert.Equal(noradId, listSpacecraftsByResourceGroup[0].NoradId);
+                Assert.Equal(titleLine, listSpacecraftsByResourceGroup[0].TitleLine);
+                Assert.Equal(tleLine1, listSpacecraftsByResourceGroup[0].TleLine1);
+                Assert.Equal(tleLine2, listSpacecraftsByResourceGroup[0].TleLine2);
+                Assert.NotNull(listSpacecraftsByResourceGroup[0].Links);
 
                 azureOrbitalClient.Orbital.DeleteSpacecraft(resourceGroupName, spacecraftName);
-                listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
-                Assert.Empty(listSpacecraftsByResourceGroup.Value);
+                listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName) as List<Spacecraft>;
+                Assert.Empty(listSpacecraftsByResourceGroup);
 
             }
         }

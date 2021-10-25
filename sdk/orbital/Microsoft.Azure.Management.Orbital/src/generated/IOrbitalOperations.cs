@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SpacecraftListResult>> ListSpacecraftsBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Spacecraft>>> ListSpacecraftsBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Return list of spacecrafts
         /// </summary>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SpacecraftListResult>> ListSpacecraftsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Spacecraft>>> ListSpacecraftsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the specified spacecraft in a specified resource group
         /// </summary>
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContactListResult>> ListContactsBySpacecraftNameWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Contact>>> ListContactsBySpacecraftNameWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the specified contact in a specified resource group
         /// </summary>
@@ -269,7 +269,8 @@ namespace Microsoft.Azure.Management.Orbital
         /// <param name='contactName'>
         /// Contact Name
         /// </param>
-        /// <param name='properties'>
+        /// <param name='parameters'>
+        /// The parameters to provide for the created contact.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -286,7 +287,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Contact>> CreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Contact>> CreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, Contact parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a specified contact
         /// </summary>
@@ -486,7 +487,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContactProfileListResult>> ListContactProfilesBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<ContactProfile>>> ListContactProfilesBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns list of contact profiles
         /// </summary>
@@ -508,7 +509,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContactProfileListResult>> ListContactProfilesByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<ContactProfile>>> ListContactProfilesByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a spacecraft resource
         /// </summary>
@@ -589,7 +590,8 @@ namespace Microsoft.Azure.Management.Orbital
         /// <param name='contactName'>
         /// Contact Name
         /// </param>
-        /// <param name='properties'>
+        /// <param name='parameters'>
+        /// The parameters to provide for the created contact.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -606,7 +608,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Contact>> BeginCreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Contact>> BeginCreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, Contact parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a specified contact
         /// </summary>

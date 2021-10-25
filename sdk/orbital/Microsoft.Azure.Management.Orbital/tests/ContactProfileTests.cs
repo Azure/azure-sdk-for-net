@@ -125,11 +125,11 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 var listContactProfile = azureOrbitalClient.Orbital.ListContactProfilesByResourceGroup(resourceGroupName);
 
                 Assert.NotNull(listContactProfile);
-                Assert.Single(listContactProfile.Value);
+                Assert.Single(listContactProfile);
 
                 azureOrbitalClient.Orbital.DeleteContactProfile(resourceGroupName, contactProfileName);
                 listContactProfile = azureOrbitalClient.Orbital.ListContactProfilesByResourceGroup(resourceGroupName);
-                Assert.Empty(listContactProfile.Value);
+                Assert.Empty(listContactProfile);
 
             }
         }

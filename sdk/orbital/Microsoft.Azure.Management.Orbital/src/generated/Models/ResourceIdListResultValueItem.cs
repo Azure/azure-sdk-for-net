@@ -10,29 +10,26 @@
 
 namespace Microsoft.Azure.Management.Orbital.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Resource Reference
-    /// </summary>
-    public partial class ResourceReference : IResource
+    public partial class ResourceIdListResultValueItem
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the ResourceIdListResultValueItem
+        /// class.
         /// </summary>
-        public ResourceReference()
+        public ResourceIdListResultValueItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the ResourceIdListResultValueItem
+        /// class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        public ResourceReference(string id = default(string))
+        /// <param name="id">The Azure Resource ID</param>
+        public ResourceIdListResultValueItem(string id = default(string))
         {
             Id = id;
             CustomInit();
@@ -44,7 +41,7 @@ namespace Microsoft.Azure.Management.Orbital.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID.
+        /// Gets or sets the Azure Resource ID
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

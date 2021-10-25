@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SpacecraftListResult>> ListSpacecraftsBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Spacecraft>>> ListSpacecraftsBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.Orbital
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SpacecraftListResult>();
+            var _result = new AzureOperationResponse<IEnumerable<Spacecraft>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.Orbital
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SpacecraftListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Spacecraft>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SpacecraftListResult>> ListSpacecraftsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Spacecraft>>> ListSpacecraftsByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -556,7 +556,7 @@ namespace Microsoft.Azure.Management.Orbital
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SpacecraftListResult>();
+            var _result = new AzureOperationResponse<IEnumerable<Spacecraft>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Management.Orbital
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SpacecraftListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Spacecraft>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1090,7 +1090,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ContactListResult>> ListContactsBySpacecraftNameWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Contact>>> ListContactsBySpacecraftNameWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1224,7 +1224,7 @@ namespace Microsoft.Azure.Management.Orbital
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ContactListResult>();
+            var _result = new AzureOperationResponse<IEnumerable<Contact>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1237,7 +1237,7 @@ namespace Microsoft.Azure.Management.Orbital
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ContactListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Contact>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1473,7 +1473,8 @@ namespace Microsoft.Azure.Management.Orbital
         /// <param name='contactName'>
         /// Contact Name
         /// </param>
-        /// <param name='properties'>
+        /// <param name='parameters'>
+        /// The parameters to provide for the created contact.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1481,10 +1482,10 @@ namespace Microsoft.Azure.Management.Orbital
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Contact>> CreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Contact>> CreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, Contact parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Contact> _response = await BeginCreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Contact> _response = await BeginCreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2041,7 +2042,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ContactProfileListResult>> ListContactProfilesBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<ContactProfile>>> ListContactProfilesBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2163,7 +2164,7 @@ namespace Microsoft.Azure.Management.Orbital
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ContactProfileListResult>();
+            var _result = new AzureOperationResponse<IEnumerable<ContactProfile>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2176,7 +2177,7 @@ namespace Microsoft.Azure.Management.Orbital
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ContactProfileListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ContactProfile>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2222,7 +2223,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ContactProfileListResult>> ListContactProfilesByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<ContactProfile>>> ListContactProfilesByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2350,7 +2351,7 @@ namespace Microsoft.Azure.Management.Orbital
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ContactProfileListResult>();
+            var _result = new AzureOperationResponse<IEnumerable<ContactProfile>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2363,7 +2364,7 @@ namespace Microsoft.Azure.Management.Orbital
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ContactProfileListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ContactProfile>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2826,7 +2827,8 @@ namespace Microsoft.Azure.Management.Orbital
         /// <param name='contactName'>
         /// Contact Name
         /// </param>
-        /// <param name='properties'>
+        /// <param name='parameters'>
+        /// The parameters to provide for the created contact.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2849,7 +2851,7 @@ namespace Microsoft.Azure.Management.Orbital
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Contact>> BeginCreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Contact>> BeginCreateContactWithHttpMessagesAsync(string resourceGroupName, string spacecraftName, string contactName, Contact parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2871,10 +2873,9 @@ namespace Microsoft.Azure.Management.Orbital
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "contactName");
             }
-            Contact parameters = new Contact();
-            if (properties != null)
+            if (parameters == null)
             {
-                parameters.Properties = properties;
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

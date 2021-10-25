@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Orbital.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.Orbital.Models
     /// resource. Later, one of the available contact can be selected to create
     /// a contact.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class AvailableContacts
     {
         /// <summary>
@@ -35,12 +38,36 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// resource.</param>
         /// <param name="groundStationName">Name of Azure Ground
         /// Station.</param>
-        /// <param name="properties">Properties of Contact resource.</param>
-        public AvailableContacts(AvailableContactsSpacecraft spacecraft = default(AvailableContactsSpacecraft), string groundStationName = default(string), AvailableContactsProperties properties = default(AvailableContactsProperties))
+        /// <param name="maximumElevationDegrees">Maximum elevation of the
+        /// antenna during the contact in decimal degrees.</param>
+        /// <param name="txStartTime">Time at which antenna transmit will be
+        /// enabled.</param>
+        /// <param name="txEndTime">Time at which antenna transmit will be
+        /// disabled.</param>
+        /// <param name="rxStartTime">Earliest time to receive a
+        /// signal.</param>
+        /// <param name="rxEndTime">Time to lost receiving a signal.</param>
+        /// <param name="startAzimuthDegrees">Azimuth of the antenna at the
+        /// start of the contact in decimal degrees.</param>
+        /// <param name="endAzimuthDegrees">Azimuth of the antenna at the end
+        /// of the contact in decimal degrees.</param>
+        /// <param name="startElevationDegrees">Spacecraft elevation above the
+        /// horizon at contact start.</param>
+        /// <param name="endElevationDegrees">Spacecraft elevation above the
+        /// horizon at contact end.</param>
+        public AvailableContacts(AvailableContactsSpacecraft spacecraft = default(AvailableContactsSpacecraft), string groundStationName = default(string), double? maximumElevationDegrees = default(double?), System.DateTime? txStartTime = default(System.DateTime?), System.DateTime? txEndTime = default(System.DateTime?), System.DateTime? rxStartTime = default(System.DateTime?), System.DateTime? rxEndTime = default(System.DateTime?), double? startAzimuthDegrees = default(double?), double? endAzimuthDegrees = default(double?), double? startElevationDegrees = default(double?), double? endElevationDegrees = default(double?))
         {
             Spacecraft = spacecraft;
             GroundStationName = groundStationName;
-            Properties = properties;
+            MaximumElevationDegrees = maximumElevationDegrees;
+            TxStartTime = txStartTime;
+            TxEndTime = txEndTime;
+            RxStartTime = rxStartTime;
+            RxEndTime = rxEndTime;
+            StartAzimuthDegrees = startAzimuthDegrees;
+            EndAzimuthDegrees = endAzimuthDegrees;
+            StartElevationDegrees = startElevationDegrees;
+            EndElevationDegrees = endElevationDegrees;
             CustomInit();
         }
 
@@ -62,10 +89,61 @@ namespace Microsoft.Azure.Management.Orbital.Models
         public string GroundStationName { get; private set; }
 
         /// <summary>
-        /// Gets or sets properties of Contact resource.
+        /// Gets maximum elevation of the antenna during the contact in decimal
+        /// degrees.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public AvailableContactsProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.maximumElevationDegrees")]
+        public double? MaximumElevationDegrees { get; private set; }
+
+        /// <summary>
+        /// Gets time at which antenna transmit will be enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.txStartTime")]
+        public System.DateTime? TxStartTime { get; private set; }
+
+        /// <summary>
+        /// Gets time at which antenna transmit will be disabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.txEndTime")]
+        public System.DateTime? TxEndTime { get; private set; }
+
+        /// <summary>
+        /// Gets earliest time to receive a signal.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rxStartTime")]
+        public System.DateTime? RxStartTime { get; private set; }
+
+        /// <summary>
+        /// Gets time to lost receiving a signal.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rxEndTime")]
+        public System.DateTime? RxEndTime { get; private set; }
+
+        /// <summary>
+        /// Gets azimuth of the antenna at the start of the contact in decimal
+        /// degrees.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.startAzimuthDegrees")]
+        public double? StartAzimuthDegrees { get; private set; }
+
+        /// <summary>
+        /// Gets azimuth of the antenna at the end of the contact in decimal
+        /// degrees.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endAzimuthDegrees")]
+        public double? EndAzimuthDegrees { get; private set; }
+
+        /// <summary>
+        /// Gets spacecraft elevation above the horizon at contact start.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.startElevationDegrees")]
+        public double? StartElevationDegrees { get; private set; }
+
+        /// <summary>
+        /// Gets spacecraft elevation above the horizon at contact end.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endElevationDegrees")]
+        public double? EndElevationDegrees { get; private set; }
 
     }
 }

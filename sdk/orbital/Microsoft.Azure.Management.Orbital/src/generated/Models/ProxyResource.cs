@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// <param name="id">Azure resource Id</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="name">Azure resource name</param>
-        public ProxyResource(string id = default(string), string type = default(string), string name = default(string))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public ProxyResource(string id = default(string), string type = default(string), string name = default(string), ProxyResourceSystemData systemData = default(ProxyResourceSystemData))
         {
             Id = id;
             Type = type;
             Name = name;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -64,6 +67,13 @@ namespace Microsoft.Azure.Management.Orbital.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public ProxyResourceSystemData SystemData { get; private set; }
 
     }
 }

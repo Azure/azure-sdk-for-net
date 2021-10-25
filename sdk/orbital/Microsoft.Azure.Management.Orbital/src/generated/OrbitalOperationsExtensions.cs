@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static SpacecraftListResult ListSpacecraftsBySubscription(this IOrbitalOperations operations)
+            public static IEnumerable<Spacecraft> ListSpacecraftsBySubscription(this IOrbitalOperations operations)
             {
                 return operations.ListSpacecraftsBySubscriptionAsync().GetAwaiter().GetResult();
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpacecraftListResult> ListSpacecraftsBySubscriptionAsync(this IOrbitalOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Spacecraft>> ListSpacecraftsBySubscriptionAsync(this IOrbitalOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSpacecraftsBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static SpacecraftListResult ListSpacecraftsByResourceGroup(this IOrbitalOperations operations, string resourceGroupName)
+            public static IEnumerable<Spacecraft> ListSpacecraftsByResourceGroup(this IOrbitalOperations operations, string resourceGroupName)
             {
                 return operations.ListSpacecraftsByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpacecraftListResult> ListSpacecraftsByResourceGroupAsync(this IOrbitalOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Spacecraft>> ListSpacecraftsByResourceGroupAsync(this IOrbitalOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSpacecraftsByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='spacecraftName'>
             /// Spacecraft ID
             /// </param>
-            public static ContactListResult ListContactsBySpacecraftName(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName)
+            public static IEnumerable<Contact> ListContactsBySpacecraftName(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName)
             {
                 return operations.ListContactsBySpacecraftNameAsync(resourceGroupName, spacecraftName).GetAwaiter().GetResult();
             }
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContactListResult> ListContactsBySpacecraftNameAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Contact>> ListContactsBySpacecraftNameAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListContactsBySpacecraftNameWithHttpMessagesAsync(resourceGroupName, spacecraftName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -419,11 +419,12 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='contactName'>
             /// Contact Name
             /// </param>
-            /// <param name='properties'>
+            /// <param name='parameters'>
+            /// The parameters to provide for the created contact.
             /// </param>
-            public static Contact CreateContact(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties))
+            public static Contact CreateContact(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, Contact parameters)
             {
-                return operations.CreateContactAsync(resourceGroupName, spacecraftName, contactName, properties).GetAwaiter().GetResult();
+                return operations.CreateContactAsync(resourceGroupName, spacecraftName, contactName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -441,14 +442,15 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='contactName'>
             /// Contact Name
             /// </param>
-            /// <param name='properties'>
+            /// <param name='parameters'>
+            /// The parameters to provide for the created contact.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Contact> CreateContactAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Contact> CreateContactAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, Contact parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -768,7 +770,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static ContactProfileListResult ListContactProfilesBySubscription(this IOrbitalOperations operations)
+            public static IEnumerable<ContactProfile> ListContactProfilesBySubscription(this IOrbitalOperations operations)
             {
                 return operations.ListContactProfilesBySubscriptionAsync().GetAwaiter().GetResult();
             }
@@ -782,7 +784,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContactProfileListResult> ListContactProfilesBySubscriptionAsync(this IOrbitalOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<ContactProfile>> ListContactProfilesBySubscriptionAsync(this IOrbitalOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListContactProfilesBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -799,7 +801,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static ContactProfileListResult ListContactProfilesByResourceGroup(this IOrbitalOperations operations, string resourceGroupName)
+            public static IEnumerable<ContactProfile> ListContactProfilesByResourceGroup(this IOrbitalOperations operations, string resourceGroupName)
             {
                 return operations.ListContactProfilesByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -816,7 +818,7 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContactProfileListResult> ListContactProfilesByResourceGroupAsync(this IOrbitalOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<ContactProfile>> ListContactProfilesByResourceGroupAsync(this IOrbitalOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListContactProfilesByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -958,11 +960,12 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='contactName'>
             /// Contact Name
             /// </param>
-            /// <param name='properties'>
+            /// <param name='parameters'>
+            /// The parameters to provide for the created contact.
             /// </param>
-            public static Contact BeginCreateContact(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties))
+            public static Contact BeginCreateContact(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, Contact parameters)
             {
-                return operations.BeginCreateContactAsync(resourceGroupName, spacecraftName, contactName, properties).GetAwaiter().GetResult();
+                return operations.BeginCreateContactAsync(resourceGroupName, spacecraftName, contactName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -980,14 +983,15 @@ namespace Microsoft.Azure.Management.Orbital
             /// <param name='contactName'>
             /// Contact Name
             /// </param>
-            /// <param name='properties'>
+            /// <param name='parameters'>
+            /// The parameters to provide for the created contact.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Contact> BeginCreateContactAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, ContactsProperties properties = default(ContactsProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Contact> BeginCreateContactAsync(this IOrbitalOperations operations, string resourceGroupName, string spacecraftName, string contactName, Contact parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateContactWithHttpMessagesAsync(resourceGroupName, spacecraftName, contactName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
