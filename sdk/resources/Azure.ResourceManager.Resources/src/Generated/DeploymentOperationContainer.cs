@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of DeploymentOperation and their operations over a DeploymentExtended. </summary>
+    /// <summary> A class representing collection of DeploymentOperation and their operations over a Deployment. </summary>
     public partial class DeploymentOperationContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => DeploymentExtended.ResourceType;
+        protected override ResourceType ValidResourceType => Deployment.ResourceType;
 
         // Container level operations.
 

@@ -26,7 +26,6 @@ namespace Azure.Communication.Identity
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2021_03_31_preview1 = 2,
             V2021_10_31_preview = 3,
         }
     }

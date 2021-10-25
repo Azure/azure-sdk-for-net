@@ -1,110 +1,5 @@
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class AddConnectionToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public AddConnectionToGroup() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public string Group { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class AddUserToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public AddUserToGroup() { }
-        public string Group { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class CloseAllConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public CloseAllConnections() { }
-        public string[] Excluded { get { throw null; } set { } }
-        public string Reason { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class CloseClientConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public CloseClientConnection() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public string Reason { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class CloseGroupConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public CloseGroupConnections() { }
-        public string[] Excluded { get { throw null; } set { } }
-        public string Group { get { throw null; } set { } }
-        public string Reason { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class GrantPermission : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public GrantPermission() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
-        public string TargetName { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class RemoveConnectionFromGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public RemoveConnectionFromGroup() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public string Group { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class RemoveUserFromAllGroups : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public RemoveUserFromAllGroups() { }
-        public string UserId { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class RemoveUserFromGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public RemoveUserFromGroup() { }
-        public string Group { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class RevokePermission : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public RevokePermission() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
-        public string TargetName { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class SendToAll : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public SendToAll() { }
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
-        public string[] Excluded { get { throw null; } set { } }
-        public System.BinaryData Message { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class SendToConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public SendToConnection() { }
-        public string ConnectionId { get { throw null; } set { } }
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
-        public System.BinaryData Message { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class SendToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public SendToGroup() { }
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
-        public string[] Excluded { get { throw null; } set { } }
-        public string Group { get { throw null; } set { } }
-        public System.BinaryData Message { get { throw null; } set { } }
-    }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public partial class SendToUser : Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubOperation
-    {
-        public SendToUser() { }
-        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
-        public System.BinaryData Message { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
     public partial class WebPubSubAttribute : System.Attribute
@@ -168,12 +63,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public static Microsoft.Azure.WebJobs.IWebJobsBuilder AddWebPubSub(this Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { throw null; }
     }
-    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public abstract partial class WebPubSubOperation
-    {
-        protected WebPubSubOperation() { }
-        public string OperationKind { get { throw null; } set { } }
-    }
     public enum WebPubSubPermission
     {
         SendToGroup = 1,
@@ -194,5 +83,119 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventType EventType { get { throw null; } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } }
+    }
+}
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
+{
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class AddConnectionToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public AddConnectionToGroup() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class AddUserToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public AddUserToGroup() { }
+        public string Group { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class CloseAllConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public CloseAllConnections() { }
+        public string[] Excluded { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class CloseClientConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public CloseClientConnection() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class CloseGroupConnections : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public CloseGroupConnections() { }
+        public string[] Excluded { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class GrantPermission : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public GrantPermission() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
+        public string TargetName { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class RemoveConnectionFromGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public RemoveConnectionFromGroup() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class RemoveUserFromAllGroups : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public RemoveUserFromAllGroups() { }
+        public string UserId { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class RemoveUserFromGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public RemoveUserFromGroup() { }
+        public string Group { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class RevokePermission : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public RevokePermission() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubPermission Permission { get { throw null; } set { } }
+        public string TargetName { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class SendToAll : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public SendToAll() { }
+        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
+        public string[] Excluded { get { throw null; } set { } }
+        public System.BinaryData Message { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class SendToConnection : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public SendToConnection() { }
+        public string ConnectionId { get { throw null; } set { } }
+        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
+        public System.BinaryData Message { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class SendToGroup : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public SendToGroup() { }
+        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
+        public string[] Excluded { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+        public System.BinaryData Message { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class SendToUser : Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations.WebPubSubOperation
+    {
+        public SendToUser() { }
+        public Microsoft.Azure.WebPubSub.Common.MessageDataType DataType { get { throw null; } set { } }
+        public System.BinaryData Message { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public abstract partial class WebPubSubOperation
+    {
+        protected WebPubSubOperation() { }
+        public string OperationKind { get { throw null; } }
     }
 }

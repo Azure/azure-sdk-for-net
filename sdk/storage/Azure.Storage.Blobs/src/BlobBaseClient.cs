@@ -2736,9 +2736,9 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     // This also makes sure that we fail fast if file doesn't exist.
-                    var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                    var etag = blobProperties.Value.ETag;
+                    ETag etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
                     if (!allowModifications)
                     {
