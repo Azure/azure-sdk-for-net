@@ -90,8 +90,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(name2, input);
 
             DiskAccess access1 = null, access2 = null;
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            await foreach (var access in subscription.GetDiskAccessesAsync())
+            await foreach (var access in DefaultSubscription.GetDiskAccessesAsync())
             {
                 if (access.Data.Name == name1)
                     access1 = access;

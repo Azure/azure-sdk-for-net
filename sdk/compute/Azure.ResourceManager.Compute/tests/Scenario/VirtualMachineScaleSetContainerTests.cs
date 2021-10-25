@@ -96,8 +96,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmssName2, input2);
 
             VirtualMachineScaleSet vmss1 = null, vmss2 = null;
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            await foreach (var vmss in subscription.GetVirtualMachineScaleSetsAsync())
+            await foreach (var vmss in DefaultSubscription.GetVirtualMachineScaleSetsAsync())
             {
                 if (vmss.Data.Name == vmssName1)
                     vmss1 = vmss;

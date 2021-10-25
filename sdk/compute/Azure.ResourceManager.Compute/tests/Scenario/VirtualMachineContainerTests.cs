@@ -96,8 +96,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmName2, input2);
 
             VirtualMachine vm1 = null, vm2 = null;
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            await foreach (var vm in subscription.GetVirtualMachinesAsync())
+            await foreach (var vm in DefaultSubscription.GetVirtualMachinesAsync())
             {
                 if (vm.Data.Name == vmName1)
                     vm1 = vm;

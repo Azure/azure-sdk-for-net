@@ -91,8 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(diskName2, input);
 
             Disk disk1 = null, disk2 = null;
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            await foreach (var disk in subscription.GetDisksAsync())
+            await foreach (var disk in DefaultSubscription.GetDisksAsync())
             {
                 if (disk.Data.Name == diskName1)
                     disk1 = disk;

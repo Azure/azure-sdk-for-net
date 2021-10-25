@@ -90,8 +90,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(groupName2, input);
 
             DedicatedHostGroup group1 = null, group2 = null;
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            await foreach (var group in subscription.GetDedicatedHostGroupsAsync())
+            await foreach (var group in DefaultSubscription.GetDedicatedHostGroupsAsync())
             {
                 if (group.Data.Name == groupName1)
                     group1 = group;
