@@ -8,7 +8,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24578")]
     public class DeploymentOperationContainerTests : ResourcesTestBase
     {
         public DeploymentOperationContainerTests(bool isAsync)
@@ -25,10 +24,10 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
             int count = 0;
-            await foreach (var tempDeploymentOperation in deploymentExtended.GetDeploymentOperations().GetAllAsync())
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperations().GetAllAsync())
             {
                 count++;
             }
@@ -44,11 +43,11 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-");
-            Deployment deploymentExtendedData = CreateDeploymentExtendedData(CreateDeploymentProperties());
-            DeploymentExtended deploymentExtended = (await rg.GetDeploymentExtendeds().CreateOrUpdateAsync(deployExName, deploymentExtendedData)).Value;
-            await foreach (var tempDeploymentOperation in deploymentExtended.GetDeploymentOperations().GetAllAsync())
+            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(deployExName, deploymentData)).Value;
+            await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperations().GetAllAsync())
             {
-                DeploymentOperation getDeploymentOperation = await deploymentExtended.GetDeploymentOperations().GetAsync(tempDeploymentOperation.Data.OperationId);
+                DeploymentOperation getDeploymentOperation = await deployment.GetDeploymentOperations().GetAsync(tempDeploymentOperation.Data.OperationId);
                 AssertValidDeploymentOperation(tempDeploymentOperation, getDeploymentOperation);
             }
         }

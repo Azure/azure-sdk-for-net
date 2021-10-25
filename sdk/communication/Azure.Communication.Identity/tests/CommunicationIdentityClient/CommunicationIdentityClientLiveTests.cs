@@ -131,7 +131,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithValidToken()
+        public async Task ExchangeTeamsUserAadTokenWithValidToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -140,18 +140,18 @@ namespace Azure.Communication.Identity.Tests
             string token = await generateTeamsToken();
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
-            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(token);
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(token);
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithEmptyTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithEmptyTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("");
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync("");
             }
             catch (RequestFailedException ex)
             {
@@ -164,12 +164,12 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithNullTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithNullTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(null);
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(null);
             }
             catch (ArgumentNullException ex)
             {
@@ -180,12 +180,12 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithInvalidTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithInvalidTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("invalid");
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync("invalid");
             }
             catch (RequestFailedException ex)
             {
@@ -198,12 +198,12 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeTeamsTokenWithExpiredTokenShouldThrow()
+        public async Task ExchangeTeamsUserAadTokenWithExpiredTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(TestEnvironment.CommunicationExpiredTeamsToken);
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(TestEnvironment.CommunicationExpiredTeamsToken);
             }
             catch (RequestFailedException ex)
             {
