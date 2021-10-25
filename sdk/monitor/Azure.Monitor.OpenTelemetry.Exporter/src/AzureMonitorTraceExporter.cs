@@ -4,10 +4,11 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-
+using System.Timers;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry;
+using OpenTelemetry.Extensions.Storage;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter

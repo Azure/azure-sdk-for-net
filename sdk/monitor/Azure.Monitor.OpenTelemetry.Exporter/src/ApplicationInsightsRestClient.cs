@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry.Extensions.Storage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -24,12 +26,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 throw new ArgumentNullException(nameof(body));
             }
+            using var message = CreateTrackRequest();
+            var content = GetRequestContent(body);
+            message.Request.Content = RequestContent.Create(content);
 
-            using var message = CreateTrackRequest(body);
-            message.SetProperty("TelemetryItems", body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                message.SetProperty("TelemetryItems", body);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-            return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+                return message.TryGetProperty("ItemsAccepted", out var objItemsAccepted) && objItemsAccepted is int itemsAccepted ? itemsAccepted : 0;
+            }
+            catch (Exception)
+            {
+                //if (ex?.InnerException?.InnerException?.Source == "System.Net.Http")
+                //{
+                    //var data = Encoding.UTF8.GetBytes(message.Request.Content.ToString());
+                    IPersistentBlob blob = AzureMonitorConverter.storage.CreateBlob(content.ToArray());
+                //}
+
+                return 0;
+            }
         }
 
         /// <summary>
@@ -85,6 +102,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             request.Content = RequestContent.Create(body);
             TelemetryDebugWriter.WriteTelemetry(content);
             return message;
+        }
+
+        internal HttpMessage CreateTrackRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(host, false);
+            uri.AppendRaw("/v2", false);
+            uri.AppendPath("/track", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal static Memory<byte> GetRequestContent(IEnumerable<TelemetryItem> body)
+        {
+            using var content = new NDJsonWriter();
+            foreach (var item in body)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+                content.WriteNewLine();
+            }
+            TelemetryDebugWriter.WriteTelemetry(content);
+            return content.ToBytes();
         }
     }
 }
