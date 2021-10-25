@@ -25,9 +25,10 @@ operation-group-to-parent:
     QueueAuthorizationRules: Microsoft.ServiceBus/namespaces/queues
     TopicAuthorizationRules: Microsoft.ServiceBus/namespaces/topics
     NamespaceAuthorizationRules: Microsoft.ServiceBus/namespaces
+    DisasterRecoveryConfigAuthorizationRules: Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs
     NamespaceName: subscriptions
     DisasterRecoveryConfigName: Microsoft.ServiceBus/namespaces
-operation-group-is-extension: NamespaceAuthorizationRules;QueueAuthorizationRules;TopicAuthorizationRules
+operation-group-is-extension: NamespaceAuthorizationRules;QueueAuthorizationRules;TopicAuthorizationRules;DisasterRecoveryConfigAuthorizationRules
 directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules'].get.operationId
@@ -71,6 +72,21 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].put.operationId
       transform: return "TopicAuthorizationRules_CreateOrUpdate"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].delete.operationId
+      transform: return "TopicAuthorizationRules_Delete"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].get.operationId
+      transform: return "TopicAuthorizationRules_Get"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/ListKeys'].post.operationId
+      transform: return "TopicAuthorizationRules_ListKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
+      transform: return "TopicAuthorizationRules_RegenerateKeys"
+    - from: swagger-document
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules'].get.operationId
+      transform: return "DisasterRecoveryConfigAuthorizationRules_Get"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].delete.operationId
       transform: return "TopicAuthorizationRules_Delete"

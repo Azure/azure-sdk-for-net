@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 
-namespace Azure.ResourceManager.ServiceBus.Tests.Tests
+namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class QueueTests : ServiceBusTestBase
     {
