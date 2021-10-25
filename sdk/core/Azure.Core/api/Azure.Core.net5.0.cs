@@ -707,6 +707,11 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
+    public partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline
+    {
+        public DisposableHttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
+        public void Dispose() { }
+    }
     public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;

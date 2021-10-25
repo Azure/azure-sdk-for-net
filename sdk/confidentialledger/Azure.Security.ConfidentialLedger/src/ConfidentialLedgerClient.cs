@@ -93,16 +93,5 @@ namespace Azure.Security.ConfidentialLedger
                 ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate)
             };
         }
-
-        /// <summary>
-        /// Dispose of the pipeline.
-        /// </summary>
-        ~ConfidentialLedgerClient()
-        {
-            if (_pipeline is DisposableHttpPipeline disposableHttpPipeline)
-            {
-                disposableHttpPipeline.Dispose();
-            }
-        }
     }
 }
