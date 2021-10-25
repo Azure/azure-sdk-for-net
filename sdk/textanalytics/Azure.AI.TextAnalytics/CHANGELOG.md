@@ -4,6 +4,9 @@
 
 ### Features Added
 - Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
+- Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
+- Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
+- Added suppport for multiple actions of the same type.
 
 ### Breaking Changes
 

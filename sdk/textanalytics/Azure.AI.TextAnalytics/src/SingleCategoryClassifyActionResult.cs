@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal SingleCategoryClassifyActionResult(SingleCategoryClassifyResultCollection result, DateTimeOffset completedOn)
-            : base(completedOn)
+        internal SingleCategoryClassifyActionResult(SingleCategoryClassifyResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(actionName, completedOn)
         {
             _documentsResults = result;
         }
@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal SingleCategoryClassifyActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error) { }
+        internal SingleCategoryClassifyActionResult(string actionName, DateTimeOffset completedOn,TextAnalyticsErrorInternal error)
+           : base(actionName, completedOn, error) { }
 
         /// <summary>
         /// Gets the result of the execution of a <see cref="SingleCategoryClassifyAction"/> per each input document.

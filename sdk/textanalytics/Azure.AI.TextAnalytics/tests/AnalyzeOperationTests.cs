@@ -301,6 +301,124 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextSentiment.Neutral, analyzeSentimentDocumentsResults[1].DocumentSentiment.Sentiment);
         }
 
+        [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
+        public async Task AnalyzeOperationWithMultipleActionsOfSameType()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var batchDocuments = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
+                {
+                    new ExtractKeyPhrasesAction()
+                    { ActionName = "DisableServaiceLogsTrue", DisableServiceLogs = true },
+                    new ExtractKeyPhrasesAction()
+                    { ActionName = "DisableServiceLogsFalse"},
+                },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>()
+                {
+                    new RecognizeEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>()
+                {
+                    new RecognizePiiEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizePiiEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>()
+                {
+                    new RecognizeLinkedEntitiesAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeLinkedEntitiesAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>()
+                {
+                    new AnalyzeSentimentAction()
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new AnalyzeSentimentAction()
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>()
+                {
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new SingleCategoryClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse" },
+                },
+                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>()
+                {
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsTrue", DisableServiceLogs = true },
+                    new MultiCategoryClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                    { ActionName = "DisableServiceLogsFalse"},
+                },
+                DisplayName = "AnalyzeOperationWithMultipleTasksOfSameType"
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
+
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(0, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(0, operation.ActionsTotal);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(0, operation.ActionsFailed);
+            Assert.AreEqual(16, operation.ActionsSucceeded);
+            Assert.AreEqual(0, operation.ActionsInProgress);
+            Assert.AreEqual(16, operation.ActionsTotal);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesResults = resultCollection.RecognizeCustomEntitiesResults;
+            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyResults = resultCollection.SingleCategoryClassifyResults;
+            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyResults = resultCollection.MultiCategoryClassifyResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(recognizeCustomEntitiesResults);
+            Assert.IsNotNull(singleCategoryClassifyResults);
+            Assert.IsNotNull(multiCategoryClassifyResults);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
+        }
+
         [RecordedTest]
         public async Task AnalyzeOperationWithPagination()
         {
