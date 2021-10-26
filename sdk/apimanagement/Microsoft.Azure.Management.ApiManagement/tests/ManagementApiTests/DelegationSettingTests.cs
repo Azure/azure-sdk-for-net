@@ -47,7 +47,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(portalDelegationSettings);
                     Assert.Equal(urlParameter, portalDelegationSettings.Url);
                     // validation key is generated brand new on playback mode and hence validation fails
-                    Assert.Equal("Sanitized", portalDelegationSettings.ValidationKey); //TODO
+                    Assert.Equal("Sanitized", portalDelegationSettings.ValidationKey);
                     Assert.True(portalDelegationSettings.UserRegistration.Enabled);
                     Assert.True(portalDelegationSettings.Subscriptions.Enabled);
 
