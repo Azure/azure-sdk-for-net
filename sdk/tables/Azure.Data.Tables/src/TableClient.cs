@@ -320,13 +320,14 @@ namespace Azure.Data.Tables
             Uri endpoint,
             HttpPipeline pipeline)
         {
+            _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
             _tableOperations = tableOperations;
+            _tableOperations.endpoint = _endpoint.AbsoluteUri;
             _version = version;
             Name = table;
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
-            _endpoint = endpoint;
             _pipeline = pipeline;
         }
 

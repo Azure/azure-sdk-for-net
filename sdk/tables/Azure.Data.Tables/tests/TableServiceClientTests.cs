@@ -21,6 +21,7 @@ namespace Azure.Data.Tables.Tests
         /// The table account name.
         /// </summary>
         private static string AccountName = "someaccount";
+
         private const string Secret = "Kg==";
         private const string TableName = "mytablename";
 
@@ -28,6 +29,7 @@ namespace Azure.Data.Tables.Tests
         /// The table endpoint.
         /// </summary>
         private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+
         private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/" + TableName);
         private static readonly Uri _devUrlWIthTableName = new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
@@ -146,7 +148,8 @@ namespace Azure.Data.Tables.Tests
         {
             var cred = new TableSharedKeyCredential(AccountName, Secret);
             var sharedKeyClient = new TableServiceClient(_url, cred);
-            var connStringClient = new TableServiceClient($"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;");
+            var connStringClient = new TableServiceClient(
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;");
             yield return new object[] { sharedKeyClient, cred };
             yield return new object[] { connStringClient, cred };
         }
@@ -198,7 +201,10 @@ namespace Azure.Data.Tables.Tests
 
         public static IEnumerable<object[]> ValidConnStrings()
         {
-            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;"
+            };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
             yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
@@ -228,19 +234,25 @@ namespace Azure.Data.Tables.Tests
             var connStrTransport = TableAlreadyExistsTransport();
             var devTransport = TableAlreadyExistsTransport();
 
-            var sharedKeyClient = new TableServiceClient(_urlWithTableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
-            var sharedKeyClientDev = new TableServiceClient(_devUrlWIthTableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransportDev });
+            var sharedKeyClient = new TableServiceClient(
+                _urlWithTableName,
+                new TableSharedKeyCredential(AccountName, Secret),
+                new TableClientOptions { Transport = sharedKeyTransport });
+            var sharedKeyClientDev = new TableServiceClient(
+                _devUrlWIthTableName,
+                new TableSharedKeyCredential(AccountName, Secret),
+                new TableClientOptions { Transport = sharedKeyTransportDev });
             var connStringClient = new TableServiceClient(
-                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;",
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/{TableName};",
                 new TableClientOptions { Transport = connStrTransport });
-            var devStorageClient = new TableServiceClient("UseDevelopmentStorage=true", new TableClientOptions { Transport = devTransport });
+            // var devStorageClient = new TableServiceClient("UseDevelopmentStorage=true", new TableClientOptions { Transport = devTransport });
             var tokenCredClient = new TableServiceClient(_urlWithTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
             var tokenCredClientDev = new TableServiceClient(_devUrlWIthTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransportDev });
 
             yield return new object[] { sharedKeyClient, sharedKeyTransport };
             yield return new object[] { sharedKeyClientDev, sharedKeyTransport };
             yield return new object[] { connStringClient, connStrTransport };
-            yield return new object[] { devStorageClient, devTransport };
+            // yield return new object[] { devStorageClient, devTransport };
             yield return new object[] { tokenCredClient, tokenTransport };
             yield return new object[] { tokenCredClientDev, tokenTransportDev };
         }
@@ -250,17 +262,17 @@ namespace Azure.Data.Tables.Tests
         {
             var client = InstrumentClient(tableClient);
 
-            client.CreateTableIfNotExistsAsync(TableName);
+            var ex = Assert.ThrowsAsync<Exception>(async () => await client.CreateTableIfNotExistsAsync(TableName));
 
-            Assert.That(transport.SingleRequest.Uri.Path, Does.Not.Contain(TableName), "Path should not contain the table name");
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
         }
 
         private static MockTransport TableAlreadyExistsTransport() =>
             new(
                 _ => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
+                    (int)HttpStatusCode.BadRequest,
                     null,
-                    TableErrorCode.TableAlreadyExists.ToString(),
+                    "bad Uri",
                     null));
     }
 }
