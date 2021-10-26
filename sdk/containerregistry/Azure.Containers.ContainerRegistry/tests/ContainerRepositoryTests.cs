@@ -28,7 +28,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()));
+            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            }));
             repository = client.GetRepository(_repositoryName);
         }
 

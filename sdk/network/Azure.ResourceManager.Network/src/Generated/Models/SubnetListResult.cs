@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SubnetListResult. </summary>
         internal SubnetListResult()
         {
-            Value = new ChangeTrackingList<Subnet>();
+            Value = new ChangeTrackingList<SubnetData>();
         }
 
         /// <summary> Initializes a new instance of SubnetListResult. </summary>
         /// <param name="value"> The subnets in a virtual network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SubnetListResult(IReadOnlyList<Subnet> value, string nextLink)
+        internal SubnetListResult(IReadOnlyList<SubnetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The subnets in a virtual network. </summary>
-        public IReadOnlyList<Subnet> Value { get; }
+        public IReadOnlyList<SubnetData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

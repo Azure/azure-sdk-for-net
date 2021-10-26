@@ -4,11 +4,13 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
     public class TenantDiscoveryBlobBaseClientTests : BlobTestBase
     {
         public TenantDiscoveryBlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -18,7 +20,7 @@ namespace Azure.Storage.Blobs.Tests
         [RecordedTest]
         public async Task ExistsAsync_WithTenantDiscovery()
         {
-            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_OauthAccount(true));
+            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_OauthAccount_TenantDiscovery());
 
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);

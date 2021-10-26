@@ -8,6 +8,9 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
+    /// <summary>
+    /// Base Class for Method Requests.
+    /// </summary>
     public partial class MethodRequest
     {
         /// <summary>

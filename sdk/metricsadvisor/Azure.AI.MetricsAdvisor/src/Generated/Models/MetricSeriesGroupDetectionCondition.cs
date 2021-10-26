@@ -17,14 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="conditionOperator">
         /// condition operator
         /// 
-        /// 
-        /// 
-        /// should be specified when combining multiple detection conditions.
+        /// should be specified when combining multiple detection conditions
         /// </param>
-        /// <param name="smartDetectionCondition"> . </param>
-        /// <param name="hardThresholdCondition"> . </param>
-        /// <param name="changeThresholdCondition"> . </param>
-        /// <param name="seriesGroupKey"> . </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        /// <param name="seriesGroupKey"></param>
         internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesGroupKey = seriesGroupKey;

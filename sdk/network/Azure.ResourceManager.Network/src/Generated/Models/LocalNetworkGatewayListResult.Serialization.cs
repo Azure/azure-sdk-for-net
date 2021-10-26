@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LocalNetworkGatewayListResult DeserializeLocalNetworkGatewayListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LocalNetworkGateway>> value = default;
+            Optional<IReadOnlyList<LocalNetworkGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LocalNetworkGateway> array = new List<LocalNetworkGateway>();
+                    List<LocalNetworkGatewayData> array = new List<LocalNetworkGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalNetworkGateway.DeserializeLocalNetworkGateway(item));
+                        array.Add(LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(item));
                     }
                     value = array;
                     continue;

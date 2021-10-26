@@ -79,10 +79,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Thumbprint { get; private set; }
 
         /// <summary>
-        /// Gets determines whether certificate has been verified.
+        /// Gets or sets determines whether certificate has been verified.
         /// </summary>
         [JsonProperty(PropertyName = "isVerified")]
-        public bool? IsVerified { get; private set; }
+        public bool? IsVerified { get; set; }
 
         /// <summary>
         /// Gets the certificate's create date and time.

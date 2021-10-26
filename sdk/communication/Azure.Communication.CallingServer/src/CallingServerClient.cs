@@ -44,30 +44,36 @@ namespace Azure.Communication.CallingServer
                   Argument.CheckNotNull(options, nameof(options)))
         { }
 
-        private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        public CallingServerClient(Uri endpoint, TokenCredential credential)
             : this(
-              endpoint: endpoint.AbsoluteUri,
-              httpPipeline: options.BuildHttpPipeline(connectionString),
-              options: options)
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new CallingServerClientOptions())
         { }
 
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
-        /// <param name="endpoint">Endpoint</param>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(Uri endpoint, string connectionString, CallingServerClientOptions options = default)
+        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options)
             : this(
-                  endpoint,
-                  options ?? new CallingServerClientOptions(),
-                  ConnectionString.Parse(connectionString))
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                Argument.CheckNotNull(options, nameof(options)))
         { }
-
         #endregion
 
         #region private constructors
 
         private CallingServerClient(ConnectionString connectionString, CallingServerClientOptions options)
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+        { }
+
+        private CallingServerClient(string endpoint, TokenCredential tokenCredential, CallingServerClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         private CallingServerClient(string endpoint, HttpPipeline httpPipeline, CallingServerClientOptions options)
@@ -277,35 +283,13 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Start recording of the call.
         /// </summary>
-        /// <param name="callLocator">The call locator.</param>
+        /// <param name="callLocator"> The callLocator. </param>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<StartCallRecordingResult>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartRecording)}");
-            scope.Start();
-            try
-            {
-                return await ServerCallRestClient.StartRecordingAsync(
-                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    recordingStateCallbackUri: recordingStateCallbackUri?.AbsoluteUri,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Start recording of the call.
-        /// </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<StartCallRecordingResult> StartRecording(CallLocator callLocator, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual Response<StartCallRecordingResult> StartRecording(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContentType? content = null, RecordingChannelType? channel = null, RecordingFormatType? format = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartRecording)}");
             scope.Start();
@@ -313,7 +297,10 @@ namespace Azure.Communication.CallingServer
             {
                 return ServerCallRestClient.StartRecording(
                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    recordingStateCallbackUri: recordingStateCallbackUri?.AbsoluteUri,
+                    recordingStateCallbackUri: recordingStateCallbackUri.AbsoluteUri,
+                    recordingContentType: content,
+                    recordingChannelType: channel,
+                    recordingFormatType: format,
                     cancellationToken: cancellationToken
                     );
             }
@@ -325,18 +312,26 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Get the current recording state by recording id.
+        /// Start recording of the call.
         /// </summary>
-        /// <param name="recordingId">The recording id to get the state of.</param>
+        /// <param name="callLocator"> The callLocator. </param>
+        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<CallRecordingProperties>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual async Task<Response<StartCallRecordingResult>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContentType? content = null, RecordingChannelType? channel = null, RecordingFormatType? format = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetRecordingState)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
-                return await ServerCallRestClient.GetRecordingPropertiesAsync(
-                    recordingId: recordingId,
+                return await ServerCallRestClient.StartRecordingAsync(
+                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
+                    recordingStateCallbackUri: recordingStateCallbackUri.AbsoluteUri,
+                    recordingContentType: content,
+                    recordingChannelType: channel,
+                    recordingFormatType: format,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -371,17 +366,17 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Stop recording of the call.
+        /// Get the current recording state by recording id.
         /// </summary>
-        /// <param name="recordingId">The recording id to stop.</param>
+        /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallRecordingProperties>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetRecordingState)}");
             scope.Start();
             try
             {
-                return await ServerCallRestClient.StopRecordingAsync(
+                return await ServerCallRestClient.GetRecordingPropertiesAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -408,6 +403,29 @@ namespace Azure.Communication.CallingServer
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to stop.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopRecording)}");
+            scope.Start();
+            try
+            {
+                return await ServerCallRestClient.StopRecordingAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -522,7 +540,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response{Stream}"/> containing the
@@ -557,7 +575,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response{Stream}"/> containing the
@@ -595,7 +613,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -625,7 +643,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -654,7 +672,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -688,7 +706,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -703,37 +721,6 @@ namespace Azure.Communication.CallingServer
             using Stream destination = File.Create(destinationPath);
             return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
                 async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Play audio in the call. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
-        /// <param name="options"> Options for playing audio. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(CallLocator callLocator, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudio)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
-                return await ServerCallRestClient.PlayAudioAsync(
-                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                    loop: options?.Loop ?? false,
-                    audioFileUri: audioFileUri.AbsoluteUri,
-                    audioFileId: options?.AudioFileId,
-                    callbackUri: options?.CallbackUri?.AbsoluteUri,
-                    operationContext: options?.OperationContext,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
 
         /// <summary> Play audio in the call. </summary>
@@ -759,6 +746,37 @@ namespace Azure.Communication.CallingServer
                     operationContext: options?.OperationContext,
                     cancellationToken: cancellationToken
                     );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play audio in the call. </summary>
+        /// <param name="callLocator">The call locator.</param>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
+        /// <param name="options"> Options for playing audio. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioAsync(CallLocator callLocator, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudio)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                return await ServerCallRestClient.PlayAudioAsync(
+                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
+                    loop: options?.Loop ?? false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: options?.AudioFileId,
+                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                    operationContext: options?.OperationContext,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -892,6 +910,30 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual Response<IEnumerable<CallParticipant>> GetParticipants(CallLocator callLocator, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipants)}");
+            scope.Start();
+            try
+            {
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = ServerCallRestClient.GetParticipants(
+                                        callLocator: CallLocatorModelSerializer.Serialize(callLocator),
+                                        cancellationToken: cancellationToken);
+
+                return Response.FromValue(callParticipantsInternal.Value.Select(x => new CallParticipant(x)), callParticipantsInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participants of the call. </summary>
+        /// <param name="callLocator">The call locator.</param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantsAsync(CallLocator callLocator, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantsAsync)}");
@@ -912,22 +954,24 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participants of the call. </summary>
+        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
         /// <param name="callLocator">The call locator.</param>
+        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual Response<IEnumerable<CallParticipant>> GetParticipants(CallLocator callLocator, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<CallParticipant>> GetParticipant(CallLocator callLocator, CommunicationIdentifier participant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = ServerCallRestClient.GetParticipants(
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = ServerCallRestClient.GetParticipant(
                                         callLocator: CallLocatorModelSerializer.Serialize(callLocator),
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                         cancellationToken: cancellationToken);
 
-                return Response.FromValue(callParticipantsInternal.Value.Select(x => new CallParticipant(x)), callParticipantsInternal.GetRawResponse());
+                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -963,24 +1007,30 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <summary> Play audio to a participant. </summary>
         /// <param name="callLocator">The call locator.</param>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
+        /// <param name="options"> Options for playing audio. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual Response<IEnumerable<CallParticipant>> GetParticipant(CallLocator callLocator, CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipant)}");
             scope.Start();
             try
             {
-                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = ServerCallRestClient.GetParticipant(
-                                        callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                        cancellationToken: cancellationToken);
+                Argument.AssertNotNull(participant, nameof(participant));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
-                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
+                return ServerCallRestClient.ParticipantPlayAudio(
+                                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
+                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                    loop: options?.Loop ?? false,
+                                    audioFileUri: audioFileUri.AbsoluteUri,
+                                    audioFileId: options?.AudioFileId,
+                                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1023,29 +1073,25 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Play audio to a participant. </summary>
+        /// <summary> Cancel Participant Media Operation. </summary>
         /// <param name="callLocator">The call locator.</param>
         /// <param name="participant"> The identifier of the participant. </param>
-        /// <param name="audioFileUri">The media resource uri of the play audio request. Currently only Wave file (.wav) format audio prompts are supported. The audio content in the wave file must be mono (single-channel), 16-bit samples with a 16,000 (16KHz) sampling rate.</param>
-        /// <param name="options"> Options for playing audio. </param>
+        /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<PlayAudioResult> PlayAudioToParticipant(CallLocator callLocator, CommunicationIdentifier participant, Uri audioFileUri, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response CancelParticipantMediaOperation(CallLocator callLocator, CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PlayAudioToParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperation)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(participant, nameof(participant));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                return ServerCallRestClient.ParticipantPlayAudio(
+                return ServerCallRestClient.CancelParticipantMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
                                     identifier: CommunicationIdentifierSerializer.Serialize(participant),
-                                    loop: options?.Loop ?? false,
-                                    audioFileUri: audioFileUri.AbsoluteUri,
-                                    audioFileId: options?.AudioFileId,
-                                    callbackUri: options?.CallbackUri?.AbsoluteUri,
+                                    mediaOperationId: mediaOperationId,
                                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -1084,26 +1130,24 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Cancel Participant Media Operation. </summary>
+        /// <summary> Cancel Media Operation. </summary>
         /// <param name="callLocator">The call locator.</param>
-        /// <param name="participant"> The identifier of the participant. </param>
         /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelParticipantMediaOperation(CallLocator callLocator, CommunicationIdentifier participant, string mediaOperationId, CancellationToken cancellationToken = default)
+        public virtual Response CancelMediaOperation(CallLocator callLocator, string mediaOperationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelParticipantMediaOperation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperation)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
 
-                return ServerCallRestClient.CancelParticipantMediaOperation(
+                return ServerCallRestClient.CancelMediaOperation(
                                     callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
                                     mediaOperationId: mediaOperationId,
-                                    cancellationToken: cancellationToken);
+                                    cancellationToken: cancellationToken
+                                    );
             }
             catch (Exception ex)
             {
@@ -1138,24 +1182,31 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Cancel Media Operation. </summary>
-        /// <param name="callLocator">The call locator.</param>
-        /// <param name="mediaOperationId">The Id of the media operation to Cancel. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelMediaOperation(CallLocator callLocator, string mediaOperationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CancelMediaOperation)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(mediaOperationId, nameof(mediaOperationId));
+                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
 
-                return ServerCallRestClient.CancelMediaOperation(
-                                    callLocator: CallLocatorModelSerializer.Serialize(callLocator),
-                                    mediaOperationId: mediaOperationId,
-                                    cancellationToken: cancellationToken
-                                    );
+                return ServerCallRestClient.RedirectCall(
+                    incomingCallContext: incomingCallContext,
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    timeoutInSeconds: timeoutInSeconds,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -1189,39 +1240,6 @@ namespace Azure.Communication.CallingServer
                     timeoutInSeconds: timeoutInSeconds,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// Redirect an incoming call to the target identities.
-        /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="targets"> The target identities. </param>
-        /// <param name="timeoutInSeconds"> The timeout in seconds. </param>
-        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        public virtual Response RedirectCall(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-                Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-
-                return ServerCallRestClient.RedirectCall(
-                    incomingCallContext: incomingCallContext,
-                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    callbackUri: callbackUri?.AbsoluteUri,
-                    timeoutInSeconds: timeoutInSeconds,
-                    cancellationToken: cancellationToken
-                    );
             }
             catch (Exception ex)
             {

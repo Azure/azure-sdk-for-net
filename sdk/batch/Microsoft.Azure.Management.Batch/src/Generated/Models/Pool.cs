@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Machines.</param>
         /// <param name="currentDedicatedNodes">The number of compute nodes
         /// currently in the pool.</param>
-        /// <param name="currentLowPriorityNodes">The number of low priority
+        /// <param name="currentLowPriorityNodes">The number of low-priority
         /// compute nodes currently in the pool.</param>
         /// <param name="scaleSettings">Settings which configure the number of
         /// nodes in the pool.</param>
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int? CurrentDedicatedNodes { get; private set; }
 
         /// <summary>
-        /// Gets the number of low priority compute nodes currently in the
+        /// Gets the number of low-priority compute nodes currently in the
         /// pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentLowPriorityNodes")]

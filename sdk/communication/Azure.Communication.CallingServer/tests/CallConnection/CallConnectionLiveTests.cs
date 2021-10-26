@@ -36,7 +36,7 @@ namespace Azure.Communication.CallingServer.Tests
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
-            CallingServerClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
             try
             {
                 // Establish a Call
@@ -71,7 +71,7 @@ namespace Azure.Communication.CallingServer.Tests
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
-            CallingServerClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClientWithConnectionString();
             try
             {
                 // Establish a call

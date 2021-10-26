@@ -38,7 +38,7 @@ Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash
 - The `TokenSigningKey` type has been renamed `AttestationTokenSigningKey`.
 - The `PolicyResult` type has been renamed `PolicyModificationResult`.
 - The constructor for the `AttestationToken` class has been changed from taking an `object` to taking a `BinaryData`. This allows callers to use their preferred serialization
-mechanism. The constructor for `AttestationToken` will ensure that the `body` parameter is in fact a serialized JSON object to ensure it is compatable wih the JSON Web Signature encoding algorithms.
+mechanism. The constructor for `AttestationToken` will ensure that the `body` parameter is in fact a serialized JSON object to ensure it is compatible wih the JSON Web Signature encoding algorithms.
 - The inputs to the AttestSgxEnclave and AttestOpenEnclave APIs have been restructured
 to reduce the number of parameters passed into the API.
 - When creating an `AttestationData` object specifying that the body type is "JSON", the binary data passed in will be verified that it contains a JSON object.

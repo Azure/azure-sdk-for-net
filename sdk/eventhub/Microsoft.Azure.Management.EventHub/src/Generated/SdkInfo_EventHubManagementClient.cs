@@ -19,25 +19,25 @@ namespace Microsoft.Azure.Management.EventHub
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventHub", "Clusters", "2018-01-01-preview"),
-                new Tuple<string, string, string>("EventHub", "Configuration", "2018-01-01-preview"),
-                new Tuple<string, string, string>("EventHub", "ConsumerGroups", "2017-04-01"),
-                new Tuple<string, string, string>("EventHub", "DisasterRecoveryConfigs", "2017-04-01"),
-                new Tuple<string, string, string>("EventHub", "EventHubs", "2017-04-01"),
-                new Tuple<string, string, string>("EventHub", "Namespaces", "2017-04-01"),
-                new Tuple<string, string, string>("EventHub", "Namespaces", "2018-01-01-preview"),
-                new Tuple<string, string, string>("EventHub", "Operations", "2017-04-01"),
-                new Tuple<string, string, string>("EventHub", "Regions", "2017-04-01"),
+                new Tuple<string, string, string>("EventHub", "Clusters", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "Configuration", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "ConsumerGroups", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "DisasterRecoveryConfigs", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "EventHubs", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "Namespaces", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "Operations", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "PrivateEndpointConnections", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventHub", "PrivateLinkResources", "2021-06-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventhub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\AutoRestSDK\\EH\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/eventhub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\autorest2021\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "bd4cdd7e0508f2c482574e90580d34c48bf21b1f";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "699c3a00cf4fbfcd0a91beb99c93c77195eff804";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

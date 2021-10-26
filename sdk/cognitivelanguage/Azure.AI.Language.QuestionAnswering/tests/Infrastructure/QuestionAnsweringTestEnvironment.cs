@@ -14,12 +14,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         /// <summary>
         /// Gets the master API key.
         /// </summary>
-        public string ApiKey => GetRecordedVariable("QNAMAKER_API_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedVariable("QUESTIONANSWERING_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the primary test project name.
         /// </summary>
-        public string ProjectName => GetRecordedVariable("QNAMAKER_PROJECT");
+        public string ProjectName => GetRecordedVariable("QUESTIONANSWERING_PROJECT");
 
         /// <summary>
         /// Gets the deployment name.
@@ -29,6 +29,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         /// <summary>
         /// Gets the endpoint.
         /// </summary>
-        public Uri Endpoint => new(GetRecordedVariable("QNAMAKER_URI"), UriKind.Absolute);
+        public Uri Endpoint => new(GetRecordedVariable("QUESTIONANSWERING_ENDPOINT"), UriKind.Absolute);
     }
 }

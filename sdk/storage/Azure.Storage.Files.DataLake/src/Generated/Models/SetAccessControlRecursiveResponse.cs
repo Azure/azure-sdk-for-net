@@ -20,10 +20,10 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of SetAccessControlRecursiveResponse. </summary>
-        /// <param name="directoriesSuccessful"> . </param>
-        /// <param name="filesSuccessful"> . </param>
-        /// <param name="failureCount"> . </param>
-        /// <param name="failedEntries"> . </param>
+        /// <param name="directoriesSuccessful"></param>
+        /// <param name="filesSuccessful"></param>
+        /// <param name="failureCount"></param>
+        /// <param name="failedEntries"></param>
         internal SetAccessControlRecursiveResponse(int? directoriesSuccessful, int? filesSuccessful, int? failureCount, IReadOnlyList<AclFailedEntry> failedEntries)
         {
             DirectoriesSuccessful = directoriesSuccessful;

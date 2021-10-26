@@ -36,10 +36,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="lastCommitId">Last commit id.</param>
         /// <param name="hostName">GitHub Enterprise host name. For example:
         /// https://github.mydomain.com</param>
-        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), string hostName = default(string))
+        /// <param name="clientId">GitHub bring your own app client id.</param>
+        /// <param name="clientSecret">GitHub bring your own app client secret
+        /// information.</param>
+        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), string hostName = default(string), string clientId = default(string), GitHubClientSecret clientSecret = default(GitHubClientSecret))
             : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
             HostName = hostName;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
             CustomInit();
         }
 
@@ -54,6 +59,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "hostName")]
         public string HostName { get; set; }
+
+        /// <summary>
+        /// Gets or sets gitHub bring your own app client id.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientId")]
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets gitHub bring your own app client secret information.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientSecret")]
+        public GitHubClientSecret ClientSecret { get; set; }
 
         /// <summary>
         /// Validate the object.

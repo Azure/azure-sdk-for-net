@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,14 +16,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzurePowerShellCredentialsTests : ClientTestBase
+    public class AzurePowerShellCredentialsTests : CredentialTestBase
     {
         private string tokenXML =
             "<Object Type=\"Microsoft.Azure.Commands.Profile.Models.PSAccessToken\"><Property Name=\"Token\" Type=\"System.String\">Kg==</Property><Property Name=\"ExpiresOn\" Type=\"System.DateTimeOffset\">5/11/2021 8:20:03 PM +00:00</Property><Property Name=\"TenantId\" Type=\"System.String\">72f988bf-86f1-41af-91ab-2d7cd011db47</Property><Property Name=\"UserId\" Type=\"System.String\">chriss@microsoft.com</Property><Property Name=\"Type\" Type=\"System.String\">Bearer</Property></Object>";
-
-        private const string Scope = "https://vault.azure.net/.default";
-        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
 
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
@@ -34,8 +31,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
+            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
             var testProcess = new TestProcess { Output = processOutput };
@@ -77,11 +74,36 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task HandlesAlternateDateTimeFormats([Values("en-US", "nl-NL")] string culture)
+        {
+            CultureInfo curCulture = CultureInfo.CurrentCulture;
+            CultureInfo.CurrentCulture = new CultureInfo(culture);
+            try
+            {
+                var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+                TestContext.WriteLine(processOutput);
+                var testProcess = new TestProcess
+                {
+                    Output = processOutput,
+                };
+                AzurePowerShellCredential credential = InstrumentClient(
+                    new AzurePowerShellCredential(
+                        new AzurePowerShellCredentialOptions(),
+                        CredentialPipeline.GetInstance(null),
+                        new TestProcessService(testProcess, true)));
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(curCulture.Name);
+            }
+        }
+
+        [Test]
         [RunOnlyOnPlatforms(Windows = true)]
         public async Task FallsBackToLegacyPowershell()
         {
             bool fellBackToPowerShell = false;
-            //var testProcess = new TestProcess { Output = "'pwsh' is not recognized as an internal or external command," };
             var testProcess = new TestProcess
             {
                 Output = "'pwsh' is not recognized as an internal or external command,",

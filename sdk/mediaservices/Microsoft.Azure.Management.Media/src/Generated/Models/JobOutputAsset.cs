@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="assetName">The name of the output Asset.</param>
         /// <param name="error">If the JobOutput is in the Error state, it
         /// contains the details of the error.</param>
+        /// <param name="presetOverride">A preset used to override the preset
+        /// in the corresponding transform output.</param>
         /// <param name="state">Describes the state of the JobOutput. Possible
         /// values include: 'Canceled', 'Canceling', 'Error', 'Finished',
         /// 'Processing', 'Queued', 'Scheduled'</param>
@@ -60,8 +62,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Output began processing.</param>
         /// <param name="endTime">The UTC date and time at which this Job
         /// Output finished processing.</param>
-        public JobOutputAsset(string assetName, JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
-            : base(error, state, progress, label, startTime, endTime)
+        public JobOutputAsset(string assetName, JobError error = default(JobError), Preset presetOverride = default(Preset), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+            : base(error, presetOverride, state, progress, label, startTime, endTime)
         {
             AssetName = assetName;
             CustomInit();

@@ -29,8 +29,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
-        private readonly bool _allowMultiTenantAuthentication;
-        private readonly bool _tenantIdOptionProvided;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -43,13 +42,11 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
         {
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
         }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            _tenantIdOptionProvided = tenantId != null;
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -113,7 +110,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -166,7 +163,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

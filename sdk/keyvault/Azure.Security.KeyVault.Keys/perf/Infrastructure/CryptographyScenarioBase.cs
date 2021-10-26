@@ -21,10 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Perf.Infrastructure
             CryptographyClient = new(
                 KeyId,
                 PerfTestEnvironment.Instance.Credential,
-                new()
-                {
-                    Transport = PerfTransport.Create(Options),
-                });
+                ConfigureClientOptions(new CryptographyClientOptions()));
         }
     }
 }

@@ -16,16 +16,18 @@ Once you have created a client and have a previous question-answer result, you c
 ## Synchronous
 
 ```C# Snippet:QuestionAnsweringClient_Chat
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgebaseAnswer previousAnswer = answers.Answers.First();
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
 {
-    Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -36,16 +38,18 @@ foreach (KnowledgebaseAnswer answer in response.Value.Answers)
 ## Asynchronous
 
 ```C# Snippet:QuestionAnsweringClient_ChatAsync
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgebaseAnswer previousAnswer = answers.Answers.First();
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
 {
-    Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync("FAQ", options);
+Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");

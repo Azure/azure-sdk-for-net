@@ -1,6 +1,17 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.5 (Unreleased)
+
+### Features Added
+
+- Repository metadata KPIs are stored in the client instance. When metadata is stale,
+  the next service operation that can make use of metadata will first attempt to
+  fetch and refresh the client metadata state. The operation will then continue as normal.
+- Adds the `ModelsRepositoryClientMetadataOptions` class and plumbing with `ModelsRepositoryClientOptions` to configure
+  client interactions with repository metadata.
+- Default metadata expiration is effectively "never" or `TimeSpan.MaxValue` by default.
+
+## 1.0.0-preview.4 (2021-07-22)
 
 - Consumes new service metadata capability
 - Simplifies client API surface area:

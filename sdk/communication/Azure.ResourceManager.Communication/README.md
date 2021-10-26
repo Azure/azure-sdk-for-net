@@ -21,7 +21,7 @@ Use the management library for Azure Communication Services to:
 
 Install the Azure Management SDK for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.ResourceManager.Communication --version 1.0.0
 ``` 
 

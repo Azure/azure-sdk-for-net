@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.MySQL.Models
         /// </summary>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
-        /// (and is required for creation).</param>
+        /// (and is required for creation). The login name is required when
+        /// updating password.</param>
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
         /// <param name="version">Server version. Possible values include:
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.MySQL.Models
         /// <summary>
         /// Gets or sets the administrator's login name of a server. Can only
         /// be specified when the server is being created (and is required for
-        /// creation).
+        /// creation). The login name is required when updating password.
         /// </summary>
         [JsonProperty(PropertyName = "administratorLogin")]
         public string AdministratorLogin { get; set; }

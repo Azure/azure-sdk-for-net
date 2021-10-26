@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteFilterListResult. </summary>
         internal RouteFilterListResult()
         {
-            Value = new ChangeTrackingList<RouteFilter>();
+            Value = new ChangeTrackingList<RouteFilterData>();
         }
 
         /// <summary> Initializes a new instance of RouteFilterListResult. </summary>
         /// <param name="value"> A list of route filters in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal RouteFilterListResult(IReadOnlyList<RouteFilter> value, string nextLink)
+        internal RouteFilterListResult(IReadOnlyList<RouteFilterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of route filters in a resource group. </summary>
-        public IReadOnlyList<RouteFilter> Value { get; }
+        public IReadOnlyList<RouteFilterData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

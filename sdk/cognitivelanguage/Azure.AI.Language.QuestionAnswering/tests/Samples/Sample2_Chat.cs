@@ -17,25 +17,26 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void Chat()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgebaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgebaseAnswer(id: 27);
+            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
 
             #region Snippet:QuestionAnsweringClient_Chat
+            string projectName = "FAQ";
+            string deploymentName = "prod";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-            KnowledgebaseAnswer previousAnswer = answers.Answers.First();
+            KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
             {
-                Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+                Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
-#else
-            Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(options);
 
-            foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+            foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
                 Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");
@@ -51,25 +52,26 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public async Task ChatAsync()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgebaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgebaseAnswer(id: 27);
+            KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(id: 27);
 
-#region Snippet:QuestionAnsweringClient_ChatAsync
+            #region Snippet:QuestionAnsweringClient_ChatAsync
+            string projectName = "FAQ";
+            string deploymentName = "prod";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-            KnowledgebaseAnswer previousAnswer = answers.Answers.First();
+            KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+#else
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
-            KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions(projectName, deploymentName, "How long should charging take?")
             {
-                Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+                Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
             };
 
-#if SNIPPET
-            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync("FAQ", options);
-#else
-            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-#endif
+            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(options);
 
-            foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+            foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
                 Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");

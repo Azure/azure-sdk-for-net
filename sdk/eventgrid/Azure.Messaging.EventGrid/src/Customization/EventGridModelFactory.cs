@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -130,6 +131,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsDeliveryReportReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = default, string @from = default, string to = default, string deliveryStatus = default, string deliveryStatusDetails = default, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default, DateTimeOffset? receivedTimestamp = default, string tag = default)
         {
             deliveryAttempts ??= new List<AcsSmsDeliveryAttemptProperties>();
@@ -139,6 +141,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes new instance of AcsRecordingStorageInfoProperties class. </summary>
         /// <param name="recordingChunks"> List of details of recording chunks information. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingStorageInfoProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks = default)
         {
             recordingChunks ??= new List<AcsRecordingChunkInfoProperties>();
@@ -314,6 +317,130 @@ namespace Azure.Messaging.EventGrid
         public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
         {
             return new(validationResponse);
+        }
+
+        /// <summary> Initializes a new instance of AcsChatMessageReceivedEventData. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        {
+            return new AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        {
+            return new AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="editTime"> The time at which the message was edited. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        {
+            return new AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
+        }
+
+        /// <summary> Initializes a new instance of AcsChatMessageEditedInThreadEventData. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="editTime"> The time at which the message was edited. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        {
+            return new AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, long? bitrate, long? incomingBitrate, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        {
+            return MediaLiveEventIngestHeartbeatEventData(trackType, trackName, default, default, bitrate, incomingBitrate, default, default, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
+        /// <param name="trackName"> Gets the track name. </param>
+        /// <param name="transcriptionLanguage"> Gets the Live Transcription language. </param>
+        /// <param name="transcriptionState"> Gets the Live Transcription state. </param>
+        /// <param name="bitrate"> Gets the bitrate of the track. </param>
+        /// <param name="incomingBitrate"> Gets the incoming bitrate. </param>
+        /// <param name="ingestDriftValue"> Gets the track ingest drift value. </param>
+        /// <param name="lastFragmentArrivalTime"> Gets the arrival UTC time of the last fragment. </param>
+        /// <param name="lastTimestamp"> Gets the last timestamp. </param>
+        /// <param name="timescale"> Gets the timescale of the last timestamp. </param>
+        /// <param name="overlapCount"> Gets the fragment Overlap count. </param>
+        /// <param name="discontinuityCount"> Gets the fragment Discontinuity count. </param>
+        /// <param name="nonincreasingCount"> Gets Non increasing count. </param>
+        /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
+        /// <param name="state"> Gets the state of the live event. </param>
+        /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventIngestHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventIngestHeartbeatEventData MediaLiveEventIngestHeartbeatEventData(string trackType = null, string trackName = null, string transcriptionLanguage = null, string transcriptionState = null, long? bitrate = null, long? incomingBitrate = null, int? ingestDriftValue = null, DateTimeOffset? lastFragmentArrivalTime = null, string lastTimestamp = null, string timescale = null, long? overlapCount = null, long? discontinuityCount = null, long? nonincreasingCount = null, bool? unexpectedBitrate = null, string state = null, bool? healthy = null)
+        {
+            return new MediaLiveEventIngestHeartbeatEventData(trackType, trackName, transcriptionLanguage, transcriptionState, bitrate, incomingBitrate, ingestDriftValue == null ? Constants.MediaEvents.NotApplicable : ingestDriftValue.Value.ToString(CultureInfo.InvariantCulture), lastFragmentArrivalTime, lastTimestamp, timescale, overlapCount, discontinuityCount, nonincreasingCount, unexpectedBitrate, state, healthy);
+        }
+
+        /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
+        /// <param name="channelLatency"> The channel latency. </param>
+        /// <param name="latencyResultCode"> The latency result code. </param>
+        /// <returns> A new <see cref="SystemEvents.MediaLiveEventChannelArchiveHeartbeatEventData"/> instance for mocking. </returns>
+        public static MediaLiveEventChannelArchiveHeartbeatEventData MediaLiveEventChannelArchiveHeartbeatEventData(TimeSpan? channelLatency = null, string latencyResultCode = null)
+        {
+            return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatency == null ? Constants.MediaEvents.NotApplicable : channelLatency.Value.Milliseconds.ToString(CultureInfo.InvariantCulture), latencyResultCode);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

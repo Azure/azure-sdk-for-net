@@ -57,6 +57,7 @@ namespace Azure.Messaging.EventHubs
     {
         public EventHubConnectionOptions() { }
         public System.Net.Security.RemoteCertificateValidationCallback CertificateValidationCallback { get { throw null; } set { } }
+        public System.TimeSpan ConnectionIdleTimeout { get { throw null; } set { } }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
         public int ReceiveBufferSizeInBytes { get { throw null; } set { } }
@@ -253,7 +254,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
         public static bool operator !=(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

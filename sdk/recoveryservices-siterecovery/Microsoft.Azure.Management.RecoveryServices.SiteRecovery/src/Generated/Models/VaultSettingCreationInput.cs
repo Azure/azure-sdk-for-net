@@ -61,10 +61,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
             }
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
         }
     }
 }

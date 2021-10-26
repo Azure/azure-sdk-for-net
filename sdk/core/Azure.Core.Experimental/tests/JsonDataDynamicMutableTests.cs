@@ -114,7 +114,7 @@ namespace Azure.Core.Tests
             yield return new object[] {1L, "1"};
             yield return new object[] {1, "1"};
             yield return new object[] {1.0, "1"};
-#if NET5_0
+#if NETCOREAPP
             yield return new object[] {1.1D, "1.1"};
             yield return new object[] {1.1F, "1.100000023841858"};
 #else

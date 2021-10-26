@@ -18,16 +18,13 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
-        /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
+        /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
-        internal MetricAvailability(TimeSpan? timeGrain, TimeSpan? retention)
+        internal MetricAvailability(TimeSpan? granularity, TimeSpan? retention)
         {
-            TimeGrain = timeGrain;
+            Granularity = granularity;
             Retention = retention;
         }
-
-        /// <summary> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
-        public TimeSpan? TimeGrain { get; }
         /// <summary> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
         public TimeSpan? Retention { get; }
     }

@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -185,7 +186,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [Test]
-        [Ignore("Regression in 7.3-preview returns 'BadParameter'. See https://github.com/Azure/azure-sdk-for-net/issues/22645 for details.")]
         public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
         {
 #if NET461
@@ -229,7 +229,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        [Ignore("Regression in 7.3-preview returns 'BadParameter'. See https://github.com/Azure/azure-sdk-for-net/issues/22645 for details.")]
         public async Task LocalSignVerifyRoundTripOnFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK
@@ -365,6 +364,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(decrypted.Plaintext);
 
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
+        }
+
+        [Test]
+        public async Task EncryptDecryptFromKeyClient()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
+            RegisterForCleanup(key.Name);
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+            // Make sure the same (instrumented) pipeline is used from the KeyClient.
+            CryptographyClient cryptoClient = Client.GetCryptographyClient(key.Name, key.Properties.Version);
+            EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+
+            Assert.AreEqual(plaintext, decryptResult.Plaintext);
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

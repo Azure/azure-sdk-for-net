@@ -7,9 +7,9 @@ namespace ServiceBus.Tests.TestHelper
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Azure.Management.ServiceBus.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
     using System.Security.Cryptography;
@@ -32,6 +32,8 @@ namespace ServiceBus.Tests.TestHelper
         internal const string IPFilterRulesPrefix = "sdk-IPFilterRules-";
         internal const string VirtualNetworkRulesPrefix = "sdk-VirtualNetworkRules-";
 
+        internal const string ResourceGroupCluster = "v-ajnavtest";
+
         public static ServiceBusManagementClient GetServiceBusManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)
@@ -39,6 +41,18 @@ namespace ServiceBus.Tests.TestHelper
                 handler.IsPassThrough = true;
                 ServiceBusManagementClient nhManagementClient = context.GetServiceClient<ServiceBusManagementClient>(handlers: handler);
                 return nhManagementClient;
+            }
+
+            return null;
+        }
+
+        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+                KeyVaultManagementClient keyValutManagementClient = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
+                return keyValutManagementClient;
             }
 
             return null;

@@ -29,24 +29,15 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QuestionAnsweringTextRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-05-01-preview")
+        public QuestionAnsweringTextRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-07-15-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(TextQueryOptions textQueryParameters)
+        internal HttpMessage CreateQueryRequest(QueryTextOptions textQueryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,23 +51,23 @@ namespace Azure.AI.Language.QuestionAnswering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textQueryParameters);
+            content.JsonWriter.WriteObjectValue(textQueryOptions);
             request.Content = content;
             return message;
         }
 
         /// <summary> Answers the specified question using the provided text in the body. </summary>
-        /// <param name="textQueryParameters"> Post body of the request. </param>
+        /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="textQueryParameters"/> is null. </exception>
-        public async Task<Response<TextAnswers>> QueryAsync(TextQueryOptions textQueryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
+        public async Task<Response<TextAnswers>> QueryAsync(QueryTextOptions textQueryOptions, CancellationToken cancellationToken = default)
         {
-            if (textQueryParameters == null)
+            if (textQueryOptions == null)
             {
-                throw new ArgumentNullException(nameof(textQueryParameters));
+                throw new ArgumentNullException(nameof(textQueryOptions));
             }
 
-            using var message = CreateQueryRequest(textQueryParameters);
+            using var message = CreateQueryRequest(textQueryOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,17 +84,17 @@ namespace Azure.AI.Language.QuestionAnswering
         }
 
         /// <summary> Answers the specified question using the provided text in the body. </summary>
-        /// <param name="textQueryParameters"> Post body of the request. </param>
+        /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="textQueryParameters"/> is null. </exception>
-        public Response<TextAnswers> Query(TextQueryOptions textQueryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
+        public Response<TextAnswers> Query(QueryTextOptions textQueryOptions, CancellationToken cancellationToken = default)
         {
-            if (textQueryParameters == null)
+            if (textQueryOptions == null)
             {
-                throw new ArgumentNullException(nameof(textQueryParameters));
+                throw new ArgumentNullException(nameof(textQueryOptions));
             }
 
-            using var message = CreateQueryRequest(textQueryParameters);
+            using var message = CreateQueryRequest(textQueryOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

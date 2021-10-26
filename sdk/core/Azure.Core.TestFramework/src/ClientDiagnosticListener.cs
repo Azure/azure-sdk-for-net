@@ -141,6 +141,21 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
+                var activity = producedDiagnosticScope.Activity;
+                var operationName = activity.OperationName;
+                // traverse the activities and check for duplicates among ancestors
+                while (activity != null)
+                {
+                    if (operationName == activity.Parent?.OperationName)
+                    {
+                        // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
+                        // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
+                        throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                    }
+
+                    activity = activity.Parent;
+                }
+
                 if (!producedDiagnosticScope.IsCompleted)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");

@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventHubs.Core
             new EventHubConnectionOptions
             {
                 TransportType = instance.TransportType,
+                ConnectionIdleTimeout = instance.ConnectionIdleTimeout,
                 Proxy = instance.Proxy,
                 CustomEndpointAddress = instance.CustomEndpointAddress,
                 SendBufferSizeInBytes = instance.SendBufferSizeInBytes,

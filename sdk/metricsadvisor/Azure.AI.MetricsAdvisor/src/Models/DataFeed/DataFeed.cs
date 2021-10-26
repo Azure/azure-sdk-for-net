@@ -54,6 +54,36 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataFeed"/> class for mocking
+        /// purposes.
+        /// </summary>
+        internal DataFeed(string id, DataFeedStatus? status, DateTimeOffset? createdOn, string creator, bool? isAdministrator,
+            IReadOnlyDictionary<string, string> metricIds, string name, DataFeedSource dataSource, DataFeedSchema schema,
+            DataFeedGranularity granularity, DataFeedIngestionSettings ingestionSettings, string description, string actionLinkTemplate,
+            DataFeedAccessMode? accessMode, DataFeedRollupSettings rollupSettings, DataFeedMissingDataPointFillSettings missingDataPointFillSettings,
+            IList<string> administrators, IList<string> viewers)
+        {
+            Id = id;
+            Status = status;
+            CreatedOn = createdOn;
+            Creator = creator;
+            IsAdministrator = isAdministrator;
+            MetricIds = metricIds;
+            Name = name;
+            DataSource = dataSource;
+            Schema = schema;
+            Granularity = granularity;
+            IngestionSettings = ingestionSettings;
+            Description = description;
+            ActionLinkTemplate = actionLinkTemplate;
+            AccessMode = accessMode;
+            RollupSettings = rollupSettings;
+            MissingDataPointFillSettings = missingDataPointFillSettings;
+            Administrators = administrators;
+            Viewers = viewers;
+        }
+
+        /// <summary>
         /// The unique identifier of this <see cref="DataFeed"/>.
         /// </summary>
         /// <remarks>

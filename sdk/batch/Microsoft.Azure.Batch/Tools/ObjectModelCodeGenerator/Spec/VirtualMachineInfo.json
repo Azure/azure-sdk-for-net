@@ -1,0 +1,20 @@
+{
+  "Name": "VirtualMachineInfo",
+  "ProtocolName": "Models.VirtualMachineInfo",
+  "SummaryComment": "Info about the current state of the virtual machine.",
+  "IsConstructorPublic": true,
+  "IsUsedInCollections": true,
+  "Properties": [
+    {
+      "Key": {
+        "Type": "ImageReference",
+        "Name": "ImageReference",
+        "SummaryComment": "The reference to the Azure Virtual Machine's Marketplace Image.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    }
+  ]
+}

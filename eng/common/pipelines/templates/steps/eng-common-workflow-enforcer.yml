@@ -21,4 +21,4 @@ steps:
           }
         }
       displayName: Prevent changes to eng/common outside of azure-sdk-tools repo
-      condition: and(succeeded(), ne(variables['Skip.EngCommonWorkflowEnforcer'], 'true'))
+      condition: and(succeeded(), ne(variables['Skip.EngCommonWorkflowEnforcer'], 'true'), not(endsWith(variables['Build.Repository.Name'], '-pr')))

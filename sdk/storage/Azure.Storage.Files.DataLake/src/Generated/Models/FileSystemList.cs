@@ -20,12 +20,13 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of FileSystemList. </summary>
-        /// <param name="filesystems"> . </param>
+        /// <param name="filesystems"></param>
         internal FileSystemList(IReadOnlyList<FileSystem> filesystems)
         {
             Filesystems = filesystems;
         }
 
+        /// <summary> Gets the filesystems. </summary>
         public IReadOnlyList<FileSystem> Filesystems { get; }
     }
 }

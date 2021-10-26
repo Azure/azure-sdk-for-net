@@ -1,7 +1,16 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.10.0-beta.1 (Unreleased)
+- Added support for SDK-calculated transactional hash checksums on data transfer.
+- This release contains bug fixes to improve quality.
 
+## 12.9.0 (2021-09-08)
+- Includes all features from 12.9.0-beta.1 and 12.9.0-beta.2.
+
+## 12.9.0-beta.2 (2021-07-23)
+- This release changes the dependency on Azure.Core to v1.16.0
+
+## 12.9.0-beta.1 (2021-07-22)
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
     - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 

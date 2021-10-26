@@ -4,6 +4,7 @@
     <PackageId>Azure.ResourceManager.Insights</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Insights</Description>
     <PackageTags>azure;management;arm;resource manager;insights</PackageTags>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <PropertyGroup>

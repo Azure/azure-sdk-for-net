@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of LoadBalancerSku. </summary>
         /// <param name="name"> Name of a load balancer SKU. </param>
-        internal LoadBalancerSku(LoadBalancerSkuName? name)
+        /// <param name="tier"> Tier of a load balancer SKU. </param>
+        internal LoadBalancerSku(LoadBalancerSkuName? name, LoadBalancerSkuTier? tier)
         {
             Name = name;
+            Tier = tier;
         }
 
         /// <summary> Name of a load balancer SKU. </summary>
         public LoadBalancerSkuName? Name { get; set; }
+        /// <summary> Tier of a load balancer SKU. </summary>
+        public LoadBalancerSkuTier? Tier { get; set; }
     }
 }

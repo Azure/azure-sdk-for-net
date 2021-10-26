@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// cluster.</param>
         /// <param name="loadBalancerProfile">Profile of the cluster load
         /// balancer.</param>
-        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string networkMode = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string outboundType = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
+        /// <param name="natGatewayProfile">Profile of the cluster NAT
+        /// gateway.</param>
+        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string networkMode = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string outboundType = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile), ManagedClusterNATGatewayProfile natGatewayProfile = default(ManagedClusterNATGatewayProfile))
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             OutboundType = outboundType;
             LoadBalancerSku = loadBalancerSku;
             LoadBalancerProfile = loadBalancerProfile;
+            NatGatewayProfile = natGatewayProfile;
             CustomInit();
         }
 
@@ -138,7 +141,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// This can only be set at cluster creation time and cannot be changed
         /// later. For more information see [egress outbound
         /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
-        /// Possible values include: 'loadBalancer', 'userDefinedRouting'
+        /// Possible values include: 'loadBalancer', 'userDefinedRouting',
+        /// 'managedNATGateway', 'userAssignedNATGateway'
         /// </remarks>
         [JsonProperty(PropertyName = "outboundType")]
         public string OutboundType { get; set; }
@@ -160,6 +164,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "loadBalancerProfile")]
         public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets profile of the cluster NAT gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "natGatewayProfile")]
+        public ManagedClusterNATGatewayProfile NatGatewayProfile { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -200,6 +210,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (LoadBalancerProfile != null)
             {
                 LoadBalancerProfile.Validate();
+            }
+            if (NatGatewayProfile != null)
+            {
+                NatGatewayProfile.Validate();
             }
         }
     }

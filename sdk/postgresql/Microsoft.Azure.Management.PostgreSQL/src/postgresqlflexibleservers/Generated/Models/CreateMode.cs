@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
     public static class CreateMode
     {
         public const string Default = "Default";
+        public const string Create = "Create";
+        public const string Update = "Update";
         public const string PointInTimeRestore = "PointInTimeRestore";
     }
 }

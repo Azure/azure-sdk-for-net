@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// Maintenance window of a server.
+    /// Maintenance window properties of a server.
     /// </summary>
     public partial class MaintenanceWindow
     {

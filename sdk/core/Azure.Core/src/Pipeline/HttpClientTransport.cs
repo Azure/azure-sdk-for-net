@@ -141,7 +141,7 @@ namespace Azure.Core.Pipeline
             return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
-                Timeout = Timeout.InfiniteTimeSpan
+                Timeout = Timeout.InfiniteTimeSpan,
             };
         }
 
@@ -153,9 +153,15 @@ namespace Azure.Core.Pipeline
             }
 
 #if NETCOREAPP
-            return new SocketsHttpHandler();
+            return new SocketsHttpHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #else
-            return new HttpClientHandler();
+            return new HttpClientHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #endif
         }
 
@@ -531,7 +537,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 _responseMessage?.Dispose();
-                DisposeContentStreamIfNotBuffered();
+                DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
             public override string ToString() => _responseMessage.ToString();

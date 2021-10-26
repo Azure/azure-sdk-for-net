@@ -20,6 +20,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         public const string StorageFileDataSmbShareReader = "StorageFileDataSmbShareReader";
         public const string StorageFileDataSmbShareContributor = "StorageFileDataSmbShareContributor";
         public const string StorageFileDataSmbShareElevatedContributor = "StorageFileDataSmbShareElevatedContributor";
-        public const string StorageFileDataSmbShareOwner = "StorageFileDataSmbShareOwner";
     }
 }

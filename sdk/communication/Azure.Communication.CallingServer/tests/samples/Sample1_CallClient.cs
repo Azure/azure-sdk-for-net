@@ -35,7 +35,7 @@ namespace Azure.Communication.CallingServer.Tests
                        CallingEventSubscriptionType.ToneReceived
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
             var callConnection = await callingServerClient.CreateCallConnectionAsync(
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallingServer.Tests
                        CallingEventSubscriptionType.ParticipantsUpdated,
                        CallingEventSubscriptionType.ToneReceived
                    });
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             var callConnection = callingServerClient.CreateCallConnection(

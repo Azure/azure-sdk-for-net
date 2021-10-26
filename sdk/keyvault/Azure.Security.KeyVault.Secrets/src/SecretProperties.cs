@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Secrets
         public bool Managed { get; internal set; }
 
         /// <summary>
-        /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certifcate.
+        /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certificate.
         /// </summary>
         public Uri KeyId
         {

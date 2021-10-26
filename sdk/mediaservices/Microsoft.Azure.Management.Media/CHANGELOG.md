@@ -1,12 +1,26 @@
 # Microsoft.Azure.Management.Media release notes
 
+## Changes in 5.0.0
+
+- The Media Services account now supports system and user assigned managed identities.
+- Added PublicNetworkAccess option to Media Services accounts. This option can be used with the Private Link feature to only allow access from private networks, blocking all public network access.
+- Basic passthrough - A new live event type is added. "Basic Pass-through" live events have similar capabilities as standard pass-through live events with some input and output restrictions, and are offered at a reduced price.
+- PresetConfigurations - allow you to customize the output settings, and min and max bitrates used for the Content Aware Encoding Preset. This helps you to better estimate and plan for more accurate billing when using Content Aware Encoding through constrained output track numbers and resolutions.
+
+### Breaking changes
+
+- ApiErrorException has been replaced with ErrorResponseException to be consistent with all other Azure SDKs. Exception body has not changed.
+- All calls returning 404 Not found raises an ErrorResponseException instead of returning null. This change was make to be consistent with other Azure SDKs.
+- Media service constructor has new optional PublicNetworkAccess parameter after KeyDelivery parameter.
+- Type property in MediaServiceIdentity has been changed from ManagedIdentityType enum to string, to accommodate comma separated multiple types. Valid strings for type are SystemAssigned or SystemAssigned,UserAssigned or UserAssigned.
+
 ## Changes in 4.0.0
 
 - Added KeyDelivery Access control property to Media Services that allows restricting KeyDelivery requests by IP address ranges
 
 ### Breaking changes
 
-- Media serice constructor has new optional Key delivery parameter after encryption parameter.
+- Media service constructor has new optional Key delivery parameter after encryption parameter.
 - Media service update call is expecting an object of a new class MediaServiceUpdate. The MediaServiceUpdate class is similar to MediaService class, except it doesn't have location property.
 
 ## Changes in 3.0.4
@@ -44,7 +58,7 @@ This SDK is using 2020-05-01 version of the API
 - Added UtcClipTime class, which specifies the clip time as a Utc time position in the media file during a job creation.
 - Added the “Mode” property to Audio/VideoAnalyzerPresets, exposing a new Basic Mode that only performs transcription and caption generation.
 
-### Breaking changes:
+### Breaking changes
 
 - VanityUrl property on LiveEvent is now called UseStaticHostName to better reflect the intent of the property.
 - SubscriptionMediaService class has been removed in favor of MediaService class. SubscriptionMediaService is a duplicate of MediaService class.

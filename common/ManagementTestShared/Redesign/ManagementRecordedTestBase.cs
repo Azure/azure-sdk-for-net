@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.TestFramework
         public TestRecording SessionRecording { get; private set; }
 
         private ArmClient _cleanupClient;
+        private bool _waitForCleanup;
 
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
@@ -54,6 +55,8 @@ namespace Azure.ResourceManager.TestFramework
                 var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
                 pollField.SetValue(null, TimeSpan.Zero);
             }
+
+            _waitForCleanup = Mode == RecordedTestMode.Live;
         }
 
         private ArmClient GetCleanupClient()
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 return new ArmClient(
                         TestEnvironment.SubscriptionId,
+                        GetUri(TestEnvironment.ResourceManagerUrl),
                         TestEnvironment.Credential,
                         new ArmClientOptions());
             }
@@ -78,8 +82,14 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
+                GetUri(TestEnvironment.ResourceManagerUrl),
                 TestEnvironment.Credential,
                 options);
+        }
+
+        private Uri GetUri(string endpoint)
+        {
+            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
         }
 
         [SetUp]
@@ -97,8 +107,8 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        var sub = _cleanupClient.GetSubscriptions().TryGet(TestEnvironment.SubscriptionId);
-                        sub?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                        var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
+                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -110,7 +120,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
+                        _cleanupClient.GetManagementGroup(mgmtGroupId).Delete(waitForCompletion: _waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -159,6 +169,7 @@ namespace Azure.ResourceManager.TestFramework
 
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
+                GetUri(SessionEnvironment.ResourceManagerUrl),
                 SessionEnvironment.Credential,
                 options);
         }
@@ -193,12 +204,12 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    var sub = _cleanupClient.GetSubscriptions().TryGet(SessionEnvironment.SubscriptionId);
-                    sub?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                    var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
+                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(waitForCompletion: _waitForCleanup);
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
+                    _cleanupClient.GetManagementGroup(mgmtGroupId).Delete(waitForCompletion: _waitForCleanup);
                 });
             }
 

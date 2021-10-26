@@ -1,16 +1,25 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 - Delete recording apis.
 
 ### Breaking Changes
 
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2021-10-05)
+
+### Features Added
+- Support for Audio Only Recording. User can provide with content Type e.g Audio/AudioVideo, user can also provide with channel type e.g Mixed/UnMixed, and user can also provide format type e.g mp4, mp3.
+
+## 1.0.0-beta.2 (2021-07-23)
+
 ### Key Bugs Fixed
-
-### Fixed
-
+- Downloading a recording from a different region no longer fails authentication
 
 ## 1.0.0-beta.1 (2021-06-24)
 This is the first release of Azure Communication Service Calling Server. For more information, please see the [README][read_me].

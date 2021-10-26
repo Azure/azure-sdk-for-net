@@ -20,15 +20,17 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         }
 
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
-        /// <param name="nJobs"> . </param>
-        /// <param name="sparkJobs"> . </param>
+        /// <param name="nJobs"></param>
+        /// <param name="sparkJobs"></param>
         internal SparkJobListViewResponse(int? nJobs, IReadOnlyList<SparkJob> sparkJobs)
         {
             NJobs = nJobs;
             SparkJobs = sparkJobs;
         }
 
+        /// <summary> Gets the n jobs. </summary>
         public int? NJobs { get; }
+        /// <summary> Gets the spark jobs. </summary>
         public IReadOnlyList<SparkJob> SparkJobs { get; }
     }
 }

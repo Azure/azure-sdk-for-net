@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
-using static Azure.Storage.Blobs.BlobClientOptions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -85,11 +85,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlockBlobClient(httpUri, GetOAuthCredential()),
+                () => new BlockBlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs.Test
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.IsTrue(e.Message.Contains("Conditions"));
                 });
         }
 
@@ -990,7 +990,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task StageBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1029,7 +1029,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task StageBlockFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -1091,7 +1091,7 @@ namespace Azure.Storage.Blobs.Test
                     ToBase64(secondBlockName)
             };
 
-            await blob.CommitBlockListAsync(commitList);
+            Response<BlobContentInfo> response = await blob.CommitBlockListAsync(commitList);
 
             // Stage 3rd Block
             using (var stream = new MemoryStream(data))
@@ -1100,6 +1100,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
             Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
@@ -1718,6 +1720,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlockList> response = await blob.GetBlockListAsync();
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.AreEqual(1, response.Value.CommittedBlocks.Count());
             Assert.AreEqual(blockId0, response.Value.CommittedBlocks.First().Name);
             Assert.AreEqual(1, response.Value.UncommittedBlocks.Count());
@@ -1967,13 +1971,16 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(Size);
 
             // Act
+            Response<BlobContentInfo> response;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(
+                response = await blob.UploadAsync(
                     content: stream);
             }
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(1, blobs.Count);
             Assert.AreEqual(blockBlobName, blobs.First().Name);
@@ -2950,7 +2957,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -2964,7 +2971,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_NoOverwrite()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
 
@@ -3132,6 +3139,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreNotEqual(default(ETag), uploadResponse.Value.ETag);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(uploadResponse.Value.ETag.ToString(), $"\"{uploadResponse.GetRawResponse().Headers.ETag.ToString()}\"");
             Assert.AreNotEqual(DateTimeOffset.MinValue, uploadResponse.Value.LastModified);
 
             // Validate source and destination blob content matches
@@ -3708,7 +3717,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3743,7 +3752,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3819,9 +3828,9 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<BlockBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<BlockBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlockBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

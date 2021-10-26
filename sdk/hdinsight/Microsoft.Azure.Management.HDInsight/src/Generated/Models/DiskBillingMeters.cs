@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="sku">The managed disk billing sku, P30 or S30.</param>
         /// <param name="tier">The managed disk billing tier, Standard or
         /// Premium. Possible values include: 'Standard', 'Premium'</param>
-        public DiskBillingMeters(string diskRpMeter = default(string), string sku = default(string), Tier? tier = default(Tier?))
+        public DiskBillingMeters(string diskRpMeter = default(string), string sku = default(string), string tier = default(string))
         {
             DiskRpMeter = diskRpMeter;
             Sku = sku;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Possible values include: 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public Tier? Tier { get; set; }
+        public string Tier { get; set; }
 
     }
 }

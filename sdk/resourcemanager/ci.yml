@@ -29,5 +29,5 @@ extends:
     ServiceDirectory: resourcemanager
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Core
-      safeName: AzureResourceManagerCore
+    - name: Azure.ResourceManager
+      safeName: AzureResourceManager

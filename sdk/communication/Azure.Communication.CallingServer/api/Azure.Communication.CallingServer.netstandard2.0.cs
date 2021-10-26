@@ -529,9 +529,9 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.RecordingFormatType? RecordingFormatType { get { throw null; } set { } }
         public string RecordingStateCallbackUri { get { throw null; } set { } }
     }
-    public partial class StartCallRecordingResult
+    public partial class StartRecordingResult
     {
-        internal StartCallRecordingResult() { }
+        internal StartRecordingResult() { }
         public string RecordingId { get { throw null; } }
     }
     public partial class StartHoldMusicOptions

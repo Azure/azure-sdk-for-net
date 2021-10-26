@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {

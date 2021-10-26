@@ -2470,6 +2470,10 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
             }
+            if (actions.ExtractSummaryActions != null)
+            {
+                tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
+            }
             return tasks;
         }
 
@@ -2479,7 +2483,8 @@ namespace Azure.AI.TextAnalytics
                 actions.RecognizeEntitiesActions?.Count > 1 ||
                 actions.RecognizeLinkedEntitiesActions?.Count > 1 ||
                 actions.ExtractKeyPhrasesActions?.Count > 1 ||
-                actions.AnalyzeSentimentActions?.Count > 1)
+                actions.AnalyzeSentimentActions?.Count > 1 ||
+                actions.ExtractSummaryActions?.Count > 1)
             {
                 throw new ArgumentException("Multiple of the same action is not currently supported.");
             }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load balancer backend addresses. </summary>
@@ -18,23 +20,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
         /// <param name="name"> Name of the backend address. </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
+        /// <param name="subnet"> Reference to an existing subnet. </param>
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
-        internal LoadBalancerBackendAddress(string name, VirtualNetwork virtualNetwork, string ipAddress, NetworkInterfaceIPConfiguration networkInterfaceIPConfiguration)
+        /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
+            Subnet = subnet;
             IpAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
+            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
         }
 
         /// <summary> Name of the backend address. </summary>
         public string Name { get; set; }
         /// <summary> Reference to an existing virtual network. </summary>
-        public VirtualNetwork VirtualNetwork { get; set; }
+        public WritableSubResource VirtualNetwork { get; set; }
+        /// <summary> Reference to an existing subnet. </summary>
+        public WritableSubResource Subnet { get; set; }
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
         public string IpAddress { get; set; }
         /// <summary> Reference to IP address defined in network interfaces. </summary>
-        public NetworkInterfaceIPConfiguration NetworkInterfaceIPConfiguration { get; set; }
+        public WritableSubResource NetworkInterfaceIPConfiguration { get; }
+        /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
+        public WritableSubResource LoadBalancerFrontendIPConfiguration { get; set; }
     }
 }

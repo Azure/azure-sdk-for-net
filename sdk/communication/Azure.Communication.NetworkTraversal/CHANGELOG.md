@@ -3,6 +3,7 @@
 ## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Making user identity an optional argument when calling GetRelayConfiguration and GetRelayConfigurationAsync
 
 ### Breaking Changes
 
@@ -10,11 +11,12 @@
 
 ### Other Changes
 
-## 1.0.0-beta.2 (2021-07-13)
+## 1.0.0-beta.2 (2021-07-14)
+
+### Breaking Changes
 
 - Renamed `CommunicationTurnServer` to `CommunicationIceServer`
 - Renamed field `turnServers` to `iceServers` in `CommunicationRelayConfiguration`
-- Renamed `IssueCredentials[Async]` to `IssueRelayConfiguration[Async]`
 
 ## 1.0.0-beta.1 (2021-05-24)
 

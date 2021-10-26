@@ -169,15 +169,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestPropertiesCollectionAsync();
             var pages = artifacts.AsPages(pageSizeHint: pageSize);
 
-            int pageCount = 0;
-            await foreach (var page in pages)
-            {
-                Assert.GreaterOrEqual(page.Values.Count, pageSize);
-                pageCount++;
-            }
-
             // Assert
-            Assert.IsTrue(pageCount >= minExpectedPages);
+            int pageCount = await pages.CountAsync();
+            Assert.GreaterOrEqual(pageCount, minExpectedPages);
         }
 
         [RecordedTest]

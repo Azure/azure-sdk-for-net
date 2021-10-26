@@ -25,35 +25,40 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsQueryClient.QueryBatchAsync"/> call.
-        /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
-        /// string countQueryId = batch.AddQuery(
+        /// <example snippet="Snippet:BatchQueryAddAndGet">
+        /// <code language="csharp">
+        /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
-        /// string topQueryId = batch.AddQuery(
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
         /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
         /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
         /// </code>
+        /// </example>
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
         /// <param name="timeRange">The timespan over which to query data.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
-        /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResults.GetResult"/> to get the result.</returns>
-        public virtual string AddQuery(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null)
+        /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResultCollection.GetResult"/> to get the result.</returns>
+        public virtual string AddWorkspaceQuery(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;
-            var logQueryRequest = new BatchQueryRequest(id, LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer), workspace);
+            var logQueryRequest = new BatchQueryRequest(id, LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer), workspaceId)
+            {
+                Options = options
+            };
             if (prefer != null)
             {
-                logQueryRequest.Headers.Add("prefer", prefer);
+                logQueryRequest.Headers.Add(HttpHeader.Names.Prefer, prefer);
             }
             Requests.Add(logQueryRequest);
             return id;

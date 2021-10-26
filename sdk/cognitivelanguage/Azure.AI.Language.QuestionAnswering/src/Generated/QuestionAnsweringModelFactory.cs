@@ -13,17 +13,17 @@ namespace Azure.AI.Language.QuestionAnswering.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswers. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswers. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="Models.KnowledgebaseAnswers"/> instance for mocking. </returns>
-        public static KnowledgebaseAnswers KnowledgebaseAnswers(IEnumerable<KnowledgebaseAnswer> answers = null)
+        /// <returns> A new <see cref="Models.KnowledgeBaseAnswers"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswers KnowledgeBaseAnswers(IEnumerable<KnowledgeBaseAnswer> answers = null)
         {
-            answers ??= new List<KnowledgebaseAnswer>();
+            answers ??= new List<KnowledgeBaseAnswer>();
 
-            return new KnowledgebaseAnswers(answers?.ToList());
+            return new KnowledgeBaseAnswers(answers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswer. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
         /// <param name="questions"> List of questions. </param>
         /// <param name="answer"> The Answer. </param>
         /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -32,34 +32,34 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="answerSpan"> Answer span object of QnA with respect to user&apos;s question. </param>
-        /// <returns> A new <see cref="Models.KnowledgebaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgebaseAnswer KnowledgebaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidenceScore = null, int? id = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgebaseAnswerDialog dialog = null, AnswerSpan answerSpan = null)
+        /// <returns> A new <see cref="Models.KnowledgeBaseAnswer"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidenceScore = null, int? id = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan answerSpan = null)
         {
             questions ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new KnowledgebaseAnswer(questions?.ToList(), answer, confidenceScore, id, source, metadata, dialog, answerSpan);
+            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidenceScore, id, source, metadata, dialog, answerSpan);
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of 0 to 20 prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Models.KnowledgebaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgebaseAnswerDialog KnowledgebaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgebaseAnswerPrompt> prompts = null)
+        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = null)
         {
-            prompts ??= new List<KnowledgebaseAnswerPrompt>();
+            prompts ??= new List<KnowledgeBaseAnswerPrompt>();
 
-            return new KnowledgebaseAnswerDialog(isContextOnly, prompts?.ToList());
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerPrompt. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Models.KnowledgebaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgebaseAnswerPrompt KnowledgebaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
+        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
         {
-            return new KnowledgebaseAnswerPrompt(displayOrder, qnaId, displayText);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText);
         }
 
         /// <summary> Initializes a new instance of AnswerSpan. </summary>

@@ -182,6 +182,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     credential,
                     clientOptions.TransportType,
                     clientOptions.Proxy,
+                    clientOptions.ConnectionIdleTimeout,
                     null,
                     clientOptions.SendBufferSizeInBytes,
                     clientOptions.ReceiveBufferSizeInBytes,
@@ -413,7 +414,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override TransportProducer CreateProducer(string partitionId,
                                                          string producerIdentifier,
                                                          TransportProducerFeatures requestedFeatures,
-                                                         PartitionPublishingOptions partitionOptions,
+                                                         PartitionPublishingOptionsInternal partitionOptions,
                                                          EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));

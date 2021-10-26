@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSet> value)
+        internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSetData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
-        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSet> value, string nextLink)
+        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of disk encryption sets. </summary>
-        public IReadOnlyList<DiskEncryptionSet> Value { get; }
+        public IReadOnlyList<DiskEncryptionSetData> Value { get; }
         /// <summary> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </summary>
         public string NextLink { get; }
     }

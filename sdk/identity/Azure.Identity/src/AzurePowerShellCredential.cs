@@ -27,7 +27,8 @@ namespace Azure.Identity
         private const int PowerShellProcessTimeoutMs = 10000;
         internal bool UseLegacyPowerShell { get; set; }
 
-        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
+        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
@@ -40,10 +41,10 @@ namespace Azure.Identity
         private static readonly string DefaultWorkingDir =
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
 
-        private readonly bool _allowMultiTenantAuthentication;
         private readonly string _tenantId;
 
         private const int ERROR_FILE_NOT_FOUND = 2;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -62,7 +63,7 @@ namespace Azure.Identity
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
             UseLegacyPowerShell = false;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
@@ -123,13 +124,14 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
             ScopeUtilities.ValidateScope(resource);
-            var tenantId = TenantIdResolver.Resolve(_tenantId, context, _allowMultiTenantAuthentication);
+            var tenantId = TenantIdResolver.Resolve(_tenantId, context);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(
                 _processService.Create(processStartInfo),
                 TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs),
+                _logPII,
                 cancellationToken);
 
             string output;
@@ -188,16 +190,20 @@ namespace Azure.Identity
                 UseShellExecute = false,
                 ErrorDialog = false,
                 CreateNoWindow = true,
-                WorkingDirectory = DefaultWorkingDir
+                WorkingDirectory = DefaultWorkingDir,
+                Environment =
+                {
+                    ["POWERSHELL_UPDATECHECK"] = "Off",
+                },
             };
 
         private void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
         {
-            string powershellExe = "pwsh -NonInteractive -EncodedCommand";
+            string powershellExe = "pwsh -NoProfile -NonInteractive -EncodedCommand";
 
             if (UseLegacyPowerShell)
             {
-                powershellExe = "powershell -NonInteractive -EncodedCommand";
+                powershellExe = "powershell -NoProfile -NonInteractive -EncodedCommand";
             }
 
             var tenantIdArg = tenantId == null ? string.Empty : $" -TenantId {tenantId}";
@@ -253,7 +259,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.InvariantCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
                         break;
                 }
 

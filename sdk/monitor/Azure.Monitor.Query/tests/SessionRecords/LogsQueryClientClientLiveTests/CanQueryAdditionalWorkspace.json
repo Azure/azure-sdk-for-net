@@ -1,23 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e7bf7412-576d-4978-b47c-2edf669e3e2a/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "181",
+        "Content-Length": "194",
         "Content-Type": "application/json",
-        "traceparent": "00-024ede1e27ed4e408e949cfd36197c2a-1b54efc73ad59b40-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210603.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-fb3388afa45cce41ab57db254d3578e8-9409e10285911f41-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210720.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+        ],
         "x-ms-client-request-id": "a1129ef5e753991baac5793297d6e382",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_144_CL | project StringColumn_s | order by StringColumn_s asc",
-        "timespan": "2021-05-24T00:00:00.0000000Z/P7D",
+        "query": "TableA1_193_CL | distinct * | project StringColumn_s | order by StringColumn_s asc",
+        "timespan": "2021-07-12T00:00:00.0000000Z/P7D",
         "workspaces": [
-          "4f6289fe-fa1f-4e57-86ee-42a1a09a5856"
+          "f0e9e868-49e4-4ab8-a2d3-68aeb704f7bd"
         ]
       },
       "StatusCode": 200,
@@ -27,10 +30,10 @@
         "Connection": "keep-alive",
         "Content-Length": "136",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 03 Jun 2021 17:13:52 GMT",
+        "Date": "Tue, 20 Jul 2021 18:30:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6cc656db9b-2trc6",
+        "Via": "1.1 draft-oms-fdbf6c888-qwgl8",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -69,12 +72,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-03T10:13:42.4985881-07:00",
+    "DateTimeOffsetNow": "2021-07-20T11:30:16.9293527-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "1201246067",
-    "SECONDARY_WORKSPACE_ID": "4f6289fe-fa1f-4e57-86ee-42a1a09a5856",
-    "SECONDARY_WORKSPACE_KEY": "Kg==",
-    "WORKSPACE_ID": "e7bf7412-576d-4978-b47c-2edf669e3e2a",
-    "WORKSPACE_KEY": "Kg=="
+    "SECONDARY_WORKSPACE_ID": "f0e9e868-49e4-4ab8-a2d3-68aeb704f7bd",
+    "WORKSPACE_ID": "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89"
   }
 }

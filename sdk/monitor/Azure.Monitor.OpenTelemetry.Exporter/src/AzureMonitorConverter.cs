@@ -34,17 +34,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             foreach (var activity in batchActivity)
             {
                 MonitorBase telemetryData = new MonitorBase();
-                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, instrumentationKey);
+                var monitorTags = EnumerateActivityTags(activity);
+                telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
                     case TelemetryType.Request:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Request];
-                        telemetryData.BaseData = TelemetryPartB.GetRequestData(activity);
+                        telemetryData.BaseData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                         break;
                     case TelemetryType.Dependency:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Dependency];
-                        telemetryData.BaseData = TelemetryPartB.GetRemoteDependencyData(activity);
+                        telemetryData.BaseData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                         break;
                 }
 
@@ -72,6 +73,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return telemetryItems;
+        }
+
+        internal static TagEnumerationState EnumerateActivityTags(Activity activity)
+        {
+            var monitorTags = new TagEnumerationState
+            {
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
+            };
+
+            monitorTags.ForEach(activity.TagObjects);
+            return monitorTags;
         }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -452,6 +451,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   events are available, they will be used to form the batch immediately.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="maximumEventCount" /> is less than 1.</exception>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
+        ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             CancellationToken cancellationToken = default) =>
             await ReceiveBatchInternalAsync(maximumEventCount, null, cancellationToken).ConfigureAwait(false);
@@ -471,6 +477,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
         ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="maximumEventCount" /> is less than 1.</exception>
+        ///
+        /// <exception cref="EventHubsException">
+        ///   Occurs when an <see cref="PartitionReceiver"/> is unable to read from the requested Event Hub partition due to another reader having
+        ///   asserted exclusive ownership.  In this case, the <see cref="EventHubsException.FailureReason"/> will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </exception>
         ///
         public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                             TimeSpan maximumWaitTime,

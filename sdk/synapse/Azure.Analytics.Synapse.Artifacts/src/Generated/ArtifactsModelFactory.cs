@@ -14,16 +14,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
-        /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = null, string name = null, string type = null)
-        {
-            return new Resource(id, name, type);
-        }
-
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -35,17 +25,214 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureEntityResource(id, name, type, etag);
         }
 
-        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(string id = null, string name = null, string type = null)
+        {
+            return new Resource(id, name, type);
+        }
+
+        /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of Big Data pools. </param>
+        /// <returns> A new <see cref="Models.BigDataPoolResourceInfoListResult"/> instance for mocking. </returns>
+        public static BigDataPoolResourceInfoListResult BigDataPoolResourceInfoListResult(string nextLink = null, IEnumerable<BigDataPoolResourceInfo> value = null)
+        {
+            value ??= new List<BigDataPoolResourceInfo>();
+
+            return new BigDataPoolResourceInfoListResult(nextLink, value?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The state of the Big Data pool. </param>
+        /// <param name="autoScale"> Auto-scaling properties. </param>
+        /// <param name="creationDate"> The time when the Big Data pool was created. </param>
+        /// <param name="autoPause"> Auto-pausing properties. </param>
+        /// <param name="isComputeIsolationEnabled"> Whether compute isolation is required or not. </param>
+        /// <param name="sessionLevelPackagesEnabled"> Whether session level packages enabled. </param>
+        /// <param name="cacheSize"> The cache size. </param>
+        /// <param name="dynamicExecutorAllocation"> Dynamic Executor Allocation. </param>
+        /// <param name="sparkEventsFolder"> The Spark events folder. </param>
+        /// <param name="nodeCount"> The number of nodes in the Big Data pool. </param>
+        /// <param name="libraryRequirements"> Library version requirements. </param>
+        /// <param name="customLibraries"> List of custom libraries/packages associated with the spark pool. </param>
+        /// <param name="sparkConfigProperties"> Spark configuration file to specify additional properties. </param>
+        /// <param name="sparkVersion"> The Apache Spark version. </param>
+        /// <param name="defaultSparkLogFolder"> The default folder where Spark logs will be written. </param>
+        /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
+        /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
+        /// <param name="lastSucceededTimestamp"> The time when the Big Data pool was updated successfully. </param>
+        /// <returns> A new <see cref="Models.BigDataPoolResourceInfo"/> instance for mocking. </returns>
+        public static BigDataPoolResourceInfo BigDataPoolResourceInfo(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, string provisioningState = null, AutoScaleProperties autoScale = null, DateTimeOffset? creationDate = null, AutoPauseProperties autoPause = null, bool? isComputeIsolationEnabled = null, bool? sessionLevelPackagesEnabled = null, int? cacheSize = null, DynamicExecutorAllocation dynamicExecutorAllocation = null, string sparkEventsFolder = null, int? nodeCount = null, LibraryRequirements libraryRequirements = null, IEnumerable<LibraryInfo> customLibraries = null, LibraryRequirements sparkConfigProperties = null, string sparkVersion = null, string defaultSparkLogFolder = null, NodeSize? nodeSize = null, NodeSizeFamily? nodeSizeFamily = null, DateTimeOffset? lastSucceededTimestamp = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            customLibraries ??= new List<LibraryInfo>();
+
+            return new BigDataPoolResourceInfo(id, name, type, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of LibraryRequirements. </summary>
+        /// <param name="time"> The last update time of the library requirements file. </param>
+        /// <param name="content"> The library requirements. </param>
+        /// <param name="filename"> The filename of the library requirements file. </param>
+        /// <returns> A new <see cref="Models.LibraryRequirements"/> instance for mocking. </returns>
+        public static LibraryRequirements LibraryRequirements(DateTimeOffset? time = null, string content = null, string filename = null)
+        {
+            return new LibraryRequirements(time, content, filename);
+        }
+
+        /// <summary> Initializes a new instance of LibraryInfo. </summary>
+        /// <param name="name"> Name of the library. </param>
+        /// <param name="path"> Storage blob path of library. </param>
+        /// <param name="containerName"> Storage blob container name. </param>
+        /// <param name="uploadedTimestamp"> The last update time of the library. </param>
+        /// <param name="type"> Type of the library. </param>
+        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
+        /// <param name="creatorId"> Creator Id of the library/package. </param>
+        /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
+        public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
+        {
+            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+        }
+
+        /// <summary> Initializes a new instance of CloudErrorAutoGenerated. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
-        /// <returns> A new <see cref="Models.CloudError"/> instance for mocking. </returns>
-        public static CloudError CloudError(string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
+        /// <returns> A new <see cref="Models.CloudErrorAutoGenerated"/> instance for mocking. </returns>
+        public static CloudErrorAutoGenerated CloudErrorAutoGenerated(string code = null, string message = null, string target = null, IEnumerable<CloudErrorAutoGenerated> details = null)
         {
-            details ??= new List<CloudError>();
+            details ??= new List<CloudErrorAutoGenerated>();
 
-            return new CloudError(code, message, target, details?.ToList());
+            return new CloudErrorAutoGenerated(code, message, target, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
+        public static CreateDataFlowDebugSessionResponse CreateDataFlowDebugSessionResponse(string sessionId = null)
+        {
+            return new CreateDataFlowDebugSessionResponse(sessionId);
+        }
+
+        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
+        /// <param name="dataFlowName"> The name of the data flow. </param>
+        /// <param name="computeType"> Compute type of the cluster. </param>
+        /// <param name="coreCount"> Core count of the cluster. </param>
+        /// <param name="nodeCount"> Node count of the cluster. (deprecated property). </param>
+        /// <param name="integrationRuntimeName"> Attached integration runtime name of data flow debug session. </param>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="startTime"> Start time of data flow debug session. </param>
+        /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
+        /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
+        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of AddDataFlowToDebugSessionResponse. </summary>
+        /// <param name="jobVersion"> The ID of data flow debug job version. </param>
+        /// <returns> A new <see cref="Models.AddDataFlowToDebugSessionResponse"/> instance for mocking. </returns>
+        public static AddDataFlowToDebugSessionResponse AddDataFlowToDebugSessionResponse(string jobVersion = null)
+        {
+            return new AddDataFlowToDebugSessionResponse(jobVersion);
+        }
+
+        /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
+        /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
+        /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
+        /// <returns> A new <see cref="Models.DataFlowDebugCommandResponse"/> instance for mocking. </returns>
+        public static DataFlowDebugCommandResponse DataFlowDebugCommandResponse(string status = null, string data = null)
+        {
+            return new DataFlowDebugCommandResponse(status, data);
+        }
+
+        /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
+        /// <param name="gitHubAccessToken"></param>
+        /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
+        public static GitHubAccessTokenResponse GitHubAccessTokenResponse(string gitHubAccessToken = null)
+        {
+            return new GitHubAccessTokenResponse(gitHubAccessToken);
+        }
+
+        /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
+        /// <param name="value"> List of integration runtimes. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntimeListResponse"/> instance for mocking. </returns>
+        public static IntegrationRuntimeListResponse IntegrationRuntimeListResponse(IEnumerable<IntegrationRuntimeResource> value = null, string nextLink = null)
+        {
+            value ??= new List<IntegrationRuntimeResource>();
+
+            return new IntegrationRuntimeListResponse(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
+        /// <param name="name"> Name of the library/package. </param>
+        /// <param name="path"> Location of library/package in storage account. </param>
+        /// <param name="containerName"> Container name of the library/package. </param>
+        /// <param name="uploadedTimestamp"> The last update time of the library/package. </param>
+        /// <param name="type"> Type of the library/package. </param>
+        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
+        /// <param name="creatorId"> Creator Id of the library/package. </param>
+        /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
+        public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
+        {
+            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+        }
+
+        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="recordId"> record Id of the library/package. </param>
+        /// <param name="state"> Provisioning status of the library/package. </param>
+        /// <param name="created"> The creation time of the library/package. </param>
+        /// <param name="changed"> The last updated time of the library/package. </param>
+        /// <param name="type"> The type of the resource. E.g. LibraryArtifact. </param>
+        /// <param name="name"> Name of the library/package. </param>
+        /// <param name="operationId"> Operation Id of the operation performed on library/package. </param>
+        /// <param name="artifactId"> artifact Id of the library/package. </param>
+        /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
+        public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
+        {
+            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
+        }
+
+        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Property name/path in request associated with error. </param>
+        /// <param name="details"> Array with additional error details. </param>
+        /// <returns> A new <see cref="Models.OperationResult"/> instance for mocking. </returns>
+        public static OperationResult OperationResult(string status = null, string code = null, string message = null, string target = null, IEnumerable<CloudErrorAutoGenerated> details = null)
+        {
+            details ??= new List<CloudErrorAutoGenerated>();
+
+            return new OperationResult(status, code, message, target, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of NotebookResource. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of Notebook. </param>
+        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
+        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
+        {
+            return new NotebookResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
@@ -134,6 +321,138 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
         }
 
+        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <param name="livyInfo"></param>
+        /// <param name="name"> The batch name. </param>
+        /// <param name="workspaceName"> The workspace name. </param>
+        /// <param name="sparkPoolName"> The Spark pool name. </param>
+        /// <param name="submitterName"> The submitter name. </param>
+        /// <param name="submitterId"> The submitter identifier. </param>
+        /// <param name="artifactId"> The artifact identifier. </param>
+        /// <param name="jobType"> The job type. </param>
+        /// <param name="result"> The Spark batch job result. </param>
+        /// <param name="scheduler"> The scheduler information. </param>
+        /// <param name="plugin"> The plugin information. </param>
+        /// <param name="errors"> The error information. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="id"> The session Id. </param>
+        /// <param name="appId"> The application id of this session. </param>
+        /// <param name="appInfo"> The detailed application info. </param>
+        /// <param name="state"> The batch state. </param>
+        /// <param name="logLines"> The log lines. </param>
+        /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
+        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
+        {
+            errors ??= new List<SparkServiceError>();
+            tags ??= new Dictionary<string, string>();
+            appInfo ??= new Dictionary<string, string>();
+            logLines ??= new List<string>();
+
+            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        /// <param name="notStartedAt"> the time that at which &quot;not_started&quot; livy state was first seen. </param>
+        /// <param name="startingAt"> the time that at which &quot;starting&quot; livy state was first seen. </param>
+        /// <param name="runningAt"> the time that at which &quot;running&quot; livy state was first seen. </param>
+        /// <param name="deadAt"> time that at which &quot;dead&quot; livy state was first seen. </param>
+        /// <param name="successAt"> the time that at which &quot;success&quot; livy state was first seen. </param>
+        /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
+        /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
+        /// <param name="currentState"> the Spark job state. </param>
+        /// <param name="jobCreationRequest"></param>
+        /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
+        public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
+        {
+            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+        }
+
+        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
+        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        {
+            arguments ??= new List<string>();
+            jars ??= new List<string>();
+            pythonFiles ??= new List<string>();
+            files ??= new List<string>();
+            archives ??= new List<string>();
+            configuration ??= new Dictionary<string, string>();
+
+            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+        }
+
+        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <param name="submittedAt"></param>
+        /// <param name="scheduledAt"></param>
+        /// <param name="endedAt"></param>
+        /// <param name="cancellationRequestedAt"></param>
+        /// <param name="currentState"></param>
+        /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
+        public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
+        {
+            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+        }
+
+        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <param name="preparationStartedAt"></param>
+        /// <param name="resourceAcquisitionStartedAt"></param>
+        /// <param name="submissionStartedAt"></param>
+        /// <param name="monitoringStartedAt"></param>
+        /// <param name="cleanupStartedAt"></param>
+        /// <param name="currentState"></param>
+        /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
+        public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
+        {
+            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+        }
+
+        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        /// <param name="message"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="source"></param>
+        /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
+        public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
+        {
+            return new SparkServiceError(message, errorCode, source);
+        }
+
+        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of SQL pools. </param>
+        /// <returns> A new <see cref="Models.SqlPoolInfoListResult"/> instance for mocking. </returns>
+        public static SqlPoolInfoListResult SqlPoolInfoListResult(string nextLink = null, IEnumerable<SqlPool> value = null)
+        {
+            value ??= new List<SqlPool>();
+
+            return new SqlPoolInfoListResult(nextLink, value?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SqlScriptResource. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of sql script. </param>
+        /// <returns> A new <see cref="Models.SqlScriptResource"/> instance for mocking. </returns>
+        public static SqlScriptResource SqlScriptResource(string id = null, string name = null, string type = null, string etag = null, SqlScript properties = null)
+        {
+            return new SqlScriptResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of Trigger. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
@@ -187,183 +506,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
 
             return new TriggerRun(triggerRunId, triggerName, triggerType, triggerRunTimestamp, status, message, properties, triggeredPipelines, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
-        public static CreateDataFlowDebugSessionResponse CreateDataFlowDebugSessionResponse(string sessionId = null)
-        {
-            return new CreateDataFlowDebugSessionResponse(sessionId);
-        }
-
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
-        /// <param name="dataFlowName"> The name of the data flow. </param>
-        /// <param name="computeType"> Compute type of the cluster. </param>
-        /// <param name="coreCount"> Core count of the cluster. </param>
-        /// <param name="nodeCount"> Node count of the cluster. (deprecated property). </param>
-        /// <param name="integrationRuntimeName"> Attached integration runtime name of data flow debug session. </param>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="startTime"> Start time of data flow debug session. </param>
-        /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
-        /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
-        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, object> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, object>();
-
-            return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of AddDataFlowToDebugSessionResponse. </summary>
-        /// <param name="jobVersion"> The ID of data flow debug job version. </param>
-        /// <returns> A new <see cref="Models.AddDataFlowToDebugSessionResponse"/> instance for mocking. </returns>
-        public static AddDataFlowToDebugSessionResponse AddDataFlowToDebugSessionResponse(string jobVersion = null)
-        {
-            return new AddDataFlowToDebugSessionResponse(jobVersion);
-        }
-
-        /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
-        /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
-        /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
-        /// <returns> A new <see cref="Models.DataFlowDebugCommandResponse"/> instance for mocking. </returns>
-        public static DataFlowDebugCommandResponse DataFlowDebugCommandResponse(string status = null, string data = null)
-        {
-            return new DataFlowDebugCommandResponse(status, data);
-        }
-
-        /// <summary> Initializes a new instance of SqlScriptResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Properties of sql script. </param>
-        /// <returns> A new <see cref="Models.SqlScriptResource"/> instance for mocking. </returns>
-        public static SqlScriptResource SqlScriptResource(string id = null, string name = null, string type = null, string etag = null, SqlScript properties = null)
-        {
-            return new SqlScriptResource(id, name, type, etag, properties);
-        }
-
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
-        /// <param name="livyInfo"> . </param>
-        /// <param name="name"> The batch name. </param>
-        /// <param name="workspaceName"> The workspace name. </param>
-        /// <param name="sparkPoolName"> The Spark pool name. </param>
-        /// <param name="submitterName"> The submitter name. </param>
-        /// <param name="submitterId"> The submitter identifier. </param>
-        /// <param name="artifactId"> The artifact identifier. </param>
-        /// <param name="jobType"> The job type. </param>
-        /// <param name="result"> The Spark batch job result. </param>
-        /// <param name="scheduler"> The scheduler information. </param>
-        /// <param name="plugin"> The plugin information. </param>
-        /// <param name="errors"> The error information. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="id"> The session Id. </param>
-        /// <param name="appId"> The application id of this session. </param>
-        /// <param name="appInfo"> The detailed application info. </param>
-        /// <param name="state"> The batch state. </param>
-        /// <param name="logLines"> The log lines. </param>
-        /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
-        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, string state = null, IEnumerable<string> logLines = null)
-        {
-            errors ??= new List<SparkServiceError>();
-            tags ??= new Dictionary<string, string>();
-            appInfo ??= new Dictionary<string, string>();
-            logLines ??= new List<string>();
-
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
-        /// <param name="notStartedAt"> the time that at which &quot;not_started&quot; livy state was first seen. </param>
-        /// <param name="startingAt"> the time that at which &quot;starting&quot; livy state was first seen. </param>
-        /// <param name="runningAt"> the time that at which &quot;running&quot; livy state was first seen. </param>
-        /// <param name="deadAt"> time that at which &quot;dead&quot; livy state was first seen. </param>
-        /// <param name="successAt"> the time that at which &quot;success&quot; livy state was first seen. </param>
-        /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
-        /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
-        /// <param name="currentState"> the Spark job state. </param>
-        /// <param name="jobCreationRequest"> . </param>
-        /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
-        public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
-        {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
-        }
-
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="file"> . </param>
-        /// <param name="className"> . </param>
-        /// <param name="arguments"> . </param>
-        /// <param name="jars"> . </param>
-        /// <param name="pythonFiles"> . </param>
-        /// <param name="files"> . </param>
-        /// <param name="archives"> . </param>
-        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="driverMemory"> . </param>
-        /// <param name="driverCores"> . </param>
-        /// <param name="executorMemory"> . </param>
-        /// <param name="executorCores"> . </param>
-        /// <param name="executorCount"> . </param>
-        /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
-        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
-        {
-            arguments ??= new List<string>();
-            jars ??= new List<string>();
-            pythonFiles ??= new List<string>();
-            files ??= new List<string>();
-            archives ??= new List<string>();
-            configuration ??= new Dictionary<string, string>();
-
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
-        }
-
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
-        /// <param name="submittedAt"> . </param>
-        /// <param name="scheduledAt"> . </param>
-        /// <param name="endedAt"> . </param>
-        /// <param name="cancellationRequestedAt"> . </param>
-        /// <param name="currentState"> . </param>
-        /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
-        public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
-        {
-            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
-        }
-
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
-        /// <param name="preparationStartedAt"> . </param>
-        /// <param name="resourceAcquisitionStartedAt"> . </param>
-        /// <param name="submissionStartedAt"> . </param>
-        /// <param name="monitoringStartedAt"> . </param>
-        /// <param name="cleanupStartedAt"> . </param>
-        /// <param name="currentState"> . </param>
-        /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
-        public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
-        {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
-        }
-
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
-        /// <param name="message"> . </param>
-        /// <param name="errorCode"> . </param>
-        /// <param name="source"> . </param>
-        /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
-        public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
-        {
-            return new SparkServiceError(message, errorCode, source);
-        }
-
-        /// <summary> Initializes a new instance of NotebookResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Properties of Notebook. </param>
-        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
-        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
-        {
-            return new NotebookResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of Workspace. </summary>
@@ -457,148 +599,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ManagedIdentity ManagedIdentity(string principalId = null, Guid? tenantId = null, ResourceIdentityType? type = null)
         {
             return new ManagedIdentity(principalId, tenantId, type);
-        }
-
-        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of SQL pools. </param>
-        /// <returns> A new <see cref="Models.SqlPoolInfoListResult"/> instance for mocking. </returns>
-        public static SqlPoolInfoListResult SqlPoolInfoListResult(string nextLink = null, IEnumerable<SqlPool> value = null)
-        {
-            value ??= new List<SqlPool>();
-
-            return new SqlPoolInfoListResult(nextLink, value?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of Big Data pools. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolResourceInfoListResult"/> instance for mocking. </returns>
-        public static BigDataPoolResourceInfoListResult BigDataPoolResourceInfoListResult(string nextLink = null, IEnumerable<BigDataPoolResourceInfo> value = null)
-        {
-            value ??= new List<BigDataPoolResourceInfo>();
-
-            return new BigDataPoolResourceInfoListResult(nextLink, value?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The state of the Big Data pool. </param>
-        /// <param name="autoScale"> Auto-scaling properties. </param>
-        /// <param name="creationDate"> The time when the Big Data pool was created. </param>
-        /// <param name="autoPause"> Auto-pausing properties. </param>
-        /// <param name="isComputeIsolationEnabled"> Whether compute isolation is required or not. </param>
-        /// <param name="sessionLevelPackagesEnabled"> Whether session level packages enabled. </param>
-        /// <param name="cacheSize"> The cache size. </param>
-        /// <param name="dynamicExecutorAllocation"> Dynamic Executor Allocation. </param>
-        /// <param name="sparkEventsFolder"> The Spark events folder. </param>
-        /// <param name="nodeCount"> The number of nodes in the Big Data pool. </param>
-        /// <param name="libraryRequirements"> Library version requirements. </param>
-        /// <param name="customLibraries"> List of custom libraries/packages associated with the spark pool. </param>
-        /// <param name="sparkConfigProperties"> Spark configuration file to specify additional properties. </param>
-        /// <param name="sparkVersion"> The Apache Spark version. </param>
-        /// <param name="defaultSparkLogFolder"> The default folder where Spark logs will be written. </param>
-        /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
-        /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
-        /// <param name="lastSucceededTimestamp"> The time when the Big Data pool was updated successfully. </param>
-        /// <returns> A new <see cref="Models.BigDataPoolResourceInfo"/> instance for mocking. </returns>
-        public static BigDataPoolResourceInfo BigDataPoolResourceInfo(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, string provisioningState = null, AutoScaleProperties autoScale = null, DateTimeOffset? creationDate = null, AutoPauseProperties autoPause = null, bool? isComputeIsolationEnabled = null, bool? sessionLevelPackagesEnabled = null, int? cacheSize = null, DynamicExecutorAllocation dynamicExecutorAllocation = null, string sparkEventsFolder = null, int? nodeCount = null, LibraryRequirements libraryRequirements = null, IEnumerable<LibraryInfo> customLibraries = null, LibraryRequirements sparkConfigProperties = null, string sparkVersion = null, string defaultSparkLogFolder = null, NodeSize? nodeSize = null, NodeSizeFamily? nodeSizeFamily = null, DateTimeOffset? lastSucceededTimestamp = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            customLibraries ??= new List<LibraryInfo>();
-
-            return new BigDataPoolResourceInfo(id, name, type, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of LibraryRequirements. </summary>
-        /// <param name="time"> The last update time of the library requirements file. </param>
-        /// <param name="content"> The library requirements. </param>
-        /// <param name="filename"> The filename of the library requirements file. </param>
-        /// <returns> A new <see cref="Models.LibraryRequirements"/> instance for mocking. </returns>
-        public static LibraryRequirements LibraryRequirements(DateTimeOffset? time = null, string content = null, string filename = null)
-        {
-            return new LibraryRequirements(time, content, filename);
-        }
-
-        /// <summary> Initializes a new instance of LibraryInfo. </summary>
-        /// <param name="name"> Name of the library. </param>
-        /// <param name="path"> Storage blob path of library. </param>
-        /// <param name="containerName"> Storage blob container name. </param>
-        /// <param name="uploadedTimestamp"> The last update time of the library. </param>
-        /// <param name="type"> Type of the library. </param>
-        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
-        /// <param name="creatorId"> Creator Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
-        public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
-        {
-            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
-        }
-
-        /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
-        /// <param name="value"> List of integration runtimes. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeListResponse"/> instance for mocking. </returns>
-        public static IntegrationRuntimeListResponse IntegrationRuntimeListResponse(IEnumerable<IntegrationRuntimeResource> value = null, string nextLink = null)
-        {
-            value ??= new List<IntegrationRuntimeResource>();
-
-            return new IntegrationRuntimeListResponse(value?.ToList(), nextLink);
-        }
-
-        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
-        /// <param name="name"> Name of the library/package. </param>
-        /// <param name="path"> Location of library/package in storage account. </param>
-        /// <param name="containerName"> Container name of the library/package. </param>
-        /// <param name="uploadedTimestamp"> The last update time of the library/package. </param>
-        /// <param name="type"> Type of the library/package. </param>
-        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
-        /// <param name="creatorId"> Creator Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
-        public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
-        {
-            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
-        }
-
-        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="recordId"> record Id of the library/package. </param>
-        /// <param name="state"> Provisioning status of the library/package. </param>
-        /// <param name="created"> The creation time of the library/package. </param>
-        /// <param name="changed"> The last updated time of the library/package. </param>
-        /// <param name="type"> The type of the resource. E.g. LibraryArtifact. </param>
-        /// <param name="name"> Name of the library/package. </param>
-        /// <param name="operationId"> Operation Id of the operation performed on library/package. </param>
-        /// <param name="artifactId"> artifact Id of the library/package. </param>
-        /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
-        public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
-        {
-            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
-        }
-
-        /// <summary> Initializes a new instance of OperationResult. </summary>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="target"> Property name/path in request associated with error. </param>
-        /// <param name="details"> Array with additional error details. </param>
-        /// <returns> A new <see cref="Models.OperationResult"/> instance for mocking. </returns>
-        public static OperationResult OperationResult(string status = null, string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
-        {
-            details ??= new List<CloudError>();
-
-            return new OperationResult(status, code, message, target, details?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
-        /// <param name="gitHubAccessToken"> . </param>
-        /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
-        public static GitHubAccessTokenResponse GitHubAccessTokenResponse(string gitHubAccessToken = null)
-        {
-            return new GitHubAccessTokenResponse(gitHubAccessToken);
         }
 
         /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>

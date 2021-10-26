@@ -28,12 +28,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ContainerRegistryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            this.url = url;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
