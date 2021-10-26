@@ -28,8 +28,7 @@ namespace Azure.AI.Language.Conversations
         public ConversationAnalysisClientOptions(Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion.V2021_11_01_Preview) { }
         public enum ServiceVersion
         {
-            V2021_07_15_Preview = 1,
-            V2021_11_01_Preview = 2,
+            V2021_11_01_Preview = 1,
         }
     }
 }
