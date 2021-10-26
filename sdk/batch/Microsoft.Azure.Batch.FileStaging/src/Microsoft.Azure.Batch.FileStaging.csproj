@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="WindowsAzure.Storage" />
-    <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="Microsoft.Azure.Batch" Version="15.1.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Web" />
