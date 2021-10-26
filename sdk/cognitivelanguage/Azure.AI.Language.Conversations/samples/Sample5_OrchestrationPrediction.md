@@ -109,10 +109,9 @@ TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondin
 if (targetIntentResult.TargetKind == TargetKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+    object luisResponse = luisTargetIntentResult.Result;
 
-    // JsonDocument
-    // SystemTextJson
-    JObject luisResult = JObject.FromObject(luisTargetIntentResult.Result);
-    Console.WriteLine($"LUIS Response: {luisResult.ToString()}");
+    JsonDocument luisJsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(luisResponse));
+    Console.WriteLine($"LUIS Response: {luisJsonDocument.RootElement}");
 }
 ```

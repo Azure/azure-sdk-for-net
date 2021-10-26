@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Text.Json;
 using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -131,11 +131,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             if (targetIntentResult.TargetKind == TargetKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+                object luisResponse = luisTargetIntentResult.Result;
 
-                // JsonDocument
-                // SystemTextJson
-                JObject luisResult = JObject.FromObject(luisTargetIntentResult.Result);
-                Console.WriteLine($"LUIS Response: {luisResult.ToString()}");
+                JsonDocument luisJsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(luisResponse));
+                Console.WriteLine($"LUIS Response: {luisJsonDocument.RootElement}");
             }
             #endregion
 
@@ -143,7 +142,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Restaurant"));
         }
 
-        [SyncOnly]
+        [AsyncOnly]
         [RecordedTest]
         public async Task AnalyzeConversationOrchestrationPredictionQuestionAnsweringAsync()
         {
@@ -188,7 +187,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RecipeFAQ"));
         }
 
-        [SyncOnly]
+        [AsyncOnly]
         [RecordedTest]
         public async Task AnalyzeConversationOrchestrationPredictionConversationAsync()
         {
@@ -239,7 +238,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Email"));
         }
 
-        [SyncOnly]
+        [AsyncOnly]
         [RecordedTest]
         public async Task AnalyzeConversationOrchestrationPredictionLuisAsync()
         {
@@ -258,9 +257,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             if (targetIntentResult.TargetKind == TargetKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+                object luisResponse = luisTargetIntentResult.Result;
 
-                JObject luisResult = JObject.FromObject(luisTargetIntentResult.Result);
-                Console.WriteLine($"Luis Response: {luisResult.ToString()}");
+                JsonDocument luisJsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(luisResponse));
+                Console.WriteLine($"LUIS Response: {luisJsonDocument.RootElement}");
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
