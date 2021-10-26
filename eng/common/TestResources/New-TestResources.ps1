@@ -79,9 +79,6 @@ param (
     [switch] $OutFile,
 
     [Parameter()]
-    [boolean] $OutFileEncryption = $true,
-
-    [Parameter()]
     [ValidateSet('json', 'dotenv', 'pwshenv')]
     [string] $OutFileFormat = 'json'
 )
@@ -166,14 +163,7 @@ try {
 
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
-
-    $root = ''
-    if (Split-Path -IsAbsolute $ServiceDirectory) {
-        $root = $ServiceDirectory
-    } else {
-        $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
-    }
-
+    $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     $templateFiles = @()
 
     'test-resources.json', 'test-resources.bicep' | ForEach-Object {
@@ -629,11 +619,10 @@ try {
                 }
             }
 
-            $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
-            if ($OutFileEncryption) {
-                $bytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
-            }
-            Set-Content $outputFile -Value $bytes -AsByteStream -Force
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
+            $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+
+            Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 
             Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
         } else {

@@ -11,7 +11,10 @@ Get-ChildItem -Path $secretsDir | ForEach-Object {
     }
 }
 
-$templateParams = Get-Content "/mnt/azure/parameters.json" | ConvertFrom-json -AsHashTable
+$templateParams = Get-Content "/mnt/testresources/parameters.json" | ConvertFrom-json -AsHashTable
+mkdir /azure
+Copy-Item "/common/scripts/stress-testing/test-resources-post.ps1" -Destination "/azure/"
+Copy-Item "/mnt/testresources/*" -Destination "/azure/"
 
 & $PSScriptRoot/New-TestResources.ps1 `
     -BaseName $env:BASE_NAME `
@@ -25,11 +28,8 @@ $templateParams = Get-Content "/mnt/azure/parameters.json" | ConvertFrom-json -A
     -ArmTemplateParameters $templateParams `
     -Location 'westus2' `
     -DeleteAfterHours 168 `
-    -ServiceDirectory '/mnt/azure/' `
+    -ServiceDirectory '/azure/' `
     -CI `
-    -Force `
-    -OutFile `
-    -OutFileEncryption $false `
-    -OutFileFormat 'dotenv'
+    -Force 
 
 #>
