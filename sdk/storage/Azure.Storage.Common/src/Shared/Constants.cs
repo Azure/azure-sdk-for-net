@@ -300,9 +300,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.

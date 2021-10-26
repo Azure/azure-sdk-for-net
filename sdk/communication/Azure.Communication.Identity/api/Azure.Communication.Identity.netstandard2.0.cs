@@ -26,7 +26,7 @@ namespace Azure.Communication.Identity
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2021_10_31_preview = 3,
+            V2021_10_31_preview = 2,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
