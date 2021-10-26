@@ -20,9 +20,8 @@ namespace CosmosDB.Tests.ScenarioTests
         public SqlResourcesOperationsTests(TestFixture fixture)
         {
             this.fixture = fixture;
-            fixture.Init(MockContext.Start(this.GetType()));
         }
-
+    
         const string roleDefinitionId = "70580ac3-cd0b-4549-8336-2f0d55df111e";
         const string roleDefinitionId2 = "fbf74201-f33f-46f0-8234-2b8bf15ecec4";
         const string roleDefinitionId3 = "a5d92de7-1c34-481e-aafa-44f5cb03744c";
@@ -50,7 +49,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
 
             var databaseName = TestUtilities.GenerateName("database");
             SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
@@ -107,12 +106,12 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.NotNull(throughputSettingsGetResults.Name);
             Assert.Equal(sqlThroughputType, throughputSettingsGetResults.Type);
 
-            var containerName = TestUtilities.GenerateName("container");
+            var containerName2 = TestUtilities.GenerateName("container");
             SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
             {
                 Resource = new SqlContainerResource
                 {
-                    Id = containerName,
+                    Id = containerName2,
                     PartitionKey = new ContainerPartitionKey
                     {
                         Kind = "Hash",
@@ -151,7 +150,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 }
             };
 
-            SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+            SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
             Assert.NotNull(sqlContainerGetResults);
 
             IEnumerable<SqlContainerGetResults> sqlContainers = client.ListSqlContainersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
@@ -171,16 +170,16 @@ namespace CosmosDB.Tests.ScenarioTests
                 Options = new CreateUpdateOptions()
             };
 
-            SqlStoredProcedureGetResults sqlStoredProcedureGetResults = client.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
+            SqlStoredProcedureGetResults sqlStoredProcedureGetResults = client.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
             Assert.NotNull(sqlStoredProcedureGetResults);
             Assert.Equal(sqlStoredProcedureGetResults.Resource.Body, sqlStoredProcedureGetResults.Resource.Body);
 
-            IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = client.ListSqlStoredProceduresWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+            IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = client.ListSqlStoredProceduresWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2).GetAwaiter().GetResult().Body;
             Assert.NotNull(sqlStoredProcedures);
 
             foreach (SqlStoredProcedureGetResults sqlStoredProcedure in sqlStoredProcedures)
             {
-                client.DeleteSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlStoredProcedure.Name);
+                client.DeleteSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2, sqlStoredProcedure.Name);
             }
 
             var userDefinedFunctionName = TestUtilities.GenerateName("udf");
@@ -197,6 +196,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Options = new CreateUpdateOptions()
             };
 
+            var containerName = TestUtilities.GenerateName("container");
             SqlUserDefinedFunctionGetResults sqlUserDefinedFunctionGetResults = client.CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, userDefinedFunctionName, sqlUserDefinedFunctionCreateUpdateParameters).GetAwaiter().GetResult().Body;
             Assert.NotNull(sqlUserDefinedFunctionGetResults);
             Assert.Equal(sqlUserDefinedFunctionGetResults.Resource.Body, sqlUserDefinedFunctionGetResults.Resource.Body);
@@ -207,7 +207,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
             foreach (SqlUserDefinedFunctionGetResults sqlUserDefinedFunction in sqlUserDefinedFunctions)
             {
-                client.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlUserDefinedFunction.Name);
+                client.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2, sqlUserDefinedFunction.Name);
             }
 
             var triggerName = TestUtilities.GenerateName("trigger");
@@ -237,7 +237,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
             foreach (SqlTriggerGetResults sqlTrigger in sqlTriggers)
             {
-                client.DeleteSqlTriggerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlTrigger.Name);
+                client.DeleteSqlTriggerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName2, sqlTrigger.Name);
             }
 
             foreach (SqlContainerGetResults sqlContainer in sqlContainers)
@@ -255,7 +255,7 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlRoleTests()
         {
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
             var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
             var databaseName = TestUtilities.GenerateName("database");
@@ -488,64 +488,67 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlAccountBackupPolicyTests()
         {
-            CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
-            string location = this.fixture.Location;
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
-            var resourceGroupName = this.fixture.ResourceGroupName;
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
+                string location = this.fixture.Location;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql, enablePitr: false);
+                var resourceGroupName = this.fixture.ResourceGroupName;
                 {
-                    Location = location,
-                    Kind = DatabaseAccountKind.GlobalDocumentDB,
-                    Locations = new List<Location>()
+                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                     {
-                        {new Location(locationName: location) }
-                    },
-                    BackupPolicy = new PeriodicModeBackupPolicy()
-                    {
-                        PeriodicModeProperties = new PeriodicModeProperties()
+                        Location = location,
+                        Kind = DatabaseAccountKind.GlobalDocumentDB,
+                        Locations = new List<Location>()
                         {
-                            BackupIntervalInMinutes = 60,
-                            BackupRetentionIntervalInHours = 8,
-                            BackupStorageRedundancy = BackupStorageRedundancy.Geo
+                            {new Location(locationName: location) }
+                        },
+                        BackupPolicy = new PeriodicModeBackupPolicy()
+                        {
+                            PeriodicModeProperties = new PeriodicModeProperties()
+                            {
+                                BackupIntervalInMinutes = 60,
+                                BackupRetentionIntervalInHours = 8,
+                                BackupStorageRedundancy = BackupStorageRedundancy.Geo
+                            }
                         }
-                    }
-                };
+                    };
 
-                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.Equal(databaseAccount.Name, databaseAccountName);
-                PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
-                Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
-                Assert.Equal(8, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
-                Assert.Equal(BackupStorageRedundancy.Geo, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
-            }
+                    DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    Assert.Equal(databaseAccount.Name, databaseAccountName);
+                    PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
+                    Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
+                    Assert.Equal(8, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
+                    Assert.Equal(BackupStorageRedundancy.Geo, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
+                }
 
-            {
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                 {
-                    Location = location,
-                    Kind = DatabaseAccountKind.GlobalDocumentDB,
-                    Locations = new List<Location>()
+                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
                     {
-                        {new Location(locationName: location) }
-                    },
-                    BackupPolicy = new PeriodicModeBackupPolicy()
-                    {
-                        PeriodicModeProperties = new PeriodicModeProperties()
+                        Location = location,
+                        Kind = DatabaseAccountKind.GlobalDocumentDB,
+                        Locations = new List<Location>()
                         {
-                            BackupIntervalInMinutes = 60,
-                            BackupRetentionIntervalInHours = 12,
-                            BackupStorageRedundancy = BackupStorageRedundancy.Local
+                            {new Location(locationName: location) }
+                        },
+                        BackupPolicy = new PeriodicModeBackupPolicy()
+                        {
+                            PeriodicModeProperties = new PeriodicModeProperties()
+                            {
+                                BackupIntervalInMinutes = 60,
+                                BackupRetentionIntervalInHours = 12,
+                                BackupStorageRedundancy = BackupStorageRedundancy.Local
+                            }
                         }
-                    }
-                };
+                    };
 
-                DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                Assert.Equal(databaseAccount.Name, databaseAccountName);
-                PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
-                Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
-                Assert.Equal(12, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
-                Assert.Equal(BackupStorageRedundancy.Local, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
+                    DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    Assert.Equal(databaseAccount.Name, databaseAccountName);
+                    PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
+                    Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
+                    Assert.Equal(12, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
+                    Assert.Equal(BackupStorageRedundancy.Local, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
+                }
             }
         }
 

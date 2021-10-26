@@ -19,7 +19,6 @@ namespace CosmosDB.Tests.ScenarioTests
         public RetrieveContainerBackupInformationTests(TestFixture fixture)
         {
             this.fixture = fixture;
-            fixture.Init(MockContext.Start(this.GetType()));
         }
 
         [Fact]
@@ -27,7 +26,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
             var resourceGroupName = this.fixture.ResourceGroupName;
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
             string location = this.fixture.Location;
             var databaseName = TestUtilities.GenerateName("database");
             var containerName = TestUtilities.GenerateName("container");

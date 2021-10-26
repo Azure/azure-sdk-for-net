@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for CosmosDBManagementClient.
+    /// Extension methods for LocationsOperations.
     /// </summary>
-    public static partial class CosmosDBManagementClientExtensions
+    public static partial class LocationsOperationsExtensions
     {
             /// <summary>
             /// List Cosmos DB locations and their properties
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<LocationGetResult> LocationList(this ICosmosDBManagementClient operations)
+            public static IEnumerable<LocationGetResult> List(this ILocationsOperations operations)
             {
-                return operations.LocationListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<LocationGetResult>> LocationListAsync(this ICosmosDBManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<LocationGetResult>> ListAsync(this ILocationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.LocationListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -60,9 +60,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='location'>
             /// Cosmos DB region, with spaces between words and each word capitalized.
             /// </param>
-            public static LocationGetResult LocationGet(this ICosmosDBManagementClient operations, string location)
+            public static LocationGetResult Get(this ILocationsOperations operations, string location)
             {
-                return operations.LocationGetAsync(location).GetAwaiter().GetResult();
+                return operations.GetAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocationGetResult> LocationGetAsync(this ICosmosDBManagementClient operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocationGetResult> GetAsync(this ILocationsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.LocationGetWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

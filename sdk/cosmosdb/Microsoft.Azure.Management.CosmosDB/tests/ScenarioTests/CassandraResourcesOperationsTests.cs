@@ -20,7 +20,6 @@ namespace CosmosDB.Tests.ScenarioTests
         public CassandraResourcesOperationsTests(TestFixture fixture)
         {
             this.fixture = fixture;
-            fixture.Init(MockContext.Start(this.GetType()));
         }
 
         [Fact]

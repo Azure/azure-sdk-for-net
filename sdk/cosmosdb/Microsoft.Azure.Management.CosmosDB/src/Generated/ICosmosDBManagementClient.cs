@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// </summary>
@@ -163,6 +159,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         IGremlinResourcesOperations GremlinResources { get; }
 
         /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        ILocationsOperations Locations { get; }
+
+        /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         INotebookWorkspacesOperations NotebookWorkspaces { get; }
@@ -221,32 +222,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the ICassandraDataCentersOperations.
         /// </summary>
         ICassandraDataCentersOperations CassandraDataCenters { get; }
-
-        /// <summary>
-        /// List Cosmos DB locations and their properties
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IEnumerable<LocationGetResult>>> LocationListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get the properties of an existing Cosmos DB location
-        /// </summary>
-        /// <param name='location'>
-        /// Cosmos DB region, with spaces between words and each word
-        /// capitalized.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<LocationGetResult>> LocationGetWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

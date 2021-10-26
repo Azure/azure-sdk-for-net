@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Cassandra should use to authenticate clients. 'None' turns off
         /// authentication, so should not be used except in emergencies.
         /// 'Cassandra' is the default password based authentication. The
-        /// default is 'Cassandra'. 'Ldap' is in preview. Possible values
-        /// include: 'None', 'Cassandra', 'Ldap'</param>
+        /// default is 'Cassandra'. Possible values include: 'None',
+        /// 'Cassandra'</param>
         /// <param name="initialCassandraAdminPassword">Initial password for
         /// clients connecting as admin to the cluster. Should be changed after
         /// cluster creation. Returns null on GET. This field only applies when
@@ -174,8 +174,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Gets or sets which authentication method Cassandra should use to
         /// authenticate clients. 'None' turns off authentication, so should
         /// not be used except in emergencies. 'Cassandra' is the default
-        /// password based authentication. The default is 'Cassandra'. 'Ldap'
-        /// is in preview. Possible values include: 'None', 'Cassandra', 'Ldap'
+        /// password based authentication. The default is 'Cassandra'. Possible
+        /// values include: 'None', 'Cassandra'
         /// </summary>
         [JsonProperty(PropertyName = "authenticationMethod")]
         public string AuthenticationMethod { get; set; }

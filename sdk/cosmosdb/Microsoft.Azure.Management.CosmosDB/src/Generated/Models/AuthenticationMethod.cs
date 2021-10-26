@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     {
         public const string None = "None";
         public const string Cassandra = "Cassandra";
-        public const string Ldap = "Ldap";
     }
 }
