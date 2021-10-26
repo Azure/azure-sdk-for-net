@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal ExtractSummaryActionResult(ExtractSummaryResultCollection result, DateTimeOffset completedOn)
-            : base(completedOn)
+        internal ExtractSummaryActionResult(ExtractSummaryResultCollection result, string actionName, DateTimeOffset completedOn)
+            : base(actionName, completedOn)
         {
             _documentsResults = result;
         }
@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal ExtractSummaryActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error) { }
+        internal ExtractSummaryActionResult(string actionName, DateTimeOffset completedOn,TextAnalyticsErrorInternal error)
+            : base(actionName, completedOn, error) { }
 
         /// <summary>
         /// Gets the result of the execution of an <see cref="ExtractSummaryAction"/> per each input document.
