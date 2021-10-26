@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class InboundNatRulesOperationsExtensions
     {
             /// <summary>
-            /// Gets all the inbound nat rules in a load balancer.
+            /// Gets all the inbound NAT rules in a load balancer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets all the inbound nat rules in a load balancer.
+            /// Gets all the inbound NAT rules in a load balancer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes the specified load balancer inbound nat rule.
+            /// Deletes the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             public static void Delete(this IInboundNatRulesOperations operations, string resourceGroupName, string loadBalancerName, string inboundNatRuleName)
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes the specified load balancer inbound nat rule.
+            /// Deletes the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the specified load balancer inbound nat rule.
+            /// Gets the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the specified load balancer inbound nat rule.
+            /// Gets the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Creates or updates a load balancer inbound nat rule.
+            /// Creates or updates a load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,10 +169,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='inboundNatRuleParameters'>
-            /// Parameters supplied to the create or update inbound nat rule operation.
+            /// Parameters supplied to the create or update inbound NAT rule operation.
             /// </param>
             public static InboundNatRule CreateOrUpdate(this IInboundNatRulesOperations operations, string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters)
             {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Creates or updates a load balancer inbound nat rule.
+            /// Creates or updates a load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,10 +192,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='inboundNatRuleParameters'>
-            /// Parameters supplied to the create or update inbound nat rule operation.
+            /// Parameters supplied to the create or update inbound NAT rule operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes the specified load balancer inbound nat rule.
+            /// Deletes the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             public static void BeginDelete(this IInboundNatRulesOperations operations, string resourceGroupName, string loadBalancerName, string inboundNatRuleName)
             {
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes the specified load balancer inbound nat rule.
+            /// Deletes the specified load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Creates or updates a load balancer inbound nat rule.
+            /// Creates or updates a load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -264,10 +264,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='inboundNatRuleParameters'>
-            /// Parameters supplied to the create or update inbound nat rule operation.
+            /// Parameters supplied to the create or update inbound NAT rule operation.
             /// </param>
             public static InboundNatRule BeginCreateOrUpdate(this IInboundNatRulesOperations operations, string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters)
             {
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Creates or updates a load balancer inbound nat rule.
+            /// Creates or updates a load balancer inbound NAT rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,10 +287,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the load balancer.
             /// </param>
             /// <param name='inboundNatRuleName'>
-            /// The name of the inbound nat rule.
+            /// The name of the inbound NAT rule.
             /// </param>
             /// <param name='inboundNatRuleParameters'>
-            /// Parameters supplied to the create or update inbound nat rule operation.
+            /// Parameters supplied to the create or update inbound NAT rule operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets all the inbound nat rules in a load balancer.
+            /// Gets all the inbound NAT rules in a load balancer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets all the inbound nat rules in a load balancer.
+            /// Gets all the inbound NAT rules in a load balancer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
