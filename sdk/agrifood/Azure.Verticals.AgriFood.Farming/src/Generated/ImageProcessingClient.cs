@@ -83,7 +83,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetRasterizeJobAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");
@@ -126,7 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRasterizeJob(string jobId, RequestOptions options)
+        public virtual Response GetRasterizeJob(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ImageProcessingClient.GetRasterizeJob");

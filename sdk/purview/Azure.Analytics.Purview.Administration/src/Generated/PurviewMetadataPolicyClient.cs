@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestOptions options)
+        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetMetadataPolicy(string policyId, RequestOptions options)
+        public virtual Response GetMetadataPolicy(string policyId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");
@@ -477,7 +477,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestOptions options)
+        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataPolicyClient.GetMetadataPolicies");

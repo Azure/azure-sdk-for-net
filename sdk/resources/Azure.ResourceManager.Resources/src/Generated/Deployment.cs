@@ -531,9 +531,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a list of DeploymentOperations in the Deployment. </summary>
         /// <returns> An object representing collection of DeploymentOperations and their operations over a Deployment. </returns>
-        public DeploymentOperationContainer GetDeploymentOperations()
+        public DeploymentOperationCollection GetDeploymentOperations()
         {
-            return new DeploymentOperationContainer(this);
+            return new DeploymentOperationCollection(this);
         }
     }
 }
