@@ -259,19 +259,19 @@ namespace Azure.Data.Tables.Tests
         {
             var client = InstrumentClient(tableClient);
 
-            var ex = Assert.ThrowsAsync<Exception>(async () => await client.CreateTableIfNotExistsAsync(TableName));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.CreateTableIfNotExistsAsync(TableName));
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
 
-            ex = Assert.ThrowsAsync<Exception>(async () => await client.DeleteTableAsync(TableName));
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteTableAsync(TableName));
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
 
-            ex = Assert.ThrowsAsync<Exception>(async () => await client.QueryAsync().ToEnumerableAsync());
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync().ToEnumerableAsync());
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
 
-            ex = Assert.ThrowsAsync<Exception>(async () => await client.CreateTableAsync(TableName));
+            ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.CreateTableAsync(TableName));
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
         }

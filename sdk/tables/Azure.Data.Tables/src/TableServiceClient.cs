@@ -975,9 +975,13 @@ namespace Azure.Data.Tables
             var fixedUri = TableUriBuilder.GetEndpointWithoutTableName(_endpoint, tableName);
             if (_endpoint.AbsolutePath != fixedUri.AbsolutePath)
             {
-                throw new Exception(
-                    $"The configured endpoint Uri appears to contain the table name '{tableName}'. Please try re-creating the TableServiceClient with just the account Uri. For example: {fixedUri.AbsoluteUri}.",
-                    ex);
+                var message =
+                    $"The configured endpoint Uri appears to contain the table name '{tableName}'. Please try re-creating the TableServiceClient with just the account Uri. For example: {fixedUri.AbsoluteUri}.";
+                if (ex is RequestFailedException rfe)
+                {
+                    throw new RequestFailedException(rfe.Status, message, rfe.ErrorCode, rfe);
+                }
+                throw new Exception(message, ex);
             }
         }
     }
