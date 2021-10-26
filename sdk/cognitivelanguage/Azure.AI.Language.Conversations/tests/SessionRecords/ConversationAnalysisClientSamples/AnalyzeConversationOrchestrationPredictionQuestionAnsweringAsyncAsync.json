@@ -1,0 +1,104 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?projectName=DomainOrchestrator\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "46",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-6579d4b49e0a8245b0259b6060ffbfb4-bf3df6c548d8bc4d-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211026.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "66add9ffb8d99a96c3d4e216dc2c7e4f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "where are the calories per recipe?"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cc81450f-f757-4821-8172-dc9d546e349e",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 26 Oct 2021 15:11:57 GMT",
+        "pragma": "no-cache",
+        "request-id": "cc81450f-f757-4821-8172-dc9d546e349e",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "958"
+      },
+      "ResponseBody": {
+        "query": "where are the calories per recipe?",
+        "prediction": {
+          "topIntent": "RecipeFAQ",
+          "projectKind": "workflow",
+          "intents": {
+            "RecipeFAQ": {
+              "confidenceScore": 0.8255208,
+              "targetKind": "question_answering",
+              "result": {
+                "answers": [
+                  {
+                    "questions": [
+                      "Where can I find the number of calories for each recipe?"
+                    ],
+                    "answer": "All nutritional information, including calories per serving, can be found in the section underneath the ingredients in all recipes.\n\nIf your aim with calorie restriction is to lose weight, please see our guide:",
+                    "confidenceScore": 0.9384,
+                    "id": 3,
+                    "source": "https://www.dietdoctor.com/low-carb/recipes/faq",
+                    "metadata": {},
+                    "dialog": {
+                      "isContextOnly": false,
+                      "prompts": []
+                    }
+                  }
+                ]
+              }
+            },
+            "Restaurant": {
+              "confidenceScore": 0.75130206,
+              "targetKind": "luis"
+            },
+            "Calendar": {
+              "confidenceScore": 0.7421875,
+              "targetKind": "conversation"
+            },
+            "Railway": {
+              "confidenceScore": 0.74088544,
+              "targetKind": "conversation"
+            },
+            "Utilities": {
+              "confidenceScore": 0.6979167,
+              "targetKind": "luis"
+            },
+            "Email": {
+              "confidenceScore": 0.68359375,
+              "targetKind": "conversation"
+            },
+            "Greeting": {
+              "confidenceScore": 0.6510417,
+              "targetKind": "non_linked"
+            },
+            "None": {
+              "confidenceScore": 0,
+              "targetKind": "non_linked"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_URI": "https://westeurope.api.cognitive.microsoft.com",
+    "RandomSeed": "1730280126"
+  }
+}
