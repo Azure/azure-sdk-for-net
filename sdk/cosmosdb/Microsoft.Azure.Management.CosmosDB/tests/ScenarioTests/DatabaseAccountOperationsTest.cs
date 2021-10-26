@@ -17,6 +17,7 @@ namespace CosmosDB.Tests.ScenarioTests
         public DatabaseAccountOperationsTests(TestFixture fixture)
         {
             this.fixture = fixture;
+            fixture.Init(MockContext.Start(this.GetType()));
         }
 
         [Fact]
@@ -182,24 +183,23 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void DatabaseAccountLocationsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            IEnumerable<LocationGetResult> locationGetResults = this.fixture.CosmosDBManagementClient.Locations.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
+            Assert.True(locationGetResults.Count() > 0);
+            string locationName = "";
+            foreach (LocationGetResult locationGetResult in locationGetResults)
             {
-                IEnumerable<LocationGetResult> locationGetResults = this.fixture.CosmosDBManagementClient.Locations.ListWithHttpMessagesAsync().GetAwaiter().GetResult().Body;
-                Assert.True(locationGetResults.Count() > 0);
-                foreach (LocationGetResult locationGetResult in locationGetResults)
-                {
-                    Assert.NotNull(locationGetResult.Name);
-                    Assert.NotNull(locationGetResult.Properties.BackupStorageRedundancies);
-                    Assert.NotNull(locationGetResult.Properties.IsResidencyRestricted);
-                    Assert.NotNull(locationGetResult.Properties.SupportsAvailabilityZone);
-                }
-
-                LocationGetResult currentLocationGetResult = this.fixture.CosmosDBManagementClient.Locations.GetWithHttpMessagesAsync("centralus").GetAwaiter().GetResult().Body;
-                Assert.NotNull(currentLocationGetResult.Name);
-                Assert.NotNull(currentLocationGetResult.Properties.BackupStorageRedundancies);
-                Assert.NotNull(currentLocationGetResult.Properties.IsResidencyRestricted);
-                Assert.NotNull(currentLocationGetResult.Properties.SupportsAvailabilityZone);
+                Assert.NotNull(locationGetResult.Name);
+                Assert.NotNull(locationGetResult.Properties.BackupStorageRedundancies);
+                Assert.NotNull(locationGetResult.Properties.IsResidencyRestricted);
+                Assert.NotNull(locationGetResult.Properties.SupportsAvailabilityZone);
+                locationName = locationGetResult.Name;
             }
+
+            LocationGetResult currentLocationGetResult = this.fixture.CosmosDBManagementClient.Locations.GetWithHttpMessagesAsync(locationName).GetAwaiter().GetResult().Body;
+            Assert.NotNull(currentLocationGetResult.Name);
+            Assert.NotNull(currentLocationGetResult.Properties.BackupStorageRedundancies);
+            Assert.NotNull(currentLocationGetResult.Properties.IsResidencyRestricted);
+            Assert.NotNull(currentLocationGetResult.Properties.SupportsAvailabilityZone);
         }
 
         private static void VerifyCosmosDBAccount(DatabaseAccountGetResults databaseAccount, DatabaseAccountCreateUpdateParameters parameters)

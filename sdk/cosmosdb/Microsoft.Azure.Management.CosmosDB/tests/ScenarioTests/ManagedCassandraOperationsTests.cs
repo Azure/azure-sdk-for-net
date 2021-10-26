@@ -5,6 +5,7 @@
     using System.IO;
     using System.Net;
     using System.Threading;
+    using System.Threading.Tasks;
     using global::CosmosDB.Tests;
     using Microsoft.Azure.Management.CosmosDB;
     using Microsoft.Azure.Management.CosmosDB.Models;
@@ -25,11 +26,12 @@
         public ManagedCassandraResourcesOperationsTests(TestFixture fixture, ITestOutputHelper output)
         {
             this.fixture = fixture;
+            fixture.Init(MockContext.Start(this.GetType()));
             this.output = output;
         }
 
         [Fact]
-        public void ManagedCassandraCRUDTests()
+        public async Task ManagedCassandraCRUDTests()
         {
             var clusterClient = this.fixture.CosmosDBManagementClient.CassandraClusters;
             var dcClient = this.fixture.CosmosDBManagementClient.CassandraDataCenters;
@@ -58,9 +60,9 @@
             this.output.WriteLine($"Cluster create request body:");
             this.output.WriteLine(JsonConvert.SerializeObject(clusterPutResource, Formatting.Indented));
 
-            ClusterResource clusterResource = clusterClient
+            ClusterResource clusterResource = (await clusterClient
                 .CreateUpdateWithHttpMessagesAsync(resourceGroupName: this.fixture.ResourceGroupName,
-                    clusterName: clusterName, body: clusterPutResource).GetAwaiter().GetResult().Body;
+                    clusterName: clusterName, body: clusterPutResource)).Body;
 
             this.output.WriteLine($"Cluster create response:");
             this.output.WriteLine(JsonConvert.SerializeObject(clusterResource, Formatting.Indented));
@@ -76,14 +78,14 @@
             clusterPutResource.Properties.ExternalSeedNodes = new List<SeedNode>
             {
                 new SeedNode {IpAddress = "192.168.12.1"}
-};
+            };
             this.output.WriteLine("");
             this.output.WriteLine("Updating cluster. Put body:");
             this.output.WriteLine(JsonConvert.SerializeObject(clusterPutResource, Formatting.Indented));
 
-            ClusterResource clusterResource2 = clusterClient
+            ClusterResource clusterResource2 = (await clusterClient
                 .CreateUpdateWithHttpMessagesAsync(resourceGroupName: this.fixture.ResourceGroupName,
-                    clusterName: clusterName, body: clusterPutResource).GetAwaiter().GetResult().Body;
+                    clusterName: clusterName, body: clusterPutResource)).Body;
 
             this.output.WriteLine("Response:");
             this.output.WriteLine(JsonConvert.SerializeObject(clusterResource2, Formatting.Indented));
@@ -105,15 +107,14 @@
                 {
                     DataCenterLocation = this.fixture.Location,
                     DelegatedSubnetId = subnetId,
-                    NodeCount = 3,
-                    Sku = "Standard_E8s_v4"
+                    NodeCount = 3
                 }
             };
             this.output.WriteLine($"Creating data center {dcName}. Put request:");
             this.output.WriteLine(JsonConvert.SerializeObject(dataCenterPutResource, Formatting.Indented));
-            DataCenterResource dcResource = dcClient
+            DataCenterResource dcResource = (await dcClient
                 .CreateUpdateWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName, dcName,
-                    dataCenterPutResource).GetAwaiter().GetResult().Body;
+                    dataCenterPutResource)).Body;
             this.output.WriteLine("Response:");
             this.output.WriteLine(JsonConvert.SerializeObject(dcResource, Formatting.Indented));
 
@@ -122,40 +123,22 @@
             Assert.Equal(3, dcResource.Properties.NodeCount);
             Assert.Equal(3, dcResource.Properties.SeedNodes.Count);
 
-            clusterClient.DeallocateWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
-            ClusterResource clusterResource3 = clusterClient.GetAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
+            await clusterClient.DeallocateWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName);
+            ClusterResource clusterResource3 = await clusterClient.GetAsync(this.fixture.ResourceGroupName, clusterName);
             Assert.True(clusterResource3.Properties.Deallocated);
 
-            clusterClient.StartWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
-            ClusterResource clusterResource4 = clusterClient.GetAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
-            Assert.True(clusterResource4.Properties.Deallocated);
-
-            CommandOutput commandOutput = clusterClient.BeginInvokeCommandWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                clusterName,
-                new CommandPostBody
-                {
-                    Host = dcResource.Properties.SeedNodes[0].IpAddress,
-                    Command = "nodetool",
-                    Arguments = new Dictionary<string, string>
-                    {
-                        { "status", "" }
-                    }
-                }
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotEmpty(commandOutput.CommandOutputProperty);
+            await clusterClient.StartWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName);
+            ClusterResource clusterResource4 = await clusterClient.GetAsync(this.fixture.ResourceGroupName, clusterName);
+            Assert.False(clusterResource4.Properties.Deallocated);
 
             this.output.WriteLine($"Deleting data center {dcName}.");
-            dcClient
-                .DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName, dcName).GetAwaiter().GetResult();
+            await dcClient.DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName, dcName);
 
             this.output.WriteLine($"Deleting cluster {clusterName}.");
-            clusterClient
-                .DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
+            await clusterClient.DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName);
 
             this.output.WriteLine("Deleting deployment of vnets.");
-            clusterClient
-                .DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName).GetAwaiter().GetResult();
+            await clusterClient.DeleteWithHttpMessagesAsync(this.fixture.ResourceGroupName, clusterName);
         }
 
 
