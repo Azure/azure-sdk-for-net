@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -172,10 +173,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == DocumentOperationStatus.Failed)
             {
-                DocumentAnalysisError error = response.Value.Error;
+                ResponseError error = response.Value.Error;
+                var additionalInfo = new Dictionary<string, string>() { { "AdditionInformation", error.ToString() } };
                 RequestFailedException requestFailedException = async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, error.ToAdditionalInfo()).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, error.ToAdditionalInfo());
+                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, additionalInfo).ConfigureAwait(false)
+                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, additionalInfo);
 
                 return OperationState<DocumentModel>.Failure(rawResponse, requestFailedException);
             }

@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentAnalysisError
+    internal partial class Error
     {
-        internal static DocumentAnalysisError DeserializeDocumentAnalysisError(JsonElement element)
+        internal static Error DeserializeError(JsonElement element)
         {
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<DocumentAnalysisError>> details = default;
-            Optional<DocumentAnalysisInnerError> innererror = default;
+            Optional<IReadOnlyList<Error>> details = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,10 +44,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DocumentAnalysisError> array = new List<DocumentAnalysisError>();
+                    List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentAnalysisError(item));
+                        array.Add(DeserializeError(item));
                     }
                     details = array;
                     continue;
@@ -59,11 +59,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DocumentAnalysisInnerError.DeserializeDocumentAnalysisInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new DocumentAnalysisError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

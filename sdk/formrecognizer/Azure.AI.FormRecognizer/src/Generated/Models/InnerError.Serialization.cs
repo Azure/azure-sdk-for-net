@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentAnalysisInnerError
+    internal partial class InnerError
     {
-        internal static DocumentAnalysisInnerError DeserializeDocumentAnalysisInnerError(JsonElement element)
+        internal static InnerError DeserializeInnerError(JsonElement element)
         {
             string code = default;
             Optional<string> message = default;
-            Optional<DocumentAnalysisInnerError> innererror = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -36,11 +36,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeDocumentAnalysisInnerError(property.Value);
+                    innererror = DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new DocumentAnalysisInnerError(code, message.Value, innererror.Value);
+            return new InnerError(code, message.Value, innererror.Value);
         }
     }
 }
