@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql.Models;
@@ -15,7 +16,7 @@ namespace Sql.Tests
         public static readonly string SubnetResourceId = "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG/providers/Microsoft.Network/virtualNetworks/vnet-mi-tooling/subnets/ManagedInstance";
         public static readonly string VNetName = "vnet-mi-tooling";
         public static readonly string Username = "dummylogin";
-        public static readonly string Password = "Un53cuREpa33w0Rd";
+        public static readonly string Password = Guid.NewGuid().ToString();
         public static readonly string Region = "westcentralus";
         public static readonly string DEFAULT_MC = "SQL_Default";
         public static readonly Dictionary<string, string> Tags = new Dictionary<string, string>

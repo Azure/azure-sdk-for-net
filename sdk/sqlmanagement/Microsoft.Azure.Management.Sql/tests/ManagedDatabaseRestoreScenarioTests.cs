@@ -2,16 +2,15 @@
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Test.HttpRecorder;
-using Sku = Microsoft.Azure.Management.Sql.Models.Sku;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Xunit;
-using Microsoft.Rest;
-using System.Net;
+using Microsoft.Azure.Management.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.Azure.Management.Storage.Models;
 
 namespace Sql.Tests
 {
@@ -270,11 +269,31 @@ namespace Sql.Tests
             using (SqlManagementTestContext Context = new SqlManagementTestContext(this))
             {
                 SqlManagementClient sqlClient = Context.GetClient<SqlManagementClient>();
-                ResourceGroup resourceGroup = Context.CreateResourceGroup();
-                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
+                StorageManagementClient storageClient = Context.GetClient<StorageManagementClient>();
+                const string AccountName = "backupscxteam";
 
                 string testStorageContainerUri = "https://backupscxteam.blob.core.windows.net/clients";
-                string testStorageContainerSasToken = "?sp=rl&st=2021-10-21T10:54:59Z&se=2021-10-28T18:54:59Z&spr=https&sv=2020-08-04&sr=c&sig=jDr2p5WXcJ92eMzKmpWwuPA0CeKYC35Yh%2FK0UsHyZUQ%3D";
+                string testStorageContainerSasToken = string.Empty;
+                StorageAccountListKeysResult keys =
+                    storageClient.StorageAccounts.ListKeys(ManagedInstanceTestUtilities.ResourceGroupName, AccountName);
+                string key = keys.Keys.First().Value;
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+
+                    CloudBlobContainer container = new CloudBlobContainer(
+                        new Uri(testStorageContainerUri),
+                        new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(AccountName, key));
+                    SharedAccessBlobPolicy sharedAccessPolicy = new SharedAccessBlobPolicy
+                    {
+                        SharedAccessExpiryTime = new DateTimeOffset(DateTime.UtcNow.Add(TimeSpan.FromHours(1))),
+                        Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.List
+                    };
+                    testStorageContainerSasToken = container.GetSharedAccessSignature(sharedAccessPolicy);
+                }
+
+                ResourceGroup resourceGroup = Context.CreateResourceGroup();
+                ManagedInstance managedInstance = Context.CreateManagedInstance(resourceGroup);
                 string databaseName = SqlManagementTestUtilities.GenerateName(_testPrefix);
 
                 // Start external backup restore.
