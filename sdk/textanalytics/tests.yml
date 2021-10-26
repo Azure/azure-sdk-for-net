@@ -10,3 +10,13 @@ extends:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
+    # temporary env vars for custom text features
+    EnvVars:
+        TEXT_ANALYTICS_ENDPOINT: $(js-textanalytics-test-service-endpoint)
+        TEXT_ANALYTICS_API_KEY: $(js-textanalytics-api-key-new)
+        TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_PROJECT_NAME: $(js-single-category-classify-project-name)
+        TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_DEPLOYMENT_NAME: $(js-single-category-classify-deployment-name)
+        TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_PROJECT_NAME: $(js-multi-category-classify-project-name)
+        TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_DEPLOYMENT_NAME: $(js-multi-category-classify-deployment-name)
+        TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME: $(js-recognize-custom-entities-project-name)
+        TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME: $(js-recognize-custom-entities-deployment-name)
