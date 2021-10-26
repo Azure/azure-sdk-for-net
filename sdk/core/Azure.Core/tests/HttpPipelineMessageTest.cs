@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             var requestMock = new Mock<Request>();
             HttpMessage message = new HttpMessage(requestMock.Object, new ResponseClassifier());
             message.Dispose();
-            requestMock.Verify(r=>r.Dispose(), Times.Once);
+            requestMock.Verify(r => r.Dispose(), Times.Once);
         }
 
         [Test]
@@ -29,8 +29,8 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(requestMock.Object, new ResponseClassifier());
             message.Response = responseMock.Object;
             message.Dispose();
-            requestMock.Verify(r=>r.Dispose(), Times.Once);
-            responseMock.Verify(r=>r.Dispose(), Times.Once);
+            requestMock.Verify(r => r.Dispose(), Times.Once);
+            responseMock.Verify(r => r.Dispose(), Times.Once);
         }
 
         [Test]
@@ -97,6 +97,18 @@ namespace Azure.Core.Tests
 
             Assert.AreSame(memoryStream, stream);
             Assert.Throws<InvalidOperationException>(() => { var x = response.Content; });
+        }
+
+        [Test]
+        public void CanApplyRequestContext()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            RequestContext context = new RequestContext() { PerCallPolicy = new RequestContext.ActionPolicy(m => { }) };
+
+            message.Apply(context);
+
+            Assert.IsTrue(message.TryGetProperty("RequestContextPerCallPolicyCallback", out object policy));
+            Assert.AreEqual(typeof(RequestContext.ActionPolicy), policy.GetType());
         }
     }
 }

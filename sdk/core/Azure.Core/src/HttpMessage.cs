@@ -124,6 +124,23 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Applies options from <see cref="RequestContext"/> instance to a <see cref="HttpMessage"/>.
+        /// </summary>
+        /// <param name="RequestContext"></param>
+        public void Apply(RequestContext RequestContext)
+        {
+            if (RequestContext == null)
+            {
+                return;
+            }
+
+            if (RequestContext.PerCallPolicy != null)
+            {
+                SetProperty("RequestContextPerCallPolicyCallback", RequestContext.PerCallPolicy);
+            }
+        }
+
+        /// <summary>
         /// Disposes the request and response.
         /// </summary>
         public void Dispose()
