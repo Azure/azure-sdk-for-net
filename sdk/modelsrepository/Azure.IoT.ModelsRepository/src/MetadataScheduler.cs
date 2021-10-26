@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
@@ -10,37 +8,31 @@ namespace Azure.IoT.ModelsRepository
     /// </summary>
     internal class MetadataScheduler
     {
-        private DateTime _lastFetched;
-        private readonly TimeSpan _desiredElapsedTimeSpan;
         private bool _initialFetch;
         private readonly bool _enabled;
 
         /// <param name="metadataOptions">The desired configuration for metadata processing.</param>
         public MetadataScheduler(ModelsRepositoryClientMetadataOptions metadataOptions)
         {
-            _lastFetched = DateTime.MinValue;
             _initialFetch = true;
-            _desiredElapsedTimeSpan = metadataOptions.Expiration;
             _enabled = metadataOptions.Enabled;
         }
 
         /// <summary>
-        /// Updates the last fetched DateTime attribute of the scheduler to <c>DateTime.Now</c>.
+        /// To be invoked by caller indicating repository metadata has been fetched.
         /// </summary>
-        public void Reset()
+        public void Set()
         {
             if (_initialFetch)
             {
                 _initialFetch = false;
             }
-
-            _lastFetched = DateTime.UtcNow;
         }
 
         /// <summary>
-        /// Determines whether the desired time span has elapsed with respect to the last fetched DateTime attribute.
+        /// Indicates whether the caller should fetch metadata.
         /// </summary>
-        public bool HasElapsed()
+        public bool ShouldFetchMetadata()
         {
             if (!_enabled)
             {
@@ -52,7 +44,7 @@ namespace Azure.IoT.ModelsRepository
                 return true;
             }
 
-            return (DateTime.UtcNow - _lastFetched) >= _desiredElapsedTimeSpan;
+            return false;
         }
     }
 }

@@ -1,0 +1,121 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://devicemodels.azure.com/metadata.json",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-8794f187ed1ed64a-00",
+        "User-Agent": [
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "76c57e6198231c77cc01bf49b684105d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+        "Access-Control-Expose-Headers": "*",
+        "Age": "8",
+        "Cache-Control": "max-age=600",
+        "Content-Length": "253",
+        "Content-MD5": "OkUGX73Wcpprz\u002BfCNCW9pg==",
+        "Content-Type": "application/json",
+        "Date": "Tue, 26 Oct 2021 21:58:21 GMT",
+        "ETag": "\u00220x8D997ED4E02500D\u0022",
+        "Expires": "Tue, 26 Oct 2021 22:08:21 GMT",
+        "Last-Modified": "Mon, 25 Oct 2021 19:26:12 GMT",
+        "Server": [
+          "ECAcc",
+          "(sed/E12A)"
+        ],
+        "X-Cache": "HIT",
+        "x-ms-error-code": "ConditionNotMet",
+        "x-ms-request-id": "721140f1-b01e-0031-02b4-ca9298000000",
+        "x-ms-version": "2018-03-28"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022commitId\u0022: \u00222d6b97fa1caf982c23ad1c2c3bea0ed777810698\u0022,\n",
+        "  \u0022features\u0022: {\n",
+        "    \u0022expanded\u0022: true,\n",
+        "    \u0022index\u0022: true\n",
+        "  },\n",
+        "  \u0022publishDateUtc\u0022: \u00222021-10-25T19:01:02.538359\u002B00:00\u0022,\n",
+        "  \u0022sourceRepo\u0022: \u0022Azure/iot-plugandplay-models\u0022,\n",
+        "  \u0022totalModelCount\u0022: 19037\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermojax-999.expanded.json",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-89aa8d44a63d274e-00",
+        "User-Agent": [
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "a2befe8a509d3b8f90893791e087f66c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+        "Access-Control-Expose-Headers": "*",
+        "Content-Length": "321",
+        "Content-Type": "text/html",
+        "Date": "Tue, 26 Oct 2021 21:58:20 GMT",
+        "Server": [
+          "Windows-Azure-Web/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": "Origin",
+        "x-ms-error-code": "WebContentNotFound",
+        "x-ms-request-id": "71b2f2c2-801e-006e-67b4-ca78b4000000",
+        "x-ms-version": "2018-03-28"
+      },
+      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 71b2f2c2-801e-006e-67b4-ca78b4000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-26T21:58:21.0122784Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
+    },
+    {
+      "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermojax-999.json",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-dbd31dbfde3ec64e-00",
+        "User-Agent": [
+          "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8c61c3b7c717805de8ff8daf5020054e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+        "Access-Control-Expose-Headers": "*",
+        "Content-Length": "321",
+        "Content-Type": "text/html",
+        "Date": "Tue, 26 Oct 2021 21:58:20 GMT",
+        "Server": [
+          "Windows-Azure-Web/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": "Origin",
+        "x-ms-error-code": "WebContentNotFound",
+        "x-ms-request-id": "0b006571-e01e-00fc-02b4-cac9c7000000",
+        "x-ms-version": "2018-03-28"
+      },
+      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 0b006571-e01e-00fc-02b4-cac9c7000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-26T21:58:21.0239840Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "603130437"
+  }
+}
