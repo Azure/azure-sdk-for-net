@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Net;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -132,8 +133,8 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // patch the subscription
                     string patchedName = "default";
-                    string patchedPk = "1Test12345"; //TODO - need to find a way to sanitize primaryKey and primaryKey1 must be different, currently in recording patchedPk and newSubscriptionPk are the same
-                    string patchedSk = "aabbccdd";//TestUtilities.GenerateName("patchedSk");
+                    string patchedPk = "1Test12345";
+                    string patchedSk = "aabbccdd";
                     var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
                     testBase.client.Subscription.Update(
@@ -167,7 +168,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
-                    Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
+                    if (HttpMockServer.Mode.Equals("Record"))
+                        Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
                     Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
                     // regenerate primary key
@@ -200,7 +202,8 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(keysHttpResponse);
                     Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
-                    Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
+                    if (HttpMockServer.Mode.Equals("Record"))
+                        Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
 
                     // get the subscription to check the key
                     subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -232,7 +235,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     }
 
                     // create a subscription with global scope on all apis
-                    var globalSubscriptionDisplayName = TestUtilities.GenerateName("global");
+                    var globalSubscriptionDisplayName = "default";
                     var globalSubscriptionCreateResponse = await testBase.client.Subscription.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
