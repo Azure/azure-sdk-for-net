@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AudioRoutingMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioRoutingMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AudioRoutingMode(string value)
         {

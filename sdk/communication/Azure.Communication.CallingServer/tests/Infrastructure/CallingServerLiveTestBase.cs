@@ -281,7 +281,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(response.Status, HttpStatusCode.OK);
+            Assert.AreEqual(response.Status, (int)HttpStatusCode.OK);
         }
 
         internal async Task CancelAllMediaOperationsOperation(IEnumerable<CallConnection> callConnections)
@@ -311,34 +311,30 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
-        internal async Task<string> AddParticipantOperation(CallConnection callConnection)
+        internal async Task<AddParticipantResult> AddParticipantOperation(CallConnection callConnection, string participantUserId)
         {
             Console.WriteLine("Performing add participant operation to add a participant");
 
-            string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
-
-            var response = await callConnection.AddParticipantAsync(new CommunicationUserIdentifier(invitedUser)).ConfigureAwait(false);
+            var response = await callConnection.AddParticipantAsync(new CommunicationUserIdentifier(participantUserId)).ConfigureAwait(false);
 
             Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
 
-            return response.Value.ParticipantId;
+            return response.Value;
         }
 
-        internal async Task<string> AddParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator)
+        internal async Task<AddParticipantResult> AddParticipantOperation(CallingServerClient callingServerClient, CallLocator callLocator, string participantUserId)
         {
             Console.WriteLine("Performing add participant operation to add a participant");
 
-            string invitedUser = GetFixedUserId("0000000b-d8d8-aaa3-3ef0-8b3a0d002f3f");
-
             var response = await callingServerClient.AddParticipantAsync(
                 callLocator,
-                new CommunicationUserIdentifier(invitedUser),
+                new CommunicationUserIdentifier(participantUserId),
                 callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
                 ).ConfigureAwait(false);
 
             Assert.AreEqual(false, string.IsNullOrEmpty(response.Value.ParticipantId));
 
-            return response.Value.ParticipantId;
+            return response.Value;
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_AddParticipantOperation
 
