@@ -1,14 +1,26 @@
 namespace Azure.AI.Language.Conversations
 {
+    public partial class AnalyzeConversationOptions
+    {
+        public AnalyzeConversationOptions(string projectName, string deploymentName, string query) { }
+        public string DeploymentName { get { throw null; } }
+        public string DirectTarget { get { throw null; } set { } }
+        public bool? IsLoggingEnabled { get { throw null; } set { } }
+        public string Language { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisParameters> Parameters { get { throw null; } }
+        public string ProjectName { get { throw null; } }
+        public string Query { get { throw null; } }
+        public bool? Verbose { get { throw null; } set { } }
+    }
     public partial class ConversationAnalysisClient
     {
         protected ConversationAnalysisClient() { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(Azure.AI.Language.Conversations.ConversationAnalysisOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.ConversationAnalysisOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConversationAnalysisClientOptions : Azure.Core.ClientOptions
@@ -19,18 +31,6 @@ namespace Azure.AI.Language.Conversations
             V2021_07_15_Preview = 1,
             V2021_11_01_Preview = 2,
         }
-    }
-    public partial class ConversationAnalysisOptions
-    {
-        public ConversationAnalysisOptions(string projectName, string deploymentName, string query) { }
-        public string DeploymentName { get { throw null; } }
-        public string DirectTarget { get { throw null; } set { } }
-        public bool? IsLoggingEnabled { get { throw null; } set { } }
-        public string Language { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.Models.AnalysisParameters> Parameters { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public string Query { get { throw null; } }
-        public bool? Verbose { get { throw null; } set { } }
     }
 }
 namespace Azure.AI.Language.Conversations.Models

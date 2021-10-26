@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The request body. </summary>
-    public partial class ConversationAnalysisOptions
+    public partial class AnalyzeConversationOptions
     {
 
         /// <summary> The conversation utterance to be analyzed. </summary>

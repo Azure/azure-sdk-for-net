@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateAnalyzeConversationRequest(string projectName, string deploymentName, ConversationAnalysisOptions conversationAnalysisOptions)
+        internal HttpMessage CreateAnalyzeConversationRequest(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationAnalysisOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisOptions"/> is null. </exception>
-        public async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, ConversationAnalysisOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationAnalysisOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="conversationAnalysisOptions"/> is null. </exception>
-        public Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, ConversationAnalysisOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
+        public Response<AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, AnalyzeConversationOptions conversationAnalysisOptions, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {

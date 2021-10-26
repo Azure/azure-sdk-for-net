@@ -9,22 +9,22 @@ namespace Azure.AI.Language.Conversations
 {
     /// <summary> The request body. </summary>
     [CodeGenModel("ConversationAnalysisOptions")]
-    public partial class ConversationAnalysisOptions
+    public partial class AnalyzeConversationOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationAnalysisOptions"/> class.
+        /// Initializes a new instance of the <see cref="AnalyzeConversationOptions"/> class.
         /// </summary>
         /// <param name="projectName">The name of the project to use.</param>
         /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "production".</param>
         /// <param name="query">The conversation utterance to be analyzed.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="query"/> is null.</exception>
-        public ConversationAnalysisOptions(string projectName, string deploymentName, string query) : this(query)
+        public AnalyzeConversationOptions(string projectName, string deploymentName, string query) : this(query)
         {
             ProjectName = Argument.CheckNotNull(projectName, nameof(projectName));
             DeploymentName = Argument.CheckNotNull(deploymentName, nameof(deploymentName));
         }
 
-        internal ConversationAnalysisOptions(string query)
+        internal AnalyzeConversationOptions(string query)
         {
             if (query == null)
             {
