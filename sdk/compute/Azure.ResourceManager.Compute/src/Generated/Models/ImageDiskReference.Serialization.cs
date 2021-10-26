@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,22 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun");
                 writer.WriteNumberValue(Lun.Value);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element)
         {
+            string id = default;
             Optional<int> lun = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("lun"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -40,11 +44,6 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     lun = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
             }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +20,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminState))
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> routerName = default;
             Optional<string> interfaceName = default;
             Optional<string> patchPanelId = default;
@@ -142,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteLink(id, name.Value, etag.Value, routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLink(id.Value, name.Value, etag.Value, routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
         }
     }
 }

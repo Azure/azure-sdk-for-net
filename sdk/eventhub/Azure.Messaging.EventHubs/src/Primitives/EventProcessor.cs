@@ -690,6 +690,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
+
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
                 // loop will take responsibility for attempting to restart or relinquishing ownership.

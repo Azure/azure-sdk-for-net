@@ -324,6 +324,7 @@
         },
         "AZURE_KEYVAULT_ATTESTATION_URL": {
             "type": "string",
+            "condition": "[parameters('enableHsm')]",
             "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
         }
     }

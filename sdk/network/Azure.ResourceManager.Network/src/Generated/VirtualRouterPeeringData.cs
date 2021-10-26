@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualRouterPeering data model. </summary>
-    public partial class VirtualRouterPeeringData : WritableSubResource
+    public partial class VirtualRouterPeeringData : SubResource
     {
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
         public VirtualRouterPeeringData()
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the virtual router peering that is unique within a virtual router. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Peering type. </param>

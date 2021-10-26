@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/teamsUser/:exchangeAccessToken?api-version=2021-10-31-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-81f8184fabfae64fad3f785bcb02bbb3-54b4a603d359bb44-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20211021.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "31f18311d09114ee6b00586ef56f7c30",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 21 Oct 2021 12:24:30 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "token": "Sanitized"
+      },
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Thu, 21 Oct 2021 12:24:30 GMT",
+        "MS-CV": "n4LrsjH1ZkiZe4STQZuFhQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0/1txYQAAAADw784xdAYyQL2CuHylsKd7TElTMDFFREdFMDUxMwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "31f18311d09114ee6b00586ef56f7c30",
+        "X-Processing-Time": "21ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidAccessToken",
+          "message": "Provided access token is not valid."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1132677483"
+  }
+}

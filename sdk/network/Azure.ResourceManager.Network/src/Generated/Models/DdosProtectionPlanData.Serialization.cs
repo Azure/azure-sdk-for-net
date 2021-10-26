@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<Models.SubResource>> virtualNetworks = default;
+            Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.SubResource> array = new List<Models.SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             virtualNetworks = array;
                             continue;

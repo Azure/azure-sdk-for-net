@@ -1,14 +1,20 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
 {
+    /// <summary>
+    /// Operation to remove user from all groups.
+    /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class RemoveUserFromAllGroups : WebPubSubOperation
     {
+        /// <summary>
+        /// Target UserId.
+        /// </summary>
         public string UserId { get; set; }
     }
 }

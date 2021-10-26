@@ -53,6 +53,188 @@ namespace KubernetesService.Tests
         }
 
         /// <summary>
+        /// Test the listClusterUserCredential API of connected cluster with CSP = true & auth method = AAD.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ListClusterUserCredentialCSPAADTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                InitializeClients(context);
+
+                string location = KubernetesServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+                ListClusterUserCredentialProperties listClusterUserCredentialProperties = new ListClusterUserCredentialProperties("AAD", true);
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(KubernetesServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a connected cluster
+                ConnectedCluster connectedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
+                    context,
+                    ResourceManagementClient,
+                    ConnectedKubernetesClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                Assert.NotNull(connectedClusterResult);
+                Assert.Equal(clusterName, connectedClusterResult.Name);
+                Assert.Equal(connectedClusterResult.ProvisioningState, ProvisioningState.Succeeded);
+
+                CredentialResults credentialResults = await kubernetesServiceClient.ConnectedCluster.ListClusterUserCredentialAsync(resourceGroup, clusterName, listClusterUserCredentialProperties);
+
+                Assert.NotNull(credentialResults);
+                Assert.NotNull(credentialResults.HybridConnectionConfig);
+                Assert.NotNull(credentialResults.Kubeconfigs);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the listClusterUserCredential API of connected cluster with CSP = true & auth method = Token
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ListClusterUserCredentialCSPTokenTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                InitializeClients(context);
+
+                string location = KubernetesServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+                ListClusterUserCredentialProperties listClusterUserCredentialProperties = new ListClusterUserCredentialProperties("Token", true);
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(KubernetesServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a connected cluster
+                ConnectedCluster connectedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
+                    context,
+                    ResourceManagementClient,
+                    ConnectedKubernetesClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                Assert.NotNull(connectedClusterResult);
+                Assert.Equal(clusterName, connectedClusterResult.Name);
+                Assert.Equal(connectedClusterResult.ProvisioningState, ProvisioningState.Succeeded);
+
+                CredentialResults credentialResults = await kubernetesServiceClient.ConnectedCluster.ListClusterUserCredentialAsync(resourceGroup, clusterName, listClusterUserCredentialProperties);
+
+                Assert.NotNull(credentialResults);
+                Assert.NotNull(credentialResults.HybridConnectionConfig);
+                Assert.NotNull(credentialResults.Kubeconfigs);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the listClusterUserCredential API of connected cluster with CSP = false & auth method = Token
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ListClusterUserCredentialHPTokenTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                InitializeClients(context);
+
+                string location = KubernetesServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+                ListClusterUserCredentialProperties listClusterUserCredentialProperties = new ListClusterUserCredentialProperties("Token", false);
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(KubernetesServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a connected cluster
+                ConnectedCluster connectedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
+                    context,
+                    ResourceManagementClient,
+                    ConnectedKubernetesClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                Assert.NotNull(connectedClusterResult);
+                Assert.Equal(clusterName, connectedClusterResult.Name);
+                Assert.Equal(connectedClusterResult.ProvisioningState, ProvisioningState.Succeeded);
+
+                CredentialResults credentialResults = await kubernetesServiceClient.ConnectedCluster.ListClusterUserCredentialAsync(resourceGroup, clusterName, listClusterUserCredentialProperties);
+
+                Assert.NotNull(credentialResults);
+                Assert.NotNull(credentialResults.Kubeconfigs);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the listClusterUserCredential API of connected cluster with CSP = false & auth method = AAD
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ListClusterUserCredentialHPAADTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                InitializeClients(context);
+
+                string location = KubernetesServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+                ListClusterUserCredentialProperties listClusterUserCredentialProperties = new ListClusterUserCredentialProperties("AAD", false);
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(KubernetesServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a connected cluster
+                ConnectedCluster connectedClusterResult = await KubernetesServiceTestUtilities.CreateConnectedCluster(
+                    context,
+                    ResourceManagementClient,
+                    ConnectedKubernetesClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                Assert.NotNull(connectedClusterResult);
+                Assert.Equal(clusterName, connectedClusterResult.Name);
+                Assert.Equal(connectedClusterResult.ProvisioningState, ProvisioningState.Succeeded);
+
+                CredentialResults credentialResults = await kubernetesServiceClient.ConnectedCluster.ListClusterUserCredentialAsync(resourceGroup, clusterName, listClusterUserCredentialProperties);
+
+                Assert.NotNull(credentialResults);
+                Assert.NotNull(credentialResults.Kubeconfigs);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
         /// Test the deletion of an connected cluster
         /// </summary>
         /// <returns></returns>

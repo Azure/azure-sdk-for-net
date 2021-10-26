@@ -988,8 +988,8 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
 
             // Verify nic - nsg association
-            Assert.AreEqual(getNicResponse.Value.Data.NetworkSecurityGroup.Id, getNsgResponse.Value.Id);
-            Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id);
+            Assert.AreEqual(getNicResponse.Value.Data.NetworkSecurityGroup.Id, getNsgResponse.Value.Id.ToString());
+            Assert.AreEqual(getNsgResponse.Value.Data.NetworkInterfaces[0].Id, getNicResponse.Value.Id.ToString());
 
             // Delete Nic
             await getNicResponse.Value.DeleteAsync();
