@@ -1,5 +1,15 @@
 # Release History
 
+## 5.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Blobs 5.0.0.
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.
