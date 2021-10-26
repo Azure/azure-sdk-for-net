@@ -4,12 +4,10 @@
 namespace Microsoft.Azure.Test.HttpRecorder
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -17,7 +15,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
-    using Track1TestRecordingSanitizer;
 
     public static class RecorderUtilities
     {
@@ -226,28 +223,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             try
             {
-                object original = JsonConvert.DeserializeObject(str);
-                JToken parsed = JToken.Parse(original.ToString());
-
-                int count = 0;
-                foreach (var (jsonPath, sanitizer) in RecordedTestSanitizer.JsonPathSanitizers)
-                {
-                    foreach (JToken token in parsed.SelectTokens(jsonPath))
-                    {
-                        //token.Replace(sanitizer(token));
-                        if (count == 0)
-                        {
-                            token.Replace("Test12345");
-                            count++;
-                        }
-                        if (count == 1)
-                        {
-                            token.Replace("default");
-                            count--;
-                        }
-                    }
-                }
-                return JsonConvert.SerializeObject(parsed, Formatting.Indented);
+                object parsedJson = JsonConvert.DeserializeObject(str);
+                return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
             }
             catch
             {
@@ -285,7 +262,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // TypeNameAssemblyFormat == Simple = 0, Full = 1 
             // (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization.
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
-            File.WriteAllText(
+            HttpMockServer.FileSystemUtilsObject.WriteFile(
                 path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
 #if net452
@@ -302,15 +279,15 @@ namespace Microsoft.Azure.Test.HttpRecorder
             // TypeNameAssemblyFormat == Simple = 0, Full = 1 
             // (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization.
             // Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
-            string json = File.ReadAllText(path);
+            string json = HttpMockServer.FileSystemUtilsObject.ReadFileAsText(path);
             return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
-            {
+                {
 #if net452
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
 #elif !net452
-                                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 #endif
-                TypeNameHandling = TypeNameHandling.None
+                    TypeNameHandling = TypeNameHandling.None
             });
         }
 
