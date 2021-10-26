@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationWithLanguage()
         {
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                SpanishText)
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationsWithConversationPrediction()
         {
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
                TestEnvironment.DeploymentName,
                EnglishText);
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public void AnalyzeConversationsInvalidArgument()
         {
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
               TestEnvironment.ProjectName,
               TestEnvironment.DeploymentName,
               "");
