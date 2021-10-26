@@ -27,7 +27,7 @@ OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as Orc
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
     "DomainOrchestrator",
     "production",
     "Where are the calories per recipe?");
@@ -110,7 +110,9 @@ if (targetIntentResult.TargetKind == TargetKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
 
+    // JsonDocument
+    // SystemTextJson
     JObject luisResult = JObject.FromObject(luisTargetIntentResult.Result);
-    Console.WriteLine($"Luis Response: {luisResult.ToString()}");
+    Console.WriteLine($"LUIS Response: {luisResult.ToString()}");
 }
 ```

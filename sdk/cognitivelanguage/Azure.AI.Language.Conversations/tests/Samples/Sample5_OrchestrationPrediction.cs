@@ -152,7 +152,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
 
 #if SNIPPET
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 "DomainOrchestrator",
                 "production",
                 "Where are the calories per recipe?");
