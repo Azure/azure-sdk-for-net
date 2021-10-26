@@ -96,7 +96,27 @@ namespace OperationalInsights.Data.Test.ScenarioTests
                 }
             }
         }
-        
+
+        [Fact]
+        public async Task GetPartialError()
+        {
+            using var ctx = MockContext.Start(this.GetType());
+            OperationalInsightsDataClient client = GetClient(ctx);
+            string query = $"set truncationmaxrecords=1; Perf";
+
+            var response = await client.QueryWithHttpMessagesAsync(query, PastHourTimespan);
+
+            Assert.Equal(System.Net.HttpStatusCode.OK, response.Response.StatusCode);
+            Assert.Equal("OK", response.Response.ReasonPhrase);
+            Assert.True(response.Body.Tables.Count > 0, "Table count isn't greater than 0");
+            Assert.False(String.IsNullOrWhiteSpace(response.Body.Tables[0].Name), "Table name was null/empty");
+            Assert.True(response.Body.Tables[0].Columns.Count > 0, "Column count isn't greater than 0");
+            Assert.True(response.Body.Tables[0].Rows.Count > 0, "Row count isn't greater than 0");
+
+            Assert.NotNull(response.Body.Error);
+            Assert.Equal("PartialError", response.Body.Error.Code);
+        }
+
         private OperationalInsightsDataClient GetClient(MockContext ctx, string workspaceId = DefaultWorkspaceId, string apiKey = DefaultApiKey)
         {
             var credentials = new ApiKeyClientCredentials(apiKey);
