@@ -8,7 +8,7 @@ title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://github.com/Azure/azure-rest-api-specs/blob/543d3523dffc91719d28b5b8814f20418fd592c2/specification/cognitiveservices/data-plane/Language/preview/2021-11-01-preview/analyzeconversations.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/543d3523dffc91719d28b5b8814f20418fd592c2/specification/cognitiveservices/data-plane/Language/preview/2021-11-01-preview/analyzeconversations.json
   clear-output-folder: true
 
 # TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
