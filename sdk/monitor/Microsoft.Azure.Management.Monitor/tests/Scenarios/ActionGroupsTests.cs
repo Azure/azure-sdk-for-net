@@ -86,7 +86,7 @@ namespace Monitor.Tests.Scenarios
                 AzureOperationResponse response = insightsClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
                     resourceGroupName: ResourceGroupName,
                             actionGroupName: ActionGroupName,
-                            receiverName: "emailreceiver").Result;
+                            enableRequest: new EnableRequest("emailreceiver")).Result;
 
                 if (!this.IsRecording)
                 {
