@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="Microsoft.Azure.Batch" Version="15.1.0" />
     <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>
 
