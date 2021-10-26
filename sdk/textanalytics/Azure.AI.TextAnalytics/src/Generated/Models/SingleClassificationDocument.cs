@@ -55,6 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
+        /// <summary> Gets the classification. </summary>
         public ClassificationResult Classification { get; }
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
