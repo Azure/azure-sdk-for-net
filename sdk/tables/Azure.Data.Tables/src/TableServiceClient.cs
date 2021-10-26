@@ -205,8 +205,10 @@ namespace Azure.Data.Tables
 
             options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
+            _endpoint = new Uri(endpointString);
+            _tableUriBuilder = new TableUriBuilder(_endpoint);
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
-            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            _isCosmosEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             TableSharedKeyPipelinePolicy policy = null;

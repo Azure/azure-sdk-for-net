@@ -232,7 +232,6 @@ namespace Azure.Data.Tables.Tests
             var sharedKeyTransport = TableAlreadyExistsTransport();
             var sharedKeyTransportDev = TableAlreadyExistsTransport();
             var connStrTransport = TableAlreadyExistsTransport();
-            var devTransport = TableAlreadyExistsTransport();
 
             var sharedKeyClient = new TableServiceClient(
                 _urlWithTableName,
@@ -245,14 +244,12 @@ namespace Azure.Data.Tables.Tests
             var connStringClient = new TableServiceClient(
                 $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/{TableName};",
                 new TableClientOptions { Transport = connStrTransport });
-            // var devStorageClient = new TableServiceClient("UseDevelopmentStorage=true", new TableClientOptions { Transport = devTransport });
             var tokenCredClient = new TableServiceClient(_urlWithTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
             var tokenCredClientDev = new TableServiceClient(_devUrlWIthTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransportDev });
 
             yield return new object[] { sharedKeyClient, sharedKeyTransport };
             yield return new object[] { sharedKeyClientDev, sharedKeyTransport };
             yield return new object[] { connStringClient, connStrTransport };
-            // yield return new object[] { devStorageClient, devTransport };
             yield return new object[] { tokenCredClient, tokenTransport };
             yield return new object[] { tokenCredClientDev, tokenTransportDev };
         }
@@ -263,6 +260,18 @@ namespace Azure.Data.Tables.Tests
             var client = InstrumentClient(tableClient);
 
             var ex = Assert.ThrowsAsync<Exception>(async () => await client.CreateTableIfNotExistsAsync(TableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<Exception>(async () => await client.DeleteTableAsync(TableName));
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<Exception>(async () => await client.QueryAsync().ToEnumerableAsync());
+
+            Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
+
+            ex = Assert.ThrowsAsync<Exception>(async () => await client.CreateTableAsync(TableName));
 
             Assert.That(ex.Message, Does.Contain("The configured endpoint Uri appears to contain the table name"));
         }
