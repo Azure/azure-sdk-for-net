@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Optional parameters for uploading to a Blob Virtual Directory.

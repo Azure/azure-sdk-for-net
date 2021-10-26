@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -22,7 +23,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the <see cref="Exception"/> caused by an action that failed to
         /// complete.  The value might be null.
         /// </summary>
-        public StorageRequestFailedException Exception { get; }
+        public TransferJobRequestFailedException Exception { get; }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         public PathTransferFailedEventArgs(
             StorageTransferJob job,
-            StorageRequestFailedException exception,
+            TransferJobRequestFailedException exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken = default)
             : base(isRunningSynchronously, cancellationToken)

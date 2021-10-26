@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Common;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Optional parameters for downloading to a Blob Directory.
@@ -12,7 +11,7 @@ namespace Azure.Storage.Blobs.Models
     public class BlobDirectoryDownloadOptions
     {
         /// <summary>
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// Optional <see cref="BlobDirectoryRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </summary>
         public BlobDirectoryRequestConditions DirectoryRequestConditions { get; set; }

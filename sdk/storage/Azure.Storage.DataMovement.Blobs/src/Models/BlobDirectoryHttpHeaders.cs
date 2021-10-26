@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Standard HTTP properties supported by containers and blobs.
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Get a hash code for the <see cref="BlobDirectoryHttpHeaders"/>.
         /// </summary>
-        /// <returns>Hash code for the <see cref="BlobHttpHeaders"/>.</returns>
+        /// <returns>Hash code for the <see cref="BlobDirectoryHttpHeaders"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
     }

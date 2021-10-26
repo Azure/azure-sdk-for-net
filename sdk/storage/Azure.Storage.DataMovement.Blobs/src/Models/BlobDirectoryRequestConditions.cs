@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs.Models
 {
     /// <summary>
     /// Specifies options for Blob Directory Requests
