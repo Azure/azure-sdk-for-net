@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             var pcProperties = new PacketCaptureInput(vm.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
 
-            var packetCaptureContainer = GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
+            var packetCaptureContainer = GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
             var  createPacketCapture1Operation = await packetCaptureContainer.CreateOrUpdateAsync(pcName1, pcProperties);
             var createPacketCapture1 = await createPacketCapture1Operation.WaitForCompletionAsync();;
             Response<PacketCapture> getPacketCapture = await packetCaptureContainer.GetAsync(pcName1);

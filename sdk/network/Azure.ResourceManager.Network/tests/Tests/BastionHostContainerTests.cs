@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(Location.WestUS2));
+            Subscription sub = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await sub.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             VirtualNetworkData vnetData = new VirtualNetworkData();

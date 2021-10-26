@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class RestorePointCollectionData : IUtf8JsonSerializable
+    public partial class RestorePointGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        internal static RestorePointCollectionData DeserializeRestorePointCollectionData(JsonElement element)
+        internal static RestorePointGroupData DeserializeRestorePointGroupData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             Location location = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointCollectionData(id, name, type, tags, location, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
+            return new RestorePointGroupData(id, name, type, tags, location, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
         }
     }
 }

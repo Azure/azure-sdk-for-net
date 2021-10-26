@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineTestBase : ComputeTestBase
     {
         protected ResourceGroup _resourceGroup;
-        protected GenericResourceContainer _genericResourceContainer;
+        protected GenericResourceCollection _genericResourceCollection;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
         {
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        protected async Task<VirtualMachineContainer> GetVirtualMachineContainerAsync()
+        protected async Task<VirtualMachineCollection> GetVirtualMachineContainerAsync()
         {
-            _genericResourceContainer = DefaultSubscription.GetGenericResources();
+            _genericResourceCollection = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachines();
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(vnetId, input);
             return operation.Value;
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(subnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(subnetId, input);
             return operation.Value;
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            var operation = await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(nicId, input);
             return operation.Value;
         }
 

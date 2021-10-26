@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
-        private ConnectionMonitorContainer ConnectionMonitors
+        private ConnectionMonitorCollection ConnectionMonitors
         {
             get
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {"key2","value2"}
         };
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
+        protected Subscription DefaultSubscription => Client.GetDefaultSubscription();
         protected StorageTestBase(bool isAsync) : base(isAsync)
         {
         }

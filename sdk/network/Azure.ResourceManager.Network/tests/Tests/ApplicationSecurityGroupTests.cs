@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
-        public async Task<ApplicationSecurityGroupContainer> GetContainer()
+        public async Task<ApplicationSecurityGroupCollection> GetCollection()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_application_security_group_"));
             return resourceGroup.GetApplicationSecurityGroups();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task ApplicationSecurityGroupApiTest()
         {
-            var container = await GetContainer();
+            var container = await GetCollection();
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
             // create
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(applicationSecurityGroups);
 
             // list all
-            applicationSecurityGroups = await ArmClient.DefaultSubscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
+            applicationSecurityGroups = await Subscription.GetApplicationSecurityGroupsAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
         }
 

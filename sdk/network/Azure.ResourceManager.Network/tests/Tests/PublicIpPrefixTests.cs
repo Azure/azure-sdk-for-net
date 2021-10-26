@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
-        public async Task<PublicIPPrefixContainer> GetContainer()
+        public async Task<PublicIPPrefixCollection> GetCollection()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_public_ip_prefix_"));
             return resourceGroup.GetPublicIPPrefixes();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpPrefixApiTest()
         {
-            var container = await GetContainer();
+            var container = await GetCollection();
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create

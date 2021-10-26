@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
 
             //Get the current network topology of the resourceGroupName1
-            var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
+            var networkWatcherContainer = GetNetworkWatcherCollection("NetworkWatcherRG");
             Response<Topology> getTopology = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
 
             //Getting infromation about VM from topology

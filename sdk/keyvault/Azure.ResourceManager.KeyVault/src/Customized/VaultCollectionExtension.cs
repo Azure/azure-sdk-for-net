@@ -8,7 +8,7 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class VaultContainer
+    public partial class VaultCollection
     {
         /// <summary> Add access policies in a key vault in the specified subscription. </summary>
         /// <param name="properties"> Properties of the access policy. </param>

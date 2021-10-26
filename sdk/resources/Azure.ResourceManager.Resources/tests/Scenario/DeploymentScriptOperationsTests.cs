@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            Subscription sub = await Client.GetDefaultSubscriptionAsync();
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-D-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();

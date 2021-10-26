@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task BGPCommunityApiTest()
         {
             //_ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
-            AsyncPageable<BgpServiceCommunity> communitiesAsync = ArmClient.DefaultSubscription.GetBgpServiceCommunitiesAsync();
+            AsyncPageable<BgpServiceCommunity> communitiesAsync = Subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);
             Assert.True(communities.First().BgpCommunities.First().IsAuthorizedToUse);

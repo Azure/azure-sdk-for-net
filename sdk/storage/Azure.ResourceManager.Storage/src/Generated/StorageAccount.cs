@@ -771,11 +771,11 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets a list of ManagementPolicies in the StorageAccount. </summary>
-        /// <returns> An object representing collection of ManagementPolicies and their operations over a StorageAccount. </returns>
-        public ManagementPolicyCollection GetManagementPolicies()
+        /// <summary> Gets an object representing a ManagementPolicy along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementPolicy" /> object. </returns>
+        public ManagementPolicy GetManagementPolicy()
         {
-            return new ManagementPolicyCollection(this);
+            return new ManagementPolicy(this, Id + "/managementPolicies/default");
         }
 
         /// <summary> Gets a list of BlobInventoryPolicies in the StorageAccount. </summary>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");
 
-            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await ArmClient.DefaultSubscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
+            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await Subscription.CheckDnsNameAvailabilityAsync(TestEnvironment.Location, domainNameLabel);
 
             Assert.True(dnsNameAvailability.Value.Available);
         }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_CreateADeployment
             // First we need to get the deployment container from the resource group
-            DeploymentContainer deploymentContainer = resourceGroup.GetDeployments();
+            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
             var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentContainer.CreateOrUpdateAsync(deploymentName, input);
+            DeploymentCreateOrUpdateAtScopeOperation lro = await deploymentCollection.CreateOrUpdateAsync(deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_ListAllDeployments
             // First we need to get the deployment container from the resource group
-            DeploymentContainer deploymentContainer = resourceGroup.GetDeployments();
+            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // With GetAllAsync(), we can get a list of the deployments in the container
-            AsyncPageable<Deployment> response = deploymentContainer.GetAllAsync();
+            AsyncPageable<Deployment> response = deploymentCollection.GetAllAsync();
             await foreach (Deployment deployment in response)
             {
                 Console.WriteLine(deployment.Data.Name);
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_DeleteADeployment
             // First we need to get the deployment container from the resource group
-            DeploymentContainer deploymentContainer = resourceGroup.GetDeployments();
+            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // Now we can get the deployment with GetAsync()
-            Deployment deployment = await deploymentContainer.GetAsync("myDeployment");
+            Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
             await deployment.DeleteAsync();
             #endregion Snippet:Managing_Deployments_DeleteADeployment
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;

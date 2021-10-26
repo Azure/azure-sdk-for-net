@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region RestorePointCollection
-        /// <summary> Gets an object representing a RestorePointCollectionCollection along with the instance operations that can be performed on it. </summary>
+        #region RestorePointGroup
+        /// <summary> Gets an object representing a RestorePointGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RestorePointCollectionCollection" /> object. </returns>
-        public static RestorePointCollectionCollection GetRestorePointCollections(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="RestorePointGroupCollection" /> object. </returns>
+        public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroup resourceGroup)
         {
-            return new RestorePointCollectionCollection(resourceGroup);
+            return new RestorePointGroupCollection(resourceGroup);
         }
         #endregion
 

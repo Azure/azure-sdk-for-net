@@ -48,6 +48,7 @@ operation-group-to-resource:
   SharedGalleries: NonResource
   SharedGalleryImages: NonResource
   SharedGalleryImageVersions: NonResource
+  RestorePointCollections: RestorePointGroup
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
@@ -148,4 +149,7 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
     transform: return 'CloudServices_PowerOn';
+  - rename-model:
+      from: RestorePointCollection
+      to: RestorePointGroup
 ```

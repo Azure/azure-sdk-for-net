@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = Subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = Subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Tests
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = Subscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 

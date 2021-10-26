@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
             //Response<NetworkWatcher> createNetworkWatcher = await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            string localIPAddress = GetNetworkInterfaceContainer(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Network.Tests
                 SourcePortRange = "*",
             };
 
-            var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
+            var networkSecurityGroupContainer = GetNetworkSecurityGroupCollection(resourceGroupName);
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
             var createOrUpdateOperation = await networkSecurityGroupContainer.CreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
+            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier
