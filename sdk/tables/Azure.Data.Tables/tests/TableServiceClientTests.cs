@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Tests
         /// </summary>
         private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
 
-        private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/" + TableName);
+        private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/{TableName}");
         private static readonly Uri _devUrlWIthTableName = new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
 
