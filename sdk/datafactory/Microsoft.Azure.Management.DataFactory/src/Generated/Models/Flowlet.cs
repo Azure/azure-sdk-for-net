@@ -18,41 +18,45 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Mapping data flow.
+    /// Data flow flowlet
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class MappingDataFlow : DataFlow
+    public partial class Flowlet : DataFlow
     {
         /// <summary>
-        /// Initializes a new instance of the MappingDataFlow class.
+        /// Initializes a new instance of the Flowlet class.
         /// </summary>
-        public MappingDataFlow()
+        public Flowlet()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MappingDataFlow class.
+        /// Initializes a new instance of the Flowlet class.
         /// </summary>
         /// <param name="description">The description of the data flow.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the data flow.</param>
         /// <param name="folder">The folder that this data flow is in. If not
         /// specified, Data flow will appear at the root level.</param>
-        /// <param name="sources">List of sources in data flow.</param>
-        /// <param name="sinks">List of sinks in data flow.</param>
-        /// <param name="transformations">List of transformations in data
-        /// flow.</param>
-        /// <param name="script">DataFlow script.</param>
-        /// <param name="scriptLines">Data flow script lines.</param>
-        public MappingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), IList<string> scriptLines = default(IList<string>))
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="sources">List of sources in Flowlet.</param>
+        /// <param name="sinks">List of sinks in Flowlet.</param>
+        /// <param name="transformations">List of transformations in
+        /// Flowlet.</param>
+        /// <param name="script">Flowlet script.</param>
+        /// <param name="scriptLines">Flowlet script lines.</param>
+        public Flowlet(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), IList<string> scriptLines = default(IList<string>), object additionalProperties1 = default(object))
             : base(description, annotations, folder)
         {
+            AdditionalProperties = additionalProperties;
             Sources = sources;
             Sinks = sinks;
             Transformations = transformations;
             Script = script;
             ScriptLines = scriptLines;
+            AdditionalProperties1 = additionalProperties1;
             CustomInit();
         }
 
@@ -62,34 +66,46 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of sources in data flow.
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of sources in Flowlet.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sources")]
         public IList<DataFlowSource> Sources { get; set; }
 
         /// <summary>
-        /// Gets or sets list of sinks in data flow.
+        /// Gets or sets list of sinks in Flowlet.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sinks")]
         public IList<DataFlowSink> Sinks { get; set; }
 
         /// <summary>
-        /// Gets or sets list of transformations in data flow.
+        /// Gets or sets list of transformations in Flowlet.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.transformations")]
         public IList<Transformation> Transformations { get; set; }
 
         /// <summary>
-        /// Gets or sets dataFlow script.
+        /// Gets or sets flowlet script.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.script")]
         public string Script { get; set; }
 
         /// <summary>
-        /// Gets or sets data flow script lines.
+        /// Gets or sets flowlet script lines.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.scriptLines")]
         public IList<string> ScriptLines { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.additionalProperties")]
+        public object AdditionalProperties1 { get; set; }
 
     }
 }
