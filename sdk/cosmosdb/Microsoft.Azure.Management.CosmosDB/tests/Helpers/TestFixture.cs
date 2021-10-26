@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using CosmosDB.Tests.ScenarioTests;
 using Microsoft.Azure.Management.CosmosDB;
 using Microsoft.Azure.Management.CosmosDB.Models;
@@ -24,13 +25,16 @@ namespace CosmosDB.Tests
         public string ResourceGroupName;
         public string Location = "central us euap";
 
-        private MockContext context;
-        private Dictionary<AccountType, string> accounts;
+        public Dictionary<AccountType, string> accounts;
 
         public TestFixture()
         {
             this.accounts = new Dictionary<AccountType, string>();
-            this.context = MockContext.Start(this.GetType());
+        }
+
+        public void Init(MockContext context)
+        {
+            this.accounts = new Dictionary<AccountType, string>();
 
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             handler1.IsPassThrough = true;
@@ -41,7 +45,7 @@ namespace CosmosDB.Tests
             this.CosmosDBManagementClient = context.GetServiceClient<CosmosDBManagementClient>(handlers: handler2);
 
             // Create a resource group for testing.
-            const string testPrefix = "CosmosDBResourceGroup";
+            const string testPrefix = "CosmosDBDotNetSDKTestsRG";
             this.ResourceGroupName = TestUtilities.GenerateName(testPrefix);
 
             var resourceGroupDefinition = new ResourceGroup
@@ -51,14 +55,9 @@ namespace CosmosDB.Tests
             ResourceManagementClient.ResourceGroups.CreateOrUpdate(this.ResourceGroupName, resourceGroupDefinition);
         }
 
-        public void Dispose()
-        {
-            ResourceManagementClient.ResourceGroups.Delete(this.ResourceGroupName);
-            this.context.Dispose();
-        }
-
         public enum AccountType
         {
+            PitrSql,
             Sql,
             Mongo32,
             Mongo36,
@@ -67,16 +66,23 @@ namespace CosmosDB.Tests
             Gremlin
         }
         
-        public string GetDatabaseAccountName(AccountType accountType, bool enablePitr = true)
+        public string GetDatabaseAccountName(AccountType accountType)
         {
             string accountName;
             if (!this.accounts.TryGetValue(accountType, out accountName))
             {
-                if (accountType == AccountType.Sql)
+                if (accountType == AccountType.PitrSql)
                 {
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.GlobalDocumentDB,
-                        enablePitr: enablePitr
+                        enablePitr: true
+                    );
+                }
+                else if (accountType == AccountType.Sql)
+                {
+                    accountName = CreateDatabaseAccount(
+                        kind: DatabaseAccountKind.GlobalDocumentDB,
+                        enablePitr: false
                     );
                 }
                 else if (accountType == AccountType.Mongo32)
@@ -84,7 +90,7 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.2",
-                        enablePitr: enablePitr
+                        enablePitr: true
                     );
                 }
                 else if (accountType == AccountType.Mongo36)
@@ -92,7 +98,7 @@ namespace CosmosDB.Tests
                     accountName = CreateDatabaseAccount(
                         kind: DatabaseAccountKind.MongoDB,
                         serverVersion: "3.6",
-                        enablePitr: enablePitr
+                        enablePitr: true
                     );
                 }
                 else if (accountType == AccountType.Table)
@@ -123,7 +129,7 @@ namespace CosmosDB.Tests
 
         private string CreateDatabaseAccount(string kind = "GlobalDocumentDB", List<Capability> capabilities = null, string serverVersion = null, bool enablePitr = true)
         {
-            var databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
+            var databaseAccountName = TestUtilities.GenerateName("databaseaccount");
             var parameters = new DatabaseAccountCreateUpdateParameters
             {
                 Location = this.Location,
@@ -157,5 +163,7 @@ namespace CosmosDB.Tests
 
             return databaseAccountName;
         }
+
+        public void Dispose() { }
     }
 }

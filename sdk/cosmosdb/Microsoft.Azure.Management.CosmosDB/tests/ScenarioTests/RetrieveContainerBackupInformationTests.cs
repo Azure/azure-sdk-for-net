@@ -11,8 +11,7 @@ using Xunit;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    [Collection("TestCollection")]
-    public class RetrieveContainerBackupInformationTests
+    public class RetrieveContainerBackupInformationTests : IClassFixture<TestFixture>
     {
         public TestFixture fixture;
 
@@ -24,19 +23,20 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void RetrieveSqlContainerContinuousBackupInfoTest()
         {
-            CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
-            var resourceGroupName = this.fixture.ResourceGroupName;
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
-            string location = this.fixture.Location;
-            var databaseName = TestUtilities.GenerateName("database");
-            var containerName = TestUtilities.GenerateName("container");
-            ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(location);
-
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                this.CreateSQLResources(cosmosDBManagementClient, databaseAccountName, databaseName, containerName);
+                fixture.Init(context);
+                CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
+                var resourceGroupName = this.fixture.ResourceGroupName;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+                string location = this.fixture.Location;
+                var databaseName = TestUtilities.GenerateName("database");
+                var containerName = TestUtilities.GenerateName("container");
+                ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(location);
 
-                DateTime oldTime = DateTime.UtcNow.AddSeconds(-1);
+                var result = this.CreateSQLResources(cosmosDBManagementClient, databaseAccountName, databaseName, containerName);
+
+                DateTime oldTime = DateTimeOffset.FromUnixTimeSeconds((int)result.Resource._ts).DateTime.AddSeconds(-1);
                 BackupInformation backupInformation = cosmosDBManagementClient.SqlResources.RetrieveContinuousBackupInformation(
                     resourceGroupName,
                     databaseAccountName,
@@ -65,19 +65,23 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void RetrieveMongoCollectionContinuousBackupInfoTest()
         {
-            CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
-            var resourceGroupName = this.fixture.ResourceGroupName;
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36);
-            string location = this.fixture.Location;
-            var databaseName = TestUtilities.GenerateName("database");
-            var collectionName = TestUtilities.GenerateName("collection");
-            ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(location);
-
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                this.CreateMongDBResources(cosmosDBManagementClient, databaseAccountName, databaseName, collectionName);
+                fixture.Init(context);
+                CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
+                var resourceGroupName = this.fixture.ResourceGroupName;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo36);
+                string location = this.fixture.Location;
+                var databaseName = TestUtilities.GenerateName("database");
+                var collectionName = TestUtilities.GenerateName("collection");
+                ContinuousBackupRestoreLocation restoreLocation = new ContinuousBackupRestoreLocation(location);
 
-                DateTime oldTime = DateTime.UtcNow.AddSeconds(-200);
+                this.CreateMongoDBResources(cosmosDBManagementClient, databaseAccountName, databaseName, collectionName);
+
+                var result = cosmosDBManagementClient.DatabaseAccounts.Get(this.fixture.ResourceGroupName, databaseAccountName);
+
+                DateTime? oldTime = result.SystemData.CreatedAt;
+                Assert.NotNull(oldTime);
                 BackupInformation backupInformation = cosmosDBManagementClient.MongoDBResources.RetrieveContinuousBackupInformation(
                     resourceGroupName,
                     databaseAccountName,
@@ -187,7 +191,7 @@ namespace CosmosDB.Tests.ScenarioTests
             return collectionGetResult;
         }
 
-        private MongoDBCollectionGetResults CreateMongDBResources(CosmosDBManagementClient cosmosDBManagementClient, string databaseAccountName, string databaseName, string collectionName)
+        private MongoDBCollectionGetResults CreateMongoDBResources(CosmosDBManagementClient cosmosDBManagementClient, string databaseAccountName, string databaseName, string collectionName)
         {
             MongoDBDatabaseGetResults databaseGetResults = null;
             try

@@ -1,19 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Net;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.CosmosDB;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    [Collection("TestCollection")]
-    public class GraphResourcesOperationsTests
+    public class GraphResourcesOperationsTests : IClassFixture<TestFixture>
     {
         public readonly TestFixture fixture;
 
@@ -25,113 +20,117 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void GraphCRUDTests()
         {
-            string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Gremlin);
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
 
-            var gremlinClient = this.fixture.CosmosDBManagementClient.GremlinResources;
+                string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Gremlin);
 
-            string databaseName = TestUtilities.GenerateName(prefix: "gremlinDb");
-            string databaseName2 = TestUtilities.GenerateName(prefix: "gremlinDb");
-            string gremlinGraphName = TestUtilities.GenerateName(prefix: "gremlinGraph");
+                var gremlinClient = this.fixture.CosmosDBManagementClient.GremlinResources;
 
-            const string gremlinThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
+                string databaseName = TestUtilities.GenerateName(prefix: "gremlinDb");
+                string databaseName2 = TestUtilities.GenerateName(prefix: "gremlinDb");
+                string gremlinGraphName = TestUtilities.GenerateName(prefix: "gremlinGraph");
 
-            const int sampleThroughput = 700;
+                const string gremlinThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
 
-            Dictionary<string, string> additionalProperties = new Dictionary<string, string>
+                const int sampleThroughput = 700;
+
+                Dictionary<string, string> additionalProperties = new Dictionary<string, string>
             {
                 {"foo","bar" }
             };
-            Dictionary<string, string> tags = new Dictionary<string, string>
+                Dictionary<string, string> tags = new Dictionary<string, string>
             {
                 {"key3","value3"},
                 {"key4","value4"}
             };
 
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters
-            {
-                Resource = new GremlinDatabaseResource {Id = databaseName},
-                Options = new CreateUpdateOptions()
-            };
-
-            GremlinDatabaseGetResults gremlinDatabaseGetResults = gremlinClient.CreateUpdateGremlinDatabaseWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName, 
-                databaseAccountName, 
-                databaseName, 
-                gremlinDatabaseCreateUpdateParameters
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinDatabaseGetResults);
-            Assert.Equal(databaseName, gremlinDatabaseGetResults.Name);
-
-            GremlinDatabaseGetResults gremlinDatabaseGetResults1 = gremlinClient.GetGremlinDatabaseWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName, 
-                databaseAccountName, 
-                databaseName
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinDatabaseGetResults1);
-            Assert.Equal(databaseName, gremlinDatabaseGetResults1.Name);
-
-            VerifyEqualGremlinDatabases(gremlinDatabaseGetResults, gremlinDatabaseGetResults1);
-
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters
-            {
-                Location = this.fixture.Location,
-                Tags = tags,
-                Resource = new GremlinDatabaseResource { Id = databaseName2 },
-                Options = new CreateUpdateOptions
+                GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters
                 {
-                    Throughput = sampleThroughput
-                }
-            };
+                    Resource = new GremlinDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
 
-            GremlinDatabaseGetResults gremlinDatabaseGetResults2 = gremlinClient.CreateUpdateGremlinDatabaseWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName, 
-                databaseAccountName, 
-                databaseName2, 
-                gremlinDatabaseCreateUpdateParameters2
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinDatabaseGetResults2);
-            Assert.Equal(databaseName2, gremlinDatabaseGetResults2.Name);
+                GremlinDatabaseGetResults gremlinDatabaseGetResults = gremlinClient.CreateUpdateGremlinDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    gremlinDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinDatabaseGetResults);
+                Assert.Equal(databaseName, gremlinDatabaseGetResults.Name);
 
-            IEnumerable<GremlinDatabaseGetResults> gremlinDatabases = gremlinClient.ListGremlinDatabasesWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName, 
-                databaseAccountName
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinDatabases);
+                GremlinDatabaseGetResults gremlinDatabaseGetResults1 = gremlinClient.GetGremlinDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinDatabaseGetResults1);
+                Assert.Equal(databaseName, gremlinDatabaseGetResults1.Name);
 
-            ThroughputSettingsGetResults throughputSettingsGetResults = gremlinClient.GetGremlinDatabaseThroughputWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName, 
-                databaseAccountName, 
-                databaseName2
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(throughputSettingsGetResults);
-            Assert.NotNull(throughputSettingsGetResults.Name);
-            Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
-            Assert.Equal(gremlinThroughputType, throughputSettingsGetResults.Type);
+                VerifyEqualGremlinDatabases(gremlinDatabaseGetResults, gremlinDatabaseGetResults1);
 
-            GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters
-            {
-                Resource = new GremlinGraphResource
-                { 
-                    Id = gremlinGraphName,
-                    DefaultTtl = -1,
-                    PartitionKey = new ContainerPartitionKey
+                GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters
+                {
+                    Location = this.fixture.Location,
+                    Tags = tags,
+                    Resource = new GremlinDatabaseResource { Id = databaseName2 },
+                    Options = new CreateUpdateOptions
                     {
-                        Kind = "Hash",
-                        Paths = new List<string> { "/address"}
-                    },
-                    IndexingPolicy = new IndexingPolicy
+                        Throughput = sampleThroughput
+                    }
+                };
+
+                GremlinDatabaseGetResults gremlinDatabaseGetResults2 = gremlinClient.CreateUpdateGremlinDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName2,
+                    gremlinDatabaseCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinDatabaseGetResults2);
+                Assert.Equal(databaseName2, gremlinDatabaseGetResults2.Name);
+
+                IEnumerable<GremlinDatabaseGetResults> gremlinDatabases = gremlinClient.ListGremlinDatabasesWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinDatabases);
+
+                ThroughputSettingsGetResults throughputSettingsGetResults = gremlinClient.GetGremlinDatabaseThroughputWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName2
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(throughputSettingsGetResults);
+                Assert.NotNull(throughputSettingsGetResults.Name);
+                Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
+                Assert.Equal(gremlinThroughputType, throughputSettingsGetResults.Type);
+
+                GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters
+                {
+                    Resource = new GremlinGraphResource
                     {
-                        Automatic = true,
-                        IndexingMode = IndexingMode.Consistent,
-                        IncludedPaths = new List<IncludedPath>
+                        Id = gremlinGraphName,
+                        DefaultTtl = -1,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address" }
+                        },
+                        IndexingPolicy = new IndexingPolicy
+                        {
+                            Automatic = true,
+                            IndexingMode = IndexingMode.Consistent,
+                            IncludedPaths = new List<IncludedPath>
                         {
                             new IncludedPath { Path = "/*"}
                         },
-                        ExcludedPaths = new List<ExcludedPath>
+                            ExcludedPaths = new List<ExcludedPath>
                         {
                             new ExcludedPath { Path = "/pathToNotIndex/*"}
                         },
-                        CompositeIndexes = new List<IList<CompositePath>>
+                            CompositeIndexes = new List<IList<CompositePath>>
                         {
                             new List<CompositePath>
                             {
@@ -144,29 +143,30 @@ namespace CosmosDB.Tests.ScenarioTests
                                 new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                             }
                         }
+                        }
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = sampleThroughput
                     }
-                },
-                Options = new CreateUpdateOptions
+                };
+
+                GremlinGraphGetResults gremlinGraphGetResults = gremlinClient.CreateUpdateGremlinGraphWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinGraphGetResults);
+                VerifyGremlinGraphCreation(gremlinGraphGetResults, gremlinGraphCreateUpdateParameters);
+
+                IEnumerable<GremlinGraphGetResults> gremlinGraphs = gremlinClient.ListGremlinGraphsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(gremlinGraphs);
+
+                foreach (GremlinGraphGetResults gremlinGraph in gremlinGraphs)
                 {
-                    Throughput = sampleThroughput
+                    gremlinClient.DeleteGremlinGraphWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, gremlinGraph.Name);
                 }
-            };
 
-            GremlinGraphGetResults gremlinGraphGetResults = gremlinClient.CreateUpdateGremlinGraphWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinGraphGetResults);
-            VerifyGremlinGraphCreation(gremlinGraphGetResults, gremlinGraphCreateUpdateParameters);
-
-            IEnumerable<GremlinGraphGetResults> gremlinGraphs = gremlinClient.ListGremlinGraphsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
-            Assert.NotNull(gremlinGraphs);
-
-            foreach (GremlinGraphGetResults gremlinGraph in gremlinGraphs)
-            {
-                gremlinClient.DeleteGremlinGraphWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, gremlinGraph.Name);
-            }
-
-            foreach (GremlinDatabaseGetResults gremlinDatabase in gremlinDatabases)
-            {
-                gremlinClient.DeleteGremlinDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, gremlinDatabase.Name);
+                foreach (GremlinDatabaseGetResults gremlinDatabase in gremlinDatabases)
+                {
+                    gremlinClient.DeleteGremlinDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, gremlinDatabase.Name);
+                }
             }
         }
 

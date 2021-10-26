@@ -12,8 +12,7 @@ using System;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    [Collection("TestCollection")]
-    public class CassandraResourcesOperationsTests
+    public class CassandraResourcesOperationsTests : IClassFixture<TestFixture>
     {
         public readonly TestFixture fixture;
 
@@ -25,129 +24,134 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void CassandraCRUDTests()
         {
-            var cassandraClient = this.fixture.CosmosDBManagementClient.CassandraResources;
-            var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Cassandra);
-
-            const string keyspaceName = "keyspaceName2510";
-            const string keyspaceName2 = "keyspaceName22510";
-            const string tableName = "tableName2510";
-            const string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
-            const int sampleThroughput = 700;
-
-            var cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
+            using (var context = MockContext.Start(this.GetType()))
             {
-                Resource = new CassandraKeyspaceResource { Id = keyspaceName },
-                Options = new CreateUpdateOptions()
-            };
+                fixture.Init(context);
 
-            var cassandraKeyspaceGetResults = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName,
-                cassandraKeyspaceCreateUpdateParameters
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraKeyspaceGetResults);
-            Assert.Equal(keyspaceName, cassandraKeyspaceGetResults.Name);
+                var cassandraClient = this.fixture.CosmosDBManagementClient.CassandraResources;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Cassandra);
 
-            var cassandraKeyspaceGetResults1 = cassandraClient.GetCassandraKeyspaceWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraKeyspaceGetResults1);
-            Assert.Equal(keyspaceName, cassandraKeyspaceGetResults1.Name);
+                const string keyspaceName = "keyspaceName2510";
+                const string keyspaceName2 = "keyspaceName22510";
+                const string tableName = "tableName2510";
+                const string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
+                const int sampleThroughput = 700;
 
-            VerifyEqualCassandraDatabases(cassandraKeyspaceGetResults, cassandraKeyspaceGetResults1);
+                var cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
+                {
+                    Resource = new CassandraKeyspaceResource { Id = keyspaceName },
+                    Options = new CreateUpdateOptions()
+                };
 
-            var cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters
-            {
-                Location = this.fixture.Location,
-                Tags = new Dictionary<string, string>
+                var cassandraKeyspaceGetResults = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName,
+                    cassandraKeyspaceCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaceGetResults);
+                Assert.Equal(keyspaceName, cassandraKeyspaceGetResults.Name);
+
+                var cassandraKeyspaceGetResults1 = cassandraClient.GetCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaceGetResults1);
+                Assert.Equal(keyspaceName, cassandraKeyspaceGetResults1.Name);
+
+                VerifyEqualCassandraDatabases(cassandraKeyspaceGetResults, cassandraKeyspaceGetResults1);
+
+                var cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters
+                {
+                    Location = this.fixture.Location,
+                    Tags = new Dictionary<string, string>
                 {
                     {"key3","value3"},
                     {"key4","value4"}
                 },
-                Resource = new CassandraKeyspaceResource { Id = keyspaceName2 },
-                Options = new CreateUpdateOptions
-                {
-                    Throughput = sampleThroughput
-                }
-            };
-
-            var cassandraKeyspaceGetResults2 = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName2,
-                cassandraKeyspaceCreateUpdateParameters2
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraKeyspaceGetResults2);
-            Assert.Equal(keyspaceName2, cassandraKeyspaceGetResults2.Name);
-
-            var cassandraKeyspaces = cassandraClient.ListCassandraKeyspacesWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraKeyspaces);
-
-            var throughputSettingsGetResults = cassandraClient.GetCassandraKeyspaceThroughputWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName2
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(throughputSettingsGetResults);
-            Assert.NotNull(throughputSettingsGetResults.Name);
-            Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
-            Assert.Equal(cassandraThroughputType, throughputSettingsGetResults.Type);
-
-            var cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters
-            {
-                Resource = new CassandraTableResource
-                {
-                    Id = tableName,
-                    Schema = new CassandraSchema
+                    Resource = new CassandraKeyspaceResource { Id = keyspaceName2 },
+                    Options = new CreateUpdateOptions
                     {
-                        Columns = new List<Column> { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } },
-                        ClusterKeys = new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
-                        PartitionKeys = new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } }
+                        Throughput = sampleThroughput
                     }
-                },
-                Options = new CreateUpdateOptions()
-            };
+                };
 
-            CassandraTableGetResults cassandraTableGetResults = cassandraClient.CreateUpdateCassandraTableWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName,
-                tableName,
-                cassandraTableCreateUpdateParameters
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraTableGetResults);
-            VerifyCassandraTableCreation(cassandraTableGetResults, cassandraTableCreateUpdateParameters);
+                var cassandraKeyspaceGetResults2 = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName2,
+                    cassandraKeyspaceCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaceGetResults2);
+                Assert.Equal(keyspaceName2, cassandraKeyspaceGetResults2.Name);
 
-            var cassandraTables = cassandraClient.ListCassandraTablesWithHttpMessagesAsync(
-                this.fixture.ResourceGroupName,
-                databaseAccountName,
-                keyspaceName
-            ).GetAwaiter().GetResult().Body;
-            Assert.NotNull(cassandraTables);
+                var cassandraKeyspaces = cassandraClient.ListCassandraKeyspacesWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraKeyspaces);
 
-            foreach (CassandraTableGetResults cassandraTable in cassandraTables)
-            {
-                cassandraClient.DeleteCassandraTableWithHttpMessagesAsync(
+                var throughputSettingsGetResults = cassandraClient.GetCassandraKeyspaceThroughputWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName2
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(throughputSettingsGetResults);
+                Assert.NotNull(throughputSettingsGetResults.Name);
+                Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
+                Assert.Equal(cassandraThroughputType, throughputSettingsGetResults.Type);
+
+                var cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters
+                {
+                    Resource = new CassandraTableResource
+                    {
+                        Id = tableName,
+                        Schema = new CassandraSchema
+                        {
+                            Columns = new List<Column> { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } },
+                            ClusterKeys = new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
+                            PartitionKeys = new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } }
+                        }
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                CassandraTableGetResults cassandraTableGetResults = cassandraClient.CreateUpdateCassandraTableWithHttpMessagesAsync(
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
                     keyspaceName,
-                    cassandraTable.Name
-                );
-            }
+                    tableName,
+                    cassandraTableCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraTableGetResults);
+                VerifyCassandraTableCreation(cassandraTableGetResults, cassandraTableCreateUpdateParameters);
 
-            foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
-            {
-                cassandraClient.DeleteCassandraKeyspaceWithHttpMessagesAsync(
+                var cassandraTables = cassandraClient.ListCassandraTablesWithHttpMessagesAsync(
                     this.fixture.ResourceGroupName,
                     databaseAccountName,
-                    cassandraKeyspace.Name
-                );
+                    keyspaceName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(cassandraTables);
+
+                foreach (CassandraTableGetResults cassandraTable in cassandraTables)
+                {
+                    cassandraClient.DeleteCassandraTableWithHttpMessagesAsync(
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName,
+                        keyspaceName,
+                        cassandraTable.Name
+                    );
+                }
+
+                foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
+                {
+                    cassandraClient.DeleteCassandraKeyspaceWithHttpMessagesAsync(
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName,
+                        cassandraKeyspace.Name
+                    );
+                }
             }
         }
 

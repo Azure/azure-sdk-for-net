@@ -9,10 +9,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    [Collection("TestCollection")]
-    public class OperationsTests
+    public class OperationsTests : IClassFixture<TestFixture>
     {
-        public readonly TestFixture fixture;
+        private readonly TestFixture fixture;
 
         public OperationsTests(TestFixture fixture)
         {
@@ -22,9 +21,13 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void ListOperationsTest()
         {
-            var operations = this.fixture.CosmosDBManagementClient.Operations.List();
-            Assert.NotNull(operations);
-            Assert.NotEmpty(operations);
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                this.fixture.Init(MockContext.Start(this.GetType()));
+                var operations = this.fixture.CosmosDBManagementClient.Operations.List();
+                Assert.NotNull(operations);
+                Assert.NotEmpty(operations);
+            }
         }
     }
 }
