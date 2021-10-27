@@ -46,6 +46,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // prepare actions.
 #if SNIPPET
+            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
             var actions = new TextAnalyticsActions()

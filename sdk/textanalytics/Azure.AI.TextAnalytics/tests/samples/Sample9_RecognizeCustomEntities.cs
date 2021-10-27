@@ -41,13 +41,17 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
+            // Set project and deployment names of the target model
+            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
+            string projectName = TestEnvironment.RecognizeCustomEntitiesProjectName;
+            string deploymentName = TestEnvironment.RecognizeCustomEntitiesDeploymentName;
+
+            var recognizeCustomEntitiesAction = new RecognizeCustomEntitiesAction(projectName, deploymentName);
+
             // prepare actions.
             var actions = new TextAnalyticsActions()
             {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { recognizeCustomEntitiesAction }
             };
 
             // Start analysis process.

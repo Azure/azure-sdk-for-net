@@ -1,5 +1,7 @@
 # Perform Custom Multiple Category Classification in Documents
-This sample demonstrates how to run a Multi Category Classification action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+This sample demonstrates how to run a Multi Category Classification action in one or more documents.  In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+
+To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -29,6 +31,7 @@ var batchInput = new List<string>
 };
 
 // Set project and deployment names of the target model
+// To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities            
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 
@@ -96,5 +99,6 @@ To see the full example source files, see:
 * [Synchronously Multi Category Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample11_MultiCategoryClassifyConvenience.cs)
 * [Asynchronously Multi Category Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample11_MultiCategoryClassifyConvenienceAsync.cs)
 
+[train_model]: https://aka.ms/azsdk/textanalytics/customfunctionalities
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
