@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class DeploymentOperationContainerTests : ResourcesTestBase
+    public class DeploymentOperationCollectionTests : ResourcesTestBase
     {
-        public DeploymentOperationContainerTests(bool isAsync)
+        public DeploymentOperationCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

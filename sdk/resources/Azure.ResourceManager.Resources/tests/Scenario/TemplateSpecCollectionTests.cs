@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class TemplateSpecVersionContainerTests : ResourcesTestBase
+    public class TemplateSpecCollectionTests : ResourcesTestBase
     {
-        public TemplateSpecVersionContainerTests(bool isAsync)
+        public TemplateSpecCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -28,17 +28,14 @@ namespace Azure.ResourceManager.Resources.Tests
             string templateSpecName = Recording.GenerateAssetName("templateSpec-C-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
             TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
-            const string version = "v1";
-            TemplateSpecVersionData templateSpecVersionData = CreateTemplateSpecVersionData();
-            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(version, templateSpecVersionData)).Value;
-            Assert.AreEqual(version, templateSpecVersion.Data.Name);
+            Assert.AreEqual(templateSpecName, templateSpec.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(null, templateSpecData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task ListByRG()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
@@ -47,14 +44,34 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
-            const string version = "v1";
-            TemplateSpecVersionData templateSpecVersionData = CreateTemplateSpecVersionData();
-            _ = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(version, templateSpecVersionData)).Value;
+            _ = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
             int count = 0;
-            await foreach (var tempTemplateSpecVersion in templateSpec.GetTemplateSpecVersions().GetAllAsync())
+            await foreach (var tempTemplateSpec in rg.GetTemplateSpecs().GetAllAsync())
             {
                 count++;
+            }
+            Assert.AreEqual(count, 1);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ListBySubscription()
+        {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-3-");
+            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroup rg = lro.Value;
+            string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
+            TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
+            int count = 0;
+            await foreach (var tempTemplateSpec in subscription.GetTemplateSpecsAsync())
+            {
+                if (tempTemplateSpec.Data.Id == templateSpec.Data.Id)
+                {
+                    count++;
+                }
             }
             Assert.AreEqual(count, 1);
         }
@@ -64,22 +81,19 @@ namespace Azure.ResourceManager.Resources.Tests
         public async Task Get()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            string rgName = Recording.GenerateAssetName("testRg-3-");
+            string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
             TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
-            const string version = "v1";
-            TemplateSpecVersionData templateSpecVersionData = CreateTemplateSpecVersionData();
-            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(version, templateSpecVersionData)).Value;
-            TemplateSpecVersion getTemplateSpecVersion = await templateSpec.GetTemplateSpecVersions().GetAsync(version);
-            AssertValidTemplateSpecVersion(templateSpecVersion, getTemplateSpecVersion);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await templateSpec.GetTemplateSpecVersions().GetAsync(null));
+            TemplateSpec getTemplateSpec = await rg.GetTemplateSpecs().GetAsync(templateSpecName);
+            AssertValidTemplateSpec(templateSpec, getTemplateSpec);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetTemplateSpecs().GetAsync(null));
         }
 
-        private static void AssertValidTemplateSpecVersion(TemplateSpecVersion model, TemplateSpecVersion getResult)
+        private static void AssertValidTemplateSpec(TemplateSpec model, TemplateSpec getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -87,15 +101,17 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(model.Data.Location, getResult.Data.Location);
             Assert.AreEqual(model.Data.Tags, getResult.Data.Tags);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.LinkedTemplates.Count, getResult.Data.LinkedTemplates.Count);
-            for (int i = 0; i < model.Data.LinkedTemplates.Count; ++i)
-            {
-                Assert.AreEqual(model.Data.LinkedTemplates[i].Path, getResult.Data.LinkedTemplates[i].Path);
-                Assert.AreEqual(model.Data.LinkedTemplates[i].Template, getResult.Data.LinkedTemplates[i].Template);
-            }
+            Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
-            Assert.AreEqual(model.Data.MainTemplate, getResult.Data.MainTemplate);
-            Assert.AreEqual(model.Data.UiFormDefinition, getResult.Data.UiFormDefinition);
+            Assert.AreEqual(model.Data.Versions.Count, getResult.Data.Versions.Count);
+            foreach (var kv in model.Data.Versions)
+            {
+                var getTemplateSpecVersionInfo = getResult.Data.Versions[kv.Key];
+                Assert.NotNull(getTemplateSpecVersionInfo);
+                Assert.AreEqual(model.Data.Versions[kv.Key].Description, getResult.Data.Versions[kv.Key].Description);
+                Assert.AreEqual(model.Data.Versions[kv.Key].TimeCreated, getResult.Data.Versions[kv.Key].TimeCreated);
+                Assert.AreEqual(model.Data.Versions[kv.Key].TimeModified, getResult.Data.Versions[kv.Key].TimeModified);
+            }
         }
     }
 }

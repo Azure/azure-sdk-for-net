@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
-    public class DeploymentContainerTests : ResourcesTestBase
+    public class DeploymentCollectionTests : ResourcesTestBase
     {
-        public DeploymentContainerTests(bool isAsync)
+        public DeploymentCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -60,12 +60,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-<<<<<<< HEAD
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
-=======
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
->>>>>>> bump_resourcemanager_version
             ResourceGroup rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-G-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());

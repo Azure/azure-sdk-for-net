@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task CreateApplicationDefinitions()
         {
             #region Snippet:Managing_ApplicationDefinitions_CreateAnApplicationDefinition
-            // First we need to get the application definition container from the resource group
+            // First we need to get the application definition collection from the resource group
             ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
             // Use the same location as the resource group
             string applicationDefinitionName = "myApplicationDefinition";
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task ListApplicationDefinitions()
         {
             #region Snippet:Managing_ApplicationDefinitions_ListAllApplicationDefinitions
-            // First we need to get the application definition container from the resource group
+            // First we need to get the application definition collection from the resource group
             ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
-            // With GetAllAsync(), we can get a list of the application definitions in the container
+            // With GetAllAsync(), we can get a list of the application definitions in the collection
             AsyncPageable<ApplicationDefinition> response = applicationDefinitionCollection.GetAllAsync();
             await foreach (ApplicationDefinition applicationDefinition in response)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task DeleteApplicationDefinitions()
         {
             #region Snippet:Managing_ApplicationDefinitions_DeleteAnApplicationDefinition
-            // First we need to get the application definition container from the resource group
+            // First we need to get the application definition collection from the resource group
             ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
             // Now we can get the application definition with GetAsync()
             ApplicationDefinition applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
+            #region Snippet:Readme_GetResourceGroupCollection
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));

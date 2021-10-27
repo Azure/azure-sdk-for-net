@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task CreateDeployments()
         {
             #region Snippet:Managing_Deployments_CreateADeployment
-            // First we need to get the deployment container from the resource group
+            // First we need to get the deployment collection from the resource group
             DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task ListDeployments()
         {
             #region Snippet:Managing_Deployments_ListAllDeployments
-            // First we need to get the deployment container from the resource group
+            // First we need to get the deployment collection from the resource group
             DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
-            // With GetAllAsync(), we can get a list of the deployments in the container
+            // With GetAllAsync(), we can get a list of the deployments in the collection
             AsyncPageable<Deployment> response = deploymentCollection.GetAllAsync();
             await foreach (Deployment deployment in response)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         public async Task DeleteDeployments()
         {
             #region Snippet:Managing_Deployments_DeleteADeployment
-            // First we need to get the deployment container from the resource group
+            // First we need to get the deployment collection from the resource group
             DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // Now we can get the deployment with GetAsync()
             Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
