@@ -155,6 +155,7 @@ namespace Azure.Core.Tests
         {
             lock (Scopes)
             {
+                var foundScopeNames = Scopes.Select(s => s.Name);
                 foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                 {
                     if (producedDiagnosticScope.Name == name)
@@ -175,7 +176,7 @@ namespace Azure.Core.Tests
                         return producedDiagnosticScope;
                     }
                 }
-                throw new InvalidOperationException($"Event '{name}' was not started");
+                throw new InvalidOperationException($"Event '{name}' was not started.Found scope names:\n{string.Join("\n", foundScopeNames)}\n");
             }
         }
 

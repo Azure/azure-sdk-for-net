@@ -85,7 +85,7 @@ namespace Azure.Core
         /// </code>
         /// </example>
         /// </summary>
-        public bool HasCompleted { get; private set; }
+        public bool HasCompleted { get; protected set; }
 
         /// <summary>
         /// The last HTTP response received from the server. Its update already handled in calls to "<c>UpdateStatus</c>" and
@@ -228,7 +228,7 @@ namespace Azure.Core
             }
         }
 
-        private async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
 
