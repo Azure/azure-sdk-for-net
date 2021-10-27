@@ -13,7 +13,7 @@ namespace Azure.IoT.ModelsRepository
     public partial class ModelResult
     {
         internal ModelResult() { }
-        public System.Collections.Generic.IDictionary<string, string> Content { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Content { get { throw null; } }
     }
     public partial class ModelsRepositoryClient
     {
@@ -27,7 +27,7 @@ namespace Azure.IoT.ModelsRepository
     public partial class ModelsRepositoryClientMetadataOptions
     {
         public ModelsRepositoryClientMetadataOptions() { }
-        public bool Enabled { get { throw null; } set { } }
+        public bool IsMetadataProcessingEnabled { get { throw null; } set { } }
     }
     public partial class ModelsRepositoryClientOptions : Azure.Core.ClientOptions
     {

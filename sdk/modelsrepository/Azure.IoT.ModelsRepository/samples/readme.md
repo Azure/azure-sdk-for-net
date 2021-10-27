@@ -48,9 +48,9 @@ The following snippet shows how to configure the client to disable repository me
 // ModelsRepositoryClientOptions supports configuration enabling consumption of repository
 // metadata within ModelsRepositoryClientOptions.RepositoryMetadata.
 // Fetching repository metadata is enabled by default.
-// This can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
+// This can be disabled as shown in the following snippet
 var customClientOptions = new ModelsRepositoryClientOptions();
-customClientOptions.Metadata.Enabled = false;
+customClientOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
 client = new ModelsRepositoryClient(options: customClientOptions);
 Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
     $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");
@@ -139,7 +139,7 @@ var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
 ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
 var parser = new ModelParser();
-IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values.ToArray());
+IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values);
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {parseResult.Count} entities.");
 ```
 
@@ -149,13 +149,13 @@ This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiR
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
 var parser = new ModelParser
 {
     // Usage of the ModelsRepositoryClientExtensions.ParserDtmiResolver extension.
     DtmiResolver = client.ParserDtmiResolver
 };
-IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values.Take(1).ToArray());
+IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values);
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {parseResult.Count} entities.");
 ```
 
