@@ -320,6 +320,7 @@ namespace Microsoft.AspNetCore.Internal
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (disposing)
             {
                 Reset();

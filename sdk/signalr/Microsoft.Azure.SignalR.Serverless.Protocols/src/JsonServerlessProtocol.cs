@@ -23,7 +23,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
         /// <inheritdoc/>
         public bool TryParseMessage(ref ReadOnlySequence<byte> input, out ServerlessMessage message)
         {
-            var textReader = new JsonTextReader(new StreamReader(new ReadOnlySequenceStream(input)));
+            using var textReader = new JsonTextReader(new StreamReader(new ReadOnlySequenceStream(input)));
             var jObject = JObject.Load(textReader);
             if (jObject.TryGetValue(TypePropertyName, StringComparison.OrdinalIgnoreCase, out var token))
             {

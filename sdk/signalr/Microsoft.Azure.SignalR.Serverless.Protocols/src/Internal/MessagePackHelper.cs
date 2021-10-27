@@ -37,7 +37,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
         {
             var argumentCount = ReadArrayLength(input, ref offset, "arguments");
             var array = new object[argumentCount];
-            for (int i = 0; i < argumentCount; i++)
+            for (var i = 0; i < argumentCount; i++)
             {
                 array[i] = ReadObject(input, ref offset);
             }
@@ -46,7 +46,6 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
 
         public static int ReadInt32(byte[] input, ref int offset, string field)
         {
-            Exception msgPackException = null;
             try
             {
                 var readInt = MessagePackBinary.ReadInt32(input, offset, out var readSize);
@@ -55,15 +54,12 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             }
             catch (Exception e)
             {
-                msgPackException = e;
+                throw new InvalidDataException($"Reading '{field}' as Int32 failed.", e);
             }
-
-            throw new InvalidDataException($"Reading '{field}' as Int32 failed.", msgPackException);
         }
 
         public static string ReadString(byte[] input, ref int offset, string field)
         {
-            Exception msgPackException = null;
             try
             {
                 var readString = MessagePackBinary.ReadString(input, offset, out var readSize);
@@ -72,15 +68,12 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             }
             catch (Exception e)
             {
-                msgPackException = e;
+                throw new InvalidDataException($"Reading '{field}' as String failed.", e);
             }
-
-            throw new InvalidDataException($"Reading '{field}' as String failed.", msgPackException);
         }
 
         public static bool ReadBoolean(byte[] input, ref int offset, string field)
         {
-            Exception msgPackException = null;
             try
             {
                 var readBool = MessagePackBinary.ReadBoolean(input, offset, out var readSize);
@@ -89,15 +82,12 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             }
             catch (Exception e)
             {
-                msgPackException = e;
+                throw new InvalidDataException($"Reading '{field}' as Boolean failed.", e);
             }
-
-            throw new InvalidDataException($"Reading '{field}' as Boolean failed.", msgPackException);
         }
 
         public static long ReadMapLength(byte[] input, ref int offset, string field)
         {
-            Exception msgPackException = null;
             try
             {
                 var readMap = MessagePackBinary.ReadMapHeader(input, offset, out var readSize);
@@ -106,15 +96,12 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             }
             catch (Exception e)
             {
-                msgPackException = e;
+                throw new InvalidDataException($"Reading map length for '{field}' failed.", e);
             }
-
-            throw new InvalidDataException($"Reading map length for '{field}' failed.", msgPackException);
         }
 
         public static long ReadArrayLength(byte[] input, ref int offset, string field)
         {
-            Exception msgPackException = null;
             try
             {
                 var readArray = MessagePackBinary.ReadArrayHeader(input, offset, out var readSize);
@@ -123,10 +110,8 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             }
             catch (Exception e)
             {
-                msgPackException = e;
+                throw new InvalidDataException($"Reading array length for '{field}' failed.", e);
             }
-
-            throw new InvalidDataException($"Reading array length for '{field}' failed.", msgPackException);
         }
 
         public static object ReadObject(byte[] input, ref int offset)
@@ -162,7 +147,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
                 case MessagePackType.Array:
                     var argumentCount = ReadArrayLength(input, ref offset, "arguments");
                     var array = new object[argumentCount];
-                    for (int i = 0; i < argumentCount; i++)
+                    for (var i = 0; i < argumentCount; i++)
                     {
                         array[i] = ReadObject(input, ref offset);
                     }
@@ -171,7 +156,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
                     var propertyCount = MessagePackBinary.ReadMapHeader(input, offset, out size);
                     offset += size;
                     var map = new Dictionary<string, object>();
-                    for (int i = 0; i < propertyCount; i++)
+                    for (var i = 0; i < propertyCount; i++)
                     {
                         textValue = MessagePackBinary.ReadString(input, offset, out size);
                         offset += size;

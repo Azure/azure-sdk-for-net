@@ -60,7 +60,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
                     }
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(origin));
             }
 
             return Position;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
                 _position = _sequence.GetPosition(value);
             }
