@@ -211,6 +211,55 @@ namespace Azure.Core.Tests
             });
         }
 
+        [Test]
+        public async Task CanGetResponseFromLlcLroMethodAsync()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet pet = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var data = new
+            {
+                name = "snoopy",
+                species = "beagle"
+            };
+            Operation<BinaryData> operation = await client.ImportPetAsync(RequestContent.Create(data), new RequestOptions());
+            var response = operation.GetRawResponse();
+            var doc = JsonDocument.Parse(response.Content.ToMemory());
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual("snoopy", doc.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual("beagle", doc.RootElement.GetProperty("species").GetString());
+        }
+
+        [Test]
+        public async Task CanGetOutputModelForLroOnSuccessCodeAsync()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet petResponse = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(petResponse, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var data = new
+            {
+                name = "snoopy",
+                species = "beagle"
+            };
+            Operation<BinaryData> operation = await client.ImportPetAsync(RequestContent.Create(data), new RequestOptions());
+
+            Pet pet = operation.GetRawResponse();
+
+            Assert.AreEqual("snoopy", pet.Name);
+            Assert.AreEqual("beagle", pet.Species);
+        }
+
         #region Helpers
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
         {

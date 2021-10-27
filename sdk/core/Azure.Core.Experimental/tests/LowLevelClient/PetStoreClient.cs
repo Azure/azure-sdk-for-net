@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests
@@ -143,6 +144,42 @@ namespace Azure.Core.Experimental.Tests
             }
         }
 
+#pragma warning disable AZC0002
+        public virtual Operation<BinaryData> ImportPet(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportPet");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportPetRequest(content);
+                return LowLevelOperationHelpers.ProcessMessage(Pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportPetAsync(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportPet");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportPetRequest(content);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(Pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="options"> The request options. </param>
@@ -157,6 +194,21 @@ namespace Azure.Core.Experimental.Tests
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            message.ResponseClassifier = Classifier200;
+            return message;
+        }
+
+        private HttpMessage CreateImportPetRequest(RequestContent content)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/pets/import", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Content = content;
             message.ResponseClassifier = Classifier200;
             return message;
         }
