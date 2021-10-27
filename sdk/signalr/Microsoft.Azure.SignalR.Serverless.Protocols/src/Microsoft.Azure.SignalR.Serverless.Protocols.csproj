@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Microsoft.Azure.SignalR.Serverless.Protocols</PackageId>
+    <Version>1.7.0-beta.1</Version>
+    <SignAssembly>true</SignAssembly>
+    <NoWarn>AZC0001;CA2000;CA2208;AZC0100;CA2215;SA1402;SA1649;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MessagePack" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="System.Memory" />
+  </ItemGroup>
+
+</Project>
