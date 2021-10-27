@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public void ExchangeTeamsUserAadToken()
+        public void GetTokenForTeamsUser()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
@@ -161,16 +161,16 @@ namespace Azure.Communication.Identity.Samples
             var teamsToken = generateTeamsToken().Result;
             var client = CreateClientWithConnectionString();
 
-            #region  Snippet:ExchangeTeamsToken
-            Response<AccessToken> tokenResponse = client.ExchangeTeamsUserAadToken(teamsToken);
+            #region Snippet:GetTokenForTeamsUser
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
-            #endregion Snippet:ExchangeTeamsToken
+            #endregion Snippet:GetTokenForTeamsUser
         }
 
         [Test]
         [AsyncOnly]
-        public async Task ExchangeTeamsUserAadTokenAsync()
+        public async Task GetTokenForTeamsUserAsync()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -179,11 +179,11 @@ namespace Azure.Communication.Identity.Samples
             var teamsToken = await generateTeamsToken();
             var client = CreateClientWithConnectionString();
 
-            #region  Snippet:ExchangeTeamsTokenAsync
-            Response<AccessToken> tokenResponse = await client.ExchangeTeamsUserAadTokenAsync(teamsToken);
+            #region Snippet:GetTokenForTeamsUserAsync
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
-            #endregion Snippet:ExchangeTeamsTokenAsync
+            #endregion Snippet:GetTokenForTeamsUserAsync
         }
 
         [Test]

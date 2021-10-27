@@ -42,7 +42,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetPetAsync("snoopy", new RequestOptions());
+            Response response = await client.GetPetAsync("snoopy", new RequestContext());
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
             Assert.AreEqual(200, response.Status);
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetPetAsync("pet1", ResponseStatusOption.NoThrow);
+            Response response = await client.GetPetAsync("pet1", ErrorOptions.NoThrow);
 
             Assert.Throws<RequestFailedException>(() => { Pet pet = response; });
         }
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
             {
                 // NOTE: is it weird that we're saying NoThrow here and it throws?
                 // This looks confusing to me as someone reading this code.
-                Pet pet = await client.GetPetAsync("pet1", ResponseStatusOption.NoThrow);
+                Pet pet = await client.GetPetAsync("pet1", ErrorOptions.NoThrow);
             }
             catch (RequestFailedException e)
             {
@@ -159,15 +159,15 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            RequestOptions options = new RequestOptions()
+            RequestContext context = new RequestContext()
             {
-                StatusOption = ResponseStatusOption.NoThrow
+                ErrorOptions = ErrorOptions.NoThrow
             };
 
             Response response = default;
             Assert.DoesNotThrowAsync(async () =>
             {
-                response = await client.GetPetAsync("snoopy", options);
+                response = await client.GetPetAsync("snoopy", context);
             });
 
             Assert.AreEqual(404, response.Status);
@@ -184,9 +184,9 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            Response response = await client.GetPetAsync("snoopy", new RequestOptions()
+            Response response = await client.GetPetAsync("snoopy", new RequestContext()
             {
-                StatusOption = ResponseStatusOption.Default
+                ErrorOptions = ErrorOptions.Default
             });
             var doc = JsonDocument.Parse(response.Content.ToMemory());
 
@@ -205,9 +205,9 @@ namespace Azure.Core.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.GetPetAsync("snoopy", new RequestOptions()
+                await client.GetPetAsync("snoopy", new RequestContext()
                 {
-                    StatusOption = ResponseStatusOption.Default
+                    ErrorOptions = ErrorOptions.Default
                 });
             });
         }

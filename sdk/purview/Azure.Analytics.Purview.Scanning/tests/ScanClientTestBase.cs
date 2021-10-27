@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.Http;
+using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
@@ -12,10 +13,12 @@ namespace Azure.Analytics.Purview.Scanning.Tests
     {
         public ScanClientTestBase(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
 
         public ScanClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            Sanitizer = new PurviewRecordedTestSanitizer();
         }
         public PurviewScanClient GetPurviewScanClient(string dataSourceName,string scanName)
         {

@@ -29,8 +29,8 @@
         "x-ms-correlation-request-id": "70160618-6264-48ea-a6c1-4c2649abc6c7"
       },
       "ResponseBody": {
-        "atlasKafkaPrimaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=TmfpFZBHQcZuAbzxwF2c8XAGWw02mXS/GWMkZmlufLM=",
-        "atlasKafkaSecondaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=GcMVTNPGShESagjYw\u002B\u002BLGPPYfZ1h3Bj1IjL4tdejn9k="
+        "atlasKafkaPrimaryEndpoint": "Sanitized",
+        "atlasKafkaSecondaryEndpoint": "Sanitized"
       }
     }
   ],
