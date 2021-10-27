@@ -10,12 +10,12 @@ using System;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Detailed error. </summary>
-    public partial class DocumentAnalysisInnerError
+    internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of DocumentAnalysisInnerError. </summary>
+        /// <summary> Initializes a new instance of InnerError. </summary>
         /// <param name="code"> Error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal DocumentAnalysisInnerError(string code)
+        internal InnerError(string code)
         {
             if (code == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisInnerError. </summary>
+        /// <summary> Initializes a new instance of InnerError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innererror"> Detailed error. </param>
-        internal DocumentAnalysisInnerError(string code, string message, DocumentAnalysisInnerError innererror)
+        internal InnerError(string code, string message, InnerError innererror)
         {
             Code = code;
             Message = message;
@@ -41,6 +41,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Detailed error. </summary>
-        public DocumentAnalysisInnerError Innererror { get; }
+        public InnerError Innererror { get; }
     }
 }

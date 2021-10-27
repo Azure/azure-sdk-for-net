@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Error info. </summary>
-    public partial class DocumentAnalysisError
+    internal partial class Error
     {
-        /// <summary> Initializes a new instance of DocumentAnalysisError. </summary>
+        /// <summary> Initializes a new instance of Error. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal DocumentAnalysisError(string code, string message)
+        internal Error(string code, string message)
         {
             if (code == null)
             {
@@ -31,16 +31,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<DocumentAnalysisError>();
+            Details = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of DocumentAnalysisError. </summary>
+        /// <summary> Initializes a new instance of Error. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Target of the error. </param>
         /// <param name="details"> List of detailed errors. </param>
         /// <param name="innererror"> Detailed error. </param>
-        internal DocumentAnalysisError(string code, string message, string target, IReadOnlyList<DocumentAnalysisError> details, DocumentAnalysisInnerError innererror)
+        internal Error(string code, string message, string target, IReadOnlyList<Error> details, InnerError innererror)
         {
             Code = code;
             Message = message;
@@ -56,8 +56,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Target of the error. </summary>
         public string Target { get; }
         /// <summary> List of detailed errors. </summary>
-        public IReadOnlyList<DocumentAnalysisError> Details { get; }
+        public IReadOnlyList<Error> Details { get; }
         /// <summary> Detailed error. </summary>
-        public DocumentAnalysisInnerError Innererror { get; }
+        public InnerError Innererror { get; }
     }
 }
