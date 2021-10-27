@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.TestFramework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -34,7 +35,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
         }
 
-        protected void Initialize()
+        protected AppConfigurationClientBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
+        {
+        }
+
+        protected async Task Initialize()
         {
             AzureLocation = "eastus";
             KeyUuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";
@@ -50,7 +56,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
             Operations = AppConfigurationManagementClient.Operations;
             ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
-            ResourceGroupCollection = ArmClient.DefaultSubscription.GetResourceGroups();
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection = sub.GetResourceGroups();
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()
