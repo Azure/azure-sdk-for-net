@@ -52,7 +52,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             defaultOptions.Version.Should().Be(ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11);
 
             // Default MetadataOptions values
-            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled.Should().Be(true);
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled.Should().BeTrue();
 
             // Ensure MetadataOptions properties are settable
             defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
