@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dns.Tests
         public ArmClient ResourcesManagementClient { get; set; }
         //public ResourcesOperations ResourcesOperations { get; set; }
         //public ProvidersOperations ResourceProvidersOperations { get; set; }
-        public ResourceGroupContainer ResourceGroupsOperations { get; set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
         public RecordSetsOperations RecordSetsOperations { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
         public ZonesOperations ZonesOperations { get; set; }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public ArmClient ArmClient { get; set; }
         public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
         public PrivateEndpointConnectionsOperations PrivateEndpointConnectionsOperations { get; set; }
-        public ResourceGroupContainer ResourceGroupContainer { get; set; }
-        public VirtualNetworkContainer VirtualNetworkContainer { get; set; }
-        public PrivateEndpointContainer PrivateEndpointContainer { get; set; }
+        public ResourceGroupCollection ResourceGroupCollection { get; set; }
+        public VirtualNetworkCollection VirtualNetworkCollection { get; set; }
+        public PrivateEndpointCollection PrivateEndpointCollection { get; set; }
         public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
         public Operations Operations { get; set; }
         public string AzureLocation { get; set; }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
             Operations = AppConfigurationManagementClient.Operations;
             ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
-            ResourceGroupContainer = ArmClient.DefaultSubscription.GetResourceGroups();
+            ResourceGroupCollection = ArmClient.DefaultSubscription.GetResourceGroups();
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()

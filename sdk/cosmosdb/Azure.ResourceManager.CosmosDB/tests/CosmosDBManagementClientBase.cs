@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     {
         public string SubscriptionId { get; set; }
         public ArmClient ResourcesManagementClient { get; set; }
-        public ResourceGroupContainer ResourceGroupsOperations { get; set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
         public CosmosDBManagementClient CosmosDBManagementClient { get; set; }
 
         protected CosmosDBManagementClientBase(bool isAsync)
