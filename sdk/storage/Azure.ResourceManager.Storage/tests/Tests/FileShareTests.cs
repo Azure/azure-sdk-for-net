@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         [SetUp]
-        public async Task CreateStorageAccountAndGetFileShareContainer()
+        public async Task CreateStorageAccountAndGetFileShareCollection()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             if (_resourceGroup != null)
             {
-                var storageAccountContainer = _resourceGroup.GetStorageAccounts();
-                await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
+                var storageAccountCollection = _resourceGroup.GetStorageAccounts();
+                await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
                 {
                     await account.DeleteAsync();
                 }

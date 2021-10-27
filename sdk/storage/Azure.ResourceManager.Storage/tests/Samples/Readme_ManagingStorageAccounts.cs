@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
-            #region Snippet:Managing_StorageAccounts_GetResourceGroupContainer
+            #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));

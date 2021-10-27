@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         private StorageAccount storageAccount;
         private FileService fileService;
         [SetUp]
-        public async Task createStorageAccountAndGetFileShareContainer()
+        public async Task createStorageAccountAndGetFileShareCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();

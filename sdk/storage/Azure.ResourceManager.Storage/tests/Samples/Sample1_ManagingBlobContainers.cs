@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         private StorageAccount storageAccount;
         private BlobService blobService;
         [SetUp]
-        public async Task createStorageAccountAndGetBlobContainerContainer()
+        public async Task createStorageAccountAndGetBlobContainerCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
