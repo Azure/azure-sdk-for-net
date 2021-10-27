@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.1")
+        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.2")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));

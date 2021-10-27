@@ -2396,7 +2396,6 @@ namespace Azure.AI.TextAnalytics
 
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2422,7 +2421,6 @@ namespace Azure.AI.TextAnalytics
 
         private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            ValidateActions(actions);
             options ??= new AnalyzeActionsOptions();
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
@@ -2458,6 +2456,10 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
+            if (actions.RecognizeCustomEntitiesActions != null)
+            {
+                tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions);
+            }
             if (actions.ExtractKeyPhrasesActions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
@@ -2474,20 +2476,15 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
             }
-            return tasks;
-        }
-
-        private static void ValidateActions(TextAnalyticsActions actions)
-        {
-            if (actions.RecognizePiiEntitiesActions?.Count > 1 ||
-                actions.RecognizeEntitiesActions?.Count > 1 ||
-                actions.RecognizeLinkedEntitiesActions?.Count > 1 ||
-                actions.ExtractKeyPhrasesActions?.Count > 1 ||
-                actions.AnalyzeSentimentActions?.Count > 1 ||
-                actions.ExtractSummaryActions?.Count > 1)
+            if (actions.SingleCategoryClassifyActions != null)
             {
-                throw new ArgumentException("Multiple of the same action is not currently supported.");
+                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
             }
+            if (actions.MultiCategoryClassifyActions != null)
+            {
+                tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
+            }
+            return tasks;
         }
 
         #endregion
