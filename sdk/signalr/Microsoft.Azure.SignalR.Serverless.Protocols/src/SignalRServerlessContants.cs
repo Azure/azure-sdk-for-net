@@ -3,7 +3,10 @@
 
 namespace Microsoft.Azure.SignalR.Serverless.Protocols
 {
-    internal static class ServerlessProtocolConstants
+    /// <summary>
+    /// Contains constants used by Azure SignalR serverless protocol.
+    /// </summary>
+    public static class SignalRServerlessContants
     {
         /// <summary>
         /// Represents the invocation message type.

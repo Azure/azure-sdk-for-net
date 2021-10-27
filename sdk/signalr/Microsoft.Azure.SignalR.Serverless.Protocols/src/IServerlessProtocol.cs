@@ -6,7 +6,7 @@ using System.Buffers;
 namespace Microsoft.Azure.SignalR.Serverless.Protocols
 {
     /// <summary>
-    /// A protocol abstraction for communicating with Azure SignalR Service in serverless sceanarios.
+    /// A protocol abstraction for communicating with Azure SignalR Service in serverless scenarios.
     /// </summary>
     public interface IServerlessProtocol
     {

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
             var messageType = MessagePackHelper.ReadInt32(array, ref startOffset, "messageType");
             switch (messageType)
             {
-                case ServerlessProtocolConstants.InvocationMessageType:
+                case SignalRServerlessContants.InvocationMessageType:
                     message = ConvertInvocationMessage(array, ref startOffset);
                     break;
                 default:
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
         {
             var invocationMessage = new InvocationMessage()
             {
-                Type = ServerlessProtocolConstants.InvocationMessageType,
+                Type = SignalRServerlessContants.InvocationMessageType,
             };
 
             MessagePackHelper.SkipHeaders(input, ref offset);
