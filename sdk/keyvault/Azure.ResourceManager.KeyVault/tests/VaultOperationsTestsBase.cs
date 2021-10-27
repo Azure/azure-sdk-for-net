@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             Client = GetArmClient();
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            DeletedVaultContainer = subscription.GetDeletedVaults();
+            DeletedVaultCollection = subscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            using var scope = _clientDiagnostics.CreateScope("VaultCollection.UpdateAccessPolicy");
             scope.Start();
             try
             {

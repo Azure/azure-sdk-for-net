@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
+            #region Snippet:Readme_GetResourceGroupCollection
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
