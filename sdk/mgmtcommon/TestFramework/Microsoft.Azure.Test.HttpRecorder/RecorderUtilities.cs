@@ -233,7 +233,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 {
                     foreach (JToken token in parsed.SelectTokens(jsonPath))
                     {
-                        token.Replace(sanitizer(token));
+                        if (token.GetType().Name.GetType().ToString().Contains("String"))
+                            token.Replace(sanitizer(token));
                     }
                 }
                 return JsonConvert.SerializeObject(parsed, Formatting.Indented);
