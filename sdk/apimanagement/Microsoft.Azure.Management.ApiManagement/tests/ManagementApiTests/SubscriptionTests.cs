@@ -168,7 +168,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
-                    if (HttpMockServer.Mode.Equals("Record"))
+                    if ((HttpMockServer.Mode == HttpRecorderMode.Record))
                         Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
                     Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
@@ -202,7 +202,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(keysHttpResponse);
                     Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
-                    if (HttpMockServer.Mode.Equals("Record"))
+                    if ((HttpMockServer.Mode == HttpRecorderMode.Record))
                         Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
 
                     // get the subscription to check the key
