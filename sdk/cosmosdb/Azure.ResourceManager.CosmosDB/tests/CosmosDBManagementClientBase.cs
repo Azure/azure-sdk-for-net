@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
@@ -21,11 +22,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Sanitizer = new CosmosDBManagementRecordedTestSanitizer();
         }
 
-        protected void InitializeClients()
+        protected async Task InitializeClients()
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = GetResourceManagementClient();
-            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
+            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = sub.GetResourceGroups();
             CosmosDBManagementClient = GetCosmosDBManagementClient();
         }
 
@@ -36,9 +38,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 InstrumentClientOptions(new CosmosDBManagementClientOptions()));
         }
 
-        protected void initNewRecord()
+        protected async Task initNewRecord()
         {
-            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
+            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = sub.GetResourceGroups();
             CosmosDBManagementClient = GetCosmosDBManagementClient();
         }
     }
