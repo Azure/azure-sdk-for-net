@@ -26,7 +26,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
     if(!(Test-Path $pkgPath)) {
-      Write-Host "Current path does not exist, skipped. Path: $pkgPath"
+      Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
     }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
