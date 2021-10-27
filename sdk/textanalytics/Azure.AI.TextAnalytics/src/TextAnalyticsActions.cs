@@ -57,6 +57,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="RecognizeCustomEntitiesAction"/> that will get executed on the input documents.
+        /// To train a model to recognize your custom entities, see <see href="https://aka.ms/azsdk/textanalytics/customentityrecognition"/>.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
@@ -65,6 +66,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="SingleCategoryClassifyAction"/> that will get executed on the input documents.
+        /// To train a model to classify your documents, see <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities"/>.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
@@ -73,6 +75,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The set of <see cref="MultiCategoryClassifyAction"/> that will get executed on the input documents.
+        /// To train a model to classify your documents, see <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities"/>.
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.

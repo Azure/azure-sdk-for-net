@@ -1,5 +1,7 @@
 # Perform Custom Single Category Classification on Documents
-This sample demonstrates how to run a single category classification action in one or more documents. To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
+This sample demonstrates how to run a single category classification action in one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+
+To get started you will need a Text Analytics endpoint and credentials. See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -29,6 +31,7 @@ var batchInput = new List<string>
 };
 
 // Set project and deployment names of the target model
+// To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 
@@ -82,10 +85,11 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 
 To see the full example source files, see:
 
-* [Synchronously SingleCategoryClassify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassify.cs)
-* [Asynchronously SingleCategoryClassify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyAsync.cs)
-* [Synchronously SingleCategoryClassify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyConvenience.cs)
-* [Asynchronously SingleCategoryClassify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyConvenienceAsync.cs)
+* [Synchronously Single Category Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassify.cs)
+* [Asynchronously Single Category Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyAsync.cs)
+* [Synchronously Single Category Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyConvenience.cs)
+* [Asynchronously Single Category Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_SingleCategoryClassifyConvenienceAsync.cs)
 
+[train_model]: https://aka.ms/azsdk/textanalytics/customfunctionalities
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

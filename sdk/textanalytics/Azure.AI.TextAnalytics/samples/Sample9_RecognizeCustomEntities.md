@@ -1,5 +1,7 @@
 # Recognizing Custom Entities from Documents
-This sample demonstrates how to recognize custom entities in one or more documents. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to recognize custom entities in one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+
+To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -41,6 +43,7 @@ var batchDocuments = new List<TextDocumentInput>
 };
 
 // prepare actions.
+// To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 var actions = new TextAnalyticsActions()
@@ -108,6 +111,7 @@ To see the full example source files, see:
 * [Asynchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample9_RecognizeCustomEntitiesConvenienceAsync.cs)
 
 <!-- LINKS -->
+[train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition
 [azure_language_studio]: https://language.azure.com/
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

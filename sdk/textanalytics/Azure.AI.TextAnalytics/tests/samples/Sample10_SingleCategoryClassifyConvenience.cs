@@ -32,6 +32,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Set project and deployment names of the target model
+            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
 
