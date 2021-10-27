@@ -921,6 +921,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
