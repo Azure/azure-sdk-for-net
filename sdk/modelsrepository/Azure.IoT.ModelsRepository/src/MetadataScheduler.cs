@@ -34,12 +34,7 @@ namespace Azure.IoT.ModelsRepository
         /// </summary>
         public bool ShouldFetchMetadata()
         {
-            if (!_isEnabled)
-            {
-                return false;
-            }
-
-            if (_isInitialFetch)
+            if (_isEnabled && _isInitialFetch)
             {
                 return true;
             }
