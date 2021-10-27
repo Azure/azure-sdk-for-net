@@ -107,6 +107,7 @@ if ($allPackageProperties)
           $configFilePrefix = $pkg.ArtifactName
         }
         $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+        Write-Host "Output path of json file: $outputPath"
         SetOutput $outputPath $pkg
     }
 
