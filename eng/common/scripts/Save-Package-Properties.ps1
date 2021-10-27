@@ -88,6 +88,7 @@ function GetRelativePath($path) {
 }
 
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
+Write-Host $allPackageProperties
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
