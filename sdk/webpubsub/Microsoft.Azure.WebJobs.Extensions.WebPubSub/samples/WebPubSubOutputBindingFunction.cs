@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
+using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Samples

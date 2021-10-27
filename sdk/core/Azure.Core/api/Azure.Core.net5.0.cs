@@ -42,6 +42,12 @@ namespace Azure
         public string Signature { get { throw null; } }
         public void Update(string signature) { }
     }
+    [System.FlagsAttribute]
+    public enum ErrorOptions
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
     {
@@ -178,6 +184,13 @@ namespace Azure
         public RequestConditions() { }
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
+    }
+    public partial class RequestContext
+    {
+        public RequestContext() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {

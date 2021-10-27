@@ -3276,11 +3276,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data to this page blob.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -3357,11 +3357,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data to this page blob.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
         /// <param name="cancellationToken">
@@ -3438,11 +3438,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// with a <see cref="RequestFailedException"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data to this page blob.
         /// </param>
         /// <param name="sourceConditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
         /// <param name="sourceAuthentication">
@@ -3600,7 +3600,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Page Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3638,7 +3638,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Page Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3679,7 +3679,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Page Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

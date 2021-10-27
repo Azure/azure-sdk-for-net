@@ -22,8 +22,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return BinaryData.FromBytes(bytes);
             }
-            // string JObject
-            return BinaryData.FromString(value.ToString());
+            // message should be stringify
+            throw new ArgumentException("Message should be string, please stringify object.");
         }
 
         public override void WriteJson(JsonWriter writer, BinaryData value, JsonSerializer serializer)
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static bool TryLoadBinary(JToken input, out byte[] output)
         {
-            if (input["type"] != null)
+            if (input.Type == JTokenType.Object && input["type"] != null)
             {
                 var target = input.ToObject<ArrayBuffer>();
                 output = target.Data;

@@ -288,15 +288,14 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get
-            {
-                return AmqpMessage.Properties.CorrelationId.ToString();
-            }
+            get => _correlationIdSet ? AmqpMessage.Properties.CorrelationId?.ToString() : AmqpMessage.Properties.CorrelationId.ToString();
             set
             {
-                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
+                _correlationIdSet = true;
+                AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
+        private bool _correlationIdSet;
 
         /// <summary>Gets or sets an application specific subject.</summary>
         /// <value>The application specific subject.</value>
@@ -326,15 +325,14 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get
-            {
-                return AmqpMessage.Properties.To.ToString();
-            }
+            get => _toSet ? AmqpMessage.Properties.To?.ToString() : AmqpMessage.Properties.To.ToString();
             set
             {
-                AmqpMessage.Properties.To = new AmqpAddress(value);
+                _toSet = true;
+                AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
+        private bool _toSet;
 
         /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -364,15 +362,14 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get
-            {
-                return AmqpMessage.Properties.ReplyTo.ToString();
-            }
+            get => _replyToSet ? AmqpMessage.Properties.ReplyTo?.ToString() :  AmqpMessage.Properties.ReplyTo.ToString();
             set
             {
-                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
+                _replyToSet = true;
+                AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
+        private bool _replyToSet;
 
         /// <summary>
         /// Gets or sets the date and time in UTC at which the message will be enqueued. This
