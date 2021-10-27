@@ -18,6 +18,7 @@ namespace Azure
 
         /// <summary>
         /// Indicates that an operation should not throw an exception when the response indicates a failure.
+        /// Callers should check the Response.IsError property instead of catching exceptions.
         /// </summary>
         NoThrow = 1,
     }
