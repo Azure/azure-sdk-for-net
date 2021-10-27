@@ -104,14 +104,14 @@ Console.WriteLine($"Token: {token.Token}");
 
 In case a user's tokens are compromised or need to be revoked:
 
-```C# Snippet:RevokeCommunicationUserToken
-Response revokeResponse = client.RevokeTokens(user);
+```C# Snippet:RevokeCommunicationUserTokenAsync
+Response revokeResponse = await client.RevokeTokensAsync(user);
 ```
 
 ### Deleting a user
 
-```C# Snippet:DeleteACommunicationUser
-Response deleteResponse = client.DeleteUser(user);
+```C# Snippet:DeleteACommunicationUserAsync
+Response deleteResponse = await client.DeleteUserAsync(user);
 ```
 
 ### Exchanging AAD access token of a Teams User for a Communication Identity access token
