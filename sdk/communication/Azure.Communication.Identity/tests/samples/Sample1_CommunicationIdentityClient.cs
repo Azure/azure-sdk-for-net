@@ -179,7 +179,7 @@ namespace Azure.Communication.Identity.Samples
             var teamsToken = await generateTeamsToken();
             var client = CreateClientWithConnectionString();
 
-            #region  Snippet:GetTokenForTeamsUserAsync
+            #region Snippet:GetTokenForTeamsUserAsync
             Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
