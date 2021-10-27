@@ -35,23 +35,5 @@ namespace Azure
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
-
-        /// <summary>
-        /// A <see cref="HttpPipelinePolicy"/> to use as part of this operation. This policy will be applied at the start
-        /// of the underlying <see cref="HttpPipeline"/>.
-        /// </summary>
-        internal HttpPipelinePolicy? PerCallPolicy { get; set; }
-
-        /// <summary>
-        /// An <see cref="HttpPipelineSynchronousPolicy"/> which invokes an action when a request is being sent.
-        /// </summary>
-        internal class ActionPolicy : HttpPipelineSynchronousPolicy
-        {
-            private Action<HttpMessage> Action { get; }
-
-            public ActionPolicy(Action<HttpMessage> action) => Action = action;
-
-            public override void OnSendingRequest(HttpMessage message) => Action.Invoke(message);
-        }
     }
 }
