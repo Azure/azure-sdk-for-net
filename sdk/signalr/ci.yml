@@ -11,6 +11,7 @@ trigger:
     - sdk/signalr/ci.yml
     - sdk/signalr/service.projects
     - sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService
+    - sdk/signalr/Microsoft.Azure.SignalR.Serverless.Protocols
 
 pr:
   branches:
@@ -24,6 +25,7 @@ pr:
     - sdk/signalr/ci.yml
     - sdk/signalr/service.projects
     - sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService
+    - sdk/signalr/Microsoft.Azure.SignalR.Serverless.Protocols
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -34,3 +36,5 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.WebJobs.Extensions.SignalRService
       safeName: MicrosoftAzureWebJobsExtensionsSignalRService
+    - name: Microsoft.Azure.SignalR.Serverless.Protocols
+      safeName: MicrosoftAzureSignalRServerlessProtocols
