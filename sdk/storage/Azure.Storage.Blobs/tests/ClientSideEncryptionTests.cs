@@ -81,11 +81,9 @@ namespace Azure.Storage.Blobs.Test
             if (userKeyBytes == default)
             {
                 const int keySizeBits = 256;
-                var bytes = new byte[keySizeBits >> 3];
-                new RNGCryptoServiceProvider().GetBytes(bytes);
-                userKeyBytes = bytes;
+                userKeyBytes = GetRandomBuffer(keySizeBits >> 3);
             }
-            keyId ??= Guid.NewGuid().ToString();
+            keyId ??= Recording.Random.NewGuid().ToString();
 
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
             keyMock.SetupGet(k => k.KeyId).Returns(keyId);
@@ -152,18 +150,21 @@ namespace Azure.Storage.Blobs.Test
             return mock;
         }
 
-        private Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(IKeyEncryptionKey iKey)
+        private Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(params IKeyEncryptionKey[] keys)
         {
+            IKeyEncryptionKey Resolve(string keyId, CancellationToken cancellationToken)
+                => keys.FirstOrDefault(k => k.KeyId == keyId) ?? throw new Exception("Mock resolver couldn't resolve key id.");
+
             var resolverMock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
             if (IsAsync)
             {
                 resolverMock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
-                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? Task.FromResult(iKey) : throw new Exception("Mock resolver couldn't resolve key id."));
+                    .Returns<string, CancellationToken>((keyId, cancellationToken) => Task.FromResult(Resolve(keyId, cancellationToken)));
             }
             else
             {
                 resolverMock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
-                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? iKey : throw new Exception("Mock resolver couldn't resolve key id."));
+                    .Returns<string, CancellationToken>(Resolve);
             }
 
             return resolverMock;
@@ -1032,6 +1033,189 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
             Assert.AreEqual(0, contentRange.Start);
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RotateKey(bool useOverrides)
+        {
+            /* Test does not actually upload encrypted data, only simulates it by setting specific
+             * metadata. This allows the test to be recordable and to hopefully catch breaks in playback CI.
+             */
+
+            // Arrange
+
+            var data = GetRandomBuffer(Constants.KB);
+            var mockKey1 = GetIKeyEncryptionKey();
+            var mockKey2 = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+
+            var cek = GetRandomBuffer(32);
+            var simulatedEncryptionData = new EncryptionData
+            {
+                WrappedContentKey = new KeyEnvelope
+                {
+                    EncryptedKey = IsAsync
+                        ? await mockKey1.Object.WrapKeyAsync(s_algorithmName, cek, s_cancellationToken)
+                        : mockKey1.Object.WrapKey(s_algorithmName, cek, s_cancellationToken),
+                    Algorithm = s_algorithmName,
+                    KeyId = mockKey1.Object.KeyId
+                },
+                ContentEncryptionIV = GetRandomBuffer(32),
+                EncryptionAgent = new EncryptionAgent()
+                {
+                    EncryptionAlgorithm = "foo",
+                    EncryptionVersion = ClientSideEncryptionVersion.V1_0
+                },
+                EncryptionMode = "bar",
+                KeyWrappingMetadata = new Dictionary<string, string> { { "fizz", "buzz" } }
+            };
+
+            // do NOT get an encryption client for data upload. we won't be able to record.
+            await using DisposingContainer disposable = await GetTestContainerAsync();
+            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(data), metadata: new Dictionary<string, string> {
+                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(simulatedEncryptionData) }
+            });
+            // assure proper setup
+            await AssertKeyAsync(blob, mockKey1.Object);
+
+            // Act
+
+            await CallCorrectKeyRotationAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
+
+            // Assert
+
+            await AssertKeyAsync(blob, mockKey2.Object, cek);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        [LiveOnly]
+        public async Task CanRoundtripWithKeyRotation(bool useOverrides)
+        {
+            // Arrange
+
+            var data = GetRandomBuffer(Constants.KB);
+            var mockKey1 = GetIKeyEncryptionKey();
+            var mockKey2 = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+
+            var initialUploadEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = mockKey1.Object,
+                KeyResolver = mockKeyResolver,
+                KeyWrapAlgorithm = s_algorithmName
+            };
+
+            await using var disposable = await GetTestContainerEncryptionAsync(initialUploadEncryptionOptions);
+
+            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+            // upload with encryption
+            await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+            // assure proper setup
+            await AssertKeyAsync(blob, mockKey1.Object);
+
+            // Act
+
+            await CallCorrectKeyRotationAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
+
+            // Assert
+
+            await AssertKeyAsync(blob, mockKey2.Object);
+
+            // can download and decrypt
+            byte[] downloadData;
+            using (var stream = new MemoryStream())
+            {
+                await blob.DownloadToAsync(stream, cancellationToken: s_cancellationToken);
+                downloadData = stream.ToArray();
+            }
+            Assert.AreEqual(data, downloadData);
+        }
+
+        /// <summary>
+        /// There's a few too many things to switch on for key rotation. Separate method to determine the correct way to call it.
+        /// </summary>
+        /// <param name="blob">Blob to rotate key on.</param>
+        /// <param name="useOverrides">Whether to use client options or method overrides as parameters for key rotation.</param>
+        /// <param name="newKey">New KEK for encryption data.</param>
+        /// <param name="keyResolver">Key resolver for unwraping the old key.</param>
+        /// <returns></returns>
+        private async Task CallCorrectKeyRotationAsync(BlobClient blob, bool useOverrides, IKeyEncryptionKey newKey, IKeyEncryptionKeyResolver keyResolver)
+        {
+            if (useOverrides)
+            {
+                // switch over to a client with no clientside encryption options configured
+                blob = BlobsClientBuilder.RotateBlobClientSharedKey(blob, default);
+
+                // have to actually switch on IsAsync for extension methods
+                if (IsAsync)
+                {
+                    await blob.RotateClientSideEncryptionKeyAsync(
+                        newKeyOverride: newKey,
+                        oldKeyResolverOverride: keyResolver,
+                        keywrapAlgorithmOverride: s_algorithmName,
+                        cancellationToken: s_cancellationToken);
+                }
+                else
+                {
+                    blob.RotateClientSideEncryptionKey(
+                        newKeyOverride: newKey,
+                        oldKeyResolverOverride: keyResolver,
+                        keywrapAlgorithmOverride: s_algorithmName,
+                        cancellationToken: s_cancellationToken);
+                }
+            }
+            else
+            {
+                // switch over to a client with clientside encryption options configured and use them
+                blob = BlobsClientBuilder.RotateBlobClientSharedKey(blob, options => options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = newKey,
+                    KeyResolver = keyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                });
+
+                // have to actually switch on IsAsync for extension methods
+                if (IsAsync)
+                {
+                    await blob.RotateClientSideEncryptionKeyAsync(cancellationToken: s_cancellationToken);
+                }
+                else
+                {
+                    blob.RotateClientSideEncryptionKey(cancellationToken: s_cancellationToken);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Asserts a blob's encryption metadata keys are as expected
+        /// </summary>
+        /// <param name="client">Client to the blob.</param>
+        /// <param name="kek">Key Encryption Key that should be ID'd in the metadata and wrapping the Content Encryption Key.</param>
+        /// <param name="knownCek">Optional. If the Content Encryption Key is known, will unwrap the cek from metadata and assert it is as expected.</param>
+        /// <returns></returns>
+        private async Task AssertKeyAsync(BlobBaseClient client, IKeyEncryptionKey kek, byte[] knownCek = default)
+        {
+            var metadata = (await client.GetPropertiesAsync()).Value.Metadata;
+            if (!metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string encryptionDataString))
+            {
+                Assert.Fail("No encryption data on blob.");
+            }
+            var wrappedCek = EncryptionDataSerializer.Deserialize(encryptionDataString).WrappedContentKey;
+
+            Assert.AreEqual(kek.KeyId, wrappedCek.KeyId);
+            if (knownCek != default)
+            {
+                Assert.AreEqual(
+                    knownCek,
+                    IsAsync
+                        ? await kek.UnwrapKeyAsync(wrappedCek.Algorithm, wrappedCek.EncryptedKey, s_cancellationToken)
+                        : kek.UnwrapKey(wrappedCek.Algorithm, wrappedCek.EncryptedKey, s_cancellationToken));
+            }
         }
     }
 }

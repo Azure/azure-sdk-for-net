@@ -88,5 +88,28 @@ namespace Azure.Storage.Blobs.Tests
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
+
+        /// <summary>
+        /// Makes a new instrumented BlobClient pointing to the same resource but with new client options.
+        /// </summary>
+        /// <param name="oldClient">
+        /// Client to copy.
+        /// </param>
+        /// <param name="modifyOptions">
+        /// How to modify prebuild instrumented clientoptions.
+        /// </param>
+        /// <param name="credential">
+        /// Optional shared key credential to use. Defaults to <see cref="TenantConfigurationBuilder.GetNewSharedKeyCredentials"/>.
+        /// </param>
+        public static BlobClient RotateBlobClientSharedKey(
+            this BlobsClientBuilder clientBuilder,
+            BlobClient oldClient,
+            Action<BlobClientOptions> modifyOptions,
+            StorageSharedKeyCredential credential = default)
+        {
+            var newOptions = clientBuilder.GetOptions();
+            modifyOptions?.Invoke(newOptions);
+            return clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(new BlobClient(oldClient.Uri, credential ?? clientBuilder.Tenants.GetNewSharedKeyCredentials(), newOptions));
+        }
     }
 }

@@ -46,11 +46,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public static void RotateClientSideEncryptionKey(
             this BlobClient client,
-            BlobRequestConditions requestConditions,
-            IKeyEncryptionKey newKeyOverride,
-            IKeyEncryptionKeyResolver oldKeyResolverOverride,
-            string keywrapAlgorithmOverride,
-            CancellationToken cancellationToken)
+            BlobRequestConditions requestConditions = default,
+            IKeyEncryptionKey newKeyOverride = default,
+            IKeyEncryptionKeyResolver oldKeyResolverOverride = default,
+            string keywrapAlgorithmOverride = default,
+            CancellationToken cancellationToken = default)
             => RotateClientsideEncryptionKeyInternal(
                 client,
                 requestConditions,
@@ -87,11 +87,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public static async Task RotateClientSideEncryptionKeyAsync(
             this BlobClient client,
-            BlobRequestConditions requestConditions,
-            IKeyEncryptionKey newKeyOverride,
-            IKeyEncryptionKeyResolver oldKeyResolverOverride,
-            string keywrapAlgorithmOverride,
-            CancellationToken cancellationToken)
+            BlobRequestConditions requestConditions = default,
+            IKeyEncryptionKey newKeyOverride = default,
+            IKeyEncryptionKeyResolver oldKeyResolverOverride = default,
+            string keywrapAlgorithmOverride = default,
+            CancellationToken cancellationToken = default)
             => await RotateClientsideEncryptionKeyInternal(
                 client,
                 requestConditions,
@@ -110,38 +110,69 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            const string operationName = "RotateClientsideEncryptionKey";
-
-            // argument validatoin
+            // argument validation
             Argument.AssertNotNull(client, nameof(client));
-            var newKey = newKeyOverride ?? client.ClientSideEncryption?.KeyEncryptionKey ?? throw new ArgumentException("");
-            var oldKeyResolver = oldKeyResolverOverride ?? client.ClientSideEncryption?.KeyResolver ?? throw new ArgumentException("");
-            var newKeywrapAlgorithm = keywrapAlgorithmOverride ?? client.ClientSideEncryption.KeyWrapAlgorithm ?? throw new ArgumentException("");
+            IKeyEncryptionKey newKey = newKeyOverride ?? client.ClientSideEncryption?.KeyEncryptionKey ?? throw new ArgumentException("");
+            IKeyEncryptionKeyResolver oldKeyResolver = oldKeyResolverOverride ?? client.ClientSideEncryption?.KeyResolver ?? throw new ArgumentException("");
+            string newKeywrapAlgorithm = keywrapAlgorithmOverride ?? client.ClientSideEncryption.KeyWrapAlgorithm ?? throw new ArgumentException("");
 
-            // get old wrapped key
-            var getPropertiesResponse = await client.GetPropertiesInternal(requestConditions, async, cancellationToken, operationName).ConfigureAwait(false);
-            ETag etag = getPropertiesResponse.Value.ETag;
-            var metadata = getPropertiesResponse.Value.Metadata;
-
-            EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)
-                ?? throw new InvalidOperationException("Resource has no client-side encryption key to rotate.");
-
-            byte[] contentEncryptionKey = await UnwrapKeyInternal(encryptionData, oldKeyResolver, async, cancellationToken).ConfigureAwait(false);
-            byte[] newWrappedKey = await WrapKeyInternal(contentEncryptionKey, newKeywrapAlgorithm, newKey, async, cancellationToken).ConfigureAwait(false);
-
-            // set new wrapped key info
-            encryptionData.WrappedContentKey = new KeyEnvelope
+            using (client.ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
-                EncryptedKey = newWrappedKey,
-                Algorithm = newKeywrapAlgorithm,
-                KeyId = newKey.KeyId
-            };
-            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
+                client.ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                        $"{nameof(Uri)}: {client.Uri}\n" +
+                        $"{nameof(requestConditions)}: {requestConditions}");
 
-            // update blob if nothing has changed
-            var modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(requestConditions) ?? new BlobRequestConditions();
-            modifiedRequestConditions.IfMatch = etag;
-            await client.SetMetadataInternal(metadata, modifiedRequestConditions, async, cancellationToken).ConfigureAwait(false);
+                DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(RotateClientSideEncryptionKey)}");
+
+                try
+                {
+                    // hold onto etag, metadata, encryptiondata
+                    var getPropertiesResponse = await client.GetPropertiesInternal(requestConditions, async, cancellationToken).ConfigureAwait(false);
+                    ETag etag = getPropertiesResponse.Value.ETag;
+                    var metadata = getPropertiesResponse.Value.Metadata;
+                    EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)
+                        ?? throw new InvalidOperationException("Resource has no client-side encryption key to rotate.");
+
+                    // rotate keywrapping
+                    byte[] newWrappedKey = await WrapKeyInternal(
+                        await UnwrapKeyInternal(
+                            encryptionData,
+                            oldKeyResolver,
+                            async,
+                            cancellationToken).ConfigureAwait(false),
+                        newKeywrapAlgorithm,
+                        newKey,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // set new wrapped key info and reinsert into metadata
+                    encryptionData.WrappedContentKey = new KeyEnvelope
+                    {
+                        EncryptedKey = newWrappedKey,
+                        Algorithm = newKeywrapAlgorithm,
+                        KeyId = newKey.KeyId
+                    };
+                    metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
+
+                    // update blob ONLY IF ETAG MATCHES (do not take chances encryption info is now out of sync)
+                    var modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(requestConditions) ?? new BlobRequestConditions();
+                    modifiedRequestConditions.IfMatch = etag;
+                    await client.SetMetadataInternal(metadata, modifiedRequestConditions, async, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    client.ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    client.ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
         }
 
         private static async Task<byte[]> UnwrapKeyInternal(EncryptionData encryptionData, IKeyEncryptionKeyResolver keyResolver, bool async, CancellationToken cancellationToken)
