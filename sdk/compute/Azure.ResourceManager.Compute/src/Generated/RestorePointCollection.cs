@@ -19,7 +19,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of RestorePoint and their operations over a RestorePointGroup. </summary>
-    public partial class RestorePointCollection : ArmCollection, IEnumerable<RestorePoint>
+    public partial class RestorePointCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RestorePointsRestOperations _restClient;
@@ -35,16 +35,6 @@ namespace Azure.ResourceManager.Compute
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RestorePointsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<RestorePoint> IEnumerable<RestorePoint>.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>

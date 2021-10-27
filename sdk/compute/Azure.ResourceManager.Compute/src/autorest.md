@@ -16,6 +16,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
+#TODO: remove after we resolve why RestorePoint has no list
+list-exception:
+  RestorePoints
 operation-group-to-resource-type:
   CloudServiceRoles: Microsoft.Compute/cloudServices/roles
   CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies

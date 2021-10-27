@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of DdosCustomPolicy and their operations over a ResourceGroup. </summary>
-    public partial class DdosCustomPolicyCollection : ArmCollection, IEnumerable<DdosCustomPolicy>
+    public partial class DdosCustomPolicyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DdosCustomPoliciesRestOperations _restClient;
@@ -36,16 +36,6 @@ namespace Azure.ResourceManager.Network
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DdosCustomPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<DdosCustomPolicy> IEnumerable<DdosCustomPolicy>.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().Value.GetEnumerator();
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
