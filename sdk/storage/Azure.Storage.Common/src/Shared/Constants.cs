@@ -173,6 +173,7 @@ namespace Azure.Storage
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
             public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
@@ -298,9 +299,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.
