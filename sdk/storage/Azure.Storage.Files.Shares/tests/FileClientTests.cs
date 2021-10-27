@@ -4140,6 +4140,23 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            string sourceFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(sourceFileName));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + sourceFileName);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
