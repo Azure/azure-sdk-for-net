@@ -72,7 +72,6 @@ namespace Azure.Core.Experimental.Tests
 #pragma warning restore AZC0002
         {
             using HttpMessage message = CreateGetPetRequest(id, context);
-            message.Apply(context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
@@ -111,7 +110,6 @@ namespace Azure.Core.Experimental.Tests
 #pragma warning restore AZC0002
         {
             using HttpMessage message = CreateGetPetRequest(id, context);
-            message.Apply(context);
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
             try
