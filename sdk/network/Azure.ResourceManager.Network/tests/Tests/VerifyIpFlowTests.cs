@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
             string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName1).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
 
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Tests
                 SourcePortRange = "*",
             };
 
-            var networkSecurityGroupContainer = GetNetworkSecurityGroupCollection(resourceGroupName);
-            Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
+            var networkSecurityGroupCollection = GetNetworkSecurityGroupCollection(resourceGroupName);
+            Response<NetworkSecurityGroup> nsg = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
-            var createOrUpdateOperation = await networkSecurityGroupContainer.CreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
+            var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(vm.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");

@@ -54,30 +54,30 @@ namespace Azure.ResourceManager.Network.Tests
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
 
             //Create Network Watcher in the resource group
-            var networkWatcherContainer = await GetCollection();
+            var networkWatcherCollection = await GetCollection();
             var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
-            var createResponse = await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
+            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
             Assert.AreEqual(location, createResponse.Value.Data.Location);
             Assert.IsEmpty(createResponse.Value.Data.Tags);
 
             //Get Network Watcher by name in the resource group
-            Response<NetworkWatcher> getResponse = await networkWatcherContainer.GetAsync(networkWatcherName);
+            Response<NetworkWatcher> getResponse = await networkWatcherCollection.GetAsync(networkWatcherName);
             Assert.AreEqual(location, getResponse.Value.Data.Location);
             Assert.AreEqual(networkWatcherName, getResponse.Value.Data.Name);
             Assert.AreEqual("Succeeded", getResponse.Value.Data.ProvisioningState.ToString());
             Assert.IsEmpty(getResponse.Value.Data.Tags);
 
             properties.Tags.Add("test", "test");
-            var updateResponse = await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
+            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
             Assert.AreEqual(location, updateResponse.Value.Data.Location);
             Has.One.Equals(updateResponse.Value.Data.Tags);
             Assert.That(updateResponse.Value.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             //Get all Network Watchers in the resource group
-            List<NetworkWatcher> listResponse = await networkWatcherContainer.GetAllAsync().ToEnumerableAsync();
+            List<NetworkWatcher> listResponse = await networkWatcherCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(listResponse);
             Assert.AreEqual(networkWatcherName, listResponse[0].Data.Name);
             Assert.AreEqual(location, listResponse[0].Data.Location);

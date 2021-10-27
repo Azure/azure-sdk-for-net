@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put circuit
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.CreateOrUpdateAsync(circuitName, circuit);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuit> circuitOperation = await circuitCollection.CreateOrUpdateAsync(circuitName, circuit);
             Response<ExpressRouteCircuit> circuitResponse = await circuitOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -477,11 +477,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Ipv6PeeringConfig = ipv6Peering
             };
 
-            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
-            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitCollection = resourceGroup.GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitCollection.Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitCollection.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
@@ -545,11 +545,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            var publicIPAddressContainer = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.CreateOrUpdateAsync(name, publicIp);
+            var publicIPAddressCollection = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -577,9 +577,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
 
             // Test NIC apis
-            var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
-            await networkInterfaceContainer.CreateOrUpdateAsync(name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
+            var networkInterfaceCollection = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+            await networkInterfaceCollection.CreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceCollection.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
@@ -642,9 +642,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
-            await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnet);
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            var virtualNetworkCollection = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+            await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
 
             return getVnetResponse;
         }

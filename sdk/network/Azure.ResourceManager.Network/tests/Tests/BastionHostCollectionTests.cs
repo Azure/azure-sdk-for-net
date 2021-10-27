@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    internal class BastionHostContainerTests : NetworkServiceClientTestBase
+    internal class BastionHostCollectionTests : NetworkServiceClientTestBase
     {
         private ResourceGroup _resourceGroup;
         private Subnet _subnet;
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Tests
         private ResourceIdentifier _subnetIdentifier;
         private ResourceIdentifier _publicIPAddressIdentifier;
 
-        public BastionHostContainerTests(bool isAsync)
+        public BastionHostCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

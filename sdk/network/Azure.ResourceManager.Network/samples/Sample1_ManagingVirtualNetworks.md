@@ -23,12 +23,12 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+```C# Snippet:Readme_GetResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the virtual networks inside this resource group.
@@ -36,7 +36,7 @@ Now that we have the resource group created, we can manage the virtual networks 
 ***Create a virtual network***
 
 ```C# Snippet:Managing_Networks_CreateAVirtualNetwork
-VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
 string vnetName = "myVnet";
 
@@ -55,15 +55,15 @@ VirtualNetworkData input = new VirtualNetworkData()
     Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
 };
 
-VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
 ```
 
 ***List all virtual networks***
 
 ```C# Snippet:Managing_Networks_ListAllVirtualNetworks
-VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-AsyncPageable<VirtualNetwork> response = virtualNetworkContainer.GetAllAsync();
+AsyncPageable<VirtualNetwork> response = virtualNetworkCollection.GetAllAsync();
 await foreach (VirtualNetwork virtualNetwork in response)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
@@ -73,24 +73,24 @@ await foreach (VirtualNetwork virtualNetwork in response)
 ***Get a virtual network***
 
 ```C# Snippet:Managing_Networks_GetAVirtualNetwork
-VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetAsync("myVnet");
+VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
 Console.WriteLine(virtualNetwork.Data.Name);
 ```
 
 ***Try to get a virtual network if it exists***
 
 ```C# Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetIfExistsAsync("foo");
+VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
 if (virtualNetwork != null)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await virtualNetworkContainer.CheckIfExistsAsync("bar"))
+if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
 {
     Console.WriteLine("Virtual network 'bar' exists.");
 }
@@ -99,9 +99,9 @@ if (await virtualNetworkContainer.CheckIfExistsAsync("bar"))
 ***Delete a virtual network***
 
 ```C# Snippet:Managing_Networks_DeleteAVirtualNetwork
-VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetAsync("myVnet");
+VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
 await virtualNetwork.DeleteAsync();
 ```
 

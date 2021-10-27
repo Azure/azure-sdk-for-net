@@ -663,10 +663,10 @@ namespace Azure.ResourceManager.Network.Tests
                     }
             };
 
-            var virtualNetworkContainer = GetVirtualNetworkCollection(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnet);
+            var virtualNetworkCollection = GetVirtualNetworkCollection(resourceGroup);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
             Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Data.Id);
             Response<Subnet> gwSubnet = getSubnetResponse;
@@ -674,13 +674,13 @@ namespace Azure.ResourceManager.Network.Tests
             ApplicationGatewayData appGw = CreateApplicationGateway(location, gwSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId);
 
             // Put AppGw
-            var applicationGatewayContainer = GetApplicationGatewayCollection(resourceGroupName);
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.CreateOrUpdateAsync(appGwName, appGw);
+            var applicationGatewayCollection = GetApplicationGatewayCollection(resourceGroupName);
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(appGwName, appGw);
             Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
-            Response<ApplicationGateway> getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Response<ApplicationGateway> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
@@ -736,11 +736,11 @@ namespace Azure.ResourceManager.Network.Tests
             nic1.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             nic2.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             // Put Nics
-            var networkInterfaceContainer = GetNetworkInterfaceCollection(resourceGroupName);
-            var createOrUpdateOperation1 = await networkInterfaceContainer.CreateOrUpdateAsync(nic1name, nic1.Result.Data);
+            var networkInterfaceCollection = GetNetworkInterfaceCollection(resourceGroupName);
+            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(nic1name, nic1.Result.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceContainer.CreateOrUpdateAsync(nic2name, nic2.Result.Data);
+            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(nic2name, nic2.Result.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Network.Tests
             await getGateway.Value.StartAsync();
 
             // Get AppGw and make sure nics are added to backend
-            getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw
@@ -789,8 +789,8 @@ namespace Azure.ResourceManager.Network.Tests
                         new SubnetData() { Name = AGSubnetName, AddressPrefix = "10.21.0.0/24" }
                     }
             };
-            var virtualNetworkContainer = GetVirtualNetworkCollection(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnetdata);
+            var virtualNetworkCollection = GetVirtualNetworkCollection(resourceGroup);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnetdata);
             var vnet = await putVnetResponseOperation.WaitForCompletionAsync();
 
             //create VMs
@@ -810,20 +810,20 @@ namespace Azure.ResourceManager.Network.Tests
 
             //create ApplicationGateway
             string appGwName = Recording.GenerateAssetName("azsmnet");
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(AGSubnetName);
             Response<Subnet> agSubnet = getSubnetResponse;
 
             ApplicationGatewayData appGw = CreateApplicationGatewayWithoutSsl(location, agSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId, ipAddresses);
 
             // Put AppGw
-            var applicationGatewayContainer = resourceGroup.GetApplicationGateways();
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.CreateOrUpdateAsync(appGwName, appGw);
+            var applicationGatewayCollection = resourceGroup.GetApplicationGateways();
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(appGwName, appGw);
             Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
-            Response<ApplicationGateway> getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Response<ApplicationGateway> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
             CompareApplicationGatewayBase(appGw, getGateway.Value.Data);
 
@@ -836,11 +836,11 @@ namespace Azure.ResourceManager.Network.Tests
             nic2.Result.Value.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
 
             // Put Nics
-            var networkInterfaceContainer = GetNetworkInterfaceCollection(resourceGroup);
-            var createOrUpdateOperation1 = await networkInterfaceContainer.CreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
+            var networkInterfaceCollection = GetNetworkInterfaceCollection(resourceGroup);
+            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceContainer.CreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
+            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await getGateway.Value.StartAsync();
 
             // Get AppGw and make sure nics are added to backend
-            getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            getGateway = await applicationGatewayCollection.GetAsync(appGwName);
             Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task RouteFilterApiTest()
         {
             Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            var filterContainer = await GetCollection();
+            var filterCollection = await GetCollection();
 
             // Create route filter
             string filterName = Recording.GenerateAssetName("filter");

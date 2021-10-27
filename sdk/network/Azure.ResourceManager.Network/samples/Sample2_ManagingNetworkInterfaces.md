@@ -23,12 +23,12 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+```C# Snippet:Readme_GetResourceGroupCollection
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the network interfaces inside this resource group.
@@ -36,7 +36,7 @@ Now that we have the resource group created, we can manage the network interface
 ***Create a network interface***
 
 ```C# Snippet:Managing_Networks_CreateANetworkInterface
-PublicIPAddressContainer publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
+PublicIPAddressCollection publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
 string publicIPAddressName = "myIPAddress";
 PublicIPAddressData publicIPInput = new PublicIPAddressData()
 {
@@ -47,9 +47,9 @@ PublicIPAddressData publicIPInput = new PublicIPAddressData()
         DomainNameLabel = "myDomain"
     }
 };
-PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
-NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
 NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
 {
@@ -71,15 +71,15 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface networkInterface = await networkInterfaceContainer.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
 ```
 
 ***List all network interfaces***
 
 ```C# Snippet:Managing_Networks_ListAllNetworkInterfaces
-NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-AsyncPageable<NetworkInterface> response = networkInterfaceContainer.GetAllAsync();
+AsyncPageable<NetworkInterface> response = networkInterfaceCollection.GetAllAsync();
 await foreach (NetworkInterface virtualNetwork in response)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
@@ -89,24 +89,24 @@ await foreach (NetworkInterface virtualNetwork in response)
 ***Get a network interface***
 
 ```C# Snippet:Managing_Networks_GetANetworkInterface
-NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-NetworkInterface virtualNetwork = await networkInterfaceContainer.GetAsync("myVnet");
+NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
 Console.WriteLine(virtualNetwork.Data.Name);
 ```
 
 ***Try to get a network interface if it exists***
 
 ```C# Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-NetworkInterface virtualNetwork = await networkInterfaceContainer.GetIfExistsAsync("foo");
+NetworkInterface virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
 if (virtualNetwork != null)
 {
     Console.WriteLine(virtualNetwork.Data.Name);
 }
 
-if (await networkInterfaceContainer.CheckIfExistsAsync("bar"))
+if (await networkInterfaceCollection.CheckIfExistsAsync("bar"))
 {
     Console.WriteLine("Network interface 'bar' exists.");
 }
@@ -115,8 +115,8 @@ if (await networkInterfaceContainer.CheckIfExistsAsync("bar"))
 ***Delete a network interface***
 
 ```C# Snippet:Managing_Networks_DeleteANetworkInterface
-NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-NetworkInterface virtualNetwork = await networkInterfaceContainer.GetAsync("myVnet");
+NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
 await virtualNetwork.DeleteAsync();
 ```
