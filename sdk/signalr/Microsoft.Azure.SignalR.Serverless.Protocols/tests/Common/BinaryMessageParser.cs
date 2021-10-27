@@ -6,7 +6,10 @@ using System.Buffers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.Common
 {
-    internal static class BinaryMessageParser
+    /// <summary>
+    /// The same as https://github.com/aspnet/SignalR/blob/release/2.2/src/Common/BinaryMessageParser.cs
+    /// </summary>
+    public static class BinaryMessageParser
     {
         internal const int MaxLengthPrefixSize = 5;
 

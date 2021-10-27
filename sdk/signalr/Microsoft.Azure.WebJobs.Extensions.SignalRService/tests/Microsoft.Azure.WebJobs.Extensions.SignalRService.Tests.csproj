@@ -11,4 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Microsoft.Azure.SignalR.Serverless.Protocols\tests\Common\*.cs" LinkBase ="Common"/>
+  </ItemGroup>
 </Project>

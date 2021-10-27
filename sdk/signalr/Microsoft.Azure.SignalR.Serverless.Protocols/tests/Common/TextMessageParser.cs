@@ -8,9 +8,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.Common
     /// <summary>
     /// The same as https://github.com/aspnet/SignalR/blob/release/2.2/src/Common/TextMessageParser.cs
     /// </summary>
-    internal static class TextMessageParser
+    public static class TextMessageParser
     {
-        public const byte RecordSeparator = 0x1e;
+        public static readonly byte RecordSeparator = 0x1e;
 
         public static bool TryParseMessage(ref ReadOnlySequence<byte> buffer, out ReadOnlySequence<byte> payload)
         {
