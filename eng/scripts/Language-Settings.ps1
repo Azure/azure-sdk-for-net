@@ -18,9 +18,12 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $EngDir/service.proj `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion
-
+  Write-Host "This is msbuild output"
+  Write-Host $msbuildOutput
   foreach ($projectOutput in $msbuildOutput)
   {
+    Write-Host "This is project output"
+    Write-Host $projectOutput
     if (!$projectOutput) { continue }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
