@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
                 TestEnvironment.OrchestrationProjectName,
                 TestEnvironment.DeploymentName,
-                "where are the calories per recipe?");
+                "Where are the calories per recipe?");
 #endif
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
@@ -120,7 +120,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
                 TestEnvironment.OrchestrationProjectName,
                 TestEnvironment.DeploymentName,
-                "book me flight from London to Paris");
+                "Book me flight from London to Paris");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 TestEnvironment.OrchestrationProjectName,
                 TestEnvironment.DeploymentName,
-                "where are the calories per recipe?");
+                "Where are the calories per recipe?");
 #endif
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
@@ -247,7 +247,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
                 TestEnvironment.OrchestrationProjectName,
                 TestEnvironment.DeploymentName,
-                "book me flight from London to Paris");
+                "Book me flight from London to Paris");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
