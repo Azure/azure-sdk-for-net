@@ -12,20 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureEventHubsParameterPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            if (Optional.IsDefined(ConsumerGroup))
-            {
-                writer.WritePropertyName("consumerGroup");
-                writer.WriteStringValue(ConsumerGroup);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

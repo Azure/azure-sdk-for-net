@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,10 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
         {
-            Optional<SubResource> subnet = default;
-            Optional<SubResource> networkInterface = default;
+            Optional<WritableSubResource> networkManager = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<WritableSubResource> networkInterface = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("networkManager"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    networkManager = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("subnet"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -25,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = SubResource.DeserializeSubResource(property.Value);
+                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("networkInterface"))
@@ -35,11 +47,11 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkInterface = SubResource.DeserializeSubResource(property.Value);
+                    networkInterface = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroupAssociation(subnet.Value, networkInterface.Value);
+            return new EffectiveNetworkSecurityGroupAssociation(networkManager, subnet, networkInterface);
         }
     }
 }

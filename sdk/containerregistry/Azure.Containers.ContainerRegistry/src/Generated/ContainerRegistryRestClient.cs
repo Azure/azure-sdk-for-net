@@ -28,12 +28,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ContainerRegistryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            this.url = url;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -107,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response<Manifest>> GetManifestAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestWrapper>> GetManifestAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -124,9 +119,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        Manifest value = default;
+                        ManifestWrapper value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Manifest.DeserializeManifest(document.RootElement);
+                        value = ManifestWrapper.DeserializeManifestWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -140,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response<Manifest> GetManifest(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public Response<ManifestWrapper> GetManifest(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -157,9 +152,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        Manifest value = default;
+                        ManifestWrapper value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Manifest.DeserializeManifest(document.RootElement);
+                        value = ManifestWrapper.DeserializeManifestWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -4,12 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -23,7 +19,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample09_ObservableEventBatchLiveTests
     {
         /// <summary>
@@ -43,32 +38,34 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-                var newBatch = new ObservableEventDataBatch(eventBatch);
+                var observableBatch = new ObservableEventDataBatch(eventBatch);
 
-                // Adding events to the batch
+                // Attempt to add events to the batch.
+
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventBody = new BinaryData($"Event #{ index }");
-                    var eventData = new EventData(eventBody);
+                    var eventData = new EventData($"Event #{ index }");
 
-                    if (!newBatch.TryAdd(eventData))
+                    if (!observableBatch.TryAdd(eventData))
                     {
                         throw new Exception($"The event at { index } could not be added.");
                     }
                 }
 
-                // Looping through the events to demonstrate how to access them
-                foreach (var singleEvent in newBatch.Events)
+                // Events in the batch can be inspected using the "Events" collection.
+
+                foreach (var singleEvent in observableBatch.Events)
                 {
                     Debug.WriteLine($"Added event { singleEvent.EventBody } at time { singleEvent.EnqueuedTime }");
                 }
 
-                await producer.SendAsync(newBatch);
+                await producer.SendAsync(observableBatch);
             }
             finally
             {
@@ -95,28 +92,35 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
+
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             try
             {
                 using var eventBatch = await producer.CreateBatchAsync();
-                var newBatch = new ObservableEventDataBatch(eventBatch);
+                var observableBatch = new ObservableEventDataBatch(eventBatch);
 
-                // Adding events to the batch
+                // Attempt to add events to the batch.
+
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventBody = new BinaryData($"Event #{ index }");
-                    var eventData = new EventData(eventBody);
-                    eventData.Properties.Add("ApplicationId", index);
+                    var eventData = new EventData($"Event #{ index }")
+                    {
+                        MessageId = index.ToString()
+                    };
 
-                    if (!newBatch.TryAdd(eventData))
+                    if (!observableBatch.TryAdd(eventData))
                     {
                         throw new Exception($"The event at { index } could not be added.");
                     }
                 }
 
-                // Verify that the expected event is in the batch
-                var contains = newBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+                // The "Events" collection can be used to validate that a specific event
+                // is in the batch.  In this example, we'll ensure that an event with
+                // id "1" was added.
+
+                var contains = observableBatch.Events
+                    .Any(eventData => eventData.MessageId == "1");
             }
             finally
             {
@@ -134,35 +138,34 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public async Task ObservableEventBatchIsPublishable()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-            await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
             using var eventBatch = await producer.CreateBatchAsync();
-            var newBatch = new ObservableEventDataBatch(eventBatch);
+            var observableBatch = new ObservableEventDataBatch(eventBatch);
 
             // Adding events to the batch
+
             for (var index = 0; index < 5; ++index)
             {
-                var eventBody = new BinaryData($"Event #{ index }");
-                var eventData = new EventData(eventBody);
+                var eventData = new EventData($"Event #{ index }");
                 eventData.Properties.Add("ApplicationId", index);
 
-                if (!newBatch.TryAdd(eventData))
+                if (!observableBatch.TryAdd(eventData))
                 {
                     throw new Exception($"The event at { index } could not be added.");
                 }
             }
 
-            var contains = newBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+            var contains = observableBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
             Assert.That(contains, Is.True, "The batch should contain the event with the expected application identifier.");
 
-            Assert.Greater(newBatch.Count, 0, "Events were not successfully added to the batch");
-            Assert.AreEqual(newBatch.Count, newBatch.Events.Count, "The observable batch events are out of sync with the event batch data");
+            Assert.That(observableBatch.Count, Is.GreaterThan(0), "Events were not successfully added to the batch");
+            Assert.That(observableBatch.Count, Is.EqualTo(observableBatch.Events.Count), "The observable batch events are out of sync with the event batch data");
 
             // Check implicit casting by verifying batch can be sent using built in
             // producer method
-            await producer.SendAsync(newBatch);
-            await producer.CloseAsync();
+
+            await producer.SendAsync(observableBatch);
         }
 
         #region Snippet:Sample09_ObservableEventBatch
@@ -209,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             public void Dispose() => _batch.Dispose();
 
-            // Performs the needed transation to allow an ObservableEventDataBatch to be
+            // Performs the needed translation to allow an ObservableEventDataBatch to be
             // implicitly converted to an EventDataBatch
             public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
         }

@@ -148,10 +148,9 @@ var consumer = new EventHubConsumerClient(consumerGroup, connectionString, event
 Using an `Azure.Identity` credential:
 
 ```C# Snippet:EventHubs_Migrate_CreateWithDefaultAzureCredential
-TokenCredential credential = new DefaultAzureCredential();
-
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);

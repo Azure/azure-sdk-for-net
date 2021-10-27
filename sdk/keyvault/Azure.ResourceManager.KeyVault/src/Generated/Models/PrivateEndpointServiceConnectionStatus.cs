@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointServiceConnectionStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateEndpointServiceConnectionStatus(string value)
         {

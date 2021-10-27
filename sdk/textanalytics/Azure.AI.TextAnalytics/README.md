@@ -1,5 +1,5 @@
 # Azure Cognitive Services Text Analytics client library for .NET
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main features: 
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
@@ -8,6 +8,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Linked Entity Recognition
 * Healthcare Recognition
 * Running multiple actions in one or more documents
+* Extractive Text Summarization
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -16,18 +17,18 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 ### Install the package
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.AI.TextAnalytics
 ```
-> Note: This version of the client library defaults to the `v3.1-preview.5` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|- |
-|5.1.0-beta.7 (latest Beta) | 3.0, 3.1-preview.5
-|5.0.0 (latest GA) | 3.0
-|1.0.0, 1.0.1 | 3.0
+|5.2.0-beta.1 | 3.0, 3.1, 3.2-preview.1 (default)
+|5.1.0  | 3.0, 3.1 (default)
+|5.0.0  | 3.0
+|1.0.X | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -146,7 +147,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
-The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main functions of Text Analytics. Although most of the snippets below make use of synchronous service calls, keep in mind that the Azure.AI.TextAnalytics package supports both synchronous and asynchronous APIs.
+The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main features of Text Analytics. Although most of the snippets below make use of synchronous service calls, keep in mind that the Azure.AI.TextAnalytics package supports both synchronous and asynchronous APIs.
 
 ### Sync examples
 * [Detect Language](#detect-language)
@@ -161,6 +162,7 @@ The following section provides several code snippets using the `client` [created
 * [Recognize Entities Asynchronously](#recognize-entities-asynchronously)
 * [Analyze Healthcare Entities Asynchronously](#analyze-healthcare-entities-asynchronously)
 * [Run multiple actions Asynchronously](#run-multiple-actions-asynchronously)
+* [Perform Extractive Text Summarization Asynchronously](#perform-extractive-text-summarization-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -549,7 +551,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 ```
 
 ### Run multiple actions Asynchronously
-This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, and sentiment analysis. For more information see [Using analyze][analyze_operation_howto].
+This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, sentiment analysis, and Extractive Text Summarization. For more information see [Using analyze][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
@@ -571,9 +573,6 @@ This functionality allows running multiple actions in one or more documents. Act
     {
         ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
         RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-        RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
-        RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
-        AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -596,9 +595,6 @@ This functionality allows running multiple actions in one or more documents. Act
     {
         IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
         IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
@@ -610,28 +606,6 @@ This functionality allows running multiple actions in one or more documents. Act
                 Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
                 foreach (CategorizedEntity entity in documentResults.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Recognized PII Entities");
-        docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
-        {
-            foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
-
-                foreach (PiiEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -660,50 +634,73 @@ This functionality allows running multiple actions in one or more documents. Act
                 Console.WriteLine("");
             }
         }
+    }
+}
+```
 
-        Console.WriteLine("Recognized Linked Entities");
-        docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
+### Perform Extractive Text Summarization Asynchronously
+Get a summary for the input documents by extracting their most relevant sentences. Note that this API can only be used as part of an [Analyze Operation](#run-multiple-actions-asynchronously).
+
+```C# Snippet:TextAnalyticsExtractSummaryWithoutErrorHandlingAsync
+// Get input document.
+string document = @"Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but “what really put the firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained that customers were asking, “’How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?”
+                    In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there – in the office, at home or a coffee shop.
+                    And then, when you’re done, you’re done.You won’t have any issues around security because you’re not saving anything on your device,” McKelvey said, noting that all the data is stored in the cloud.
+                    The ability to login to a Cloud PC from anywhere on any device is part of Microsoft’s larger strategy around tailoring products such as Microsoft Teams and Microsoft 365 for the post-pandemic hybrid workforce of the future, she added. It enables employees accustomed to working from home to continue working from home; it enables companies to hire interns from halfway around the world; it allows startups to scale without requiring IT expertise.
+                    “I think this will be interesting for those organizations who, for whatever reason, have shied away from virtualization.This is giving them an opportunity to try it in a way that their regular, everyday endpoint admin could manage,” McKelvey said.
+                    The simplicity of Windows 365 won over Dean Wells, the corporate chief information officer for the Government of Nunavut. His team previously attempted to deploy a traditional virtual desktop infrastructure and found it inefficient and unsustainable given the limitations of low-bandwidth satellite internet and the constant need for IT staff to manage the network and infrastructure.
+                    We didn’t run it for very long,” he said. “It didn’t turn out the way we had hoped.So, we actually had terminated the project and rolled back out to just regular PCs.”
+                    He re-evaluated this decision after the Government of Nunavut was hit by a ransomware attack in November 2019 that took down everything from the phone system to the government’s servers. Microsoft helped rebuild the system, moving the government to Teams, SharePoint, OneDrive and Microsoft 365. Manchester’s team recruited the Government of Nunavut to pilot Windows 365. Wells was intrigued, especially by the ability to manage the elastic workforce securely and seamlessly.
+                    “The impact that I believe we are finding, and the impact that we’re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,” he said.
+                    “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
+
+// Prepare analyze operation input. You can add multiple documents to this list and perform the same
+// operation to all of them.
+var batchInput = new List<string>
+{
+    document
+};
+
+TextAnalyticsActions actions = new TextAnalyticsActions()
+{
+    ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() }
+};
+
+// Start analysis process.
+AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
+
+await operation.WaitForCompletionAsync();
+
+// View operation status.
+Console.WriteLine($"AnalyzeActions operation has completed");
+Console.WriteLine();
+
+Console.WriteLine($"Created On   : {operation.CreatedOn}");
+Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+Console.WriteLine($"Id           : {operation.Id}");
+Console.WriteLine($"Status       : {operation.Status}");
+Console.WriteLine($"Last Modified: {operation.LastModified}");
+Console.WriteLine();
+
+// View operation results.
+await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+{
+    IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
+
+    foreach (ExtractSummaryActionResult summaryActionResults in summaryResults)
+    {
+        foreach (ExtractSummaryResult documentResults in summaryActionResults.DocumentsResults)
         {
-            foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
+            Console.WriteLine($"  Extracted the following {documentResults.Sentences.Count} sentence(s):");
+            Console.WriteLine();
+
+            foreach (SummarySentence sentence in documentResults.Sentences)
             {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
-
-                foreach (LinkedEntity entity in documentResults.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Name}");
-                    Console.WriteLine($"  DataSource: {entity.DataSource}");
-                    Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
-                    Console.WriteLine($"  Language: {entity.Language}");
-                    Console.WriteLine($"  DataSource Url: {entity.Url}");
-
-                    Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
-                    foreach (LinkedEntityMatch match in entity.Matches)
-                    {
-                        Console.WriteLine($"    Match Text: {match.Text}");
-                        Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
-                        Console.WriteLine($"    Offset: {match.Offset}");
-                        Console.WriteLine($"    Length: {match.Length}");
-                    }
-                    Console.WriteLine("");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Analyze Sentiment");
-        docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
-        {
-            foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
-                Console.WriteLine("");
+                Console.WriteLine($"  Sentence: {sentence.Text}");
+                Console.WriteLine($"  Rank Score: {sentence.RankScore}");
+                Console.WriteLine($"  Offset: {sentence.Offset}");
+                Console.WriteLine($"  Length: {sentence.Length}");
+                Console.WriteLine();
             }
         }
     }
@@ -772,10 +769,11 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
 - [Recognize Healthcare Entities][analyze_healthcare_sample]
-- [Run multiple actions][analyze_operation_sample]
+- [Perform Extractive Text Summarization][extract_summary_sample]
 
 ### Advanced samples
 - [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
+- [Run multiple actions][analyze_operation_sample]
 - [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
@@ -818,7 +816,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
@@ -827,6 +825,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
 [analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
 [extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
+[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample8_ExtractSummary.md
 [recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
 [recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
 [recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md

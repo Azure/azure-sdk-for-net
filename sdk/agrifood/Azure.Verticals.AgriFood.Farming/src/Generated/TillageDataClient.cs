@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,13 +19,16 @@ namespace Azure.Verticals.AgriFood.Farming
     /// <summary> The TillageData service client. </summary>
     public partial class TillageDataClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
+
+        private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get => _pipeline; }
 
         /// <summary> Initializes a new instance of TillageDataClient for mocking. </summary>
         protected TillageDataClient()
@@ -34,6 +39,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public TillageDataClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
             if (endpoint == null)
@@ -46,638 +52,73 @@ namespace Azure.Verticals.AgriFood.Farming
             }
 
             options ??= new FarmBeatsClientOptions();
+
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
-        }
-
-        /// <summary> Returns a paginated list of tillage data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("TillageDataClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of tillage data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("TillageDataClient.ListByFarmerId");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="ListByFarmerId"/> and <see cref="ListByFarmerIdAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/tillage-data", false);
-            if (minTillageDepth != null)
-            {
-                uri.AppendQuery("minTillageDepth", minTillageDepth.Value, true);
-            }
-            if (maxTillageDepth != null)
-            {
-                uri.AppendQuery("maxTillageDepth", maxTillageDepth.Value, true);
-            }
-            if (minTillagePressure != null)
-            {
-                uri.AppendQuery("minTillagePressure", minTillagePressure.Value, true);
-            }
-            if (maxTillagePressure != null)
-            {
-                uri.AppendQuery("maxTillagePressure", maxTillagePressure.Value, true);
-            }
-            if (sources != null)
-            {
-                uri.AppendQueryDelimited("sources", sources, ",", true);
-            }
-            if (associatedBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("associatedBoundaryIds", associatedBoundaryIds, ",", true);
-            }
-            if (operationBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("operationBoundaryIds", operationBoundaryIds, ",", true);
-            }
-            if (minOperationStartDateTime != null)
-            {
-                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
-            }
-            if (maxOperationStartDateTime != null)
-            {
-                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
-            }
-            if (minOperationEndDateTime != null)
-            {
-                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
-            }
-            if (maxOperationEndDateTime != null)
-            {
-                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
-            }
-            if (minOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
-            }
-            if (maxOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
-            }
-            if (minArea != null)
-            {
-                uri.AppendQuery("minArea", minArea.Value, true);
-            }
-            if (maxArea != null)
-            {
-                uri.AppendQuery("maxArea", maxArea.Value, true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("TillageDataClient.List");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response List(double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("TillageDataClient.List");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="List"/> and <see cref="ListAsync"/> operations. </summary>
-        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
-        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
-        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// 
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// 
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRequest(double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/tillage-data", false);
-            if (minTillageDepth != null)
-            {
-                uri.AppendQuery("minTillageDepth", minTillageDepth.Value, true);
-            }
-            if (maxTillageDepth != null)
-            {
-                uri.AppendQuery("maxTillageDepth", maxTillageDepth.Value, true);
-            }
-            if (minTillagePressure != null)
-            {
-                uri.AppendQuery("minTillagePressure", minTillagePressure.Value, true);
-            }
-            if (maxTillagePressure != null)
-            {
-                uri.AppendQuery("maxTillagePressure", maxTillagePressure.Value, true);
-            }
-            if (sources != null)
-            {
-                uri.AppendQueryDelimited("sources", sources, ",", true);
-            }
-            if (associatedBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("associatedBoundaryIds", associatedBoundaryIds, ",", true);
-            }
-            if (operationBoundaryIds != null)
-            {
-                uri.AppendQueryDelimited("operationBoundaryIds", operationBoundaryIds, ",", true);
-            }
-            if (minOperationStartDateTime != null)
-            {
-                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
-            }
-            if (maxOperationStartDateTime != null)
-            {
-                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
-            }
-            if (minOperationEndDateTime != null)
-            {
-                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
-            }
-            if (maxOperationEndDateTime != null)
-            {
-                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
-            }
-            if (minOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
-            }
-            if (maxOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
-            }
-            if (minArea != null)
-            {
-                uri.AppendQuery("minArea", minArea.Value, true);
-            }
-            if (maxArea != null)
-            {
-                uri.AppendQuery("maxArea", maxArea.Value, true);
-            }
-            if (ids != null)
-            {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
-            }
-            if (names != null)
-            {
-                uri.AppendQueryDelimited("names", names, ",", true);
-            }
-            if (propertyFilters != null)
-            {
-                uri.AppendQueryDelimited("propertyFilters", propertyFilters, ",", true);
-            }
-            if (statuses != null)
-            {
-                uri.AppendQueryDelimited("statuses", statuses, ",", true);
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Get a specified tillage data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="tillageDataId"> ID of the tillage data resource. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string tillageDataId, RequestOptions options = null)
+        public virtual async Task<Response> GetAsync(string farmerId, string tillageDataId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetRequest(farmerId, tillageDataId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -690,257 +131,155 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="tillageDataId"> ID of the tillage data resource. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string tillageDataId, RequestOptions options = null)
+        public virtual Response Get(string farmerId, string tillageDataId, RequestOptions options)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateGetRequest(farmerId, tillageDataId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="tillageDataId"> ID of the tillage data resource. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(string farmerId, string tillageDataId, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/tillage-data/", false);
-            uri.AppendPath(tillageDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Creates or updates an tillage data resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>tillageDepth</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>tillagePressure</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Source of the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Link for attachments. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique resource ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Status of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
-        /// Each pair must not have a key greater than 50 characters
-        /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Data unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Data value. </term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="tillageDataId"> ID of the tillage data resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string tillageDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -950,198 +289,91 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates an tillage data resource under a particular farmer. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>tillageDepth</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>tillagePressure</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>area</term>
-        ///     <term>Measure</term>
-        ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Source of the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationModifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationStartDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationEndDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>attachmentsLink</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Link for attachments. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>associatedBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>operationBoundaryId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>farmerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Unique resource ID. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>eTag</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>status</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Status of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>createdDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>modifiedDateTime</term>
-        ///     <term>string (ISO 8601 Format)</term>
-        ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>name</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Name to identify resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>description</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>properties</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
-        /// Each pair must not have a key greater than 50 characters
-        /// 
-        /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>Measure</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>unit</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Data unit. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>value</term>
-        ///     <term>number</term>
-        ///     <term></term>
-        ///     <term> Data value. </term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="tillageDataId"> ID of the tillage data resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   tillageDepth: {
+        ///     unit: string,
+        ///     value: number
+        ///   },
+        ///   tillagePressure: Measure,
+        ///   area: Measure,
+        ///   source: string,
+        ///   operationModifiedDateTime: string (ISO 8601 Format),
+        ///   operationStartDateTime: string (ISO 8601 Format),
+        ///   operationEndDateTime: string (ISO 8601 Format),
+        ///   attachmentsLink: string,
+        ///   associatedBoundaryId: string,
+        ///   operationBoundaryId: string,
+        ///   farmerId: string,
+        ///   id: string,
+        ///   eTag: string,
+        ///   status: string,
+        ///   createdDateTime: string (ISO 8601 Format),
+        ///   modifiedDateTime: string (ISO 8601 Format),
+        ///   name: string,
+        ///   description: string,
+        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string farmerId, string tillageDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 201:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, tillageDataId, content);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -1150,63 +382,39 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="tillageDataId"> ID of the tillage data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string tillageDataId, RequestContent content, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/tillage-data/", false);
-            uri.AppendPath(tillageDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
         /// <summary> Deletes a specified tillage data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="tillageDataId"> ID of the tillage data. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string farmerId, string tillageDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1219,35 +427,35 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="tillageDataId"> ID of the tillage data. </param>
         /// <param name="options"> The request options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response Delete(string farmerId, string tillageDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope = _clientDiagnostics.CreateScope("TillageDataClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                using HttpMessage message = CreateDeleteRequest(farmerId, tillageDataId);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
             {
@@ -1256,25 +464,825 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="tillageDataId"> ID of the tillage data. </param>
+        /// <summary> Returns a paginated list of tillage data resources under a particular farm. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string farmerId, string tillageDataId, RequestOptions options = null)
+        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
+        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
+        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       tillageDepth: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       tillagePressure: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListByFarmerIdAsync(string farmerId, RequestOptions options, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
         {
-            var message = Pipeline.CreateMessage();
+            if (farmerId == null)
+            {
+                throw new ArgumentNullException(nameof(farmerId));
+            }
+
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "TillageDataClient.ListByFarmerId");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of tillage data resources under a particular farm. </summary>
+        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="options"> The request options. </param>
+        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
+        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
+        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       tillageDepth: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       tillagePressure: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> ListByFarmerId(string farmerId, RequestOptions options, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            if (farmerId == null)
+            {
+                throw new ArgumentNullException(nameof(farmerId));
+            }
+
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "TillageDataClient.ListByFarmerId");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
+        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
+        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       tillageDepth: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       tillagePressure: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual AsyncPageable<BinaryData> ListAsync(RequestOptions options, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "TillageDataClient.List");
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
+        /// <param name="options"> The request options. </param>
+        /// <param name="minTillageDepth"> Minimum measured tillage depth (inclusive). </param>
+        /// <param name="maxTillageDepth"> Maximum measured tillage depth (inclusive). </param>
+        /// <param name="minTillagePressure"> Minimum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="maxTillagePressure"> Maximum pressure applied by a tillage implement (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="operationBoundaryIds"> Operation boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   value: [
+        ///     {
+        ///       tillageDepth: {
+        ///         unit: string,
+        ///         value: number
+        ///       },
+        ///       tillagePressure: Measure,
+        ///       area: Measure,
+        ///       source: string,
+        ///       operationModifiedDateTime: string (ISO 8601 Format),
+        ///       operationStartDateTime: string (ISO 8601 Format),
+        ///       operationEndDateTime: string (ISO 8601 Format),
+        ///       attachmentsLink: string,
+        ///       associatedBoundaryId: string,
+        ///       operationBoundaryId: string,
+        ///       farmerId: string,
+        ///       id: string,
+        ///       eTag: string,
+        ///       status: string,
+        ///       createdDateTime: string (ISO 8601 Format),
+        ///       modifiedDateTime: string (ISO 8601 Format),
+        ///       name: string,
+        ///       description: string,
+        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///     }
+        ///   ],
+        ///   $skipToken: string,
+        ///   nextLink: string
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   error: {
+        ///     code: string,
+        ///     message: string,
+        ///     target: string,
+        ///     details: [Error],
+        ///     innererror: {
+        ///       code: string,
+        ///       innererror: InnerError
+        ///     }
+        ///   },
+        ///   traceId: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+#pragma warning disable AZC0002
+        public virtual Pageable<BinaryData> List(RequestOptions options, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+#pragma warning restore AZC0002
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "TillageDataClient.List");
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateListRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        internal HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Delete;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/tillage-data", false);
+            if (minTillageDepth != null)
+            {
+                uri.AppendQuery("minTillageDepth", minTillageDepth.Value, true);
+            }
+            if (maxTillageDepth != null)
+            {
+                uri.AppendQuery("maxTillageDepth", maxTillageDepth.Value, true);
+            }
+            if (minTillagePressure != null)
+            {
+                uri.AppendQuery("minTillagePressure", minTillagePressure.Value, true);
+            }
+            if (maxTillagePressure != null)
+            {
+                uri.AppendQuery("maxTillagePressure", maxTillagePressure.Value, true);
+            }
+            if (sources != null)
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (associatedBoundaryIds != null)
+            {
+                foreach (var param in associatedBoundaryIds)
+                {
+                    uri.AppendQuery("associatedBoundaryIds", param, true);
+                }
+            }
+            if (operationBoundaryIds != null)
+            {
+                foreach (var param in operationBoundaryIds)
+                {
+                    uri.AppendQuery("operationBoundaryIds", param, true);
+                }
+            }
+            if (minOperationStartDateTime != null)
+            {
+                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
+            }
+            if (maxOperationStartDateTime != null)
+            {
+                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
+            }
+            if (minOperationEndDateTime != null)
+            {
+                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
+            }
+            if (maxOperationEndDateTime != null)
+            {
+                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
+            }
+            if (minOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
+            }
+            if (maxOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
+            }
+            if (minArea != null)
+            {
+                uri.AppendQuery("minArea", minArea.Value, true);
+            }
+            if (maxArea != null)
+            {
+                uri.AppendQuery("maxArea", maxArea.Value, true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateListRequest(double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tillage-data", false);
+            if (minTillageDepth != null)
+            {
+                uri.AppendQuery("minTillageDepth", minTillageDepth.Value, true);
+            }
+            if (maxTillageDepth != null)
+            {
+                uri.AppendQuery("maxTillageDepth", maxTillageDepth.Value, true);
+            }
+            if (minTillagePressure != null)
+            {
+                uri.AppendQuery("minTillagePressure", minTillagePressure.Value, true);
+            }
+            if (maxTillagePressure != null)
+            {
+                uri.AppendQuery("maxTillagePressure", maxTillagePressure.Value, true);
+            }
+            if (sources != null)
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (associatedBoundaryIds != null)
+            {
+                foreach (var param in associatedBoundaryIds)
+                {
+                    uri.AppendQuery("associatedBoundaryIds", param, true);
+                }
+            }
+            if (operationBoundaryIds != null)
+            {
+                foreach (var param in operationBoundaryIds)
+                {
+                    uri.AppendQuery("operationBoundaryIds", param, true);
+                }
+            }
+            if (minOperationStartDateTime != null)
+            {
+                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
+            }
+            if (maxOperationStartDateTime != null)
+            {
+                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
+            }
+            if (minOperationEndDateTime != null)
+            {
+                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
+            }
+            if (maxOperationEndDateTime != null)
+            {
+                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
+            }
+            if (minOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
+            }
+            if (maxOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
+            }
+            if (minArea != null)
+            {
+                uri.AppendQuery("minArea", minArea.Value, true);
+            }
+            if (maxArea != null)
+            {
+                uri.AppendQuery("maxArea", maxArea.Value, true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRequest(string farmerId, string tillageDataId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
             uri.AppendPath("/farmers/", false);
             uri.AppendPath(farmerId, true);
             uri.AppendPath("/tillage-data/", false);
             uri.AppendPath(tillageDataId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string tillageDataId, RequestContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/tillage-data/", false);
+            uri.AppendPath(tillageDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            message.ResponseClassifier = ResponseClassifier200201.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string farmerId, string tillageDataId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/farmers/", false);
+            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/tillage-data/", false);
+            uri.AppendPath(tillageDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier204.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateListByFarmerIdNextPageRequest(string nextLink, string farmerId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.ResponseClassifier = ResponseClassifier200.Instance;
+            return message;
+        }
+
+        private sealed class ResponseClassifier200 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier200201 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    200 => false,
+                    201 => false,
+                    _ => true
+                };
+            }
+        }
+        private sealed class ResponseClassifier204 : ResponseClassifier
+        {
+            private static ResponseClassifier _instance;
+            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    204 => false,
+                    _ => true
+                };
+            }
         }
     }
 }

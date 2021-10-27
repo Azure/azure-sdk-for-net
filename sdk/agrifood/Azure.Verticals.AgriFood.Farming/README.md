@@ -12,7 +12,7 @@ FarmBeats is a B2B PaaS offering from Microsoft that makes it easy for AgriFood 
 
 Install the Azure FarmBeats client library for .NET with [NuGet][client_nuget_package]:
 
-```
+```dotnetcli
 dotnet add package Azure.Verticals.AgriFood.Farming --prerelease
 ```
 

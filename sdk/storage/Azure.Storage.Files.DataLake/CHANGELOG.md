@@ -1,6 +1,16 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.9.0-beta.1 (Unreleased)
+- Added support for service version 2020-12-06.
+- Added support for SDK-calculated transactional hash checksums on data transfer.
+
+## 12.8.0 (2021-09-08)
+- Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
+
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Parquet as an input format in DataLakeFileClient.Query().
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.

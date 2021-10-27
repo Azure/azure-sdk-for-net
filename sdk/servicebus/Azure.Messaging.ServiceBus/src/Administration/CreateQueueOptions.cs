@@ -55,6 +55,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             ForwardTo = queue.ForwardTo;
             ForwardDeadLetteredMessagesTo = queue.ForwardDeadLetteredMessagesTo;
             EnablePartitioning = queue.EnablePartitioning;
+            MaxMessageSizeInKilobytes = queue.MaxMessageSizeInKilobytes;
             if (queue.UserMetadata != null)
             {
                 UserMetadata = queue.UserMetadata;
@@ -298,6 +299,13 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
+        /// Gets or sets the maximum message size, in kilobytes, for messages sent to this queue.
+        /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
+        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// </summary>
+        public long? MaxMessageSizeInKilobytes { get; set; }
+
+        /// <summary>
         ///   Returns a hash code for this instance.
         /// </summary>
         public override int GetHashCode()
@@ -334,7 +342,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && string.Equals(_userMetadata, otherOptions._userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (AuthorizationRules != null && otherOptions.AuthorizationRules != null
                     || AuthorizationRules == null && otherOptions.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherOptions.AuthorizationRules)))
+                && (AuthorizationRules == null || AuthorizationRules.Equals(otherOptions.AuthorizationRules))
+                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
             {
                 return true;
             }

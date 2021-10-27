@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Default is Query. Possible values include: 'Query',
         /// 'QueryAll'</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
-        public SalesforceServiceCloudSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object query = default(object), string readBehavior = default(string), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
+        public SalesforceServiceCloudSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object query = default(object), string readBehavior = default(string), object additionalColumns = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             Query = query;
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets specifies the additional columns to be added to source
-        /// data. Type: array of objects (or Expression with resultType array
-        /// of objects).
+        /// data. Type: array of objects(AdditionalColumns) (or Expression with
+        /// resultType array of objects).
         /// </summary>
         [JsonProperty(PropertyName = "additionalColumns")]
-        public IList<AdditionalColumns> AdditionalColumns { get; set; }
+        public object AdditionalColumns { get; set; }
 
     }
 }

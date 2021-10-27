@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="dedicatedCoreQuota">The dedicated core quota for the
         /// Batch account.</param>
-        /// <param name="lowPriorityCoreQuota">The low priority core quota for
+        /// <param name="lowPriorityCoreQuota">The low-priority core quota for
         /// the Batch account.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamily">A list of the dedicated
         /// core quota per Virtual Machine family for the Batch account. For
@@ -71,8 +71,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
         /// schedule quota for the Batch account.</param>
+        /// <param name="allowedAuthenticationModes">List of allowed
+        /// authentication modes for the Batch account that can be used to
+        /// authenticate with the data plane. This does not affect
+        /// authentication with the control plane.</param>
         /// <param name="identity">The identity of the Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int), BatchAccountIdentity identity = default(BatchAccountIdentity))
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int), IList<AuthenticationMode?> allowedAuthenticationModes = default(IList<AuthenticationMode?>), BatchAccountIdentity identity = default(BatchAccountIdentity))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
@@ -89,6 +93,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             DedicatedCoreQuotaPerVMFamilyEnforced = dedicatedCoreQuotaPerVMFamilyEnforced;
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
+            AllowedAuthenticationModes = allowedAuthenticationModes;
             Identity = identity;
             CustomInit();
         }
@@ -176,7 +181,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int? DedicatedCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the low priority core quota for the Batch account.
+        /// Gets the low-priority core quota for the Batch account.
         /// </summary>
         /// <remarks>
         /// For accounts with PoolAllocationMode set to UserSubscription, quota
@@ -223,6 +228,14 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeJobAndJobScheduleQuota")]
         public int ActiveJobAndJobScheduleQuota { get; private set; }
+
+        /// <summary>
+        /// Gets list of allowed authentication modes for the Batch account
+        /// that can be used to authenticate with the data plane. This does not
+        /// affect authentication with the control plane.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedAuthenticationModes")]
+        public IList<AuthenticationMode?> AllowedAuthenticationModes { get; private set; }
 
         /// <summary>
         /// Gets or sets the identity of the Batch account.

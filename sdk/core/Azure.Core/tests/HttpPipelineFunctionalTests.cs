@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -237,8 +238,9 @@ namespace Azure.Core.Tests
             await Task.WhenAll(requests);
         }
 
-        [Test]
-        public async Task BufferedResponsesReadableAfterMessageDisposed()
+        [TestCase(200)]
+        [TestCase(404)]
+        public async Task BufferedResponsesReadableAfterMessageDisposed(int status)
         {
             byte[] buffer = { 0 };
 
@@ -249,6 +251,7 @@ namespace Azure.Core.Tests
             using TestServer testServer = new TestServer(
                 async context =>
                 {
+                    context.Response.StatusCode = status;
                     for (int i = 0; i < bodySize; i++)
                     {
                         await context.Response.Body.WriteAsync(buffer, 0, 1);
@@ -624,6 +627,139 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
         }
 
+        [Test]
+        public async Task HandlesRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
+        public async Task HandlesRelativeRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
+        public async Task PerRetryPolicyObservesRedirect()
+        {
+            List<string> uris = new List<string>();
+            var options = GetOptions();
+            var perRetryPolicy = new CallbackPolicy(message => uris.Add(message.Request.Uri.ToString()));
+            options.AddPolicy(perRetryPolicy, HttpPipelinePosition.PerRetry);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options);
+            Uri testServerAddress = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+            Assert.AreEqual(2, uris.Count);
+            Assert.AreEqual(1, uris.Count(u => u.Contains("/redirected")));
+        }
+
+        [Test]
+        public async Task StopsOnMaxRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            int count = 0;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Interlocked.Increment(ref count);
+                    context.Response.StatusCode = 300;
+                    context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(300, response.Status);
+            Assert.AreEqual(51, count);
+        }
+
+        private class CallbackPolicy : HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<HttpMessage> _callback;
+
+            public CallbackPolicy(Action<HttpMessage> callback)
+            {
+                _callback = callback;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                base.OnSendingRequest(message);
+                _callback(message);
+            }
+        }
         private class TestOptions : ClientOptions
         {
         }

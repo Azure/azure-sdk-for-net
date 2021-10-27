@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("cipher");
                 writer.WriteStringValue(Cipher.Value.ToString());
             }
+            if (Optional.IsDefined(SciState))
+            {
+                writer.WritePropertyName("sciState");
+                writer.WriteStringValue(SciState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> cknSecretIdentifier = default;
             Optional<string> cakSecretIdentifier = default;
             Optional<ExpressRouteLinkMacSecCipher> cipher = default;
+            Optional<ExpressRouteLinkMacSecSciState> sciState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cknSecretIdentifier"))
@@ -60,8 +66,18 @@ namespace Azure.ResourceManager.Network.Models
                     cipher = new ExpressRouteLinkMacSecCipher(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sciState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sciState = new ExpressRouteLinkMacSecSciState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher));
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState));
         }
     }
 }

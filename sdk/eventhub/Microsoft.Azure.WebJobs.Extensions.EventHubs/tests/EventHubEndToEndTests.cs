@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.EventHubListener.EventProcessor");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CollectionAssert.Contains(logs, $"Input(data)");
 
                 var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.EventHubListener.EventProcessor");
+                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
             }
         }
 
@@ -505,6 +505,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        IDictionary<string, object> systemProperties)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
+                Assert.AreEqual("data", evt.ToString());
                 _eventWait.Set();
             }
         }

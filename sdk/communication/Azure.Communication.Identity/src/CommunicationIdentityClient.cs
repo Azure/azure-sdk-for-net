@@ -281,8 +281,8 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Exchange a teams token for a new ACS access token.</summary>
-        /// <param name="teamsToken">Teams token to acquire a new ACS access token.</param>
+        /// <summary>Exchange an AAD access token of a Teams User for a Communication Identity access token.</summary>
+        /// <param name="teamsToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<AccessToken> ExchangeTeamsToken(string teamsToken, CancellationToken cancellationToken = default)
@@ -301,8 +301,8 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Asynchronously exchange a teams token for a new ACS access token.</summary>
-        /// <param name="teamsToken">Teams token to acquire a new ACS access token.</param>
+        /// <summary>Asynchronously exchange an AAD access token of a Teams User for a Communication Identity access token.</summary>
+        /// <param name="teamsToken">AAD access token of a Teams User to acquire a new Communication Identity access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<AccessToken>> ExchangeTeamsTokenAsync(String teamsToken, CancellationToken cancellationToken = default)
         {

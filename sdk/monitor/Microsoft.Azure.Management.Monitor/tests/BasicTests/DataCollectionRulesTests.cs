@@ -19,6 +19,7 @@ using Xunit;
 
 namespace Monitor.Tests.BasicTests
 {
+    /** commenting this out because DataCollectionRules have a different error response format from everything else in AzureMonitor and so they can't be built with this SDK.
     public class DataCollectionRulesTests : TestBase
     {
         #region DCR Tests
@@ -539,4 +540,5 @@ namespace Monitor.Tests.BasicTests
         }
         #endregion
     }
+    */
 }

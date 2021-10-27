@@ -8,7 +8,7 @@ While the `ObservableDataBatch` may seem desirable, there are several nuances th
 
 Another issue is with equality. `EventData` objects do not have a strong and deterministic way to define equality, since the meaning of two events being equal can be different depending on the application. This creates confusion and can cause unnecessary issues in some applications.
 
-Using this approach **does not** protect from the inherent risks as discussed above, and is not recommended unless the appplication is willing to assume those risks. If the `EventData` objects exposed through the `Events` property are altered, these changes will **not** be reflected in the events held in the actual Batch. 
+Using this approach **does not** protect from the inherent risks as discussed above, and is not recommended unless the application is willing to assume those risks. If the `EventData` objects exposed through the `Events` property are altered, these changes will **not** be reflected in the events held in the actual Batch. 
 
 ## Approach
 
@@ -57,7 +57,7 @@ public class ObservableEventDataBatch : IDisposable
 
     public void Dispose() => _batch.Dispose();
 
-    // Performs the needed transation to allow an ObservableEventDataBatch to be
+    // Performs the needed translation to allow an ObservableEventDataBatch to be
     // implicitly converted to an EventDataBatch
     public static implicit operator EventDataBatch(ObservableEventDataBatch observable) => observable._batch;
 }
@@ -84,32 +84,34 @@ An `EventHubProducerClient` is safe to cache and use for the lifetime of the app
 ```C# Snippet:Sample09_AccessingEventData
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-    var newBatch = new ObservableEventDataBatch(eventBatch);
+    var observableBatch = new ObservableEventDataBatch(eventBatch);
 
-    // Adding events to the batch
+    // Attempt to add events to the batch.
+
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
+        var eventData = new EventData($"Event #{ index }");
 
-        if (!newBatch.TryAdd(eventData))
+        if (!observableBatch.TryAdd(eventData))
         {
             throw new Exception($"The event at { index } could not be added.");
         }
     }
 
-    // Looping through the events to demonstrate how to access them
-    foreach (var singleEvent in newBatch.Events)
+    // Events in the batch can be inspected using the "Events" collection.
+
+    foreach (var singleEvent in observableBatch.Events)
     {
         Debug.WriteLine($"Added event { singleEvent.EventBody } at time { singleEvent.EnqueuedTime }");
     }
 
-    await producer.SendAsync(newBatch);
+    await producer.SendAsync(observableBatch);
 }
 finally
 {
@@ -124,28 +126,35 @@ This sample demonstrates how to add an `EventData` identification property that 
 ```C# Snippet:Sample09_CheckingBatch
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(connectionString, eventHubName);
 
 try
 {
     using var eventBatch = await producer.CreateBatchAsync();
-    var newBatch = new ObservableEventDataBatch(eventBatch);
+    var observableBatch = new ObservableEventDataBatch(eventBatch);
 
-    // Adding events to the batch
+    // Attempt to add events to the batch.
+
     for (var index = 0; index < 5; ++index)
     {
-        var eventBody = new BinaryData($"Event #{ index }");
-        var eventData = new EventData(eventBody);
-        eventData.Properties.Add("ApplicationId", index);
+        var eventData = new EventData($"Event #{ index }")
+        {
+            MessageId = index.ToString()
+        };
 
-        if (!newBatch.TryAdd(eventData))
+        if (!observableBatch.TryAdd(eventData))
         {
             throw new Exception($"The event at { index } could not be added.");
         }
     }
 
-    // Verify that the expected event is in the batch
-    var contains = newBatch.Events.Any(eventData => int.TryParse(eventData.Properties["ApplicationId"].ToString(), out var id) && id == 1);
+    // The "Events" collection can be used to validate that a specific event
+    // is in the batch.  In this example, we'll ensure that an event with
+    // id "1" was added.
+
+    var contains = observableBatch.Events
+        .Any(eventData => eventData.MessageId == "1");
 }
 finally
 {

@@ -183,7 +183,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(sqlStoredProcedureGetResults);
                 Assert.Equal(sqlStoredProcedureGetResults.Resource.Body, sqlStoredProcedureGetResults.Resource.Body);
 
-                IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = cosmosDBManagementClient.SqlResources.ListSqlStoredProceduresWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = cosmosDBManagementClient.SqlResources.ListSqlStoredProceduresWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlStoredProcedures);
 
                 foreach (SqlStoredProcedureGetResults sqlStoredProcedure in sqlStoredProcedures)

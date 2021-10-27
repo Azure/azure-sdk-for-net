@@ -27,20 +27,25 @@ namespace Microsoft.Azure.Batch
         /// Initializes a new instance of the <see cref="ContainerRegistry"/> class.
         /// </summary>
         /// <param name='userName'>The user name to log into the registry server.</param>
-        /// <param name='registryServer'>The registry URL.</param>
         /// <param name='password'>The password to log into the registry server.</param>
+        /// <param name='registryServer'>The registry URL.</param>
+        /// <param name='identityReference'>The reference to the user assigned identity to use to access an Azure Container Registry instead of username 
+        /// and password.</param>
         public ContainerRegistry(
-            string userName,
+            string userName = default(string),
+            string password = default(string),
             string registryServer = default(string),
-            string password = default(string))
+            ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             this.UserName = userName;
-            this.RegistryServer = registryServer;
             this.Password = password;
+            this.RegistryServer = registryServer;
+            this.IdentityReference = identityReference;
         }
 
         internal ContainerRegistry(Models.ContainerRegistry protocolObject)
         {
+            this.IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.IdentityReference, o => new ComputeNodeIdentityReference(o).Freeze());
             this.Password = protocolObject.Password;
             this.RegistryServer = protocolObject.RegistryServer;
             this.UserName = protocolObject.UserName;
@@ -49,6 +54,12 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region ContainerRegistry
+
+        /// <summary>
+        /// Gets the reference to the user assigned identity to use to access an Azure Container Registry instead of username 
+        /// and password.
+        /// </summary>
+        public ComputeNodeIdentityReference IdentityReference { get; }
 
         /// <summary>
         /// Gets the password to log into the registry server.
@@ -99,6 +110,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.ContainerRegistry result = new Models.ContainerRegistry()
             {
+                IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(this.IdentityReference, (o) => o.GetTransportObject()),
                 Password = this.Password,
                 RegistryServer = this.RegistryServer,
                 UserName = this.UserName,

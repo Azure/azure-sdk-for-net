@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         /// <param name="adminUsername">The administrator username to use for
         /// Linux VMs.</param>
-        /// <param name="ssh">SSH configuration for Linux-based VMs running on
-        /// Azure.</param>
+        /// <param name="ssh">The SSH configuration for Linux-based VMs running
+        /// on Azure.</param>
         public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
         {
             AdminUsername = adminUsername;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string AdminUsername { get; set; }
 
         /// <summary>
-        /// Gets or sets SSH configuration for Linux-based VMs running on
+        /// Gets or sets the SSH configuration for Linux-based VMs running on
         /// Azure.
         /// </summary>
         [JsonProperty(PropertyName = "ssh")]

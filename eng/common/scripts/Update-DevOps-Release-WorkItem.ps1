@@ -38,6 +38,8 @@ if (!$?){
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
+CheckDevOpsAccess
+
 $parsedNewVersion = [AzureEngSemanticVersion]::new($version)
 $state = "In Release"
 $releaseType = $parsedNewVersion.VersionType

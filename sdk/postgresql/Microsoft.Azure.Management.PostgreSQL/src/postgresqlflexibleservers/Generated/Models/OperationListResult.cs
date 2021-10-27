@@ -31,11 +31,15 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <summary>
         /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        /// <param name="value">The list of resource provider
-        /// operations.</param>
-        public OperationListResult(IList<Operation> value = default(IList<Operation>))
+        /// <param name="value">Collection of available operation
+        /// details</param>
+        /// <param name="nextLink">URL client should use to fetch the next page
+        /// (per server side paging).
+        /// It's null for now, added for future use.</param>
+        public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -45,10 +49,18 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of resource provider operations.
+        /// Gets or sets collection of available operation details
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<Operation> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets URL client should use to fetch the next page (per
+        /// server side paging).
+        /// It's null for now, added for future use.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

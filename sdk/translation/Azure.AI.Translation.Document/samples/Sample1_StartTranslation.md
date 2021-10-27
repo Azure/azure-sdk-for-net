@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -19,15 +19,12 @@ To Start a translation operation for a single document or documents in a single 
 
 To call `StartTranslationAsync` you need to initialize an object of type `DocumentTranslationInput` which contains the information needed to translate the documents.
 
-- The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
-- The `targetUri` is a SAS URI with read and write access for the blob container to which the translated documents will be written.
-
-More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
+> The `sourceUri` and the `targetUri` are SAS URI with permissions that allow the service to access the content on the container/blob.
+See the [service documentation][Sas_token_permissions] for the supported SAS permissions.
 
 ```C# Snippet:StartTranslationAsync
 Uri sourceUri = new Uri("<source SAS URI>");
 Uri targetUri = new Uri("<target SAS URI>");
-
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -43,14 +40,14 @@ Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-await foreach (DocumentStatus document in operation.Value)
+await foreach (DocumentStatusResult document in operation.Value)
 {
     Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == DocumentTranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
+        Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
@@ -66,5 +63,6 @@ To see the full example source files, see:
 * [Synchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslation.cs)
 * [Asynchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationAsync.cs)
 
+[Sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

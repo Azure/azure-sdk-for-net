@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -367,12 +367,27 @@ namespace Azure.AI.TextAnalytics.Tests
                 batchDocuments.Add(document);
             }
 
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+            AnalyzeHealthcareEntitiesOperation operation = default;
 
-            await operation.CancelAsync();
+            await TestRetryHelper.RetryAsync(async () =>
+            {
+                try
+                {
+                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
+                    await operation.CancelAsync();
+                    await operation.WaitForCompletionAsync();
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
+                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
+                    return (Response)null;
+                }
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.IsTrue(ex.Message.Contains("The operation was canceled so no value is available."));
+                // If we get here, that means that the operation completed successfully and didn't cancel.
+                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
+            },
+            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -400,7 +415,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsFalse(operation.HasValue);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
-            Assert.Throws<InvalidOperationException>(() => operation.GetValues());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
 
             await operation.WaitForCompletionAsync();
 

@@ -24,7 +24,7 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Initializes a new instance of AnomalyState. </summary>
         /// <param name="timestamp"> timestamp. </param>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="errors"> Error message when inference this timestamp. </param>
         internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors)
         {
@@ -35,6 +35,7 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> timestamp. </summary>
         public DateTimeOffset Timestamp { get; }
+        /// <summary> Gets the value. </summary>
         public AnomalyValue Value { get; }
         /// <summary> Error message when inference this timestamp. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }

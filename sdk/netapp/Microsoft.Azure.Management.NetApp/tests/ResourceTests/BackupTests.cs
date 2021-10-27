@@ -16,12 +16,14 @@ using Xunit;
 using Microsoft.Rest.Azure;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using System.Threading.Tasks;
 
 namespace NetApp.Tests.ResourceTests
 {
     public class AnfBackupTests : TestBase
     {
         private const int delay = 5000;
+        //[Fact(Skip = "Backup service side bug (Networking) causes this to fail, re-enable when fixed")]
         [Fact]
         public void CreateDeleteBackup()
         {
@@ -30,7 +32,7 @@ namespace NetApp.Tests.ResourceTests
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 // create the Pool and account
-                ResourceUtils.CreatePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, location: ResourceUtils.backupLocation);
+                ResourceUtils.CreatePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1, location: ResourceUtils.backupLocation);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
@@ -45,12 +47,12 @@ namespace NetApp.Tests.ResourceTests
                     Thread.Sleep(delay);
                 }
                 // Create volume 
-                var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
+                var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
                 }
-                var createGetVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                var createGetVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 Assert.Equal("Succeeded", createGetVolume.ProvisioningState);
                 //volume update with backup setting                
                 var dataProtection = new VolumePatchPropertiesDataProtection
@@ -62,13 +64,13 @@ namespace NetApp.Tests.ResourceTests
                     DataProtection = dataProtection
                 };
 
-                var updatedVolume = netAppMgmtClient.Volumes.Update(volumePatch, ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                var updatedVolume = netAppMgmtClient.Volumes.Update(volumePatch, ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 //Get volume and check
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
                 }
-                var getVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                var getVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 Assert.NotNull(getVolume.DataProtection);
                 Assert.NotNull(getVolume.DataProtection.Backup);
                 Assert.NotNull(getVolume.DataProtection.Backup.VaultId);
@@ -79,39 +81,43 @@ namespace NetApp.Tests.ResourceTests
                     Location = ResourceUtils.backupLocation,
                     Label = "sdkTestBackup1"
                 };
-                var createdBackup = netAppMgmtClient.Backups.Create(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1, backup);
+                var createdBackup = netAppMgmtClient.Backups.Create(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1, backup);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
                 }
                 Assert.NotNull(createdBackup);
                 Assert.NotNull(createdBackup.Name);                
-                Assert.Equal($"{ResourceUtils.volumeBackupAccountName1}/{ResourceUtils.poolName1}/{ResourceUtils.backupVolumeName1}/{ResourceUtils.backupName1}", createdBackup.Name);
+                Assert.Equal($"{ResourceUtils.volumeBackupAccountName1}/{ResourceUtils.backupPoolName1}/{ResourceUtils.backupVolumeName1}/{ResourceUtils.backupName1}", createdBackup.Name);
 
-                WaitForBackupSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1);
+                WaitForBackupSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1);
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 //create second backup
                 var backup2 = new Backup()
                 {
                     Location = ResourceUtils.backupLocation,
                     Label = "sdkTestBackup1"
                 };
-                var createdBackup2 = netAppMgmtClient.Backups.Create(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2, backup);
+                var createdBackup2 = netAppMgmtClient.Backups.Create(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2, backup);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
                 }
                 Assert.NotNull(createdBackup2);
                 Assert.NotNull(createdBackup2.Name);
-                Assert.Equal($"{ResourceUtils.volumeBackupAccountName1}/{ResourceUtils.poolName1}/{ResourceUtils.backupVolumeName1}/{ResourceUtils.backupName2}", createdBackup2.Name);
+                Assert.Equal($"{ResourceUtils.volumeBackupAccountName1}/{ResourceUtils.backupPoolName1}/{ResourceUtils.backupVolumeName1}/{ResourceUtils.backupName2}", createdBackup2.Name);
 
-                WaitForBackupSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2);
+                WaitForBackupSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2);
 
-                var getBackup = netAppMgmtClient.Backups.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2);
+                var getBackup = netAppMgmtClient.Backups.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName2);
                 Assert.NotNull(getBackup);
 
                 //Get Volume backup status
-                var getBackupStatus = netAppMgmtClient.Backups.GetStatus(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                var getBackupStatus = netAppMgmtClient.Backups.GetStatus(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 Assert.NotNull(getBackupStatus);
 
                 //Get by account backups
@@ -121,7 +127,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal($"{ResourceUtils.volumeBackupAccountName1}/{ResourceUtils.backupName2}", getAccountBackup2.Name);
 
                 //Get List backups
-                var getBackupList = netAppMgmtClient.Backups.List(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                var getBackupList = netAppMgmtClient.Backups.List(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 Assert.NotNull(getBackupList);
                 Assert.Equal(2, getBackupList.Count());
                 
@@ -131,25 +137,29 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal(2, getBackupList.Count());
 
                 //Delete backup 1
-                WaitForBackupDeleteSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1);
+                WaitForBackupDeleteSucceeded(netAppMgmtClient, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1);
 
                 //Get List backups
-                getBackupList = netAppMgmtClient.Backups.List(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+                getBackupList = netAppMgmtClient.Backups.List(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1);
                 Assert.NotNull(getBackupList);
                 Assert.Single(getBackupList);
 
                 // clean up 
                 // Delete volume so we can delete last backup
-                ResourceUtils.DeleteVolume(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, volumeName: ResourceUtils.backupVolumeName1);
+                ResourceUtils.DeleteVolume(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1 , volumeName: ResourceUtils.backupVolumeName1);
                 //Delete last backup from AccountBackups
-                netAppMgmtClient.AccountBackups.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupName2);                
-                ResourceUtils.DeletePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
+                netAppMgmtClient.AccountBackups.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupName2);
+                ResourceUtils.DeletePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1);
                 ResourceUtils.DeleteAccount(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
 
             }
         }
 
-        private void WaitForBackupDeleteSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.poolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
+        private void WaitForBackupDeleteSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.backupPoolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
         {
             var maxDelay = TimeSpan.FromSeconds(45);
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
@@ -168,24 +178,90 @@ namespace NetApp.Tests.ResourceTests
                 );
         }
 
-        private void WaitForBackupSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.poolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
+        private void WaitForBackupSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.backupPoolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
         {
             var maxDelay = TimeSpan.FromSeconds(45);
+            int count = 0;
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
             {
                 maxDelay = TimeSpan.FromMilliseconds(500);
             }
 
-            var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 20)
+            var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 50)
                     .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount) 
-            var policy = Policy
-                .HandleResult<Backup>(b => !b.ProvisioningState.Equals("Succeeded")) // retry if Provisioning state is not Succeeded 
+            var retryPolicy = Policy
+                .HandleResult<Backup>(b => !(b.ProvisioningState.Equals("Succeeded") || b.ProvisioningState.Equals("Failed"))) // retry if Provisioning state is not Succeeded 
                 .WaitAndRetry(delay);
 
-            policy.Execute(() => 
-            GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName)            
+            var fallbackPolicy = Policy
+                .HandleResult<Backup>(b => (!b.ProvisioningState.Equals("Succeeded") || b.ProvisioningState.Equals("Failed"))) // Fail the test run if Provisioning state is not Succeeded by now
+                .Fallback<Backup>(b =>  
+                {
+                    var backup = GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName);
+                    throw new Exception($"Provision state {backup.ProvisioningState} after {count} retires waiting for backup Provisioning state to be Succeeded");
+                });
+            
+            var f = fallbackPolicy.Wrap(retryPolicy)
+                    .Execute(() =>
+                    {
+                        count++;
+                        return GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName);
+                    }
                 );
+
+            //policy.Execute(() => 
+            //    GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName)
+            //    );            
         }
+
+        //private void WaitForBackupSucceededFailed(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.backupPoolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
+        //{
+        //    var maxDelay = TimeSpan.FromSeconds(120);
+        //    int count = 0;
+        //    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+        //    {
+        //        maxDelay = TimeSpan.FromMilliseconds(500);
+        //    }
+
+        //    var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 50)
+        //            .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount) 
+        //    var retryPolicy = Policy
+        //        .HandleResult<Backup>(b => !(b.ProvisioningState.Equals("Succeeded") || b.ProvisioningState.Equals("Failed"))) // retry if Provisioning state is not Succeeded 
+        //        .WaitAndRetry(delay);
+
+        //    var fallbackPolicy = Policy
+        //        .HandleResult<Backup>(b => (!b.ProvisioningState.Equals("Succeeded"))) // Fail the test run if Provisioning state is not Succeeded by now                 
+        //        .Fallback<Backup>(b =>
+        //                .Fallback<Backup>(
+        //                    {
+        //                        throw new Exception($"Max retires {count} waiting for backup Provisioning state to be Succeeded");
+        //                    }),
+        //            fallbackAction: () =>
+        //            {
+        //                var backup = GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName);
+        //                if (backup.ProvisioningState == "Failed")
+        //                {
+        //                    throw new Exception($"Provisioning state Failed after {count} retries");
+        //                }
+        //                else
+        //                {
+        //                    throw new Exception("Max retires waiting for backup Provisioning state to be Succeeded");
+        //                }
+        //            }
+        //         );
+                            
+        //    var r = fallbackPolicy.Wrap(retryPolicy)
+        //            .Execute(() =>
+        //                {
+        //                    count++;
+        //                    return GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName);
+        //                }
+        //        );
+
+        //    //policy.Execute(() => 
+        //    //    GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName)
+        //    //    );            
+        //}
 
         private Backup GetBackup(AzureNetAppFilesManagementClient netAppMgmtClient, string resourceGroup, string accountName, string poolName, string volumeName, string backupName)
         {

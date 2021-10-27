@@ -792,7 +792,8 @@ namespace Azure.Storage.Blobs
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
                 CopyId = response.Headers.CopyId,
-                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus)
+                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus),
+                EncryptionScope = response.Headers.EncryptionScope
             };
         }
 
@@ -1163,8 +1164,8 @@ namespace Azure.Storage.Blobs
                     ? blobItemInternal.Metadata.ToMetadata()
                     : new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
-                ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
-                    ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
+                ObjectReplicationSourceProperties = blobItemInternal.OrMetadata?.Count > 0
+                    ? ParseObjectReplicationMetadata(blobItemInternal.OrMetadata)
                     : null,
                 HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };

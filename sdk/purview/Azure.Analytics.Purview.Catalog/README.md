@@ -6,7 +6,7 @@ Azure Purview Catalog is a fully managed cloud service whose users can discover 
 - Browse associated technical, business, semantic, and operational metadata
 - Identify the sensitivity level of data.
 
-**Please rely heavily on the [service's documentation][catalog_product_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
+**Please rely heavily on the [service's documentation][catalog_service_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
 [Source code][source_code] | [Package (NuGet)][client_nuget_package] | [Product documentation][catalog_product_documentation]
 
@@ -16,8 +16,8 @@ Azure Purview Catalog is a fully managed cloud service whose users can discover 
 
 Install the Azure Purview Catalog client library for .NET with [NuGet][client_nuget_package]:
 
-```
-dotnet add package Azure.Analysis.Purview.Catalog --prerelease
+```dotnetcli
+dotnet add package Azure.Analytics.Purview.Catalog --prerelease
 ```
 
 ### Prerequisites
@@ -103,7 +103,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.Catalog/src
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Analytics.Purview.Catalog
-[catalog_product_documentation]: https://azure.microsoft.com/services/purview/
+[catalog_service_documentation]: https://azure.microsoft.com/services/purview/
+[catalog_product_documentation]: https://docs.microsoft.com/azure/purview/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
 [default_cred_ref]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
@@ -114,5 +115,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fpurview%2FAzure.Analytics.Purview.Catalog%2FREADME.png)

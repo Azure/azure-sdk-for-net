@@ -42,7 +42,8 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
+        public virtual Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
+           => this.DefaultWaitForCompletion(cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -68,8 +69,7 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
-            => this.DefaultWaitForCompletion(cancellationToken);
+        public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.

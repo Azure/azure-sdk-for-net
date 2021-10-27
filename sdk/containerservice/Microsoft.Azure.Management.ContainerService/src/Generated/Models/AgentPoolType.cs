@@ -16,7 +16,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class AgentPoolType
     {
+        /// <summary>
+        /// Create an Agent Pool backed by a Virtual Machine Scale Set.
+        /// </summary>
         public const string VirtualMachineScaleSets = "VirtualMachineScaleSets";
+        /// <summary>
+        /// Use of this is strongly discouraged.
+        /// </summary>
         public const string AvailabilitySet = "AvailabilitySet";
     }
 }

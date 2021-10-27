@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricSeriesData
     {
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"> . </param>
+        /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/>, or <paramref name="metricValues"/> is null. </exception>
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"> . </param>
+        /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
         internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues)

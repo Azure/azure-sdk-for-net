@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'Low', 'Moderate', 'High'</param>
         /// <param name="preview">True if this assessment is in preview release
         /// status</param>
-        public SecurityAssessmentMetadataProperties(string displayName, string severity, string assessmentType, string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> category = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
+        public SecurityAssessmentMetadataProperties(string displayName, string severity, string assessmentType, string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> categories = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
             Description = description;
             RemediationDescription = remediationDescription;
-            Category = category;
+            Categories = categories;
             Severity = severity;
             UserImpact = userImpact;
             ImplementationEffort = implementationEffort;
@@ -105,8 +105,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "category")]
-        public IList<string> Category { get; set; }
+        [JsonProperty(PropertyName = "categories")]
+        public IList<string> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the severity level of the assessment. Possible values

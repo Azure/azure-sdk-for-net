@@ -21,12 +21,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public int? ShiftPoint { get; set; }
         /// <summary>
         /// if the withinRange = true, detected data is abnormal when the value falls in the range, in this case anomalyDetectorDirection must be Both
-        /// 
-        /// if the withinRange = false, detected data is abnormal when the value falls out of the range.
+        /// if the withinRange = false, detected data is abnormal when the value falls out of the range
         /// </summary>
         public bool? WithinRange { get; set; }
         /// <summary> detection direction. </summary>
         public AnomalyDetectorDirection? AnomalyDetectorDirection { get; set; }
+        /// <summary> Gets or sets the suppress condition. </summary>
         public SuppressConditionPatch SuppressCondition { get; set; }
     }
 }

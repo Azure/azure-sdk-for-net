@@ -19,11 +19,11 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_04_05_preview6) { }
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_09_07) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2021_04_05_preview6 = 2,
+            V2021_09_07 = 2,
         }
     }
     public partial class ChatError

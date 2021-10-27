@@ -19,7 +19,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "617",
+        "Content-Length": "547",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 25 Jun 2020 16:48:47 GMT",
         "ETag": "\u0022NzY3NjQxOTE5\u0022",
@@ -40,8 +40,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gxBkE09ObbP7nEcMlPV7VX/IvUZzuJkWy069FTd7lzA=",
-            "secondaryKey": "1C/G6kW47t1nMKlWJXyCR2MupAiqcCplI779FAlJ5IA="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -69,7 +69,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "620",
+        "Content-Length": "550",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 25 Jun 2020 16:48:47 GMT",
         "ETag": "\u0022NzY3NjQxOTE5\u0022",
@@ -90,8 +90,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gxBkE09ObbP7nEcMlPV7VX/IvUZzuJkWy069FTd7lzA=",
-            "secondaryKey": "1C/G6kW47t1nMKlWJXyCR2MupAiqcCplI779FAlJ5IA="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -109,7 +109,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "574",
+        "Content-Length": "504",
         "Content-Type": "application/json",
         "If-Match": "*",
         "User-Agent": [
@@ -131,8 +131,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gxBkE09ObbP7nEcMlPV7VX/IvUZzuJkWy069FTd7lzA=",
-            "secondaryKey": "1C/G6kW47t1nMKlWJXyCR2MupAiqcCplI779FAlJ5IA="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {},
           "type": "sas"
@@ -143,7 +143,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "629",
+        "Content-Length": "559",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 25 Jun 2020 16:48:47 GMT",
         "ETag": "\u0022NzY3NjQxOTIw\u0022",
@@ -164,8 +164,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gxBkE09ObbP7nEcMlPV7VX/IvUZzuJkWy069FTd7lzA=",
-            "secondaryKey": "1C/G6kW47t1nMKlWJXyCR2MupAiqcCplI779FAlJ5IA="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,

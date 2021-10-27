@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Monitor.Tests.Scenarios
 {
+    /** commenting this out because DataCollectionRules have a different error response format from everything else in AzureMonitor and so they can't be built with this SDK.
     public class DataCollectionRulesTests : TestBase
     {
         private const string ResourceGroupName = "netSdkTestRecord";
@@ -586,4 +587,5 @@ namespace Monitor.Tests.Scenarios
         }
         #endregion
     }
+    */
 }

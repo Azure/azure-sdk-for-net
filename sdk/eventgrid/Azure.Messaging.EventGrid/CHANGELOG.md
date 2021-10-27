@@ -1,15 +1,35 @@
 # Release History
 
-## 4.5.0-beta.1 (Unreleased)
+## 4.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
 
-### Fixed
+### Other Changes
 
+## 4.7.0 (2021-10-05)
+
+### Features Added
+- Added API Management events
+- Added AcsUserDisconnectedEventData event
+
+## 4.6.0 (2021-08-10)
+
+### Features Added
+- Added `ContainerServiceNewKubernetesVersionAvailableEventData` system event.
+
+### Bugs Fixed
+- Updated deserialization of KeyVault system events to match the casing used in the events published by the service.
+
+## 4.5.0 (2021-07-19)
+
+### Features Added
+- Added constructor for `EventGridPublisherClient` that takes a `TokenCredential` to enable Azure Active Directory authentication.
+- Added `Metadata` property to `AcsChatMessageEditedEventData`, `AcsChatMessageEditedInThreadEventData`, `AcsChatMessageReceivedEventData`, and `AcsChatMessageReceivedInThreadEventData`.
+- Added custom converter for `EventGridEvent` that allows this type to be serialized and deserialized using `System.Text.Json` APIs.
 
 ## 4.4.0 (2021-06-21)
 

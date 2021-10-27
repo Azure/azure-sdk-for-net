@@ -47,7 +47,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "602",
+        "Content-Length": "532",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
         "ETag": "\u0022NzUzMzQwNTQ4\u0022",
@@ -68,8 +68,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gT9h6sBk1DdThl7X8q72D0o5TPJI5wbxP9ilMbv7BwM=",
-            "secondaryKey": "4lAXP9CSPQuDkAkacZxU91D/fvh\u002B01DVVs0pc3K/zYM="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,
@@ -97,7 +97,7 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "605",
+        "Content-Length": "535",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 16 Jun 2020 22:34:55 GMT",
         "ETag": "\u0022NzUzMzQwNTQ4\u0022",
@@ -118,8 +118,8 @@
         "cloudToDeviceMessageCount": 0,
         "authentication": {
           "symmetricKey": {
-            "primaryKey": "gT9h6sBk1DdThl7X8q72D0o5TPJI5wbxP9ilMbv7BwM=",
-            "secondaryKey": "4lAXP9CSPQuDkAkacZxU91D/fvh\u002B01DVVs0pc3K/zYM="
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
           },
           "x509Thumbprint": {
             "primaryThumbprint": null,

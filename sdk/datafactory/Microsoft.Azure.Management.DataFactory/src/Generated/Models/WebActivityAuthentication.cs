@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -45,7 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userTenant">TenantId for which Azure Auth token will
         /// be requested when using ServicePrincipal Authentication. Type:
         /// string (or Expression with resultType string).</param>
-        public WebActivityAuthentication(string type, SecretBase pfx = default(SecretBase), object username = default(object), SecretBase password = default(SecretBase), object resource = default(object), object userTenant = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public WebActivityAuthentication(string type = default(string), SecretBase pfx = default(SecretBase), object username = default(object), SecretBase password = default(SecretBase), object resource = default(object), object userTenant = default(object), CredentialReference credential = default(CredentialReference))
         {
             Type = type;
             Pfx = pfx;
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Password = password;
             Resource = resource;
             UserTenant = userTenant;
+            Credential = credential;
             CustomInit();
         }
 
@@ -107,16 +109,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object UserTenant { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Type == null)
+            if (Credential != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+                Credential.Validate();
             }
         }
     }

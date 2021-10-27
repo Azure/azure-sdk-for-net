@@ -197,19 +197,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "name", "value" } };
-
-            var emptyList = new List<DimensionKey>();
-            var seriesKeys = new List<DimensionKey>() { new DimensionKey(columns) };
+            var dimensions = new Dictionary<string, string>() { { "name", "value" } };
+            var seriesKeys = new List<DimensionKey>() { new DimensionKey(dimensions) };
 
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, null, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, emptyList, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(null, seriesKeys, default, default), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync("", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync("configId", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
 
             Assert.That(() => client.GetMetricEnrichedSeriesData(FakeGuid, null, default, default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetMetricEnrichedSeriesData(FakeGuid, emptyList, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesData(null, seriesKeys, default, default), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichedSeriesData("", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => client.GetMetricEnrichedSeriesData("configId", seriesKeys, default, default), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
@@ -220,10 +216,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var columns = new Dictionary<string, string>() { { "name", "value" } };
+            var dimensions = new Dictionary<string, string>() { { "name", "value" } };
 
             var emptyList = new List<DimensionKey>();
-            var seriesKeys = new List<DimensionKey>() { new DimensionKey(columns) };
+            var seriesKeys = new List<DimensionKey>() { new DimensionKey(dimensions) };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

@@ -1,24 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "148",
+        "Content-Length": "161",
         "Content-Type": "application/json",
-        "traceparent": "00-07b4aa0b333b384f99aec0026060d91a-d70a18a62b0b9e4a-00",
+        "traceparent": "00-7ad3edabf4dd504da155ff0533409549-250a6b36fd731e48-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210720.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "d3c806a83a8d010a8270095172b48f15",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_123_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |order by Name asc",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "query": "TableA1_193_CL | distinct * |project-rename Name = StringColumn_s, Age = IntColumn_d |order by Name asc",
+        "timespan": "2021-07-12T00:00:00.0000000Z/P7D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,13 +27,13 @@
         "Connection": "keep-alive",
         "Content-Length": "911",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:57:54 GMT",
+        "Date": "Tue, 20 Jul 2021 18:30:20 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6b5d48d5bb-pp9rq",
+        "Via": "1.1 draft-oms-fdbf6c888-4vwfj",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -96,48 +96,48 @@
             ],
             "rows": [
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-03T00:00:00Z",
+                "2021-07-12T00:00:00Z",
                 "",
                 "",
                 1,
                 "a",
                 false,
                 0,
-                "TableA1_123_CL",
+                "TableA1_193_CL",
                 ""
               ],
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-05T00:00:00Z",
+                "2021-07-14T00:00:00Z",
                 "",
                 "",
                 3,
                 "b",
                 true,
                 1.20000005,
-                "TableA1_123_CL",
+                "TableA1_193_CL",
                 ""
               ],
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-08T00:00:00Z",
+                "2021-07-17T00:00:00Z",
                 "",
                 "",
                 1,
                 "c",
                 false,
                 1.10000002,
-                "TableA1_123_CL",
+                "TableA1_193_CL",
                 ""
               ]
             ]
@@ -147,9 +147,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T14:57:54.1868932-07:00",
+    "DateTimeOffsetNow": "2021-07-20T11:30:19.7312426-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "195466269",
-    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
+    "WORKSPACE_ID": "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89"
   }
 }

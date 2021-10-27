@@ -350,9 +350,10 @@ namespace Azure.Messaging.ServiceBus
         ///   for closing the connection and other cleanup activities.
         /// </remarks>
         ///
-        internal static ServiceBusConnection CreateWithCredential<TCredential>(string fullyQualifiedNamespace,
-                                                                             TCredential credential,
-                                                                             ServiceBusClientOptions options) =>
+        internal static ServiceBusConnection CreateWithCredential<TCredential>(
+            string fullyQualifiedNamespace,
+            TCredential credential,
+            ServiceBusClientOptions options) =>
             credential switch
             {
                 TokenCredential cred => new ServiceBusConnection(fullyQualifiedNamespace, cred, options),

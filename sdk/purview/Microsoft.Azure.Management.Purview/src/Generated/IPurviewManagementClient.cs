@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.Purview
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The api version to use.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The subscription identifier
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The api version to use.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.

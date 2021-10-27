@@ -50,6 +50,22 @@ namespace Azure.Messaging.EventGrid
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
+        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+        /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">The token credential used to authenticate with the service.</param>
+        /// <param name="options">The set of options to use for configuring the client.</param>
+        public EventGridPublisherClient(Uri endpoint, TokenCredential credential, EventGridPublisherClientOptions options = default)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridPublisherClientOptions();
+            _uriBuilder = new RequestUriBuilder();
+            _uriBuilder.Reset(endpoint);
+            _uriBuilder.AppendQuery("api-version", options.Version.GetVersionString(), true);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://eventgrid.azure.net/.default"));
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EventGridPublisherClient"/> class.
         /// </summary>

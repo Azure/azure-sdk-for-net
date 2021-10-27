@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Certificates
         protected RecoverDeletedCertificateOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => _value.Id.AbsoluteUri;
 
         /// <summary>
         /// Gets the <see cref="KeyVaultCertificate"/> of the certificate being recovered.

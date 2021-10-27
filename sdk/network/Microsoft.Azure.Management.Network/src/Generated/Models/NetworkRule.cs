@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Rule of type network.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("NetworkRule")]
     public partial class NetworkRule : FirewallPolicyRule
     {
         /// <summary>

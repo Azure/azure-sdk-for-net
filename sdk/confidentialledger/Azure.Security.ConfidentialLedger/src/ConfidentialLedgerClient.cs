@@ -33,14 +33,14 @@ namespace Azure.Security.ConfidentialLedger
             clientDiagnostics = _clientDiagnostics;
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
                 new HttpPipelinePolicy[] { authPolicy },
                 new ResponseClassifier());
-            this.ledgerUri = ledgerUri;
-            apiVersion = options.Version;
-            DefaultPollingInterval = options.WaitForCompletionDefaultPollingInterval;
+            _ledgerUri = ledgerUri;
+            _apiVersion = options.Version;
+            DefaultPollingInterval = options.OperationPollingInterval;
         }
 
         /// <summary> Posts a new entry to the ledger. A sub-ledger id may optionally be specified. </summary>
@@ -131,7 +131,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/>
         /// will automatically poll for status until the ledger entry is committed before it is returned.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/>
+        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponseAsync(System.Threading.CancellationToken)"/>
         /// must be called to ensure the operation has completed.</param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
@@ -158,7 +158,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -195,7 +195,7 @@ namespace Azure.Security.ConfidentialLedger
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, options);
+            HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -225,30 +225,6 @@ namespace Azure.Security.ConfidentialLedger
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId = null, RequestOptions options = null)
-        {
-            if (options.CancellationToken == null)
-            {
-                // Just need to get rid of the error.
-            }
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(ledgerUri);
-            uri.AppendPath("/app/transactions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (subLedgerId != null)
-            {
-                uri.AppendQuery("subLedgerId", subLedgerId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
     }
 }

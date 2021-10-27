@@ -9,19 +9,13 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>47.0.0</Version>
+    <Version>49.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. Restore Points API.
-        2. UserData property added to VM and VMSS resources.
-        3. Deep Deletion of Disks API.
-        4. Scheduled Events property on VM resources.
-        5. AssessmentMode property added to PatchSettings. 
-        6. Network Interface Configuration schema added to VM network profile.
-        7. Update the description for the PatchSettings property with information about the VMSS Flex feature.
+        1. DiskRP API calls updated with 2021-04-01 version.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

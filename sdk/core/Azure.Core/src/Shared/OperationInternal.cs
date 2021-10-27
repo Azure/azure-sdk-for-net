@@ -151,7 +151,7 @@ namespace Azure.Core
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>
-        ///   public async ValueTask&lt;Response&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
         ///     await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         /// </code>
         /// </example>
@@ -171,7 +171,7 @@ namespace Azure.Core
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
         /// <code>
-        ///   public async ValueTask&lt;Response&gt; WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
         ///     await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         /// </code>
         /// </example>

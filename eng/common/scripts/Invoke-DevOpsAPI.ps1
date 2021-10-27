@@ -13,7 +13,6 @@ function Start-DevOpsBuild {
   param (
     $Organization="azure-sdk",
     $Project="internal",
-    [Parameter(Mandatory = $true)]
     $SourceBranch,
     [Parameter(Mandatory = $true)]
     $DefinitionId,

@@ -87,11 +87,11 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
-            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+            Uri httpUri = new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint).ToHttp();
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new PageBlobClient(httpUri, GetOAuthCredential()),
+                () => new PageBlobClient(httpUri, Tenants.GetOAuthCredential()),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -1621,240 +1621,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            // Upload some Pages
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 0);
-            }
-
-            // Create prevSnapshot
-            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-            var prevSnapshot = response.Value.Snapshot;
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Snapshot = prevSnapshot
-            };
-
-            // Upload additional Pages
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-            }
-
-            // create snapshot
-            response = await blob.CreateSnapshotAsync();
-            string snapshot = response.Value.Snapshot;
-
-            // Act
-            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
-                range: new HttpRange(0, 4 * Constants.KB),
-                snapshot,
-                previousSnapshotUri: blobUriBuilder.ToUri());
-
-            // Assert
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
-            HttpRange range = result.Value.PageRanges.First();
-
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_Error()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
-                e =>
-                {
-                    Assert.AreEqual("InvalidRange", e.ErrorCode);
-                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
-                        e.Message.Split('\n')[0]);
-                });
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
-            {
-                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-                // Upload some Pages
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Create prevSnapshot
-                Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
-                var prevSnapshot = snapshotCreateResult.Value.Snapshot;
-
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-                {
-                    Snapshot = prevSnapshot
-                };
-
-                // Upload additional Pages
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                PageBlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                // Act
-                Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
-                    range: new HttpRange(0, Constants.KB),
-                    previousSnapshotUri: blobUriBuilder.ToUri(),
-                    conditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.Value.PageRanges);
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
-            {
-                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-                // Upload some Pages
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Create prevSnapshot
-                Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-                var prevSnapshot = response.Value.Snapshot;
-
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-                {
-                    Snapshot = prevSnapshot
-                };
-
-                // Upload additional Pages
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                PageBlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                // Act
-                await TestHelper.CatchAsync<Exception>(
-                    async () =>
-                    {
-                        var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            previousSnapshotUri: blobUriBuilder.ToUri(),
-                            conditions: accessConditions)).Value;
-                    });
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewNonAsciiBlobName()));
-            await blob.CreateAsync(4 * Constants.KB, 0).ConfigureAwait(false);
-
-            // Upload some Pages
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 0);
-            }
-
-            // Create prevSnapshot
-            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-            var prevSnapshot = response.Value.Snapshot;
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Snapshot = prevSnapshot
-            };
-
-            // Upload additional Pages
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-            }
-
-            // create snapshot
-            response = await blob.CreateSnapshotAsync();
-            string snapshot = response.Value.Snapshot;
-
-            // Act
-            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
-                range: new HttpRange(0, 4 * Constants.KB),
-                snapshot,
-                previousSnapshotUri: blobUriBuilder.ToUri());
-
-            // Assert
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
-            HttpRange range = result.Value.PageRanges.First();
-
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
-        }
-
-        [RecordedTest]
         public async Task ResizeAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2588,7 +2354,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -2628,7 +2394,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2663,7 +2429,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTier()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
 
             // Arrange
@@ -2680,7 +2446,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetTierAsync_AccessTierFail()
         {
-            BlobServiceClient premiumService = GetServiceClient_PremiumBlobAccount_SharedKey();
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
             await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
@@ -2754,13 +2520,18 @@ namespace Azure.Storage.Blobs.Test
 
             HttpRange httpRange = new HttpRange(0, 1);
 
+            PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
+            {
+                SourceConditions = sourceConditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlobClient.UploadPagesFromUriAsync(
                     uri,
                     httpRange,
                     httpRange,
-                    sourceConditions: sourceConditions),
+                    options),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"UploadPagesFromUri does not support the {invalidSourceCondition} condition(s)."));
@@ -3195,7 +2966,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerToken()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3235,7 +3006,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadPagesFromUriAsync_SourceBearerTokenFail()
         {
             // Arrange
-            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingContainer test = await GetTestContainerAsync(
                 service: serviceClient,
                 publicAccessType: PublicAccessType.None);
@@ -3571,7 +3342,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
-            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
 
@@ -3892,12 +3663,12 @@ namespace Azure.Storage.Blobs.Test
             var mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name", new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(TestConfigDefault.ConnectionString, "name", "name").Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
-        private PageBlobRequestConditions BuildAccessConditions(
+        public static PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
             bool sequenceNumbers = false)

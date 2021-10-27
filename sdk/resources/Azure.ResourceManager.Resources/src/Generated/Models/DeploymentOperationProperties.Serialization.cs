@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> duration = default;
             Optional<string> serviceRequestId = default;
             Optional<string> statusCode = default;
-            Optional<object> statusMessage = default;
+            Optional<StatusMessage> statusMessage = default;
             Optional<TargetResource> targetResource = default;
             Optional<HttpMessage> request = default;
             Optional<HttpMessage> response = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
                         statusMessage = null;
                         continue;
                     }
-                    statusMessage = property.Value.GetObject();
+                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetResource"))

@@ -33,19 +33,10 @@ namespace Azure.Storage.Blobs.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string snapshot = null, string versionId = null, string version = "2020-06-12")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.snapshot = snapshot;
             this.versionId = versionId;
-            this.version = version;
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

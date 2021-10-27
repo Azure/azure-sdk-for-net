@@ -17,24 +17,10 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests
 {
-    public class DeviceCodeCredentialTests : ClientTestBase
+    public class DeviceCodeCredentialTests : CredentialTestBase
     {
         public DeviceCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
-
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string Scope = "https://vault.azure.net/.default";
-        private readonly HashSet<string> _requestedCodes = new HashSet<string>();
-        private TokenCredentialOptions options = new TokenCredentialOptions();
-        private readonly object _requestedCodesLock = new object();
-        private string expectedCode;
-        private string expectedToken;
-        private DateTimeOffset expiresOn;
-        private MockMsalPublicClient mockMsalClient;
-        private DeviceCodeResult deviceCodeResult;
-        private string expectedTenantId = null;
 
         private Task VerifyDeviceCode(DeviceCodeInfo codeInfo, string expectedCode)
         {
@@ -69,48 +55,19 @@ namespace Azure.Identity.Tests
         }
 
         [SetUp]
-        public void TestSetup()
+        public void Setup()
         {
-            expectedTenantId = null;
-            expectedCode = Guid.NewGuid().ToString();
-            expectedToken = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            mockMsalClient = new MockMsalPublicClient();
-            deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
-            mockMsalClient.DeviceCodeResult = deviceCodeResult;
-            var result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
-            mockMsalClient.SilentAuthFactory = (_, tId) =>
-            {
-                Assert.AreEqual(expectedTenantId, tId);
-                return result;
-            };
-            mockMsalClient.DeviceCodeAuthFactory = (_, _) =>
-            {
-                // Assert.AreEqual(tenantId, tId);
-                return result;
-            };
+            TestSetup();
         }
 
         [Test]
         public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            options = new TokenCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            options = new TokenCredentialOptions();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication) ;
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context) ;
             var cred = InstrumentClient(
-                new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockMsalClient));
+                new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 
             AccessToken token = await cred.GetTokenAsync(context);
 
@@ -119,6 +76,15 @@ namespace Azure.Identity.Tests
             token = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken);
+        }
+
+        [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]
@@ -132,18 +98,18 @@ namespace Azure.Identity.Tests
 
             try
             {
-                var client = new DeviceCodeCredential { Client = mockMsalClient };
+                var client = new DeviceCodeCredential { Client = mockPublicMsalClient };
                 var cred = InstrumentClient(client);
 
                 AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
                 Assert.AreEqual(token.Token, expectedToken);
-                Assert.AreEqual(mockMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
+                Assert.AreEqual(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
 
                 token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
                 Assert.AreEqual(token.Token, expectedToken);
-                Assert.AreEqual(mockMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
+                Assert.AreEqual(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
             }
             finally
             {
@@ -164,7 +130,7 @@ namespace Azure.Identity.Tests
                     ClientId,
                     options,
                     null,
-                    mockMsalClient));
+                    mockPublicMsalClient));
 
             var ex = Assert.CatchAsync<OperationCanceledException>(
                 async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }), cancelSource.Token));
@@ -177,7 +143,7 @@ namespace Azure.Identity.Tests
         {
             var cancelSource = new CancellationTokenSource();
             cancelSource.Cancel();
-            var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, null, ClientId, options, null, mockMsalClient));
+            var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, null, ClientId, options, null, mockPublicMsalClient));
 
             var ex = Assert.CatchAsync<OperationCanceledException>(
                 async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }), cancelSource.Token));
@@ -191,7 +157,7 @@ namespace Azure.Identity.Tests
             var cancelSource = new CancellationTokenSource();
             var options = new TokenCredentialOptions();
 
-            var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, null, ClientId, options, null, mockMsalClient));
+            var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, null, ClientId, options, null, mockPublicMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { testEnvironment.KeyvaultScope }), cancelSource.Token));

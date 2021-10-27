@@ -32,17 +32,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineInstallPatchesParameters class.
         /// </summary>
-        /// <param name="maximumDuration">Specifies the maximum amount of time
-        /// that the operation will run. It must be an ISO 8601-compliant
-        /// duration string such as PT4H (4 hours)</param>
         /// <param name="rebootSetting">Defines when it is acceptable to reboot
         /// a VM during a software update operation. Possible values include:
         /// 'IfRequired', 'Never', 'Always'</param>
+        /// <param name="maximumDuration">Specifies the maximum amount of time
+        /// that the operation will run. It must be an ISO 8601-compliant
+        /// duration string such as PT4H (4 hours)</param>
         /// <param name="windowsParameters">Input for InstallPatches on a
         /// Windows VM, as directly received by the API</param>
         /// <param name="linuxParameters">Input for InstallPatches on a Linux
         /// VM, as directly received by the API</param>
-        public VirtualMachineInstallPatchesParameters(string maximumDuration, string rebootSetting, WindowsParameters windowsParameters = default(WindowsParameters), LinuxParameters linuxParameters = default(LinuxParameters))
+        public VirtualMachineInstallPatchesParameters(string rebootSetting, string maximumDuration = default(string), WindowsParameters windowsParameters = default(WindowsParameters), LinuxParameters linuxParameters = default(LinuxParameters))
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
@@ -94,10 +94,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MaximumDuration == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MaximumDuration");
-            }
             if (RebootSetting == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RebootSetting");

@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
         /// <param name="excludeLastRequest">Whether to exclude the records of
         /// the last request. The default value is true. Type: boolean (or
         /// Expression with resultType boolean).</param>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// be used as delimiter passed to SAP RFC as well as splitting the
         /// output data retrieved. Type: string (or Expression with resultType
         /// string).</param>
-        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object excludeLastRequest = default(object), object baseRequestId = default(object), object customRfcReadTableFunctionModule = default(object), object sapDataColumnDelimiter = default(object))
+        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object excludeLastRequest = default(object), object baseRequestId = default(object), object customRfcReadTableFunctionModule = default(object), object sapDataColumnDelimiter = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, queryTimeout, additionalColumns)
         {
             ExcludeLastRequest = excludeLastRequest;

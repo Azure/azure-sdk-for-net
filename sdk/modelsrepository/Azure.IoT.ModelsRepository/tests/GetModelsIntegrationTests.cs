@@ -16,13 +16,13 @@ namespace Azure.IoT.ModelsRepository.Tests
         {
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public void GetModelsWithWrongCasingThrowsException(ModelsRepositoryTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
+        public void GetModelsWithWrongCasingThrowsException(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi = "dtmi:com:example:thermostat;1";
 
-            ModelsRepositoryClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType, false);
             string expectedExMsg =
                 string.Format(StandardStrings.GenericGetModelsError, "dtmi:com:example:thermostat;1") +
                 " " +
@@ -66,27 +66,31 @@ namespace Azure.IoT.ModelsRepository.Tests
             act.Should().Throw<RequestFailedException>().WithMessage($"Unable to resolve \"{invalidDep}\"");
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiNoDeps(ModelsRepositoryTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
+        public async Task GetModelsSingleDtmiNoDeps(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi = "dtmi:com:example:Thermostat;1";
 
-            ModelsRepositoryClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata);
             IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
             result.Keys.Count.Should().Be(1);
             result.Should().ContainKey(dtmi);
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi]).Should().Be(dtmi);
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsMultipleDtmisNoDeps(ModelsRepositoryTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
+        public async Task GetModelsMultipleDtmisNoDeps(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi1 = "dtmi:com:example:Thermostat;1";
             const string dtmi2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepositoryClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata);
             IDictionary<string, string> result = await client.GetModelsAsync(new string[] { dtmi1, dtmi2 });
             result.Keys.Count.Should().Be(2);
             result.Should().ContainKey(dtmi1);
@@ -95,14 +99,16 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi2]).Should().Be(dtmi2);
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiWithDeps(ModelsRepositoryTestBase.ClientType clientType)
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
+        public async Task GetModelsSingleDtmiWithDeps(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi = "dtmi:com:example:TemperatureController;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepositoryClient client = GetClient(clientType);
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata);
             IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -206,12 +212,14 @@ namespace Azure.IoT.ModelsRepository.Tests
             }
         }
 
-        public async Task GetModelsEnsuresNoDupes()
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
+        public async Task GetModelsMultipleDtmisEnsuresNoDupes(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmiDupe1 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
             const string dtmiDupe2 = "dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
+            ModelsRepositoryClient client = GetClient(clientType);
             IDictionary<string, string> result = await client.GetModelsAsync(new[] { dtmiDupe1, dtmiDupe2 });
 
             result.Keys.Count.Should().Be(1);
@@ -220,75 +228,26 @@ namespace Azure.IoT.ModelsRepository.Tests
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiWithDepsDisableDependencyResolution(ModelsRepositoryTestBase.ClientType clientType)
+        public async Task GetModelsSingleDtmiWithDepsDisabledDependencyResolution(ModelsRepositoryTestBase.ClientType clientType)
         {
-            const string dtmi = "dtmi:com:example:Thermostat;1";
+            const string dtmi = "dtmi:com:example:TemperatureController;1";
+            ModelsRepositoryClient client = GetClient(clientType);
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled);
-            ModelsRepositoryClient client = GetClient(clientType, options);
-
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, ModelDependencyResolution.Disabled);
 
             result.Keys.Count.Should().Be(1);
             result.Should().ContainKey(dtmi);
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[dtmi]).Should().Be(dtmi);
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiWithDepsResolutionOptionOverrideAsDisabled(ModelsRepositoryTestBase.ClientType clientType)
-        {
-            const string dtmi = "dtmi:com:example:TemperatureController;1";
-
-            ModelsRepositoryClient client = GetClient(clientType);
-
-            // We would expect 3 models without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.Disabled);
-            var expectedDtmis = $"{dtmi}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            result.Keys.Count.Should().Be(expectedDtmis.Length);
-
-            foreach (var id in expectedDtmis)
-            {
-                result.Should().ContainKey(id);
-                ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]).Should().Be(id);
-            }
-        }
-
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiWithDepsResolutionOptionOverrideAsEnabled(ModelsRepositoryTestBase.ClientType clientType)
-        {
-            const string dtmi = "dtmi:com:example:TemperatureController;1";
-            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
-
-            ModelsRepositoryClient client = GetClient(
-                clientType, new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
-
-            // We would expect 1 model without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.Enabled);
-            var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            result.Keys.Count.Should().Be(expectedDtmis.Length);
-
-            foreach (var id in expectedDtmis)
-            {
-                result.Should().ContainKey(id);
-                ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]).Should().Be(id);
-            }
-        }
-
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        public async Task GetModelsSingleDtmiWithDepsResolutionOptionOverrideAsTryFromExpanded(ModelsRepositoryTestBase.ClientType clientType)
+        public async Task GetModelsSingleDtmiWithDepsUseMetadataEnsureTryFromExpanded()
         {
             const string dtmi = "dtmi:com:example:DanglingExpanded;1";
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
-            ModelsRepositoryClient client = GetClient(
-                clientType, new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local, true);
 
-            // We would expect 1 model without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.TryFromExpanded);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, ModelDependencyResolution.Enabled);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
             result.Keys.Count.Should().Be(expectedDtmis.Length);
@@ -300,30 +259,9 @@ namespace Azure.IoT.ModelsRepository.Tests
             }
         }
 
-        [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
-        [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public async Task GetModelsSingleDtmiTryFromExpanded(ModelsRepositoryTestBase.ClientType clientType)
-        {
-            const string dtmi = "dtmi:com:example:TemperatureController;1";
-            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
-
-            var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded);
-            ModelsRepositoryClient client = GetClient(clientType, options);
-
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
-
-            result.Keys.Count.Should().Be(expectedDtmis.Length);
-
-            foreach (var id in expectedDtmis)
-            {
-                result.Should().ContainKey(id);
-                ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]).Should().Be(id);
-            }
-        }
-
-        public async Task GetModelsMultipleDtmisTryFromExpandedPartial()
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        public async Task GetModelsMultipleDtmisWithDepsPartialTryFromExpanded(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmisExpanded = "dtmi:com:example:TemperatureController;1," +  // Expanded available.
                   "dtmi:com:example:Thermostat;1," +
@@ -337,8 +275,8 @@ namespace Azure.IoT.ModelsRepository.Tests
             string[] nonExpandedDtmis = dtmisNonExpanded.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             string[] totalDtmis = expandedDtmis.Concat(nonExpandedDtmis).ToArray();
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded);
-            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local, options);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions();
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local, hasMetadata, options);
 
             // Multi-resolve dtmi:com:example:TemperatureController;1 + dtmi:com:example:ColdStorage;1
             IDictionary<string, string> result = await client.GetModelsAsync(new[] { expandedDtmis[0], nonExpandedDtmis[0] });
@@ -348,6 +286,43 @@ namespace Azure.IoT.ModelsRepository.Tests
             {
                 result.Should().ContainKey(id);
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result[id]).Should().Be(id);
+            }
+        }
+
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Remote, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, false)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, ModelsRepositoryTestBase.TimeSpanAlias.TimeSpanZero, false)]
+        public async Task MultipleGetModelsSingleDtmiWithDepsCustomMetadataExpiry(
+            ModelsRepositoryTestBase.ClientType clientType,
+            ModelsRepositoryTestBase.TimeSpanAlias timeSpanAlias,
+            bool hasMetadata)
+        {
+            TimeSpan targetTimeSpan = ModelsRepositoryTestBase.ConvertAliasToTimeSpan(timeSpanAlias);
+            const string rootDtmi = "dtmi:com:example:TemperatureController;1";
+            const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
+
+            var options = new ModelsRepositoryClientOptions();
+            options.Metadata.Expiration = targetTimeSpan;
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata: hasMetadata, options);
+            var expectedDtmis = $"{rootDtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < 2; i++)
+            {
+                IDictionary<string, string> resultWithDeps = await client.GetModelsAsync(rootDtmi);
+
+                resultWithDeps.Keys.Count.Should().Be(expectedDtmis.Length);
+
+                foreach (var id in expectedDtmis)
+                {
+                    resultWithDeps.Should().ContainKey(id);
+                    ModelsRepositoryTestBase.ParseRootDtmiFromJson(resultWithDeps[id]).Should().Be(id);
+                }
+
+                IDictionary<string, string> resultNoDeps = await client.GetModelsAsync(rootDtmi, ModelDependencyResolution.Disabled);
+                resultNoDeps.Keys.Count.Should().Be(1);
+                resultNoDeps.Should().ContainKey(rootDtmi);
+                ModelsRepositoryTestBase.ParseRootDtmiFromJson(resultNoDeps[rootDtmi]).Should().Be(rootDtmi);
             }
         }
     }

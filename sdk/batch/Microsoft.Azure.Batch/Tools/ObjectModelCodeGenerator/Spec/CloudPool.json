@@ -429,6 +429,17 @@
             "Type": "IList<Models.MountConfiguration>",
             "Name": "MountConfiguration"
           }
+        },
+        {
+          "Key": {
+            "Type": "BatchPoolIdentity",
+            "Name": "Identity",
+            "SummaryComment": "The identity of the Batch pool, if configured.",
+            "RemarksComment": "The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

@@ -12,25 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureBlobParameterPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            if (Optional.IsDefined(Container))
-            {
-                writer.WritePropertyName("container");
-                writer.WriteStringValue(Container);
-            }
-            if (Optional.IsDefined(BlobTemplate))
-            {
-                writer.WritePropertyName("blobTemplate");
-                writer.WriteStringValue(BlobTemplate);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

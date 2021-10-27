@@ -43,12 +43,6 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name='endpoint'>The Azure digital twins service instance URI to connect to.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
-        /// <seealso cref="DigitalTwinsClient(Uri, TokenCredential)">
-        /// This other constructor provides an opportunity to override default behavior, including specifying API version,
-        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
-        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
-        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
-        /// </seealso>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -476,6 +470,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
+        /// <seealso cref="UpdateDigitalTwin(string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual async Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwin)}");
@@ -516,9 +511,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateDigitalTwinAsync(string, JsonPatchDocument, ETag?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="UpdateDigitalTwinAsync(string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual Response UpdateDigitalTwin(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwin)}");
@@ -563,6 +556,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="GetComponent(string, string, CancellationToken)"/>
         public virtual async Task<Response<T>> GetComponentAsync<T>(string digitalTwinId, string componentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponent)}");
@@ -607,9 +601,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetComponentAsync(string, string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetComponentAsync(string, string, CancellationToken)"/>
         public virtual Response<T> GetComponent<T>(string digitalTwinId, string componentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponent)}");
@@ -662,6 +654,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="UpdateComponent(string, string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual async Task<Response> UpdateComponentAsync(
             string digitalTwinId,
             string componentName,
@@ -715,9 +708,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual Response UpdateComponent(
             string digitalTwinId,
             string componentName,
@@ -781,6 +772,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="GetRelationships(string, string, CancellationToken)"/>
         public virtual AsyncPageable<T> GetRelationshipsAsync<T>(
             string digitalTwinId,
             string relationshipName = null,
@@ -860,9 +852,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetRelationshipsAsync(string, string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetRelationshipsAsync(string, string, CancellationToken)"/>
         public virtual Pageable<T> GetRelationships<T>(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
@@ -945,6 +935,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="GetIncomingRelationships(string, CancellationToken)"/>
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
@@ -1013,9 +1004,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetIncomingRelationshipsAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetIncomingRelationshipsAsync(string, CancellationToken)"/>
         public virtual Pageable<IncomingRelationship> GetIncomingRelationships(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
@@ -1096,6 +1085,7 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;Prop2: {getCustomRelationship.Prop2}&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="GetRelationship(string, string, CancellationToken)"/>
         public virtual async Task<Response<T>> GetRelationshipAsync<T>(
             string digitalTwinId,
             string relationshipId,
@@ -1140,9 +1130,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetRelationshipAsync(string, string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetRelationshipAsync(string, string, CancellationToken)"/>
         public virtual Response<T> GetRelationship<T>(
             string digitalTwinId,
             string relationshipId,
@@ -1187,6 +1175,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
+        /// <seealso cref="DeleteRelationship(string, string, ETag?, CancellationToken)"/>
         public virtual async Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationship)}");
@@ -1225,9 +1214,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteRelationshipAsync(string, string, ETag?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="DeleteRelationshipAsync(string, string, ETag?, CancellationToken)"/>
         public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationship)}");
@@ -1302,6 +1289,7 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;from twin &apos;{createCustomRelationshipResponse.Value.SourceId}&apos; to twin &apos;{createCustomRelationshipResponse.Value.TargetId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="CreateOrReplaceRelationship{T}(string, string, T, ETag?, CancellationToken)"/>
         public virtual async Task<Response<T>> CreateOrReplaceRelationshipAsync<T>(
             string digitalTwinId,
             string relationshipId,
@@ -1378,9 +1366,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, ETag?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, ETag?, CancellationToken)"/>
         public virtual Response<T> CreateOrReplaceRelationship<T>(
             string digitalTwinId,
             string relationshipId,
@@ -1434,6 +1420,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
+        /// <seealso cref="UpdateRelationship(string, string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual async Task<Response> UpdateRelationshipAsync(
             string digitalTwinId,
             string relationshipId,
@@ -1486,9 +1473,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateRelationshipAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="UpdateRelationshipAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual Response UpdateRelationship(
             string digitalTwinId,
             string relationshipId,
@@ -1540,6 +1525,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="GetModels(GetModelsOptions, CancellationToken)"/>
         public virtual AsyncPageable<DigitalTwinsModelData> GetModelsAsync(GetModelsOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
@@ -1620,9 +1606,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="GetModelsAsync(GetModelsOptions, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetModelsAsync(GetModelsOptions, CancellationToken)"/>
         public virtual Pageable<DigitalTwinsModelData> GetModels(GetModelsOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModels)}");
@@ -1694,6 +1678,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="GetModel(string, CancellationToken)"/>
         public virtual async Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModel)}");
@@ -1727,9 +1712,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetModelAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetModelAsync(string, CancellationToken)"/>
         public virtual Response<DigitalTwinsModelData> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModel)}");
@@ -1783,6 +1766,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="DecommissionModel(string, CancellationToken)"/>
         public virtual async Task<Response> DecommissionModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModel)}");
@@ -1824,9 +1808,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DecommissionModelAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="DecommissionModelAsync(string, CancellationToken)"/>
         public virtual Response DecommissionModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModel)}");
@@ -1863,14 +1845,15 @@ namespace Azure.DigitalTwins.Core
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins.</see>
         /// </remarks>
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models" />
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels" language="csharp">
         /// await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="CreateModels(IEnumerable{string}, CancellationToken)"/>
         public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModels)}");
@@ -1911,14 +1894,12 @@ namespace Azure.DigitalTwins.Core
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins.</see>
         /// </remarks>
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models" />
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)"/>
         public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModels)}");
@@ -1979,6 +1960,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="DeleteModel(string, CancellationToken)"/>
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModel)}");
@@ -2021,9 +2003,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteModelAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="DeleteModelAsync(string, CancellationToken)"/>
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModel)}");
@@ -2072,6 +2052,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="Query(string, CancellationToken)"/>
         public virtual AsyncPageable<T> QueryAsync<T>(string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
@@ -2178,9 +2159,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// A basic query for all digital twins: SELECT * FROM digitalTwins.
         /// </example>
-        /// <seealso cref="QueryAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="QueryAsync(string, CancellationToken)"/>
         public virtual Pageable<T> Query<T>(string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
@@ -2285,6 +2264,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
+        /// <seealso cref="GetEventRoutesAsync(CancellationToken)"/>
         public virtual AsyncPageable<DigitalTwinsEventRoute> GetEventRoutesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
@@ -2360,9 +2340,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="GetEventRoutesAsync(CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetEventRoutesAsync(CancellationToken)"/>
         public virtual Pageable<DigitalTwinsEventRoute> GetEventRoutes(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
@@ -2439,6 +2417,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
+        /// <seealso cref="GetEventRoute(string, CancellationToken)"/>
         public virtual async Task<Response<DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoute)}");
@@ -2471,9 +2450,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="GetEventRouteAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="GetEventRouteAsync(string, CancellationToken)"/>
         public virtual Response<DigitalTwinsEventRoute> GetEventRoute(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoute)}");
@@ -2517,6 +2494,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="CreateOrReplaceEventRoute(string, DigitalTwinsEventRoute, CancellationToken)"/>
         public virtual async Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRoute)}");
@@ -2551,9 +2529,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateOrReplaceEventRouteAsync(string, DigitalTwinsEventRoute, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="CreateOrReplaceEventRouteAsync(string, DigitalTwinsEventRoute, CancellationToken)"/>
         public virtual Response CreateOrReplaceEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRoute)}");
@@ -2592,6 +2568,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="DeleteEventRouteAsync(string, CancellationToken)"/>
         public virtual async Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRoute)}");
@@ -2624,9 +2601,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteEventRouteAsync(string, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="DeleteEventRouteAsync(string, CancellationToken)"/>
         public virtual Response DeleteEventRoute(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRoute)}");
@@ -2671,6 +2646,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="PublishTelemetry(string, string, string, DateTimeOffset?, CancellationToken)"/>
         public virtual async Task<Response> PublishTelemetryAsync(
             string digitalTwinId,
             string messageId,
@@ -2728,9 +2704,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishTelemetryAsync(string, string, string, DateTimeOffset?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="PublishTelemetryAsync(string, string, string, DateTimeOffset?, CancellationToken)"/>
         public virtual Response PublishTelemetry(
             string digitalTwinId,
             string messageId,
@@ -2802,6 +2776,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Published component telemetry message to twin &apos;{twinId}&apos;.&quot;);
         /// </code>
         /// </example>
+        /// <seealso cref="PublishComponentTelemetry(string, string, string, string, DateTimeOffset?, CancellationToken)"/>
         public virtual async Task<Response> PublishComponentTelemetryAsync(
             string digitalTwinId,
             string componentName,
@@ -2862,9 +2837,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, DateTimeOffset?, CancellationToken)">
-        /// See the asynchronous version of this method for examples.
-        /// </seealso>
+        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, DateTimeOffset?, CancellationToken)"/>
         public virtual Response PublishComponentTelemetry(
             string digitalTwinId,
             string componentName,

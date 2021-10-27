@@ -1,6 +1,23 @@
 # Release History
 
-## 5.1.0-beta.8 (Unreleased)
+## 5.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
+
+### Other Changes
+
+## 5.2.0-beta.1 (2021-08-09)
+
+### Features Added
+- The client defaults to the latest supported service version, which currently is `3.2-preview.1`.
+- Added property `ExtractSummaryActions` to `TextAnalyticsActions` to support the new 'extractive text summarization' API. This action can be used to get a summary for the input document by extracting the most relevant sentences.
+
+## 5.1.0 (2021-07-07)
 ### New features
 - Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
 - Added AAD support for the `StartAnalyzeHealthcareEntities` methods.

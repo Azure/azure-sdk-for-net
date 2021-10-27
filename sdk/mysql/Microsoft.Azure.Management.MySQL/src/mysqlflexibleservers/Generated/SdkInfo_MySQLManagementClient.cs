@@ -28,9 +28,21 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
                 new Tuple<string, string, string>("DBForMySql", "Operations", "2020-07-01-privatepreview"),
                 new Tuple<string, string, string>("DBForMySql", "Replicas", "2020-07-01-privatepreview"),
                 new Tuple<string, string, string>("DBForMySql", "ServerKeys", "2020-07-01-privatepreview"),
+                new Tuple<string, string, string>("DBForMySql", "ServerParameters", "2020-07-01-privatepreview"),
                 new Tuple<string, string, string>("DBForMySql", "Servers", "2020-07-01-privatepreview"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mysql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.MySQL.FlexibleServers --tag=package-2020-07-01-privatepreview --csharp.output-folder=C:\\Users\\daeunyim\\work\\SDK\\azure-sdk-for-net\\sdk\\mysql\\Microsoft.Azure.Management.MySQL\\src\\mysqlflexibleservers\\Generated";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "3257aacc47c2a03b7964cbb5c6a07ec9f2f232ee";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

@@ -47,8 +47,8 @@ namespace Azure.Communication.NetworkTraversal.Tests
 
             Assert.IsNotNull(turnCredentialsResponse.Value);
             Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
-            Assert.IsNotNull(turnCredentialsResponse.Value.TurnServers);
-            foreach (CommunicationTurnServer serverCredential in turnCredentialsResponse.Value.TurnServers)
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
             {
                 foreach (string url in serverCredential.Urls)
                 {

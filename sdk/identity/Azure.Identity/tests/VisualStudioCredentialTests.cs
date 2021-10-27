@@ -13,25 +13,20 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
-    public class VisualStudioCredentialTests : ClientTestBase
+    public class VisualStudioCredentialTests : CredentialTestBase
     {
-        private string TenantId = "a0287521-e002-0026-7112-207c0c000000";
-        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
-        private const string Scope = "https://vault.azure.net/.default";
-        private string expectedTenantId;
-
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool preferHint)
+        public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
-            var options = new VisualStudioCredentialOptions { AllowMultiTenantAuthentication = preferHint };
+            var options = new VisualStudioCredentialOptions();
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
 
             var token = await credential.GetTokenAsync(context, default);
 

@@ -3,7 +3,11 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
+title: Container Registry
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/5bcf8b9ce0d230830b172c2d9753cbbb4abf325b/specification/containerregistry/data-plane/Azure.ContainerRegistry/preview/2019-08-15-preview/containerregistry.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/2c33d5572dab4c6f52faf31004f0561205737107/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json
+ 
 model-namespace: false
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```

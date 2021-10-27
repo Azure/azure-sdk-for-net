@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "restorePointName");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "restorePointName");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-07-01";
             RestorePoint parameters = new RestorePoint();
             if (excludeDisks != null)
             {
@@ -576,7 +576,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "restorePointName");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

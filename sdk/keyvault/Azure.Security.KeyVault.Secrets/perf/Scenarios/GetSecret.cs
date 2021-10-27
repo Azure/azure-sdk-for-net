@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
     public sealed class GetSecret : SecretsScenarioBase<PerfOptions>
     {
         private const string SecretValue = "value";
-        private string _secretName;
+        private static string _secretName = GetRandomName("s-");
 
         public GetSecret(PerfOptions options) : base(options)
         {
@@ -22,7 +22,6 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
         {
             await base.GlobalSetupAsync();
 
-            _secretName = GetRandomName("s-");
             await Client.SetSecretAsync(_secretName, SecretValue);
         }
 

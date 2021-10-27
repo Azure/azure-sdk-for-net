@@ -62,6 +62,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
 
   # Generate the release tag for use in link substitution
   $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
+  Write-Host "The tag of package: $tag"
   $date = Get-Date -Format "MM/dd/yyyy"
 
 
@@ -84,7 +85,7 @@ keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
 author: maggiepint
 ms.author: magpint
 ms.date: $date
-ms.topic: article
+ms.topic: reference
 ms.prod: azure
 ms.technology: azure
 ms.devlang: $Language
@@ -97,9 +98,13 @@ ms.service: $service
 }
 
 function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) { 
+  if (!(Test-Path $packageInfoJsonLocation)) {
+    LogWarning "Package metadata not found for $packageInfoJsonLocation"
+    return
+  }
+  
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
-
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   if ($packageInfo.DevVersion) {
     # If the package is of a dev version there may be language-specific needs to 

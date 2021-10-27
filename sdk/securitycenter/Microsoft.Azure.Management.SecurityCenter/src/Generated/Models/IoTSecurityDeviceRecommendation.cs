@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'High'</param>
         /// <param name="devicesCount">Number of devices with this
         /// recommendation.</param>
-        public IoTSecurityDeviceRecommendation(string recommendationDisplayName = default(string), string reportedSeverity = default(string), int? devicesCount = default(int?))
+        public IoTSecurityDeviceRecommendation(string recommendationDisplayName = default(string), string reportedSeverity = default(string), long? devicesCount = default(long?))
         {
             RecommendationDisplayName = recommendationDisplayName;
             ReportedSeverity = reportedSeverity;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of devices with this recommendation.
         /// </summary>
         [JsonProperty(PropertyName = "devicesCount")]
-        public int? DevicesCount { get; private set; }
+        public long? DevicesCount { get; private set; }
 
     }
 }

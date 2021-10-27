@@ -18,12 +18,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     /// This task will enable getting projects that needs to be built.
     /// Currently this task makes the following assumption:
     /// 1) We have hard coded to search for only *.csproj files as the projects that needs to be built
-    /// It has the capability and properties that will accomodate any number of project file extension (using ; separated list)
+    /// It has the capability and properties that will accommodate any number of project file extension (using ; separated list)
     /// 2) It has currently hard-coded to ignore KeyVault Sample projects (they do not need to be built anytime)
     /// 3) Due to a Msbuild capability of not able to provide outputs for multi-targeting projects, we need to separate out projects 
     /// that are only targeting one framework version.
     /// So in our entire build system, we assume that all our proejcts target only .NET 452 and .NET Standard 1.4
-    /// Not sure if we want to accomodate random target frameworks (possibly not), but then there are always exceptions and we are not
+    /// Not sure if we want to accommodate random target frameworks (possibly not), but then there are always exceptions and we are not
     /// ready for those exceptions.
     /// Need to file an issue to investigate this and enable it.
     /// 

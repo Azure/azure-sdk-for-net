@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Administration;
@@ -105,25 +106,25 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new <see cref="QueueProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
         /// </summary>
         public static QueueProperties QueueProperties(
             string name,
-            TimeSpan lockDuration = default,
-            long maxSizeInMegabytes = default,
-            bool requiresDuplicateDetection = default,
-            bool requiresSession = default,
-            TimeSpan defaultMessageTimeToLive = default,
-            TimeSpan autoDeleteOnIdle = default,
-            bool deadLetteringOnMessageExpiration = default,
-            TimeSpan duplicateDetectionHistoryTimeWindow = default,
-            int maxDeliveryCount = default,
-            bool enableBatchedOperations = default,
-            EntityStatus status = default,
-            string forwardTo = default,
-            string forwardDeadLetteredMessagesTo = default,
-            string userMetadata = default,
-            bool enablePartitioning = default) =>
+            TimeSpan lockDuration,
+            long maxSizeInMegabytes,
+            bool requiresDuplicateDetection,
+            bool requiresSession,
+            TimeSpan defaultMessageTimeToLive,
+            TimeSpan autoDeleteOnIdle,
+            bool deadLetteringOnMessageExpiration,
+            TimeSpan duplicateDetectionHistoryTimeWindow,
+            int maxDeliveryCount,
+            bool enableBatchedOperations,
+            EntityStatus status,
+            string forwardTo,
+            string forwardDeadLetteredMessagesTo,
+            string userMetadata,
+            bool enablePartitioning) =>
             new QueueProperties(name)
             {
                 LockDuration = lockDuration,
@@ -145,18 +146,62 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="TopicProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
         /// </summary>
-        public static TopicProperties TopicProperties(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static QueueProperties QueueProperties(
             string name,
+            TimeSpan lockDuration = default,
             long maxSizeInMegabytes = default,
             bool requiresDuplicateDetection = default,
+            bool requiresSession = default,
             TimeSpan defaultMessageTimeToLive = default,
             TimeSpan autoDeleteOnIdle = default,
+            bool deadLetteringOnMessageExpiration = default,
             TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            int maxDeliveryCount = default,
             bool enableBatchedOperations = default,
             EntityStatus status = default,
-            bool enablePartitioning = default) =>
+            string forwardTo = default,
+            string forwardDeadLetteredMessagesTo = default,
+            string userMetadata = default,
+            bool enablePartitioning = default,
+            long maxMessageSizeInKilobytes = default) =>
+                new QueueProperties(name)
+                {
+                    LockDuration = lockDuration,
+                    MaxSizeInMegabytes = maxSizeInMegabytes,
+                    RequiresDuplicateDetection = requiresDuplicateDetection,
+                    RequiresSession = requiresSession,
+                    DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                    AutoDeleteOnIdle = autoDeleteOnIdle,
+                    DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
+                    DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                    MaxDeliveryCount = maxDeliveryCount,
+                    EnableBatchedOperations = enableBatchedOperations,
+                    AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                    Status = status,
+                    ForwardTo = forwardTo,
+                    ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
+                    UserMetadata = userMetadata,
+                    EnablePartitioning = enablePartitioning,
+                    MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TopicProperties TopicProperties(
+            string name,
+            long maxSizeInMegabytes,
+            bool requiresDuplicateDetection,
+            TimeSpan defaultMessageTimeToLive,
+            TimeSpan autoDeleteOnIdle,
+            TimeSpan duplicateDetectionHistoryTimeWindow,
+            bool enableBatchedOperations,
+            EntityStatus status,
+            bool enablePartitioning) =>
             new TopicProperties(name)
             {
                 MaxSizeInMegabytes = maxSizeInMegabytes,
@@ -168,6 +213,34 @@ namespace Azure.Messaging.ServiceBus
                 AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
                 Status = status,
                 EnablePartitioning = enablePartitioning
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicProperties TopicProperties(
+            string name,
+            long maxSizeInMegabytes = default,
+            bool requiresDuplicateDetection = default,
+            TimeSpan defaultMessageTimeToLive = default,
+            TimeSpan autoDeleteOnIdle = default,
+            TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            bool enableBatchedOperations = default,
+            EntityStatus status = default,
+            bool enablePartitioning = default,
+            long maxMessageSizeInKilobytes = default) =>
+            new TopicProperties(name)
+            {
+                MaxSizeInMegabytes = maxSizeInMegabytes,
+                RequiresDuplicateDetection = requiresDuplicateDetection,
+                DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                AutoDeleteOnIdle = autoDeleteOnIdle,
+                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                EnableBatchedOperations = enableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = status,
+                EnablePartitioning = enablePartitioning,
+                MaxMessageSizeInKilobytes = maxMessageSizeInKilobytes
             };
 
         /// <summary>
@@ -215,17 +288,93 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch" /> class.
+        /// Creates a new <see cref="QueueRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static QueueRuntimeProperties QueueRuntimeProperties(
+            string name,
+            long activeMessageCount = default,
+            long scheduledMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            long sizeInBytes = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    ScheduledMessageCount = scheduledMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="TopicRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicRuntimeProperties TopicRuntimeProperties(
+            string name,
+            long scheduledMessageCount = default,
+            long sizeInBytes = default,
+            int subscriptionCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ScheduledMessageCount = scheduledMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    SubscriptionCount = subscriptionCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="SubscriptionRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static SubscriptionRuntimeProperties SubscriptionRuntimeProperties(
+            string topicName,
+            string subscriptionName,
+            long activeMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(topicName, subscriptionName)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> class.
         /// </summary>
         ///
         /// <param name="batchSizeBytes">The size, in bytes, that the batch should report; this is a static value and will not mutate as messages are added.</param>
-        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
+        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
         /// <param name="batchOptions">The set of options to consider when creating this batch.</param>
-        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="ServiceBusMessageBatch.TryAddMessage" /> is called;
-        /// the return of this callback represents the result of <see cref="ServiceBusMessageBatch.TryAddMessage" />.
+        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> is called;
+        /// the return of this callback represents the result of <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" />.
         /// If not provided, all events will be accepted into the batch.</param>
         ///
-        /// <returns>The <see cref="ServiceBusMessageBatch" /> instance that was created.</returns>
+        /// <returns>The <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> instance that was created.</returns>
         ///
         public static ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes,
                                                     IList<ServiceBusMessage> batchMessageStore,

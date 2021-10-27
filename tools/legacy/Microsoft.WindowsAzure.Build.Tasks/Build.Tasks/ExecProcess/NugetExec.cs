@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
         {
             get
             {
-                // We check if nuget publishing is happening to a non-standard location (e.g. local hard drive or anything other than the officialy nuget publish location
+                // We check if nuget publishing is happening to a non-standard location (e.g. local hard drive or anything other than the officially nuget publish location
                 // If anything non-standard nuget publish location, symbol path will be same as the provided nuget publish location
                 if (string.IsNullOrEmpty(_publishSymbolToPath))
                 {

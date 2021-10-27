@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
         {
             _attribute = attribute;
             _defaultPath = defaultPath;
-            _serviceBusEntityType = _attribute.ServiceBusEntityType;
+            _serviceBusEntityType = _attribute.EntityType;
             _messagingProvider = messagingProvider;
             _clientFactory = clientFactory;
         }

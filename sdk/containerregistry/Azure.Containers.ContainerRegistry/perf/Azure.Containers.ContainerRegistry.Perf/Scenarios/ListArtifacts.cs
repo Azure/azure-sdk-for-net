@@ -15,7 +15,11 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public ListArtifacts(PerfOptions options) : base(options)
         {
-            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential);
+            _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential,
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
         }
 
         public override async Task GlobalSetupAsync()

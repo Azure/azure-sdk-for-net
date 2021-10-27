@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.NetApp
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// Gets the INetAppResourceOperations.
         /// </summary>
         INetAppResourceOperations NetAppResource { get; }
+
+        /// <summary>
+        /// Gets the INetAppResourceQuotaLimitsOperations.
+        /// </summary>
+        INetAppResourceQuotaLimitsOperations NetAppResourceQuotaLimits { get; }
 
         /// <summary>
         /// Gets the IAccountsOperations.

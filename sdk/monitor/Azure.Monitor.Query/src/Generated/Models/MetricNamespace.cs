@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="name"> The escaped name of the namespace. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
-        internal MetricNamespace(string id, string type, string name, NamespaceClassification? classification, MetricNamespaceName properties)
+        internal MetricNamespace(string id, string type, string name, MetricNamespaceClassification? classification, MetricNamespaceName properties)
         {
             Id = id;
             Type = type;
@@ -37,6 +37,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The escaped name of the namespace. </summary>
         public string Name { get; }
         /// <summary> Kind of namespace. </summary>
-        public NamespaceClassification? Classification { get; }
+        public MetricNamespaceClassification? Classification { get; }
     }
 }

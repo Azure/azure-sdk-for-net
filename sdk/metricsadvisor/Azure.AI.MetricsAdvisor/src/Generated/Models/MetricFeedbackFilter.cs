@@ -22,7 +22,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> filter feedbacks by metric id. </summary>
         public Guid MetricId { get; }
-        public FeedbackDimensionFilter DimensionFilter { get; set; }
+        /// <summary> Gets or sets the dimension filter. </summary>
+        public FeedbackFilter DimensionFilter { get; set; }
         /// <summary> filter feedbacks by type. </summary>
         public MetricFeedbackKind? FeedbackType { get; set; }
         /// <summary> start time filter under chosen time mode. </summary>

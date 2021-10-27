@@ -1,6 +1,20 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.11.0-beta.1 (Unreleased)
+- Added support for service version 2020-12-06.
+- Added support for Encryption Scope SAS.
+- Added support for Encryption Scopes with BlobBaseClient.SyncCopyFromUriAsync().
+- Added support for generating SAS URLs with the Permanent Delete ('y') SAS permission.
+- Added support for SDK-calculated transactional hash checksums on data transfer.
+- Fixed bug where BlobContainerClient.GetBlobs() and .GetBlobsByHierarchyAsync() was not parsing the Object Replication Metadata correctly
+
+## 12.10.0 (2021-09-08)
+- Includes all features from 12.10.0-beta.1 and 12.10.0-beta.2.
+
+## 12.10.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.10.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Immutable Storage with Versioning
     - Added BlobBaseClient.SetImmutibilityPolicy()
@@ -13,6 +27,7 @@
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
     - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
 - Fixed bug where BlobBaseClient.DownloadStreamingAsync() won't correctly parse the LeaseStatus header.
+- Fixed bug where BlobBaseClient.DownloadContentAsync() fails on 304 response.
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.

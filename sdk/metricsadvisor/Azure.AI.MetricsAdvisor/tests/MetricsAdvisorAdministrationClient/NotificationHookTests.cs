@@ -40,22 +40,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => adminClient.CreateHookAsync(emailHook), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.CreateHook(emailHook), Throws.InstanceOf<ArgumentException>());
 
-            emailHook.Name = name;
-            emailHook.EmailsToAlert.Clear();
-            Assert.That(() => adminClient.CreateHookAsync(emailHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(emailHook), Throws.InstanceOf<ArgumentException>());
-
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
 
             webHook.Name = "";
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentException>());
-
-            webHook.Name = name;
-            webHook.Endpoint = null;
-            Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]

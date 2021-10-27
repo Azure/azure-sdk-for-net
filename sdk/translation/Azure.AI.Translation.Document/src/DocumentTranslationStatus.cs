@@ -12,5 +12,12 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("Status")]
     public partial struct DocumentTranslationStatus
     {
+        /// <summary> Canceled. </summary>
+        [CodeGenMember("Cancelled")]
+        public static DocumentTranslationStatus Canceled { get; } = new DocumentTranslationStatus(CanceledValue);
+
+        /// <summary> Canceling. </summary>
+        [CodeGenMember("Cancelling")]
+        public static DocumentTranslationStatus Canceling { get; } = new DocumentTranslationStatus(CancelingValue);
     }
 }

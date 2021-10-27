@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,6 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
         internal AcsChatMessageReceivedInThreadEventData()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
@@ -27,12 +30,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
-        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
+        /// <param name="metadata"> The chat message metadata. </param>
+        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
         {
             MessageBody = messageBody;
+            Metadata = metadata;
         }
 
         /// <summary> The body of the chat message. </summary>
         public string MessageBody { get; }
+        /// <summary> The chat message metadata. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

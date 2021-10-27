@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample03_EventProcessorHandlersLiveTests
     {
         /// <summary>
@@ -34,19 +32,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_Sample03_EventHandlerExceptionHandling
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -98,19 +97,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_Sample03_EventHandlerCancellation
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -170,19 +170,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample03_EventHandlerStopOnException
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -198,7 +199,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // if signaled, then processing will be stopped.
 
             using var cancellationSource = new CancellationTokenSource();
-            /*@@*/ cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+#if !SNIPPET
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+#endif
 
             Task processEventHandler(ProcessEventArgs args)
             {
@@ -272,88 +275,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public void ErrorHandlerExceptionHandling()
-        {
-            #region Snippet:EventHubs_Processor_Sample03_ErrorHandlerExceptionHandling
-
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
-
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
-
-            var storageClient = new BlobContainerClient(
-                storageConnectionString,
-                blobContainerName);
-
-            var processor = new EventProcessorClient(
-                storageClient,
-                consumerGroup,
-                eventHubsConnectionString,
-                eventHubName);
-
-            Task processErrorHandler(ProcessErrorEventArgs args)
-            {
-                try
-                {
-                    // Process the error and take the appropriate
-                    // action for the application.
-                }
-                catch
-                {
-                    // Take action to handle the exception.
-                    // It is important that all exceptions are
-                    // handled and none are permitted to bubble up.
-                }
-
-                return Task.CompletedTask;
-            }
-
-            try
-            {
-                processor.ProcessErrorAsync += processErrorHandler;
-
-                // Starting and stopping the processor are not
-                // shown in this example.
-            }
-            finally
-            {
-                processor.ProcessErrorAsync -= processErrorHandler;
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
         public void ErrorHandlerArgs()
         {
             #region Snippet:EventHubs_Processor_Sample03_ErrorHandlerArgs
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -417,19 +356,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample03_ErrorHandlerCancellationRecovery
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -445,7 +385,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // if signaled, then processing will be stopped.
 
             using var cancellationSource = new CancellationTokenSource();
-            /*@@*/ cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+#if !SNIPPET
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+#endif
 
             Task processEventHandler(ProcessEventArgs args)
             {
@@ -557,19 +499,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_Sample03_InitializeHandlerArgs
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -634,19 +577,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_Sample03_CloseHandlerArgs
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = "not-real";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fakeHub";
-            /*@@*/ consumerGroup = "fakeConsumer";
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,

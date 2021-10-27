@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
+    public class MetricsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
@@ -18,17 +18,17 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:QueryMetrics
 
 #if SNIPPET
-            var endpoint = new Uri("https://management.azure.com");
             string resourceId =
-                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 #else
-            Uri endpoint = TestEnvironment.LogsEndpoint;
             string resourceId = TestEnvironment.MetricsResource;
 #endif
 
-            var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
+            #region Snippet:CreateMetricsClient
+            var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+            #endregion
 
-            Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+            Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
                 resourceId,
                 new[] {"Microsoft.OperationalInsights/workspaces"}
             );
@@ -40,7 +40,7 @@ namespace Azure.Monitor.Query.Tests
                 {
                     Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
-                    foreach (var metricValue in element.Data)
+                    foreach (var metricValue in element.Values)
                     {
                         Console.WriteLine(metricValue);
                     }

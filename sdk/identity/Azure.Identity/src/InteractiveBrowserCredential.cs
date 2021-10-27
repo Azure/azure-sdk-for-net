@@ -18,7 +18,6 @@ namespace Azure.Identity
     public class InteractiveBrowserCredential : TokenCredential
     {
         private readonly string _tenantId;
-        private readonly bool _allowMultiTenantAuthentication;
         internal string ClientId { get; }
         internal string LoginHint { get; }
         internal MsalPublicClient Client { get; }
@@ -78,11 +77,10 @@ namespace Azure.Identity
 
             ClientId = clientId;
             _tenantId = tenantId;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
-            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
@@ -99,7 +97,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Interactively authenticates a user via the default browser.
+        /// Interactively authenticates a user via the default browser. The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetTokenAsync"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
@@ -112,7 +110,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Interactively authenticates a user via the default browser.
+        /// Interactively authenticates a user via the default browser. The resulting <see cref="AuthenticationRecord"/> will automatically be used in subsequent calls to <see cref="GetToken"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -183,7 +181,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, _allowMultiTenantAuthentication);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext);
                         AuthenticationResult result = await Client
                             .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
@@ -217,7 +215,7 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context, _allowMultiTenantAuthentication);
+            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context);
             AuthenticationResult result = await Client
                 .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);

@@ -20,6 +20,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol ConsumerOwnerLevel { get; } = AmqpConstants.Vendor + ":epoch";
 
         /// <summary>
+        ///   The consumer identifier to associate with a receiver link.
+        /// </summary>
+        ///
+        public static AmqpSymbol ConsumerIdentifier { get; } = AmqpConstants.Vendor + ":receiver-name";
+
+        /// <summary>
         ///   The owner level (a.k.a. epoch) to associate with a sending link.
         /// </summary>
         ///

@@ -20,23 +20,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="workspaceId">The workspace ID of the Log Analytics resource.</param>
         /// <param name="query">The query to retrieve the data to be ingested.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="workspaceId"/> or <paramref name="query"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="workspaceId"/> or <paramref name="query"/> is empty.</exception>
-        public LogAnalyticsDataFeedSource(string workspaceId, string query)
-            : base(DataFeedSourceKind.LogAnalytics)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(query, nameof(query));
-
-            WorkspaceId = workspaceId;
-            Query = query;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LogAnalyticsDataFeedSource"/> class.
-        /// </summary>
-        /// <param name="workspaceId">The workspace ID of the Log Analytics resource.</param>
-        /// <param name="query">The query to retrieve the data to be ingested.</param>
         /// <param name="clientId">The client ID used for AAD authentication.</param>
         /// <param name="clientSecret">The client secret used for AAD authentication.</param>
         /// <param name="tenantId">The tenant ID used for AAD authentication.</param>

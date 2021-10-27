@@ -368,7 +368,7 @@ namespace Azure.Storage.Blobs
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.ToString(),
+                url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs
         #region GetBlobContainers
         /// <summary>
         /// The <see cref="GetBlobContainers(BlobContainerTraits, BlobContainerStates, string, CancellationToken)"/>
-        /// operation returns an asyncsequence of blob containers in the storage account.  Enumerating the
+        /// operation returns a sequence of blob containers in the storage account.  Enumerating the
         /// blob containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         ///

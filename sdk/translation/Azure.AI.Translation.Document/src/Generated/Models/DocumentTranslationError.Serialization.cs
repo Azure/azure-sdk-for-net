@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentTranslationError
+    public partial struct DocumentTranslationError
     {
         internal static DocumentTranslationError DeserializeDocumentTranslationError(JsonElement element)
         {

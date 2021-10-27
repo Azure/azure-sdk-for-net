@@ -39,7 +39,10 @@ namespace Azure.Core
             return operation.WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
         }
 
-        public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public static async ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(
+            this Operation<TResult> operation,
+            TimeSpan pollingInterval,
+            CancellationToken cancellationToken)
             where TResult : notnull
         {
             while (true)
@@ -68,9 +71,8 @@ namespace Azure.Core
         {
             while (true)
             {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                operation.UpdateStatusAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                operation.UpdateStatus(cancellationToken);
+
                 if (operation.HasCompleted)
                 {
                     return Response.FromValue(operation.Value, operation.GetRawResponse());
@@ -109,9 +111,8 @@ namespace Azure.Core
         {
             while (true)
             {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                operation.UpdateStatusAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                operation.UpdateStatus(cancellationToken);
+
                 if (operation.HasCompleted)
                 {
                     return operation.GetRawResponse();

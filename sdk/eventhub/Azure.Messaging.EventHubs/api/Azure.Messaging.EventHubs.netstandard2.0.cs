@@ -57,6 +57,7 @@ namespace Azure.Messaging.EventHubs
     {
         public EventHubConnectionOptions() { }
         public System.Net.Security.RemoteCertificateValidationCallback CertificateValidationCallback { get { throw null; } set { } }
+        public System.TimeSpan ConnectionIdleTimeout { get { throw null; } set { } }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
         public int ReceiveBufferSizeInBytes { get { throw null; } set { } }
@@ -204,6 +205,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         public string ConsumerGroup { get { throw null; } }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
         public bool IsClosed { get { throw null; } protected set { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
@@ -226,6 +228,7 @@ namespace Azure.Messaging.EventHubs.Consumer
     {
         public EventHubConsumerClientOptions() { }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -251,7 +254,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
         public static bool operator !=(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -400,6 +402,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string ConsumerGroup { get { throw null; } }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
         public Azure.Messaging.EventHubs.Consumer.EventPosition InitialPosition { get { throw null; } }
         public bool IsClosed { get { throw null; } protected set { } }
         public string PartitionId { get { throw null; } }
@@ -421,6 +424,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public PartitionReceiverOptions() { }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
         public System.TimeSpan? DefaultMaximumReceiveWaitTime { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
         public long? OwnerLevel { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }
@@ -519,6 +523,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubProducerClient(string connectionString, string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions) { }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
         public bool IsClosed { get { throw null; } protected set { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Messaging.EventHubs.Producer.EventDataBatch> CreateBatchAsync(Azure.Messaging.EventHubs.Producer.CreateBatchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -541,6 +546,7 @@ namespace Azure.Messaging.EventHubs.Producer
     {
         public EventHubProducerClientOptions() { }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

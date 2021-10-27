@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,11 +34,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="password">The password to log into the registry
         /// server.</param>
         /// <param name="registryServer">The registry URL.</param>
-        public ContainerRegistry(string userName, string password, string registryServer = default(string))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access an Azure Container Registry instead of
+        /// username and password.</param>
+        public ContainerRegistry(string userName = default(string), string password = default(string), string registryServer = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
-            RegistryServer = registryServer;
             UserName = userName;
             Password = password;
+            RegistryServer = registryServer;
+            IdentityReference = identityReference;
             CustomInit();
         }
 
@@ -47,15 +50,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the registry URL.
-        /// </summary>
-        /// <remarks>
-        /// If omitted, the default is "docker.io".
-        /// </remarks>
-        [JsonProperty(PropertyName = "registryServer")]
-        public string RegistryServer { get; set; }
 
         /// <summary>
         /// Gets or sets the user name to log into the registry server.
@@ -70,21 +64,21 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the registry URL.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (UserName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserName");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-        }
+        /// <remarks>
+        /// If omitted, the default is "docker.io".
+        /// </remarks>
+        [JsonProperty(PropertyName = "registryServer")]
+        public string RegistryServer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access an Azure Container Registry instead of username and
+        /// password.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
+
     }
 }

@@ -10,7 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
+    [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     public class ManagedHsmCryptographyClientLiveTests : CryptographyClientLiveTests
     {
         private static readonly IEnumerable<KeyOperation> s_aesKeyOps = new[]
@@ -25,6 +27,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        protected internal override bool IsManagedHSM => true;
 
         public override Uri Uri =>
             Uri.TryCreate(TestEnvironment.ManagedHsmUrl, UriKind.Absolute, out Uri uri)

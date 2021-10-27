@@ -28,9 +28,7 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint"> server parameter. </param>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("https://api.loganalytics.io/v1");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("https://api.loganalytics.io/v1");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -231,7 +229,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<LogsBatchQueryResults>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchResponse>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -244,9 +242,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        LogsBatchQueryResults value = default;
+                        BatchResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogsBatchQueryResults.DeserializeLogsBatchQueryResults(document.RootElement);
+                        value = BatchResponse.DeserializeBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +256,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<LogsBatchQueryResults> Batch(BatchRequest body, CancellationToken cancellationToken = default)
+        public Response<BatchResponse> Batch(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -271,9 +269,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        LogsBatchQueryResults value = default;
+                        BatchResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogsBatchQueryResults.DeserializeLogsBatchQueryResults(document.RootElement);
+                        value = BatchResponse.DeserializeBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

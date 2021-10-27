@@ -12,6 +12,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             AddJsonPathSanitizer("$..sourceUrl");
             AddJsonPathSanitizer("$..targetUrl");
+            AddJsonPathSanitizer("$..glossaryUrl");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
     }

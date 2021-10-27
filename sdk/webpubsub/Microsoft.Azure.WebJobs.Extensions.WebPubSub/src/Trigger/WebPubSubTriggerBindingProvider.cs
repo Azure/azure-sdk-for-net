@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Reflection;
@@ -13,10 +13,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
         private readonly INameResolver _nameResolver;
-        private readonly WebPubSubOptions _options;
+        private readonly WebPubSubFunctionsOptions _options;
         private readonly Exception _webhookException;
 
-        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubOptions options, Exception webhookException)
+        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubFunctionsOptions options, Exception webhookException)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
@@ -61,7 +61,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return new WebPubSubTriggerAttribute(
                 hub,
                 attribute.EventType,
-                eventName);
+                eventName,
+                attribute.Connections);
         }
     }
 }

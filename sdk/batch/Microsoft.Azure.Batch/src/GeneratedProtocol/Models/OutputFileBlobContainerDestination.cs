@@ -36,10 +36,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Blob Storage to which to upload the file(s).</param>
         /// <param name="path">The destination blob or virtual directory within
         /// the Azure Storage container.</param>
-        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access Azure Blob Storage specified by
+        /// containerUrl</param>
+        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             Path = path;
             ContainerUrl = containerUrl;
+            IdentityReference = identityReference;
             CustomInit();
         }
 
@@ -70,11 +74,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// which to upload the file(s).
         /// </summary>
         /// <remarks>
-        /// The URL must include a Shared Access Signature (SAS) granting write
-        /// permissions to the container.
+        /// If not using a managed identity, the URL must include a Shared
+        /// Access Signature (SAS) granting write permissions to the container.
         /// </remarks>
         [JsonProperty(PropertyName = "containerUrl")]
         public string ContainerUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access Azure Blob Storage specified by containerUrl
+        /// </summary>
+        /// <remarks>
+        /// The identity must have write access to the Azure Blob Storage
+        /// container
+        /// </remarks>
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
 
     }
 }

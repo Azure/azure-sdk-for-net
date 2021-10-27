@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
 
@@ -17,16 +18,16 @@ namespace Azure.Management.EventHub.Tests
         [Test]
         public async Task NamespaceCreateGetUpdateDelete()
         {
-            var location = GetLocation();
-            var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location.Result, resourceGroup);
+            var location = await GetLocation();
+            var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
+            await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var operationsResponse = Operations.ListAsync();
             var checkNameAvailable = NamespacesOperations.CheckNameAvailabilityAsync(new CheckNameAvailabilityParameter(namespaceName));
-            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
+            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,
                 new EHNamespace()
                 {
-                    Location = location.Result
+                    Location = location
                 }
                 );
             var np = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
@@ -34,15 +35,15 @@ namespace Azure.Management.EventHub.Tests
             Assert.AreEqual(np.Name,namespaceName);
             DelayInTest(60);
             //get the created namespace
-            var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
                 DelayInTest(10);
-            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
-            Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location);
-            // Get all namespaces created within a resourceGroup
-            var getAllNamespacesResponse =  NamespacesOperations.ListByResourceGroupAsync(resourceGroup);
+            Assert.AreEqual(location, getNamespaceResponse.Value.Location);
+            // Get all namespaces created within a resourceGroupName
+            var getAllNamespacesResponse =  NamespacesOperations.ListByResourceGroupAsync(resourceGroupName);
             Assert.NotNull(getAllNamespacesResponse);
             //Assert.True(getAllNamespacesResponse.AsPages.c >= 1);
             bool isContainnamespaceName = false;
@@ -57,7 +58,7 @@ namespace Azure.Management.EventHub.Tests
             }
            foreach (var name in list)
             {
-                if (name.Id.Contains(resourceGroup))
+                if (name.Id.Contains(resourceGroupName))
                 {
                     isContainresourceGroup = true;
                     break;
@@ -65,7 +66,7 @@ namespace Azure.Management.EventHub.Tests
             }
             Assert.True(isContainnamespaceName);
             Assert.True(isContainresourceGroup);
-            // Get all namespaces created within the subscription irrespective of the resourceGroup
+            // Get all namespaces created within the subscription irrespective of the resourceGroupName
             var getAllNpResponse = NamespacesOperations.ListAsync();
             Assert.NotNull(getAllNamespacesResponse);
             // Update namespace tags and make the namespace critical
@@ -78,13 +79,13 @@ namespace Azure.Management.EventHub.Tests
                         }
             };
             // Will uncomment the assertions once the service is deployed
-            var updateNamespaceResponse = NamespacesOperations.UpdateAsync(resourceGroup, namespaceName, updateNamespaceParameter);
+            var updateNamespaceResponse = NamespacesOperations.UpdateAsync(resourceGroupName, namespaceName, updateNamespaceParameter);
             Assert.NotNull(updateNamespaceResponse);
             // Get the updated namespace and also verify the Tags.
-            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             DelayInTest(15);
             Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual(location.Result, getNamespaceResponse.Value.Location);
+            Assert.AreEqual(location, getNamespaceResponse.Value.Location);
             Assert.AreEqual(namespaceName, getNamespaceResponse.Value.Name);
             Assert.AreEqual(2, getNamespaceResponse.Value.Tags.Count);
             bool IsContainKey = false;
@@ -111,7 +112,7 @@ namespace Azure.Management.EventHub.Tests
             Assert.True(IsContainKey);
             Assert.True(IsContainValue);
             //delete namespace
-            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
+            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroupName, namespaceName));
         }
     }
 }

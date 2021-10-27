@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
-    internal class BlobEventStoreEventSource : EventSource
+    internal class BlobEventStoreEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-BlobEventStore";
@@ -28,25 +28,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource(EventSourceName);
+        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        protected BlobEventStoreEventSource()
-        {
-        }
-
-        /// <summary>
-        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
-        ///   outside the scope of this library.  Exposed for testing purposes only.
-        /// </summary>
-        ///
-        /// <param name="eventSourceName">The name to assign to the event source.</param>
-        ///
-        private BlobEventStoreEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected BlobEventStoreEventSource() : base(EventSourceName)
         {
         }
 

@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Model factory that enables mocking for the Text Analytics library.
     /// </summary>
+    [CodeGenType(nameof(TextAnalyticsModelFactory))]
     public static partial class TextAnalyticsModelFactory
     {
         #region Common
@@ -452,6 +454,70 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract KeyPhrase
 
+        #region Extract Summary
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="sentences">Sets the collection of <see cref="TextAnalytics.SummarySentenceCollection"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryResult ExtractSummaryResult(string id, TextDocumentStatistics statistics, SummarySentenceCollection sentences)
+        {
+            return new ExtractSummaryResult(id, statistics, sentences);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryResult ExtractSummaryResult(string id, TextAnalyticsError error)
+        {
+            return new ExtractSummaryResult(id, error);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.ExtractSummaryResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="ExtractSummaryResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="ExtractSummaryResultCollection.ModelVersion"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.</returns>
+        public static ExtractSummaryResultCollection ExtractSummaryResultCollection(IEnumerable<ExtractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        {
+            return new ExtractSummaryResultCollection(list.ToList(), statistics, modelVersion);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="SummarySentence.Text"/> property.</param>
+        /// <param name="rankScore">Sets the <see cref="SummarySentence.RankScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="SummarySentence.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SummarySentence.Length"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.</returns>
+        public static SummarySentence SummarySentence(string text, double rankScore, int offset, int length)
+        {
+            return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sentences">Sets the collection of <see cref="TextAnalytics.SummarySentence"/>.</param>
+        /// <param name="warnings">Sets the <see cref="CategorizedEntityCollection.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.</returns>
+        public static SummarySentenceCollection SummarySentenceCollection(IEnumerable<SummarySentence> sentences, IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            warnings ??= new List<TextAnalyticsWarning>();
+            return new SummarySentenceCollection(sentences.ToList(), warnings.ToList());
+        }
+
+        #endregion Extract Summary
+
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
@@ -596,6 +662,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="recognizeLinkedEntitiesActionsResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
         /// <param name="analyzeSentimentActionsResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
             IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
@@ -608,7 +675,35 @@ namespace Azure.AI.TextAnalytics
                 recognizeEntitiesActionResults.ToList(),
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
-                analyzeSentimentActionsResults.ToList());
+                analyzeSentimentActionsResults.ToList(),
+                new List<ExtractSummaryActionResult>());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="extractKeyPhrasesActionResults">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/>.</param>
+        /// <param name="recognizeEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/>.</param>
+        /// <param name="recognizePiiEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/>.</param>
+        /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
+        /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
+        /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        public static AnalyzeActionsResult AnalyzeActionsResult(
+            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
+            IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults)
+        {
+            return new AnalyzeActionsResult(
+                extractKeyPhrasesActionResults.ToList(),
+                recognizeEntitiesActionResults.ToList(),
+                recognizePiiEntitiesActionResults.ToList(),
+                recognizeLinkedEntitiesActionResults.ToList(),
+                analyzeSentimentActionResults.ToList(),
+                extractSummaryActionResults.ToList());
         }
 
         /// <summary>
@@ -637,6 +732,34 @@ namespace Azure.AI.TextAnalytics
             string message)
         {
             return new ExtractKeyPhrasesActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="result">Sets the <see cref="ExtractSummaryActionResult.DocumentsResults"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            ExtractSummaryResultCollection result,
+            DateTimeOffset completedOn)
+        {
+            return new ExtractSummaryActionResult(result, completedOn);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
+        /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractSummaryActionResult"/> for mocking purposes.</returns>
+        public static ExtractSummaryActionResult ExtractSummaryActionResult(
+            DateTimeOffset completedOn,
+            string code,
+            string message)
+        {
+            return new ExtractSummaryActionResult(completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>

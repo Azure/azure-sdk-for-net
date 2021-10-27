@@ -2,9 +2,16 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>SA1636</NoWarn>
+
+    <!-- We don't care about XML doc comments on test types and members -->
+    <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <!-- Reference the Client Library -->
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.WebPubSub.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
@@ -13,9 +20,4 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.WebPubSub.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -17,14 +17,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     {
 
         /// <summary> Initializes a new instance of AssetConversionConfiguration. </summary>
-        /// <param name="assetDimensionsWrapper"> . </param>
-        /// <param name="boundingBoxCenterWrapper"> . </param>
-        /// <param name="gravityWrapper"> . </param>
+        /// <param name="assetDimensionsWrapper"></param>
+        /// <param name="boundingBoxCenterWrapper"></param>
+        /// <param name="gravityWrapper"></param>
         /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
         /// <param name="groundTruthTrajectoryCameraPoses"> Ground truth trajectory. </param>
-        /// <param name="principalAxisWrapper"> . </param>
+        /// <param name="principalAxisWrapper"></param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <param name="supportingPlaneWrapper"> . </param>
+        /// <param name="supportingPlaneWrapper"></param>
         /// <param name="testTrajectoryCameraPoses"> Test Trajectory. </param>
         internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
         {

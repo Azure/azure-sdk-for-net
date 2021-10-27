@@ -216,11 +216,88 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void ConnectionStringConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var producer = new EventHubProducerClient(connectionString, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var mockConnection = new MockConnection();
+            var producer = new EventHubProducerClient(mockConnection, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
         public void ConnectionStringConstructorCreatesDefaultOptions()
         {
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+
             var producer = new EventHubProducerClient(connectionString);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -239,7 +316,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -258,7 +337,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -277,7 +358,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -296,7 +379,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var mockConnection = new MockConnection();
+
             var producer = new EventHubProducerClient(mockConnection);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -429,7 +514,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadPartitionPublishingPropertiesAsyncInitializesPartitionState()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -438,10 +523,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 EnableIdempotentPartitions = true
             };
 
-            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
-            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptionsInternal());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptionsInternal());
 
-            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
+            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptionsInternal
             {
                 ProducerGroupId = 999,
                 OwnerLevel = 999,
@@ -480,7 +565,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadPartitionPublishingPropertiesAsyncReturnsPartitionStateWhenIdempotentPublishingEnabled()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -525,7 +610,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadPartitionPublishingPropertiesAsyncReturnsEmptyPartitionStateWhenIdempotentPublishingDisabled()
         {
             var expectedPartition = "5";
-            var expectedProperties = PartitionPublishingProperties.Empty;
+            var expectedProperties = PartitionPublishingPropertiesInternal.Empty;
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -781,10 +866,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPartition = "5";
             var eventCount = 1;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var expectedLastSequence = expectedProperties.LastPublishedSequenceNumber + eventCount;
-            var expectedOptions = new PartitionPublishingOptions();
-            var requestedOptions = default(PartitionPublishingOptions);
+            var expectedOptions = new PartitionPublishingOptionsInternal();
+            var requestedOptions = default(PartitionPublishingOptionsInternal);
             var requestedFeatures = TransportProducerFeatures.None;
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var events = EventGenerator.CreateEvents(eventCount);
@@ -800,10 +885,10 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             clientOptions.PartitionOptions.Add(expectedPartition, expectedOptions);
-            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
-            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptionsInternal());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptionsInternal());
 
-            var connection = new MockConnection((partition, feature, options, retry) =>
+            var connection = new MockConnection((partition, identifier, feature, options, retry) =>
             {
                 requestedFeatures = feature;
                 requestedOptions = options;
@@ -838,7 +923,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPartition = "5";
             var eventCount = 1;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var expectedLastSequence = expectedProperties.LastPublishedSequenceNumber + eventCount;
             var events = EventGenerator.CreateEvents(eventCount);
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
@@ -850,10 +935,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 EnableIdempotentPartitions = true
             };
 
-            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
-            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptionsInternal());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptionsInternal());
 
-            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
+            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptionsInternal
             {
                 ProducerGroupId = 999,
                 OwnerLevel = 999,
@@ -889,7 +974,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendIdempotentFailsIfPartitionStateCannotBeInitialized()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, null, null, null);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, null, null, null);
             var events = EventGenerator.CreateEvents(1);
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
@@ -949,7 +1034,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendIdempotentHonorsCancellationIfSetWhenInitializingPartitionState()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var events = EventGenerator.CreateEvents(1);
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
@@ -983,7 +1068,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 5;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var events = EventGenerator.CreateEvents(eventCount).ToArray();
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
@@ -1033,7 +1118,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 5;
             var startingSequence = int.MaxValue;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var events = EventGenerator.CreateEvents(eventCount).ToArray();
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
@@ -1083,7 +1168,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 5;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var events = EventGenerator.CreateEvents(eventCount).ToArray();
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
@@ -1130,7 +1215,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 5;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var sendOptions = new SendEventOptions { PartitionId = expectedPartition };
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
@@ -1194,7 +1279,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var eventCount = 5;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -1338,10 +1423,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPartition = "5";
             var eventCount = 1;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var expectedLastSequence = expectedProperties.LastPublishedSequenceNumber + eventCount;
-            var expectedOptions = new PartitionPublishingOptions();
-            var requestedOptions = default(PartitionPublishingOptions);
+            var expectedOptions = new PartitionPublishingOptionsInternal();
+            var requestedOptions = default(PartitionPublishingOptionsInternal);
             var requestedFeatures = TransportProducerFeatures.None;
             var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
@@ -1356,10 +1441,10 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             clientOptions.PartitionOptions.Add(expectedPartition, expectedOptions);
-            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
-            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptionsInternal());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptionsInternal());
 
-            var connection = new MockConnection((partition, feature, options, retry) =>
+            var connection = new MockConnection((partition, identifier, feature, options, retry) =>
             {
                 requestedFeatures = feature;
                 requestedOptions = options;
@@ -1394,7 +1479,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPartition = "5";
             var eventCount = 1;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var expectedLastSequence = expectedProperties.LastPublishedSequenceNumber + eventCount;
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
@@ -1405,10 +1490,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 EnableIdempotentPartitions = true
             };
 
-            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
-            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptionsInternal());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptionsInternal());
 
-            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
+            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptionsInternal
             {
                 ProducerGroupId = 999,
                 OwnerLevel = 999,
@@ -1444,7 +1529,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendIdempotentFailsIfPartitionStateCannotBeInitializedWithABatch()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, null, null, null);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, null, null, null);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
             var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
@@ -1501,7 +1586,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendIdempotentHonorsCancellationIfSetWhenInitializingPartitionStateWithABatch()
         {
             var expectedPartition = "5";
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, 798);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
             var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
@@ -1537,7 +1622,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 6;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
@@ -1581,7 +1666,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 6;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
@@ -1622,7 +1707,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 6;
             var startingSequence = int.MaxValue;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
@@ -1666,7 +1751,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var eventCount = 5;
             var startingSequence = 435;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -1723,7 +1808,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventCount = 5;
             var startingSequence = 435;
             var partition = 0;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
+            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 123, 456, startingSequence);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
 
@@ -2583,7 +2668,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
-            public override ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override ValueTask<PartitionPublishingPropertiesInternal> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
             public override Task CloseAsync(CancellationToken cancellationToken)
             {
@@ -2605,15 +2690,15 @@ namespace Azure.Messaging.EventHubs.Tests
             public Mock<TransportClient> InnerClientMock = null;
             public bool WasClosed = false;
 
-            public Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> TransportProducerFactory =
-                (partition, features, options, retry) => Mock.Of<TransportProducer>();
+            public Func<string, string, TransportProducerFeatures, PartitionPublishingOptionsInternal, EventHubsRetryPolicy, TransportProducer> TransportProducerFactory =
+                (partition, identifier, features, options, retry) => Mock.Of<TransportProducer>();
 
             public MockConnection(string namespaceName = "fakeNamespace",
                                   string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object)
             {
             }
 
-            public MockConnection(Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory,
+            public MockConnection(Func<string, string, TransportProducerFeatures, PartitionPublishingOptionsInternal, EventHubsRetryPolicy, TransportProducer> transportProducerFactory,
                                   string namespaceName,
                                   string eventHubName) : this(namespaceName, eventHubName)
             {
@@ -2622,11 +2707,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public MockConnection(Func<TransportProducer> transportProducerFactory,
                                   string namespaceName,
-                                  string eventHubName) : this((partition, features, options, retry) => transportProducerFactory(), namespaceName, eventHubName)
+                                  string eventHubName) : this((partition, identifier, features, options, retry) => transportProducerFactory(), namespaceName, eventHubName)
             {
             }
 
-            public MockConnection(Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory)
+            public MockConnection(Func<string, string, TransportProducerFeatures, PartitionPublishingOptionsInternal, EventHubsRetryPolicy, TransportProducer> transportProducerFactory)
                 : this(transportProducerFactory, "fakeNamespace", "fakeEventHub")
             {
             }
@@ -2658,9 +2743,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override TransportProducer CreateTransportProducer(string partitionId,
+                                                                        string producerIdentifier,
                                                                         TransportProducerFeatures requestedFeatures,
-                                                                        PartitionPublishingOptions partitionOptions,
-                                                                        EventHubsRetryPolicy retryPolicy) => TransportProducerFactory(partitionId, requestedFeatures, partitionOptions, retryPolicy);
+                                                                        PartitionPublishingOptionsInternal partitionOptions,
+                                                                        EventHubsRetryPolicy retryPolicy) => TransportProducerFactory(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName, EventHubTokenCredential credential,
@@ -2750,7 +2836,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                              EventHubConnection connection,
                                              EventHubsRetryPolicy retryPolicy,
                                              ConcurrentDictionary<string, PoolItem> pool = default,
-                                             TimeSpan? expirationInterval = default) : base(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), pool, expirationInterval)
+                                             TimeSpan? expirationInterval = default) : base(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), pool, expirationInterval)
             {
                 MockPooledProducer = new MockPooledProducer(transportProducer);
             }

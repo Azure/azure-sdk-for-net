@@ -42,6 +42,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
@@ -54,6 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
+
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
@@ -112,10 +124,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int count = 0;
 
-            foreach (KeyValuePair<string, string> column in groupKey)
+            foreach (KeyValuePair<string, string> dimension in groupKey)
             {
-                Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
-                Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
+                Assert.That(dimension.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
 
                 count++;
             }

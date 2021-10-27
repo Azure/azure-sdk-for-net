@@ -12,55 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyAlertingConfigurationPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(CrossMetricsOperator))
-            {
-                writer.WritePropertyName("crossMetricsOperator");
-                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
-            {
-                writer.WritePropertyName("splitAlertByDimensions");
-                writer.WriteStartArray();
-                foreach (var item in SplitAlertByDimensions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(HookIds))
-            {
-                writer.WritePropertyName("hookIds");
-                writer.WriteStartArray();
-                foreach (var item in HookIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(MetricAlertingConfigurations))
-            {
-                writer.WritePropertyName("metricAlertingConfigurations");
-                writer.WriteStartArray();
-                foreach (var item in MetricAlertingConfigurations)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
     }
 }
