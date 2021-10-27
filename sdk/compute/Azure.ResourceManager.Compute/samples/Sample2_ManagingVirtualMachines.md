@@ -19,16 +19,16 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.GetDefaultSubscription();
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
+```C# Snippet:Readme_GetResourceGroupCollection
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -44,8 +44,8 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+// Now we get the virtual machine collection from the resource group
+VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 // Use the same location as the resource group
 string vmName = "myVM";
 var input = new VirtualMachineData(resourceGroup.Data.Location)
@@ -104,7 +104,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         }
     }
 };
-VirtualMachineCreateOrUpdateOperation lro = await vmContainer.CreateOrUpdateAsync(vmName, input);
+VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(vmName, input);
 VirtualMachine vm = lro.Value;
 ```
 
@@ -116,10 +116,10 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
-// With ListAsync(), we can get a list of the virtual machines in the container
-AsyncPageable<VirtualMachine> response = vmContainer.GetAllAsync();
+// Now we get the virtual machine collection from the resource group
+VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+// With ListAsync(), we can get a list of the virtual machines
+AsyncPageable<VirtualMachine> response = vmCollection.GetAllAsync();
 await foreach (VirtualMachine vm in response)
 {
     Console.WriteLine(vm.Data.Name);
@@ -134,9 +134,9 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+// Now we get the virtual machine collection from the resource group
+VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 string vmName = "myVM";
-VirtualMachine vm = await vmContainer.GetAsync(vmName);
+VirtualMachine vm = await vmCollection.GetAsync(vmName);
 await vm.DeleteAsync();
 ```

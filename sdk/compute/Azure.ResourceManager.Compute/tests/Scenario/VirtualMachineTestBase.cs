@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        protected async Task<VirtualMachineCollection> GetVirtualMachineContainerAsync()
+        protected async Task<VirtualMachineCollection> GetVirtualMachineCollectionAsync()
         {
             _genericResourceCollection = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Compute.Tests
             return subnet["id"] as string;
         }
 
-        // WEIRD: second level resources cannot use GenericResourceContainer to create.
-        // Exception thrown: System.InvalidOperationException : An invalid resouce id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
+        // WEIRD: second level resources cannot use GenericResourceCollection to create.
+        // Exception thrown: System.InvalidOperationException : An invalid resource id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
         private async Task<GenericResource> CreateSubnet(ResourceIdentifier vnetId)
         {
             var subnetName = Recording.GenerateAssetName("testSubnet-");

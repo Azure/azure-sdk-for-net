@@ -11,12 +11,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class GalleryImageContainerTests : ComputeTestBase
+    public class GalleryImageCollectionTests : ComputeTestBase
     {
         private ResourceGroup _resourceGroup;
         private Gallery _gallery;
 
-        public GalleryImageContainerTests(bool isAsync)
+        public GalleryImageCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests
             }
         }
 
-        private async Task<GalleryImageContainer> GetGalleryImageContainerAsync()
+        private async Task<GalleryImageCollection> GetGalleryImageCollectionAsync()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var container = await GetGalleryImageContainerAsync();
+            var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
             GalleryImage image = lro.Value;
             Assert.AreEqual(name, image.Data.Name);
         }
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetGalleryImageContainerAsync();
+            var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
             GalleryImage image1 = lro.Value;
-            GalleryImage image2 = await container.GetAsync(name);
+            GalleryImage image2 = await collection.GetAsync(name);
 
             ResourceDataHelper.AssertGalleryImage(image1.Data, image2.Data);
         }
@@ -71,29 +71,29 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CheckIfExistsAsync()
         {
-            var container = await GetGalleryImageContainerAsync();
+            var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await collection.CreateOrUpdateAsync(name, BasicGalleryImageData);
             GalleryImage image = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(name));
-            Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.CheckIfExistsAsync(name));
+            Assert.IsFalse(await collection.CheckIfExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
-            var container = await GetGalleryImageContainerAsync();
+            var collection = await GetGalleryImageCollectionAsync();
             var name1 = Recording.GenerateAssetName("testImage_");
             var name2 = Recording.GenerateAssetName("testImage_");
             var input1 = BasicGalleryImageData;
             var input2 = BasicGalleryImageData;
-            _ = await container.CreateOrUpdateAsync(name1, input1);
-            _ = await container.CreateOrUpdateAsync(name2, input2);
+            _ = await collection.CreateOrUpdateAsync(name1, input1);
+            _ = await collection.CreateOrUpdateAsync(name2, input2);
             int count = 0;
-            await foreach (var galleryImage in container.GetAllAsync())
+            await foreach (var galleryImage in collection.GetAllAsync())
             {
                 count++;
             }

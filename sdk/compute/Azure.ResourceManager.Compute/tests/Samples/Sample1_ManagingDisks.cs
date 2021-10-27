@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            DiskContainer diskContainer = resourceGroup.GetDisks();
+            // Now we get the disk collection from the resource group
+            DiskCollection diskCollection = resourceGroup.GetDisks();
             // Use the same location as the resource group
             string diskName = "myDisk";
             var input = new DiskData(resourceGroup.Data.Location)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 CreationData = new CreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
-            DiskCreateOrUpdateOperation lro = await diskContainer.CreateOrUpdateAsync(diskName, input);
+            DiskCreateOrUpdateOperation lro = await diskCollection.CreateOrUpdateAsync(diskName, input);
             Disk disk = lro.Value;
             #endregion Snippet:Managing_Disks_CreateADisk
         }
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            DiskContainer diskContainer = resourceGroup.GetDisks();
-            // With ListAsync(), we can get a list of the virtual machines in the container
-            AsyncPageable<Disk> response = diskContainer.GetAllAsync();
+            // Now we get the disk collection from the resource group
+            DiskCollection diskCollection = resourceGroup.GetDisks();
+            // With ListAsync(), we can get a list of the disks
+            AsyncPageable<Disk> response = diskCollection.GetAllAsync();
             await foreach (Disk disk in response)
             {
                 Console.WriteLine(disk.Data.Name);
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            DiskContainer diskContainer = resourceGroup.GetDisks();
+            // Now we get the disk collection from the resource group
+            DiskCollection diskCollection = resourceGroup.GetDisks();
             string diskName = "myDisk";
-            Disk disk = await diskContainer.GetAsync(diskName);
+            Disk disk = await diskCollection.GetAsync(diskName);
             await disk.DeleteAsync();
             #endregion Snippet:Managing_Disks_DeleteDisk
         }

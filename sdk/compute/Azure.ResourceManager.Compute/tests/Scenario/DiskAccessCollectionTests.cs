@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class DiskAccessContainerTests : ComputeTestBase
+    public class DiskAccessCollectionTests : ComputeTestBase
     {
-        public DiskAccessContainerTests(bool isAsync)
+        public DiskAccessCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<DiskAccessContainer> GetDiskAccessContainerAsync()
+        private async Task<DiskAccessCollection> GetDiskAccessCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetDiskAccesses();
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var container = await GetDiskAccessContainerAsync();
+            var collection = await GetDiskAccessCollectionAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(name, input);
             DiskAccess access = lro.Value;
             Assert.AreEqual(name, access.Data.Name);
         }
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetDiskAccessContainerAsync();
+            var collection = await GetDiskAccessCollectionAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(name, input);
             DiskAccess access1 = lro.Value;
-            DiskAccess access2 = await container.GetAsync(name);
+            DiskAccess access2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }
 
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CheckIfExistsAsync()
         {
-            var container = await GetDiskAccessContainerAsync();
+            var collection = await GetDiskAccessCollectionAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(name, input);
             DiskAccess access = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(name));
-            Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
+            Assert.IsTrue(await collection.CheckIfExistsAsync(name));
+            Assert.IsFalse(await collection.CheckIfExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
-            var container = await GetDiskAccessContainerAsync();
+            var collection = await GetDiskAccessCollectionAsync();
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
             int count = 0;
-            await foreach (var access in container.GetAllAsync())
+            await foreach (var access in collection.GetAllAsync())
             {
                 count++;
             }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task GetAllInSubscription()
         {
-            var container = await GetDiskAccessContainerAsync();
+            var collection = await GetDiskAccessCollectionAsync();
             var name1 = Recording.GenerateAssetName("testDA");
             var name2 = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            _ = await container.CreateOrUpdateAsync(name1, input);
-            _ = await container.CreateOrUpdateAsync(name2, input);
+            _ = await collection.CreateOrUpdateAsync(name1, input);
+            _ = await collection.CreateOrUpdateAsync(name2, input);
 
             DiskAccess access1 = null, access2 = null;
             await foreach (var access in DefaultSubscription.GetDiskAccessesAsync())

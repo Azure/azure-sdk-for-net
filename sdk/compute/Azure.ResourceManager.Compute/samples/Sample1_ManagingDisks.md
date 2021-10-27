@@ -20,16 +20,16 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.GetDefaultSubscription();
 ```
 
-This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
+This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
-```C# Snippet:Readme_GetResourceGroupContainer
+```C# Snippet:Readme_GetResourceGroupCollection
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With the container, we can create a new resource group with an specific name
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+// With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -43,8 +43,8 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-DiskContainer diskContainer = resourceGroup.GetDisks();
+// Now we get the disk collection from the resource group
+DiskCollection diskCollection = resourceGroup.GetDisks();
 // Use the same location as the resource group
 string diskName = "myDisk";
 var input = new DiskData(resourceGroup.Data.Location)
@@ -56,7 +56,7 @@ var input = new DiskData(resourceGroup.Data.Location)
     CreationData = new CreationData(DiskCreateOption.Empty),
     DiskSizeGB = 1,
 };
-DiskCreateOrUpdateOperation lro = await diskContainer.CreateOrUpdateAsync(diskName, input);
+DiskCreateOrUpdateOperation lro = await diskCollection.CreateOrUpdateAsync(diskName, input);
 Disk disk = lro.Value;
 ```
 
@@ -68,10 +68,10 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-DiskContainer diskContainer = resourceGroup.GetDisks();
-// With ListAsync(), we can get a list of the virtual machines in the container
-AsyncPageable<Disk> response = diskContainer.GetAllAsync();
+// Now we get the disk collection from the resource group
+DiskCollection diskCollection = resourceGroup.GetDisks();
+// With ListAsync(), we can get a list of the disks
+AsyncPageable<Disk> response = diskCollection.GetAllAsync();
 await foreach (Disk disk in response)
 {
     Console.WriteLine(disk.Data.Name);
@@ -86,10 +86,10 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 // first we need to get the resource group
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-// Now we get the virtual machine container from the resource group
-DiskContainer diskContainer = resourceGroup.GetDisks();
+// Now we get the disk collection from the resource group
+DiskCollection diskCollection = resourceGroup.GetDisks();
 string diskName = "myDisk";
-Disk disk = await diskContainer.GetAsync(diskName);
+Disk disk = await diskCollection.GetAsync(diskName);
 await disk.DeleteAsync();
 ```
 

@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class AvailabilitySetContainerTests : ComputeTestBase
+    public class AvailabilitySetCollectionTests : ComputeTestBase
     {
-        public AvailabilitySetContainerTests(bool isAsync)
+        public AvailabilitySetCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<AvailabilitySetContainer> GetAvailabilitySetContainerAsync()
+        private async Task<AvailabilitySetCollection> GetAvailabilitySetCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup.GetAvailabilitySets();
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var container = await GetAvailabilitySetContainerAsync();
+            var collection = await GetAvailabilitySetCollectionAsync();
             var setName = Recording.GenerateAssetName("testAS-");
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
                 { "key", "value" }
             });
-            var lro = await container.CreateOrUpdateAsync(setName, input);
+            var lro = await collection.CreateOrUpdateAsync(setName, input);
             var availabilitySet = lro.Value;
             Assert.AreEqual(setName, availabilitySet.Data.Name);
         }
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetAvailabilitySetContainerAsync();
+            var collection = await GetAvailabilitySetCollectionAsync();
             var setName = Recording.GenerateAssetName("testAS-");
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
                 { "key", "value" }
             });
-            var lro = await container.CreateOrUpdateAsync(setName, input);
+            var lro = await collection.CreateOrUpdateAsync(setName, input);
             AvailabilitySet set1 = lro.Value;
-            AvailabilitySet set2 = await container.GetAsync(setName);
+            AvailabilitySet set2 = await collection.GetAsync(setName);
 
             ResourceDataHelper.AssertAvailabilitySet(set1.Data, set2.Data);
         }
@@ -61,35 +61,35 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            var container = await GetAvailabilitySetContainerAsync();
+            var collection = await GetAvailabilitySetCollectionAsync();
             var setName = Recording.GenerateAssetName("testAS-");
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
                 { "key", "value" }
             });
-            var lro = await container.CreateOrUpdateAsync(setName, input);
+            var lro = await collection.CreateOrUpdateAsync(setName, input);
             var availabilitySet = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(setName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(setName + "1"));
+            Assert.IsTrue(await collection.CheckIfExistsAsync(setName));
+            Assert.IsFalse(await collection.CheckIfExistsAsync(setName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
-            var container = await GetAvailabilitySetContainerAsync();
+            var collection = await GetAvailabilitySetCollectionAsync();
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
                 { "key", "value" }
             });
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAS-"), input);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAs-"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testAS-"), input);
+            _ = await collection.CreateOrUpdateAsync(Recording.GenerateAssetName("testAs-"), input);
             int count = 0;
-            await foreach (var availabilitySet in container.GetAllAsync())
+            await foreach (var availabilitySet in collection.GetAllAsync())
             {
                 count++;
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         public async Task GetAllInSubscription()
         {
-            var container = await GetAvailabilitySetContainerAsync();
+            var collection = await GetAvailabilitySetCollectionAsync();
             var setName1 = Recording.GenerateAssetName("testAS-");
             var setName2 = Recording.GenerateAssetName("testAS-");
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            _ = await container.CreateOrUpdateAsync(setName1, input);
-            _ = await container.CreateOrUpdateAsync(setName2, input);
+            _ = await collection.CreateOrUpdateAsync(setName1, input);
+            _ = await collection.CreateOrUpdateAsync(setName2, input);
 
             AvailabilitySet set1 = null, set2 = null;
             await foreach (var availabilitySet in DefaultSubscription.GetAvailabilitySetsAsync())
