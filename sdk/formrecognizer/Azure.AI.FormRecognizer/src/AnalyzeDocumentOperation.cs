@@ -198,11 +198,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             else if (status == AnalyzeResultOperationStatus.Failed)
             {
-                ResponseError error = response.Value.Error;
-                var additionalInfo = new Dictionary<string, string>() { { "AdditionInformation", error.ToString() } };
-                RequestFailedException requestFailedException = async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(rawResponse, error.Message, error.Code, additionalInfo).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(rawResponse, error.Message, error.Code, additionalInfo);
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
+                    .ConfigureAwait(false);
 
                 return OperationState<AnalyzeResult>.Failure(rawResponse, requestFailedException);
             }
