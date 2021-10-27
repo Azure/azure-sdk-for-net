@@ -19,24 +19,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist,
         /// the rename will succeed.
         /// </summary>
-        public bool ReplaceIfExists { get; set; }
+        public bool? ReplaceIfExists { get; set; }
 
         /// <summary>
         /// Optional.  A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected.
         /// If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the
         /// rename to fail.
         /// </summary>
-        public bool IgnoreReadOnly { get; set; }
-
-        /// <summary>
-        /// Optional. Name-value pairs associated with the file as metadata. If no name-value pairs are specified, the operation will copy
-        /// the metadata from the source blob or file to the destination file. If one or more name-value pairs are specified, the
-        /// destination file is created with the specified metadata, and the metadata is not copied from the source file. Metadata names
-        /// must adhere to the naming rules for C# identifiers.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public Metadata Metadata { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public bool? IgnoreReadOnly { get; set; }
 
         /// <summary>
         /// Source request conditions.

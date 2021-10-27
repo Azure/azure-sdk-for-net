@@ -1504,7 +1504,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, IDictionary<string, string> metadata, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo, FileHttpHeaders fileHttpHeaders)
+        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo, FileHttpHeaders fileHttpHeaders)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1526,10 +1526,6 @@ namespace Azure.Storage.Files.Shares
             if (ignoreReadOnly != null)
             {
                 request.Headers.Add("x-ms-file-rename-ignore-read-only", ignoreReadOnly.Value);
-            }
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
             }
             if (sourceLeaseId != null)
             {
@@ -1576,7 +1572,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
         /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
         /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -1585,14 +1580,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, IDictionary<string, string> metadata = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, metadata, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileRenameHeaders(message.Response);
             switch (message.Response.Status)
@@ -1609,7 +1604,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
         /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
         /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -1618,14 +1612,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<FileRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, IDictionary<string, string> metadata = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
                 throw new ArgumentNullException(nameof(renameSource));
             }
 
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, metadata, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
+            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionKey, copyFileSmbInfo, fileHttpHeaders);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileRenameHeaders(message.Response);
             switch (message.Response.Status)
