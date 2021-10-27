@@ -32,7 +32,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             #endregion
         }
 
@@ -42,7 +42,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_GetResourceGroupContainer
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";

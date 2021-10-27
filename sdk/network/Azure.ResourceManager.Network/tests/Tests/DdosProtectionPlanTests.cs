@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string NamePrefix = "test_ddos_";
         private Resources.ResourceGroup resourceGroup;
+        private Resources.Subscription _subscription;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
         {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            ddosProtectionPlans = await Subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
         }
 

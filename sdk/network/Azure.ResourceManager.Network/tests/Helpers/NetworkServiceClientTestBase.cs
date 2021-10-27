@@ -61,22 +61,24 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
         protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
         }
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await sub.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -155,12 +157,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetwork vnet)
         {
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var adminUsername = Recording.GenerateAssetName("admin");
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await sub.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -243,8 +245,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
             var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await sub.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {
@@ -308,8 +310,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
         {
             var extensionId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent";
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            return (await sub.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData(location)
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            return (await subscription.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData(location)
             {
                 Properties = new Dictionary<string, object>
                 {

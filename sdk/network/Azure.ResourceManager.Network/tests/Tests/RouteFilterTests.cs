@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task RouteFilterApiTest()
         {
-            var filterCollection = await GetCollection();
+            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            var filterContainer = await GetCollection();
 
             // Create route filter
             string filterName = Recording.GenerateAssetName("filter");
@@ -59,8 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(filterName, filters[0].Data.Name);
             Assert.IsEmpty(filters[0].Data.Rules);
 
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            var allFilters = await sub.GetRouteFiltersAsync().ToEnumerableAsync();
+            var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
             Assert.True(allFilters.Any(f => filterName == f.Data.Name && f.Data.Rules.Count == 0));
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete filter
             await filter.DeleteAsync();
-            allFilters = await sub.GetRouteFiltersAsync().ToEnumerableAsync();
+            allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
 

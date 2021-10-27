@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_Disks_CreateADisk
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_Disks_ListAllDisks
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_Disks_DeleteDisk
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);

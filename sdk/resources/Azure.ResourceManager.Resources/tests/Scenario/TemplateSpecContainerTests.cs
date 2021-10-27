@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-C-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task ListByRG()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task ListBySubscription()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-L-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
             TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(templateSpecName, templateSpecData)).Value;
             int count = 0;
-            await foreach (var tempTemplateSpec in sub.GetTemplateSpecsAsync())
+            await foreach (var tempTemplateSpec in subscription.GetTemplateSpecsAsync())
             {
                 if (tempTemplateSpec.Data.Id == templateSpec.Data.Id)
                 {
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Get()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);

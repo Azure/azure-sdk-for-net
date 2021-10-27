@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            Subscription sub = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await sub.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(Location.WestUS2));
+            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(Location.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             VirtualNetworkData vnetData = new VirtualNetworkData();
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
+            var _ = await client.GetDefaultSubscriptionAsync(); // TODO: hack to avoid mismatch of recordings so we don't need to re-record for the change. Remove when you need to run live tests next time.
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
             VirtualNetwork vnet = await _resourceGroup.GetVirtualNetworks().GetAsync(_subnetIdentifier.Parent.Name);
             _subnet = await vnet.GetSubnets().GetAsync(_subnetIdentifier.Name);

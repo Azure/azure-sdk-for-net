@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string appDefName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-C-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, sub.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-"), Recording.GenerateAssetName("s1"));
+            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-"), Recording.GenerateAssetName("s1"));
             Application application = (await rg.GetApplications().CreateOrUpdateAsync(appName, applicationData)).Value;
             Assert.AreEqual(appName, application.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplications().CreateOrUpdateAsync(null, applicationData));
@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task ListByRG()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string appDefName = Recording.GenerateAssetName("appDef-L-");
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, sub.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-"), Recording.GenerateAssetName("s2"));
+            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-"), Recording.GenerateAssetName("s2"));
             _ = await rg.GetApplications().CreateOrUpdateAsync(appName, applicationData);
             int count = 0;
             await foreach (var tempApplication in rg.GetApplications().GetAllAsync())
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task ListBySubscription()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string appDefName = Recording.GenerateAssetName("appDef-L-");
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, sub.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-"), Recording.GenerateAssetName("s3"));
+            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-"), Recording.GenerateAssetName("s3"));
             _ = await rg.GetApplications().CreateOrUpdateAsync(appName, applicationData);
             int count = 0;
-            await foreach (var tempApplication in sub.GetApplicationsAsync())
+            await foreach (var tempApplication in subscription.GetApplicationsAsync())
             {
                 if (tempApplication.Data.ApplicationDefinitionId == appDef.Id)
                 {
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Get()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string appDefName = Recording.GenerateAssetName("appDef-G-");
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-G-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, sub.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-"), Recording.GenerateAssetName("s4"));
+            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-"), Recording.GenerateAssetName("s4"));
             Application application = (await rg.GetApplications().CreateOrUpdateAsync(appName, applicationData)).Value;
             Application getApplication = await rg.GetApplications().GetAsync(appName);
             AssertValidApplication(application, getApplication);

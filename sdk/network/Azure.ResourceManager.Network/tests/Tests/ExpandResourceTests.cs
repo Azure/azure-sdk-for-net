@@ -16,17 +16,20 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class ExpandResourceTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
+
         public ExpandResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         [Test]

@@ -56,7 +56,7 @@ Before creating an availability set, we need to have a resource group.
 
 ```C# Snippet:Readme_GetResourceGroupContainer
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
@@ -79,7 +79,7 @@ AvailabilitySet availabilitySet = lro.Value;
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 string rgName = "myRgName";
@@ -100,7 +100,7 @@ await foreach (AvailabilitySet availabilitySet in response)
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 // With the container, we can create a new resource group with an specific name
@@ -123,7 +123,7 @@ AvailabilitySet updatedAvailabilitySet = await availabilitySet.UpdateAsync(updat
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 // With the container, we can create a new resource group with an specific name
@@ -142,7 +142,7 @@ If you just want to verify if the availability set exists, you can use the funct
 
 ```C# Snippet:Managing_Availability_Set_CheckIfExistsForAvailabilitySet
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 string rgName = "myRgName";
@@ -166,7 +166,7 @@ If you want to first check if the availability set exists, and if it does, you w
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 string rgName = "myRgName";
@@ -190,7 +190,7 @@ if (availabilitySet == null)
 // First, initialize the ArmClient and get the default subscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 string rgName = "myRgName";

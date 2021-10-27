@@ -16,17 +16,19 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class NetworkInterfaceTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
         public NetworkInterfaceTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
         [Test]
@@ -160,7 +162,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[0].Etag, getListNicResponse.First().Data.IpConfigurations[0].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = Subscription.GetNetworkInterfacesAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 
@@ -391,7 +393,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = Subscription.GetNetworkInterfacesAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 
@@ -710,7 +712,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getNicResponse.Value.Data.IpConfigurations[1].Etag, getListNicResponse.First().Data.IpConfigurations[1].Etag);
 
             // Get all Nics in subscription
-            AsyncPageable<NetworkInterface> listNicSubscriptionAP = Subscription.GetNetworkInterfacesAsync();
+            AsyncPageable<NetworkInterface> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
             List<NetworkInterface> listNicSubscription = await listNicSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listNicSubscription);
 
