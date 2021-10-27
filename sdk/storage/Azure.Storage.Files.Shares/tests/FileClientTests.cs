@@ -4316,6 +4316,51 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RenameAsync_DestinationLeaseId(bool includeLeaseId)
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+            ShareFileClient destFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(Constants.KB);
+            string leaseId = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient shareLeaseClient = InstrumentClient(destFile.GetShareLeaseClient(leaseId));
+            await shareLeaseClient.AcquireAsync();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ReplaceIfExists = true
+            };
+
+            // Act
+            if (includeLeaseId)
+            {
+                options.DestinationRequestConditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseId
+                };
+                destFile = await sourceFile.RenameAsync(
+                    destinationPath: test.Directory.Name + "/" + destFile.Name,
+                    options: options);
+
+                // Assert
+                await destFile.GetPropertiesAsync();
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceFile.RenameAsync(
+                    destinationPath: test.Directory.Name + "/" + destFile.Name,
+                    options: options),
+                    e => Assert.AreEqual("LeaseIdMissing", e.ErrorCode));
+            }
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
