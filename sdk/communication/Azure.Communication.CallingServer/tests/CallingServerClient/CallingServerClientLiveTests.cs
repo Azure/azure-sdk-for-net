@@ -83,10 +83,12 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             var groupId = GetGroupId();
+
+            // Establish a Call
+            var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+
             try
             {
-                // Establish a Call
-                var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
                 var callLocator = new GroupCallLocator(groupId);
 
                 // Play Prompt Audio
@@ -96,10 +98,6 @@ namespace Azure.Communication.CallingServer.Tests
                 // Cancel Prompt Audio
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await CancelAllMediaOperationsOperation(callConnections).ConfigureAwait(false);
-
-                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -109,6 +107,12 @@ namespace Azure.Communication.CallingServer.Tests
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
         }
 
@@ -127,7 +131,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             try
             {
-                string userId = GetFixedUserId("0000000d-5a5f-2db9-ccd7-44482200049a");
+                string userId = GetFixedUserId("0000000d-5e6a-3252-a808-4548220003b8");
 
                 // Add Participant
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);

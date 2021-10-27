@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -36,6 +37,31 @@ namespace Azure.Communication.CallingServer.Tests
                                                             "}";
 
         private const string ServerCallId = "sampleServerCallId";
+
+        private const string GetParticipantsResultPayload = "[" +
+                                                "{" +
+                                                    "\"identifier\": {" +
+                                                        "\"rawId\": \"dummyRawId\"," +
+                                                        "\"communicationUser\": {" +
+                                                                "\"id\": \"0000000d-5a5f-2db9-ccd7-44482200049a\"" +
+                                                            "}" +
+                                                    "}," +
+                                                    "\"participantId\": \"dummyParticipantId\"," +
+                                                    "\"isMuted\": false" +
+                                                "}," +
+                                                "{" +
+                                                    "\"identifier\": {" +
+                                                        "\"rawId\": \"dummyRawId\"," +
+                                                        "\"phoneNumber\": {" +
+                                                                "\"value\": \"+1555123456\"" +
+                                                            "}" +
+                                                    "}," +
+                                                    "\"participantId\": \"dummyParticipantId1\"," +
+                                                    "\"isMuted\": false" +
+                                                "}" +
+                                                "]";
+
+        private const string GetParticipantResultPayload = GetParticipantsResultPayload;
 
         private static CallLocator CallLocator = new ServerCallLocator(ServerCallId);
 
@@ -132,6 +158,14 @@ namespace Azure.Communication.CallingServer.Tests
         {
             CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
             var response = callingServerClient.DeleteRecording(new Uri(AmsDeleteUrl));
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+        }
+
+        [Test]
+        public async Task DeleteRecordingAsync_Returns200Ok()
+        {
+            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
+            var response = await callingServerClient.DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
@@ -618,28 +652,28 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
         public async Task CancelParticipantMediaOperationAsync_Return200OK(string participantUserId, string mediaOperationId)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: DummyPlayAudioResponse);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200);
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var result = await serverCallRestClient.CancelParticipantMediaOperationAsync(
+            var response = await serverCallRestClient.CancelParticipantMediaOperationAsync(
                 CallLocator,
                 participant,
                 mediaOperationId);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
         public void CancelParticipantMediaOperation_Return200OK(string participantUserId, string mediaOperationId)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: DummyPlayAudioResponse);
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200);
             var participant = new CommunicationUserIdentifier(participantUserId);
 
-            var result = serverCallRestClient.CancelParticipantMediaOperation(
+            var response = serverCallRestClient.CancelParticipantMediaOperation(
                 CallLocator,
                 participant,
                 mediaOperationId);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_CancelParticipantMediaOperation))]
@@ -667,6 +701,191 @@ namespace Azure.Communication.CallingServer.Tests
                 CallLocator,
                 participant,
                 mediaOperationId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelMediaOperation))]
+        public async Task CancelMediaOperationAsync_Return200OK(string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200);
+
+            var result = await serverCallRestClient.CancelMediaOperationAsync(
+                CallLocator,
+                mediaOperationId);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelMediaOperation))]
+        public void CancelMediaOperation_Return200OK(string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200);
+
+            var result = serverCallRestClient.CancelMediaOperation(
+                CallLocator,
+                mediaOperationId);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelMediaOperation))]
+        public void CancelMediaOperationAsync_Returns404NotFound(string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.CancelMediaOperationAsync(
+                CallLocator,
+                mediaOperationId).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_CancelMediaOperation))]
+        public void CancelMediaOperation_Returns404NotFound(string mediaOperationId)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.CancelMediaOperation(
+                CallLocator,
+                mediaOperationId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public async Task GetParticipantsAsync_Return200OK()
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantsResultPayload);
+
+            var result = await serverCallRestClient.GetParticipantsAsync(CallLocator);
+            VerifyGetParticipantsResult(result.Value.ToList());
+        }
+
+        [Test]
+        public void GetParticipants_Return200OK()
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantsResultPayload);
+
+            var result = serverCallRestClient.GetParticipants(CallLocator);
+            VerifyGetParticipantsResult(result.Value.ToList());
+        }
+
+        [Test]
+        public void GetParticipantsAsync_Returns404NotFound()
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.GetParticipantsAsync(
+                CallLocator
+                ).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void GetParticipants_Returns404NotFound()
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.GetParticipants(
+                CallLocator
+                ));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_Participant))]
+        public async Task GetParticipantAsync_Return200OK(CommunicationIdentifier participant)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantResultPayload);
+
+            var result = await serverCallRestClient.GetParticipantAsync(CallLocator, participant);
+            VerifyGetParticipantsResult(result.Value.ToList());
+        }
+
+        [TestCaseSource(nameof(TestData_Participant))]
+        public void GetParticipant_Return200OK(CommunicationIdentifier participant)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(200, responseContent: GetParticipantResultPayload);
+
+            var result = serverCallRestClient.GetParticipant(CallLocator, participant);
+            VerifyGetParticipantsResult(result.Value.ToList());
+        }
+
+        [TestCaseSource(nameof(TestData_Participant))]
+        public void GetParticipantAsync_Returns404NotFound(CommunicationIdentifier participant)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.GetParticipantAsync(
+                CallLocator,
+                participant
+                ).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_Participant))]
+        public void GetParticipant_Returns404NotFound(CommunicationIdentifier participant)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.GetParticipant(
+                CallLocator,
+                participant
+                ));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_RedirectCall))]
+        public async Task RedirectCallAsync_Return200OK(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
+
+            var response = await serverCallRestClient.RedirectCallAsync(incomingCallContext, targets, callbackUri, timeoutInSeconds);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_RedirectCall))]
+        public void RedirectCall_Return200OK(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(202);
+
+            var response = serverCallRestClient.RedirectCall(incomingCallContext, targets, callbackUri, timeoutInSeconds);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_RedirectCall))]
+        public void RedirectCallAsync_Returns404NotFound(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await serverCallRestClient.RedirectCallAsync(
+                incomingCallContext,
+                targets,
+                callbackUri,
+                timeoutInSeconds
+                ).ConfigureAwait(false));
+
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_RedirectCall))]
+        public void RedirectCall_Returns404NotFound(string incomingCallContext, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, int timeoutInSeconds)
+        {
+            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => serverCallRestClient.RedirectCall(
+                incomingCallContext,
+                targets,
+                callbackUri,
+                timeoutInSeconds
+                ));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -735,6 +954,14 @@ namespace Azure.Communication.CallingServer.Tests
             Assert.AreEqual("dummyOperationContext", response.OperationContext);
             Assert.AreEqual(200, response.ResultInfo.Code);
             Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
+        }
+
+        private void VerifyGetParticipantsResult(List<CallParticipant> result)
+        {
+            Assert.NotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.True(result[0].Identifier is CommunicationUserIdentifier);
+            Assert.True(result[1].Identifier is PhoneNumberIdentifier);
         }
 
         private static IEnumerable<object?[]> TestData_StartRecording()
@@ -847,6 +1074,17 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
+        private static IEnumerable<object?[]> TestData_CancelMediaOperation()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "3631b8cb-4a65-45b5-98ae-339fc78b0aed",
+                }
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_AddParticipant()
         {
             return new[]
@@ -868,6 +1106,35 @@ namespace Azure.Communication.CallingServer.Tests
                 new object?[]
                 {
                     "66c76529-3e58-45bf-9592-84eadd52bc81"
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_Participant()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationUserIdentifier("8:acs:acsuserid"),
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_RedirectCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    "dummyIincomingCallContext",
+                    new CommunicationIdentifier[]
+                    {
+                        new CommunicationUserIdentifier("8:acs:acsuserid"),
+                        new PhoneNumberIdentifier("+14255550123")
+                    },
+                    new Uri("https://bot.contoso.com/callback"),
+                    3,
                 },
             };
         }

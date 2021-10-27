@@ -299,7 +299,7 @@ namespace Azure.Communication.CallingServer.Tests
                     try
                     {
                         var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
-                        Assert.AreEqual(response.Status, HttpStatusCode.OK);
+                        Assert.AreEqual(response.Status, (int)HttpStatusCode.OK);
                     }
                     catch (Exception ex)
                     {
