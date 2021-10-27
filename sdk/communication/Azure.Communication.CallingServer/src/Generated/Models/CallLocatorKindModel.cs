@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CallLocatorKindModel"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallLocatorKindModel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CallLocatorKindModel(string value)
         {

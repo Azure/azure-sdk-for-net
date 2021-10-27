@@ -30,10 +30,10 @@ namespace Azure.Communication.CallingServer
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
         /// <summary> The content type of call recording. </summary>
-        public RecordingContentType? RecordingContentType { get; set; }
+        public RecordingContent? RecordingContentType { get; set; }
         /// <summary> The channel type of call recording. </summary>
-        public RecordingChannelType? RecordingChannelType { get; set; }
+        public RecordingChannel? RecordingChannelType { get; set; }
         /// <summary> The format type of call recording. </summary>
-        public RecordingFormatType? RecordingFormatType { get; set; }
+        public RecordingFormat? RecordingFormatType { get; set; }
     }
 }

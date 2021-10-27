@@ -25,17 +25,17 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType");
-                writer.WriteStringValue(RecordingContentType.Value.ToString());
+                writer.WriteStringValue(RecordingContentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecordingChannelType))
             {
                 writer.WritePropertyName("recordingChannelType");
-                writer.WriteStringValue(RecordingChannelType.Value.ToString());
+                writer.WriteStringValue(RecordingChannelType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType");
-                writer.WriteStringValue(RecordingFormatType.Value.ToString());
+                writer.WriteStringValue(RecordingFormatType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

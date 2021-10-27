@@ -33,17 +33,8 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-11-15-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -419,12 +410,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
@@ -468,12 +456,9 @@ namespace Azure.Communication.CallingServer
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="identifier"> The identifier of the participant to play audio to. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
@@ -596,7 +581,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateStartRecordingRequest(CallLocatorModel callLocator, string recordingStateCallbackUri, RecordingContentType? recordingContentType, RecordingChannelType? recordingChannelType, RecordingFormatType? recordingFormatType)
+        internal HttpMessage CreateStartRecordingRequest(CallLocatorModel callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -629,7 +614,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> The format type of call recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(CallLocatorModel callLocator, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StartCallRecordingResult>> StartRecordingAsync(CallLocatorModel callLocator, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
@@ -660,7 +645,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingFormatType"> The format type of call recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
-        public Response<StartCallRecordingResult> StartRecording(CallLocatorModel callLocator, string recordingStateCallbackUri = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, CancellationToken cancellationToken = default)
+        public Response<StartCallRecordingResult> StartRecording(CallLocatorModel callLocator, string recordingStateCallbackUri = null, RecordingContent? recordingContentType = null, RecordingChannel? recordingChannelType = null, RecordingFormat? recordingFormatType = null, CancellationToken cancellationToken = default)
         {
             if (callLocator == null)
             {
@@ -1075,12 +1060,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
@@ -1119,12 +1101,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
