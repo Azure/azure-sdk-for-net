@@ -48,13 +48,13 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Expires On: {expiresOn}");
             #endregion Snippet:CreateCommunicationTokenAsync
 
-            #region RevokeCommunicationUserTokenAsync
+            #region Snippet:RevokeCommunicationUserTokenAsync
             Response revokeResponse = await client.RevokeTokensAsync(user);
-            #endregion RevokeCommunicationUserTokenAsync
+            #endregion Snippet:RevokeCommunicationUserTokenAsync
 
-            #region DeleteACommunicationUserAsync
+            #region Snippet:DeleteACommunicationUserAsync
             Response deleteResponse = await client.DeleteUserAsync(user);
-            #endregion DeleteACommunicationUserAsync
+            #endregion Snippet:DeleteACommunicationUserAsync
         }
 
         [Test]
