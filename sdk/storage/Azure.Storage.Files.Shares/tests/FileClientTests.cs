@@ -4150,11 +4150,21 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await sourceFile.CreateAsync(Constants.KB);
 
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceFile.UploadAsync(stream);
+
             // Act
             ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
 
             // Assert
-            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+            Response<ShareFileDownloadInfo> downloadResponse = await destFile.DownloadAsync(
+                range: new HttpRange(0, Constants.KB));
+
+            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [RecordedTest]
@@ -4178,6 +4188,44 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RenameAsync_ReplaceIfExists(bool replaceIfExists)
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+            ShareFileClient destFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(Constants.KB);
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ReplaceIfExists = replaceIfExists
+            };
+
+            // Act
+            if (replaceIfExists)
+            {
+                destFile = await sourceFile.RenameAsync(
+                    destinationPath: test.Directory.Name + "/" + destFile.Name,
+                    options: options);
+
+                // Assert
+                Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceFile.RenameAsync(
+                    destinationPath: test.Directory.Name + "/" + destFile.Name,
+                    options: options),
+                    e => Assert.AreEqual(ShareErrorCode.ResourceAlreadyExists.ToString(), e.ErrorCode));
+            }
         }
 
         #region GenerateSasTests
