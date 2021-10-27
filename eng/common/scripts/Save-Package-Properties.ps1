@@ -97,18 +97,21 @@ if ($allPackageProperties)
     }
     foreach($pkg in $allPackageProperties)
     {
-        Write-Host "Package Name: $($pkg.Name)"
-        Write-Host "Package Version: $($pkg.Version)"
-        Write-Host "Package SDK Type: $($pkg.SdkType)"
-        Write-Host "Artifact Name: $($pkg.ArtifactName)"
-        Write-Host "Release date: $($pkg.ReleaseStatus)"
-        $configFilePrefix = $pkg.Name
-        if ($pkg.ArtifactName)
-        {
-          $configFilePrefix = $pkg.ArtifactName
-        }
-        $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
-        SetOutput $outputPath $pkg
+      if ($pkg.IsNewSdk)
+      {
+          Write-Host "Package Name: $($pkg.Name)"
+          Write-Host "Package Version: $($pkg.Version)"
+          Write-Host "Package SDK Type: $($pkg.SdkType)"
+          Write-Host "Artifact Name: $($pkg.ArtifactName)"
+          Write-Host "Release date: $($pkg.ReleaseStatus)"
+          $configFilePrefix = $pkg.Name
+          if ($pkg.ArtifactName)
+          {
+            $configFilePrefix = $pkg.ArtifactName
+          }
+          $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+          SetOutput $outputPath $pkg
+      }
     }
 
     Get-ChildItem -Path $outDirectory
