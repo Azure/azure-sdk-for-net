@@ -28,8 +28,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 "Where are the calories per recipe?");
 #else
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "DomainOrchestrator",
-                "production",
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
                 "where are the calories per recipe?");
 #endif
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RecipeFAQ"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiMaking"));
         }
 
         [SyncOnly]
@@ -66,9 +66,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "DomainOrchestrator",
-                "production",
-                "send an email to carol about the demo");
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Email"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiOrder"));
         }
 
         [SyncOnly]
@@ -118,9 +118,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "DomainOrchestrator",
-                "production",
-                "reserve a restaurant at the egyptian place for 2 people");
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
+                "book me flight from London to Paris");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -139,7 +139,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Restaurant"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("FlightBooking"));
         }
 
         [AsyncOnly]
@@ -157,8 +157,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 "Where are the calories per recipe?");
 #else
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "DomainOrchestrator",
-                "production",
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
                 "where are the calories per recipe?");
 #endif
 
@@ -184,7 +184,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RecipeFAQ"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiMaking"));
         }
 
         [AsyncOnly]
@@ -194,9 +194,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "DomainOrchestrator",
-                "production",
-                "send an email to carol about the demo");
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
+                "We'll have 2 plates of seared salmon nigiri.");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -235,7 +235,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Email"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiOrder"));
         }
 
         [AsyncOnly]
@@ -245,9 +245,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "DomainOrchestrator",
-                "production",
-                "reserve a restaurant at the egyptian place for 2 people");
+                TestEnvironment.OrchestrationProjectName,
+                TestEnvironment.DeploymentName,
+                "book me flight from London to Paris");
 
             OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
 
@@ -264,7 +264,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("Restaurant"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("FlightBooking"));
         }
     }
 }

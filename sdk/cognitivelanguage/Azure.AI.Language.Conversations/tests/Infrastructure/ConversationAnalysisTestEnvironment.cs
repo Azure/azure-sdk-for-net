@@ -27,6 +27,11 @@ namespace Azure.AI.Language.Conversations.Tests
         public string DeploymentName => "production";
 
         /// <summary>
+        /// Gets the orchestration test project name.
+        /// </summary>
+        public string OrchestrationProjectName => "antischTwo";
+
+        /// <summary>
         /// Gets the endpoint.
         /// </summary>
         public Uri Endpoint => new(GetRecordedVariable("CONVERSATIONS_URI"), UriKind.Absolute);

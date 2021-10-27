@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westeurope.api.cognitive.microsoft.com/language/:analyze-conversations?projectName=DomainOrchestrator\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
+      "RequestUri": "https://antischsdktest.cognitiveservices.azure.com/language/:analyze-conversations?projectName=antischTwo\u0026deploymentName=production\u0026api-version=2021-11-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "49",
+        "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211026.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211027.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "fb4af1292add5289e7bfb167d8f03774",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "send an email to carol about the demo"
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri."
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fea137e3-7e06-42c7-b3ed-adf0c745d720",
+        "apim-request-id": "8c21e933-4576-46bb-af48-58539d56779f",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -26,134 +26,58 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 26 Oct 2021 15:12:13 GMT",
+        "Date": "Wed, 27 Oct 2021 18:13:27 GMT",
         "pragma": "no-cache",
-        "request-id": "fea137e3-7e06-42c7-b3ed-adf0c745d720",
+        "request-id": "8c21e933-4576-46bb-af48-58539d56779f",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "128"
+        "x-envoy-upstream-service-time": "454"
       },
       "ResponseBody": {
-        "query": "send an email to carol about the demo",
+        "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
         "prediction": {
-          "topIntent": "Email",
+          "topIntent": "SushiOrder",
           "projectKind": "workflow",
           "intents": {
-            "Email": {
-              "confidenceScore": 0.83203125,
+            "SushiOrder": {
+              "confidenceScore": 0.82421875,
               "targetKind": "conversation",
               "result": {
-                "query": "send an email to carol about the demo",
+                "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
                 "prediction": {
                   "intents": [
                     {
-                      "category": "SendEmail",
-                      "confidenceScore": 0.999971
-                    },
-                    {
-                      "category": "Forward",
-                      "confidenceScore": 1.9151932E-05
-                    },
-                    {
-                      "category": "SearchMessages",
-                      "confidenceScore": 2.8264596E-06
-                    },
-                    {
-                      "category": "AddFlag",
-                      "confidenceScore": 1.7513945E-06
-                    },
-                    {
-                      "category": "Reply",
-                      "confidenceScore": 1.7222392E-06
-                    },
-                    {
-                      "category": "Confirm",
-                      "confidenceScore": 1.5886679E-06
-                    },
-                    {
-                      "category": "CheckMessages",
-                      "confidenceScore": 7.553774E-07
-                    },
-                    {
-                      "category": "AddMore",
-                      "confidenceScore": 5.3919155E-07
-                    },
-                    {
-                      "category": "QueryLastText",
-                      "confidenceScore": 2.7759376E-07
-                    },
-                    {
-                      "category": "Cancel",
-                      "confidenceScore": 1.3855124E-07
-                    },
-                    {
-                      "category": "None",
-                      "confidenceScore": 7.75706E-08
-                    },
-                    {
-                      "category": "ShowNext",
-                      "confidenceScore": 6.440199E-08
-                    },
-                    {
-                      "category": "ReadAloud",
-                      "confidenceScore": 6.189704E-08
-                    },
-                    {
-                      "category": "Delete",
-                      "confidenceScore": 2.1408692E-08
-                    },
-                    {
-                      "category": "ShowPrevious",
-                      "confidenceScore": 1.0773529E-08
+                      "category": "Order",
+                      "confidenceScore": 1
                     }
                   ],
                   "entities": [
                     {
-                      "category": "ContactName",
-                      "text": "carol",
-                      "offset": 17,
-                      "length": 5,
+                      "category": "OrderItem",
+                      "text": "2 plates",
+                      "offset": 11,
+                      "length": 8,
                       "confidenceScore": 1,
                       "listKeys": null
                     },
                     {
-                      "category": "EmailSubject",
-                      "text": "demo",
-                      "offset": 33,
-                      "length": 4,
+                      "category": "OrderItem",
+                      "text": "seared salmon nigiri",
+                      "offset": 23,
+                      "length": 20,
                       "confidenceScore": 1,
                       "listKeys": null
                     }
                   ],
-                  "topIntent": "SendEmail",
+                  "topIntent": "Order",
                   "projectKind": "conversation"
                 }
               }
             },
-            "Calendar": {
-              "confidenceScore": 0.7447917,
-              "targetKind": "conversation"
-            },
-            "Utilities": {
-              "confidenceScore": 0.69661456,
-              "targetKind": "luis"
-            },
-            "Restaurant": {
-              "confidenceScore": 0.6796875,
-              "targetKind": "luis"
-            },
-            "Greeting": {
-              "confidenceScore": 0.66276044,
-              "targetKind": "non_linked"
-            },
-            "RecipeFAQ": {
-              "confidenceScore": 0.6536458,
+            "SushiMaking": {
+              "confidenceScore": 0.7317708,
               "targetKind": "question_answering"
-            },
-            "Railway": {
-              "confidenceScore": 0.63932294,
-              "targetKind": "conversation"
             },
             "None": {
               "confidenceScore": 0,
@@ -166,7 +90,7 @@
   ],
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_URI": "https://westeurope.api.cognitive.microsoft.com",
+    "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
     "RandomSeed": "772935208"
   }
 }
