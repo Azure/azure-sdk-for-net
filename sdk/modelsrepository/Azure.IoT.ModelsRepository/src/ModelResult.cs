@@ -14,9 +14,9 @@ namespace Azure.IoT.ModelsRepository
         /// Digital twin model content where each key-value pair consists
         /// of a digital twin model Id and the corresponding model definition.
         /// </summary>
-        public IDictionary<string, string> Content { get; }
+        public IReadOnlyDictionary<string, string> Content { get; }
 
-        internal ModelResult(IDictionary<string, string> content)
+        internal ModelResult(IReadOnlyDictionary<string, string> content)
         {
             Content = content;
         }

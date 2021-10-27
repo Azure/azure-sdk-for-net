@@ -80,8 +80,8 @@ namespace Azure.IoT.ModelsRepository.Tests
             foreach (var dtmi in dtmis)
             {
                 ModelResult result = await client.GetModelAsync(dtmi);
-                result.Content.Keys.Count.Should().Be(1);
-                result.Content.Should().ContainKey(dtmi);
+                result.Content.Count.Should().Be(1);
+                result.Content.ContainsKey(dtmi).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
             }
         }
@@ -99,11 +99,11 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelResult result = await client.GetModelAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            result.Content.Keys.Count.Should().Be(expectedDtmis.Length);
+            result.Content.Count.Should().Be(expectedDtmis.Length);
 
             foreach (var id in expectedDtmis)
             {
-                result.Content.Should().ContainKey(id);
+                result.Content.ContainsKey(id).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
             }
         }
@@ -116,11 +116,11 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelResult result = await client.GetModelAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            result.Content.Keys.Count.Should().Be(expectedDtmis.Length);
+            result.Content.Count.Should().Be(expectedDtmis.Length);
 
             foreach (var id in expectedDtmis)
             {
-                result.Content.Should().ContainKey(id);
+                result.Content.ContainsKey(id).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
             }
         }
@@ -137,11 +137,11 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelResult result = await client.GetModelAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            result.Content.Keys.Count.Should().Be(expectedDtmis.Length);
+            result.Content.Count.Should().Be(expectedDtmis.Length);
 
             foreach (var id in expectedDtmis)
             {
-                result.Content.Should().ContainKey(id);
+                result.Content.ContainsKey(id).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
             }
         }
@@ -153,8 +153,8 @@ namespace Azure.IoT.ModelsRepository.Tests
 
             ModelResult result = await client.GetModelAsync(dtmi);
 
-            result.Content.Keys.Count.Should().Be(1);
-            result.Content.Should().ContainKey(dtmi);
+            result.Content.Count.Should().Be(1);
+            result.Content.ContainsKey(dtmi).Should().BeTrue();
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
         }
 
@@ -168,11 +168,11 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelResult result = await client.GetModelAsync(dtmi);
             var expectedDtmis = $"{dtmi},{expected}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            result.Content.Keys.Count.Should().Be(expectedDtmis.Length);
+            result.Content.Count.Should().Be(expectedDtmis.Length);
 
             foreach (var id in expectedDtmis)
             {
-                result.Content.Should().ContainKey(id);
+                result.Content.ContainsKey(id).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
             }
         }
@@ -186,8 +186,8 @@ namespace Azure.IoT.ModelsRepository.Tests
 
             ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled);
 
-            result.Content.Keys.Count.Should().Be(1);
-            result.Content.Should().ContainKey(dtmi);
+            result.Content.Count.Should().Be(1);
+            result.Content.ContainsKey(dtmi).Should().BeTrue();
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
         }
 
@@ -201,11 +201,11 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Enabled);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            result.Content.Keys.Count.Should().Be(expectedDtmis.Length);
+            result.Content.Count.Should().Be(expectedDtmis.Length);
 
             foreach (var id in expectedDtmis)
             {
-                result.Content.Should().ContainKey(id);
+                result.Content.ContainsKey(id).Should().BeTrue();
                 ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
             }
         }

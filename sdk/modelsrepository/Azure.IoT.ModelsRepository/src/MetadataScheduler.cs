@@ -8,24 +8,24 @@ namespace Azure.IoT.ModelsRepository
     /// </summary>
     internal class MetadataScheduler
     {
-        private bool _initialFetch;
-        private readonly bool _enabled;
+        private bool _isInitialFetch;
+        private readonly bool _isEnabled;
 
         /// <param name="metadataOptions">The desired configuration for metadata processing.</param>
         public MetadataScheduler(ModelsRepositoryClientMetadataOptions metadataOptions)
         {
-            _initialFetch = true;
-            _enabled = metadataOptions.Enabled;
+            _isInitialFetch = true;
+            _isEnabled = metadataOptions.IsMetadataProcessingEnabled;
         }
 
         /// <summary>
         /// To be invoked by caller indicating repository metadata has been fetched.
         /// </summary>
-        public void Set()
+        public void SetHasBeenFetched()
         {
-            if (_initialFetch)
+            if (_isInitialFetch)
             {
-                _initialFetch = false;
+                _isInitialFetch = false;
             }
         }
 
@@ -34,12 +34,12 @@ namespace Azure.IoT.ModelsRepository
         /// </summary>
         public bool ShouldFetchMetadata()
         {
-            if (!_enabled)
+            if (!_isEnabled)
             {
                 return false;
             }
 
-            if (_initialFetch)
+            if (_isInitialFetch)
             {
                 return true;
             }

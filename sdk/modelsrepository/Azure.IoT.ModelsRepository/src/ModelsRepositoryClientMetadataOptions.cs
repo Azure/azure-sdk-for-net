@@ -11,7 +11,7 @@ namespace Azure.IoT.ModelsRepository
         /// <summary>
         /// Indicates if models repository metadata processing should be enabled for the client.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool IsMetadataProcessingEnabled { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelsRepositoryClientMetadataOptions"/> class with
@@ -19,7 +19,7 @@ namespace Azure.IoT.ModelsRepository
         /// </summary>
         public ModelsRepositoryClientMetadataOptions()
         {
-            Enabled = true;
+            IsMetadataProcessingEnabled = true;
         }
     }
 }

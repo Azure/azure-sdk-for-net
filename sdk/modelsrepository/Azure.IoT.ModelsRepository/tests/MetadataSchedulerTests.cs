@@ -17,7 +17,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
             // For initial fetch, always return true.
             metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
-            metadataScheduler.Set();
+            metadataScheduler.SetHasBeenFetched();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }
@@ -28,12 +28,12 @@ namespace Azure.IoT.ModelsRepository.Tests
             // In this case the scheduler should support no metadata fetching.
             var metadataOptions = new ModelsRepositoryClientMetadataOptions
             {
-                Enabled = false
+                IsMetadataProcessingEnabled = false
             };
             var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
-            metadataScheduler.Set();
+            metadataScheduler.SetHasBeenFetched();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }

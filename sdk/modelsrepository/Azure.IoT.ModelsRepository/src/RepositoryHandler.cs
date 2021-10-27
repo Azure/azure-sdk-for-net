@@ -76,7 +76,7 @@ namespace Azure.IoT.ModelsRepository
                     _repositorySupportsExpanded = false;
                 }
 
-                _metadataScheduler.Set();
+                _metadataScheduler.SetHasBeenFetched();
             }
 
             // Covers case when the repository supports expanded but dependency resolution is disabled.

@@ -65,7 +65,7 @@ namespace Azure.IoT.ModelsRepository
         /// Gets a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// <see cref="ModelResult"></see> containing the desired model content.
+        /// A <see cref="ModelResult" /> containing the desired model content.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
@@ -95,7 +95,7 @@ namespace Azure.IoT.ModelsRepository
         /// Gets a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// <see cref="ModelResult"></see> containing the desired model content.
+        /// A <see cref="ModelResult" /> containing the desired model content.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>

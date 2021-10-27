@@ -48,9 +48,9 @@ namespace Azure.IoT.ModelsRepository.Samples
             // ModelsRepositoryClientOptions supports configuration enabling consumption of repository
             // metadata within ModelsRepositoryClientOptions.RepositoryMetadata.
             // Fetching repository metadata is enabled by default.
-            // This can be disabled by setting the ModelsRepositoryClientOptions.Metadata.Enabled property to false.
+            // This can be disabled as shown in the following snippet
             var customClientOptions = new ModelsRepositoryClientOptions();
-            customClientOptions.RepositoryMetadata.Enabled = false;
+            customClientOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
             client = new ModelsRepositoryClient(options: customClientOptions);
             Console.WriteLine($"Initialized client with disabled metadata fetching pointing " +
                 $"to the global endpoint: {client.RepositoryUri.AbsoluteUri}.");

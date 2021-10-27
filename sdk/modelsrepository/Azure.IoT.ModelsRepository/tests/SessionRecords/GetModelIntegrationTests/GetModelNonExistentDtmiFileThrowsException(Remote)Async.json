@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/metadata.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-8794f187ed1ed64a-00",
+        "traceparent": "00-4a0801037d4b7a4aa104ed8991d4f7ef-ae9e359ba8b4954b-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "76c57e6198231c77cc01bf49b684105d",
+        "x-ms-client-request-id": "b8637bfe5a7c6a21ece79f323f993bda",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,14 +19,14 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "8",
+        "Age": "53",
         "Cache-Control": "max-age=600",
         "Content-Length": "253",
         "Content-MD5": "OkUGX73Wcpprz\u002BfCNCW9pg==",
         "Content-Type": "application/json",
-        "Date": "Tue, 26 Oct 2021 21:58:21 GMT",
+        "Date": "Wed, 27 Oct 2021 01:55:52 GMT",
         "ETag": "\u00220x8D997ED4E02500D\u0022",
-        "Expires": "Tue, 26 Oct 2021 22:08:21 GMT",
+        "Expires": "Wed, 27 Oct 2021 02:05:52 GMT",
         "Last-Modified": "Mon, 25 Oct 2021 19:26:12 GMT",
         "Server": [
           "ECAcc",
@@ -34,7 +34,7 @@
         ],
         "X-Cache": "HIT",
         "x-ms-error-code": "ConditionNotMet",
-        "x-ms-request-id": "721140f1-b01e-0031-02b4-ca9298000000",
+        "x-ms-request-id": "6dbbcc31-d01e-00cb-0fd5-ca39d8000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
@@ -54,12 +54,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermojax-999.expanded.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-89aa8d44a63d274e-00",
+        "traceparent": "00-4a0801037d4b7a4aa104ed8991d4f7ef-97fd3799359d0e42-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "a2befe8a509d3b8f90893791e087f66c",
+        "x-ms-client-request-id": "c6f31c84551d6281434f0bea359f14ae",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -70,28 +70,28 @@
         "Access-Control-Expose-Headers": "*",
         "Content-Length": "321",
         "Content-Type": "text/html",
-        "Date": "Tue, 26 Oct 2021 21:58:20 GMT",
+        "Date": "Wed, 27 Oct 2021 01:55:51 GMT",
         "Server": [
           "Windows-Azure-Web/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Vary": "Origin",
         "x-ms-error-code": "WebContentNotFound",
-        "x-ms-request-id": "71b2f2c2-801e-006e-67b4-ca78b4000000",
+        "x-ms-request-id": "313d34e0-901e-0023-1bd5-ca74be000000",
         "x-ms-version": "2018-03-28"
       },
-      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 71b2f2c2-801e-006e-67b4-ca78b4000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-26T21:58:21.0122784Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
+      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 313d34e0-901e-0023-1bd5-ca74be000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-27T01:55:52.4041479Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
     },
     {
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermojax-999.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-df89f86a9c4c82459a9dcca0230e85ee-dbd31dbfde3ec64e-00",
+        "traceparent": "00-4a0801037d4b7a4aa104ed8991d4f7ef-2c9dcdf972840848-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211026.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "8c61c3b7c717805de8ff8daf5020054e",
+        "x-ms-client-request-id": "025a5031c8935b3ccd14cffaadfec02f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -102,20 +102,20 @@
         "Access-Control-Expose-Headers": "*",
         "Content-Length": "321",
         "Content-Type": "text/html",
-        "Date": "Tue, 26 Oct 2021 21:58:20 GMT",
+        "Date": "Wed, 27 Oct 2021 01:55:51 GMT",
         "Server": [
           "Windows-Azure-Web/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Vary": "Origin",
         "x-ms-error-code": "WebContentNotFound",
-        "x-ms-request-id": "0b006571-e01e-00fc-02b4-cac9c7000000",
+        "x-ms-request-id": "3d67168e-d01e-00b3-60d5-ca93c9000000",
         "x-ms-version": "2018-03-28"
       },
-      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 0b006571-e01e-00fc-02b4-cac9c7000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-26T21:58:21.0239840Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
+      "ResponseBody": "\u003C!DOCTYPE html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Ctitle\u003EWebContentNotFound\u003C/title\u003E\u003C/head\u003E\u003Cbody\u003E\u003Ch1\u003EThe requested content does not exist.\u003C/h1\u003E\u003Cp\u003E\u003Cul\u003E\u003Cli\u003EHttpStatusCode: 404\u003C/li\u003E\u003Cli\u003EErrorCode: WebContentNotFound\u003C/li\u003E\u003Cli\u003ERequestId : 3d67168e-d01e-00b3-60d5-ca93c9000000\u003C/li\u003E\u003Cli\u003ETimeStamp : 2021-10-27T01:55:52.4185492Z\u003C/li\u003E\u003C/ul\u003E\u003C/p\u003E\u003C/body\u003E\u003C/html\u003E"
     }
   ],
   "Variables": {
-    "RandomSeed": "603130437"
+    "RandomSeed": "369697226"
   }
 }
