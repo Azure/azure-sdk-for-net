@@ -4146,12 +4146,35 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
-            string sourceFileName = GetNewFileName();
-            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(sourceFileName));
+            string destFileName = GetNewFileName();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await sourceFile.CreateAsync(Constants.KB);
 
             // Act
-            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + sourceFileName);
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
+
+            // Assert
+            Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_DifferentDirectory()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+
+            ShareDirectoryClient sourceDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDirectory.CreateAsync();
+            ShareFileClient sourceFile = InstrumentClient(sourceDirectory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            ShareDirectoryClient destDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await destDirectory.CreateAsync();
+            string destFileName = GetNewFileName();
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: destDirectory.Name + "/" + destFileName);
 
             // Assert
             Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();

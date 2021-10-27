@@ -5824,13 +5824,10 @@ namespace Azure.Storage.Files.Shares
         #region Rename
         /// <summary>
         /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
         /// </summary>
         /// <param name="destinationPath">
         /// The destination path to rename the file to.
-        /// </param>
-        /// <param name="destinationShare">
-        /// Optional destination share.  If null, the file will be renamed with the
-        /// current share.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -5848,12 +5845,10 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileClient> Rename(
             string destinationPath,
-            string destinationShare = default,
             ShareFileRenameOptions options = default,
             CancellationToken cancellationToken = default)
             => RenameInternal(
                 destinationPath: destinationPath,
-                destinationShare: destinationShare,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -5861,13 +5856,10 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
         /// </summary>
         /// <param name="destinationPath">
         /// The destination path to rename the file to.
-        /// </param>
-        /// <param name="destinationShare">
-        /// Optional destination share.  If null, the file will be renamed with the
-        /// current share.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -5885,12 +5877,10 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareFileClient>> RenameAsync(
             string destinationPath,
-            string destinationShare = default,
             ShareFileRenameOptions options = default,
             CancellationToken cancellationToken = default)
             => await RenameInternal(
                 destinationPath: destinationPath,
-                destinationShare: destinationShare,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -5898,13 +5888,10 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
         /// </summary>
         /// <param name="destinationPath">
         /// The destination path to rename the file to.
-        /// </param>
-        /// <param name="destinationShare">
-        /// Optional destination share.  If null, the file will be renamed with the
-        /// current share.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -5925,7 +5912,6 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileClient>> RenameInternal(
             string destinationPath,
-            string destinationShare,
             ShareFileRenameOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -5936,7 +5922,6 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(destinationShare)}: {destinationShare}\n" +
                     $"{nameof(destinationPath)}: {destinationPath}\n" +
                     $"{nameof(options)}: {options}\n");
 
@@ -5946,22 +5931,12 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
 
-                    // Build renameSource
-                    ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(Uri);
-                    string renameSource = "/" + sourceUriBuilder.ShareName + "/" + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
-
-                    if (sourceUriBuilder.Sas != null)
-                    {
-                        renameSource += "?" + sourceUriBuilder.Sas;
-                    }
-
                     // Build destination URI
                     ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
                     {
                         Sas = null,
                         Query = null
                     };
-                    destUriBuilder.ShareName = destinationShare ?? destUriBuilder.ShareName;
 
                     // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
                     // especially SAS, to be encoded.
@@ -5998,7 +5973,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
-                            renameSource: renameSource,
+                            renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             metadata: options?.Metadata,
@@ -6014,7 +5989,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destFileClient.FileRestClient.Rename(
-                            renameSource: renameSource,
+                            renameSource: Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             metadata: options?.Metadata,
