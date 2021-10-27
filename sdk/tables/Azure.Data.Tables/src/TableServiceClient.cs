@@ -981,7 +981,6 @@ namespace Azure.Data.Tables
                 {
                     throw new RequestFailedException(rfe.Status, message, rfe.ErrorCode, rfe);
                 }
-                throw new Exception(message, ex);
             }
         }
     }
