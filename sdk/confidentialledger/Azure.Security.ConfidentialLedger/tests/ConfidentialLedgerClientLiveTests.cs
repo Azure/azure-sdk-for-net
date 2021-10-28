@@ -57,7 +57,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
             {
-                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true).GetAwaiter().GetResult();
+                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true)
+                    .GetAwaiter()
+                    .GetResult();
                 transactionId = operation.Id;
             }
         }
@@ -76,7 +78,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await PostLedgerEntry();
 
-            await foreach (var entry in Client.GetLedgerEntriesAsync(new RequestOptions()))
+            await foreach (var entry in Client.GetLedgerEntriesAsync(options: new RequestOptions()))
             {
                 Assert.NotNull(entry);
             }
@@ -89,7 +91,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId, new RequestOptions());
+            Response response = await Client.GetLedgerEntryAsync(transactionId, options: new RequestOptions());
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -158,7 +160,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task PostLedgerEntry()
         {
-            var operation = await Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true);
+            var operation = await Client.PostLedgerEntryAsync(
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
+                waitForCompletion: true);
             var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -171,7 +175,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
-            var result = await Client.GetCurrentLedgerEntryAsync(new());
+            var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -222,7 +226,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
             string stringResult = "Loading";
-            var result = Client.GetLedgerEntriesAsync(new RequestOptions());
+            var result = Client.GetLedgerEntriesAsync();
             bool first = true;
             Response response = null;
 
@@ -243,7 +247,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             while (stringResult.Contains("Loading"))
             {
                 first = true;
-                result = Client.GetLedgerEntriesAsync(new RequestOptions());
+                result = Client.GetLedgerEntriesAsync();
                 await foreach (var page in result.AsPages())
                 {
                     if (first)
@@ -266,7 +270,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var doc = JsonDocument.Parse(stringResult);
             if (doc.RootElement.TryGetProperty("transactionId", out var tid))
             {
-                        return tid.GetString();
+                return tid.GetString();
             }
             throw new Exception($"Could not parse transationId from response:\n{stringResult}");
         }
