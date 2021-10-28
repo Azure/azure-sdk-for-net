@@ -109,7 +109,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
@@ -175,7 +175,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
@@ -215,7 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DownloadAsync(string filePath, RequestOptions options)
+        public virtual async Task<Response> DownloadAsync(string filePath, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
@@ -255,7 +255,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Download(string filePath, RequestOptions options)
+        public virtual Response Download(string filePath, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
@@ -276,7 +276,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="farmerId"> FarmerId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="source"> Source name of scene data, default value Sentinel_2_L2A (Sentinel 2 L2A). </param>
         /// <param name="startDateTime"> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </param>
         /// <param name="endDateTime"> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </param>
@@ -290,6 +289,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -339,7 +339,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListAsync(string provider, string farmerId, string boundaryId, RequestOptions options, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (provider == null)
@@ -355,14 +355,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(boundaryId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ScenesClient.List");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ScenesClient.GetScenes");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
+                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken)
+                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -374,7 +374,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="farmerId"> FarmerId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="source"> Source name of scene data, default value Sentinel_2_L2A (Sentinel 2 L2A). </param>
         /// <param name="startDateTime"> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </param>
         /// <param name="endDateTime"> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </param>
@@ -388,6 +387,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/>, or <paramref name="boundaryId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -437,7 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> List(string provider, string farmerId, string boundaryId, RequestOptions options, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetScenes(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (provider == null)
@@ -453,14 +453,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(boundaryId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ScenesClient.List");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ScenesClient.GetScenes");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
+                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken)
+                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -654,7 +654,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateListRequest(string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetScenesRequest(string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -771,7 +771,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetScenesNextPageRequest(string nextLink, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

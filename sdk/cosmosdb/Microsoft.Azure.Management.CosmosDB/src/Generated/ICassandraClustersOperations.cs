@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ClusterResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterResource body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Request that repair begin on this cluster as soon as possible.
+        /// Invoke a command like nodetool for cassandra maintenance
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -180,7 +180,35 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Managed Cassandra cluster name.
         /// </param>
         /// <param name='body'>
-        /// Specification of what keyspaces and tables to run repair on.
+        /// Specification which command to run where
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CommandOutput>> InvokeCommandWithHttpMessagesAsync(string resourceGroupName, string clusterName, CommandPostBody body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deallocate the Managed Cassandra Cluster and Associated Data
+        /// Centers. Deallocation will deallocate the host virtual machine of
+        /// this cluster, and reserved the data disk. This won't do anything on
+        /// an already deallocated cluster. Use Start to restart the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Managed Cassandra cluster name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -194,10 +222,35 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RequestRepairWithHttpMessagesAsync(string resourceGroupName, string clusterName, RepairPostBody body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Request the status of all nodes in the cluster (as returned by
-        /// 'nodetool status').
+        /// Start the Managed Cassandra Cluster and Associated Data Centers.
+        /// Start will start the host virtual machine of this cluster with
+        /// reserved data disk. This won't do anything on an already running
+        /// cluster. Use Deallocate to deallocate the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Managed Cassandra cluster name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the CPU, memory, and disk usage statistics for each Cassandra
+        /// node in a cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -220,61 +273,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ClusterNodeStatus>> FetchNodeStatusWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List the backups of this cluster that are available to restore.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Managed Cassandra cluster name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IEnumerable<BackupResource>>> ListBackupsMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get the properties of an individual backup of this cluster that is
-        /// available to restore.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Managed Cassandra cluster name.
-        /// </param>
-        /// <param name='backupId'>
-        /// Id of a restorable backup of a Cassandra cluster.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<BackupResource>> GetBackupWithHttpMessagesAsync(string resourceGroupName, string clusterName, string backupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CassandraClusterPublicStatus>> StatusWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a managed Cassandra cluster.
         /// </summary>
@@ -357,7 +356,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ClusterResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterResource body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Request that repair begin on this cluster as soon as possible.
+        /// Invoke a command like nodetool for cassandra maintenance
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -366,30 +365,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Managed Cassandra cluster name.
         /// </param>
         /// <param name='body'>
-        /// Specification of what keyspaces and tables to run repair on.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginRequestRepairWithHttpMessagesAsync(string resourceGroupName, string clusterName, RepairPostBody body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Request the status of all nodes in the cluster (as returned by
-        /// 'nodetool status').
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Managed Cassandra cluster name.
+        /// Specification which command to run where
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -406,6 +382,56 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ClusterNodeStatus>> BeginFetchNodeStatusWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CommandOutput>> BeginInvokeCommandWithHttpMessagesAsync(string resourceGroupName, string clusterName, CommandPostBody body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deallocate the Managed Cassandra Cluster and Associated Data
+        /// Centers. Deallocation will deallocate the host virtual machine of
+        /// this cluster, and reserved the data disk. This won't do anything on
+        /// an already deallocated cluster. Use Start to restart the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Managed Cassandra cluster name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Start the Managed Cassandra Cluster and Associated Data Centers.
+        /// Start will start the host virtual machine of this cluster with
+        /// reserved data disk. This won't do anything on an already running
+        /// cluster. Use Deallocate to deallocate the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Managed Cassandra cluster name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

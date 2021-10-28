@@ -11,7 +11,7 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing algorithm to use for the transaction.
         /// </summary>
-        public TransactionalHashAlgorithm Algorithm { get; set; }
+        public TransactionalHashAlgorithm Algorithm { get; set; } = TransactionalHashAlgorithm.StorageCrc64;
 
         /// <summary>
         /// Optional. Upload APIs that send the given data all in one request

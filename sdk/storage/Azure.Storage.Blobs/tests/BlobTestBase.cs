@@ -456,7 +456,7 @@ namespace Azure.Storage.Test.Shared
             if (match == ReceivedETag)
             {
                 Response<BlobProperties> headers = await blob.GetPropertiesAsync();
-                return headers.Value.ETag.ToString();
+                return headers.GetRawResponse().Headers.ETag.ToString();
             }
             else
             {

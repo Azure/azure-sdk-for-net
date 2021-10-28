@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK Common object library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK Common for WebPubSub</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

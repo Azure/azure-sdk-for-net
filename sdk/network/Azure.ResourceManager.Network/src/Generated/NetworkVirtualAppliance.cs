@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of VirtualApplianceSites in the NetworkVirtualAppliance. </summary>
         /// <returns> An object representing collection of VirtualApplianceSites and their operations over a NetworkVirtualAppliance. </returns>
-        public VirtualApplianceSiteContainer GetVirtualApplianceSites()
+        public VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {
-            return new VirtualApplianceSiteContainer(this);
+            return new VirtualApplianceSiteCollection(this);
         }
     }
 }

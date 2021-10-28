@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/health/jobs?stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "223",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4625460f3856b04da3ed48bcf326ca93-44198cf74d96e844-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-3895b966acd5cb47b386549eb4e176f0-72c061ef1918ae4f-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "1d7c0f7df9a5be46a7bf1d0b574c6095",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,102 +35,84 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "d020d9e4-c7e9-4ded-a89c-7716e9779e8a",
-        "Date": "Fri, 06 Aug 2021 01:53:19 GMT",
-        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs/445e78c0-aa96-45ef-b165-d613e220d5f1",
+        "apim-request-id": "ce456f8b-a04b-4f34-9846-43ba3bcd764f",
+        "Date": "Mon, 25 Oct 2021 21:20:53 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs/074f5d2a-efeb-4c84-a9ae-1c2c592bc007",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "226"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "159"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs/445e78c0-aa96-45ef-b165-d613e220d5f1?showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/health/jobs/074f5d2a-efeb-4c84-a9ae-1c2c592bc007?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "9441bfd5d8fa13e75ab79017f0dbec22",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "660e6b04-f1ce-4407-a3f7-bf6078c29f37",
+        "apim-request-id": "c80a47ba-147b-4b3a-9332-051b146591d5",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 01:53:19 GMT",
+        "Date": "Mon, 25 Oct 2021 21:20:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
-        "jobId": "445e78c0-aa96-45ef-b165-d613e220d5f1",
-        "lastUpdateDateTime": "2021-08-06T01:53:20Z",
-        "createdDateTime": "2021-08-06T01:53:19Z",
-        "expirationDateTime": "2021-08-07T01:53:19Z",
-        "status": "notStarted",
+        "jobId": "074f5d2a-efeb-4c84-a9ae-1c2c592bc007",
+        "lastUpdateDateTime": "2021-10-25T21:20:54Z",
+        "createdDateTime": "2021-10-25T21:20:54Z",
+        "expirationDateTime": "2021-10-26T21:20:54Z",
+        "status": "running",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs/445e78c0-aa96-45ef-b165-d613e220d5f1?showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/health/jobs/074f5d2a-efeb-4c84-a9ae-1c2c592bc007?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "1f1476b4f8decd8416de12a15e37d599",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4e4ecb6f-77a6-43d9-b31a-797538e334b0",
+        "apim-request-id": "87e06de5-ce58-4c8c-a51c-ec86c44b5baa",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 01:53:20 GMT",
+        "Date": "Mon, 25 Oct 2021 21:20:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "82"
       },
       "ResponseBody": {
-        "jobId": "445e78c0-aa96-45ef-b165-d613e220d5f1",
-        "lastUpdateDateTime": "2021-08-06T01:53:20Z",
-        "createdDateTime": "2021-08-06T01:53:19Z",
-        "expirationDateTime": "2021-08-07T01:53:19Z",
-        "status": "notStarted",
-        "errors": []
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/entities/health/jobs/445e78c0-aa96-45ef-b165-d613e220d5f1?showStats=false",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "9fb8c34e36bba5c72869c2ed682ecdcc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "08e6c7c0-e689-4874-8ea1-b36af394f099",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Aug 2021 01:53:21 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "79"
-      },
-      "ResponseBody": {
-        "jobId": "445e78c0-aa96-45ef-b165-d613e220d5f1",
-        "lastUpdateDateTime": "2021-08-06T01:53:21Z",
-        "createdDateTime": "2021-08-06T01:53:19Z",
-        "expirationDateTime": "2021-08-07T01:53:19Z",
+        "jobId": "074f5d2a-efeb-4c84-a9ae-1c2c592bc007",
+        "lastUpdateDateTime": "2021-10-25T21:20:54Z",
+        "createdDateTime": "2021-10-25T21:20:54Z",
+        "expirationDateTime": "2021-10-26T21:20:54Z",
         "status": "succeeded",
         "errors": [],
         "results": {
@@ -1108,6 +1096,6 @@
   "Variables": {
     "RandomSeed": "1964733569",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

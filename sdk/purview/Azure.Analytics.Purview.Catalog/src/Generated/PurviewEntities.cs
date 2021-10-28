@@ -149,6 +149,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -286,6 +293,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -308,10 +322,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -373,10 +387,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
@@ -395,10 +416,10 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
         /// <param name="guids"> An array of GUIDs of entities to create. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -460,10 +481,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuids(IEnumerable<string> guids, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuids");
@@ -597,6 +625,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -738,6 +773,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -812,6 +854,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -890,6 +939,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -935,6 +991,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
         ///   },
         ///   entityGuids: [string]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -984,6 +1047,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   entityGuids: [string]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1006,9 +1076,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1068,10 +1138,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidAsync(string guid, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
@@ -1090,9 +1167,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get complete definition of an entity given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1152,10 +1229,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuid(string guid, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByGuid");
@@ -1233,6 +1317,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1318,6 +1409,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1392,6 +1490,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1470,6 +1575,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1515,10 +1627,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions options)
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
@@ -1560,10 +1679,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassification(string guid, string classificationName, RequestOptions options)
+        public virtual Response GetClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassification");
@@ -1585,6 +1711,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -1608,6 +1744,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="classificationName"> The name of the classification. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response DeleteClassification(string guid, string classificationName, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -1641,10 +1787,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   totalCount: number
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions options)
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
@@ -1676,10 +1829,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   totalCount: number
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetClassifications(string guid, RequestOptions options)
+        public virtual Response GetClassifications(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetClassifications");
@@ -1719,6 +1879,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1766,6 +1933,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1809,6 +1983,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -1856,6 +2037,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -1885,10 +2073,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1948,10 +2136,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null)
+        public virtual async Task<Response> GetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
@@ -1977,10 +2172,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2040,10 +2235,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetByUniqueAttributes(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null)
+        public virtual Response GetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetByUniqueAttributes");
@@ -2182,6 +2384,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2328,6 +2537,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2410,6 +2626,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         ///     }
         ///   ]
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2496,6 +2719,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2522,6 +2752,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -2546,6 +2786,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <remarks>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -2588,6 +2838,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2636,6 +2893,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2680,6 +2944,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   source: string,
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2728,6 +2999,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2758,6 +3036,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -2786,6 +3071,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -2822,10 +3114,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2887,10 +3179,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null)
+        public virtual async Task<Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
@@ -2921,10 +3220,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="attrNQualifiedName"> Qualified name of an entity. E.g. to find 2 entities you can set attrs_0:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -2986,10 +3285,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ]
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEntitiesByUniqueAttributes(string typeName, RequestOptions options, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null)
+        public virtual Response GetEntitiesByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetEntitiesByUniqueAttributes");
@@ -3056,10 +3362,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions options)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
@@ -3126,10 +3439,17 @@ namespace Azure.Analytics.Purview.Catalog
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
         /// }
         /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   requestId: string,
+        ///   errorCode: string,
+        ///   errorMessage: string
+        /// }
+        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetHeader(string guid, RequestOptions options)
+        public virtual Response GetHeader(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewEntities.GetHeader");
@@ -3153,7 +3473,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3170,7 +3490,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3204,7 +3524,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3221,7 +3541,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
@@ -3240,9 +3560,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3256,7 +3577,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             if (minExtInfo != null)
@@ -3280,7 +3601,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("name", name, true);
@@ -3299,7 +3620,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
@@ -3315,7 +3636,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
@@ -3333,12 +3654,13 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3350,7 +3672,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
@@ -3367,11 +3689,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3385,11 +3708,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3403,7 +3727,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3431,7 +3755,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3453,7 +3777,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (attrQualifiedName != null)
@@ -3473,7 +3797,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classification/", false);
@@ -3483,6 +3807,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
@@ -3494,7 +3819,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3503,6 +3828,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3516,7 +3842,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
@@ -3525,6 +3851,7 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             message.ResponseClassifier = ResponseClassifier204.Instance;
@@ -3538,7 +3865,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3555,7 +3882,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             if (minExtInfo != null)
@@ -3583,7 +3910,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/api", false);
+            uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/header", false);

@@ -99,7 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string cropId, string cropVarietyId, RequestOptions options)
+        public virtual async Task<Response> GetAsync(string cropId, string cropVarietyId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
@@ -155,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string cropId, string cropVarietyId, RequestOptions options)
+        public virtual Response Get(string cropId, string cropVarietyId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("CropVarietiesClient.Get");
@@ -400,7 +400,6 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of crop variety resources under a particular crop. </summary>
         /// <param name="cropId"> ID of the associated crop. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -420,6 +419,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -461,7 +461,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListByCropIdAsync(string cropId, RequestOptions options, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetCropVarietiesByCropIdAsync(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (cropId == null)
@@ -469,14 +469,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(cropId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.ListByCropId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListByCropIdNextPageRequest(nextLink, cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetCropVarietiesByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetCropVarietiesByCropIdNextPageRequest(nextLink, cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -486,7 +486,6 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of crop variety resources under a particular crop. </summary>
         /// <param name="cropId"> ID of the associated crop. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -506,6 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cropId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -547,7 +547,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListByCropId(string cropId, RequestOptions options, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetCropVarietiesByCropId(string cropId, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (cropId == null)
@@ -555,14 +555,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(cropId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.ListByCropId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.GetCropVarietiesByCropId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListByCropIdNextPageRequest(nextLink, cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetCropVarietiesByCropIdRequest(cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetCropVarietiesByCropIdNextPageRequest(nextLink, cropId, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -571,7 +571,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of crop variety resources across all crops. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -591,6 +590,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -631,17 +631,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListAsync(RequestOptions options, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetCropVarietiesAsync(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.List");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "CropVarietiesClient.GetCropVarieties");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetCropVarietiesRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetCropVarietiesNextPageRequest(nextLink, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -650,7 +650,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of crop variety resources across all crops. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
@@ -670,6 +669,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -710,17 +710,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> List(RequestOptions options, IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetCropVarieties(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.List");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "CropVarietiesClient.GetCropVarieties");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetCropVarietiesRequest(cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetCropVarietiesNextPageRequest(nextLink, cropIds, brands, products, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -728,7 +728,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateListByCropIdRequest(string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetCropVarietiesByCropIdRequest(string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -818,7 +818,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetCropVarietiesRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -962,7 +962,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListByCropIdNextPageRequest(string nextLink, string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetCropVarietiesByCropIdNextPageRequest(string nextLink, string cropId, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -976,7 +976,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetCropVarietiesNextPageRequest(string nextLink, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

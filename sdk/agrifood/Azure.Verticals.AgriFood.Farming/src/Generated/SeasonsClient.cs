@@ -98,7 +98,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string seasonId, RequestOptions options)
+        public virtual async Task<Response> GetAsync(string seasonId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
@@ -153,7 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string seasonId, RequestOptions options)
+        public virtual Response Get(string seasonId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("SeasonsClient.Get");
@@ -393,7 +393,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of season resources. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
@@ -415,6 +414,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -455,17 +455,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListAsync(RequestOptions options, DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetSeasonsAsync(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonsClient.List");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "SeasonsClient.GetSeasons");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetSeasonsRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetSeasonsNextPageRequest(nextLink, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -474,7 +474,6 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of season resources. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="minStartDateTime"> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxStartDateTime"> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minEndDateTime"> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
@@ -496,6 +495,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -536,17 +536,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> List(RequestOptions options, DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetSeasons(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, IEnumerable<int> years = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonsClient.List");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "SeasonsClient.GetSeasons");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateListNextPageRequest(nextLink, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateGetSeasonsRequest(minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateGetSeasonsNextPageRequest(nextLink, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, years, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -554,7 +554,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateListRequest(DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonsRequest(DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -694,7 +694,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateGetSeasonsNextPageRequest(string nextLink, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, IEnumerable<int> years, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

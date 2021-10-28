@@ -25,8 +25,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The total number of events that can be buffered for publishing at a given time for a given partition.</summary>
         private int _maximumEventBufferLengthPerPartition = 1500;
 
-        /// <summary> The amount of time to wait for a new event to be enqueued in the buffer before publishing a partially full batch..</summary>
-        private TimeSpan? _maximumWaitTime = TimeSpan.FromMilliseconds(250);
+        /// <summary> The amount of time to wait for a new event to be enqueued in the buffer before publishing a partially full batch.</summary>
+        private TimeSpan? _maximumWaitTime = TimeSpan.FromSeconds(1);
 
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
@@ -52,15 +52,16 @@ namespace Azure.Messaging.EventHubs.Producer
         public bool EnableIdempotentRetries { get; set; }
 
         /// <summary>
-        ///   The amount of time to wait for a new event to be enqueued in the buffer before publishing
+        ///   The amount of time to wait for a batch to be built with events in the buffer before publishing
         ///   a partially full batch.
         /// </summary>
         ///
         /// <value>
-        ///   The default wait time is 250 milliseconds.
+        ///   The default wait time is 1 second.  For most scenarios, it is recommended to allow for at least 1
+        ///   second in order to ensure consistent performance.
         ///
-        ///   <para>If <c>null</c>, attempts to enqueue events will wait forever for room in the buffer to become available
-        ///   unless the operation is canceled.</para>
+        ///   <para>If <c>null</c>, batches will only be published when full unless <see cref="EventHubBufferedProducerClient.FlushAsync(System.Threading.CancellationToken)"/>
+        ///   is called.</para>
         /// </value>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
