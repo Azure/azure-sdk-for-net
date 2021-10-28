@@ -6,8 +6,11 @@
 
 namespace IotCentral.Tests.Helpers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Net;
     using Microsoft.Azure.Management.IotCentral;
+    using Microsoft.Azure.Management.IotCentral.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -20,7 +23,23 @@ namespace IotCentral.Tests.Helpers
         public static string DefaultUpdateSubdomain = "defaultdotnetsdksubdomainupdate";
         public static string DefaultResourceGroupName = "DefaultDotNetSdkIotCentralRG";
         public static string DefaultUpdateResourceGroupName = "DefaultDotNetSdkIotCentralRGUpdate";
-        
+
+        internal static string RandomizedResourceName = DefaultResourceName + Guid.NewGuid().ToString("n");
+        internal static string RandomizedSubdomain = DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
+        internal static string RandomizedResourceGroupName = DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
+
+        internal static List<AppTemplateLocations> SupportedAzureRegions = new List<AppTemplateLocations> {
+                    new AppTemplateLocations("australiaeast", "Australia East"),
+                    new AppTemplateLocations("australiaeast", "Central US"),
+                    new AppTemplateLocations("australiaeast", "East US"),
+                    new AppTemplateLocations("australiaeast", "East US 2"),
+                    new AppTemplateLocations("australiaeast", "Japan East"),
+                    new AppTemplateLocations("australiaeast", "North Europe"),
+                    new AppTemplateLocations("australiaeast", "South East Asia"),
+                    new AppTemplateLocations("australiaeast", "UK South"),
+                    new AppTemplateLocations("australiaeast", "West Europe"),
+                    new AppTemplateLocations("australiaeast", "West US") };
+
         public static IotCentralClient GetIotCentralClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)

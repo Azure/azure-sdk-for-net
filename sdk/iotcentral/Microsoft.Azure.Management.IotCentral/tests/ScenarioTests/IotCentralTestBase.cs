@@ -22,6 +22,10 @@ namespace IotCentral.Tests.ScenarioTests
         protected string location;
         protected TestEnvironment testEnv;
 
+        protected String resourceName = IotCentralTestUtilities.RandomizedResourceName;
+        protected String subDomain = IotCentralTestUtilities.RandomizedSubdomain;
+        protected String resourceGroupName = IotCentralTestUtilities.RandomizedResourceGroupName;
+
         protected void Initialize(MockContext context)
         {
             if (!initialized)
