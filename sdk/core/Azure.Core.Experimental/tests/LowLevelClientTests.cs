@@ -260,6 +260,30 @@ namespace Azure.Core.Tests
             Assert.AreEqual("beagle", pet.Species);
         }
 
+        [Test]
+        public async Task CanGetOperationOfOutputModelForLroAsync()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet petResponse = new Pet("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(petResponse, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var data = new
+            {
+                name = "snoopy",
+                species = "beagle"
+            };
+            LowLevelFuncOperation<Pet> operation = (LowLevelFuncOperation<BinaryData>)await client.ImportPetAsync(RequestContent.Create(data), new RequestOptions());
+
+            Pet pet = await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual("snoopy", pet.Name);
+            Assert.AreEqual("beagle", pet.Species);
+        }
+
         #region Helpers
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
         {

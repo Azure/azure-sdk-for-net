@@ -148,12 +148,12 @@ namespace Azure.Core.Experimental.Tests
         public virtual Operation<BinaryData> ImportPet(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportPet");
+            using var scope = _clientDiagnostics.CreateScope("PetStoreClient.ImportPet");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportPetRequest(content);
-                return LowLevelOperationHelpers.ProcessMessage(Pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options);
+                return LowLevelOperationHelpers.ProcessMessage(Pipeline, message, _clientDiagnostics, "PetStoreClient.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options);
             }
             catch (Exception e)
             {
@@ -166,12 +166,12 @@ namespace Azure.Core.Experimental.Tests
         public virtual async Task<Operation<BinaryData>> ImportPetAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportPet");
+            using var scope = _clientDiagnostics.CreateScope("PetStoreClient.ImportPet");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportPetRequest(content);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(Pipeline, message, _clientDiagnostics, "PurviewGlossaries.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(Pipeline, message, _clientDiagnostics, "PetStoreClient.ImportPet", OperationFinalStateVia.AzureAsyncOperation, options).ConfigureAwait(false);
             }
             catch (Exception e)
             {
