@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             (string schemaId, BinaryData data) = avroEncoder.Encode(value, inputType ?? value?.GetType(), cancellationToken);
             message.ContentType = $"{AvroMimeType}+{schemaId}";
-            message.Body = data;
+            message.Data = data;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             (string schemaId, BinaryData data) = await avroEncoder.EncodeAsync(value, inputType ?? value?.GetType(), cancellationToken).ConfigureAwait(false);
             message.ContentType = $"{AvroMimeType}+{schemaId}";
-            message.Body = data;
+            message.Data = data;
         }
 
         /// <summary>
@@ -110,11 +110,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             if (async)
             {
-                return await avroEncoder.DecodeAsync(message.Body, contentType[1], returnType, cancellationToken).ConfigureAwait(false);
+                return await avroEncoder.DecodeAsync(message.Data, contentType[1], returnType, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return avroEncoder.Decode(message.Body, contentType[1], returnType, cancellationToken);
+                return avroEncoder.Decode(message.Data, contentType[1], returnType, cancellationToken);
             }
         }
     }

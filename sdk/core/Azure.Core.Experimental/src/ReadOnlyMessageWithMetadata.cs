@@ -13,7 +13,7 @@ namespace Azure.Messaging
         /// <summary>
         ///
         /// </summary>
-        public abstract BinaryData Body { get; }
+        public abstract BinaryData Data { get; }
 
         /// <summary>
         ///

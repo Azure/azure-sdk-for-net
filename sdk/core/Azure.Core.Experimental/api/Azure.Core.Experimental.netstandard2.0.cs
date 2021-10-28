@@ -152,3 +152,18 @@ namespace Azure.Core.Pipeline
         public static bool IsError(this Azure.Response response) { throw null; }
     }
 }
+namespace Azure.Messaging
+{
+    public abstract partial class MessageWithMetadata
+    {
+        protected MessageWithMetadata() { }
+        public abstract string ContentType { get; set; }
+        public abstract System.BinaryData Data { get; set; }
+    }
+    public abstract partial class ReadOnlyMessageWithMetadata
+    {
+        protected ReadOnlyMessageWithMetadata() { }
+        public abstract string ContentType { get; }
+        public abstract System.BinaryData Data { get; }
+    }
+}

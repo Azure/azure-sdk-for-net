@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -135,7 +136,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
-        public override BinaryData Body
+        public BinaryData Body
         {
             get => AmqpMessage.GetBody();
             set
@@ -334,6 +335,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 AmqpMessage.Properties.To = new AmqpAddress(value);
             }
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="Body"/>
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data
+        {
+            get => Body;
+            set => Body = value;
         }
 
         /// <summary>Gets or sets the content type descriptor.</summary>

@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Messaging;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
         private readonly SchemaRegistryAvroObjectEncoderOptions _options;
+        private const string AvroMimeType = "avro/binary";
 
         /// <summary>
         /// Initializes new instance of <see cref="SchemaRegistryAvroEncoder"/>.
@@ -226,6 +228,130 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var binaryDecoder = new BinaryDecoder(data.ToStream());
             DatumReader<object> reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <param name="cancellationToken"></param>
+        public void EncodeMessageBody(
+            MessageWithMetadata message,
+            object value,
+            Type inputType = default,
+            CancellationToken cancellationToken = default)
+        {
+            (string schemaId, BinaryData data) = Encode(value, inputType ?? value?.GetType(), cancellationToken);
+            message.ContentType = $"{AvroMimeType}+{schemaId}";
+            message.Data = data;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="value"></param>
+        /// <param name="inputType"></param>
+        /// <param name="cancellationToken"></param>
+        public async Task EncodeMessageBodyAsync(
+            MessageWithMetadata message,
+            object value,
+            Type inputType = default,
+            CancellationToken cancellationToken = default)
+        {
+            (string schemaId, BinaryData data) = await EncodeAsync(value, inputType ?? value?.GetType(), cancellationToken).ConfigureAwait(false);
+            message.ContentType = $"{AvroMimeType}+{schemaId}";
+            message.Data = data;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="returnType"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        public object DecodeMessageBody(
+            MessageWithMetadata message,
+            Type returnType,
+            CancellationToken cancellationToken = default)
+            => DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="returnType"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async ValueTask<object> DecodeMessageBodyAsync(
+            MessageWithMetadata message,
+            Type returnType,
+            CancellationToken cancellationToken = default)
+            => await DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="returnType"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        public object DecodeMessageBody(
+            ReadOnlyMessageWithMetadata message,
+            Type returnType,
+            CancellationToken cancellationToken = default)
+            => DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="returnType"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async ValueTask<object> DecodeMessageBodyAsync(
+            ReadOnlyMessageWithMetadata message,
+            Type returnType,
+            CancellationToken cancellationToken = default)
+            => await DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<object> DecodeMessageBodyInternalAsync(
+            BinaryData data,
+            string contentType,
+            Type returnType,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            string[] contentTypeArray = contentType.Split('+');
+            if (contentTypeArray.Length != 2)
+            {
+                throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
+            }
+
+            if (contentTypeArray[0] != AvroMimeType)
+            {
+                throw new InvalidOperationException("An avro encoder may only be used on content that is of 'avro/binary' type");
+            }
+
+            if (async)
+            {
+                return await DecodeAsync(data, contentTypeArray[1], returnType, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                return Decode(data, contentTypeArray[1], returnType, cancellationToken);
+            }
         }
     }
 }

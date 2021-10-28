@@ -1,18 +1,3 @@
-namespace Azure.Messaging
-{
-    public abstract partial class MessageWithMetadata
-    {
-        protected MessageWithMetadata() { }
-        public virtual System.BinaryData Body { get { throw null; } set { } }
-        public virtual string ContentType { get { throw null; } set { } }
-    }
-    public abstract partial class ReadOnlyMessageWithMetadata
-    {
-        protected ReadOnlyMessageWithMetadata() { }
-        public virtual System.BinaryData Body { get { throw null; } }
-        public virtual string ContentType { get { throw null; } }
-    }
-}
 namespace Azure.Messaging.ServiceBus
 {
     public partial class CreateMessageBatchOptions
@@ -175,9 +160,11 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
-        public override System.BinaryData Body { get { throw null; } set { } }
+        public System.BinaryData Body { get { throw null; } set { } }
         public override string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
         public string ReplyTo { get { throw null; } set { } }
@@ -266,9 +253,11 @@ namespace Azure.Messaging.ServiceBus
     {
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
-        public override System.BinaryData Body { get { throw null; } }
+        public System.BinaryData Body { get { throw null; } }
         public override string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } }
         public string DeadLetterErrorDescription { get { throw null; } }
         public string DeadLetterReason { get { throw null; } }
         public string DeadLetterSource { get { throw null; } }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
@@ -65,7 +66,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public override BinaryData Body => AmqpMessage.GetBody();
+        public BinaryData Body => AmqpMessage.GetBody();
 
         /// <summary>
         /// Gets the MessageId to identify the message.
@@ -159,6 +160,12 @@ namespace Azure.Messaging.ServiceBus
         ///     intended logical destination of the message.
         /// </remarks>
         public string To => AmqpMessage.Properties.To?.ToString();
+
+        /// <summary>
+        /// <inheritdoc cref="Body"/>
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override BinaryData Data => Body;
 
         /// <summary>Gets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>

@@ -1,7 +1,8 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData
+    public partial class EventData : Azure.Messaging.MessageWithMetadata
     {
+        public EventData() { }
         public EventData(System.BinaryData eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
@@ -13,10 +14,12 @@ namespace Azure.Messaging.EventHubs
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public override string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override System.BinaryData Data { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
-        public System.BinaryData EventBody { get { throw null; } }
+        public System.BinaryData EventBody { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
