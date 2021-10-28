@@ -21,7 +21,7 @@ namespace Azure.IoT.ModelsRepository
         /// <summary>
         /// To be invoked by caller indicating repository metadata has been fetched.
         /// </summary>
-        public void SetHasBeenFetched()
+        public void MarkAsFetched()
         {
             if (_isInitialFetch)
             {

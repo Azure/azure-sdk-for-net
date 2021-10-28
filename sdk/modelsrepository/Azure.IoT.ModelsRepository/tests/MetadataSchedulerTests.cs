@@ -17,7 +17,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
             // For initial fetch, always return true.
             metadataScheduler.ShouldFetchMetadata().Should().BeTrue();
-            metadataScheduler.SetHasBeenFetched();
+            metadataScheduler.MarkAsFetched();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }
@@ -33,7 +33,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             var metadataScheduler = new MetadataScheduler(metadataOptions);
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
-            metadataScheduler.SetHasBeenFetched();
+            metadataScheduler.MarkAsFetched();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
             metadataScheduler.ShouldFetchMetadata().Should().BeFalse();
         }
