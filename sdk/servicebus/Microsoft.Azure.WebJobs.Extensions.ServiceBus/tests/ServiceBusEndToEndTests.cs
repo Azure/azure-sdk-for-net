@@ -729,6 +729,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "       \"MaxRetries\": 3",
                 "  }",
                 "  \"TransportType\": \"AmqpTcp\",",
+                "  \"EnableCrossEntityTransactions\": false",
                 "  \"WebProxy\": \"\",",
                 "}",
                 "SingletonOptions",
