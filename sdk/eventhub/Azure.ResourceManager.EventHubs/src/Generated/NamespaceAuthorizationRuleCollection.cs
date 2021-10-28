@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,37 +20,52 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of AuthorizationRuleEventHub and their operations over a EventHub. </summary>
-    public partial class AuthorizationRuleEventHubContainer : ArmContainer
+    /// <summary> A class representing collection of NamespaceAuthorizationRule and their operations over a EventHubNamespace. </summary>
+    public partial class NamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceAuthorizationRule>, IAsyncEnumerable<NamespaceAuthorizationRule>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly EventHubAuthorizationRulesRestOperations _restClient;
+        private readonly NamespaceAuthorizationRulesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleEventHubContainer"/> class for mocking. </summary>
-        protected AuthorizationRuleEventHubContainer()
+        /// <summary> Initializes a new instance of the <see cref="NamespaceAuthorizationRuleCollection"/> class for mocking. </summary>
+        protected NamespaceAuthorizationRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleEventHubContainer class. </summary>
+        /// <summary> Initializes a new instance of NamespaceAuthorizationRuleCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AuthorizationRuleEventHubContainer(ArmResource parent) : base(parent)
+        internal NamespaceAuthorizationRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new EventHubAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new NamespaceAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
+        IEnumerator<NamespaceAuthorizationRule> IEnumerable<NamespaceAuthorizationRule>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<NamespaceAuthorizationRule> IAsyncEnumerable<NamespaceAuthorizationRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => EventHub.ResourceType;
+        protected override ResourceType ValidResourceType => EventHubNamespace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
-        /// <summary> Creates or updates an AuthorizationRule for the specified Event Hub. Creation/update of the AuthorizationRule will take a few seconds to take effect. </summary>
+        /// <summary> Creates or updates an AuthorizationRule for a Namespace. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual EventHubAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(string authorizationRuleName, AuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual NamespaceAuthorizationRuleCreateOrUpdateOperation CreateOrUpdate(string authorizationRuleName, AuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
@@ -59,12 +76,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken);
-                var operation = new EventHubAuthorizationRuleCreateOrUpdateOperation(Parent, response);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken);
+                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -76,13 +93,13 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Creates or updates an AuthorizationRule for the specified Event Hub. Creation/update of the AuthorizationRule will take a few seconds to take effect. </summary>
+        /// <summary> Creates or updates an AuthorizationRule for a Namespace. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<EventHubAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string authorizationRuleName, AuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<NamespaceAuthorizationRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string authorizationRuleName, AuthorizationRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (authorizationRuleName == null)
             {
@@ -93,12 +110,12 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubAuthorizationRuleCreateOrUpdateOperation(Parent, response);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NamespaceAuthorizationRuleCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,9 +130,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<AuthorizationRuleEventHub> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
@@ -124,10 +141,10 @@ namespace Azure.ResourceManager.EventHubs
                     throw new ArgumentNullException(nameof(authorizationRuleName));
                 }
 
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRuleEventHub(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceAuthorizationRule(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,9 +156,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<AuthorizationRuleEventHub>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NamespaceAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
@@ -150,10 +167,10 @@ namespace Azure.ResourceManager.EventHubs
                     throw new ArgumentNullException(nameof(authorizationRuleName));
                 }
 
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AuthorizationRuleEventHub(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceAuthorizationRule(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,9 +182,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<AuthorizationRuleEventHub> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -176,10 +193,10 @@ namespace Azure.ResourceManager.EventHubs
                     throw new ArgumentNullException(nameof(authorizationRuleName));
                 }
 
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<AuthorizationRuleEventHub>(null, response.GetRawResponse())
-                    : Response.FromValue(new AuthorizationRuleEventHub(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse())
+                    : Response.FromValue(new NamespaceAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,9 +208,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<AuthorizationRuleEventHub>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NamespaceAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -202,10 +219,10 @@ namespace Azure.ResourceManager.EventHubs
                     throw new ArgumentNullException(nameof(authorizationRuleName));
                 }
 
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<AuthorizationRuleEventHub>(null, response.GetRawResponse())
-                    : Response.FromValue(new AuthorizationRuleEventHub(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<NamespaceAuthorizationRule>(null, response.GetRawResponse())
+                    : Response.FromValue(new NamespaceAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -262,19 +279,19 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <summary> Gets a list of authorization rules for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationRuleEventHub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AuthorizationRuleEventHub> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationRuleEventHub> FirstPageFunc(int? pageSizeHint)
+            Page<NamespaceAuthorizationRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRuleEventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -282,14 +299,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<AuthorizationRuleEventHub> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NamespaceAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRuleEventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,19 +317,19 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <summary> Gets a list of authorization rules for a Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationRuleEventHub" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AuthorizationRuleEventHub> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NamespaceAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationRuleEventHub>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NamespaceAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRuleEventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,14 +337,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<AuthorizationRuleEventHub>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NamespaceAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHubContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("NamespaceAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRuleEventHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceAuthorizationRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -339,6 +356,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, AuthorizationRuleEventHub, AuthorizationRuleData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, NamespaceAuthorizationRule, AuthorizationRuleData> Construct() { }
     }
 }

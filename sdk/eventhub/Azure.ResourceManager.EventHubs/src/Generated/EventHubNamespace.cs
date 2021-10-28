@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventHubs
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.EventHubs
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new EventHubNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -587,30 +587,30 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets a list of PrivateEndpointConnections in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a EventHubNamespace. </returns>
-        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionContainer(this);
+            return new PrivateEndpointConnectionCollection(this);
         }
 
         /// <summary> Gets a list of EventHubs in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of EventHubs and their operations over a EventHubNamespace. </returns>
-        public EventHubContainer GetEventHubs()
+        public EventHubCollection GetEventHubs()
         {
-            return new EventHubContainer(this);
+            return new EventHubCollection(this);
         }
 
         /// <summary> Gets a list of ArmDisasterRecoveries in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a EventHubNamespace. </returns>
-        public ArmDisasterRecoveryContainer GetArmDisasterRecoveries()
+        public ArmDisasterRecoveryCollection GetArmDisasterRecoveries()
         {
-            return new ArmDisasterRecoveryContainer(this);
+            return new ArmDisasterRecoveryCollection(this);
         }
 
-        /// <summary> Gets a list of AuthorizationRuleNamespaces in the EventHubNamespace. </summary>
-        /// <returns> An object representing collection of AuthorizationRuleNamespaces and their operations over a EventHubNamespace. </returns>
-        public AuthorizationRuleNamespaceContainer GetAuthorizationRuleNamespaces()
+        /// <summary> Gets a list of NamespaceAuthorizationRules in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a EventHubNamespace. </returns>
+        public NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
-            return new AuthorizationRuleNamespaceContainer(this);
+            return new NamespaceAuthorizationRuleCollection(this);
         }
     }
 }

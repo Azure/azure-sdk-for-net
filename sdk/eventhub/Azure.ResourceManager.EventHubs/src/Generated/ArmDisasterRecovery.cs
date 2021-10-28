@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a list of AuthorizationRuleDisasterRecoveryConfigs in the ArmDisasterRecovery. </summary>
-        /// <returns> An object representing collection of AuthorizationRuleDisasterRecoveryConfigs and their operations over a ArmDisasterRecovery. </returns>
-        public AuthorizationRuleDisasterRecoveryConfigContainer GetAuthorizationRuleDisasterRecoveryConfigs()
+        /// <summary> Gets a list of DisasterRecoveryConfigAuthorizationRules in the ArmDisasterRecovery. </summary>
+        /// <returns> An object representing collection of DisasterRecoveryConfigAuthorizationRules and their operations over a ArmDisasterRecovery. </returns>
+        public DisasterRecoveryConfigAuthorizationRuleCollection GetDisasterRecoveryConfigAuthorizationRules()
         {
-            return new AuthorizationRuleDisasterRecoveryConfigContainer(this);
+            return new DisasterRecoveryConfigAuthorizationRuleCollection(this);
         }
     }
 }

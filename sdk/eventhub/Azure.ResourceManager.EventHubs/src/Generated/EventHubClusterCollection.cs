@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,28 +22,43 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of EventHubCluster and their operations over a ResourceGroup. </summary>
-    public partial class EventHubClusterContainer : ArmContainer
+    public partial class EventHubClusterCollection : ArmCollection, IEnumerable<EventHubCluster>, IAsyncEnumerable<EventHubCluster>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ClustersRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EventHubClusterContainer"/> class for mocking. </summary>
-        protected EventHubClusterContainer()
+        /// <summary> Initializes a new instance of the <see cref="EventHubClusterCollection"/> class for mocking. </summary>
+        protected EventHubClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubClusterContainer class. </summary>
+        /// <summary> Initializes a new instance of EventHubClusterCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal EventHubClusterContainer(ArmResource parent) : base(parent)
+        internal EventHubClusterCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<EventHubCluster> IEnumerable<EventHubCluster>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<EventHubCluster> IAsyncEnumerable<EventHubCluster>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates or updates an instance of an Event Hubs Cluster. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
@@ -60,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -116,7 +133,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<EventHubCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Get");
             scope.Start();
             try
             {
@@ -142,7 +159,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<EventHubCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Get");
             scope.Start();
             try
             {
@@ -168,7 +185,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<EventHubCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -194,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<EventHubCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -244,7 +261,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -270,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<EventHubCluster> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -285,7 +302,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             Page<EventHubCluster> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -308,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<EventHubCluster>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -323,7 +340,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             async Task<Page<EventHubCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -347,7 +364,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {

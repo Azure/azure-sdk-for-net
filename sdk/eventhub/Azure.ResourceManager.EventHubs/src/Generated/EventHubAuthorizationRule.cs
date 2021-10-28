@@ -19,22 +19,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A Class representing a AuthorizationRuleEventHub along with the instance operations that can be performed on it. </summary>
-    public partial class AuthorizationRuleEventHub : ArmResource
+    /// <summary> A Class representing a EventHubAuthorizationRule along with the instance operations that can be performed on it. </summary>
+    public partial class EventHubAuthorizationRule : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly EventHubAuthorizationRulesRestOperations _restClient;
         private readonly AuthorizationRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleEventHub"/> class for mocking. </summary>
-        protected AuthorizationRuleEventHub()
+        /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRule"/> class for mocking. </summary>
+        protected EventHubAuthorizationRule()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthorizationRuleEventHub"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "EventHubAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal AuthorizationRuleEventHub(ArmResource options, AuthorizationRuleData resource) : base(options, resource.Id)
+        internal EventHubAuthorizationRule(ArmResource options, AuthorizationRuleData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.EventHubs
             _restClient = new EventHubAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleEventHub"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AuthorizationRuleEventHub(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal EventHubAuthorizationRule(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new EventHubAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationRuleEventHub"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRule"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AuthorizationRuleEventHub(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal EventHubAuthorizationRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new EventHubAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AuthorizationRuleEventHub>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<EventHubAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new AuthorizationRuleEventHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthorizationRuleEventHub> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubAuthorizationRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.Get");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRuleEventHub(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<EventHubAuthorizationRuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.Delete");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.Delete");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EventHubAuthorizationRuleDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.Delete");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.GetKeys");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.GetKeys");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.RegenerateKeys");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AuthorizationRuleEventHub.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("EventHubAuthorizationRule.RegenerateKeys");
             scope.Start();
             try
             {

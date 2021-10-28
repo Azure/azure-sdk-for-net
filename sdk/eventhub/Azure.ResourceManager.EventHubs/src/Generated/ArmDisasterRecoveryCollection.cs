@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.EventHubs.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of ArmDisasterRecovery and their operations over a EventHubNamespace. </summary>
-    public partial class ArmDisasterRecoveryContainer : ArmContainer
+    public partial class ArmDisasterRecoveryCollection : ArmCollection, IEnumerable<ArmDisasterRecovery>, IAsyncEnumerable<ArmDisasterRecovery>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DisasterRecoveryConfigsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryContainer"/> class for mocking. </summary>
-        protected ArmDisasterRecoveryContainer()
+        /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecoveryCollection"/> class for mocking. </summary>
+        protected ArmDisasterRecoveryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryContainer class. </summary>
+        /// <summary> Initializes a new instance of ArmDisasterRecoveryCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ArmDisasterRecoveryContainer(ArmResource parent) : base(parent)
+        internal ArmDisasterRecoveryCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<ArmDisasterRecovery> IEnumerable<ArmDisasterRecovery>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ArmDisasterRecovery> IAsyncEnumerable<ArmDisasterRecovery>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => EventHubNamespace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates or updates a new Alias(Disaster Recovery configuration). </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<ArmDisasterRecovery> Get(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<ArmDisasterRecovery>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<ArmDisasterRecovery> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<ArmDisasterRecovery>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<ArmDisasterRecovery> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             Page<ArmDisasterRecovery> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<ArmDisasterRecovery>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             async Task<Page<ArmDisasterRecovery>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecoveryCollection.GetAll");
                 scope.Start();
                 try
                 {

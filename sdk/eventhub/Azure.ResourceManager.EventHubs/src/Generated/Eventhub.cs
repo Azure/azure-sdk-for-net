@@ -184,18 +184,18 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a list of AuthorizationRuleEventHubs in the EventHub. </summary>
-        /// <returns> An object representing collection of AuthorizationRuleEventHubs and their operations over a EventHub. </returns>
-        public AuthorizationRuleEventHubContainer GetAuthorizationRuleEventHubs()
+        /// <summary> Gets a list of EventHubAuthorizationRules in the EventHub. </summary>
+        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHub. </returns>
+        public EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
         {
-            return new AuthorizationRuleEventHubContainer(this);
+            return new EventHubAuthorizationRuleCollection(this);
         }
 
         /// <summary> Gets a list of ConsumerGroups in the EventHub. </summary>
         /// <returns> An object representing collection of ConsumerGroups and their operations over a EventHub. </returns>
-        public ConsumerGroupContainer GetConsumerGroups()
+        public ConsumerGroupCollection GetConsumerGroups()
         {
-            return new ConsumerGroupContainer(this);
+            return new ConsumerGroupCollection(this);
         }
     }
 }

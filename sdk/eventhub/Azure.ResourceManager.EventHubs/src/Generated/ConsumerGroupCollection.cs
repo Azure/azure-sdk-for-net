@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.EventHubs.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of ConsumerGroup and their operations over a EventHub. </summary>
-    public partial class ConsumerGroupContainer : ArmContainer
+    public partial class ConsumerGroupCollection : ArmCollection, IEnumerable<ConsumerGroup>, IAsyncEnumerable<ConsumerGroup>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ConsumerGroupsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ConsumerGroupContainer"/> class for mocking. </summary>
-        protected ConsumerGroupContainer()
+        /// <summary> Initializes a new instance of the <see cref="ConsumerGroupCollection"/> class for mocking. </summary>
+        protected ConsumerGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupContainer class. </summary>
+        /// <summary> Initializes a new instance of ConsumerGroupCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ConsumerGroupContainer(ArmResource parent) : base(parent)
+        internal ConsumerGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ConsumerGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<ConsumerGroup> IEnumerable<ConsumerGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ConsumerGroup> IAsyncEnumerable<ConsumerGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => EventHub.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates or updates an Event Hubs consumer group as a nested resource within a Namespace. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<ConsumerGroup> Get(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<ConsumerGroup>> GetAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<ConsumerGroup> GetIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<ConsumerGroup>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -271,7 +288,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<ConsumerGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -286,7 +303,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             Page<ConsumerGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -311,7 +328,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<ConsumerGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -326,7 +343,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             async Task<Page<ConsumerGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetAll");
                 scope.Start();
                 try
                 {

@@ -13,22 +13,22 @@ namespace Azure.ResourceManager.EventHubs
     public static partial class ResourceGroupExtensions
     {
         #region EventHubCluster
-        /// <summary> Gets an object representing a EventHubClusterContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a EventHubClusterCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="EventHubClusterContainer" /> object. </returns>
-        public static EventHubClusterContainer GetEventHubClusters(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="EventHubClusterCollection" /> object. </returns>
+        public static EventHubClusterCollection GetEventHubClusters(this ResourceGroup resourceGroup)
         {
-            return new EventHubClusterContainer(resourceGroup);
+            return new EventHubClusterCollection(resourceGroup);
         }
         #endregion
 
         #region EventHubNamespace
-        /// <summary> Gets an object representing a EventHubNamespaceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a EventHubNamespaceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="EventHubNamespaceContainer" /> object. </returns>
-        public static EventHubNamespaceContainer GetEventHubNamespaces(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="EventHubNamespaceCollection" /> object. </returns>
+        public static EventHubNamespaceCollection GetEventHubNamespaces(this ResourceGroup resourceGroup)
         {
-            return new EventHubNamespaceContainer(resourceGroup);
+            return new EventHubNamespaceCollection(resourceGroup);
         }
         #endregion
     }

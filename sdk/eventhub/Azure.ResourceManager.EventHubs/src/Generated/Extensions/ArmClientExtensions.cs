@@ -67,36 +67,36 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region AuthorizationRuleNamespace
-        /// <summary> Gets an object representing a AuthorizationRuleNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRuleNamespace" /> object. </returns>
-        public static AuthorizationRuleNamespace GetAuthorizationRuleNamespace(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
+        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AuthorizationRuleNamespace(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region AuthorizationRuleDisasterRecoveryConfig
-        /// <summary> Gets an object representing a AuthorizationRuleDisasterRecoveryConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryConfigAuthorizationRule
+        /// <summary> Gets an object representing a DisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRuleDisasterRecoveryConfig" /> object. </returns>
-        public static AuthorizationRuleDisasterRecoveryConfig GetAuthorizationRuleDisasterRecoveryConfig(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigAuthorizationRule" /> object. </returns>
+        public static DisasterRecoveryConfigAuthorizationRule GetDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AuthorizationRuleDisasterRecoveryConfig(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region AuthorizationRuleEventHub
-        /// <summary> Gets an object representing a AuthorizationRuleEventHub along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubAuthorizationRule
+        /// <summary> Gets an object representing a EventHubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRuleEventHub" /> object. </returns>
-        public static AuthorizationRuleEventHub GetAuthorizationRuleEventHub(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
+        public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new AuthorizationRuleEventHub(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new EventHubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
