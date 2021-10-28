@@ -1,5 +1,9 @@
 # Release History
 
+## 5.1.1 (2021-10-27)
+### Breaking changes
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior
+
 ## 5.1.0 (2021-07-07)
 ### New features
 - Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
