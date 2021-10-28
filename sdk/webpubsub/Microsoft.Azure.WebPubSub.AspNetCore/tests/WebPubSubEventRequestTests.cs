@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         {
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod);
 
-            var result = context.Request.IsValidationRequest(out var requestHosts);
+            var result = context.Request.IsPreflightRequest(out var requestHosts);
 
             Assert.AreEqual(valid, result);
 
@@ -253,6 +253,22 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 Assert.NotNull(requestHosts);
                 Assert.AreEqual(TestUri.Host, requestHosts[0]);
             }
+        }
+
+        [TestCase("my-host.com", true)]
+        [TestCase("my-host1.com", false)]
+        [TestCase("localhost", false)]
+        [TestCase("http://localhost", false)]
+        public void TestAbuseProtectionCompare(string requestHost, bool expected)
+        {
+            var options = new WebPubSubValidationOptions($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+
+            var result = false;
+            if (options.ContainsHost(requestHost))
+            {
+                result = true;
+            }
+            Assert.AreEqual(expected, result);
         }
 
         private static HttpContext PrepareHttpContext(

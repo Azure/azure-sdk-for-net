@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
 
             // validation request.
-            if (request.IsValidationRequest(out var requestHosts))
+            if (request.IsPreflightRequest(out var requestHosts))
             {
                 if (options == null || !options.ContainsHost())
                 {
@@ -105,12 +105,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
         }
 
-        internal static bool IsValidationRequest(this HttpRequest request, out List<string> requestHosts)
+        internal static bool IsPreflightRequest(this HttpRequest request, out List<string> requestHosts)
         {
             if (HttpMethods.IsOptions(request.Method))
             {
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
-                if (requestOrigin.Any())
+                if (requestOrigin.Count > 0)
                 {
                     requestHosts = requestOrigin.ToList();
                     return true;
@@ -128,6 +128,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 return true;
             }
 
+            // TODO: considering add cache to improve.
             if (options.TryGetKey(connectionContext.Origin, out var accessKey))
             {
                 var signatures = connectionContext.Signature.ToHeaderList();

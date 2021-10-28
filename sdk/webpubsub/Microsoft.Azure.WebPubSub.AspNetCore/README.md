@@ -1,4 +1,4 @@
-# Azure Web PubSub service subscriber client library for .NET
+# Azure Web PubSub service middleware client library for .NET
 
 [Azure Web PubSub Service](https://aka.ms/awps/doc) is a service that enables you to build real-time messaging web applications using WebSockets and the publish-subscribe pattern. Any platform supporting WebSocket APIs can connect to the service easily, e.g. web pages, mobile applications, edge devices, etc. The service manages the WebSocket connections for you and allows up to 100K **concurrent** connections. It provides powerful APIs for you to manage these clients and deliver real-time messages.
 
@@ -10,8 +10,8 @@ This library can be used to do the following actions. Details about the terms us
 - Add validation options for upstream request
 - API to add user defined functionality to handle different upstream events
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/) |
-[Package](https://www.nuget.org/packages/) |
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/src) |
+[Package](https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore) |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples][samples_ref]
@@ -37,7 +37,7 @@ In order to interact with the service, you'll need to create an instance of the 
 
 ### Create a `WebPubSubServiceClient`
 
-```C#
+```C# Snippet:WebPubSubAuthenticate
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 ```
 
@@ -49,7 +49,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ### Add Web PubSub service with options
 
-```C#
+```C# Snippet:WebPubSubDependencyInjection
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddWebPubSub(o =>
@@ -63,19 +63,19 @@ public void ConfigureServices(IServiceCollection services)
 
 The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
 
-```C#
+```C# Snippet:WebPubSubMapHub
 public void Configure(IApplicationBuilder app)
 {
     app.UseEndpoints(endpoint =>
     {
-        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhander");
     });
 }
 ```
 
 ### Handle Upstream event
 
-```C#
+```C# Snippet:WebPubSubConnectMethods
 public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
 {
     var response = new ConnectEventResponse
@@ -113,4 +113,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/
+[samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/

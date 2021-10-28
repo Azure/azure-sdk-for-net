@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
@@ -14,12 +15,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         public WebPubSubMiddleware(
             RequestDelegate next,
-            WebPubSubOptions options,
+            IOptions<WebPubSubOptions> options,
             ServiceRequestHandlerAdapter handler)
         {
             _next = next;
             _handler = handler;
-            _options = options;
+            _options = options.Value;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             }
 
             // Handle Abuse Protection
-            if (context.Request.IsValidationRequest(out var requestHosts))
+            if (context.Request.IsPreflightRequest(out var requestHosts))
             {
                 var isValid = false;
                 if (_options == null || !_options.ValidationOptions.ContainsHost())

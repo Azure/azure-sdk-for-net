@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -20,10 +21,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         // <hubName, HubImpl>
         private readonly Dictionary<string, WebPubSubHub> _hubRegistry = new(StringComparer.OrdinalIgnoreCase);
 
-        public ServiceRequestHandlerAdapter(IServiceProvider provider, WebPubSubOptions options)
+        public ServiceRequestHandlerAdapter(IServiceProvider provider, IOptions<WebPubSubOptions> options)
         {
             _provider = provider;
-            _options = options;
+            _options = options.Value;
         }
 
         // for tests.
@@ -54,21 +55,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             if (context == null)
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync("HttpContext is null").ConfigureAwait(false);
-                return;
+                throw new ArgumentNullException(nameof(context));
             }
 
             // Should check in middleware to skip not match calls.
-            // And keep here for internal reference lib robustness amd return as 400BadRequest.
+            // And keep here for internal reference lib robustness and return as 400BadRequest.
             #region WebPubSubRequest Check
             // Not Web PubSub request.
             if (!context.Request.Headers.ContainsKey(Constants.Headers.CloudEvents.WebPubSubVersion)
                 || !context.Request.Headers.TryGetValue(Constants.Headers.CloudEvents.Hub, out var hubName))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync("Not Web PubSub request.").ConfigureAwait(false);
-                return;
+                throw new ArgumentException("Invalid Web PubSub request.");
             }
 
             // Hub not registered
@@ -83,7 +80,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
             try
             {
-                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions);
+                var serviceRequest = await request.ReadWebPubSubEventAsync(_options.ValidationOptions, context.RequestAborted);
 
                 switch (serviceRequest)
                 {
@@ -92,7 +89,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         {
                             if (preflightRequest.IsValid)
                             {
-                                context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, "*");
+                                context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                                 return;
                             }
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;

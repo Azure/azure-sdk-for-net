@@ -30,11 +30,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            var options = new WebPubSubOptions();
-            configure.Invoke(options);
+            services.Configure(configure);
 
-            services.AddWebPubSub()
-                .TryAddSingleton(options);
+            services.AddWebPubSub();
 
             return services;
         }
@@ -50,8 +48,6 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
-            services.TryAddSingleton<WebPubSubOptions>();
 
             return services.AddSingleton<ServiceRequestHandlerAdapter>()
                 .AddSingleton<WebPubSubMarkerService>();
