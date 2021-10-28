@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             var message = new ServiceBusMessage();
-            await message.EncodeMessageBodyAsync(encoder, employee);
+            await encoder.EncodeMessageBodyAsync(message, employee);
 
             string[] contentType = message.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotEmpty(contentType[1]);
 
             ServiceBusReceivedMessage received = ServiceBusModelFactory.ServiceBusReceivedMessage(body: message.Body, contentType: message.ContentType);
-            Employee deserialized = (Employee)await received.DecodeMessageBodyAsync(encoder, typeof(Employee));
+            Employee deserialized = (Employee)await encoder.DecodeMessageBodyAsync(received, typeof(Employee));
 
             // decoding should not alter the message
             contentType = received.ContentType.Split('+');
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             var message = new EventData();
-            await message.EncodeMessageBodyAsync(encoder, employee);
+            await encoder.EncodeMessageBodyAsync(message, employee);
 
             string[] contentType = message.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
