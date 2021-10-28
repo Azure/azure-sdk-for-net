@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets the management group container for this tenant.
+        /// Gets the management group collection for this tenant.
         /// </summary>
-        /// <returns> A container of the management groups. </returns>
-        public virtual ManagementGroupContainer GetManagementGroups()
+        /// <returns> A collection of the management groups. </returns>
+        public virtual ManagementGroupCollection GetManagementGroups()
         {
-            return new ManagementGroupContainer(this);
+            return new ManagementGroupCollection(this);
         }
 
         /// <summary>
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets the subscription container for this tenant.
+        /// Gets the subscription collection for this tenant.
         /// </summary>
-        /// <returns> A container of the subscriptions. </returns>
-        public virtual SubscriptionContainer GetSubscriptions()
+        /// <returns> A collection of the subscriptions. </returns>
+        public virtual SubscriptionCollection GetSubscriptions()
         {
-            return new SubscriptionContainer(this);
+            return new SubscriptionCollection(this);
         }
     }
 }

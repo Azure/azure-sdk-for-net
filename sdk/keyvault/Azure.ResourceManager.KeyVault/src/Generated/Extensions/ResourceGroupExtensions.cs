@@ -13,22 +13,22 @@ namespace Azure.ResourceManager.KeyVault
     public static partial class ResourceGroupExtensions
     {
         #region Vault
-        /// <summary> Gets an object representing a VaultContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VaultCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VaultContainer" /> object. </returns>
-        public static VaultContainer GetVaults(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VaultCollection" /> object. </returns>
+        public static VaultCollection GetVaults(this ResourceGroup resourceGroup)
         {
-            return new VaultContainer(resourceGroup);
+            return new VaultCollection(resourceGroup);
         }
         #endregion
 
         #region ManagedHsm
-        /// <summary> Gets an object representing a ManagedHsmContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ManagedHsmCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ManagedHsmContainer" /> object. </returns>
-        public static ManagedHsmContainer GetManagedHsms(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ManagedHsmCollection" /> object. </returns>
+        public static ManagedHsmCollection GetManagedHsms(this ResourceGroup resourceGroup)
         {
-            return new ManagedHsmContainer(resourceGroup);
+            return new ManagedHsmCollection(resourceGroup);
         }
         #endregion
     }

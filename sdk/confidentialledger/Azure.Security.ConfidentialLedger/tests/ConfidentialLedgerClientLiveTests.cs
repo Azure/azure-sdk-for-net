@@ -64,7 +64,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await PostLedgerEntry();
 
-            await foreach (var entry in Client.GetLedgerEntriesAsync(new RequestOptions()))
+            await foreach (var entry in Client.GetLedgerEntriesAsync())
             {
                 Assert.NotNull(entry);
             }
@@ -77,7 +77,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId, new RequestOptions());
+            Response response = await Client.GetLedgerEntryAsync(transactionId);
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -160,7 +160,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await PostLedgerEntry();
 
-            var result = await Client.GetCurrentLedgerEntryAsync(new());
+            var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -211,7 +211,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
             string stringResult = "Loading";
-            var result = Client.GetLedgerEntriesAsync(new RequestOptions());
+            var result = Client.GetLedgerEntriesAsync();
             bool first = true;
             Response response = null;
 
@@ -232,7 +232,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             while (stringResult.Contains("Loading"))
             {
                 first = true;
-                result = Client.GetLedgerEntriesAsync(new RequestOptions());
+                result = Client.GetLedgerEntriesAsync();
                 await foreach (var page in result.AsPages())
                 {
                     if (first)
