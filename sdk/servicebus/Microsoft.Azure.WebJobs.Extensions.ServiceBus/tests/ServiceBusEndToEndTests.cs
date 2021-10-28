@@ -560,7 +560,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }));
         }
 
-        private static Action<IHostBuilder> BuildHostWithCrossEntityTransactionsEnabled<T>()
+        private static Action<IHostBuilder> EnableCrossEntityTransactions =>
         {
             return builder =>
                 builder.ConfigureWebJobs(b =>
