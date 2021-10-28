@@ -204,28 +204,6 @@ namespace Azure.Core
 
             return state.RawResponse;
         }
-
-        private static TimeSpan GetServerDelay(Response response)
-        {
-            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string retryAfterValue)
-                || response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
-                {
-                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
-                }
-            }
-
-            if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
-                {
-                    return TimeSpan.FromSeconds(serverDelayInSeconds);
-                }
-            }
-
-            return TimeSpan.Zero;
-        }
     }
 
     /// <summary>

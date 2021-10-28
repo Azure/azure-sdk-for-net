@@ -254,7 +254,7 @@ namespace Azure.Core
             return state.RawResponse;
         }
 
-        private static TimeSpan GetServerDelay(Response response)
+        protected static TimeSpan GetServerDelay(Response response)
         {
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string retryAfterValue)
                 || response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
