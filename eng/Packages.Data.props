@@ -91,6 +91,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.8.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.5" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.6" />
@@ -120,11 +121,6 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-
-  <!-- Packages intended for Management libraries only -->
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-alpha.20211025.2" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
