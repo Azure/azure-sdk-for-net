@@ -14,6 +14,8 @@ namespace IotCentral.Tests.ScenarioTests
 {
     public class IotCentralTestBase
     {
+        protected static string DefaultIotcSku = AppSku.ST2.ToString();
+
         protected ResourceManagementClient resourcesClient;
         protected IotCentralClient iotCentralClient;
 
@@ -64,7 +66,7 @@ namespace IotCentral.Tests.ScenarioTests
                 Location = location,
                 Sku = new AppSkuInfo()
                 {
-                    Name = sku ?? "ST1",
+                    Name = sku ?? DefaultIotcSku,
                 },
                 Subdomain = appSubdomain,
                 DisplayName = appResourceName,

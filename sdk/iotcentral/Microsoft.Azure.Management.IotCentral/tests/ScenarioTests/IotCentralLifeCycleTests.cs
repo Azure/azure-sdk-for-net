@@ -35,7 +35,7 @@ namespace IotCentral.Tests.ScenarioTests
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 Assert.NotNull(app);
-                Assert.Equal(AppSku.ST1, app.Sku.Name);
+                Assert.Equal(DefaultIotcSku, app.Sku.Name);
                 Assert.Contains(IotCentralTestUtilities.DefaultResourceName, app.Name);
                 Assert.Contains(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
                 Assert.Equal("eastus", app.Location);
@@ -91,7 +91,7 @@ namespace IotCentral.Tests.ScenarioTests
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 Assert.NotNull(app);
-                Assert.Equal(AppSku.ST1, app.Sku.Name);
+                Assert.Equal(AppSku.ST2, app.Sku.Name);
                 Assert.Contains(IotCentralTestUtilities.DefaultResourceName, app.Name);
                 Assert.Contains(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
                 Assert.Equal("eastus", app.Location);
@@ -157,7 +157,7 @@ namespace IotCentral.Tests.ScenarioTests
                 var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, updateResourceName, updateSubDomain);
 
                 // Validate the default sku
-                Assert.Equal(app.Sku.Name, AppSku.ST1);
+                Assert.Equal(DefaultIotcSku, app.Sku.Name);
 
                 // Validate resourceName and subdomain are taken
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
