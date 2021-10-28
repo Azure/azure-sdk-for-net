@@ -49,8 +49,9 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        /// <inheritdoc cref="EventBody"/>
+        ///   <inheritdoc cref="EventBody"/>
         /// </summary>
+        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override BinaryData Data
         {

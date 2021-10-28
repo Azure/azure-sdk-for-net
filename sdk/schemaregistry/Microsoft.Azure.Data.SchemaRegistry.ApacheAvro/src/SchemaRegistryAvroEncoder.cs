@@ -232,96 +232,98 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         /// <summary>
-        ///
+        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="value"></param>
-        /// <param name="inputType"></param>
-        /// <param name="cancellationToken"></param>
-        public void EncodeMessageBody(
+        /// <param name="message">The message to store the data into.</param>
+        /// <param name="data">The data to serialize to Avro and encode into the message.</param>
+        /// <param name="inputType">The type to use to serialize the data.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public void EncodeMessageData(
             MessageWithMetadata message,
-            object value,
+            object data,
             Type inputType = default,
             CancellationToken cancellationToken = default)
         {
-            (string schemaId, BinaryData data) = Encode(value, inputType ?? value?.GetType(), cancellationToken);
+            (string schemaId, BinaryData bd) = Encode(data, inputType ?? data?.GetType(), cancellationToken);
             message.ContentType = $"{AvroMimeType}+{schemaId}";
-            message.Data = data;
+            message.Data = bd;
         }
 
         /// <summary>
-        /// Encodes the value into Avro and stores it in the 
+        /// Encodes the message data into Avro and stores it in <see cref="MessageWithMetadata.Data"/>. The <see cref="MessageWithMetadata.ContentType"/>
+        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to encode the data.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="value"></param>
-        /// <param name="inputType"></param>
-        /// <param name="cancellationToken"></param>
-        public async Task EncodeMessageBodyAsync(
+        /// <param name="message">The message to store the data into.</param>
+        /// <param name="data">The data to serialize to Avro and encode into the message.</param>
+        /// <param name="inputType">The type to use to serialize the data.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public async Task EncodeMessageDataAsync(
             MessageWithMetadata message,
-            object value,
+            object data,
             Type inputType = default,
             CancellationToken cancellationToken = default)
         {
-            (string schemaId, BinaryData data) = await EncodeAsync(value, inputType ?? value?.GetType(), cancellationToken).ConfigureAwait(false);
+            (string schemaId, BinaryData bd) = await EncodeAsync(data, inputType ?? data?.GetType(), cancellationToken).ConfigureAwait(false);
             message.ContentType = $"{AvroMimeType}+{schemaId}";
-            message.Data = data;
+            message.Data = bd;
         }
 
         /// <summary>
-        ///
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="returnType"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public object DecodeMessageBody(
+        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="returnType">The type to deserialize to.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The deserialized data.</returns>
+        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
+        public object DecodeMessageData(
             MessageWithMetadata message,
             Type returnType,
             CancellationToken cancellationToken = default)
             => DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        ///
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="MessageWithMetadata.ContentType"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="returnType"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public async ValueTask<object> DecodeMessageBodyAsync(
+        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="returnType">The type to deserialize to.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The deserialized data.</returns>
+        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
+        public async ValueTask<object> DecodeMessageDataAsync(
             MessageWithMetadata message,
             Type returnType,
             CancellationToken cancellationToken = default)
             => await DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        ///
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="ReadOnlyMessageWithMetadata.ContentType"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="returnType"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public object DecodeMessageBody(
+        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="returnType">The type to deserialize to.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The deserialized data.</returns>
+        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
+        public object DecodeMessageData(
             ReadOnlyMessageWithMetadata message,
             Type returnType,
             CancellationToken cancellationToken = default)
             => DecodeMessageBodyInternalAsync(message.Data, message.ContentType, returnType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        ///
+        /// Decodes the message data into the specified type using the schema information populated in <see cref="ReadOnlyMessageWithMetadata.ContentType"/>.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="returnType"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="FormatException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public async ValueTask<object> DecodeMessageBodyAsync(
+        /// <param name="message">The message containing the data to decode.</param>
+        /// <param name="returnType">The type to deserialize to.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The deserialized data.</returns>
+        /// <exception cref="FormatException">Thrown if the content type is not in the expected format.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if an attempt is made to decode non-Avro data.</exception>
+        public async ValueTask<object> DecodeMessageDataAsync(
             ReadOnlyMessageWithMetadata message,
             Type returnType,
             CancellationToken cancellationToken = default)
