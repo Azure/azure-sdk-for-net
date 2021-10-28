@@ -30,13 +30,13 @@ namespace Microsoft.Azure.SignalR.Serverless.Protocols
                 var type = token.Value<int>();
                 switch (type)
                 {
-                    case SignalRServerlessContants.InvocationMessageType:
+                    case MessageTypes.InvocationMessageType:
                         message = SafeParseMessage<InvocationMessage>(jObject);
                         break;
-                    case SignalRServerlessContants.OpenConnectionMessageType:
+                    case MessageTypes.OpenConnectionMessageType:
                         message = SafeParseMessage<OpenConnectionMessage>(jObject);
                         break;
-                    case SignalRServerlessContants.CloseConnectionMessageType:
+                    case MessageTypes.CloseConnectionMessageType:
                         message = SafeParseMessage<CloseConnectionMessage>(jObject);
                         break;
                     default:
