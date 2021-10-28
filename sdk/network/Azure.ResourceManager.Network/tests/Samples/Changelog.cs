@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 {
     public class Changelog
     {
-        private ResourceGroup resourceGroup;
-
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task NewCode()
