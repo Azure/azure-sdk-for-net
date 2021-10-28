@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             userProps.Add(new KeyValuePair<string, object>("prop2", "value2"));
             var message = CreateMessageWithSystemProperties(applicationProperties: userProps);
 
-            var input = ServiceBusTriggerInput.CreateSingle(message);
+            var input = ServiceBusTriggerInput.CreateSingle(message, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 CreateMessageWithSystemProperties("Event 3"),
             };
 
-             var input = ServiceBusTriggerInput.CreateBatch(messages);
+             var input = ServiceBusTriggerInput.CreateBatch(messages, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 

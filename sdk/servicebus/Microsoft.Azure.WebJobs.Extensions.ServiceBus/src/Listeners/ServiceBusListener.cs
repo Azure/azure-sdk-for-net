@@ -245,8 +245,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.MessageActions = actions;
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
@@ -266,8 +265,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.MessageActions = actions;
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
@@ -329,15 +327,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     if (messages.Count > 0)
                     {
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
-                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
-                        if (_isSessionsEnabled)
-                        {
-                            input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver);
-                        }
-                        else
-                        {
-                            input.MessageActions = new ServiceBusMessageActions(receiver);
-                        }
+                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
+                            messagesArray,
+                            _isSessionsEnabled ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver) : new ServiceBusMessageActions(receiver),
+                            _client.Value);
+
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
 
                         // Complete batch of messages only if the execution was successful

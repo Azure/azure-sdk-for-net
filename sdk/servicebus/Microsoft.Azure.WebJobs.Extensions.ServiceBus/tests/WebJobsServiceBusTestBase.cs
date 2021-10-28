@@ -259,6 +259,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
             await sender.SendMessageAsync(messageObj);
         }
+
+        protected static Action<IHostBuilder> EnableCrossEntityTransactions =>
+            builder => builder.ConfigureWebJobs(b =>
+            b.AddServiceBus(sbOptions =>
+            {
+                sbOptions.EnableCrossEntityTransactions = true;
+            }));
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

@@ -239,6 +239,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestBatch_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransactionBatch>(EnableCrossEntityTransactions);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
@@ -556,13 +569,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.AutoCompleteMessages = false;
-                    }));
-
-        private static Action<IHostBuilder> EnableCrossEntityTransactions =>
-            builder => builder.ConfigureWebJobs(b =>
-                    b.AddServiceBus(sbOptions =>
-                    {
-                        sbOptions.EnableCrossEntityTransactions = true;
                     }));
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
@@ -1239,20 +1245,50 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)]
                 ServiceBusReceivedMessage message,
                 ServiceBusMessageActions messageActions,
-                [ServiceBus(SecondQueueNameKey)] ServiceBusSender sender)
+                ServiceBusClient client)
             {
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await messageActions.CompleteMessageAsync(message);
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage());
                     ts.Complete();
                 }
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
                 // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
                 // var received = await receiver1.ReceiveMessageAsync();
                 // Assert.IsNull(received);
-                ServiceBusReceiver receiver2 = client.CreateReceiver(_secondQueueScope.QueueName);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransactionBatch
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusMessageActions messageActions,
+                ServiceBusClient client)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(messages.First());
+                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                // need to use a separate client here to do the assertions
+                var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
                 var received = await receiver2.ReceiveMessageAsync();
                 Assert.IsNotNull(received);
                 _waitHandle1.Set();
