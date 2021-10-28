@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        private const int BindingContractCount = 19;
+        private const int BindingContractCount = 20;
 
         [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
@@ -167,6 +167,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["MessageSession"]);
             Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageActions"]);
             Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["SessionActions"]);
+            Assert.AreEqual(typeof(ServiceBusClient), bindingDataContract["Client"]);
         }
 
         private static ServiceBusReceivedMessage CreateMessageWithSystemProperties(string body = default, IDictionary<string, object> applicationProperties = default)
