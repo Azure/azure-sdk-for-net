@@ -34,10 +34,6 @@ namespace Azure.Core
     internal class OperationInternal<T> : OperationInternal
 #pragma warning restore SA1649
     {
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
-
         private readonly IOperation<T> _operation;
 
         private readonly ClientDiagnostics _diagnostics;
