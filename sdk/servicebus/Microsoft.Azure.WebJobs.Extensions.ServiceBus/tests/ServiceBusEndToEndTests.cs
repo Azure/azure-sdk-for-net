@@ -24,6 +24,7 @@ using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Transactions;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -216,6 +217,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
             var host = BuildHost<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
                 BuildHostWithAutoCompleteDisabled<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_CrossEntityTransaction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCrossEntityTransaction>(BuildHostWithCrossEntityTransactionsEnabled<TestCrossEntityTransaction>());
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -543,6 +557,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.AutoCompleteMessages = false;
+                    }));
+        }
+
+        private static Action<IHostBuilder> BuildHostWithCrossEntityTransactionsEnabled<T>()
+        {
+            return builder =>
+                builder.ConfigureWebJobs(b =>
+                    b.AddServiceBus(sbOptions =>
+                    {
+                        sbOptions.EnableCrossEntityTransactions = true;
                     }));
         }
 
@@ -1210,6 +1234,32 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestCrossEntityTransaction
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                [ServiceBus(SecondQueueNameKey)] ServiceBusSender sender)
+            {
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await messageActions.CompleteMessageAsync(message);
+                    await sender.SendMessageAsync(new ServiceBusMessage());
+                    ts.Complete();
+                }
+                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                // This can be uncommented once https://github.com/Azure/azure-sdk-for-net/issues/24989 is fixed
+                // ServiceBusReceiver receiver1 = client.CreateReceiver(_firstQueueScope.QueueName);
+                // var received = await receiver1.ReceiveMessageAsync();
+                // Assert.IsNull(received);
+                ServiceBusReceiver receiver2 = client.CreateReceiver(_secondQueueScope.QueueName);
+                var received = await receiver2.ReceiveMessageAsync();
+                Assert.IsNotNull(received);
                 _waitHandle1.Set();
             }
         }

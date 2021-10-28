@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         internal static QueueScope _firstQueueScope;
         protected static QueueScope _secondaryNamespaceQueueScope;
-        private QueueScope _secondQueueScope;
+        protected static QueueScope _secondQueueScope;
         private QueueScope _thirdQueueScope;
         protected static TopicScope _topicScope;
 
