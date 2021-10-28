@@ -338,7 +338,7 @@ try {
     $serviceName = if (Split-Path $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
-        $ServiceDirectory
+        $ServiceDirectory.Trim('/')
     }
 
     $ResourceGroupName = if ($ResourceGroupName) {

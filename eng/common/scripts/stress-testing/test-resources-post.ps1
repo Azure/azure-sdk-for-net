@@ -1,5 +1,9 @@
 param (
-    [hashtable] $DeploymentOutputs
+    [Parameter()]
+    [hashtable] $DeploymentOutputs,
+
+    [Parameter(ValueFromRemainingArguments = $true)]
+    $RemainingArguments
 )
 
 $outputFile = "$env:ENV_FILE"
