@@ -56,7 +56,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetConstitutionAsync(RequestOptions options)
+        public virtual async Task<Response> GetConstitutionAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
@@ -94,7 +94,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetConstitution(RequestOptions options)
+        public virtual Response GetConstitution(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
@@ -136,7 +136,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetConsortiumMembersAsync(RequestOptions options)
+        public virtual async Task<Response> GetConsortiumMembersAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
@@ -178,7 +178,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetConsortiumMembers(RequestOptions options)
+        public virtual Response GetConsortiumMembers(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
@@ -216,7 +216,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestOptions options)
+        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
@@ -254,7 +254,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetEnclaveQuotes(RequestOptions options)
+        public virtual Response GetEnclaveQuotes(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
@@ -273,8 +273,8 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -299,7 +299,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, RequestOptions options, string subLedgerId = null)
+        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
@@ -318,8 +318,8 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -344,7 +344,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetLedgerEntry(string transactionId, RequestOptions options, string subLedgerId = null)
+        public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
@@ -396,7 +396,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestOptions options)
+        public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
@@ -448,7 +448,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetReceipt(string transactionId, RequestOptions options)
+        public virtual Response GetReceipt(string transactionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
@@ -488,7 +488,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestOptions options)
+        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
@@ -528,7 +528,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTransactionStatus(string transactionId, RequestOptions options)
+        public virtual Response GetTransactionStatus(string transactionId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
@@ -546,8 +546,8 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -568,7 +568,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCurrentLedgerEntryAsync(RequestOptions options, string subLedgerId = null)
+        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -586,8 +586,8 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -608,7 +608,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCurrentLedgerEntry(RequestOptions options, string subLedgerId = null)
+        public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -716,7 +716,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetUserAsync(string userId, RequestOptions options)
+        public virtual async Task<Response> GetUserAsync(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
@@ -756,7 +756,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetUser(string userId, RequestOptions options)
+        public virtual Response GetUser(string userId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
@@ -868,10 +868,10 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -898,7 +898,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(RequestOptions options, string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null)
+        public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
@@ -917,10 +917,10 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -947,7 +947,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetLedgerEntries(RequestOptions options, string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null)
+        public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");

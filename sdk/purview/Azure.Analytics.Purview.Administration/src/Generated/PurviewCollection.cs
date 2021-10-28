@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionAsync(RequestOptions options)
+        public virtual async Task<Response> GetCollectionAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCollection(RequestOptions options)
+        public virtual Response GetCollection(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollection");
@@ -428,7 +428,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionPathAsync(RequestOptions options)
+        public virtual async Task<Response> GetCollectionPathAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -474,7 +474,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetCollectionPath(RequestOptions options)
+        public virtual Response GetCollectionPath(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewCollection.GetCollectionPath");
@@ -492,8 +492,8 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -527,17 +527,17 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> ListChildCollectionNamesAsync(RequestOptions options, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetChildCollectionNamesAsync(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -546,8 +546,8 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists the child collections names in the collection. </summary>
-        /// <param name="options"> The request options. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -581,17 +581,17 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> ListChildCollectionNames(RequestOptions options, string skipToken = null)
+        public virtual Pageable<BinaryData> GetChildCollectionNames(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.ListChildCollectionNames");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewCollection.GetChildCollectionNames");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateListChildCollectionNamesRequest(skipToken)
-                        : CreateListChildCollectionNamesNextPageRequest(nextLink, skipToken);
+                        ? CreateGetChildCollectionNamesRequest(skipToken)
+                        : CreateGetChildCollectionNamesNextPageRequest(nextLink, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -649,7 +649,7 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesRequest(string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -687,7 +687,7 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
-        internal HttpMessage CreateListChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

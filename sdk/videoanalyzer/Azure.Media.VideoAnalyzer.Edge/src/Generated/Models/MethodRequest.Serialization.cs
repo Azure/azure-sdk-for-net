@@ -31,16 +31,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     case "MethodRequestEmptyBodyBase": return MethodRequestEmptyBodyBase.DeserializeMethodRequestEmptyBodyBase(element);
                     case "PipelineTopologySetRequestBody": return PipelineTopologySetRequestBody.DeserializePipelineTopologySetRequestBody(element);
+                    case "RemoteDeviceAdapterSetRequestBody": return RemoteDeviceAdapterSetRequestBody.DeserializeRemoteDeviceAdapterSetRequestBody(element);
                     case "livePipelineActivate": return LivePipelineActivateRequest.DeserializeLivePipelineActivateRequest(element);
                     case "livePipelineDeactivate": return LivePipelineDeactivateRequest.DeserializeLivePipelineDeactivateRequest(element);
                     case "livePipelineDelete": return LivePipelineDeleteRequest.DeserializeLivePipelineDeleteRequest(element);
                     case "livePipelineGet": return LivePipelineGetRequest.DeserializeLivePipelineGetRequest(element);
                     case "livePipelineList": return LivePipelineListRequest.DeserializeLivePipelineListRequest(element);
                     case "livePipelineSet": return LivePipelineSetRequest.DeserializeLivePipelineSetRequest(element);
+                    case "onvifDeviceDiscover": return OnvifDeviceDiscoverRequest.DeserializeOnvifDeviceDiscoverRequest(element);
+                    case "onvifDeviceGet": return OnvifDeviceGetRequest.DeserializeOnvifDeviceGetRequest(element);
                     case "pipelineTopologyDelete": return PipelineTopologyDeleteRequest.DeserializePipelineTopologyDeleteRequest(element);
                     case "pipelineTopologyGet": return PipelineTopologyGetRequest.DeserializePipelineTopologyGetRequest(element);
                     case "pipelineTopologyList": return PipelineTopologyListRequest.DeserializePipelineTopologyListRequest(element);
                     case "pipelineTopologySet": return PipelineTopologySetRequest.DeserializePipelineTopologySetRequest(element);
+                    case "remoteDeviceAdapterDelete": return RemoteDeviceAdapterDeleteRequest.DeserializeRemoteDeviceAdapterDeleteRequest(element);
+                    case "remoteDeviceAdapterGet": return RemoteDeviceAdapterGetRequest.DeserializeRemoteDeviceAdapterGetRequest(element);
+                    case "remoteDeviceAdapterList": return RemoteDeviceAdapterListRequest.DeserializeRemoteDeviceAdapterListRequest(element);
+                    case "remoteDeviceAdapterSet": return RemoteDeviceAdapterSetRequest.DeserializeRemoteDeviceAdapterSetRequest(element);
                     case "LivePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
                 }
             }

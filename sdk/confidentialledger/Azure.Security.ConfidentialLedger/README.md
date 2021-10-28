@@ -316,7 +316,7 @@ while (!loaded)
 Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
 // This will return the latest entry available in the sub-ledger.
-getResponse = ledgerClient.GetCurrentLedgerEntry(new(),"my sub-ledger");
+getResponse = ledgerClient.GetCurrentLedgerEntry(new(), "my sub-ledger");
 string latestSubLedger = JsonDocument.Parse(getResponse.Content)
     .RootElement
     .GetProperty("contents")

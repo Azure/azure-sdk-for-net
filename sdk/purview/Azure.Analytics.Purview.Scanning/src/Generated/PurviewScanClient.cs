@@ -107,7 +107,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetFilterAsync(RequestOptions options)
+        public virtual async Task<Response> GetFilterAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetFilter(RequestOptions options)
+        public virtual Response GetFilter(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
@@ -648,7 +648,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
@@ -737,7 +737,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions options)
+        public virtual Response GetProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
@@ -934,8 +934,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -979,7 +979,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RunScanAsync(string runId, RequestOptions options, string scanLevel = null)
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
@@ -998,8 +998,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1043,7 +1043,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RunScan(string runId, RequestOptions options, string scanLevel = null)
+        public virtual Response RunScan(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
@@ -1106,7 +1106,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options)
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
@@ -1169,7 +1169,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CancelScan(string runId, RequestOptions options)
+        public virtual Response CancelScan(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
@@ -1244,7 +1244,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTriggerAsync(RequestOptions options)
+        public virtual async Task<Response> GetTriggerAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
@@ -1319,7 +1319,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTrigger(RequestOptions options)
+        public virtual Response GetTrigger(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
@@ -1781,7 +1781,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanClient.GetRuns");
@@ -1870,7 +1870,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetRuns(RequestOptions options)
+        public virtual Pageable<BinaryData> GetRuns(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanClient.GetRuns");

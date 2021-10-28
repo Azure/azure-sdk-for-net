@@ -93,37 +93,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            // #region Snippet:AppendToLedgerNoWaitForCompletion
-
-            PostLedgerEntryOperation postOperationWithWait = ledgerClient.PostLedgerEntry(
-                RequestContent.Create(
-                    new { contents = "Hello world!" }),
-                waitForCompletion: false);
-
-            string waitingTransactionId = postOperationWithWait.Id;
-            Console.WriteLine($"Started transaction with Id: {transactionId}");
-
-            var rawResponse = postOperationWithWait.WaitForCompletionResponse();
-            Console.WriteLine($"Completed Post operations with transaction Id: {transactionId}");
-
-            // #endregion
-
-            // #region Snippet:AppendToLedgerFailure
-
-            try
-            {
-                PostLedgerEntryOperation failingPostOperation = ledgerClient.PostLedgerEntry(
-                    RequestContent.Create(
-                        new { contents = "Hello world!" }),
-                    waitForCompletion: true);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            // #endregion
-
             #region Snippet:GetStatus
 
             Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
@@ -340,7 +309,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
             // This will return the latest entry available in the sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry(new(),"my sub-ledger");
+            getResponse = ledgerClient.GetCurrentLedgerEntry(new(), "my sub-ledger");
             string latestSubLedger = JsonDocument.Parse(getResponse.Content)
                 .RootElement
                 .GetProperty("contents")

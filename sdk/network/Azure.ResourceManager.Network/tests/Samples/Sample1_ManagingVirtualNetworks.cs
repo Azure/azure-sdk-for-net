@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_Networks_CreateAVirtualNetwork
-            VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
             string vnetName = "myVnet";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
             };
 
-            VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
+            VirtualNetwork vnet = await virtualNetworkCollection.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
             #endregion
         }
 
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_Networks_ListAllVirtualNetworks
-            VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-            AsyncPageable<VirtualNetwork> response = virtualNetworkContainer.GetAllAsync();
+            AsyncPageable<VirtualNetwork> response = virtualNetworkCollection.GetAllAsync();
             await foreach (VirtualNetwork virtualNetwork in response)
             {
                 Console.WriteLine(virtualNetwork.Data.Name);
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_Networks_GetAVirtualNetwork
-            VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-            VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetAsync("myVnet");
+            VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
             Console.WriteLine(virtualNetwork.Data.Name);
             #endregion
         }
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public async Task GetIfExists()
         {
             #region Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-            VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-            VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetIfExistsAsync("foo");
+            VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
             if (virtualNetwork != null)
             {
                 Console.WriteLine(virtualNetwork.Data.Name);
             }
 
-            if (await virtualNetworkContainer.CheckIfExistsAsync("bar"))
+            if (await virtualNetworkCollection.CheckIfExistsAsync("bar"))
             {
                 Console.WriteLine("Virtual network 'bar' exists.");
             }
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public async Task DeleteVirtualNetwork()
         {
             #region Snippet:Managing_Networks_DeleteAVirtualNetwork
-            VirtualNetworkContainer virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
 
-            VirtualNetwork virtualNetwork = await virtualNetworkContainer.GetAsync("myVnet");
+            VirtualNetwork virtualNetwork = await virtualNetworkCollection.GetAsync("myVnet");
             await virtualNetwork.DeleteAsync();
             #endregion
         }
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupContainer
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            #region Snippet:Readme_GetResourceGroupCollection
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;
