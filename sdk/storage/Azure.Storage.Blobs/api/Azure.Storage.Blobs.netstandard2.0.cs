@@ -1551,6 +1551,11 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithVersion(string versionId) { throw null; }
     }
+    public static partial class BlobClientSpecializedExtensions
+    {
+        public static void RotateClientSideEncryptionKey(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.BlobRequestConditions requestConditions = null, Azure.Core.Cryptography.IKeyEncryptionKey newKeyOverride = null, Azure.Core.Cryptography.IKeyEncryptionKeyResolver oldKeyResolverOverride = null, string keywrapAlgorithmOverride = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task RotateClientSideEncryptionKeyAsync(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.BlobRequestConditions requestConditions = null, Azure.Core.Cryptography.IKeyEncryptionKey newKeyOverride = null, Azure.Core.Cryptography.IKeyEncryptionKeyResolver oldKeyResolverOverride = null, string keywrapAlgorithmOverride = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class BlobLeaseClient
     {
         public static readonly System.TimeSpan InfiniteLeaseDuration;
