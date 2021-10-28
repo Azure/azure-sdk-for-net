@@ -1547,10 +1547,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
             }
-            if (copyFileSmbInfo?.SetArchiveAttribute != null)
-            {
-                request.Headers.Add("x-ms-file-copy-set-archive", copyFileSmbInfo.SetArchiveAttribute.Value);
-            }
             if (filePermission != null)
             {
                 request.Headers.Add("x-ms-file-permission", filePermission);

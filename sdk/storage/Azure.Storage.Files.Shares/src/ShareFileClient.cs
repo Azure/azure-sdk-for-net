@@ -5961,7 +5961,6 @@ namespace Azure.Storage.Files.Shares
                         FileAttributes = options?.FileAttributes?.ToAttributesString(),
                         FileCreationTime = options?.FileCreatedOn.ToFileDateTimeString(),
                         FileLastWriteTime = options?.FileLastWrittenOn.ToFileDateTimeString(),
-                        SetArchiveAttribute = options?.SetArchiveAttribute,
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
 

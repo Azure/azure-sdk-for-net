@@ -54,12 +54,6 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset? FileLastWrittenOn { get; set; }
 
         /// <summary>
-        /// Optional.  A  boolean value that specifies whether the Archive attribute should be set,
-        /// irrespective of the x-ms-file-attributes header value.
-        /// </summary>
-        public bool SetArchiveAttribute { get; set; }
-
-        /// <summary>
         /// Optional file permission to set on the destination.
         /// </summary>
         public string FilePermission { get; set; }
