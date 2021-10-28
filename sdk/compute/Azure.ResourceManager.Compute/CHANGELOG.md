@@ -2,13 +2,9 @@
 
 ## 1.0.0-beta.3 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -30,7 +26,7 @@ The package name has been changed from `Microsoft.Azure.Management.Compute` to `
 Example: Create a VM:
 
 Before upgrade:
-```csharp
+```C#
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -150,7 +146,7 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:Changelog_New 
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -242,7 +238,7 @@ VirtualMachine vm = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync
 Example: Create a Virtual Machine Extension
 
 Before upgrade:
-```csharp
+```C#
 var vmExtension = new VirtualMachineExtension
             {
                 Location = "westus",
@@ -260,7 +256,7 @@ var vmExtension = new VirtualMachineExtension
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:Changelog_CreateVMExtension
 var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
