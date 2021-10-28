@@ -105,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
@@ -167,7 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions options)
+        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
@@ -291,7 +291,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions options)
+        public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
@@ -314,7 +314,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
         /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
@@ -322,6 +321,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/>, or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -387,7 +387,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, RequestOptions options, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -432,7 +432,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
         /// <param name="granularity"> Granularity of weather data (daily/hourly). </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="startDateTime"> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
@@ -440,6 +439,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/>, or <paramref name="granularity"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -505,7 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, RequestOptions options, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null)
+        public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)

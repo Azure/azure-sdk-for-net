@@ -194,6 +194,37 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> SwapPublicIpAddressesWithHttpMessagesAsync(string location, LoadBalancerVipSwapRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List of inbound NAT rule port mappings.
+        /// </summary>
+        /// <param name='groupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// The name of the load balancer.
+        /// </param>
+        /// <param name='backendPoolName'>
+        /// The name of the load balancer backend address pool.
+        /// </param>
+        /// <param name='parameters'>
+        /// Query inbound NAT rule port mapping request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackendAddressInboundNatRulePortMappings>> ListInboundNatRulePortMappingsWithHttpMessagesAsync(string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes the specified load balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -266,6 +297,37 @@ namespace Microsoft.Azure.Management.Network
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginSwapPublicIpAddressesWithHttpMessagesAsync(string location, LoadBalancerVipSwapRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List of inbound NAT rule port mappings.
+        /// </summary>
+        /// <param name='groupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// The name of the load balancer.
+        /// </param>
+        /// <param name='backendPoolName'>
+        /// The name of the load balancer backend address pool.
+        /// </param>
+        /// <param name='parameters'>
+        /// Query inbound NAT rule port mapping request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BackendAddressInboundNatRulePortMappings>> BeginListInboundNatRulePortMappingsWithHttpMessagesAsync(string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the load balancers in a subscription.
         /// </summary>

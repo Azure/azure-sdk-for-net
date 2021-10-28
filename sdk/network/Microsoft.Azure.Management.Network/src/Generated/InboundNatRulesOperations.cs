@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='expand'>
         /// Expands referenced resources.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -490,10 +490,10 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='inboundNatRuleParameters'>
-        /// Parameters supplied to the create or update inbound nat rule operation.
+        /// Parameters supplied to the create or update inbound NAT rule operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -556,7 +556,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -700,10 +700,10 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the load balancer.
         /// </param>
         /// <param name='inboundNatRuleName'>
-        /// The name of the inbound nat rule.
+        /// The name of the inbound NAT rule.
         /// </param>
         /// <param name='inboundNatRuleParameters'>
-        /// Parameters supplied to the create or update inbound nat rule operation.
+        /// Parameters supplied to the create or update inbound NAT rule operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -748,7 +748,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -926,7 +926,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets all the inbound nat rules in a load balancer.
+        /// Gets all the inbound NAT rules in a load balancer.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

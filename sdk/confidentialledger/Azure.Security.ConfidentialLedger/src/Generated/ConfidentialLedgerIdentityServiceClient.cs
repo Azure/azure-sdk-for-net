@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestOptions options)
+        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");
@@ -95,7 +95,7 @@ namespace Azure.Security.ConfidentialLedger
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetLedgerIdentity(string ledgerId, RequestOptions options)
+        public virtual Response GetLedgerIdentity(string ledgerId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerIdentityServiceClient.GetLedgerIdentity");

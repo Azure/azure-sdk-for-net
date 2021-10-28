@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                InitializeClients();
+                await InitializeClients();
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                     CosmosDBTestUtilities.Location,
                     Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix));

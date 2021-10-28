@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.TestFramework
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProviderContainer providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ProviderCollection providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
             return provider.Data.ResourceTypes.Where(

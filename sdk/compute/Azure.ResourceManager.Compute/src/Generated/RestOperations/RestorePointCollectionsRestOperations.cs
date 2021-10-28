@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string restorePointCollectionName, RestorePointGroupData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RestorePointCollectionData>> CreateOrUpdateAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorePointGroupData>> CreateOrUpdateAsync(string resourceGroupName, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                 case 201:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<RestorePointCollectionData> CreateOrUpdate(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public Response<RestorePointGroupData> CreateOrUpdate(string resourceGroupName, string restorePointCollectionName, RestorePointGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                 case 201:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RestorePointCollectionData>> UpdateAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorePointGroupData>> UpdateAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<RestorePointCollectionData> Update(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        public Response<RestorePointGroupData> Update(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="restorePointCollectionName"/> is null. </exception>
-        public async Task<Response<RestorePointCollectionData>> GetAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorePointGroupData>> GetAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -364,13 +364,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointCollectionData)null, message.Response);
+                    return Response.FromValue((RestorePointGroupData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="restorePointCollectionName"/> is null. </exception>
-        public Response<RestorePointCollectionData> Get(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public Response<RestorePointGroupData> Get(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -399,13 +399,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RestorePointCollectionData value = default;
+                        RestorePointGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorePointCollectionData.DeserializeRestorePointCollectionData(document.RootElement);
+                        value = RestorePointGroupData.DeserializeRestorePointGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointCollectionData)null, message.Response);
+                    return Response.FromValue((RestorePointGroupData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

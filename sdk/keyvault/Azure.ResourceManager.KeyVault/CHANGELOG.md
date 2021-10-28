@@ -62,7 +62,8 @@ using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultContainer vaultContainer = resourceGroup.GetVaults();
 
