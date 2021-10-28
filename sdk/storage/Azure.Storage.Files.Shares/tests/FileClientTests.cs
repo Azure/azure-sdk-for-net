@@ -4387,6 +4387,58 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(options.ContentType, response.Value.ContentType);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_NonAsciiSourceAndDestination()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewNonAsciiFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+
+            string destFileName = GetNewNonAsciiFileName();
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName);
+
+            // Assert
+            await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_ShareSAS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await sourceFile.CreateAsync(Constants.KB);
+            string destFileName = GetNewFileName();
+
+            ShareSasBuilder shareSasBuilder = new ShareSasBuilder
+            {
+                ShareName = test.Share.Name,
+                ExpiresOn = Recording.UtcNow.AddDays(-1)
+            };
+            shareSasBuilder.SetPermissions(ShareSasPermissions.All);
+            SasQueryParameters sasQueryParameters = shareSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(sourceFile.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            sourceFile = InstrumentClient(new ShareFileClient(shareUriBuilder.ToUri(), GetOptions()));
+            await sourceFile.GetPropertiesAsync();
+
+            // Act
+            ShareFileClient destFile = await sourceFile.RenameAsync(
+                destinationPath: test.Directory.Name + "/" + destFileName + "?" + sasQueryParameters);
+
+            // Assert
+            await destFile.GetPropertiesAsync();
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
