@@ -17,16 +17,19 @@ namespace IotCentral.Tests.Helpers
     public class IotCentralTestUtilities
     {
         public static string DefaultLocation = "EastUS";
-        public static string DefaultResourceName = "defaultdotnetsdkapp";
-        public static string DefaultUpdateResourceName = "defaultdotnetsdkappupdate";
-        public static string DefaultSubdomain = "defaultdotnetsdksubdomain";
-        public static string DefaultUpdateSubdomain = "defaultdotnetsdksubdomainupdate";
-        public static string DefaultResourceGroupName = "DefaultDotNetSdkIotCentralRG";
-        public static string DefaultUpdateResourceGroupName = "DefaultDotNetSdkIotCentralRGUpdate";
+        public static string DefaultResourceName = "dotnetsdkapp";
+        public static string DefaultUpdateResourceName = "dotnetsdkappupdate";
+        public static string DefaultSubdomain = "dotnetsdksubdomain";
+        public static string DefaultUpdateSubdomain = "dotnetsdksubdomainupdate";
+        public static string DefaultResourceGroupName = "DotNetSdkIotCentralRG";
+        public static string DefaultUpdateResourceGroupName = "DotNetSdkIotCentralRGUpdate";
 
-        internal static string RandomizedResourceName = DefaultResourceName + Guid.NewGuid().ToString("n");
-        internal static string RandomizedSubdomain = DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
-        internal static string RandomizedResourceGroupName = DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
+        internal static string RandomizedResourceName => DefaultResourceName + Guid.NewGuid().ToString("n");
+        internal static string RandomizedSubdomain => DefaultSubdomain + Guid.NewGuid().ToString("n");
+        internal static string RandomizedUpdateSubdomain => DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
+        internal static string RandomizedResourceGroupName => DefaultUpdateSubdomain + Guid.NewGuid().ToString("n");
+        internal static string RandomizedUpdateResourceName => DefaultUpdateResourceName + Guid.NewGuid().ToString("n");
+        internal static string RandomizedUpdateResourceGroupName => DefaultUpdateResourceGroupName + Guid.NewGuid().ToString("n");
 
         internal static List<AppTemplateLocations> SupportedAzureRegions = new List<AppTemplateLocations> {
                     new AppTemplateLocations("australiaeast", "Australia East"),

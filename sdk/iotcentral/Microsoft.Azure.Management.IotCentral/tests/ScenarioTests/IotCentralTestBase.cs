@@ -23,8 +23,12 @@ namespace IotCentral.Tests.ScenarioTests
         protected TestEnvironment testEnv;
 
         protected String resourceName = IotCentralTestUtilities.RandomizedResourceName;
+        protected String updateResourceName = IotCentralTestUtilities.RandomizedUpdateResourceName;
         protected String subDomain = IotCentralTestUtilities.RandomizedSubdomain;
+        protected String updateSubDomain = IotCentralTestUtilities.RandomizedUpdateSubdomain;
         protected String resourceGroupName = IotCentralTestUtilities.RandomizedResourceGroupName;
+        protected String updateResourceGroupName = IotCentralTestUtilities.RandomizedUpdateResourceGroupName;
+        protected SystemAssignedServiceIdentity DefaultMIType = new SystemAssignedServiceIdentity(type: "SystemAssigned");
 
         protected void Initialize(MockContext context)
         {
@@ -53,24 +57,42 @@ namespace IotCentral.Tests.ScenarioTests
             }
         }
 
-        protected App CreateIotCentral(ResourceGroup resourceGroup, string location, string appResourceName, string appSubdomain)
+        protected App CreateIotCentralApp(string location, string appResourceName, string appSubdomain, string sku = null)
         {
-            var app = new App()
+            return new App()
             {
                 Location = location,
                 Sku = new AppSkuInfo()
                 {
-                    Name = "ST1"
+                    Name = sku ?? "ST1",
                 },
                 Subdomain = appSubdomain,
-                DisplayName = appResourceName
+                DisplayName = appResourceName,
             };
+        }
+
+        protected App CreateIotCentral(
+            ResourceGroup resourceGroup,
+            string location,
+            string appResourceName,
+            string appSubdomain,
+            SystemAssignedServiceIdentity identity = null,
+            string sku = null)
+        {
+            var app = CreateIotCentralApp(location, appResourceName, appSubdomain, sku);
+
+            // Set system-assigned identity as default.
+            if (identity != null)
+            {
+                app.Identity = identity;
+            }
 
             return this.iotCentralClient.Apps.CreateOrUpdate(
                 resourceGroup.Name,
                 appResourceName,
                 app);
         }
+
 
         protected App UpdateIotCentral(ResourceGroup resourceGroup, AppPatch app, string appResourceName)
         {
