@@ -11,11 +11,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
-    <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.SignalR.Serverless.Protocols\src\Microsoft.Azure.SignalR.Serverless.Protocols.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">

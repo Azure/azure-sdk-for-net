@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{25AE2C7A-FD1
 		api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs = api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.SignalR.Serverless.Protocols", "..\Microsoft.Azure.SignalR.Serverless.Protocols\src\Microsoft.Azure.SignalR.Serverless.Protocols.csproj", "{2BEED730-CF96-4FED-9DAE-9E603DC3E294}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1F82C66-8DF4-4622-BED6-7B6F11DABBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BEED730-CF96-4FED-9DAE-9E603DC3E294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BEED730-CF96-4FED-9DAE-9E603DC3E294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BEED730-CF96-4FED-9DAE-9E603DC3E294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BEED730-CF96-4FED-9DAE-9E603DC3E294}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
