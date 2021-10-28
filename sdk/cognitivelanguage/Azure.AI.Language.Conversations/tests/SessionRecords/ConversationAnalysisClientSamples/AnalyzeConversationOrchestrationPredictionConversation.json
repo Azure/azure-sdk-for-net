@@ -8,7 +8,7 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211027.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "fb4af1292add5289e7bfb167d8f03774",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,7 +17,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8c21e933-4576-46bb-af48-58539d56779f",
+        "apim-request-id": "a3d0c532-0aa4-47a8-90ae-48a893a2c7fe",
         "Cache-Control": [
           "no-store",
           "proxy-revalidate",
@@ -26,13 +26,13 @@
           "private"
         ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 27 Oct 2021 18:13:27 GMT",
+        "Date": "Thu, 28 Oct 2021 16:04:25 GMT",
         "pragma": "no-cache",
-        "request-id": "8c21e933-4576-46bb-af48-58539d56779f",
+        "request-id": "a3d0c532-0aa4-47a8-90ae-48a893a2c7fe",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "454"
+        "x-envoy-upstream-service-time": "337"
       },
       "ResponseBody": {
         "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
@@ -58,16 +58,14 @@
                       "text": "2 plates",
                       "offset": 11,
                       "length": 8,
-                      "confidenceScore": 1,
-                      "listKeys": null
+                      "confidenceScore": 1
                     },
                     {
                       "category": "OrderItem",
                       "text": "seared salmon nigiri",
                       "offset": 23,
                       "length": 20,
-                      "confidenceScore": 1,
-                      "listKeys": null
+                      "confidenceScore": 1
                     }
                   ],
                   "topIntent": "Order",

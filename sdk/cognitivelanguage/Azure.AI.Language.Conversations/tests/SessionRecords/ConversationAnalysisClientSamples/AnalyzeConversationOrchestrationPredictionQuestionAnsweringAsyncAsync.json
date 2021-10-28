@@ -8,32 +8,35 @@
         "Content-Length": "46",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-da53accb70b49340ab119919c4ff3ff8-0e075063ff7e4e48-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211027.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
+        "traceparent": "00-7d0d1157fe02be458062e0047a17e635-4d39f7d0f326f44b-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "66add9ffb8d99a96c3d4e216dc2c7e4f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "where are the calories per recipe?"
+        "query": "Where are the calories per recipe?"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8a36e299-7cf4-4082-836a-fabc76241aea",
-        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
+        "apim-request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 27 Oct 2021 18:07:39 GMT",
-        "Pragma": "no-cache",
-        "request-id": "8a36e299-7cf4-4082-836a-fabc76241aea",
+        "Date": "Thu, 28 Oct 2021 16:05:48 GMT",
+        "pragma": "no-cache",
+        "request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1479"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "1412"
       },
       "ResponseBody": {
-        "query": "where are the calories per recipe?",
+        "query": "Where are the calories per recipe?",
         "prediction": {
           "topIntent": "SushiMaking",
           "projectKind": "workflow",

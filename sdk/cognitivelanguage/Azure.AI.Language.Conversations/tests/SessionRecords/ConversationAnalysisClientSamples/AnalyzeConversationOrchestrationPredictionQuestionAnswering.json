@@ -8,31 +8,34 @@
         "Content-Length": "46",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211027.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "587246152726023bfa7dcd5b3a8d8f06",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "where are the calories per recipe?"
+        "query": "Where are the calories per recipe?"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bda88051-d631-420e-a69d-80d8824a4fc2",
-        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
+        "apim-request-id": "10695fbe-f645-4258-b8bf-7900e6871bf5",
+        "Cache-Control": [
+          "no-store",
+          "proxy-revalidate",
+          "no-cache",
+          "max-age=0",
+          "private"
+        ],
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 27 Oct 2021 17:50:23 GMT",
-        "Pragma": "no-cache",
-        "request-id": "bda88051-d631-420e-a69d-80d8824a4fc2",
+        "Date": "Thu, 28 Oct 2021 16:05:33 GMT",
+        "pragma": "no-cache",
+        "request-id": "10695fbe-f645-4258-b8bf-7900e6871bf5",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1645"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "1303"
       },
       "ResponseBody": {
-        "query": "where are the calories per recipe?",
+        "query": "Where are the calories per recipe?",
         "prediction": {
           "topIntent": "SushiMaking",
           "projectKind": "workflow",
