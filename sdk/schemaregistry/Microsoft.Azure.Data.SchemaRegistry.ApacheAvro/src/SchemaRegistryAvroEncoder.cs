@@ -23,7 +23,8 @@ using Azure.Messaging;
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryAvroEncoder"/> implementation that uses <see cref="SchemaRegistryClient"/> for Avro serialization/deserialization.
+    /// A <see cref="SchemaRegistryAvroEncoder"/> uses the <see cref="SchemaRegistryClient"/> to
+    /// encode and decode Avro payloads.
     /// </summary>
     public class SchemaRegistryAvroEncoder
     {
@@ -249,7 +250,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         /// <summary>
-        ///
+        /// Encodes the value into Avro and stores it in the 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="value"></param>
