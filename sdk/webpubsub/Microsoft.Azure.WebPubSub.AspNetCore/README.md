@@ -11,7 +11,7 @@ This library can be used to do the following actions. Details about the terms us
 - API to add user defined functionality to handle different upstream events
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/src) |
-[Package](https://www.nuget.org/packages/Microsoft.Azure.WebPubSub.AspNetCore) |
+Package |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples][samples_ref]
