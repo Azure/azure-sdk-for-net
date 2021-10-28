@@ -201,14 +201,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_AutoCompleteEnabledOnTrigger()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
         public async Task TestBatch_AutoCompleteEnabledOnTrigger_CompleteInFunction()
         {
             await TestMultiple<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                configurationDelegate: BuildHostWithAutoCompleteDisabled<TestBatchAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                configurationDelegate: DisableAutoComplete);
         }
 
         [Test]
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
             var host = BuildHost<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>(
-                BuildHostWithAutoCompleteDisabled<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
+                DisableAutoComplete);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestSingle_CrossEntityTransaction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            var host = BuildHost<TestCrossEntityTransaction>(BuildHostWithCrossEntityTransactionsEnabled<TestCrossEntityTransaction>());
+            var host = BuildHost<TestCrossEntityTransaction>(EnableCrossEntityTransactions);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -550,25 +550,20 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private static Action<IHostBuilder> BuildHostWithAutoCompleteDisabled<T>()
-        {
-            return builder =>
+        private static Action<IHostBuilder> DisableAutoComplete =>
+            builder =>
                 builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.AutoCompleteMessages = false;
                     }));
-        }
 
         private static Action<IHostBuilder> EnableCrossEntityTransactions =>
-        {
-            return builder =>
-                builder.ConfigureWebJobs(b =>
+            builder => builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         sbOptions.EnableCrossEntityTransactions = true;
                     }));
-        }
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
