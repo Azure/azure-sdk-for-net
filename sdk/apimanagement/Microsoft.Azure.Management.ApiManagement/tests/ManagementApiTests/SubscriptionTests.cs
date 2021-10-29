@@ -11,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Net;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -21,7 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -81,14 +80,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     "*");
 
                 // add new subscription
-                string newSubscriptionId = TestUtilities.GenerateName("newSubscriptionId");
-                string globalSubscriptionId = TestUtilities.GenerateName("globalSubscriptionId");
+                string newSubscriptionId = TestUtilities.GenerateName("subscription");
+                string globalSubscriptionId = TestUtilities.GenerateName("globalSubscription");
 
                 try
                 {
-                    string newSubscriptionName = "default";
-                    string newSubscriptionPk = "Test12345";
-                    string newSubscriptionSk = "aabbccdd";
+                    string newSubscriptionName = TestUtilities.GenerateName("newSubscription1");
+                    string newSubscriptionPk = TestUtilities.GenerateName("newSubscription2");
+                    string newSubscriptionSk = TestUtilities.GenerateName("newSubscription3");
                     var newSubscriptionState = SubscriptionState.Active;
 
                     var newSubscriptionCreate = new SubscriptionCreateParameters(
@@ -132,9 +131,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(2, productSubscriptions.Count());
 
                     // patch the subscription
-                    string patchedName = "default";
-                    string patchedPk = "1Test12345";
-                    string patchedSk = "aabbccdd";
+                    string patchedName = TestUtilities.GenerateName("patched1");
+                    string patchedPk = TestUtilities.GenerateName("patched2");
+                    string patchedSk = TestUtilities.GenerateName("patched3");
                     var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
                     testBase.client.Subscription.Update(
@@ -168,8 +167,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
-                    if ((HttpMockServer.Mode == HttpRecorderMode.Record))
-                        Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
+                    Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
                     Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
                     // regenerate primary key
@@ -202,8 +200,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(keysHttpResponse);
                     Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
-                    if ((HttpMockServer.Mode == HttpRecorderMode.Record))
-                        Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
+                    Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
 
                     // get the subscription to check the key
                     subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -235,7 +232,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     }
 
                     // create a subscription with global scope on all apis
-                    var globalSubscriptionDisplayName = "default";
+                    var globalSubscriptionDisplayName = TestUtilities.GenerateName("global");
                     var globalSubscriptionCreateResponse = await testBase.client.Subscription.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,

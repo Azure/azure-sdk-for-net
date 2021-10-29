@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class AvailabilitySetContainerTests : ComputeTestBase
     {
         public AvailabilitySetContainerTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task CreateOrUpdate()
         {
             var container = await GetAvailabilitySetContainerAsync();
-            var setName = Recording.GenerateAssetName("testAS-");
+            var setName = Recording.GenerateAssetName("testAS-"); //TODO: generating name with prefix here
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
