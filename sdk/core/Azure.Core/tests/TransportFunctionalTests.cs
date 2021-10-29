@@ -804,6 +804,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TransportExceptionsAreWrappedAndInnerExceptionIsPopulated()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    context.Abort();
+                    return Task.CompletedTask;
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await ExecuteRequest(request, transport));
+                Assert.IsNotEmpty(exception.Message);
+                Assert.AreEqual(0, exception.Status);
+                Assert.IsNotEmpty(exception.InnerException.Message);
+            }
+        }
+
+        [Test]
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]

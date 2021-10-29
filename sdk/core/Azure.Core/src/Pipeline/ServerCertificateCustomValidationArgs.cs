@@ -9,7 +9,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Enables configuration of options for the <see cref="HttpClientTransport"/>
     /// </summary>
-    public struct ServerCertificateCustomValidationArgs
+    public class ServerCertificateCustomValidationArgs
     {
         /// <summary>
         /// The certificate used to authenticate the remote party.

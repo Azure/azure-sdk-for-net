@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// A wrapper type for <see cref="HttpPipeline"/> that exposes a <see cref="Dispose"/> method for disposal of the underlying <see cref="HttpPipelineTransport"/>.
     /// </summary>
-    public class DisposableHttpPipeline : HttpPipeline
+    public class DisposableHttpPipeline : HttpPipeline, IDisposable
     {
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
@@ -21,6 +23,10 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Calls Dispose on the underlying <see cref="HttpPipelineTransport"/>.
         /// </summary>
-        public void Dispose() => _transport.Dispose();
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            _transport.Dispose();
+        }
     }
 }

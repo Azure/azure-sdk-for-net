@@ -22,6 +22,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
+        internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
+
         // Internal for testing
         internal HttpClient Client { get; }
 

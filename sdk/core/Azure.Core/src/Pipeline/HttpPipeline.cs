@@ -28,8 +28,6 @@ namespace Azure.Core.Pipeline
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            // Call AddReference for this transport instance
-            _transport.AddReference();
             ResponseClassifier = responseClassifier ?? new ResponseClassifier();
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();

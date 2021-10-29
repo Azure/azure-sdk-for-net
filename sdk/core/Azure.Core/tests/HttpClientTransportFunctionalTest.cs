@@ -12,8 +12,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -26,41 +24,30 @@ namespace Azure.Core.Tests
 
         protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null)
         {
+#if !NET461
             if (https)
             {
-#if !NET461
-                return options switch
-                {
-                    null => new HttpClientTransport(new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true }),
-                    _ => new HttpClientTransport(options)
-
-                };
-#endif
+                return new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true });
             }
-            return options switch
-            {
-                null => new HttpClientTransport(),
-                _ => new HttpClientTransport(options)
-            };
+#endif
+            return new HttpClientTransport(options);
         }
 
-        [SetUp]
+#if NET461
+        [OneTimeSetUp]
         public void TestSetup()
         {
-#if NET461
             // No way to disable SSL check per HttpClient on NET461
             ServicePointManager.ServerCertificateValidationCallback += certCallback;
-#endif
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TestTeardown()
         {
-#if NET461
             // No way to disable SSL check per HttpClient on NET461
             ServicePointManager.ServerCertificateValidationCallback -= certCallback;
-#endif
         }
+#endif
 
 #if NETCOREAPP
         [Test]
@@ -82,6 +69,15 @@ namespace Azure.Core.Tests
             Assert.AreEqual(50, handler.MaxConnectionsPerServer);
         }
 #endif
+
+        [Test]
+        public void DisposeDisposesClient()
+        {
+            var transport = (HttpClientTransport)GetTransport();
+            transport.Dispose();
+            var _disposedField = typeof(HttpClient).GetField("_disposed", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsTrue((bool)_disposedField.GetValue(transport.Client));
+        }
 
         private static object GetHandler(HttpClient transportClient)
         {
