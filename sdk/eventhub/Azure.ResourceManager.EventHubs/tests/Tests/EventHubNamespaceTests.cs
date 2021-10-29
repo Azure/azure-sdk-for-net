@@ -274,82 +274,81 @@ namespace Azure.ResourceManager.EventHubs.Tests
             }
         }
 
-        //[Test]
-        //[RecordedTest]
-        //[Ignore("resource.manager.network record id null")]
-        //public async Task SetGetNetworkRuleSets()
-        //{
-        //    //create namespace
-        //    _resourceGroup = await CreateResourceGroupAsync();
-        //    EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-        //    string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-        //    EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+        [Test]
+        [RecordedTest]
+        public async Task SetGetNetworkRuleSets()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
 
-        //    //prepare vnet
-        //    string vnetName = Recording.GenerateAssetName("sdktestvnet");
-        //    var parameters = new VirtualNetworkData
-        //    {
-        //        AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
-        //        Subnets = {
-        //            new SubnetData
-        //            {
-        //                Name = "default1",
-        //                AddressPrefix = "10.0.0.0/24",
-        //                ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
-        //            },
-        //            new SubnetData
-        //            {
-        //                Name = "default2",
-        //                AddressPrefix = "10.0.1.0/24",
-        //                ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
-        //            },
-        //            new SubnetData
-        //            {
-        //                Name = "default3",
-        //                AddressPrefix = "10.0.2.0/24",
-        //                ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
-        //            }
-        //        },
-        //        Location = "eastus2"
-        //    };
-        //    VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, parameters)).Value;
+            //prepare vnet
+            string vnetName = Recording.GenerateAssetName("sdktestvnet");
+            var parameters = new VirtualNetworkData
+            {
+                AddressSpace = new AddressSpace { AddressPrefixes = { "10.0.0.0/16" } },
+                Subnets = {
+                    new SubnetData
+                    {
+                        Name = "default1",
+                        AddressPrefix = "10.0.0.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default2",
+                        AddressPrefix = "10.0.1.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default3",
+                        AddressPrefix = "10.0.2.0/24",
+                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.EventHub" } }
+                    }
+                },
+                Location = "eastus2"
+            };
+            VirtualNetwork virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, parameters)).Value;
 
-        //    //set network rule set
-        //    string subscriptionId = DefaultSubscription.Id.ToString();
-        //    string subnetId1 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1";
-        //    string subnetId2 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2";
-        //    string subnetId3 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3";
-        //    NetworkRuleSet parameter = new NetworkRuleSet()
-        //    {
-        //        DefaultAction = DefaultAction.Deny,
-        //        VirtualNetworkRules =
-        //        {
-        //            new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
-        //            new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
-        //            new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
-        //        },
-        //        IpRules =
-        //            {
-        //                new NetworkRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
-        //                new NetworkRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
-        //                new NetworkRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
-        //                new NetworkRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
-        //                new NetworkRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
-        //            }
-        //    };
-        //    await eventHubNamespace.CreateOrUpdateNetworkRuleSetAsync(parameter);
+            //set network rule set
+            string subscriptionId = DefaultSubscription.Id.ToString();
+            string subnetId1 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1";
+            string subnetId2 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2";
+            string subnetId3 = subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3";
+            NetworkRuleSet parameter = new NetworkRuleSet()
+            {
+                DefaultAction = DefaultAction.Deny,
+                VirtualNetworkRules =
+                {
+                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
+                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
+                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
+                },
+                IpRules =
+                    {
+                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.1", Action = "Allow" },
+                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.2", Action = "Allow" },
+                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.3", Action = "Allow" },
+                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.4", Action = "Allow" },
+                        new NetworkRuleSetIpRules() { IpMask = "1.1.1.5", Action = "Allow" }
+                    }
+            };
+            await eventHubNamespace.CreateOrUpdateNetworkRuleSetAsync(parameter);
 
-        //    //get the network rule set
-        //    NetworkRuleSet networkRuleSet = await eventHubNamespace.GetNetworkRuleSetAsync();
-        //    Assert.NotNull(networkRuleSet);
-        //    Assert.NotNull(networkRuleSet.IpRules);
-        //    Assert.NotNull(networkRuleSet.VirtualNetworkRules);
-        //    Assert.AreEqual(networkRuleSet.VirtualNetworkRules.Count, 3);
-        //    Assert.AreEqual(networkRuleSet.IpRules.Count, 5);
+            //get the network rule set
+            NetworkRuleSet networkRuleSet = await eventHubNamespace.GetNetworkRuleSetAsync();
+            Assert.NotNull(networkRuleSet);
+            Assert.NotNull(networkRuleSet.IpRules);
+            Assert.NotNull(networkRuleSet.VirtualNetworkRules);
+            Assert.AreEqual(networkRuleSet.VirtualNetworkRules.Count, 3);
+            Assert.AreEqual(networkRuleSet.IpRules.Count, 5);
 
-        //    //delete virtual network
-        //    await virtualNetwork.DeleteAsync();
-        //}
+            //delete virtual network
+            await virtualNetwork.DeleteAsync();
+        }
 
         [Test]
         [RecordedTest]

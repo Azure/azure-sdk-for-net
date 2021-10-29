@@ -17,7 +17,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Managing_EventHubs_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
@@ -33,9 +33,9 @@ After we have the resource group created, we can create a namespace
 
 ```C# Snippet:Managing_EventHubs_CreateNamespace
 string namespaceName = "myNamespace";
-EventHubNamespaceContainer namespaceContainer = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
-EventHubContainer eventHubContainer = eHNamespace.GetEventHubs();
+EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
+EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
 ```
 
 Now that we have the namespace, we can manage the event hubs inside this namespace.
@@ -44,13 +44,13 @@ Now that we have the namespace, we can manage the event hubs inside this namespa
 
 ```C# Snippet:Managing_EventHubs_CreateEventHub
 string eventhubName = "myEventhub";
-EventHub eventHub = (await eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+EventHub eventHub = (await eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
 ```
 
 ***List all event hubs***
 
 ```C# Snippet:Managing_EventHubs_ListEventHubs
-await foreach (EventHub eventHub in eventHubContainer.GetAllAsync())
+await foreach (EventHub eventHub in eventHubCollection.GetAllAsync())
 {
     Console.WriteLine(eventHub.Id.Name);
 }
@@ -59,18 +59,18 @@ await foreach (EventHub eventHub in eventHubContainer.GetAllAsync())
 ***Get an event hub***
 
 ```C# Snippet:Managing_EventHubs_GetEventHub
-EventHub eventHub = await eventHubContainer.GetAsync("myEventHub");
+EventHub eventHub = await eventHubCollection.GetAsync("myEventHub");
 ```
 
 ***Try to get an event hub if it exists***
 
 ```C# Snippet:Managing_EventHubs_GetEventHubIfExists
-EventHub eventHub = await eventHubContainer.GetIfExistsAsync("foo");
+EventHub eventHub = await eventHubCollection.GetIfExistsAsync("foo");
 if (eventHub != null)
 {
     Console.WriteLine("eventHub 'foo' exists");
 }
-if (await eventHubContainer.CheckIfExistsAsync("bar"))
+if (await eventHubCollection.CheckIfExistsAsync("bar"))
 {
     Console.WriteLine("eventHub 'bar' exists");
 }
@@ -79,7 +79,7 @@ if (await eventHubContainer.CheckIfExistsAsync("bar"))
 ***Delete an event hub***
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub
-EventHub eventHub = await eventHubContainer.GetAsync("myEventhub");
+EventHub eventHub = await eventHubCollection.GetAsync("myEventhub");
 await eventHub.DeleteAsync();
 ```
 
