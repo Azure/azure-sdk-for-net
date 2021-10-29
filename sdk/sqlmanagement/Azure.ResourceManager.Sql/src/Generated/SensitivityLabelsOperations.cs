@@ -39,6 +39,90 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
+        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> UpdateAsync(string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SensitivityLabelsOperations.Update");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateAsync(resourceGroupName, serverName, databaseName, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Update(string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SensitivityLabelsOperations.Update");
+            scope.Start();
+            try
+            {
+                return RestClient.Update(resourceGroupName, serverName, databaseName, parameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> UpdateRecommendedAsync(string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SensitivityLabelsOperations.UpdateRecommended");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateRecommendedAsync(resourceGroupName, serverName, databaseName, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response UpdateRecommended(string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SensitivityLabelsOperations.UpdateRecommended");
+            scope.Start();
+            try
+            {
+                return RestClient.UpdateRecommended(resourceGroupName, serverName, databaseName, parameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Enables sensitivity recommendations on a given column (recommendations are enabled by default on all columns). </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -277,10 +361,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual AsyncPageable<SensitivityLabel> ListCurrentByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabel> ListCurrentByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -301,7 +387,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListCurrentByDatabaseAsync(resourceGroupName, serverName, databaseName, filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListCurrentByDatabaseAsync(resourceGroupName, serverName, databaseName, skipToken, count, filter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -316,7 +402,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListCurrentByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListCurrentByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, skipToken, count, filter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -332,10 +418,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual Pageable<SensitivityLabel> ListCurrentByDatabase(string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabel> ListCurrentByDatabase(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -356,7 +444,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListCurrentByDatabase(resourceGroupName, serverName, databaseName, filter, cancellationToken);
+                    var response = RestClient.ListCurrentByDatabase(resourceGroupName, serverName, databaseName, skipToken, count, filter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -371,7 +459,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListCurrentByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, filter, cancellationToken);
+                    var response = RestClient.ListCurrentByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, skipToken, count, filter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -387,12 +475,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual AsyncPageable<SensitivityLabel> ListRecommendedByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabel> ListRecommendedByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -413,7 +501,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListRecommendedByDatabaseAsync(resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListRecommendedByDatabaseAsync(resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -428,7 +516,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -444,12 +532,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual Pageable<SensitivityLabel> ListRecommendedByDatabase(string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabel> ListRecommendedByDatabase(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -470,7 +558,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListRecommendedByDatabase(resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter, cancellationToken);
+                    var response = RestClient.ListRecommendedByDatabase(resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -485,7 +573,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListRecommendedByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter, cancellationToken);
+                    var response = RestClient.ListRecommendedByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

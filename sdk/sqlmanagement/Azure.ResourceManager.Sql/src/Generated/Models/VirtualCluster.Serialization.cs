@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("family");
                 writer.WriteStringValue(Family);
             }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> subnetId = default;
             Optional<string> family = default;
             Optional<IReadOnlyList<string>> childResources = default;
+            Optional<string> maintenanceConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -121,11 +127,16 @@ namespace Azure.ResourceManager.Sql.Models
                             childResources = array;
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceConfigurationId"))
+                        {
+                            maintenanceConfigurationId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualCluster(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), subnetId.Value, family.Value, Optional.ToList(childResources));
+            return new VirtualCluster(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), subnetId.Value, family.Value, Optional.ToList(childResources), maintenanceConfigurationId.Value);
         }
     }
 }

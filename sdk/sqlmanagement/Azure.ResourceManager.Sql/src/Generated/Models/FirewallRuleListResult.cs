@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents the response to a List Firewall Rules request. </summary>
+    /// <summary> The response to a list firewall rules request. </summary>
     internal partial class FirewallRuleListResult
     {
         /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
-        /// <param name="value"> The list of server firewall rules. </param>
-        internal FirewallRuleListResult(IReadOnlyList<FirewallRule> value)
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        internal FirewallRuleListResult(IReadOnlyList<FirewallRule> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> The list of server firewall rules. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<FirewallRule> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

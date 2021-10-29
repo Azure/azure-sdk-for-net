@@ -43,7 +43,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
-        internal Server(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<ServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerPublicNetworkAccess? publicNetworkAccess) : base(id, name, type, location, tags)
+        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory identity of the server. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        internal Server(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<ServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, string primaryUserAssignedIdentityId, Guid? federatedClientId, string keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess) : base(id, name, type, location, tags)
         {
             Identity = identity;
             Kind = kind;
@@ -55,6 +61,12 @@ namespace Azure.ResourceManager.Sql.Models
             PrivateEndpointConnections = privateEndpointConnections;
             MinimalTlsVersion = minimalTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
+            WorkspaceFeature = workspaceFeature;
+            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            FederatedClientId = federatedClientId;
+            KeyId = keyId;
+            Administrators = administrators;
+            RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
         }
 
         /// <summary> The Azure Active Directory identity of the server. </summary>
@@ -76,6 +88,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
-        public ServerPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
+        public ServerWorkspaceFeature? WorkspaceFeature { get; }
+        /// <summary> The resource id of a user assigned identity to be used by default. </summary>
+        public string PrimaryUserAssignedIdentityId { get; set; }
+        /// <summary> The Client id used for cross tenant CMK scenario. </summary>
+        public Guid? FederatedClientId { get; set; }
+        /// <summary> A CMK URI of the key to use for encryption. </summary>
+        public string KeyId { get; set; }
+        /// <summary> The Azure Active Directory identity of the server. </summary>
+        public ServerExternalAdministrator Administrators { get; set; }
+        /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
     }
 }

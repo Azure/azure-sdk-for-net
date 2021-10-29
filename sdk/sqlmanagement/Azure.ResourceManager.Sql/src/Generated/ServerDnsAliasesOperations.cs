@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServerDnsAlias>> GetAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerDnsAlias> Get(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Creates a server dns alias. </summary>
+        /// <summary> Creates a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public virtual async Task<ServerDnsAliasesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Creates a server dns alias. </summary>
+        /// <summary> Creates a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public virtual ServerDnsAliasesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the server DNS alias with the given name. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public virtual async Task<ServerDnsAliasesDeleteOperation> StartDeleteAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the server DNS alias with the given name. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public virtual ServerDnsAliasesDeleteOperation StartDelete(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)

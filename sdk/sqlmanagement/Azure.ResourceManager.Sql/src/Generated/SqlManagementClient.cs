@@ -56,23 +56,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns an instance of RecoverableDatabasesOperations. </summary>
         public virtual RecoverableDatabasesOperations RecoverableDatabases => new RecoverableDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of RestorableDroppedDatabasesOperations. </summary>
-        public virtual RestorableDroppedDatabasesOperations RestorableDroppedDatabases => new RestorableDroppedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
         /// <summary> Returns an instance of ServerConnectionPoliciesOperations. </summary>
         public virtual ServerConnectionPoliciesOperations ServerConnectionPolicies => new ServerConnectionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of DatabaseThreatDetectionPoliciesOperations. </summary>
-        public virtual DatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies => new DatabaseThreatDetectionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of DataMaskingPoliciesOperations. </summary>
         public virtual DataMaskingPoliciesOperations DataMaskingPolicies => new DataMaskingPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of DataMaskingRulesOperations. </summary>
         public virtual DataMaskingRulesOperations DataMaskingRules => new DataMaskingRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of FirewallRulesOperations. </summary>
-        public virtual FirewallRulesOperations FirewallRules => new FirewallRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of GeoBackupPoliciesOperations. </summary>
         public virtual GeoBackupPoliciesOperations GeoBackupPolicies => new GeoBackupPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
@@ -82,9 +73,6 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Returns an instance of ElasticPoolsOperations. </summary>
         public virtual ElasticPoolsOperations ElasticPools => new ElasticPoolsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of RecommendedElasticPoolsOperations. </summary>
-        public virtual RecommendedElasticPoolsOperations RecommendedElasticPools => new RecommendedElasticPoolsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of ReplicationLinksOperations. </summary>
         public virtual ReplicationLinksOperations ReplicationLinks => new ReplicationLinksOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
@@ -101,47 +89,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns an instance of ElasticPoolDatabaseActivitiesOperations. </summary>
         public virtual ElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities => new ElasticPoolDatabaseActivitiesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ServiceTierAdvisorsOperations. </summary>
-        public virtual ServiceTierAdvisorsOperations ServiceTierAdvisors => new ServiceTierAdvisorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of TransparentDataEncryptionsOperations. </summary>
-        public virtual TransparentDataEncryptionsOperations TransparentDataEncryptions => new TransparentDataEncryptionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of TransparentDataEncryptionActivitiesOperations. </summary>
-        public virtual TransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities => new TransparentDataEncryptionActivitiesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
         /// <summary> Returns an instance of ServerUsagesOperations. </summary>
         public virtual ServerUsagesOperations ServerUsages => new ServerUsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of DatabaseUsagesOperations. </summary>
-        public virtual DatabaseUsagesOperations DatabaseUsages => new DatabaseUsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of DatabaseAutomaticTuningOperations. </summary>
-        public virtual DatabaseAutomaticTuningOperations DatabaseAutomaticTuning => new DatabaseAutomaticTuningOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of EncryptionProtectorsOperations. </summary>
-        public virtual EncryptionProtectorsOperations EncryptionProtectors => new EncryptionProtectorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of FailoverGroupsOperations. </summary>
-        public virtual FailoverGroupsOperations FailoverGroups => new FailoverGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of Operations. </summary>
-        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
-
-        /// <summary> Returns an instance of ServerKeysOperations. </summary>
-        public virtual ServerKeysOperations ServerKeys => new ServerKeysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of SyncAgentsOperations. </summary>
-        public virtual SyncAgentsOperations SyncAgents => new SyncAgentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of SubscriptionUsagesOperations. </summary>
-        public virtual SubscriptionUsagesOperations SubscriptionUsages => new SubscriptionUsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of VirtualClustersOperations. </summary>
-        public virtual VirtualClustersOperations VirtualClusters => new VirtualClustersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of VirtualNetworkRulesOperations. </summary>
-        public virtual VirtualNetworkRulesOperations VirtualNetworkRules => new VirtualNetworkRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of ExtendedDatabaseBlobAuditingPoliciesOperations. </summary>
         public virtual ExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies => new ExtendedDatabaseBlobAuditingPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
@@ -155,11 +104,59 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns an instance of DatabaseBlobAuditingPoliciesOperations. </summary>
         public virtual DatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies => new DatabaseBlobAuditingPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
+        /// <summary> Returns an instance of DatabaseAdvisorsOperations. </summary>
+        public virtual DatabaseAdvisorsOperations DatabaseAdvisors => new DatabaseAdvisorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseAutomaticTuningOperations. </summary>
+        public virtual DatabaseAutomaticTuningOperations DatabaseAutomaticTuning => new DatabaseAutomaticTuningOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseColumnsOperations. </summary>
+        public virtual DatabaseColumnsOperations DatabaseColumns => new DatabaseColumnsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseRecommendedActionsOperations. </summary>
+        public virtual DatabaseRecommendedActionsOperations DatabaseRecommendedActions => new DatabaseRecommendedActionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseSchemasOperations. </summary>
+        public virtual DatabaseSchemasOperations DatabaseSchemas => new DatabaseSchemasOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseSecurityAlertPoliciesOperations. </summary>
+        public virtual DatabaseSecurityAlertPoliciesOperations DatabaseSecurityAlertPolicies => new DatabaseSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseTablesOperations. </summary>
+        public virtual DatabaseTablesOperations DatabaseTables => new DatabaseTablesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
         /// <summary> Returns an instance of DatabaseVulnerabilityAssessmentRuleBaselinesOperations. </summary>
         public virtual DatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines => new DatabaseVulnerabilityAssessmentRuleBaselinesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of DatabaseVulnerabilityAssessmentsOperations. </summary>
         public virtual DatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments => new DatabaseVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseVulnerabilityAssessmentScansOperations. </summary>
+        public virtual DatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans => new DatabaseVulnerabilityAssessmentScansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DataWarehouseUserActivitiesOperations. </summary>
+        public virtual DataWarehouseUserActivitiesOperations DataWarehouseUserActivities => new DataWarehouseUserActivitiesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DeletedServersOperations. </summary>
+        public virtual DeletedServersOperations DeletedServers => new DeletedServersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ElasticPoolOperations. </summary>
+        public virtual ElasticPoolOperations ElasticPool => new ElasticPoolOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of EncryptionProtectorsOperations. </summary>
+        public virtual EncryptionProtectorsOperations EncryptionProtectors => new EncryptionProtectorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of FailoverGroupsOperations. </summary>
+        public virtual FailoverGroupsOperations FailoverGroups => new FailoverGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of FirewallRulesOperations. </summary>
+        public virtual FirewallRulesOperations FirewallRules => new FirewallRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of InstanceFailoverGroupsOperations. </summary>
+        public virtual InstanceFailoverGroupsOperations InstanceFailoverGroups => new InstanceFailoverGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of InstancePoolsOperations. </summary>
+        public virtual InstancePoolsOperations InstancePools => new InstancePoolsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of JobAgentsOperations. </summary>
         public virtual JobAgentsOperations JobAgents => new JobAgentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
@@ -188,137 +185,32 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns an instance of JobVersionsOperations. </summary>
         public virtual JobVersionsOperations JobVersions => new JobVersionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of LongTermRetentionBackupsOperations. </summary>
-        public virtual LongTermRetentionBackupsOperations LongTermRetentionBackups => new LongTermRetentionBackupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of BackupLongTermRetentionPoliciesOperations. </summary>
-        public virtual BackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies => new BackupLongTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedBackupShortTermRetentionPoliciesOperations. </summary>
-        public virtual ManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies => new ManagedBackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations. </summary>
-        public virtual ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies => new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ServerAutomaticTuningOperations. </summary>
-        public virtual ServerAutomaticTuningOperations ServerAutomaticTuning => new ServerAutomaticTuningOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ServerDnsAliasesOperations. </summary>
-        public virtual ServerDnsAliasesOperations ServerDnsAliases => new ServerDnsAliasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ServerSecurityAlertPoliciesOperations. </summary>
-        public virtual ServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies => new ServerSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of RestorableDroppedManagedDatabasesOperations. </summary>
-        public virtual RestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases => new RestorableDroppedManagedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of RestorePointsOperations. </summary>
-        public virtual RestorePointsOperations RestorePoints => new RestorePointsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedDatabaseSecurityAlertPoliciesOperations. </summary>
-        public virtual ManagedDatabaseSecurityAlertPoliciesOperations ManagedDatabaseSecurityAlertPolicies => new ManagedDatabaseSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedServerSecurityAlertPoliciesOperations. </summary>
-        public virtual ManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies => new ManagedServerSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of SensitivityLabelsOperations. </summary>
-        public virtual SensitivityLabelsOperations SensitivityLabels => new SensitivityLabelsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstanceAdministratorsOperations. </summary>
-        public virtual ManagedInstanceAdministratorsOperations ManagedInstanceAdministrators => new ManagedInstanceAdministratorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of DatabaseOperations. </summary>
-        public virtual DatabaseOperations Database => new DatabaseOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ElasticPoolOperations. </summary>
-        public virtual ElasticPoolOperations ElasticPool => new ElasticPoolOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of DatabaseVulnerabilityAssessmentScansOperations. </summary>
-        public virtual DatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans => new DatabaseVulnerabilityAssessmentScansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations. </summary>
-        public virtual ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines => new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentScansOperations. </summary>
-        public virtual ManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans => new ManagedDatabaseVulnerabilityAssessmentScansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentsOperations. </summary>
-        public virtual ManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments => new ManagedDatabaseVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of InstanceFailoverGroupsOperations. </summary>
-        public virtual InstanceFailoverGroupsOperations InstanceFailoverGroups => new InstanceFailoverGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of TdeCertificatesOperations. </summary>
-        public virtual TdeCertificatesOperations TdeCertificates => new TdeCertificatesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstanceTdeCertificatesOperations. </summary>
-        public virtual ManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates => new ManagedInstanceTdeCertificatesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstanceKeysOperations. </summary>
-        public virtual ManagedInstanceKeysOperations ManagedInstanceKeys => new ManagedInstanceKeysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstanceEncryptionProtectorsOperations. </summary>
-        public virtual ManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors => new ManagedInstanceEncryptionProtectorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of RecoverableManagedDatabasesOperations. </summary>
-        public virtual RecoverableManagedDatabasesOperations RecoverableManagedDatabases => new RecoverableManagedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstanceVulnerabilityAssessmentsOperations. </summary>
-        public virtual ManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments => new ManagedInstanceVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ServerVulnerabilityAssessmentsOperations. </summary>
-        public virtual ServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments => new ServerVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedDatabaseSensitivityLabelsOperations. </summary>
-        public virtual ManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels => new ManagedDatabaseSensitivityLabelsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of InstancePoolsOperations. </summary>
-        public virtual InstancePoolsOperations InstancePools => new InstancePoolsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of UsagesOperations. </summary>
-        public virtual UsagesOperations Usages => new UsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
-        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
-        public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ServersOperations. </summary>
-        public virtual ServersOperations Servers => new ServersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
         /// <summary> Returns an instance of CapabilitiesOperations. </summary>
         public virtual CapabilitiesOperations Capabilities => new CapabilitiesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LongTermRetentionBackupsOperations. </summary>
+        public virtual LongTermRetentionBackupsOperations LongTermRetentionBackups => new LongTermRetentionBackupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of LongTermRetentionManagedInstanceBackupsOperations. </summary>
         public virtual LongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups => new LongTermRetentionManagedInstanceBackupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ManagedInstanceLongTermRetentionPoliciesOperations. </summary>
-        public virtual ManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies => new ManagedInstanceLongTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of LongTermRetentionPoliciesOperations. </summary>
+        public virtual LongTermRetentionPoliciesOperations LongTermRetentionPolicies => new LongTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of WorkloadGroupsOperations. </summary>
-        public virtual WorkloadGroupsOperations WorkloadGroups => new WorkloadGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of MaintenanceWindowOptionsOperations. </summary>
+        public virtual MaintenanceWindowOptionsOperations MaintenanceWindowOptions => new MaintenanceWindowOptionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of WorkloadClassifiersOperations. </summary>
-        public virtual WorkloadClassifiersOperations WorkloadClassifiers => new WorkloadClassifiersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of MaintenanceWindowsOperations. </summary>
+        public virtual MaintenanceWindowsOperations MaintenanceWindows => new MaintenanceWindowsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ManagedInstanceOperations. </summary>
-        public virtual ManagedInstanceOperations ManagedInstance => new ManagedInstanceOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of ManagedBackupShortTermRetentionPoliciesOperations. </summary>
+        public virtual ManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies => new ManagedBackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of ServerAzureADAdministratorsOperations. </summary>
-        public virtual ServerAzureADAdministratorsOperations ServerAzureADAdministrators => new ServerAzureADAdministratorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of ManagedDatabaseColumnsOperations. </summary>
+        public virtual ManagedDatabaseColumnsOperations ManagedDatabaseColumns => new ManagedDatabaseColumnsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of SyncGroupsOperations. </summary>
-        public virtual SyncGroupsOperations SyncGroups => new SyncGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of SyncMembersOperations. </summary>
-        public virtual SyncMembersOperations SyncMembers => new SyncMembersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of ManagedInstancesOperations. </summary>
-        public virtual ManagedInstancesOperations ManagedInstances => new ManagedInstancesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-
-        /// <summary> Returns an instance of BackupShortTermRetentionPoliciesOperations. </summary>
-        public virtual BackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies => new BackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of ManagedDatabaseQueriesOperations. </summary>
+        public virtual ManagedDatabaseQueriesOperations ManagedDatabaseQueries => new ManagedDatabaseQueriesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of ManagedDatabaseRestoreDetailsOperations. </summary>
         public virtual ManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails => new ManagedDatabaseRestoreDetailsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
@@ -326,7 +218,190 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Returns an instance of ManagedDatabasesOperations. </summary>
         public virtual ManagedDatabasesOperations ManagedDatabases => new ManagedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
+        /// <summary> Returns an instance of ManagedDatabaseSchemasOperations. </summary>
+        public virtual ManagedDatabaseSchemasOperations ManagedDatabaseSchemas => new ManagedDatabaseSchemasOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseSecurityAlertPoliciesOperations. </summary>
+        public virtual ManagedDatabaseSecurityAlertPoliciesOperations ManagedDatabaseSecurityAlertPolicies => new ManagedDatabaseSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseSecurityEventsOperations. </summary>
+        public virtual ManagedDatabaseSecurityEventsOperations ManagedDatabaseSecurityEvents => new ManagedDatabaseSecurityEventsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseSensitivityLabelsOperations. </summary>
+        public virtual ManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels => new ManagedDatabaseSensitivityLabelsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseTablesOperations. </summary>
+        public virtual ManagedDatabaseTablesOperations ManagedDatabaseTables => new ManagedDatabaseTablesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseTransparentDataEncryptionOperations. </summary>
+        public virtual ManagedDatabaseTransparentDataEncryptionOperations ManagedDatabaseTransparentDataEncryption => new ManagedDatabaseTransparentDataEncryptionOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations. </summary>
+        public virtual ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines => new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentsOperations. </summary>
+        public virtual ManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments => new ManagedDatabaseVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedDatabaseVulnerabilityAssessmentScansOperations. </summary>
+        public virtual ManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans => new ManagedDatabaseVulnerabilityAssessmentScansOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceAdministratorsOperations. </summary>
+        public virtual ManagedInstanceAdministratorsOperations ManagedInstanceAdministrators => new ManagedInstanceAdministratorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceAzureADOnlyAuthenticationsOperations. </summary>
+        public virtual ManagedInstanceAzureADOnlyAuthenticationsOperations ManagedInstanceAzureADOnlyAuthentications => new ManagedInstanceAzureADOnlyAuthenticationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceEncryptionProtectorsOperations. </summary>
+        public virtual ManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors => new ManagedInstanceEncryptionProtectorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceKeysOperations. </summary>
+        public virtual ManagedInstanceKeysOperations ManagedInstanceKeys => new ManagedInstanceKeysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceLongTermRetentionPoliciesOperations. </summary>
+        public virtual ManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies => new ManagedInstanceLongTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceOperations. </summary>
+        public virtual ManagedInstanceOperations ManagedInstance => new ManagedInstanceOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstancePrivateEndpointConnectionsOperations. </summary>
+        public virtual ManagedInstancePrivateEndpointConnectionsOperations ManagedInstancePrivateEndpointConnections => new ManagedInstancePrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstancePrivateLinkResourcesOperations. </summary>
+        public virtual ManagedInstancePrivateLinkResourcesOperations ManagedInstancePrivateLinkResources => new ManagedInstancePrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstancesOperations. </summary>
+        public virtual ManagedInstancesOperations ManagedInstances => new ManagedInstancesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceTdeCertificatesOperations. </summary>
+        public virtual ManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates => new ManagedInstanceTdeCertificatesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedInstanceVulnerabilityAssessmentsOperations. </summary>
+        public virtual ManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments => new ManagedInstanceVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations. </summary>
+        public virtual ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies => new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ManagedServerSecurityAlertPoliciesOperations. </summary>
+        public virtual ManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies => new ManagedServerSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
+
+        /// <summary> Returns an instance of OperationsHealthOperations. </summary>
+        public virtual OperationsHealthOperations OperationsHealth => new OperationsHealthOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
+        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
+        public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RecoverableManagedDatabasesOperations. </summary>
+        public virtual RecoverableManagedDatabasesOperations RecoverableManagedDatabases => new RecoverableManagedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorePointsOperations. </summary>
+        public virtual RestorePointsOperations RestorePoints => new RestorePointsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SensitivityLabelsOperations. </summary>
+        public virtual SensitivityLabelsOperations SensitivityLabels => new SensitivityLabelsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerAdvisorsOperations. </summary>
+        public virtual ServerAdvisorsOperations ServerAdvisors => new ServerAdvisorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerAutomaticTuningOperations. </summary>
+        public virtual ServerAutomaticTuningOperations ServerAutomaticTuning => new ServerAutomaticTuningOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerAzureADAdministratorsOperations. </summary>
+        public virtual ServerAzureADAdministratorsOperations ServerAzureADAdministrators => new ServerAzureADAdministratorsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
         /// <summary> Returns an instance of ServerAzureADOnlyAuthenticationsOperations. </summary>
         public virtual ServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications => new ServerAzureADOnlyAuthenticationsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerDevOpsAuditSettingsOperations. </summary>
+        public virtual ServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings => new ServerDevOpsAuditSettingsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerDnsAliasesOperations. </summary>
+        public virtual ServerDnsAliasesOperations ServerDnsAliases => new ServerDnsAliasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerKeysOperations. </summary>
+        public virtual ServerKeysOperations ServerKeys => new ServerKeysOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerOperations. </summary>
+        public virtual ServerOperations Server => new ServerOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerSecurityAlertPoliciesOperations. </summary>
+        public virtual ServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies => new ServerSecurityAlertPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerTrustGroupsOperations. </summary>
+        public virtual ServerTrustGroupsOperations ServerTrustGroups => new ServerTrustGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServerVulnerabilityAssessmentsOperations. </summary>
+        public virtual ServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments => new ServerVulnerabilityAssessmentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SqlAgentOperations. </summary>
+        public virtual SqlAgentOperations SqlAgent => new SqlAgentOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SubscriptionUsagesOperations. </summary>
+        public virtual SubscriptionUsagesOperations SubscriptionUsages => new SubscriptionUsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SyncAgentsOperations. </summary>
+        public virtual SyncAgentsOperations SyncAgents => new SyncAgentsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SyncGroupsOperations. </summary>
+        public virtual SyncGroupsOperations SyncGroups => new SyncGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of SyncMembersOperations. </summary>
+        public virtual SyncMembersOperations SyncMembers => new SyncMembersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of TdeCertificatesOperations. </summary>
+        public virtual TdeCertificatesOperations TdeCertificates => new TdeCertificatesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of TimeZonesOperations. </summary>
+        public virtual TimeZonesOperations TimeZones => new TimeZonesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualClustersOperations. </summary>
+        public virtual VirtualClustersOperations VirtualClusters => new VirtualClustersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of VirtualNetworkRulesOperations. </summary>
+        public virtual VirtualNetworkRulesOperations VirtualNetworkRules => new VirtualNetworkRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of WorkloadClassifiersOperations. </summary>
+        public virtual WorkloadClassifiersOperations WorkloadClassifiers => new WorkloadClassifiersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of WorkloadGroupsOperations. </summary>
+        public virtual WorkloadGroupsOperations WorkloadGroups => new WorkloadGroupsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of TransparentDataEncryptionsOperations. </summary>
+        public virtual TransparentDataEncryptionsOperations TransparentDataEncryptions => new TransparentDataEncryptionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of BackupShortTermRetentionPoliciesOperations. </summary>
+        public virtual BackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies => new BackupShortTermRetentionPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseExtensionsOperations. </summary>
+        public virtual DatabaseExtensionsOperations DatabaseExtensions => new DatabaseExtensionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseOperations. </summary>
+        public virtual DatabaseOperations Database => new DatabaseOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of DatabaseUsagesOperations. </summary>
+        public virtual DatabaseUsagesOperations DatabaseUsages => new DatabaseUsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of LedgerDigestUploadsOperations. </summary>
+        public virtual LedgerDigestUploadsOperations LedgerDigestUploads => new LedgerDigestUploadsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of OutboundFirewallRulesOperations. </summary>
+        public virtual OutboundFirewallRulesOperations OutboundFirewallRules => new OutboundFirewallRulesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableDroppedDatabasesOperations. </summary>
+        public virtual RestorableDroppedDatabasesOperations RestorableDroppedDatabases => new RestorableDroppedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableDroppedManagedDatabasesOperations. </summary>
+        public virtual RestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases => new RestorableDroppedManagedDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of ServersOperations. </summary>
+        public virtual ServersOperations Servers => new ServersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of UsagesOperations. </summary>
+        public virtual UsagesOperations Usages => new UsagesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

@@ -43,88 +43,159 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateFailoverRequest(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType)
+        internal HttpMessage CreateListByInstancePoolRequest(string resourceGroupName, string instancePoolName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
-            uri.AppendPath(managedInstanceName, true);
-            uri.AppendPath("/failover", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
-            if (replicaType != null)
+            uri.AppendPath("/providers/Microsoft.Sql/instancePools/", false);
+            uri.AppendPath(instancePoolName, true);
+            uri.AppendPath("/managedInstances", false);
+            if (expand != null)
             {
-                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand, true);
             }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Failovers a managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <summary> Gets a list of all managed instances in an instance pool. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public async Task<Response> FailoverAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
+        public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (managedInstanceName == null)
+            if (instancePoolName == null)
             {
-                throw new ArgumentNullException(nameof(managedInstanceName));
+                throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType);
+            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Failovers a managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <summary> Gets a list of all managed instances in an instance pool. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public Response Failover(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
+        public Response<ManagedInstanceListResult> ListByInstancePool(string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (managedInstanceName == null)
+            if (instancePoolName == null)
             {
-                throw new ArgumentNullException(nameof(managedInstanceName));
+                throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType);
+            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListRequest(string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ManagedInstanceListResult>> ListAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListRequest(expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ManagedInstanceListResult> List(string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListRequest(expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,7 +207,11 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -144,16 +219,17 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of managed instances in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ManagedInstanceListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceListResult>> ListByResourceGroupAsync(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -171,16 +247,17 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of managed instances in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ManagedInstanceListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceListResult> ListByResourceGroup(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -196,7 +273,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string managedInstanceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string managedInstanceName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +286,11 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -218,9 +299,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public async Task<Response<ManagedInstance>> GetAsync(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstance>> GetAsync(string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -231,7 +313,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateGetRequest(resourceGroupName, managedInstanceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -250,9 +332,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public Response<ManagedInstance> Get(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public Response<ManagedInstance> Get(string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -263,7 +346,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateGetRequest(resourceGroupName, managedInstanceName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -292,7 +375,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -383,7 +466,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -459,7 +542,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -535,7 +618,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByInstancePoolRequest(string resourceGroupName, string instancePoolName)
+        internal HttpMessage CreateListByManagedInstanceRequest(string resourceGroupName, string managedInstanceName, int? numberOfQueries, string databases, string startTime, string endTime, QueryTimeGrainType? interval, AggregationFunctionType? aggregationFunction, MetricType? observationMetric)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -546,40 +629,75 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/instancePools/", false);
-            uri.AppendPath(instancePoolName, true);
-            uri.AppendPath("/managedInstances", false);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/topqueries", false);
+            if (numberOfQueries != null)
+            {
+                uri.AppendQuery("numberOfQueries", numberOfQueries.Value, true);
+            }
+            if (databases != null)
+            {
+                uri.AppendQuery("databases", databases, true);
+            }
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("endTime", endTime, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value.ToString(), true);
+            }
+            if (aggregationFunction != null)
+            {
+                uri.AppendQuery("aggregationFunction", aggregationFunction.Value.ToString(), true);
+            }
+            if (observationMetric != null)
+            {
+                uri.AppendQuery("observationMetric", observationMetric.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a list of all managed instances in an instance pool. </summary>
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public async Task<Response<TopQueriesListResult>> ListByManagedInstanceAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (instancePoolName == null)
+            if (managedInstanceName == null)
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName);
+            using var message = CreateListByManagedInstanceRequest(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedInstanceListResult value = default;
+                        TopQueriesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        value = TopQueriesListResult.DeserializeTopQueriesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,31 +705,38 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of all managed instances in an instance pool. </summary>
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<ManagedInstanceListResult> ListByInstancePool(string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public Response<TopQueriesListResult> ListByManagedInstance(string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (instancePoolName == null)
+            if (managedInstanceName == null)
             {
-                throw new ArgumentNullException(nameof(instancePoolName));
+                throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateListByInstancePoolRequest(resourceGroupName, instancePoolName);
+            using var message = CreateListByManagedInstanceRequest(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedInstanceListResult value = default;
+                        TopQueriesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        value = TopQueriesListResult.DeserializeTopQueriesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,140 +744,88 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateFailoverRequest(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/failover", false);
+            if (replicaType != null)
+            {
+                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <summary> Failovers a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ManagedInstanceListResult>> ListAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public async Task<Response> FailoverAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var message = CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ManagedInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <summary> Failovers a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ManagedInstanceListResult> List(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public Response Failover(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var message = CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ManagedInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets a list of managed instances in a resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ManagedInstanceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedInstanceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets a list of managed instances in a resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ManagedInstanceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedInstanceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListByInstancePoolNextPageRequest(string nextLink, string resourceGroupName, string instancePoolName)
+        internal HttpMessage CreateListByInstancePoolNextPageRequest(string nextLink, string resourceGroupName, string instancePoolName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -769,9 +842,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolNextPageAsync(string nextLink, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceListResult>> ListByInstancePoolNextPageAsync(string nextLink, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -786,7 +860,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName);
+            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -806,9 +880,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="instancePoolName"/> is null. </exception>
-        public Response<ManagedInstanceListResult> ListByInstancePoolNextPage(string nextLink, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceListResult> ListByInstancePoolNextPage(string nextLink, string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -823,7 +898,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(instancePoolName));
             }
 
-            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName);
+            using var message = CreateListByInstancePoolNextPageRequest(nextLink, resourceGroupName, instancePoolName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -839,7 +914,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -854,16 +929,17 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of all managed instances in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ManagedInstanceListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceListResult>> ListNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -881,16 +957,17 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of all managed instances in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ManagedInstanceListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceListResult> ListNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListNextPageRequest(nextLink, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -899,6 +976,186 @@ namespace Azure.ResourceManager.Sql
                         ManagedInstanceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of managed instances in a resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public async Task<Response<ManagedInstanceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets a list of managed instances in a resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        public Response<ManagedInstanceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedInstanceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ManagedInstanceListResult.DeserializeManagedInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByManagedInstanceNextPageRequest(string nextLink, string resourceGroupName, string managedInstanceName, int? numberOfQueries, string databases, string startTime, string endTime, QueryTimeGrainType? interval, AggregationFunctionType? aggregationFunction, MetricType? observationMetric)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        public async Task<Response<TopQueriesListResult>> ListByManagedInstanceNextPageAsync(string nextLink, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TopQueriesListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TopQueriesListResult.DeserializeTopQueriesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="managedInstanceName"/> is null. </exception>
+        public Response<TopQueriesListResult> ListByManagedInstanceNextPage(string nextLink, string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        TopQueriesListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = TopQueriesListResult.DeserializeTopQueriesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public virtual AsyncPageable<SyncGroupLogProperties> ListLogsAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SyncGroupLogProperties> ListLogsAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public virtual Pageable<SyncGroupLogProperties> ListLogs(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SyncGroupLogProperties> ListLogs(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

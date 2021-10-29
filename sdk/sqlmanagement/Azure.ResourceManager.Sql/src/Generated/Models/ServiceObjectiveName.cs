@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The name of the service objective to assign to the database. </summary>
-    public readonly partial struct ServiceObjectiveName : IEquatable<ServiceObjectiveName>
+    /// <summary> The serviceLevelObjective for SLO usage metric. </summary>
+    internal readonly partial struct ServiceObjectiveName : IEquatable<ServiceObjectiveName>
     {
         private readonly string _value;
 

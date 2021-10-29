@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
         /// <param name="zoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
-        internal ElasticPool(string id, string name, string type, string location, IDictionary<string, string> tags, Sku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType) : base(id, name, type, location, tags)
+        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
+        internal ElasticPool(string id, string name, string type, string location, IDictionary<string, string> tags, Sku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Kind = kind;
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
             PerDatabaseSettings = perDatabaseSettings;
             ZoneRedundant = zoneRedundant;
             LicenseType = licenseType;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
         }
 
         /// <summary>
@@ -98,5 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? ZoneRedundant { get; set; }
         /// <summary> The license type to apply for this elastic pool. </summary>
         public ElasticPoolLicenseType? LicenseType { get; set; }
+        /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
+        public string MaintenanceConfigurationId { get; set; }
     }
 }

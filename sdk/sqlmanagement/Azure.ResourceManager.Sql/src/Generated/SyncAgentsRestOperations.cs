@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/syncAgents/", false);
             uri.AppendPath(syncAgentName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/syncAgents/", false);
             uri.AppendPath(syncAgentName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/syncAgents/", false);
             uri.AppendPath(syncAgentName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/syncAgents", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncAgents/", false);
             uri.AppendPath(syncAgentName, true);
             uri.AppendPath("/generateKey", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncAgents/", false);
             uri.AppendPath(syncAgentName, true);
             uri.AppendPath("/linkedDatabases", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/keys", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Creates or updates a server key. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901, then the server key name should be formatted as: YourVaultName_YourKeyName_01234567890123456789012345678901. </param>
+        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
         /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="keyName"/>, or <paramref name="parameters"/> is null. </exception>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Creates or updates a server key. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901, then the server key name should be formatted as: YourVaultName_YourKeyName_01234567890123456789012345678901. </param>
+        /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
         /// <param name="parameters"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="keyName"/>, or <paramref name="parameters"/> is null. </exception>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }

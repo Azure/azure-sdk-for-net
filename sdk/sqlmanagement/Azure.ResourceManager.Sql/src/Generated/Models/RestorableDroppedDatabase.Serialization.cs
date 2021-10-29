@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,6 +17,27 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,23 +46,49 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static RestorableDroppedDatabase DeserializeRestorableDroppedDatabase(JsonElement element)
         {
+            Optional<Sku> sku = default;
             Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> maxSizeBytes = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
+            Optional<long> maxSizeBytes = default;
+            Optional<string> elasticPoolId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
+            Optional<RestorableDroppedDatabasePropertiesBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = Sku.DeserializeSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -72,24 +120,19 @@ namespace Azure.ResourceManager.Sql.Models
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("edition"))
-                        {
-                            edition = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("maxSizeBytes"))
                         {
-                            maxSizeBytes = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maxSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("serviceLevelObjective"))
+                        if (property0.NameEquals("elasticPoolId"))
                         {
-                            serviceLevelObjective = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("elasticPoolName"))
-                        {
-                            elasticPoolName = property0.Value.GetString();
+                            elasticPoolId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -122,11 +165,21 @@ namespace Azure.ResourceManager.Sql.Models
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("backupStorageRedundancy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            backupStorageRedundancy = new RestorableDroppedDatabasePropertiesBackupStorageRedundancy(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new RestorableDroppedDatabase(id.Value, name.Value, type.Value, location.Value, databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate));
+            return new RestorableDroppedDatabase(id.Value, name.Value, type.Value, sku.Value, location.Value, Optional.ToDictionary(tags), databaseName.Value, Optional.ToNullable(maxSizeBytes), elasticPoolId.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

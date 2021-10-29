@@ -24,22 +24,30 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
-        /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
-        /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account.
+        /// <param name="isDevopsAuditEnabled">
+        /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// 
-        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
+        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
         /// 
-        /// Prerequisites for using managed identity authentication:
         /// 
-        /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
         /// 
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
         /// 
-        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355).
+        /// 
+        /// 
+        /// Diagnostic Settings URI format:
+        /// 
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// 
+        /// 
+        /// 
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// 
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// 
+        /// .
         /// </param>
+        /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
@@ -156,12 +164,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions).
         /// </param>
-        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor.
         /// 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
         /// 
         /// 
         /// 
@@ -188,27 +195,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
-        internal ExtendedServerBlobAuditingPolicy(string id, string name, string type, string predicateExpression, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs) : base(id, name, type)
-        {
-            PredicateExpression = predicateExpression;
-            State = state;
-            StorageEndpoint = storageEndpoint;
-            StorageAccountAccessKey = storageAccountAccessKey;
-            RetentionDays = retentionDays;
-            AuditActionsAndGroups = auditActionsAndGroups;
-            StorageAccountSubscriptionId = storageAccountSubscriptionId;
-            IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
-            IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
-            QueueDelayMs = queueDelayMs;
-        }
-
-        /// <summary> Specifies condition of where clause when creating an audit. </summary>
-        public string PredicateExpression { get; set; }
-        /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
-        public BlobAuditingPolicyState? State { get; set; }
-        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
-        public string StorageEndpoint { get; set; }
-        /// <summary>
+        /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
+        /// <param name="storageAccountAccessKey">
         /// Specifies the identifier key of the auditing storage account.
         /// 
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
@@ -220,8 +209,49 @@ namespace Azure.ResourceManager.Sql.Models
         /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
         /// 
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355).
+        /// </param>
+        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
+        internal ExtendedServerBlobAuditingPolicy(string id, string name, string type, bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, type)
+        {
+            IsDevopsAuditEnabled = isDevopsAuditEnabled;
+            PredicateExpression = predicateExpression;
+            RetentionDays = retentionDays;
+            AuditActionsAndGroups = auditActionsAndGroups;
+            IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
+            IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
+            QueueDelayMs = queueDelayMs;
+            State = state;
+            StorageEndpoint = storageEndpoint;
+            StorageAccountAccessKey = storageAccountAccessKey;
+            StorageAccountSubscriptionId = storageAccountSubscriptionId;
+        }
+
+        /// <summary>
+        /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
+        /// 
+        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
+        /// 
+        /// 
+        /// 
+        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
+        /// 
+        /// 
+        /// 
+        /// Diagnostic Settings URI format:
+        /// 
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// 
+        /// 
+        /// 
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// 
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// 
+        /// .
         /// </summary>
-        public string StorageAccountAccessKey { get; set; }
+        public bool? IsDevopsAuditEnabled { get; set; }
+        /// <summary> Specifies condition of where clause when creating an audit. </summary>
+        public string PredicateExpression { get; set; }
         /// <summary> Specifies the number of days to keep in the audit logs in the storage account. </summary>
         public int? RetentionDays { get; set; }
         /// <summary>
@@ -340,14 +370,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions).
         /// </summary>
         public IList<string> AuditActionsAndGroups { get; }
-        /// <summary> Specifies the blob storage subscription Id. </summary>
-        public Guid? StorageAccountSubscriptionId { get; set; }
         /// <summary> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </summary>
         public bool? IsStorageSecondaryKeyInUse { get; set; }
         /// <summary>
         /// Specifies whether audit events are sent to Azure Monitor.
         /// 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
         /// 
         /// 
         /// 
@@ -376,5 +404,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </summary>
         public int? QueueDelayMs { get; set; }
+        /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
+        public BlobAuditingPolicyState? State { get; set; }
+        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
+        public string StorageEndpoint { get; set; }
+        /// <summary>
+        /// Specifies the identifier key of the auditing storage account.
+        /// 
+        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
+        /// 
+        /// Prerequisites for using managed identity authentication:
+        /// 
+        /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
+        /// 
+        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 
+        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355).
+        /// </summary>
+        public string StorageAccountAccessKey { get; set; }
+        /// <summary> Specifies the blob storage subscription Id. </summary>
+        public Guid? StorageAccountSubscriptionId { get; set; }
     }
 }

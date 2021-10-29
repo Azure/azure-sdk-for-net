@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/administrators", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string managedInstanceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string managedInstanceName, AdministratorName administratorName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/administrators/", false);
-            uri.AppendPath("ActiveDirectory", true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendPath(administratorName.ToString(), true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -151,9 +151,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public async Task<Response<ManagedInstanceAdministrator>> GetAsync(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedInstanceAdministrator>> GetAsync(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateGetRequest(resourceGroupName, managedInstanceName, administratorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,9 +184,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public Response<ManagedInstanceAdministrator> Get(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public Response<ManagedInstanceAdministrator> Get(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -196,7 +198,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateGetRequest(resourceGroupName, managedInstanceName, administratorName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -212,7 +214,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, ManagedInstanceAdministrator parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -226,8 +228,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/administrators/", false);
-            uri.AppendPath("ActiveDirectory", true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendPath(administratorName.ToString(), true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -240,10 +242,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Creates or updates a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="parameters"> The requested administrator parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -258,7 +261,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, managedInstanceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, managedInstanceName, administratorName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -274,10 +277,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Creates or updates a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="parameters"> The requested administrator parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -292,7 +296,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, managedInstanceName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, managedInstanceName, administratorName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -305,7 +309,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string managedInstanceName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string managedInstanceName, AdministratorName administratorName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -319,8 +323,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/administrators/", false);
-            uri.AppendPath("ActiveDirectory", true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendPath(administratorName.ToString(), true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -328,9 +332,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -341,7 +346,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateDeleteRequest(resourceGroupName, managedInstanceName, administratorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -356,9 +361,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes a managed instance administrator. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public Response Delete(string resourceGroupName, string managedInstanceName, AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -369,7 +375,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, managedInstanceName);
+            using var message = CreateDeleteRequest(resourceGroupName, managedInstanceName, administratorName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

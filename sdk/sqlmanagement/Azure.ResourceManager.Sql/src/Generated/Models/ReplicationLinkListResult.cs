@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents the response to a List database replication link request. </summary>
+    /// <summary> A list of replication links. </summary>
     internal partial class ReplicationLinkListResult
     {
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
-        /// <param name="value"> The list of database replication links housed in the database. </param>
-        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLink> value)
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLink> value, string nextLink)
         {
             Value = value;
+            NextLink = nextLink;
         }
 
-        /// <summary> The list of database replication links housed in the database. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<ReplicationLink> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

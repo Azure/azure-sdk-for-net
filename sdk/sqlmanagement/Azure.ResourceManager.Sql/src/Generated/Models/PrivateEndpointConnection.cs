@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Connection state of the private endpoint connection. </summary>
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
-        public string ProvisioningState { get; }
+        public PrivateEndpointProvisioningState? ProvisioningState { get; }
     }
 }

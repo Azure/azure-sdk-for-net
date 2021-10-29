@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> databaseDeletionTime = default;
             Optional<DateTimeOffset> backupTime = default;
             Optional<DateTimeOffset> backupExpirationTime = default;
+            Optional<BackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -109,11 +110,21 @@ namespace Azure.ResourceManager.Sql.Models
                             backupExpirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("backupStorageRedundancy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            backupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedInstanceLongTermRetentionBackup(id.Value, name.Value, type.Value, managedInstanceName.Value, Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime));
+            return new ManagedInstanceLongTermRetentionBackup(id.Value, name.Value, type.Value, managedInstanceName.Value, Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

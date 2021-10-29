@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
 
@@ -38,63 +39,19 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database for which setting the transparent data encryption applies. </param>
-        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="parameters"> The required parameters for creating or updating transparent data encryption. </param>
+        /// <param name="databaseName"> The name of the logical database for which the transparent data encryption is defined. </param>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransparentDataEncryption>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName transparentDataEncryptionName, TransparentDataEncryption parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, transparentDataEncryptionName, parameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a database&apos;s transparent data encryption configuration. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database for which setting the transparent data encryption applies. </param>
-        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="parameters"> The required parameters for creating or updating transparent data encryption. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransparentDataEncryption> CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName transparentDataEncryptionName, TransparentDataEncryption parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdate(resourceGroupName, serverName, databaseName, transparentDataEncryptionName, parameters, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a database&apos;s transparent data encryption configuration. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database for which the transparent data encryption applies. </param>
-        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransparentDataEncryption>> GetAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryption>> GetAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, serverName, databaseName, transparentDataEncryptionName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(resourceGroupName, serverName, databaseName, tdeName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -103,25 +60,177 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database for which the transparent data encryption applies. </param>
-        /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="databaseName"> The name of the logical database for which the transparent data encryption is defined. </param>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransparentDataEncryption> Get(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual Response<LogicalDatabaseTransparentDataEncryption> Get(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, serverName, databaseName, transparentDataEncryptionName, cancellationToken);
+                return RestClient.Get(resourceGroupName, serverName, databaseName, tdeName, cancellationToken);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the logical database for which the security alert policy is defined. </param>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="parameters"> The database transparent data encryption. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LogicalDatabaseTransparentDataEncryption>> CreateOrUpdateAsync(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryption parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, tdeName, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the logical database for which the security alert policy is defined. </param>
+        /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
+        /// <param name="parameters"> The database transparent data encryption. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LogicalDatabaseTransparentDataEncryption> CreateOrUpdate(string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName tdeName, LogicalDatabaseTransparentDataEncryption parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(resourceGroupName, serverName, databaseName, tdeName, parameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the logical database for which the transparent data encryption is defined. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public virtual AsyncPageable<LogicalDatabaseTransparentDataEncryption> ListByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            async Task<Page<LogicalDatabaseTransparentDataEncryption>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByDatabaseAsync(resourceGroupName, serverName, databaseName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<LogicalDatabaseTransparentDataEncryption>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the logical database for which the transparent data encryption is defined. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public virtual Pageable<LogicalDatabaseTransparentDataEncryption> ListByDatabase(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            Page<LogicalDatabaseTransparentDataEncryption> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByDatabase(resourceGroupName, serverName, databaseName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<LogicalDatabaseTransparentDataEncryption> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("TransparentDataEncryptionsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

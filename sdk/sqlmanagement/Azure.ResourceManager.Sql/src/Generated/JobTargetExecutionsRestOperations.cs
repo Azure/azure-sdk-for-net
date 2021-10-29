@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(stepName, true);
             uri.AppendPath("/targets/", false);
             uri.AppendPath(targetId, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

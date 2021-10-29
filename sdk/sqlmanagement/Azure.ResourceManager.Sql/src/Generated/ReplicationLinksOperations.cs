@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database replication link. </summary>
+        /// <summary> Gets a replication link. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to get the link for. </param>
-        /// <param name="linkId"> The replication link ID to be retrieved. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReplicationLink>> GetAsync(string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default)
         {
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database replication link. </summary>
+        /// <summary> Gets a replication link. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to get the link for. </param>
-        /// <param name="linkId"> The replication link ID to be retrieved. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="linkId"> The name of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReplicationLink> Get(string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default)
         {
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Lists a database&apos;s replication links. </summary>
+        /// <summary> Gets a list of replication links on database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to retrieve links for. </param>
+        /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
         public virtual AsyncPageable<ReplicationLink> ListByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await RestClient.ListByDatabaseAsync(resourceGroupName, serverName, databaseName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,13 +159,28 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<ReplicationLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByDatabaseNextPageAsync(nextLink, resourceGroupName, serverName, databaseName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists a database&apos;s replication links. </summary>
+        /// <summary> Gets a list of replication links on database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to retrieve links for. </param>
+        /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
         public virtual Pageable<ReplicationLink> ListByDatabase(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
@@ -190,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = RestClient.ListByDatabase(resourceGroupName, serverName, databaseName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,7 +213,120 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<ReplicationLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByDatabaseNextPage(nextLink, resourceGroupName, serverName, databaseName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of replication links. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual AsyncPageable<ReplicationLink> ListByServerAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            async Task<Page<ReplicationLink>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ReplicationLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerNextPageAsync(nextLink, resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of replication links. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual Pageable<ReplicationLink> ListByServer(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            Page<ReplicationLink> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServer(resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ReplicationLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ReplicationLinksOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServerNextPage(nextLink, resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Sets which replica database is primary by failing over from the current primary replica database. </summary>

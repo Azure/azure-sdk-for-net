@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseDeletionTime"> The delete time of the database. </param>
         /// <param name="backupTime"> The time the backup was taken. </param>
         /// <param name="backupExpirationTime"> The time the long term retention backup will expire. </param>
-        internal LongTermRetentionBackup(string id, string name, string type, string serverName, DateTimeOffset? serverCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime) : base(id, name, type)
+        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        internal LongTermRetentionBackup(string id, string name, string type, string serverName, DateTimeOffset? serverCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, type)
         {
             ServerName = serverName;
             ServerCreateTime = serverCreateTime;
@@ -35,6 +37,8 @@ namespace Azure.ResourceManager.Sql.Models
             DatabaseDeletionTime = databaseDeletionTime;
             BackupTime = backupTime;
             BackupExpirationTime = backupExpirationTime;
+            BackupStorageRedundancy = backupStorageRedundancy;
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
         }
 
         /// <summary> The server name that the backup database belong to. </summary>
@@ -49,5 +53,9 @@ namespace Azure.ResourceManager.Sql.Models
         public DateTimeOffset? BackupTime { get; }
         /// <summary> The time the long term retention backup will expire. </summary>
         public DateTimeOffset? BackupExpirationTime { get; }
+        /// <summary> The storage redundancy type of the backup. </summary>
+        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
+        /// <summary> The storage redundancy type of the backup. </summary>
+        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
     }
 }

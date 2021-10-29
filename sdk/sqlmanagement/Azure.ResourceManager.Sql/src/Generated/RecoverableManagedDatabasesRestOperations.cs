@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/recoverableDatabases", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/recoverableDatabases/", false);
             uri.AppendPath(recoverableDatabaseName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

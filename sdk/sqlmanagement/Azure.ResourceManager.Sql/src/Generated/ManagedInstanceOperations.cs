@@ -39,46 +39,6 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        /// <summary> Cancels the asynchronous operation on the managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelAsync(string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperations.Cancel");
-            scope.Start();
-            try
-            {
-                return await RestClient.CancelAsync(resourceGroupName, managedInstanceName, operationId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels the asynchronous operation on the managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Cancel(string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperations.Cancel");
-            scope.Start();
-            try
-            {
-                return RestClient.Cancel(resourceGroupName, managedInstanceName, operationId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a management operation on a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -111,6 +71,46 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 return RestClient.Get(resourceGroupName, managedInstanceName, operationId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancels the asynchronous operation on the managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="operationId"> The Uuid to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CancelAsync(string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperations.Cancel");
+            scope.Start();
+            try
+            {
+                return await RestClient.CancelAsync(resourceGroupName, managedInstanceName, operationId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancels the asynchronous operation on the managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="operationId"> The Uuid to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Cancel(string resourceGroupName, string managedInstanceName, Guid operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceOperations.Cancel");
+            scope.Start();
+            try
+            {
+                return RestClient.Cancel(resourceGroupName, managedInstanceName, operationId, cancellationToken);
             }
             catch (Exception e)
             {

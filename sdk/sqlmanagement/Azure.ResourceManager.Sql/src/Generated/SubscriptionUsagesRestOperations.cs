@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
             uri.AppendPath(locationName, true);
             uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(locationName, true);
             uri.AppendPath("/usages/", false);
             uri.AppendPath(usageName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

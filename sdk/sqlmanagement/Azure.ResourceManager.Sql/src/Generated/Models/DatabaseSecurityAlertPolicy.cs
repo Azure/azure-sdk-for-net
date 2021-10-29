@@ -5,34 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Contains information about a database Threat Detection policy. </summary>
+    /// <summary> A database security alert policy. </summary>
     public partial class DatabaseSecurityAlertPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of DatabaseSecurityAlertPolicy. </summary>
         public DatabaseSecurityAlertPolicy()
         {
+            DisabledAlerts = new ChangeTrackingList<string>();
+            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DatabaseSecurityAlertPolicy. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="kind"> Resource kind. </param>
-        /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. </param>
-        /// <param name="disabledAlerts"> Specifies the semicolon-separated list of alerts that are disabled, or empty string to disable no alerts. Possible values: Sql_Injection; Sql_Injection_Vulnerability; Access_Anomaly; Data_Exfiltration; Unsafe_Action. </param>
-        /// <param name="emailAddresses"> Specifies the semicolon-separated list of e-mail addresses to which the alert is sent. </param>
+        /// <param name="systemData"> SystemData of SecurityAlertPolicyResource. </param>
+        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
+        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
+        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
         /// <param name="emailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. If state is Enabled, storageEndpoint is required. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. If state is Enabled, storageAccountAccessKey is required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="useServerDefault"> Specifies whether to use the default server policy. </param>
-        internal DatabaseSecurityAlertPolicy(string id, string name, string type, string location, string kind, SecurityAlertPolicyState? state, string disabledAlerts, string emailAddresses, SecurityAlertPolicyEmailAccountAdmins? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, SecurityAlertPolicyUseServerDefault? useServerDefault) : base(id, name, type)
+        /// <param name="creationTime"> Specifies the UTC creation time of the policy. </param>
+        internal DatabaseSecurityAlertPolicy(string id, string name, string type, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? creationTime) : base(id, name, type)
         {
-            Location = location;
-            Kind = kind;
+            SystemData = systemData;
             State = state;
             DisabledAlerts = disabledAlerts;
             EmailAddresses = emailAddresses;
@@ -40,28 +44,26 @@ namespace Azure.ResourceManager.Sql.Models
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
-            UseServerDefault = useServerDefault;
+            CreationTime = creationTime;
         }
 
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
-        /// <summary> Resource kind. </summary>
-        public string Kind { get; }
-        /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. </summary>
-        public SecurityAlertPolicyState? State { get; set; }
-        /// <summary> Specifies the semicolon-separated list of alerts that are disabled, or empty string to disable no alerts. Possible values: Sql_Injection; Sql_Injection_Vulnerability; Access_Anomaly; Data_Exfiltration; Unsafe_Action. </summary>
-        public string DisabledAlerts { get; set; }
-        /// <summary> Specifies the semicolon-separated list of e-mail addresses to which the alert is sent. </summary>
-        public string EmailAddresses { get; set; }
+        /// <summary> SystemData of SecurityAlertPolicyResource. </summary>
+        public SystemData SystemData { get; }
+        /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
+        public SecurityAlertsPolicyState? State { get; set; }
+        /// <summary> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </summary>
+        public IList<string> DisabledAlerts { get; }
+        /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
+        public IList<string> EmailAddresses { get; }
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
-        public SecurityAlertPolicyEmailAccountAdmins? EmailAccountAdmins { get; set; }
-        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. If state is Enabled, storageEndpoint is required. </summary>
+        public bool? EmailAccountAdmins { get; set; }
+        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
         public string StorageEndpoint { get; set; }
-        /// <summary> Specifies the identifier key of the Threat Detection audit storage account. If state is Enabled, storageAccountAccessKey is required. </summary>
+        /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>
         public string StorageAccountAccessKey { get; set; }
         /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
         public int? RetentionDays { get; set; }
-        /// <summary> Specifies whether to use the default server policy. </summary>
-        public SecurityAlertPolicyUseServerDefault? UseServerDefault { get; set; }
+        /// <summary> Specifies the UTC creation time of the policy. </summary>
+        public DateTimeOffset? CreationTime { get; }
     }
 }

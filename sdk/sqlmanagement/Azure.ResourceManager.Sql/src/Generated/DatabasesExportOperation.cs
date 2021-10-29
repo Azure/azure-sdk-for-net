@@ -16,10 +16,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> Exports a database to a bacpac. </summary>
-    public partial class DatabasesExportOperation : Operation<ImportExportResponse>, IOperationSource<ImportExportResponse>
+    /// <summary> Exports a database. </summary>
+    public partial class DatabasesExportOperation : Operation<ImportExportOperationResult>, IOperationSource<ImportExportOperationResult>
     {
-        private readonly ArmOperationHelpers<ImportExportResponse> _operation;
+        private readonly ArmOperationHelpers<ImportExportOperationResult> _operation;
 
         /// <summary> Initializes a new instance of DatabasesExportOperation for mocking. </summary>
         protected DatabasesExportOperation()
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Sql
 
         internal DatabasesExportOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ImportExportResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabasesExportOperation");
+            _operation = new ArmOperationHelpers<ImportExportOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabasesExportOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ImportExportResponse Value => _operation.Value;
+        public override ImportExportOperationResult Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.Sql
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ImportExportResponse>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ImportExportOperationResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ImportExportResponse>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ImportExportOperationResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        ImportExportResponse IOperationSource<ImportExportResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        ImportExportOperationResult IOperationSource<ImportExportOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ImportExportResponse.DeserializeImportExportResponse(document.RootElement);
+            return ImportExportOperationResult.DeserializeImportExportOperationResult(document.RootElement);
         }
 
-        async ValueTask<ImportExportResponse> IOperationSource<ImportExportResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ImportExportOperationResult> IOperationSource<ImportExportOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ImportExportResponse.DeserializeImportExportResponse(document.RootElement);
+            return ImportExportOperationResult.DeserializeImportExportOperationResult(document.RootElement);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/automaticTuning/current", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/automaticTuning/current", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

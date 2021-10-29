@@ -42,14 +42,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Server>> GetAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Server>> GetAsync(string resourceGroupName, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServersOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(resourceGroupName, serverName, expand, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -61,14 +62,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Server> Get(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public virtual Response<Server> Get(string resourceGroupName, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServersOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, serverName, cancellationToken);
+                return RestClient.Get(resourceGroupName, serverName, expand, cancellationToken);
             }
             catch (Exception e)
             {
@@ -115,9 +117,10 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of servers in a resource groups. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual AsyncPageable<Server> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Server> ListByResourceGroupAsync(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -130,7 +133,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -159,9 +162,10 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a list of servers in a resource groups. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Pageable<Server> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Server> ListByResourceGroup(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByResourceGroup(resourceGroupName, cancellationToken);
+                    var response = RestClient.ListByResourceGroup(resourceGroupName, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, cancellationToken);
+                    var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -202,8 +206,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of all servers in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Server> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Server> ListAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<Server>> FirstPageFunc(int? pageSizeHint)
             {
@@ -211,7 +216,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAsync(expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -226,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListNextPageAsync(nextLink, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -239,8 +244,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of all servers in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Server> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Server> List(string expand = null, CancellationToken cancellationToken = default)
         {
             Page<Server> FirstPageFunc(int? pageSizeHint)
             {
@@ -248,7 +254,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken);
+                    var response = RestClient.List(expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    var response = RestClient.ListNextPage(nextLink, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -467,6 +473,76 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalResponse = RestClient.Update(resourceGroupName, serverName, parameters, cancellationToken);
                 return new ServersUpdateOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(resourceGroupName, serverName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<ServersImportDatabaseOperation> StartImportDatabaseAsync(string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServersOperations.StartImportDatabase");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.ImportDatabaseAsync(resourceGroupName, serverName, parameters, cancellationToken).ConfigureAwait(false);
+                return new ServersImportDatabaseOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportDatabaseRequest(resourceGroupName, serverName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual ServersImportDatabaseOperation StartImportDatabase(string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServersOperations.StartImportDatabase");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.ImportDatabase(resourceGroupName, serverName, parameters, cancellationToken);
+                return new ServersImportDatabaseOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportDatabaseRequest(resourceGroupName, serverName, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

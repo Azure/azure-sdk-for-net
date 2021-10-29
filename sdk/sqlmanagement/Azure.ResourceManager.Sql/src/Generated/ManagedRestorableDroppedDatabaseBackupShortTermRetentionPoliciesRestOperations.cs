@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/restorableDroppedDatabases/", false);
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendPath("/backupShortTermRetentionPolicies", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Sql/operations", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

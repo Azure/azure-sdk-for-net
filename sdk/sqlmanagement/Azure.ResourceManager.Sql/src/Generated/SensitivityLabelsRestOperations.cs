@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListCurrentByDatabaseRequest(string resourceGroupName, string serverName, string databaseName, string filter)
+        internal HttpMessage CreateListCurrentByDatabaseRequest(string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,11 +59,19 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/currentSensitivityLabels", false);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", count.Value, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -73,10 +81,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -91,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, serverName, databaseName, filter);
+            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, serverName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -111,10 +121,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListCurrentByDatabase(string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListCurrentByDatabase(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -129,7 +141,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, serverName, databaseName, filter);
+            using var message = CreateListCurrentByDatabaseRequest(resourceGroupName, serverName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -145,7 +157,106 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListRecommendedByDatabaseRequest(string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations, string skipToken, string filter)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/currentSensitivityLabels", false);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> UpdateAsync(string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateRequest(resourceGroupName, serverName, databaseName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update sensitivity labels of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response Update(string resourceGroupName, string serverName, string databaseName, SensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateRequest(resourceGroupName, serverName, databaseName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListRecommendedByDatabaseRequest(string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -161,19 +272,19 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/recommendedSensitivityLabels", false);
-            if (includeDisabledRecommendations != null)
-            {
-                uri.AppendQuery("includeDisabledRecommendations", includeDisabledRecommendations.Value, true);
-            }
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (includeDisabledRecommendations != null)
+            {
+                uri.AppendQuery("includeDisabledRecommendations", includeDisabledRecommendations.Value, true);
             }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -183,12 +294,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseAsync(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -203,7 +314,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter);
+            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -223,12 +334,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListRecommendedByDatabase(string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListRecommendedByDatabase(string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -243,7 +354,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter);
+            using var message = CreateListRecommendedByDatabaseRequest(resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -254,6 +365,105 @@ namespace Azure.ResourceManager.Sql
                         value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateRecommendedRequest(string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/recommendedSensitivityLabels", false);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> UpdateRecommendedAsync(string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateRecommendedRequest(resourceGroupName, serverName, databaseName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update recommended sensitivity labels states of a given database using an operations batch. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response UpdateRecommended(string resourceGroupName, string serverName, string databaseName, RecommendedSensitivityLabelUpdateList parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateUpdateRecommendedRequest(resourceGroupName, serverName, databaseName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -283,7 +493,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/sensitivityLabels/", false);
             uri.AppendPath("recommended", true);
             uri.AppendPath("/enable", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -406,7 +616,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/sensitivityLabels/", false);
             uri.AppendPath("recommended", true);
             uri.AppendPath("/disable", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -528,7 +738,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(columnName, true);
             uri.AppendPath("/sensitivityLabels/", false);
             uri.AppendPath(sensitivityLabelSource.ToSerialString(), true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -663,7 +873,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(columnName, true);
             uri.AppendPath("/sensitivityLabels/", false);
             uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -812,7 +1022,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(columnName, true);
             uri.AppendPath("/sensitivityLabels/", false);
             uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -911,7 +1121,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListCurrentByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string filter)
+        internal HttpMessage CreateListCurrentByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -929,10 +1139,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListCurrentByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -951,7 +1163,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, filter);
+            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -972,10 +1184,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListCurrentByDatabaseNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListCurrentByDatabaseNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -994,7 +1208,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, filter);
+            using var message = CreateListCurrentByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, skipToken, count, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1010,7 +1224,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListRecommendedByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations, string skipToken, string filter)
+        internal HttpMessage CreateListRecommendedByDatabaseNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1028,12 +1242,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SensitivityLabelListResult>> ListRecommendedByDatabaseNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1052,7 +1266,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter);
+            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1073,12 +1287,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response<SensitivityLabelListResult> ListRecommendedByDatabaseNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SensitivityLabelListResult> ListRecommendedByDatabaseNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1097,7 +1311,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(databaseName));
             }
 
-            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, includeDisabledRecommendations, skipToken, filter);
+            using var message = CreateListRecommendedByDatabaseNextPageRequest(nextLink, resourceGroupName, serverName, databaseName, skipToken, includeDisabledRecommendations, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
