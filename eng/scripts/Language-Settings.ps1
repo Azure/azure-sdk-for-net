@@ -25,6 +25,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
 
+    if(!(Test-Path $pkgPath)) {
+      Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
+      continue
+    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
@@ -245,6 +249,7 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
 function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
+    $PackageName = $PackageName.ToLower()
     $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
     return $existingVersion.versions
   }

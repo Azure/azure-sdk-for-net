@@ -28,7 +28,7 @@ namespace VideoAnalyzer.Tests.ScenarioTests
                     Assert.Empty(videos);
 
                     var videoName = TestUtilities.GenerateName("video");
-                    VideoAnalyzerClient.Videos.CreateOrUpdate(ResourceGroup, AccountName, videoName, "video title", "test description");
+                    VideoAnalyzerClient.Videos.CreateOrUpdate(ResourceGroup, AccountName, videoName, new VideoEntity(){ Title= "video title", Description= "video description"});
 
                     var video = VideoAnalyzerClient.Videos.Get(ResourceGroup, AccountName, videoName);
                     Assert.NotNull(video);

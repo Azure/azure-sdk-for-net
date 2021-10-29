@@ -1,0 +1,210 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2021-09-30-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "71",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3bc09d8e77cacc44afe9da21021df2b9-d3612e48f2370a4f-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1406ac25b3eda7bf798c20ee1c3f6f52",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "modelId": "1718002526",
+        "azureBlobSource": {
+          "containerUrl": "Sanitized"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "66dec467-e8b5-474d-b025-d8c73db61890",
+        "Content-Length": "0",
+        "Date": "Tue, 12 Oct 2021 18:29:07 GMT",
+        "operation-location": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31532304655_66dec467-e8b5-474d-b025-d8c73db61890?api-version=2021-09-30-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "3117"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31532304655_66dec467-e8b5-474d-b025-d8c73db61890?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "413721c930e5c49b67d5db5b57025511",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1918c1f5-35f5-4b2b-aa78-7124dd12e1e7",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 18:29:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022operationId\u0022: \u002231532304655_66dec467-e8b5-474d-b025-d8c73db61890\u0022,\n",
+        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
+        "  \u0022status\u0022: \u0022notStarted\u0022,\n",
+        "  \u0022createdDateTime\u0022: \u00222021-10-12T18:29:04Z\u0022,\n",
+        "  \u0022lastUpdatedDateTime\u0022: \u00222021-10-12T18:29:04Z\u0022,\n",
+        "  \u0022resourceLocation\u0022: \u0022https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1718002526?api-version=2021-09-30-preview\u0022\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31532304655_66dec467-e8b5-474d-b025-d8c73db61890?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e00274d14b9073dca4bd18edee799e4a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "be45b320-5747-4336-bf75-2e74399dff15",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 18:29:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022operationId\u0022: \u002231532304655_66dec467-e8b5-474d-b025-d8c73db61890\u0022,\n",
+        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
+        "  \u0022status\u0022: \u0022running\u0022,\n",
+        "  \u0022createdDateTime\u0022: \u00222021-10-12T18:29:04Z\u0022,\n",
+        "  \u0022lastUpdatedDateTime\u0022: \u00222021-10-12T18:29:08Z\u0022,\n",
+        "  \u0022resourceLocation\u0022: \u0022https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1718002526?api-version=2021-09-30-preview\u0022\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31532304655_66dec467-e8b5-474d-b025-d8c73db61890?api-version=2021-09-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "2780376a3c62f5781042ac18d7644f76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "56f9da52-2eeb-4280-b829-e37a592dbc75",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 18:29:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "47"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022operationId\u0022: \u002231532304655_66dec467-e8b5-474d-b025-d8c73db61890\u0022,\n",
+        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
+        "  \u0022status\u0022: \u0022succeeded\u0022,\n",
+        "  \u0022createdDateTime\u0022: \u00222021-10-12T18:29:04Z\u0022,\n",
+        "  \u0022lastUpdatedDateTime\u0022: \u00222021-10-12T18:29:10Z\u0022,\n",
+        "  \u0022resourceLocation\u0022: \u0022https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1718002526?api-version=2021-09-30-preview\u0022,\n",
+        "  \u0022percentCompleted\u0022: 100,\n",
+        "  \u0022result\u0022: {\n",
+        "    \u0022docTypes\u0022: {\n",
+        "      \u00221718002526\u0022: {\n",
+        "        \u0022fieldSchema\u0022: {\n",
+        "          \u0022Merchant\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022PhoneNumber\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Website\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Email\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022PurchaseOrderNumber\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022DatedAs\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022VendorName\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022CompanyName\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022CompanyAddress\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022CompanyPhoneNumber\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Subtotal\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Tax\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Total\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Signature\u0022: {\n",
+        "            \u0022type\u0022: \u0022string\u0022\n",
+        "          },\n",
+        "          \u0022Quantity\u0022: {\n",
+        "            \u0022type\u0022: \u0022number\u0022\n",
+        "          }\n",
+        "        },\n",
+        "        \u0022fieldConfidence\u0022: {\n",
+        "          \u0022CompanyAddress\u0022: 0.8,\n",
+        "          \u0022CompanyName\u0022: 0.95,\n",
+        "          \u0022CompanyPhoneNumber\u0022: 0.95,\n",
+        "          \u0022DatedAs\u0022: 0.95,\n",
+        "          \u0022Email\u0022: 0.8,\n",
+        "          \u0022Merchant\u0022: 0.95,\n",
+        "          \u0022PhoneNumber\u0022: 0.95,\n",
+        "          \u0022PurchaseOrderNumber\u0022: 0.95,\n",
+        "          \u0022Quantity\u0022: 0.95,\n",
+        "          \u0022Signature\u0022: 0.6,\n",
+        "          \u0022Subtotal\u0022: 0.95,\n",
+        "          \u0022Tax\u0022: 0.95,\n",
+        "          \u0022Total\u0022: 0.95,\n",
+        "          \u0022VendorName\u0022: 0.95,\n",
+        "          \u0022Website\u0022: 0.95\n",
+        "        }\n",
+        "      }\n",
+        "    },\n",
+        "    \u0022modelId\u0022: \u00221718002526\u0022,\n",
+        "    \u0022createdDateTime\u0022: \u00222021-10-12T18:29:09Z\u0022\n",
+        "  }\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
+    "RandomSeed": "945149459"
+  }
+}

@@ -19,43 +19,43 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Compute", "ReplicationEligibilityResults", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "MigrationRecoveryPoints", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "Operations", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationAlertSettings", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationEvents", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationFabrics", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationJobs", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationLogicalNetworks", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationMigrationItems", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationNetworkMappings", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationNetworks", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationPolicies", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectableItems", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectedItems", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionContainerMappings", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionContainers", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionIntents", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationRecoveryPlans", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationRecoveryServicesProviders", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassificationMappings", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassifications", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultHealth", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultSetting", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationvCenters", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "SupportedOperatingSystems", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "TargetComputeSizes", "2021-06-01"),
+                new Tuple<string, string, string>("Compute", "ReplicationEligibilityResults", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "MigrationRecoveryPoints", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "Operations", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationAlertSettings", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationEvents", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationFabrics", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationJobs", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationLogicalNetworks", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationMigrationItems", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationNetworkMappings", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationNetworks", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationPolicies", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectableItems", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectedItems", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionContainerMappings", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionContainers", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationProtectionIntents", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationRecoveryPlans", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationRecoveryServicesProviders", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassificationMappings", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassifications", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultHealth", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultSetting", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationvCenters", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "SupportedOperatingSystems", "2021-08-01"),
+                new Tuple<string, string, string>("RecoveryServices", "TargetComputeSizes", "2021-08-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicessiterecovery/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\GIT\\AsrOneSdk\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservicessiterecovery/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "6de27dc43268e23cbb322bdf18016c8b944f8926";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "3eaa729b3686f20817145e771a8ab707c739dbbd";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

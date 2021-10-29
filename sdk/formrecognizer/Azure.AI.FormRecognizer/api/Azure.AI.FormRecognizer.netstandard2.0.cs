@@ -294,7 +294,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public int PercentCompleted { get { throw null; } }
+        public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -323,7 +323,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public int PercentCompleted { get { throw null; } }
+        public virtual int PercentCompleted { get { throw null; } }
         public override Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -358,22 +358,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             V2021_09_30_preview = 1,
         }
-    }
-    public partial class DocumentAnalysisError
-    {
-        internal DocumentAnalysisError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisError> Details { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisInnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
-    public partial class DocumentAnalysisInnerError
-    {
-        internal DocumentAnalysisInnerError() { }
-        public string Code { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisInnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
     }
     public partial class DocumentEntity
     {
@@ -537,10 +521,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan Span { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.SelectionMarkState State { get { throw null; } }
     }
-    public enum DocumentSignatureType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentSignatureType : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType>
     {
-        Signed = 0,
-        Unsigned = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentSignatureType(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType Signed { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType Unsigned { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentSpan
     {
@@ -613,7 +610,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class ModelOperation : Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperationInfo
     {
         internal ModelOperation() { }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisError Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Result { get { throw null; } }
     }
     public partial class ModelOperationInfo

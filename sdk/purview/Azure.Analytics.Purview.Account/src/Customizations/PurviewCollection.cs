@@ -15,9 +15,9 @@ namespace Azure.Analytics.Purview.Account
         {
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
-            this.endpoint = endpoint;
-            this.collectionName = collectionName;
-            this.apiVersion = apiVersion;
+            _endpoint = endpoint;
+            _collectionName = collectionName;
+            _apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
         }
     }

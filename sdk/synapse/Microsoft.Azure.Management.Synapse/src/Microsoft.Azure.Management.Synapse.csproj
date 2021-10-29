@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>2.2.0-preview</Version>
+		<Version>2.3.0-preview</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			- SDK now consumes 2021-06-01 and 2021-06-01-preview API version
+			- Add Kusto pool related features
       ]]>
 		</PackageReleaseNotes>
     

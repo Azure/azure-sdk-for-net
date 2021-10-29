@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load balancer backend addresses. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
-        internal LoadBalancerBackendAddress(string name, SubResource virtualNetwork, SubResource subnet, string ipAddress, SubResource networkInterfaceIPConfiguration, SubResource loadBalancerFrontendIPConfiguration)
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
@@ -35,14 +37,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Name of the backend address. </summary>
         public string Name { get; set; }
         /// <summary> Reference to an existing virtual network. </summary>
-        public SubResource VirtualNetwork { get; set; }
+        public WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Reference to an existing subnet. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
         public string IpAddress { get; set; }
         /// <summary> Reference to IP address defined in network interfaces. </summary>
-        public SubResource NetworkInterfaceIPConfiguration { get; }
+        public WritableSubResource NetworkInterfaceIPConfiguration { get; }
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
-        public SubResource LoadBalancerFrontendIPConfiguration { get; set; }
+        public WritableSubResource LoadBalancerFrontendIPConfiguration { get; set; }
     }
 }

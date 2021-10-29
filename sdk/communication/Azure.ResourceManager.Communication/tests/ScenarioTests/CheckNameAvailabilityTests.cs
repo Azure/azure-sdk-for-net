@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task CheckNameUniqueness()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;

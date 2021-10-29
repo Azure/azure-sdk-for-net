@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -18,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
-            var container = await GetVirtualMachineScaleSetContainerAsync();
+            var collection = await GetVirtualMachineScaleSetCollectionAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            var lro = await container.CreateOrUpdateAsync(vmssName, input);
+            var lro = await collection.CreateOrUpdateAsync(vmssName, input);
             return lro.Value;
         }
 
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
             await vmss.DeallocateAsync();
             var update = new VirtualMachineScaleSetUpdate()
             {
-                ProximityPlacementGroup = new SubResource()
+                ProximityPlacementGroup = new WritableSubResource()
                 {
                     Id = ppg.Id
                 }

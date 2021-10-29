@@ -1,6 +1,7 @@
 # Release History
 
-## 5.0.0-beta.6 (Unreleased)
+## 5.0.0 (2021-10-26)
+- General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Blobs 5.0.0.
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.
 - Adding Dynamic Concurrency support.
 - Execution log when using Event Grid Blob Trigger vs Blob Trigger.
