@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerParametersOperations operations.
+    /// GetPrivateDnsZoneSuffixOperations operations.
     /// </summary>
-    internal partial class ServerParametersOperations : IServiceOperations<MySQLManagementClient>, IServerParametersOperations
+    internal partial class GetPrivateDnsZoneSuffixOperations : IServiceOperations<MySQLManagementClient>, IGetPrivateDnsZoneSuffixOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ServerParametersOperations class.
+        /// Initializes a new instance of the GetPrivateDnsZoneSuffixOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ServerParametersOperations(MySQLManagementClient client)
+        internal GetPrivateDnsZoneSuffixOperations(MySQLManagementClient client)
         {
             if (client == null)
             {
@@ -51,42 +51,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         public MySQLManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Update a list of configurations in a given server.
+        /// Get private DNS zone suffix in the cloud.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='value'>
-        /// The parameters for updating a list of server configuration.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ConfigurationListResult>> BatchUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListResult value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<ConfigurationListResult> _response = await BeginBatchUpdateWithHttpMessagesAsync(resourceGroupName, serverName, value, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update a list of configurations in a given server.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='value'>
-        /// The parameters for updating a list of server configuration.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -108,7 +74,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ConfigurationListResult>> BeginBatchUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ConfigurationListResult value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GetPrivateDnsZoneSuffixResponse>> ExecuteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -121,40 +87,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (Client.SubscriptionId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (serverName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
-            }
-            if (value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "value");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -162,18 +94,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("value", value);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginBatchUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Execute", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBForMySql/flexibleServers/{serverName}/updateConfigurations").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -217,12 +143,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
 
             // Serialize Request
             string _requestContent = null;
-            if(value != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(value, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -243,7 +163,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -278,7 +198,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ConfigurationListResult>();
+            var _result = new AzureOperationResponse<GetPrivateDnsZoneSuffixResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -291,7 +211,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConfigurationListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GetPrivateDnsZoneSuffixResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

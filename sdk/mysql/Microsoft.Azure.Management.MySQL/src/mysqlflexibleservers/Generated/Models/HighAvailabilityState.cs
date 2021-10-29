@@ -12,11 +12,14 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessEnum.
+    /// Defines values for HighAvailabilityState.
     /// </summary>
-    public static class PublicNetworkAccessEnum
+    public static class HighAvailabilityState
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string NotEnabled = "NotEnabled";
+        public const string CreatingStandby = "CreatingStandby";
+        public const string Healthy = "Healthy";
+        public const string FailingOver = "FailingOver";
+        public const string RemovingStandby = "RemovingStandby";
     }
 }
