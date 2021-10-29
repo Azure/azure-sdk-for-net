@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
 
         public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
-            base(isAsync: true, RecordedTestMode.Live)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
             _serviceVersion = serviceVersion;
