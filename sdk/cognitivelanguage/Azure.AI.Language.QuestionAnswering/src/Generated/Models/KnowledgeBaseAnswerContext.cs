@@ -5,14 +5,14 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Context object with previous QnA&apos;s information. </summary>
-    public partial class KnowledgeBaseAnswerRequestContext
+    public partial class KnowledgeBaseAnswerContext
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerRequestContext. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerContext. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
-        public KnowledgeBaseAnswerRequestContext(int previousQnaId)
+        public KnowledgeBaseAnswerContext(int previousQnaId)
         {
             PreviousQnaId = previousQnaId;
         }
@@ -20,6 +20,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Previous turn top answer result QnA ID. </summary>
         public int PreviousQnaId { get; }
         /// <summary> Previous user query. </summary>
-        public string PreviousUserQuery { get; set; }
+        public string PreviousQuestion { get; set; }
     }
 }

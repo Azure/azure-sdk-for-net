@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class KnowledgeBaseAnswers
+    public partial class AnswersFromTextResult
     {
-        internal static KnowledgeBaseAnswers DeserializeKnowledgeBaseAnswers(JsonElement element)
+        internal static AnswersFromTextResult DeserializeAnswersFromTextResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
+            Optional<IReadOnlyList<TextAnswer>> answers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answers"))
@@ -25,16 +25,16 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnowledgeBaseAnswer> array = new List<KnowledgeBaseAnswer>();
+                    List<TextAnswer> array = new List<TextAnswer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseAnswer.DeserializeKnowledgeBaseAnswer(item));
+                        array.Add(TextAnswer.DeserializeTextAnswer(item));
                     }
                     answers = array;
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswers(Optional.ToList(answers));
+            return new AnswersFromTextResult(Optional.ToList(answers));
         }
     }
 }

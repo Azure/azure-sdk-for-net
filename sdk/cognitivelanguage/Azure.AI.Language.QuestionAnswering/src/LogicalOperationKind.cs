@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     public readonly partial struct LogicalOperationKind
     {
