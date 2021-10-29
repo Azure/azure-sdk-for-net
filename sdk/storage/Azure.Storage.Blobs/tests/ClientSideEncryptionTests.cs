@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1086,17 +1086,17 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
 
-            var data = GetRandomBuffer(Constants.KB);
-            var mockKey1 = GetIKeyEncryptionKey();
-            var mockKey2 = GetIKeyEncryptionKey();
-            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
+            Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey();
+            IKeyEncryptionKeyResolver mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
-            var cek = GetRandomBuffer(32);
-            var simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
+            byte[] cek = GetRandomBuffer(32);
+            EncryptionData simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
 
             // do NOT get an encryption client for data upload. we won't be able to record.
             await using DisposingContainer disposable = await GetTestContainerAsync();
-            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+            BlobClient blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
             await blob.UploadAsync(new MemoryStream(data), metadata: new Dictionary<string, string> {
                 { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(simulatedEncryptionData) }
             });
@@ -1122,18 +1122,18 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             const float rotationPauseTimeSeconds = 1f;
 
-            var data = GetRandomBuffer(Constants.KB);
-            var mockKey1 = GetIKeyEncryptionKey();
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
             // delay forces pause in rotation where we can mess with blob and change etag
-            var mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(rotationPauseTimeSeconds));
-            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+            Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(rotationPauseTimeSeconds));
+            IKeyEncryptionKeyResolver mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
-            var cek = GetRandomBuffer(32);
-            var simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
+            byte[] cek = GetRandomBuffer(32);
+            EncryptionData simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
 
             // do NOT get an encryption client for data upload. we won't be able to record.
             await using DisposingContainer disposable = await GetTestContainerAsync();
-            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+            BlobClient blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
             await blob.UploadAsync(new MemoryStream(data), metadata: new Dictionary<string, string> {
                 { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(simulatedEncryptionData) }
             });
@@ -1183,10 +1183,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
 
-            var data = GetRandomBuffer(Constants.KB);
-            var mockKey1 = GetIKeyEncryptionKey();
-            var mockKey2 = GetIKeyEncryptionKey();
-            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
+            Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey();
+            IKeyEncryptionKeyResolver mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
             var initialUploadEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
@@ -1197,7 +1197,7 @@ namespace Azure.Storage.Blobs.Test
 
             await using var disposable = await GetTestContainerEncryptionAsync(initialUploadEncryptionOptions);
 
-            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+            BlobClient blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
 
             // upload with encryption
             await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
