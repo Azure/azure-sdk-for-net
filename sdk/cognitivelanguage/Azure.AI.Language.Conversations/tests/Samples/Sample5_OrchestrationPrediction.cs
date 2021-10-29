@@ -131,10 +131,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             if (targetIntentResult.TargetKind == TargetKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
-                object luisResponse = luisTargetIntentResult.Result;
+                BinaryData luisResponse = luisTargetIntentResult.Result;
 
-                JsonDocument luisJsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(luisResponse));
-                Console.WriteLine($"LUIS Response: {luisJsonDocument.RootElement}");
+                Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
             }
             #endregion
 
@@ -257,10 +256,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             if (targetIntentResult.TargetKind == TargetKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
-                object luisResponse = luisTargetIntentResult.Result;
+                BinaryData luisResponse = luisTargetIntentResult.Result;
 
-                JsonDocument luisJsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(luisResponse));
-                Console.WriteLine($"LUIS Response: {luisJsonDocument.RootElement}");
+                Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
