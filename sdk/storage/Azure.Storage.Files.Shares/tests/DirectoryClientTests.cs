@@ -1228,6 +1228,23 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            string destDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient sourceDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDirectory.CreateAsync();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()

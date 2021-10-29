@@ -705,7 +705,7 @@ namespace Azure.Storage.Files.Shares
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
             uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "list", true);
+            uri.AppendQuery("comp", "rename", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
