@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2021-11-03)
 
 This version of the client library targets service version `2021-10-01`.
 
