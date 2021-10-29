@@ -198,11 +198,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return options.ToString(Formatting.Indented);
         }
 
-        internal Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
+        internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            ProcessErrorAsync?.Invoke(args);
-
-            return Task.CompletedTask;
+            if (ProcessErrorAsync != null)
+            {
+                await ProcessErrorAsync(args).ConfigureAwait(false);
+            }
         }
 
         internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)

@@ -252,6 +252,20 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_CustomErrorHandler()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestCustomErrorHandler>(SetCustomErrorHandler);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // intentionally not calling host.StopAsync as we are expecting errors in the error log
+                // for this test, so we accept that the stop will not be graceful
+            }
+        }
+
+        [Test]
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
@@ -1293,6 +1307,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var received = await receiver2.ReceiveMessageAsync();
                 Assert.IsNotNull(received);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomErrorHandler
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message)
+            {
+                // Delay so that the lock will be lost when trying to complete automatically.
+                // We can't simply throw an exception here as it would be swallowed by TryExecuteAsync call in the listener.
+                // This means that the exception handler will not be used for errors originating from the function. This is the same
+                // behavior as in V4.
+                await Task.Delay(TimeSpan.FromSeconds(30));
+            }
+
+            public static Task ErrorHandler(ProcessErrorEventArgs e)
+            {
+                Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, ((ServiceBusException) e.Exception).Reason);
+                _waitHandle1.Set();
+                return Task.CompletedTask;
             }
         }
 
