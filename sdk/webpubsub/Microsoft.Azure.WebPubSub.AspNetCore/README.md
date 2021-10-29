@@ -14,7 +14,7 @@ This library can be used to do the following actions. Details about the terms us
 Package |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
-[Samples][samples_ref]
+Samples |
 
 ## Getting started
 
@@ -49,7 +49,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ### Add Web PubSub service with options
 
-```C# Snippet:WebPubSubDependencyInjection
+```C#
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddWebPubSub(o =>
@@ -63,7 +63,7 @@ public void ConfigureServices(IServiceCollection services)
 
 The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
 
-```C# Snippet:WebPubSubMapHub
+```C#
 public void Configure(IApplicationBuilder app)
 {
     app.UseEndpoints(endpoint =>
@@ -75,7 +75,7 @@ public void Configure(IApplicationBuilder app)
 
 ### Handle Upstream event
 
-```C# Snippet:WebPubSubConnectMethods
+```C#
 public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
 {
     var response = new ConnectEventResponse
@@ -113,4 +113,3 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/
