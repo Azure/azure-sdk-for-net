@@ -107,7 +107,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetFilterAsync(RequestOptions options)
+        public virtual async Task<Response> GetFilterAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetFilter(RequestOptions options)
+        public virtual Response GetFilter(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
@@ -345,7 +345,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -534,7 +534,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -623,7 +623,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -648,7 +648,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
@@ -712,7 +712,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -737,7 +737,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions options)
+        public virtual Response GetProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -890,7 +890,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
@@ -934,8 +934,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -979,7 +979,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RunScanAsync(string runId, RequestOptions options, string scanLevel = null)
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
@@ -998,8 +998,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: &quot;Full&quot; | &quot;Incremental&quot;. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -1043,7 +1043,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response RunScan(string runId, RequestOptions options, string scanLevel = null)
+        public virtual Response RunScan(string runId, string scanLevel = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
@@ -1106,7 +1106,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options)
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
@@ -1169,7 +1169,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response CancelScan(string runId, RequestOptions options)
+        public virtual Response CancelScan(string runId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
@@ -1244,7 +1244,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTriggerAsync(RequestOptions options)
+        public virtual async Task<Response> GetTriggerAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
@@ -1319,7 +1319,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetTrigger(RequestOptions options)
+        public virtual Response GetTrigger(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
@@ -1754,7 +1754,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ],
         ///   nextLink: string,
@@ -1781,7 +1781,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewScanClient.GetRuns");
@@ -1843,7 +1843,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///         ]
         ///       },
         ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ],
         ///   nextLink: string,
@@ -1870,7 +1870,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetRuns(RequestOptions options)
+        public virtual Pageable<BinaryData> GetRuns(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewScanClient.GetRuns");

@@ -9,7 +9,7 @@ namespace Azure.AI.Language.Conversations.Tests
     /// Base class for live client tests using different service versions.
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
-    [ClientTestFixture(ConversationAnalysisClientOptions.ServiceVersion.V2021_07_15_Preview)]
+    [ClientTestFixture(ConversationAnalysisClientOptions.ServiceVersion.V2021_11_01_Preview)]
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
         protected ConversationAnalysisTestBase(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)

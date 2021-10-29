@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.5 (2021-10-28)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed DefaultSubscription property from ArmClient and added GetDefaultSubscription()/GetDefaultSubscriptionAsync() methods. See the [Hello World examples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/README.md) of how to use the new methods to get the default subscription.
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.4 (2021-09-28)
 

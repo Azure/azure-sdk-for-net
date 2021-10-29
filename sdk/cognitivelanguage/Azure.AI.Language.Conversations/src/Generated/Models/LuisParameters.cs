@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-    public partial class LuisParameters : AnalyzeParameters
+    public partial class LuisParameters : AnalysisParameters
     {
         /// <summary> Initializes a new instance of LuisParameters. </summary>
         public LuisParameters()

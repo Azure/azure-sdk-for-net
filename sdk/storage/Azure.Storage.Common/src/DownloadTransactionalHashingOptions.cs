@@ -11,7 +11,7 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing algorithm to use for the transaction.
         /// </summary>
-        public TransactionalHashAlgorithm Algorithm { get; set; }
+        public TransactionalHashAlgorithm Algorithm { get; set; } = TransactionalHashAlgorithm.StorageCrc64;
 
         /// <summary>
         /// Defaults to true. Indicates whether the SDK should validate the content
