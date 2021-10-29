@@ -6,11 +6,10 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.AppConfiguration.csproj" />
     <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
-    <ProjectReference Include="..\..\..\resources\Azure.ResourceManager.Resources\src\Azure.ResourceManager.Resources.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <!--<PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="Azure.ResourceManager.Network" />-->
+    <PackageReference Include="Azure.ResourceManager.Resources" />
+    <!--<PackageReference Include="Azure.ResourceManager.Network" />-->
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
 </Project>
