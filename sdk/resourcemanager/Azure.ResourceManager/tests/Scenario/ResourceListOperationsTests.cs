@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ListAtContext()
         {
-            var rgOp1 = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rgOp1 = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = rgOp1.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg.Id);
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(1, result);
 
             result = 0;
-            pageable = ResourceListOperations.GetAtContextAsync(Client.DefaultSubscription);
+            pageable = ResourceListOperations.GetAtContextAsync(await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false));
             await foreach (var resource in pageable)
             {
                 result++;

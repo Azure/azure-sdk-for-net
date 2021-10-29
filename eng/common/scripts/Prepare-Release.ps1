@@ -109,11 +109,15 @@ else
 $releaseDateString = $ParsedReleaseDate.ToString("MM/dd/yyyy")
 $month = $ParsedReleaseDate.ToString("MMMM")
 
-Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+if (Test-Path "Function:GetExistingPackageVersions")
+{
+    $releasedVersions = GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
+    $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
+    Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+}
 
 $currentProjectVersion = $packageProperties.Version
-
 $newVersion = Read-Host -Prompt "Input the new version, or press Enter to use use current project version '$currentProjectVersion'"
 
 if (!$newVersion)

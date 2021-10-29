@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         internal static QueueScope _firstQueueScope;
         protected static QueueScope _secondaryNamespaceQueueScope;
-        private QueueScope _secondQueueScope;
+        protected static QueueScope _secondQueueScope;
         private QueueScope _thirdQueueScope;
         protected static TopicScope _topicScope;
 
@@ -259,6 +259,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
             await sender.SendMessageAsync(messageObj);
         }
+
+        protected static Action<IHostBuilder> EnableCrossEntityTransactions =>
+            builder => builder.ConfigureWebJobs(b =>
+            b.AddServiceBus(sbOptions =>
+            {
+                sbOptions.EnableCrossEntityTransactions = true;
+            }));
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

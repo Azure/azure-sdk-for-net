@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_CreateAVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+            // Now we get the virtual machine collection from the resource group
+            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
             string vmName = "myVM";
             var input = new VirtualMachineData(resourceGroup.Data.Location)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            VirtualMachineCreateOrUpdateOperation lro = await vmContainer.CreateOrUpdateAsync(vmName, input);
+            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(vmName, input);
             VirtualMachine vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_ListAllVirtualMachines
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
-            // With ListAsync(), we can get a list of the virtual machines in the container
-            AsyncPageable<VirtualMachine> response = vmContainer.GetAllAsync();
+            // Now we get the virtual machine collection from the resource group
+            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+            // With ListAsync(), we can get a list of the virtual machines
+            AsyncPageable<VirtualMachine> response = vmCollection.GetAllAsync();
             await foreach (VirtualMachine vm in response)
             {
                 Console.WriteLine(vm.Data.Name);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_DeleteVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
-            // Now we get the virtual machine container from the resource group
-            VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+            // Now we get the virtual machine collection from the resource group
+            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";
-            VirtualMachine vm = await vmContainer.GetAsync(vmName);
+            VirtualMachine vm = await vmCollection.GetAsync(vmName);
             await vm.DeleteAsync();
             #endregion Snippet:Managing_VirtualMachines_DeleteVirtualMachine
         }

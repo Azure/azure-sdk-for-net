@@ -225,5 +225,65 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+
+        /// <summary>
+        /// Create or update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The created or updated tags. </returns>
+        public virtual TagCreateOrUpdateOperation CreateOrUpdate(TagResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters is null)
+                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
+
+            using var scope = _clientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                var response = _restClient.CreateOrUpdateAtScope(Id, parameters, cancellationToken);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update tags with the resource.
+        /// </summary>
+        /// <param name="parameters"> The tags to create or update. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The created or updated tags. </returns>
+        public virtual async Task<TagCreateOrUpdateOperation> CreateOrUpdateAsync(TagResourceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            if (parameters is null)
+                throw new ArgumentException($"{nameof(parameters)} provided cannot be null.", nameof(parameters));
+
+            using var scope = _clientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new TagCreateOrUpdateOperation(this, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

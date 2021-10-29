@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetMetadataRoles(RequestOptions options)
+        public virtual Pageable<BinaryData> GetMetadataRoles(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");

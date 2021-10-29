@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31806.525
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Administration", "src\Azure.Analytics.Purview.Administration.csproj", "{B0C276D1-2930-4887-B29A-D1A33E7009A2}"
 EndProject
@@ -13,7 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Stress", "..\..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{FA8BD3F1-8616-47B6-974C-7576CDF4717E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Analytics.Purview.Shared.Tests", "..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.shproj", "{283CB4FE-A207-4D92-8431-6147F1ECBAB7}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems*{283cb4fe-a207-4d92-8431-6147f1ecbab7}*SharedItemsImports = 13
+		..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems*{8e9a77ac-792a-4432-8320-acfd46730401}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
