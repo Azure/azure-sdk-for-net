@@ -176,7 +176,7 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class LuisTargetIntentResult : Azure.AI.Language.Conversations.Models.TargetIntentResult
     {
         internal LuisTargetIntentResult() { }
-        public object Result { get { throw null; } }
+        public System.BinaryData Result { get { throw null; } }
     }
     public partial class NoneLinkedTargetIntentResult : Azure.AI.Language.Conversations.Models.TargetIntentResult
     {
