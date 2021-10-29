@@ -14,34 +14,32 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// Vcores capability
+    /// Sku capability
     /// </summary>
-    public partial class VcoreCapability
+    public partial class SkuCapability
     {
         /// <summary>
-        /// Initializes a new instance of the VcoreCapability class.
+        /// Initializes a new instance of the SkuCapability class.
         /// </summary>
-        public VcoreCapability()
+        public SkuCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VcoreCapability class.
+        /// Initializes a new instance of the SkuCapability class.
         /// </summary>
         /// <param name="name">vCore name</param>
         /// <param name="vCores">supported vCores</param>
         /// <param name="supportedIops">supported IOPS</param>
-        /// <param name="supportedMemoryPerVcoreMB">supported memory per vCore
+        /// <param name="supportedMemoryPerVCoreMB">supported memory per vCore
         /// in MB</param>
-        /// <param name="status">The status of the capability.</param>
-        public VcoreCapability(string name = default(string), long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVcoreMB = default(long?), string status = default(string))
+        public SkuCapability(string name = default(string), long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVCoreMB = default(long?))
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
-            SupportedMemoryPerVcoreMB = supportedMemoryPerVcoreMB;
-            Status = status;
+            SupportedMemoryPerVCoreMB = supportedMemoryPerVCoreMB;
             CustomInit();
         }
 
@@ -71,14 +69,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <summary>
         /// Gets supported memory per vCore in MB
         /// </summary>
-        [JsonProperty(PropertyName = "supportedMemoryPerVcoreMB")]
-        public long? SupportedMemoryPerVcoreMB { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the capability.
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
+        [JsonProperty(PropertyName = "supportedMemoryPerVCoreMB")]
+        public long? SupportedMemoryPerVCoreMB { get; private set; }
 
     }
 }

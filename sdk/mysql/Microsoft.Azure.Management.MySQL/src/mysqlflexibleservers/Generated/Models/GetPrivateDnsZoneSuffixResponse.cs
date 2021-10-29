@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// Delegated subnet arguments of a server
+    /// The response of get private dns zone suffix.
     /// </summary>
-    public partial class DelegatedSubnetArguments
+    public partial class GetPrivateDnsZoneSuffixResponse
     {
         /// <summary>
-        /// Initializes a new instance of the DelegatedSubnetArguments class.
+        /// Initializes a new instance of the GetPrivateDnsZoneSuffixResponse
+        /// class.
         /// </summary>
-        public DelegatedSubnetArguments()
+        public GetPrivateDnsZoneSuffixResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DelegatedSubnetArguments class.
+        /// Initializes a new instance of the GetPrivateDnsZoneSuffixResponse
+        /// class.
         /// </summary>
-        /// <param name="subnetArmResourceId">delegated subnet arm resource
-        /// id.</param>
-        public DelegatedSubnetArguments(string subnetArmResourceId = default(string))
+        /// <param name="privateDnsZoneSuffix">Represents the private DNS zone
+        /// suffix.</param>
+        public GetPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = default(string))
         {
-            SubnetArmResourceId = subnetArmResourceId;
+            PrivateDnsZoneSuffix = privateDnsZoneSuffix;
             CustomInit();
         }
 
@@ -43,10 +45,10 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets delegated subnet arm resource id.
+        /// Gets or sets represents the private DNS zone suffix.
         /// </summary>
-        [JsonProperty(PropertyName = "subnetArmResourceId")]
-        public string SubnetArmResourceId { get; set; }
+        [JsonProperty(PropertyName = "privateDnsZoneSuffix")]
+        public string PrivateDnsZoneSuffix { get; set; }
 
     }
 }

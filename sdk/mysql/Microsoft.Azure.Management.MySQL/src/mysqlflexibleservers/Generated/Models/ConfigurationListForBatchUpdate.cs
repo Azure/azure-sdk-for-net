@@ -16,24 +16,25 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of resource provider operations.
+    /// A list of server configurations to update.
     /// </summary>
-    public partial class OperationListResult
+    public partial class ConfigurationListForBatchUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the ConfigurationListForBatchUpdate
+        /// class.
         /// </summary>
-        public OperationListResult()
+        public ConfigurationListForBatchUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the ConfigurationListForBatchUpdate
+        /// class.
         /// </summary>
-        /// <param name="value">The list of resource provider
-        /// operations.</param>
-        public OperationListResult(IList<Operation> value = default(IList<Operation>))
+        /// <param name="value">The list of server configurations.</param>
+        public ConfigurationListForBatchUpdate(IList<ConfigurationForBatchUpdate> value = default(IList<ConfigurationForBatchUpdate>))
         {
             Value = value;
             CustomInit();
@@ -45,10 +46,10 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of resource provider operations.
+        /// Gets or sets the list of server configurations.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Operation> Value { get; set; }
+        public IList<ConfigurationForBatchUpdate> Value { get; set; }
 
     }
 }

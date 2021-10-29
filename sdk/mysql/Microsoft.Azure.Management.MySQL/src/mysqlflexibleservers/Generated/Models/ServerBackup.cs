@@ -16,21 +16,21 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// A MySQL Server key.
+    /// Server backup properties
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServerKey : ProxyResource
+    public partial class ServerBackup : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ServerKey class.
+        /// Initializes a new instance of the ServerBackup class.
         /// </summary>
-        public ServerKey()
+        public ServerBackup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerKey class.
+        /// Initializes a new instance of the ServerBackup class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -38,24 +38,20 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="kind">Kind of encryption protector used to protect the
-        /// key.</param>
-        /// <param name="uri">The URI of the key.</param>
-        /// <param name="creationDate">The key creation date.</param>
-        public ServerKey(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string uri = default(string), System.DateTime? creationDate = default(System.DateTime?))
+        /// <param name="backupType">Backup type.</param>
+        /// <param name="completedTime">Backup completed time (ISO8601
+        /// format).</param>
+        /// <param name="source">Backup source</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public ServerBackup(string id = default(string), string name = default(string), string type = default(string), string backupType = default(string), System.DateTime? completedTime = default(System.DateTime?), string source = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            Kind = kind;
-            Uri = uri;
-            CreationDate = creationDate;
+            BackupType = backupType;
+            CompletedTime = completedTime;
+            Source = source;
+            SystemData = systemData;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for ServerKey class.
-        /// </summary>
-        static ServerKey()
-        {
-            ServerKeyType = "AzureKeyVault";
         }
 
         /// <summary>
@@ -64,28 +60,28 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets kind of encryption protector used to protect the key.
+        /// Gets or sets backup type.
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
+        [JsonProperty(PropertyName = "properties.backupType")]
+        public string BackupType { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI of the key.
+        /// Gets or sets backup completed time (ISO8601 format).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.uri")]
-        public string Uri { get; set; }
+        [JsonProperty(PropertyName = "properties.completedTime")]
+        public System.DateTime? CompletedTime { get; set; }
 
         /// <summary>
-        /// Gets the key creation date.
+        /// Gets or sets backup source
         /// </summary>
-        [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.source")]
+        public string Source { get; set; }
 
         /// <summary>
-        /// The key type like 'AzureKeyVault'.
+        /// Gets the system metadata relating to this resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serverKeyType")]
-        public static string ServerKeyType { get; private set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

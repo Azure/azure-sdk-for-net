@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for HaEnabledEnum.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class HaEnabledEnum
+    public static class CreatedByType
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
