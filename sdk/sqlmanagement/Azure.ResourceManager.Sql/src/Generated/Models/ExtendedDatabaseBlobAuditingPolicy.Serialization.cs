@@ -24,21 +24,6 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("predicateExpression");
                 writer.WriteStringValue(PredicateExpression);
             }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(StorageEndpoint))
-            {
-                writer.WritePropertyName("storageEndpoint");
-                writer.WriteStringValue(StorageEndpoint);
-            }
-            if (Optional.IsDefined(StorageAccountAccessKey))
-            {
-                writer.WritePropertyName("storageAccountAccessKey");
-                writer.WriteStringValue(StorageAccountAccessKey);
-            }
             if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays");
@@ -53,11 +38,6 @@ namespace Azure.ResourceManager.Sql.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(StorageAccountSubscriptionId))
-            {
-                writer.WritePropertyName("storageAccountSubscriptionId");
-                writer.WriteStringValue(StorageAccountSubscriptionId.Value);
             }
             if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
@@ -74,6 +54,26 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("queueDelayMs");
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state");
+                writer.WriteStringValue(State.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(StorageEndpoint))
+            {
+                writer.WritePropertyName("storageEndpoint");
+                writer.WriteStringValue(StorageEndpoint);
+            }
+            if (Optional.IsDefined(StorageAccountAccessKey))
+            {
+                writer.WritePropertyName("storageAccountAccessKey");
+                writer.WriteStringValue(StorageAccountAccessKey);
+            }
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
+            {
+                writer.WritePropertyName("storageAccountSubscriptionId");
+                writer.WriteStringValue(StorageAccountSubscriptionId.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> predicateExpression = default;
-            Optional<BlobAuditingPolicyState> state = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
             Optional<IList<string>> auditActionsAndGroups = default;
-            Optional<Guid> storageAccountSubscriptionId = default;
             Optional<bool> isStorageSecondaryKeyInUse = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<int> queueDelayMs = default;
+            Optional<BlobAuditingPolicyState> state = default;
+            Optional<string> storageEndpoint = default;
+            Optional<string> storageAccountAccessKey = default;
+            Optional<Guid> storageAccountSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -124,26 +124,6 @@ namespace Azure.ResourceManager.Sql.Models
                             predicateExpression = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            state = property0.Value.GetString().ToBlobAuditingPolicyState();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageEndpoint"))
-                        {
-                            storageEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountAccessKey"))
-                        {
-                            storageAccountAccessKey = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("retentionDays"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -167,16 +147,6 @@ namespace Azure.ResourceManager.Sql.Models
                                 array.Add(item.GetString());
                             }
                             auditActionsAndGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountSubscriptionId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountSubscriptionId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("isStorageSecondaryKeyInUse"))
@@ -209,11 +179,41 @@ namespace Azure.ResourceManager.Sql.Models
                             queueDelayMs = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("state"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            state = property0.Value.GetString().ToBlobAuditingPolicyState();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageEndpoint"))
+                        {
+                            storageEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountAccessKey"))
+                        {
+                            storageAccountAccessKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountSubscriptionId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountSubscriptionId = property0.Value.GetGuid();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ExtendedDatabaseBlobAuditingPolicy(id.Value, name.Value, type.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs));
+            return new ExtendedDatabaseBlobAuditingPolicy(id.Value, name.Value, type.Value, predicateExpression.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

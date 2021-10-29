@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
             uri.AppendPath(locationName, true);
             uri.AppendPath("/syncDatabaseIds", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/refreshHubSchema", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/hubSchemas", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListLogsRequest(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken)
+        internal HttpMessage CreateListLogsRequest(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public async Task<Response<SyncGroupLogListResult>> ListLogsAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SyncGroupLogListResult>> ListLogsAsync(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public Response<SyncGroupLogListResult> ListLogs(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<SyncGroupLogListResult> ListLogs(string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/cancelSync", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/triggerSync", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/syncGroups", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListLogsNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken)
+        internal HttpMessage CreateListLogsNextPageRequest(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1395,7 +1395,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public async Task<Response<SyncGroupLogListResult>> ListLogsNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SyncGroupLogListResult>> ListLogsNextPageAsync(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> The continuation token for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="syncGroupName"/>, <paramref name="startTime"/>, or <paramref name="endTime"/> is null. </exception>
-        public Response<SyncGroupLogListResult> ListLogsNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum65 type, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<SyncGroupLogListResult> ListLogsNextPage(string nextLink, string resourceGroupName, string serverName, string databaseName, string syncGroupName, string startTime, string endTime, Enum75 type, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

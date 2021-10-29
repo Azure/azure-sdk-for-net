@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(jobName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(jobVersion, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

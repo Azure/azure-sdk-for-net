@@ -6,18 +6,20 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> Acquires server DNS alias from another server. </summary>
-    public partial class ServerDnsAliasesAcquireOperation : Operation<Response>, IOperationSource<Response>
+    public partial class ServerDnsAliasesAcquireOperation : Operation<ServerDnsAlias>, IOperationSource<ServerDnsAlias>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly ArmOperationHelpers<ServerDnsAlias> _operation;
 
         /// <summary> Initializes a new instance of ServerDnsAliasesAcquireOperation for mocking. </summary>
         protected ServerDnsAliasesAcquireOperation()
@@ -26,13 +28,13 @@ namespace Azure.ResourceManager.Sql
 
         internal ServerDnsAliasesAcquireOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerDnsAliasesAcquireOperation");
+            _operation = new ArmOperationHelpers<ServerDnsAlias>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerDnsAliasesAcquireOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
+        public override ServerDnsAlias Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -50,19 +52,21 @@ namespace Azure.ResourceManager.Sql
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ServerDnsAlias>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ServerDnsAlias>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerDnsAlias IOperationSource<ServerDnsAlias>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            return response;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            return ServerDnsAlias.DeserializeServerDnsAlias(document.RootElement);
         }
 
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerDnsAlias> IOperationSource<ServerDnsAlias>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ServerDnsAlias.DeserializeServerDnsAlias(document.RootElement);
         }
     }
 }

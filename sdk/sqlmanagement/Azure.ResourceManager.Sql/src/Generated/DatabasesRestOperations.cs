@@ -43,303 +43,6 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateImportRequest(string resourceGroupName, string serverName, ImportRequest parameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/import", false);
-            uri.AppendQuery("api-version", "2014-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Imports a bacpac into a new database. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> ImportAsync(string resourceGroupName, string serverName, ImportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateImportRequest(resourceGroupName, serverName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Imports a bacpac into a new database. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Import(string resourceGroupName, string serverName, ImportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateImportRequest(resourceGroupName, serverName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateImportOperationRequest(string resourceGroupName, string serverName, string databaseName, ExtensionName extensionName, ImportExtensionRequest parameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/extensions/", false);
-            uri.AppendPath(extensionName.ToString(), true);
-            uri.AppendQuery("api-version", "2014-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates an import operation that imports a bacpac into an existing database. The existing database must be empty. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to import into. </param>
-        /// <param name="extensionName"> The name of the operation to perform. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateImportOperationAsync(string resourceGroupName, string serverName, string databaseName, ExtensionName extensionName, ImportExtensionRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateImportOperationRequest(resourceGroupName, serverName, databaseName, extensionName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                case 202:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates an import operation that imports a bacpac into an existing database. The existing database must be empty. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to import into. </param>
-        /// <param name="extensionName"> The name of the operation to perform. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateImportOperation(string resourceGroupName, string serverName, string databaseName, ExtensionName extensionName, ImportExtensionRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateImportOperationRequest(resourceGroupName, serverName, databaseName, extensionName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                case 202:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateExportRequest(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(serverName, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/export", false);
-            uri.AppendQuery("api-version", "2014-04-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Exports a database to a bacpac. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to be exported. </param>
-        /// <param name="parameters"> The required parameters for exporting a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> ExportAsync(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateExportRequest(resourceGroupName, serverName, databaseName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Exports a database to a bacpac. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to be exported. </param>
-        /// <param name="parameters"> The required parameters for exporting a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Export(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateExportRequest(resourceGroupName, serverName, databaseName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListMetricsRequest(string resourceGroupName, string serverName, string databaseName, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -543,7 +246,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByServerRequest(string resourceGroupName, string serverName)
+        internal HttpMessage CreateListByServerRequest(string resourceGroupName, string serverName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -557,7 +260,11 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -566,9 +273,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public async Task<Response<DatabaseListResult>> ListByServerAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseListResult>> ListByServerAsync(string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -579,7 +287,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var message = CreateListByServerRequest(resourceGroupName, serverName);
+            using var message = CreateListByServerRequest(resourceGroupName, serverName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -598,9 +306,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public Response<DatabaseListResult> ListByServer(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<DatabaseListResult> ListByServer(string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -611,7 +320,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var message = CreateListByServerRequest(resourceGroupName, serverName);
+            using var message = CreateListByServerRequest(resourceGroupName, serverName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -642,7 +351,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -737,7 +446,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -840,7 +549,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -928,7 +637,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1030,7 +739,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/elasticPools/", false);
             uri.AppendPath(elasticPoolName, true);
             uri.AppendPath("/databases", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1110,6 +819,183 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal HttpMessage CreateFailoverRequest(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/failover", false);
+            if (replicaType != null)
+            {
+                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Failovers a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public async Task<Response> FailoverAsync(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var message = CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Failovers a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public Response Failover(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var message = CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListInaccessibleByServerRequest(string resourceGroupName, string serverName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/inaccessibleDatabases", false);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public async Task<Response<DatabaseListResult>> ListInaccessibleByServerAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var message = CreateListInaccessibleByServerRequest(resourceGroupName, serverName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DatabaseListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public Response<DatabaseListResult> ListInaccessibleByServer(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var message = CreateListInaccessibleByServerRequest(resourceGroupName, serverName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DatabaseListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreatePauseRequest(string resourceGroupName, string serverName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -1126,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/pause", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1214,7 +1100,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/resume", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1302,7 +1188,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/upgradeDataWarehouse", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -1389,7 +1275,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/move", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -1472,7 +1358,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateFailoverRequest(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType)
+        internal HttpMessage CreateImportRequest(string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1487,24 +1373,25 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
-            uri.AppendPath("/failover", false);
-            if (replicaType != null)
-            {
-                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
-            }
-            uri.AppendQuery("api-version", "2018-06-01-preview", true);
+            uri.AppendPath("/import", false);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
             return message;
         }
 
-        /// <summary> Failovers a database. </summary>
+        /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to failover. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public async Task<Response> FailoverAsync(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ImportAsync(string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1518,8 +1405,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType);
+            using var message = CreateImportRequest(resourceGroupName, serverName, databaseName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1531,14 +1422,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Failovers a database. </summary>
+        /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to failover. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public Response Failover(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response Import(string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1552,8 +1443,12 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType);
+            using var message = CreateImportRequest(resourceGroupName, serverName, databaseName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1565,7 +1460,109 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string resourceGroupName, string serverName)
+        internal HttpMessage CreateExportRequest(string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/export", false);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(parameters);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Exports a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ExportAsync(string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateExportRequest(resourceGroupName, serverName, databaseName, parameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Exports a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response Export(string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var message = CreateExportRequest(resourceGroupName, serverName, databaseName, parameters);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string resourceGroupName, string serverName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1582,9 +1579,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
-        public async Task<Response<DatabaseListResult>> ListByServerNextPageAsync(string nextLink, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseListResult>> ListByServerNextPageAsync(string nextLink, string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1599,7 +1597,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var message = CreateListByServerNextPageRequest(nextLink, resourceGroupName, serverName);
+            using var message = CreateListByServerNextPageRequest(nextLink, resourceGroupName, serverName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1619,9 +1617,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
-        public Response<DatabaseListResult> ListByServerNextPage(string nextLink, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<DatabaseListResult> ListByServerNextPage(string nextLink, string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1636,7 +1635,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(serverName));
             }
 
-            using var message = CreateListByServerNextPageRequest(nextLink, resourceGroupName, serverName);
+            using var message = CreateListByServerNextPageRequest(nextLink, resourceGroupName, serverName, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1734,6 +1733,93 @@ namespace Azure.ResourceManager.Sql
             }
 
             using var message = CreateListByElasticPoolNextPageRequest(nextLink, resourceGroupName, serverName, elasticPoolName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DatabaseListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListInaccessibleByServerNextPageRequest(string nextLink, string resourceGroupName, string serverName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        public async Task<Response<DatabaseListResult>> ListInaccessibleByServerNextPageAsync(string nextLink, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var message = CreateListInaccessibleByServerNextPageRequest(nextLink, resourceGroupName, serverName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DatabaseListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serverName"/> is null. </exception>
+        public Response<DatabaseListResult> ListInaccessibleByServerNextPage(string nextLink, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var message = CreateListInaccessibleByServerNextPageRequest(nextLink, resourceGroupName, serverName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

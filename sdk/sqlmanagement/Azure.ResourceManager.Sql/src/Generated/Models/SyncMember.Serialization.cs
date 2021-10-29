@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<Guid> sqlServerDatabaseId = default;
             Optional<string> syncMemberAzureDatabaseResourceId = default;
             Optional<bool> usePrivateLinkConnection = default;
+            Optional<string> privateEndpointName = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
             Optional<string> userName = default;
@@ -154,6 +155,11 @@ namespace Azure.ResourceManager.Sql.Models
                             usePrivateLinkConnection = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointName"))
+                        {
+                            privateEndpointName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("serverName"))
                         {
                             serverName = property0.Value.GetString();
@@ -198,7 +204,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncMember(id.Value, name.Value, type.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState));
+            return new SyncMember(id.Value, name.Value, type.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState));
         }
     }
 }

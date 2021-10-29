@@ -42,14 +42,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedInstance>> GetAsync(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstance>> GetAsync(string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, managedInstanceName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(resourceGroupName, managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -61,14 +62,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a managed instance. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstance> Get(string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstance> Get(string resourceGroupName, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, managedInstanceName, cancellationToken);
+                return RestClient.Get(resourceGroupName, managedInstanceName, expand, cancellationToken);
             }
             catch (Exception e)
             {
@@ -77,100 +79,13 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of managed instances in a resource group. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual AsyncPageable<ManagedInstance> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of managed instances in a resource group. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Pageable<ManagedInstance> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-
-            Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByResourceGroup(resourceGroupName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedInstance> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
         /// <summary> Gets a list of all managed instances in an instance pool. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public virtual AsyncPageable<ManagedInstance> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstance> ListByInstancePoolAsync(string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -187,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByInstancePoolAsync(resourceGroupName, instancePoolName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByInstancePoolAsync(resourceGroupName, instancePoolName, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -202,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByInstancePoolNextPageAsync(nextLink, resourceGroupName, instancePoolName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByInstancePoolNextPageAsync(nextLink, resourceGroupName, instancePoolName, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -217,9 +132,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of all managed instances in an instance pool. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="instancePoolName"> The instance pool name. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
-        public virtual Pageable<ManagedInstance> ListByInstancePool(string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstance> ListByInstancePool(string resourceGroupName, string instancePoolName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -236,7 +152,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByInstancePool(resourceGroupName, instancePoolName, cancellationToken);
+                    var response = RestClient.ListByInstancePool(resourceGroupName, instancePoolName, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,7 +167,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByInstancePoolNextPage(nextLink, resourceGroupName, instancePoolName, cancellationToken);
+                    var response = RestClient.ListByInstancePoolNextPage(nextLink, resourceGroupName, instancePoolName, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -264,8 +180,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManagedInstance> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstance> ListAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
             {
@@ -273,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListAsync(expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListNextPageAsync(nextLink, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -301,8 +218,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a list of all managed instances in the subscription. </summary>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManagedInstance> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstance> List(string expand = null, CancellationToken cancellationToken = default)
         {
             Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
             {
@@ -310,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.List(cancellationToken);
+                    var response = RestClient.List(expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -325,7 +243,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    var response = RestClient.ListNextPage(nextLink, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -337,44 +255,109 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Failovers a managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <summary> Gets a list of managed instances in a resource group. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public virtual async Task<ManagedInstancesFailoverOperation> StartFailoverAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual AsyncPageable<ManagedInstance> ListByResourceGroupAsync(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.StartFailover");
-            scope.Start();
-            try
+            async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
             {
-                var originalResponse = await RestClient.FailoverAsync(resourceGroupName, managedInstanceName, replicaType, cancellationToken).ConfigureAwait(false);
-                return new ManagedInstancesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType).Request, originalResponse);
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ManagedInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Failovers a managed instance. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <summary> Gets a list of managed instances in a resource group. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual Pageable<ManagedInstance> ListByResourceGroup(string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+
+            Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByResourceGroup(resourceGroupName, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ManagedInstance> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByResourceGroup");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        public virtual ManagedInstancesFailoverOperation StartFailover(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> ListByManagedInstanceAsync(string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -385,18 +368,93 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(managedInstanceName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.StartFailover");
-            scope.Start();
-            try
+            async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
-                var originalResponse = RestClient.Failover(resourceGroupName, managedInstanceName, replicaType, cancellationToken);
-                return new ManagedInstancesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType).Request, originalResponse);
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByManagedInstance");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByManagedInstanceAsync(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<TopQueries>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByManagedInstance");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByManagedInstanceNextPageAsync(nextLink, resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get top resource consuming queries of a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="numberOfQueries"> How many &apos;top queries&apos; to return. Default is 5. </param>
+        /// <param name="databases"> Comma separated list of databases to be included into search. All DB&apos;s are included if this parameter is not specified. </param>
+        /// <param name="startTime"> Start time for observed period. </param>
+        /// <param name="endTime"> End time for observed period. </param>
+        /// <param name="interval"> The time step to be used to summarize the metric values. Default value is PT1H. </param>
+        /// <param name="aggregationFunction"> Aggregation function to be used, default value is &apos;sum&apos;. </param>
+        /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public virtual Pageable<TopQueries> ListByManagedInstance(string resourceGroupName, string managedInstanceName, int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            Page<TopQueries> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByManagedInstance");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByManagedInstance(resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<TopQueries> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.ListByManagedInstance");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByManagedInstanceNextPage(nextLink, resourceGroupName, managedInstanceName, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Creates or updates a managed instance. </summary>
@@ -591,6 +649,68 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalResponse = RestClient.Update(resourceGroupName, managedInstanceName, parameters, cancellationToken);
                 return new ManagedInstancesUpdateOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(resourceGroupName, managedInstanceName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Failovers a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public virtual async Task<ManagedInstancesFailoverOperation> StartFailoverAsync(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.StartFailover");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.FailoverAsync(resourceGroupName, managedInstanceName, replicaType, cancellationToken).ConfigureAwait(false);
+                return new ManagedInstancesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Failovers a managed instance. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is null. </exception>
+        public virtual ManagedInstancesFailoverOperation StartFailover(string resourceGroupName, string managedInstanceName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagedInstancesOperations.StartFailover");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Failover(resourceGroupName, managedInstanceName, replicaType, cancellationToken);
+                return new ManagedInstancesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, managedInstanceName, replicaType).Request, originalResponse);
             }
             catch (Exception e)
             {

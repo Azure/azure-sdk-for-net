@@ -115,14 +115,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="licenseType"> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </param>
         /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
         /// <param name="earliestRestoreDate"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
-        /// <param name="readScale"> If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases. </param>
-        /// <param name="readReplicaCount"> The number of readonly secondary replicas associated with the database to which readonly application intent connections may be routed. This property is only settable for Hyperscale edition databases. </param>
+        /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. </param>
+        /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </param>
         /// <param name="currentSku"> The name and tier of the SKU. </param>
         /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
+        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this database. </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this database. </param>
         /// <param name="minCapacity"> Minimal capacity that database will always have allocated, if not paused. </param>
-        /// <param name="pausedDate"> The date when database was paused by user configuration or action (ISO8601 format). Null if the database is ready. </param>
+        /// <param name="pausedDate"> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </param>
         /// <param name="resumedDate"> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </param>
-        internal Database(string id, string name, string type, string location, IDictionary<string, string> tags, Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? readReplicaCount, Sku currentSku, int? autoPauseDelay, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate) : base(id, name, type, location, tags)
+        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
+        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
+        internal Database(string id, string name, string type, string location, IDictionary<string, string> tags, Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, Sku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, location, tags)
         {
             Sku = sku;
             Kind = kind;
@@ -152,12 +158,18 @@ namespace Azure.ResourceManager.Sql.Models
             MaxLogSizeBytes = maxLogSizeBytes;
             EarliestRestoreDate = earliestRestoreDate;
             ReadScale = readScale;
-            ReadReplicaCount = readReplicaCount;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
+            SecondaryType = secondaryType;
             CurrentSku = currentSku;
             AutoPauseDelay = autoPauseDelay;
+            CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             MinCapacity = minCapacity;
             PausedDate = pausedDate;
             ResumedDate = resumedDate;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
+            IsLedgerOn = isLedgerOn;
+            IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
         }
 
         /// <summary>
@@ -272,19 +284,31 @@ namespace Azure.ResourceManager.Sql.Models
         public long? MaxLogSizeBytes { get; }
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreDate { get; }
-        /// <summary> If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases. </summary>
+        /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </summary>
         public DatabaseReadScale? ReadScale { get; set; }
-        /// <summary> The number of readonly secondary replicas associated with the database to which readonly application intent connections may be routed. This property is only settable for Hyperscale edition databases. </summary>
-        public int? ReadReplicaCount { get; set; }
+        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. </summary>
+        public int? HighAvailabilityReplicaCount { get; set; }
+        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
+        public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
         public Sku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
+        /// <summary> The storage account type used to store backups for this database. </summary>
+        public CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        /// <summary> The storage account type to be used to store backups for this database. </summary>
+        public RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         public double? MinCapacity { get; set; }
-        /// <summary> The date when database was paused by user configuration or action (ISO8601 format). Null if the database is ready. </summary>
+        /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
         public DateTimeOffset? PausedDate { get; }
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
         public DateTimeOffset? ResumedDate { get; }
+        /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
+        public string MaintenanceConfigurationId { get; set; }
+        /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
+        public bool? IsLedgerOn { get; set; }
+        /// <summary> Infra encryption is enabled for this database. </summary>
+        public bool? IsInfraEncryptionEnabled { get; }
     }
 }

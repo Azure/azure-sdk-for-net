@@ -43,6 +43,90 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateUpdateDnsServersRequest(string resourceGroupName, string virtualClusterName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/virtualClusters/", false);
+            uri.AppendPath(virtualClusterName, true);
+            uri.AppendPath("/updateManagedInstanceDnsServers", false);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
+        public async Task<Response<UpdateManagedInstanceDnsServersOperation>> UpdateDnsServersAsync(string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (virtualClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualClusterName));
+            }
+
+            using var message = CreateUpdateDnsServersRequest(resourceGroupName, virtualClusterName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UpdateManagedInstanceDnsServersOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = UpdateManagedInstanceDnsServersOperation.DeserializeUpdateManagedInstanceDnsServersOperation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualClusterName"/> is null. </exception>
+        public Response<UpdateManagedInstanceDnsServersOperation> UpdateDnsServers(string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (virtualClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualClusterName));
+            }
+
+            using var message = CreateUpdateDnsServersRequest(resourceGroupName, virtualClusterName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UpdateManagedInstanceDnsServersOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = UpdateManagedInstanceDnsServersOperation.DeserializeUpdateManagedInstanceDnsServersOperation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -53,7 +137,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Sql/virtualClusters", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -111,7 +195,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/virtualClusters", false);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -184,7 +268,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/virtualClusters/", false);
             uri.AppendPath(virtualClusterName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -267,7 +351,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/virtualClusters/", false);
             uri.AppendPath(virtualClusterName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -343,7 +427,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/virtualClusters/", false);
             uri.AppendPath(virtualClusterName, true);
-            uri.AppendQuery("api-version", "2015-05-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -356,7 +440,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Updates a virtual cluster. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="parameters"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default)
@@ -389,7 +473,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Updates a virtual cluster. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="parameters"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default)

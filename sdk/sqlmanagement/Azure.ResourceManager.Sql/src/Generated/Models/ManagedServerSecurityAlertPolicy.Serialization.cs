@@ -70,10 +70,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedServerSecurityAlertPolicy DeserializeManagedServerSecurityAlertPolicy(JsonElement element)
         {
+            Optional<SystemData> systemData = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<SecurityAlertPolicyState> state = default;
+            Optional<SecurityAlertsPolicyState> state = default;
             Optional<IList<string>> disabledAlerts = default;
             Optional<IList<string>> emailAddresses = default;
             Optional<bool> emailAccountAdmins = default;
@@ -83,6 +84,16 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -114,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToSecurityAlertPolicyState();
+                            state = property0.Value.GetString().ToSecurityAlertsPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("disabledAlerts"))
@@ -191,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedServerSecurityAlertPolicy(id.Value, name.Value, type.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
+            return new ManagedServerSecurityAlertPolicy(id.Value, name.Value, type.Value, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
         }
     }
 }

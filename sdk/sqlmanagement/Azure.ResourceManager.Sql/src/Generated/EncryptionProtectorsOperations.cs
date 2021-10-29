@@ -177,68 +177,6 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Revalidates an existing encryption protector. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public virtual async Task<EncryptionProtectorsRevalidateOperation> StartRevalidateAsync(string resourceGroupName, string serverName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorsOperations.StartRevalidate");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.RevalidateAsync(resourceGroupName, serverName, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
-                return new EncryptionProtectorsRevalidateOperation(_clientDiagnostics, _pipeline, RestClient.CreateRevalidateRequest(resourceGroupName, serverName, encryptionProtectorName).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revalidates an existing encryption protector. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public virtual EncryptionProtectorsRevalidateOperation StartRevalidate(string resourceGroupName, string serverName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorsOperations.StartRevalidate");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.Revalidate(resourceGroupName, serverName, encryptionProtectorName, cancellationToken);
-                return new EncryptionProtectorsRevalidateOperation(_clientDiagnostics, _pipeline, RestClient.CreateRevalidateRequest(resourceGroupName, serverName, encryptionProtectorName).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Updates an existing encryption protector. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -303,6 +241,68 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalResponse = RestClient.CreateOrUpdate(resourceGroupName, serverName, encryptionProtectorName, parameters, cancellationToken);
                 return new EncryptionProtectorsCreateOrUpdateOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateRequest(resourceGroupName, serverName, encryptionProtectorName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Revalidates an existing encryption protector. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual async Task<EncryptionProtectorsRevalidateOperation> StartRevalidateAsync(string resourceGroupName, string serverName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorsOperations.StartRevalidate");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RevalidateAsync(resourceGroupName, serverName, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+                return new EncryptionProtectorsRevalidateOperation(_clientDiagnostics, _pipeline, RestClient.CreateRevalidateRequest(resourceGroupName, serverName, encryptionProtectorName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Revalidates an existing encryption protector. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual EncryptionProtectorsRevalidateOperation StartRevalidate(string resourceGroupName, string serverName, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EncryptionProtectorsOperations.StartRevalidate");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Revalidate(resourceGroupName, serverName, encryptionProtectorName, cancellationToken);
+                return new EncryptionProtectorsRevalidateOperation(_clientDiagnostics, _pipeline, RestClient.CreateRevalidateRequest(resourceGroupName, serverName, encryptionProtectorName).Request, originalResponse);
             }
             catch (Exception e)
             {

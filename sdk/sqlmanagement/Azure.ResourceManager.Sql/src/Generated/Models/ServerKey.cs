@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="serverKeyType"> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
-        /// <param name="uri"> The URI of the server key. </param>
+        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="creationDate"> The server key creation date. </param>
-        internal ServerKey(string id, string name, string type, string kind, string location, string subregion, ServerKeyType? serverKeyType, string uri, string thumbprint, DateTimeOffset? creationDate) : base(id, name, type)
+        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        internal ServerKey(string id, string name, string type, string kind, string location, string subregion, ServerKeyType? serverKeyType, string uri, string thumbprint, DateTimeOffset? creationDate, bool? autoRotationEnabled) : base(id, name, type)
         {
             Kind = kind;
             Location = location;
@@ -37,21 +38,24 @@ namespace Azure.ResourceManager.Sql.Models
             Uri = uri;
             Thumbprint = thumbprint;
             CreationDate = creationDate;
+            AutoRotationEnabled = autoRotationEnabled;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
-        public string Kind { get; set; }
+        public string Kind { get; }
         /// <summary> Resource location. </summary>
         public string Location { get; }
         /// <summary> Subregion of the server key. </summary>
         public string Subregion { get; }
         /// <summary> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
         public ServerKeyType? ServerKeyType { get; set; }
-        /// <summary> The URI of the server key. </summary>
+        /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         public string Uri { get; set; }
         /// <summary> Thumbprint of the server key. </summary>
-        public string Thumbprint { get; set; }
+        public string Thumbprint { get; }
         /// <summary> The server key creation date. </summary>
-        public DateTimeOffset? CreationDate { get; set; }
+        public DateTimeOffset? CreationDate { get; }
+        /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
+        public bool? AutoRotationEnabled { get; }
     }
 }
