@@ -91,5 +91,30 @@ namespace Azure.Test.Perf
         {
             return Task.CompletedTask;
         }
+
+        // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#implement-both-dispose-and-async-dispose-patterns
+        public override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _errorCancellationTokenSource?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        public override async ValueTask DisposeAsyncCore()
+        {
+            if (_errorCancellationTokenSource is IAsyncDisposable disposable)
+            {
+                await disposable.DisposeAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                _errorCancellationTokenSource.Dispose();
+            }
+
+            await base.DisposeAsyncCore();
+        }
     }
 }
