@@ -65,10 +65,8 @@ var response = await client.Runtime.GenerateAnswerAsync("{knowladgebase-id}", qu
 Now in `Azure.AI.Language.QuestionAnswering` you use `client.QueryKnowledgeBaseAsync`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-var response = await client.QueryKnowledgeBaseAsync(
-    "{project-name}",
-    "{deployment-name}",
-    "{question}");
+QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+var response = await client.GetAnswersAsync("{question}", project);
 ```
 
 ### Chatting
@@ -85,11 +83,11 @@ var responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowladgebase-
 Now in `Azure.AI.Language.QuestionAnswering`, you use `QueryKnowledgeBaseOptions` to set `projectName`, `deploymentName`, and `question` along with setting the `context` to have `previousQnaId`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
-var options = new QueryKnowledgeBaseOptions(
-    "{project-name}",
-    "{deployment-name}",
-    "{question}");
-options.Context = new KnowledgeBaseAnswerRequestContext(1);
+QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+var options = new AnswersOptions
+{
+    AnswerContext = new KnowledgeBaseAnswerContext(1)
+};
 
-var responseFollowUp = await client.QueryKnowledgeBaseAsync(options);
+var responseFollowUp = await client.GetAnswersAsync("{question}", project, options);
 ```

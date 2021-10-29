@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Answer span object of QnA. </summary>
     public partial class AnswerSpan
@@ -17,13 +17,13 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Initializes a new instance of AnswerSpan. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
-        /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
+        /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
-        internal AnswerSpan(string text, double? confidenceScore, int? offset, int? length)
+        internal AnswerSpan(string text, double? confidence, int? offset, int? length)
         {
             Text = text;
-            ConfidenceScore = confidenceScore;
+            Confidence = confidence;
             Offset = offset;
             Length = length;
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Predicted text of answer span. </summary>
         public string Text { get; }
         /// <summary> Predicted score of answer span, value ranges from 0 to 1. </summary>
-        public double? ConfidenceScore { get; }
+        public double? Confidence { get; }
         /// <summary> The answer span offset from the start of answer. </summary>
         public int? Offset { get; }
         /// <summary> The length of the answer span. </summary>

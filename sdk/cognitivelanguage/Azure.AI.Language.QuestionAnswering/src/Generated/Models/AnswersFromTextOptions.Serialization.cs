@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class QueryTextOptions : IUtf8JsonSerializable
+    public partial class AnswersFromTextOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStringValue(Question);
             writer.WritePropertyName("records");
             writer.WriteStartArray();
-            foreach (var item in Records)
+            foreach (var item in TextDocuments)
             {
                 writer.WriteObjectValue(item);
             }

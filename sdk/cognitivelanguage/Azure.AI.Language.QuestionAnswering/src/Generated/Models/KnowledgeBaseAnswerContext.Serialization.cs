@@ -8,19 +8,19 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class KnowledgeBaseAnswerRequestContext : IUtf8JsonSerializable
+    public partial class KnowledgeBaseAnswerContext : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("previousQnaId");
             writer.WriteNumberValue(PreviousQnaId);
-            if (Optional.IsDefined(PreviousUserQuery))
+            if (Optional.IsDefined(PreviousQuestion))
             {
                 writer.WritePropertyName("previousUserQuery");
-                writer.WriteStringValue(PreviousUserQuery);
+                writer.WriteStringValue(PreviousQuestion);
             }
             writer.WriteEndObject();
         }

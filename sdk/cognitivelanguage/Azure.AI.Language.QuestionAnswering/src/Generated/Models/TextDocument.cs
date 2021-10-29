@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Represent input text record to be queried. </summary>
-    public partial class TextRecord
+    public partial class TextDocument
     {
     }
 }

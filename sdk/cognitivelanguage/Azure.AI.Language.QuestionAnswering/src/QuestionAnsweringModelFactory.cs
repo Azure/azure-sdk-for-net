@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     [CodeGenType("QuestionAnsweringModelFactory")]
     public static partial class QuestionAnsweringModelFactory

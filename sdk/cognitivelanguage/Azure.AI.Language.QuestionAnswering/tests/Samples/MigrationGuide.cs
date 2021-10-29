@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Models;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
 using NUnit.Framework;
@@ -71,7 +70,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await client.Knowledgebase.DeleteAsync("<KnowledgeBaseID>");
             #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledeBase
 
-        }*/
+        }
+        */
+
         private async Task Language_QnA_MigrationGuide_Runtime()
         {
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
@@ -81,24 +82,26 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             var client = new QuestionAnsweringClient(endpoint, credential);
             #endregion
 
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-            var response = await client.QueryKnowledgeBaseAsync(
-                "{project-name}",
-                "{deployment-name}",
-                "{question}");
-            #endregion
+#pragma warning disable SA1509 // Opening braces should not be preceded by blank line
+            {
+                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+                QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+                var response = await client.GetAnswersAsync("{question}", project);
+                #endregion
+            }
 
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+            {
+                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+                QuestionAnsweringProject project = new QuestionAnsweringProject("{project-name}", "{deployment-name}");
+                var options = new AnswersOptions
+                {
+                    AnswerContext = new KnowledgeBaseAnswerContext(1)
+                };
 
-            var options = new QueryKnowledgeBaseOptions(
-                "{project-name}",
-                "{deployment-name}",
-                "{question}");
-            options.Context = new KnowledgeBaseAnswerRequestContext(1);
-
-            var responseFollowUp = await client.QueryKnowledgeBaseAsync(options);
-
-            #endregion
+                var responseFollowUp = await client.GetAnswersAsync("{question}", project, options);
+                #endregion
+            }
+#pragma warning restore SA1509 // Opening braces should not be preceded by blank line
         }
         private async Task CognitiveServices_QnA_MigrationGuide_Runtime()
         {

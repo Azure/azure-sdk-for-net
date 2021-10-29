@@ -8,20 +8,20 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Represents the answer results. </summary>
-    public partial class TextAnswers
+    public partial class AnswersFromTextResult
     {
-        /// <summary> Initializes a new instance of TextAnswers. </summary>
-        internal TextAnswers()
+        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
+        internal AnswersFromTextResult()
         {
             Answers = new ChangeTrackingList<TextAnswer>();
         }
 
-        /// <summary> Initializes a new instance of TextAnswers. </summary>
+        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
         /// <param name="answers"> Represents the answer results. </param>
-        internal TextAnswers(IReadOnlyList<TextAnswer> answers)
+        internal AnswersFromTextResult(IReadOnlyList<TextAnswer> answers)
         {
             Answers = answers;
         }
