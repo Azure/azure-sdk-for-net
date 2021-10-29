@@ -172,7 +172,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textDocuments">The text documents to query.</param>
         /// <param name="language">
         /// The language of the text documents.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textDocuments">The text documents to query.</param>
         /// <param name="language">
         /// The language of the text documents.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
@@ -206,7 +206,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textDocuments">A collection of <see cref="TextDocument"/> to query.</param>
         /// <param name="language">
         /// The language of the text documents.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
@@ -223,7 +223,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="textDocuments">A collection of <see cref="TextDocument"/> to query.</param>
         /// <param name="language">
         /// The language of the text documents.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
         /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.

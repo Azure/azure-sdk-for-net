@@ -33,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <summary>
         /// Gets or sets the default language to use in some client methods.
-        /// This is the BCP-47 representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, the service default, "en" for English, is used.
         /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </summary>
