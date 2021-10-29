@@ -56,36 +56,36 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region SBAuthorizationRuleNamespace
-        /// <summary> Gets an object representing a SBAuthorizationRuleNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceSBAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBAuthorizationRuleNamespace" /> object. </returns>
-        public static SBAuthorizationRuleNamespace GetSBAuthorizationRuleNamespace(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceSBAuthorizationRule" /> object. </returns>
+        public static NamespaceSBAuthorizationRule GetNamespaceSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBAuthorizationRuleNamespace(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SBAuthorizationRuleQueue
-        /// <summary> Gets an object representing a SBAuthorizationRuleQueue along with the instance operations that can be performed on it but with no data. </summary>
+        #region QueueSBAuthorizationRule
+        /// <summary> Gets an object representing a QueueSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBAuthorizationRuleQueue" /> object. </returns>
-        public static SBAuthorizationRuleQueue GetSBAuthorizationRuleQueue(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QueueSBAuthorizationRule" /> object. </returns>
+        public static QueueSBAuthorizationRule GetQueueSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBAuthorizationRuleQueue(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new QueueSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SBAuthorizationRuleTopic
-        /// <summary> Gets an object representing a SBAuthorizationRuleTopic along with the instance operations that can be performed on it but with no data. </summary>
+        #region TopicSBAuthorizationRule
+        /// <summary> Gets an object representing a TopicSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBAuthorizationRuleTopic" /> object. </returns>
-        public static SBAuthorizationRuleTopic GetSBAuthorizationRuleTopic(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopicSBAuthorizationRule" /> object. </returns>
+        public static TopicSBAuthorizationRule GetTopicSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBAuthorizationRuleTopic(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TopicSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

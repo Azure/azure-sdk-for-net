@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,28 +22,43 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of SBNamespace and their operations over a ResourceGroup. </summary>
-    public partial class SBNamespaceContainer : ArmContainer
+    public partial class SBNamespaceCollection : ArmCollection, IEnumerable<SBNamespace>, IAsyncEnumerable<SBNamespace>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly NamespacesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SBNamespaceContainer"/> class for mocking. </summary>
-        protected SBNamespaceContainer()
+        /// <summary> Initializes a new instance of the <see cref="SBNamespaceCollection"/> class for mocking. </summary>
+        protected SBNamespaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SBNamespaceContainer class. </summary>
+        /// <summary> Initializes a new instance of SBNamespaceCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SBNamespaceContainer(ArmResource parent) : base(parent)
+        internal SBNamespaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<SBNamespace> IEnumerable<SBNamespace>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SBNamespace> IAsyncEnumerable<SBNamespace>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -60,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -116,7 +133,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBNamespace> Get(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -142,7 +159,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBNamespace>> GetAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.Get");
             scope.Start();
             try
             {
@@ -168,7 +185,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBNamespace> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -194,7 +211,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBNamespace>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -244,7 +261,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -270,7 +287,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<SBNamespace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -285,7 +302,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<SBNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -308,7 +325,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<SBNamespace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -323,7 +340,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<SBNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -347,7 +364,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBNamespaceContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("SBNamespaceCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {

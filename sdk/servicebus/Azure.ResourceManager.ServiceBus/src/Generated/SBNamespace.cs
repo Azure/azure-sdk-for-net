@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ServiceBus
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ServiceBus
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new SBNamespace(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -662,44 +662,44 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a list of PrivateEndpointConnections in the SBNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a SBNamespace. </returns>
-        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionContainer(this);
+            return new PrivateEndpointConnectionCollection(this);
         }
 
         /// <summary> Gets a list of ArmDisasterRecoveries in the SBNamespace. </summary>
         /// <returns> An object representing collection of ArmDisasterRecoveries and their operations over a SBNamespace. </returns>
-        public ArmDisasterRecoveryContainer GetArmDisasterRecoveries()
+        public ArmDisasterRecoveryCollection GetArmDisasterRecoveries()
         {
-            return new ArmDisasterRecoveryContainer(this);
+            return new ArmDisasterRecoveryCollection(this);
         }
 
         /// <summary> Gets a list of MigrationConfigProperties in the SBNamespace. </summary>
         /// <returns> An object representing collection of MigrationConfigProperties and their operations over a SBNamespace. </returns>
-        public MigrationConfigPropertiesContainer GetMigrationConfigProperties()
+        public MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
-            return new MigrationConfigPropertiesContainer(this);
+            return new MigrationConfigPropertiesCollection(this);
         }
 
-        /// <summary> Gets a list of SBAuthorizationRuleNamespaces in the SBNamespace. </summary>
-        /// <returns> An object representing collection of SBAuthorizationRuleNamespaces and their operations over a SBNamespace. </returns>
-        public SBAuthorizationRuleNamespaceContainer GetSBAuthorizationRuleNamespaces()
+        /// <summary> Gets a list of NamespaceSBAuthorizationRules in the SBNamespace. </summary>
+        /// <returns> An object representing collection of NamespaceSBAuthorizationRules and their operations over a SBNamespace. </returns>
+        public NamespaceSBAuthorizationRuleCollection GetNamespaceSBAuthorizationRules()
         {
-            return new SBAuthorizationRuleNamespaceContainer(this);
+            return new NamespaceSBAuthorizationRuleCollection(this);
         }
 
         /// <summary> Gets a list of SBQueues in the SBNamespace. </summary>
         /// <returns> An object representing collection of SBQueues and their operations over a SBNamespace. </returns>
-        public SBQueueContainer GetSBQueues()
+        public SBQueueCollection GetSBQueues()
         {
-            return new SBQueueContainer(this);
+            return new SBQueueCollection(this);
         }
 
         /// <summary> Gets a list of SBTopics in the SBNamespace. </summary>
         /// <returns> An object representing collection of SBTopics and their operations over a SBNamespace. </returns>
-        public SBTopicContainer GetSBTopics()
+        public SBTopicCollection GetSBTopics()
         {
-            return new SBTopicContainer(this);
+            return new SBTopicCollection(this);
         }
     }
 }

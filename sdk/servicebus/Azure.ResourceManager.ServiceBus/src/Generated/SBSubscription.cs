@@ -186,9 +186,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets a list of Rules in the SBSubscription. </summary>
         /// <returns> An object representing collection of Rules and their operations over a SBSubscription. </returns>
-        public RuleContainer GetRules()
+        public RuleCollection GetRules()
         {
-            return new RuleContainer(this);
+            return new RuleCollection(this);
         }
     }
 }

@@ -16,9 +16,9 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates an authorization rule for a queue. </summary>
-    public partial class QueueAuthorizationRuleCreateOrUpdateOperation : Operation<SBAuthorizationRuleQueue>
+    public partial class QueueAuthorizationRuleCreateOrUpdateOperation : Operation<QueueSBAuthorizationRule>
     {
-        private readonly OperationOrResponseInternals<SBAuthorizationRuleQueue> _operation;
+        private readonly OperationOrResponseInternals<QueueSBAuthorizationRule> _operation;
 
         /// <summary> Initializes a new instance of QueueAuthorizationRuleCreateOrUpdateOperation for mocking. </summary>
         protected QueueAuthorizationRuleCreateOrUpdateOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal QueueAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<SBAuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<SBAuthorizationRuleQueue>(Response.FromValue(new SBAuthorizationRuleQueue(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<QueueSBAuthorizationRule>(Response.FromValue(new QueueSBAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SBAuthorizationRuleQueue Value => _operation.Value;
+        public override QueueSBAuthorizationRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBAuthorizationRuleQueue>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<QueueSBAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBAuthorizationRuleQueue>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<QueueSBAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

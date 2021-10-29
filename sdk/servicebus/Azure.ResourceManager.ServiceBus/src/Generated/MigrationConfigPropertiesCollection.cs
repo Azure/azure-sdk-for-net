@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of MigrationConfigProperties and their operations over a SBNamespace. </summary>
-    public partial class MigrationConfigPropertiesContainer : ArmContainer
+    public partial class MigrationConfigPropertiesCollection : ArmCollection, IEnumerable<MigrationConfigProperties>, IAsyncEnumerable<MigrationConfigProperties>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly MigrationConfigsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MigrationConfigPropertiesContainer"/> class for mocking. </summary>
-        protected MigrationConfigPropertiesContainer()
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigPropertiesCollection"/> class for mocking. </summary>
+        protected MigrationConfigPropertiesCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationConfigPropertiesContainer class. </summary>
+        /// <summary> Initializes a new instance of MigrationConfigPropertiesCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal MigrationConfigPropertiesContainer(ArmResource parent) : base(parent)
+        internal MigrationConfigPropertiesCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new MigrationConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<MigrationConfigProperties> IEnumerable<MigrationConfigProperties>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<MigrationConfigProperties> IAsyncEnumerable<MigrationConfigProperties>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => SBNamespace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates Migration configuration and starts migration of entities from Standard to Premium namespace. </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
@@ -55,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -85,7 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -107,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<MigrationConfigProperties> Get(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Get");
             scope.Start();
             try
             {
@@ -128,7 +145,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<MigrationConfigProperties>> GetAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Get");
             scope.Start();
             try
             {
@@ -149,7 +166,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<MigrationConfigProperties> GetIfExists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -170,7 +187,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<MigrationConfigProperties>> GetIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -191,7 +208,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -210,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -231,7 +248,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<MigrationConfigProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -246,7 +263,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<MigrationConfigProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<MigrationConfigProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<MigrationConfigProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetAll");
                 scope.Start();
                 try
                 {

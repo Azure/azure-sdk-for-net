@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a list of SBAuthorizationRuleQueues in the SBQueue. </summary>
-        /// <returns> An object representing collection of SBAuthorizationRuleQueues and their operations over a SBQueue. </returns>
-        public SBAuthorizationRuleQueueContainer GetSBAuthorizationRuleQueues()
+        /// <summary> Gets a list of QueueSBAuthorizationRules in the SBQueue. </summary>
+        /// <returns> An object representing collection of QueueSBAuthorizationRules and their operations over a SBQueue. </returns>
+        public QueueSBAuthorizationRuleCollection GetQueueSBAuthorizationRules()
         {
-            return new SBAuthorizationRuleQueueContainer(this);
+            return new QueueSBAuthorizationRuleCollection(this);
         }
     }
 }

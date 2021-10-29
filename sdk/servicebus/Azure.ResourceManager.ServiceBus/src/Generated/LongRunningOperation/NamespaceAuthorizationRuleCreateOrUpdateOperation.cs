@@ -16,9 +16,9 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates or updates an authorization rule for a namespace. </summary>
-    public partial class NamespaceAuthorizationRuleCreateOrUpdateOperation : Operation<SBAuthorizationRuleNamespace>
+    public partial class NamespaceAuthorizationRuleCreateOrUpdateOperation : Operation<NamespaceSBAuthorizationRule>
     {
-        private readonly OperationOrResponseInternals<SBAuthorizationRuleNamespace> _operation;
+        private readonly OperationOrResponseInternals<NamespaceSBAuthorizationRule> _operation;
 
         /// <summary> Initializes a new instance of NamespaceAuthorizationRuleCreateOrUpdateOperation for mocking. </summary>
         protected NamespaceAuthorizationRuleCreateOrUpdateOperation()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal NamespaceAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<SBAuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<SBAuthorizationRuleNamespace>(Response.FromValue(new SBAuthorizationRuleNamespace(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<NamespaceSBAuthorizationRule>(Response.FromValue(new NamespaceSBAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SBAuthorizationRuleNamespace Value => _operation.Value;
+        public override NamespaceSBAuthorizationRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBAuthorizationRuleNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<NamespaceSBAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBAuthorizationRuleNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<NamespaceSBAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

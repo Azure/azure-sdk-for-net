@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of SBSubscription and their operations over a SBTopic. </summary>
-    public partial class SBSubscriptionContainer : ArmContainer
+    public partial class SBSubscriptionCollection : ArmCollection, IEnumerable<SBSubscription>, IAsyncEnumerable<SBSubscription>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SubscriptionsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SBSubscriptionContainer"/> class for mocking. </summary>
-        protected SBSubscriptionContainer()
+        /// <summary> Initializes a new instance of the <see cref="SBSubscriptionCollection"/> class for mocking. </summary>
+        protected SBSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SBSubscriptionContainer class. </summary>
+        /// <summary> Initializes a new instance of SBSubscriptionCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SBSubscriptionContainer(ArmResource parent) : base(parent)
+        internal SBSubscriptionCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<SBSubscription> IEnumerable<SBSubscription>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SBSubscription> IAsyncEnumerable<SBSubscription>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => SBTopic.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a topic subscription. </summary>
         /// <param name="subscriptionName"> The subscription name. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBSubscription> Get(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBSubscription>> GetAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBSubscription> GetIfExists(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBSubscription>> GetIfExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -271,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<SBSubscription> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -286,7 +303,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<SBSubscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -311,7 +328,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<SBSubscription>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -326,7 +343,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<SBSubscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBSubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {

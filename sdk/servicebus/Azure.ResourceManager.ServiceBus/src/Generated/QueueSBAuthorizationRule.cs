@@ -19,52 +19,52 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A Class representing a SBAuthorizationRuleTopic along with the instance operations that can be performed on it. </summary>
-    public partial class SBAuthorizationRuleTopic : ArmResource
+    /// <summary> A Class representing a QueueSBAuthorizationRule along with the instance operations that can be performed on it. </summary>
+    public partial class QueueSBAuthorizationRule : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TopicAuthorizationRulesRestOperations _restClient;
+        private readonly QueueAuthorizationRulesRestOperations _restClient;
         private readonly SBAuthorizationRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SBAuthorizationRuleTopic"/> class for mocking. </summary>
-        protected SBAuthorizationRuleTopic()
+        /// <summary> Initializes a new instance of the <see cref="QueueSBAuthorizationRule"/> class for mocking. </summary>
+        protected QueueSBAuthorizationRule()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SBAuthorizationRuleTopic"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "QueueSBAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SBAuthorizationRuleTopic(ArmResource options, SBAuthorizationRuleData resource) : base(options, resource.Id)
+        internal QueueSBAuthorizationRule(ArmResource options, SBAuthorizationRuleData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TopicAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new QueueAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SBAuthorizationRuleTopic"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QueueSBAuthorizationRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SBAuthorizationRuleTopic(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal QueueSBAuthorizationRule(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TopicAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new QueueAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SBAuthorizationRuleTopic"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QueueSBAuthorizationRule"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SBAuthorizationRuleTopic(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal QueueSBAuthorizationRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TopicAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _restClient = new QueueAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/authorizationRules";
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/queues/authorizationRules";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Returns the specified authorization rule. </summary>
+        /// <summary> Gets an authorization rule for a queue by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SBAuthorizationRuleTopic>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<QueueSBAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.Get");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SBAuthorizationRuleTopic(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QueueSBAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Returns the specified authorization rule. </summary>
+        /// <summary> Gets an authorization rule for a queue by rule name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SBAuthorizationRuleTopic> Get(CancellationToken cancellationToken = default)
+        public virtual Response<QueueSBAuthorizationRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.Get");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SBAuthorizationRuleTopic(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QueueSBAuthorizationRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.ServiceBus
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
-        /// <summary> Deletes a topic authorization rule. </summary>
+        /// <summary> Deletes a queue authorization rule. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<TopicAuthorizationRuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<QueueAuthorizationRuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.Delete");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.Delete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new TopicAuthorizationRuleDeleteOperation(response);
+                var operation = new QueueAuthorizationRuleDeleteOperation(response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Deletes a topic authorization rule. </summary>
+        /// <summary> Deletes a queue authorization rule. </summary>
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual TopicAuthorizationRuleDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual QueueAuthorizationRuleDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.Delete");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new TopicAuthorizationRuleDeleteOperation(response);
+                var operation = new QueueAuthorizationRuleDeleteOperation(response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ServiceBus
                 throw;
             }
         }
-        /// <summary> Gets the primary and secondary connection strings for the topic. </summary>
+        /// <summary> Primary and secondary connection strings to the queue. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.GetKeys");
             scope.Start();
             try
             {
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets the primary and secondary connection strings for the topic. </summary>
+        /// <summary> Primary and secondary connection strings to the queue. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.GetKeys");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.GetKeys");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Regenerates primary or secondary connection strings for the topic. </summary>
+        /// <summary> Regenerates the primary or secondary connection strings to the queue. </summary>
         /// <param name="parameters"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.RegenerateKeys");
             scope.Start();
             try
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Regenerates primary or secondary connection strings for the topic. </summary>
+        /// <summary> Regenerates the primary or secondary connection strings to the queue. </summary>
         /// <param name="parameters"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBAuthorizationRuleTopic.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("QueueSBAuthorizationRule.RegenerateKeys");
             scope.Start();
             try
             {

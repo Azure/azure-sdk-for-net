@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing collection of SBTopic and their operations over a SBNamespace. </summary>
-    public partial class SBTopicContainer : ArmContainer
+    public partial class SBTopicCollection : ArmCollection, IEnumerable<SBTopic>, IAsyncEnumerable<SBTopic>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TopicsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SBTopicContainer"/> class for mocking. </summary>
-        protected SBTopicContainer()
+        /// <summary> Initializes a new instance of the <see cref="SBTopicCollection"/> class for mocking. </summary>
+        protected SBTopicCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SBTopicContainer class. </summary>
+        /// <summary> Initializes a new instance of SBTopicCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SBTopicContainer(ArmResource parent) : base(parent)
+        internal SBTopicCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new TopicsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<SBTopic> IEnumerable<SBTopic>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SBTopic> IAsyncEnumerable<SBTopic>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => SBNamespace.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a topic in the specified namespace. </summary>
         /// <param name="topicName"> The topic name. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBTopic> Get(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBTopic>> GetAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SBTopic> GetIfExists(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SBTopic>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -271,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Page<SBTopic> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -286,7 +303,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             Page<SBTopic> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -311,7 +328,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             async Task<Page<SBTopic>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -326,7 +343,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
             async Task<Page<SBTopic>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SBTopicContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SBTopicCollection.GetAll");
                 scope.Start();
                 try
                 {

@@ -184,18 +184,18 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a list of SBAuthorizationRuleTopics in the SBTopic. </summary>
-        /// <returns> An object representing collection of SBAuthorizationRuleTopics and their operations over a SBTopic. </returns>
-        public SBAuthorizationRuleTopicContainer GetSBAuthorizationRuleTopics()
+        /// <summary> Gets a list of TopicSBAuthorizationRules in the SBTopic. </summary>
+        /// <returns> An object representing collection of TopicSBAuthorizationRules and their operations over a SBTopic. </returns>
+        public TopicSBAuthorizationRuleCollection GetTopicSBAuthorizationRules()
         {
-            return new SBAuthorizationRuleTopicContainer(this);
+            return new TopicSBAuthorizationRuleCollection(this);
         }
 
         /// <summary> Gets a list of SBSubscriptions in the SBTopic. </summary>
         /// <returns> An object representing collection of SBSubscriptions and their operations over a SBTopic. </returns>
-        public SBSubscriptionContainer GetSBSubscriptions()
+        public SBSubscriptionCollection GetSBSubscriptions()
         {
-            return new SBSubscriptionContainer(this);
+            return new SBSubscriptionCollection(this);
         }
     }
 }

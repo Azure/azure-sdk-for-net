@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceBus
     public static partial class ResourceGroupExtensions
     {
         #region SBNamespace
-        /// <summary> Gets an object representing a SBNamespaceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SBNamespaceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SBNamespaceContainer" /> object. </returns>
-        public static SBNamespaceContainer GetSBNamespaces(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SBNamespaceCollection" /> object. </returns>
+        public static SBNamespaceCollection GetSBNamespaces(this ResourceGroup resourceGroup)
         {
-            return new SBNamespaceContainer(resourceGroup);
+            return new SBNamespaceCollection(resourceGroup);
         }
         #endregion
     }
