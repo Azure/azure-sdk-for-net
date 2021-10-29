@@ -923,7 +923,8 @@ namespace Microsoft.Azure.Management.Monitor
         public async Task<AzureOperationResponse<TestNotificationResponse>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            return await BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<TestNotificationResponse> _response = await BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -970,7 +971,6 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationId");
             }
-
             string apiVersion = "2021-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -980,13 +980,13 @@ namespace Microsoft.Azure.Management.Monitor
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("notificationId", notificationId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTestNotifications", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Insights/notifications/{notificationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{notificationId}", System.Uri.EscapeDataString(notificationId));
             List<string> _queryParameters = new List<string>();
@@ -1501,8 +1501,8 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='actionGroupName'>
         /// The name of the action group.
         /// </param>
-        /// <param name='enableRequest'>
-        /// The receiver to re-enable.
+        /// <param name='receiverName'>
+        /// The name of the receiver to resubscribe.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1522,7 +1522,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> EnableReceiverWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, EnableRequest enableRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> EnableReceiverWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, string receiverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1543,14 +1543,6 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "actionGroupName");
             }
-            if (enableRequest == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enableRequest");
-            }
-            if (enableRequest != null)
-            {
-                enableRequest.Validate();
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1562,7 +1554,16 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
+            if (receiverName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "receiverName");
+            }
             string apiVersion = "2021-09-01";
+            EnableRequest enableRequest = new EnableRequest();
+            if (receiverName != null)
+            {
+                enableRequest.ReceiverName = receiverName;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1735,7 +1736,7 @@ namespace Microsoft.Azure.Management.Monitor
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
-            }            
+            }
             if (notificationRequest == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationRequest");
@@ -1752,9 +1753,9 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("notificationRequest", notificationRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                tracingParameters.Add("apiVersion", apiVersion);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPostTestNotifications", tracingParameters);
             }
             // Construct URL

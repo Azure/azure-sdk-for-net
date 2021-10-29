@@ -243,7 +243,7 @@ namespace Monitor.Tests.BasicTests
             AzureOperationResponse response = monitorManagementClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
                 resourceGroupName: "rg1",
                 actionGroupName: "name1",
-                enableRequest: new EnableRequest("receiverName1")).Result;
+                receiverName: "receiverName1").Result;
 
             Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
         }

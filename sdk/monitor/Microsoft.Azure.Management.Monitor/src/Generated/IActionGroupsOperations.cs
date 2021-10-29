@@ -223,8 +223,8 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='actionGroupName'>
         /// The name of the action group.
         /// </param>
-        /// <param name='enableRequest'>
-        /// The receiver to re-enable.
+        /// <param name='receiverName'>
+        /// The name of the receiver to resubscribe.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> EnableReceiverWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, EnableRequest enableRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> EnableReceiverWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, string receiverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Send test notifications to a set of provided receivers
         /// </summary>

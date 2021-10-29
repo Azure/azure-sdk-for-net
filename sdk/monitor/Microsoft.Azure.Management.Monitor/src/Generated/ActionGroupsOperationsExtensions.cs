@@ -338,12 +338,12 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='actionGroupName'>
             /// The name of the action group.
             /// </param>
-            /// <param name='enableRequest'>
-            /// The receiver to re-enable.
+            /// <param name='receiverName'>
+            /// The name of the receiver to resubscribe.
             /// </param>
-            public static void EnableReceiver(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, EnableRequest enableRequest)
+            public static void EnableReceiver(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string receiverName)
             {
-                operations.EnableReceiverAsync(resourceGroupName, actionGroupName, enableRequest).GetAwaiter().GetResult();
+                operations.EnableReceiverAsync(resourceGroupName, actionGroupName, receiverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -360,15 +360,15 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='actionGroupName'>
             /// The name of the action group.
             /// </param>
-            /// <param name='enableRequest'>
-            /// The receiver to re-enable.
+            /// <param name='receiverName'>
+            /// The name of the receiver to resubscribe.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task EnableReceiverAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, EnableRequest enableRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task EnableReceiverAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string receiverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.EnableReceiverWithHttpMessagesAsync(resourceGroupName, actionGroupName, enableRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.EnableReceiverWithHttpMessagesAsync(resourceGroupName, actionGroupName, receiverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
