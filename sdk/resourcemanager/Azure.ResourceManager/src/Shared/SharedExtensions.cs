@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +16,21 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     internal static class SharedExtensions
     {
+        /// <summary>
+        /// Collects the segments in a resource identifier into a string
+        /// </summary>
+        /// <param name="resourceId">the resource identifier</param>
+        /// <param name="start">the index of segment we would like to start</param>
+        /// <returns></returns>
+        public static string GetParts(this ResourceIdentifier resourceId, int start)
+        {
+            var parts = resourceId.ToString().Split('/').ToList();
+            var indexOfProviders = parts.LastIndexOf(ResourceIdentifier.ProvidersKey);
+            if (indexOfProviders < 0)
+                throw new InvalidOperationException($"{resourceId} does not have a providers segment");
+            return string.Join("/", parts.Skip(indexOfProviders + start));
+        }
+
         /// <summary>
         /// An extension method for supporting replacing one dictionary content with another one.
         /// This is used to support resource tags.
