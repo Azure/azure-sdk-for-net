@@ -113,6 +113,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [SyncOnly]
         [RecordedTest]
+        [Ignore(reason: "LUIS Orchestration not set up in CI pipeline")]
         public void AnalyzeConversationOrchestrationPredictionLuis()
         {
             ConversationAnalysisClient client = Client;
@@ -239,6 +240,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
+        [Ignore(reason:"LUIS Orchestration not set up in CI pipeline")]
         public async Task AnalyzeConversationOrchestrationPredictionLuisAsync()
         {
             ConversationAnalysisClient client = Client;
