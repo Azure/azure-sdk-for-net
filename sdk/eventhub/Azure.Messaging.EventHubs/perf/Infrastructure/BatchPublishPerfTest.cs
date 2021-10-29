@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Perf
             catch (EventHubsException e) when (cancellationToken.IsCancellationRequested && e.IsTransient)
             {
                 // If SendAsync() is cancelled during a retry loop, the most recent exception is thrown.
-                // If the exception is transient, it should be wrapped in an OperationCancelledException
+                // If the exception is transient, it should be wrapped in an OperationCanceledException
                 // which is ignored by the perf framework.
                 throw new OperationCanceledException("EventHubsException thrown during cancellation", e);
             }
