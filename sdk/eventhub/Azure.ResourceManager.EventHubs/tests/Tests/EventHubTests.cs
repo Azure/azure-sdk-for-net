@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     Destination = new Destination()
                     {
                         Name = "EventHubArchive.AzureBlockBlob",
-                        BlobContainer = "Container",
+                        BlobContainer = "container",
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
                         StorageAccountResourceId = account.Id.ToString()
                     }
