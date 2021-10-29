@@ -720,7 +720,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline
+    public sealed partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline, System.IDisposable
     {
         public DisposableHttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
         public void Dispose() { }
@@ -782,12 +782,9 @@ namespace Azure.Core.Pipeline
         public HttpPipelineTransportOptions() { }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct ServerCertificateCustomValidationArgs
+    public partial class ServerCertificateCustomValidationArgs
     {
-        private object _dummy;
-        private int _dummyPrimitive;
-        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { throw null; }
+        public ServerCertificateCustomValidationArgs(System.Security.Cryptography.X509Certificates.X509Certificate2? certificate, System.Security.Cryptography.X509Certificates.X509Chain? x509Chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) { }
         public System.Security.Cryptography.X509Certificates.X509Certificate2? Certificate { get { throw null; } }
         public System.Net.Security.SslPolicyErrors SslPolicyErrors { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Chain? X509Chain { get { throw null; } }
