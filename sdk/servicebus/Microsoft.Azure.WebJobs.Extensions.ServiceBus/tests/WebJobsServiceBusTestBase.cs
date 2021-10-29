@@ -266,6 +266,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 sbOptions.EnableCrossEntityTransactions = true;
             }));
+
+        protected static Action<IHostBuilder> SetCustomErrorHandler =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.ProcessErrorAsync = ServiceBusEndToEndTests.TestCustomErrorHandler.ErrorHandler;
+                    sbOptions.MaxAutoLockRenewalDuration = TimeSpan.Zero;
+                    sbOptions.MaxConcurrentCalls = 1;
+                }));
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
