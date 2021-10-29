@@ -8,6 +8,7 @@ using Azure.Identity;
 using NUnit.Framework;
 using System.IO;
 using System.Threading;
+using Azure.Messaging.EventHubs;
 using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
@@ -31,6 +32,29 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
             #endregion
 
             this.schemaRegistryClient = schemaRegistryClient;
+        }
+
+        [Test]
+        public void EncodeDecodeEventData()
+        {
+            string groupName = TestEnvironment.SchemaRegistryGroup;
+
+            #region Snippet:SchemaRegistryAvroEncodeEventData
+            var employee = new Employee { Age = 42, Name = "John Doe" };
+            var encoder = new SchemaRegistryAvroEncoder(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var eventData = new EventData();
+
+            encoder.EncodeMessageData(eventData, employee, typeof(Employee));
+
+            // the schema Id will be included as a parameter of the content type
+            Console.WriteLine(eventData.ContentType);
+
+            // the serialized Avro data will be stored in the EventBody
+            Console.WriteLine(eventData.EventBody);
+
+            // We can also get the Employee model back out from the serialized data
+            employee = (Employee) encoder.DecodeMessageData(eventData, typeof(Employee));
+            #endregion
         }
     }
 }

@@ -85,26 +85,24 @@ Details on generating a class using the Apache Avro library can be found in the 
 * [Serialize](#serialize)
 * [Deserialize](#deserialize)
 
-### Serialize
+### Encode and decode data using the Event Hub EventData model
 
-Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:SchemaRegistryAvroSerialize
+```C# Snippet:SchemaRegistryAvroEncodeEventData
 var employee = new Employee { Age = 42, Name = "John Doe" };
+var encoder = new SchemaRegistryAvroEncoder(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+var eventData = new EventData();
 
-using var memoryStream = new MemoryStream();
-var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
-```
+encoder.EncodeMessageData(eventData, employee, typeof(Employee));
 
-### Deserialize
+// the schema Id will be included as a parameter of the content type
+Console.WriteLine(eventData.ContentType);
 
-Retrieve a previously registered schema ID from the Azure Schema Registry.
+// the serialized Avro data will be stored in the EventBody
+Console.WriteLine(eventData.EventBody);
 
-```C# Snippet:SchemaRegistryAvroDeserialize
-var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-memoryStream.Position = 0;
-Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
+// We can also get the Employee model back out from the serialized data
+employee = (Employee) encoder.DecodeMessageData(eventData, typeof(Employee));
 ```
 
 ## Troubleshooting
