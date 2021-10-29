@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Properties\launchSettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
