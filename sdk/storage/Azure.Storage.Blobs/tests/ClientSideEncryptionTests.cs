@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1120,11 +1120,12 @@ namespace Azure.Storage.Blobs.Test
              */
 
             // Arrange
+            const float rotationPauseTimeSeconds = 1f;
 
             var data = GetRandomBuffer(Constants.KB);
             var mockKey1 = GetIKeyEncryptionKey();
             // delay forces pause in rotation where we can mess with blob and change etag
-            var mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(1));
+            var mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(rotationPauseTimeSeconds));
             var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
             var cek = GetRandomBuffer(32);
@@ -1159,7 +1160,9 @@ namespace Azure.Storage.Blobs.Test
                     keywrapAlgorithmOverride: s_algorithmName,
                     cancellationToken: s_cancellationToken));
             }
-            // mess with blob while key is rotation, changing the etag
+
+            // partway through, mess with blob while key is rotation, changing the etag
+            await Task.Delay(TimeSpan.FromSeconds(rotationPauseTimeSeconds / 2));
             await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
                 ContentLanguage = "foo"
