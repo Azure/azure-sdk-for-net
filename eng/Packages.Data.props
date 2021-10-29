@@ -91,6 +91,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.8.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.5" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.6" />
@@ -122,11 +123,6 @@
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <!-- Packages intended for Management libraries only -->
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-beta.4" />
-  </ItemGroup>
-
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
@@ -146,7 +142,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211019.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20211026.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210903.4" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -169,9 +165,9 @@
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.2.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-alpha.20210831.3" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.3" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-beta.3" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
