@@ -70,18 +70,21 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 Assert.Equal(tleLine2, getSpacecraft.TleLine2);
                 Assert.NotNull(getSpacecraft.Links);
 
-                var listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName) as List<Spacecraft>;
+                var listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
 
                 Assert.Single(listSpacecraftsByResourceGroup);
-                Assert.Equal(spacecraftName, listSpacecraftsByResourceGroup[0].Name);
-                Assert.Equal(noradId, listSpacecraftsByResourceGroup[0].NoradId);
-                Assert.Equal(titleLine, listSpacecraftsByResourceGroup[0].TitleLine);
-                Assert.Equal(tleLine1, listSpacecraftsByResourceGroup[0].TleLine1);
-                Assert.Equal(tleLine2, listSpacecraftsByResourceGroup[0].TleLine2);
-                Assert.NotNull(listSpacecraftsByResourceGroup[0].Links);
+                var enumerator = listSpacecraftsByResourceGroup.GetEnumerator();
+                enumerator.MoveNext();
+                var spacecraft = enumerator.Current;
+                Assert.Equal(spacecraftName, spacecraft.Name);
+                Assert.Equal(noradId, spacecraft.NoradId);
+                Assert.Equal(titleLine, spacecraft.TitleLine);
+                Assert.Equal(tleLine1, spacecraft.TleLine1);
+                Assert.Equal(tleLine2, spacecraft.TleLine2);
+                Assert.NotNull(spacecraft.Links);
 
                 azureOrbitalClient.Orbital.DeleteSpacecraft(resourceGroupName, spacecraftName);
-                listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName) as List<Spacecraft>;
+                listSpacecraftsByResourceGroup = azureOrbitalClient.Orbital.ListSpacecraftsByResourceGroup(resourceGroupName);
                 Assert.Empty(listSpacecraftsByResourceGroup);
 
             }

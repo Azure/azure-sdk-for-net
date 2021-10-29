@@ -1,0 +1,134 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/providers/Microsoft.Orbital/availableGroundStations?api-version=2021-04-04-preview&capability=EarthObservation",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuT3JiaXRhbC9hdmFpbGFibGVHcm91bmRTdGF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXcmY2FwYWJpbGl0eT1FYXJ0aE9ic2VydmF0aW9u",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3ec51b1e-fbf4-4e91-ad24-d888f6315d63"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "585bd20b-39be-4b6a-84b6-2dc48be56771"
+        ],
+        "x-ms-correlation-request-id": [
+          "585bd20b-39be-4b6a-84b6-2dc48be56771"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20211029T160929Z:585bd20b-39be-4b6a-84b6-2dc48be56771"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 29 Oct 2021 16:09:29 GMT"
+        ],
+        "Content-Length": [
+          "733"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/providers/Microsoft.Orbital/availableGroundStations/guhidalg-gs\",\r\n      \"name\": \"guhidalg-gs\",\r\n      \"type\": \"Microsoft.Orbital/availableGroundStations\",\r\n      \"properties\": {\r\n        \"city\": \"redmond\",\r\n        \"providerName\": \"Microsoft\",\r\n        \"longitudeDegrees\": 47.674,\r\n        \"latitudeDegrees\": -122.122,\r\n        \"altitudeMeters\": 1500.83\r\n      }\r\n    },\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/providers/Microsoft.Orbital/availableGroundStations/WESTUS2_0\",\r\n      \"name\": \"WESTUS2_0\",\r\n      \"type\": \"Microsoft.Orbital/availableGroundStations\",\r\n      \"properties\": {\r\n        \"city\": \"Quincy\",\r\n        \"providerName\": \"Microsoft\",\r\n        \"longitudeDegrees\": -119.88515,\r\n        \"latitudeDegrees\": 47.2393,\r\n        \"altitudeMeters\": 392.5\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/providers/Microsoft.Orbital/availableGroundStations/guhidalg-gs?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuT3JiaXRhbC9hdmFpbGFibGVHcm91bmRTdGF0aW9ucy9ndWhpZGFsZy1ncz9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "619234d9-eea2-46a5-b686-bafd96db7c6d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "f105d97c-6d82-401f-8803-e4ff3ea11d10"
+        ],
+        "x-ms-correlation-request-id": [
+          "f105d97c-6d82-401f-8803-e4ff3ea11d10"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20211029T160930Z:f105d97c-6d82-401f-8803-e4ff3ea11d10"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 29 Oct 2021 16:09:29 GMT"
+        ],
+        "Content-Length": [
+          "354"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/providers/Microsoft.Orbital/availableGroundStations/guhidalg-gs\",\r\n  \"name\": \"guhidalg-gs\",\r\n  \"type\": \"Microsoft.Orbital/availableGroundStations\",\r\n  \"properties\": {\r\n    \"city\": \"redmond\",\r\n    \"providerName\": \"Microsoft\",\r\n    \"longitudeDegrees\": 47.674,\r\n    \"latitudeDegrees\": -122.122,\r\n    \"altitudeMeters\": 1500.83\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "45918c83-a22a-4e7d-8026-ccec4bb63589"
+  }
+}

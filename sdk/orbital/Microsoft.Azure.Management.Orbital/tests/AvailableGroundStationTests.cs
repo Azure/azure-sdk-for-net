@@ -19,12 +19,16 @@ namespace Microsoft.Azure.Management.Orbital.Tests.Tests
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
                 var azureOrbitalClient = GetAzureOrbitalClientWithHandler(context, handler);
 
-                List<AvailableGroundStation> listAvailableGroundStations = (List<AvailableGroundStation>)azureOrbitalClient.AvailableGroundStations.ListByCapability("EarthObservation");
-                
+                var listAvailableGroundStations = azureOrbitalClient.AvailableGroundStations.ListByCapability("EarthObservation");
+
                 Assert.NotNull(listAvailableGroundStations);
                 Assert.NotEmpty(listAvailableGroundStations);
 
-                var getAvailableGroundStation = azureOrbitalClient.AvailableGroundStations.Get(listAvailableGroundStations[0].Id);
+                var enumerator = listAvailableGroundStations.GetEnumerator();
+                enumerator.MoveNext();
+                var availableGroundStation = enumerator.Current;
+
+                var getAvailableGroundStation = azureOrbitalClient.AvailableGroundStations.Get(availableGroundStation.Name);
 
                 Assert.NotNull(getAvailableGroundStation);
                 Assert.NotNull(getAvailableGroundStation.Name);

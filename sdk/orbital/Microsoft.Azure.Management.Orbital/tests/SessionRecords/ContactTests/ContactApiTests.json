@@ -1,21 +1,21 @@
-﻿{
+{
   "Entries": [
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourcegroups/csmrg7738?api-version=2020-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzczOD9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourcegroups/csmrg3146?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlZ3JvdXBzL2NzbXJnMzE0Nj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "aee0005e-3239-43d1-b2a0-27f5dd3197d9"
+          "64e984e4-ba73-4a1d-ae1c-622fee88cbf0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.1.0"
         ],
         "Content-Type": [
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "5ee70b63-7667-4f41-80a1-9ec4b6fe22c9"
+          "dac63e8a-9a5a-4b7f-b855-f7224ba3d0af"
         ],
         "x-ms-correlation-request-id": [
-          "5ee70b63-7667-4f41-80a1-9ec4b6fe22c9"
+          "dac63e8a-9a5a-4b7f-b855-f7224ba3d0af"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193636Z:5ee70b63-7667-4f41-80a1-9ec4b6fe22c9"
+          "CENTRALUS:20211029T161036Z:dac63e8a-9a5a-4b7f-b855-f7224ba3d0af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:36:36 GMT"
+          "Fri, 29 Oct 2021 16:10:35 GMT"
         ],
         "Content-Length": [
           "216"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738\",\r\n  \"name\": \"csmrg7738\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146\",\r\n  \"name\": \"csmrg3146\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"noradId\": \"25544\",\r\n    \"titleLine\": \"ISS\",\r\n    \"tleLine1\": \"1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927\",\r\n    \"tleLine2\": \"2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537\",\r\n    \"links\": [\r\n      {\r\n        \"centerFrequencyMHz\": 45.0,\r\n        \"bandwidthMHz\": 45.0,\r\n        \"direction\": \"uplink\",\r\n        \"polarization\": \"RHCP\"\r\n      },\r\n      {\r\n        \"centerFrequencyMHz\": 55.0,\r\n        \"bandwidthMHz\": 55.0,\r\n        \"direction\": \"downlink\",\r\n        \"polarization\": \"LHCP\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "009e96b9-9c9b-47e9-ace7-7a3ad7ff74a7"
+          "42e45476-c701-4ae4-9edf-711e6c904d48"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,19 +108,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "c11252e4-b35b-4e7a-9a7f-ad5f2879bb42"
+          "c821e6e3-76c3-4a3f-b0f9-8f2d9e365bd0"
         ],
         "x-ms-correlation-request-id": [
-          "c11252e4-b35b-4e7a-9a7f-ad5f2879bb42"
+          "c821e6e3-76c3-4a3f-b0f9-8f2d9e365bd0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193639Z:c11252e4-b35b-4e7a-9a7f-ad5f2879bb42"
+          "CENTRALUS:20211029T161039Z:c821e6e3-76c3-4a3f-b0f9-8f2d9e365bd0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:36:39 GMT"
+          "Fri, 29 Oct 2021 16:10:38 GMT"
         ],
         "Content-Length": [
           "708"
@@ -132,20 +132,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\",\r\n  \"name\": \"azsmnet2623\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts\",\r\n  \"properties\": {\r\n    \"noradId\": \"25544\",\r\n    \"authorizationStatus\": \"Allowed\",\r\n    \"authorizationStatusExtended\": null,\r\n    \"titleLine\": \"ISS\",\r\n    \"tleLine1\": \"1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927\",\r\n    \"tleLine2\": \"2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537\",\r\n    \"links\": [\r\n      {\r\n        \"centerFrequencyMHz\": 45.0,\r\n        \"bandwidthMHz\": 45.0,\r\n        \"direction\": \"Uplink\",\r\n        \"polarization\": \"RHCP\"\r\n      },\r\n      {\r\n        \"centerFrequencyMHz\": 55.0,\r\n        \"bandwidthMHz\": 55.0,\r\n        \"direction\": \"Downlink\",\r\n        \"polarization\": \"LHCP\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\",\r\n  \"name\": \"azsmnet4685\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts\",\r\n  \"properties\": {\r\n    \"noradId\": \"25544\",\r\n    \"authorizationStatus\": \"Allowed\",\r\n    \"authorizationStatusExtended\": null,\r\n    \"titleLine\": \"ISS\",\r\n    \"tleLine1\": \"1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927\",\r\n    \"tleLine2\": \"2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537\",\r\n    \"links\": [\r\n      {\r\n        \"centerFrequencyMHz\": 45.0,\r\n        \"bandwidthMHz\": 45.0,\r\n        \"direction\": \"Uplink\",\r\n        \"polarization\": \"RHCP\"\r\n      },\r\n      {\r\n        \"centerFrequencyMHz\": 55.0,\r\n        \"bandwidthMHz\": 55.0,\r\n        \"direction\": \"Downlink\",\r\n        \"polarization\": \"LHCP\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -156,7 +156,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -165,19 +165,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "51d4484d-68cd-412e-9ab9-89f73039c11d"
+          "bea8b65c-2159-4695-8006-08bda6880e79"
         ],
         "x-ms-correlation-request-id": [
-          "51d4484d-68cd-412e-9ab9-89f73039c11d"
+          "bea8b65c-2159-4695-8006-08bda6880e79"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193709Z:51d4484d-68cd-412e-9ab9-89f73039c11d"
+          "CENTRALUS:20211029T161109Z:bea8b65c-2159-4695-8006-08bda6880e79"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:37:09 GMT"
+          "Fri, 29 Oct 2021 16:11:09 GMT"
         ],
         "Content-Length": [
           "708"
@@ -189,26 +189,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\",\r\n  \"name\": \"azsmnet2623\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts\",\r\n  \"properties\": {\r\n    \"noradId\": \"25544\",\r\n    \"authorizationStatus\": \"Allowed\",\r\n    \"authorizationStatusExtended\": null,\r\n    \"titleLine\": \"ISS\",\r\n    \"tleLine1\": \"1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927\",\r\n    \"tleLine2\": \"2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537\",\r\n    \"links\": [\r\n      {\r\n        \"centerFrequencyMHz\": 45.0,\r\n        \"bandwidthMHz\": 45.0,\r\n        \"direction\": \"Uplink\",\r\n        \"polarization\": \"RHCP\"\r\n      },\r\n      {\r\n        \"centerFrequencyMHz\": 55.0,\r\n        \"bandwidthMHz\": 55.0,\r\n        \"direction\": \"Downlink\",\r\n        \"polarization\": \"LHCP\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\",\r\n  \"name\": \"azsmnet4685\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts\",\r\n  \"properties\": {\r\n    \"noradId\": \"25544\",\r\n    \"authorizationStatus\": \"Allowed\",\r\n    \"authorizationStatusExtended\": null,\r\n    \"titleLine\": \"ISS\",\r\n    \"tleLine1\": \"1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927\",\r\n    \"tleLine2\": \"2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537\",\r\n    \"links\": [\r\n      {\r\n        \"centerFrequencyMHz\": 45.0,\r\n        \"bandwidthMHz\": 45.0,\r\n        \"direction\": \"Uplink\",\r\n        \"polarization\": \"RHCP\"\r\n      },\r\n      {\r\n        \"centerFrequencyMHz\": 55.0,\r\n        \"bandwidthMHz\": 55.0,\r\n        \"direction\": \"Downlink\",\r\n        \"polarization\": \"LHCP\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQzMjc/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ4MjU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9c5e69b2-018f-4f8c-b05c-fb7481ae30b3"
+          "086178c7-8c33-47bb-9d6e-8ad43e03368c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -234,22 +234,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "9a5d5f0f-1c6d-4eab-bac5-7def7b6fcefa"
+          "96ac1989-d9bc-417f-bc3a-2398683b637b"
         ],
         "x-ms-correlation-request-id": [
-          "9a5d5f0f-1c6d-4eab-bac5-7def7b6fcefa"
+          "96ac1989-d9bc-417f-bc3a-2398683b637b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193710Z:9a5d5f0f-1c6d-4eab-bac5-7def7b6fcefa"
+          "CENTRALUS:20211029T161110Z:96ac1989-d9bc-417f-bc3a-2398683b637b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:37:10 GMT"
+          "Fri, 29 Oct 2021 16:11:10 GMT"
         ],
         "Content-Length": [
-          "889"
+          "930"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -258,20 +258,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327\",\r\n  \"name\": \"azsmnet327\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825\",\r\n  \"name\": \"azsmnet825\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"eventHubNamespaceConnectionString\": null,\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQzMjc/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ4MjU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -282,7 +282,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11997"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -291,22 +291,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "12e2ee02-77e5-4533-834e-73cf4eced9bc"
+          "ded2b695-9dd7-4083-ba99-3eb1ddee50dc"
         ],
         "x-ms-correlation-request-id": [
-          "12e2ee02-77e5-4533-834e-73cf4eced9bc"
+          "ded2b695-9dd7-4083-ba99-3eb1ddee50dc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193740Z:12e2ee02-77e5-4533-834e-73cf4eced9bc"
+          "CENTRALUS:20211029T161140Z:ded2b695-9dd7-4083-ba99-3eb1ddee50dc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:37:40 GMT"
+          "Fri, 29 Oct 2021 16:11:40 GMT"
         ],
         "Content-Length": [
-          "889"
+          "930"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -315,26 +315,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327\",\r\n  \"name\": \"azsmnet327\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825\",\r\n  \"name\": \"azsmnet825\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"eventHubNamespaceConnectionString\": null,\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/listAvailableContacts?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvbGlzdEF2YWlsYWJsZUNvbnRhY3RzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/listAvailableContacts?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvbGlzdEF2YWlsYWJsZUNvbnRhY3RzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"contactProfile\": {\r\n    \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327\"\r\n  },\r\n  \"groundStationName\": \"WESTUS2_0\",\r\n  \"startTime\": \"2021-09-23T19:37:40.7531168Z\",\r\n  \"endTime\": \"2021-09-24T19:37:40.7531168Z\"\r\n}",
+      "RequestBody": "{\r\n  \"contactProfile\": {\r\n    \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825\"\r\n  },\r\n  \"groundStationName\": \"WESTUS2_0\",\r\n  \"startTime\": \"2021-10-31T16:11:41.7822728Z\",\r\n  \"endTime\": \"2021-11-01T16:11:41.7822728Z\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d204bd5-36bc-4d02-881f-96d737b8e70b"
+          "824c4198-e0ea-4311-8828-16024cb46447"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -360,22 +360,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "70405fd6-d629-4421-a554-06faf519b635"
+          "39ccaa32-b1c1-49f7-8432-16c88a39df73"
         ],
         "x-ms-correlation-request-id": [
-          "70405fd6-d629-4421-a554-06faf519b635"
+          "39ccaa32-b1c1-49f7-8432-16c88a39df73"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193744Z:70405fd6-d629-4421-a554-06faf519b635"
+          "CENTRALUS:20211029T161144Z:39ccaa32-b1c1-49f7-8432-16c88a39df73"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:37:43 GMT"
+          "Fri, 29 Oct 2021 16:11:44 GMT"
         ],
         "Content-Length": [
-          "2681"
+          "3212"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -384,26 +384,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 29.613,\r\n        \"txStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n        \"txEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n        \"rxStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n        \"rxEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n        \"startAzimuthDegrees\": 211.782585,\r\n        \"endAzimuthDegrees\": 73.894475,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 58.041,\r\n        \"txStartTime\": \"2021-09-24T07:41:57.568Z\",\r\n        \"txEndTime\": \"2021-09-24T07:50:03.995Z\",\r\n        \"rxStartTime\": \"2021-09-24T07:41:57.568Z\",\r\n        \"rxEndTime\": \"2021-09-24T07:50:03.995Z\",\r\n        \"startAzimuthDegrees\": 257.962551,\r\n        \"endAzimuthDegrees\": 64.330948,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 34.84,\r\n        \"txStartTime\": \"2021-09-24T09:18:30.132Z\",\r\n        \"txEndTime\": \"2021-09-24T09:26:19.891Z\",\r\n        \"rxStartTime\": \"2021-09-24T09:18:30.132Z\",\r\n        \"rxEndTime\": \"2021-09-24T09:26:19.891Z\",\r\n        \"startAzimuthDegrees\": 287.14593,\r\n        \"endAzimuthDegrees\": 74.804771,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 65.249,\r\n        \"txStartTime\": \"2021-09-24T10:54:44.496Z\",\r\n        \"txEndTime\": \"2021-09-24T11:02:50.423Z\",\r\n        \"rxStartTime\": \"2021-09-24T10:54:44.496Z\",\r\n        \"rxEndTime\": \"2021-09-24T11:02:50.423Z\",\r\n        \"startAzimuthDegrees\": 295.595944,\r\n        \"endAzimuthDegrees\": 105.90919,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 24.689,\r\n        \"txStartTime\": \"2021-09-24T12:30:59.147Z\",\r\n        \"txEndTime\": \"2021-09-24T12:38:17.352Z\",\r\n        \"rxStartTime\": \"2021-09-24T12:30:59.147Z\",\r\n        \"rxEndTime\": \"2021-09-24T12:38:17.352Z\",\r\n        \"startAzimuthDegrees\": 283.804981,\r\n        \"endAzimuthDegrees\": 154.118096,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 48.108,\r\n        \"txStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n        \"txEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n        \"rxStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n        \"rxEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n        \"startAzimuthDegrees\": 264.552838,\r\n        \"endAzimuthDegrees\": 64.575811,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 35.398,\r\n        \"txStartTime\": \"2021-10-31T18:38:59.153Z\",\r\n        \"txEndTime\": \"2021-10-31T18:46:45.825Z\",\r\n        \"rxStartTime\": \"2021-10-31T18:38:59.153Z\",\r\n        \"rxEndTime\": \"2021-10-31T18:46:45.825Z\",\r\n        \"startAzimuthDegrees\": 290.339846,\r\n        \"endAzimuthDegrees\": 78.760122,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 81.993,\r\n        \"txStartTime\": \"2021-10-31T20:15:08.251Z\",\r\n        \"txEndTime\": \"2021-10-31T20:23:14.298Z\",\r\n        \"rxStartTime\": \"2021-10-31T20:15:08.251Z\",\r\n        \"rxEndTime\": \"2021-10-31T20:23:14.298Z\",\r\n        \"startAzimuthDegrees\": 295.031506,\r\n        \"endAzimuthDegrees\": 113.104288,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 18.419,\r\n        \"txStartTime\": \"2021-10-31T21:51:31.085Z\",\r\n        \"txEndTime\": \"2021-10-31T21:58:18.699Z\",\r\n        \"rxStartTime\": \"2021-10-31T21:51:31.085Z\",\r\n        \"rxEndTime\": \"2021-10-31T21:58:18.699Z\",\r\n        \"startAzimuthDegrees\": 279.074458,\r\n        \"endAzimuthDegrees\": 164.457892,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 20.883,\r\n        \"txStartTime\": \"2021-11-01T14:28:36.169Z\",\r\n        \"txEndTime\": \"2021-11-01T14:35:33.898Z\",\r\n        \"rxStartTime\": \"2021-11-01T14:28:36.169Z\",\r\n        \"rxEndTime\": \"2021-11-01T14:35:33.898Z\",\r\n        \"startAzimuthDegrees\": 200.311271,\r\n        \"endAzimuthDegrees\": 78.741068,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.0\r\n      }\r\n    },\r\n    {\r\n      \"spacecraft\": {\r\n        \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685\"\r\n      },\r\n      \"groundStationName\": \"WESTUS2_0\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"maximumElevationDegrees\": 72.324,\r\n        \"txStartTime\": \"2021-11-01T16:03:51.221Z\",\r\n        \"txEndTime\": \"2021-11-01T16:11:41Z\",\r\n        \"rxStartTime\": \"2021-11-01T16:03:51.221Z\",\r\n        \"rxEndTime\": \"2021-11-01T16:11:41Z\",\r\n        \"startAzimuthDegrees\": 250.492485,\r\n        \"endAzimuthDegrees\": 64.352179,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 6.000819\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHMvYXpzbW5ldDk3ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHMvYXpzbW5ldDk2ND9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"reservationStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"reservationEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/contactProfiles/azsmnet327\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"reservationStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"reservationEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/contactProfiles/azsmnet825\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1f77e4e4-a1b2-4913-8d9a-722524661154"
+          "0ef5280d-9dec-42e2-8dd0-630d695fa6c4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -429,22 +429,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "189d0b9e-d143-460a-bc06-287352bbdd06"
+          "a15550fa-6689-4415-950c-c77ce7cd5c43"
         ],
         "x-ms-correlation-request-id": [
-          "189d0b9e-d143-460a-bc06-287352bbdd06"
+          "a15550fa-6689-4415-950c-c77ce7cd5c43"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193747Z:189d0b9e-d143-460a-bc06-287352bbdd06"
+          "CENTRALUS:20211029T161146Z:a15550fa-6689-4415-950c-c77ce7cd5c43"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:37:46 GMT"
+          "Fri, 29 Oct 2021 16:11:46 GMT"
         ],
         "Content-Length": [
-          "841"
+          "839"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -453,83 +453,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785\",\r\n  \"name\": \"azsmnet9785\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"reservationEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG7738/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET327\"\r\n    },\r\n    \"maximumElevationDegrees\": 29.613694,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"rxEndTime\": \"2021-09-24T06:13:53Z\",\r\n    \"startAzimuthDegrees\": 211.782585,\r\n    \"endAzimuthDegrees\": 73.954842,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.056131\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964\",\r\n  \"name\": \"azsmnet964\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"reservationEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG3146/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET825\"\r\n    },\r\n    \"maximumElevationDegrees\": 48.109406,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"rxEndTime\": \"2021-10-31T17:10:24Z\",\r\n    \"startAzimuthDegrees\": 264.552838,\r\n    \"endAzimuthDegrees\": 64.568374,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.012095\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHMvYXpzbW5ldDk3ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHMvYXpzbW5ldDk2ND9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "171d7004-0434-4060-af9c-34dac5d28eb0"
-        ],
-        "x-ms-correlation-request-id": [
-          "171d7004-0434-4060-af9c-34dac5d28eb0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193817Z:171d7004-0434-4060-af9c-34dac5d28eb0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 21 Sep 2021 19:38:17 GMT"
-        ],
-        "Content-Length": [
-          "841"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785\",\r\n  \"name\": \"azsmnet9785\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"reservationEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG7738/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET327\"\r\n    },\r\n    \"maximumElevationDegrees\": 29.613694,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"rxEndTime\": \"2021-09-24T06:13:53Z\",\r\n    \"startAzimuthDegrees\": 211.782585,\r\n    \"endAzimuthDegrees\": 73.954842,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.056131\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHMvYXpzbW5ldDk3ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "f5b54da7-1394-4f07-9e0e-728fd05c1df4"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.30411.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -549,22 +486,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "a5cf84e1-77ac-4894-96b0-259fe5d9c8e8"
+          "627493c8-3307-4da7-a1c9-5b615323aa04"
         ],
         "x-ms-correlation-request-id": [
-          "a5cf84e1-77ac-4894-96b0-259fe5d9c8e8"
+          "627493c8-3307-4da7-a1c9-5b615323aa04"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193817Z:a5cf84e1-77ac-4894-96b0-259fe5d9c8e8"
+          "CENTRALUS:20211029T161217Z:627493c8-3307-4da7-a1c9-5b615323aa04"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:38:17 GMT"
+          "Fri, 29 Oct 2021 16:12:16 GMT"
         ],
         "Content-Length": [
-          "841"
+          "839"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -573,26 +510,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785\",\r\n  \"name\": \"azsmnet9785\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"reservationEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG7738/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET327\"\r\n    },\r\n    \"maximumElevationDegrees\": 29.613694,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n    \"rxEndTime\": \"2021-09-24T06:13:53Z\",\r\n    \"startAzimuthDegrees\": 211.782585,\r\n    \"endAzimuthDegrees\": 73.954842,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.056131\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964\",\r\n  \"name\": \"azsmnet964\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"reservationEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG3146/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET825\"\r\n    },\r\n    \"maximumElevationDegrees\": 48.109406,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"rxEndTime\": \"2021-10-31T17:10:24Z\",\r\n    \"startAzimuthDegrees\": 264.552838,\r\n    \"endAzimuthDegrees\": 64.568374,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.012095\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHMvYXpzbW5ldDk2ND9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "13c61321-6987-41b9-bec6-d53dc277b056"
+          "bb930e88-29f7-45ec-a199-0f6e927e024f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -612,22 +549,22 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "bfe70a43-2376-4b6a-a126-5111de88b09b"
+          "81a3ebfa-c029-45a0-851c-c4fd47c676d9"
         ],
         "x-ms-correlation-request-id": [
-          "bfe70a43-2376-4b6a-a126-5111de88b09b"
+          "81a3ebfa-c029-45a0-851c-c4fd47c676d9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193817Z:bfe70a43-2376-4b6a-a126-5111de88b09b"
+          "CENTRALUS:20211029T161217Z:81a3ebfa-c029-45a0-851c-c4fd47c676d9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:38:17 GMT"
+          "Fri, 29 Oct 2021 16:12:16 GMT"
         ],
         "Content-Length": [
-          "869"
+          "839"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -636,26 +573,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785\",\r\n      \"name\": \"azsmnet9785\",\r\n      \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n      \"properties\": {\r\n        \"status\": \"scheduled\",\r\n        \"reservationStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n        \"reservationEndTime\": \"2021-09-24T06:13:53.733Z\",\r\n        \"errorMessage\": null,\r\n        \"groundStationName\": \"WESTUS2_0\",\r\n        \"contactProfile\": {\r\n          \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG7738/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET327\"\r\n        },\r\n        \"maximumElevationDegrees\": 29.613694,\r\n        \"txStartTime\": null,\r\n        \"txEndTime\": null,\r\n        \"rxStartTime\": \"2021-09-24T06:06:17.885Z\",\r\n        \"rxEndTime\": \"2021-09-24T06:13:53Z\",\r\n        \"startAzimuthDegrees\": 211.782585,\r\n        \"endAzimuthDegrees\": 73.954842,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.056131\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964\",\r\n  \"name\": \"azsmnet964\",\r\n  \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n  \"properties\": {\r\n    \"status\": \"scheduled\",\r\n    \"reservationStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"reservationEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n    \"errorMessage\": null,\r\n    \"groundStationName\": \"WESTUS2_0\",\r\n    \"contactProfile\": {\r\n      \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG3146/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET825\"\r\n    },\r\n    \"maximumElevationDegrees\": 48.109406,\r\n    \"txStartTime\": null,\r\n    \"txEndTime\": null,\r\n    \"rxStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n    \"rxEndTime\": \"2021-10-31T17:10:24Z\",\r\n    \"startAzimuthDegrees\": 264.552838,\r\n    \"endAzimuthDegrees\": 64.568374,\r\n    \"startElevationDegrees\": 5.0,\r\n    \"endElevationDegrees\": 5.012095\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a753fb2c-8262-4448-a910-5a861f5a7a08"
+          "8be5f53e-19b0-4ca6-b7f8-2fbd54b0f430"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -675,19 +612,82 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "67d63611-1a5e-4fd3-af32-3af8d5017ab7"
+          "920d4747-09ab-4a3b-a29b-06cdab0fe4e0"
         ],
         "x-ms-correlation-request-id": [
-          "67d63611-1a5e-4fd3-af32-3af8d5017ab7"
+          "920d4747-09ab-4a3b-a29b-06cdab0fe4e0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193818Z:67d63611-1a5e-4fd3-af32-3af8d5017ab7"
+          "CENTRALUS:20211029T161217Z:920d4747-09ab-4a3b-a29b-06cdab0fe4e0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:38:17 GMT"
+          "Fri, 29 Oct 2021 16:12:16 GMT"
+        ],
+        "Content-Length": [
+          "867"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964\",\r\n      \"name\": \"azsmnet964\",\r\n      \"type\": \"Microsoft.Orbital/spacecrafts/contacts\",\r\n      \"properties\": {\r\n        \"status\": \"scheduled\",\r\n        \"reservationStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n        \"reservationEndTime\": \"2021-10-31T17:10:24.151Z\",\r\n        \"errorMessage\": null,\r\n        \"groundStationName\": \"WESTUS2_0\",\r\n        \"contactProfile\": {\r\n          \"id\": \"/SUBSCRIPTIONS/45918C83-A22A-4E7D-8026-CCEC4BB63589/RESOURCEGROUPS/CSMRG3146/PROVIDERS/MICROSOFT.ORBITAL/CONTACTPROFILES/AZSMNET825\"\r\n        },\r\n        \"maximumElevationDegrees\": 48.109406,\r\n        \"txStartTime\": null,\r\n        \"txEndTime\": null,\r\n        \"rxStartTime\": \"2021-10-31T17:02:28.101Z\",\r\n        \"rxEndTime\": \"2021-10-31T17:10:24Z\",\r\n        \"startAzimuthDegrees\": 264.552838,\r\n        \"endAzimuthDegrees\": 64.568374,\r\n        \"startElevationDegrees\": 5.0,\r\n        \"endElevationDegrees\": 5.012095\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHM/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7fc0069c-062f-4d4e-a054-e34bcdc5f819"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "555750c7-d0d4-42f6-8d30-def03d5617d4"
+        ],
+        "x-ms-correlation-request-id": [
+          "555750c7-d0d4-42f6-8d30-def03d5617d4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20211029T161217Z:555750c7-d0d4-42f6-8d30-def03d5617d4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 29 Oct 2021 16:12:16 GMT"
         ],
         "Content-Length": [
           "28"
@@ -703,22 +703,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg7738/providers/Microsoft.Orbital/spacecrafts/azsmnet2623/contacts/azsmnet9785?api-version=2021-04-04-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnNzczOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDI2MjMvY29udGFjdHMvYXpzbW5ldDk3ODU/YXBpLXZlcnNpb249MjAyMS0wNC0wNC1wcmV2aWV3",
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg3146/providers/Microsoft.Orbital/spacecrafts/azsmnet4685/contacts/azsmnet964?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMzE0Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvc3BhY2VjcmFmdHMvYXpzbW5ldDQ2ODUvY29udGFjdHMvYXpzbW5ldDk2ND9hcGktdmVyc2lvbj0yMDIxLTA0LTA0LXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "65c1260b-d579-4d84-99f9-8223b9d9a00f"
+          "9f043c70-14b9-4d07-bee8-1e3d8e4d88b3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0.beta.1"
         ]
       },
       "ResponseHeaders": {
@@ -738,19 +738,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "fe15dc46-3d5c-41e0-8574-b094cbfad961"
+          "97b00517-eb01-4f5c-a485-7000de780dbc"
         ],
         "x-ms-correlation-request-id": [
-          "fe15dc46-3d5c-41e0-8574-b094cbfad961"
+          "97b00517-eb01-4f5c-a485-7000de780dbc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20210921T193817Z:fe15dc46-3d5c-41e0-8574-b094cbfad961"
+          "CENTRALUS:20211029T161217Z:97b00517-eb01-4f5c-a485-7000de780dbc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 21 Sep 2021 19:38:17 GMT"
+          "Fri, 29 Oct 2021 16:12:16 GMT"
         ],
         "Expires": [
           "-1"
@@ -765,10 +765,10 @@
   ],
   "Names": {
     "ContactApiTests": [
-      "csmrg7738",
-      "azsmnet2623",
-      "azsmnet327",
-      "azsmnet9785"
+      "csmrg3146",
+      "azsmnet4685",
+      "azsmnet825",
+      "azsmnet964"
     ]
   },
   "Variables": {
