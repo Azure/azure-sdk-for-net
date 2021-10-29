@@ -9,7 +9,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.EventHubs.Models;
-using Sku = Azure.ResourceManager.EventHubs.Models.Sku;
 using SkuTier = Azure.ResourceManager.EventHubs.Models.SkuTier;
 
 namespace Azure.ResourceManager.EventHubs.Tests.Helpers
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     {
         public static Location DefaultLocation => Location.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
+        protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
         protected EventHubTestBase(bool isAsync) : base(isAsync)
         {
@@ -32,9 +31,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {

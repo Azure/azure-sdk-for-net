@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+                List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
                     await eventHubNamespace.DeleteAsync();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace1 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eHNamespace2 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName2, new EventHubNamespaceData(Location.EastUS))).Value;
+            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, new EventHubNamespaceData(Location.EastUS))).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            AuthorizationRuleNamespace authorizationRule = (await eHNamespace1.GetAuthorizationRuleNamespaces().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
+            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailabilityParameter(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<AuthorizationRuleDisasterRecoveryConfig> rules = await armDisasterRecovery.GetAuthorizationRuleDisasterRecoveryConfigs().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecoveryConfigAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            AuthorizationRuleDisasterRecoveryConfig rule = rules.First();
+            DisasterRecoveryConfigAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 

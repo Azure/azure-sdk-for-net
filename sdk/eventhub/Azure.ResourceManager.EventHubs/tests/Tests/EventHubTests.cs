@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public class EventhubTests : EventHubTestBase
     {
         private ResourceGroup _resourceGroup;
-        private EventHubContainer _eventHubContainer;
+        private EventHubCollection _eventHubCollection;
         public EventhubTests(bool isAsync) : base(isAsync)
         {
         }
         [SetUp]
-        public async Task CreateNamespaceAndGetEventhubContainer()
+        public async Task CreateNamespaceAndGetEventhubCollection()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
-            _eventHubContainer = eHNamespace.GetEventHubs();
+            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            _eventHubCollection = eHNamespace.GetEventHubs();
         }
         [TearDown]
         public async Task ClearNamespaces()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                EventHubNamespaceContainer namespaceContainer = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+                List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (EventHubNamespace eventHubNamespace in namespaceList)
                 {
                     await eventHubNamespace.DeleteAsync();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHub eventHub = (await _eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+            EventHub eventHub = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
             Assert.NotNull(eventHub);
             Assert.AreEqual(eventHub.Id.Name, eventhubName);
 
             //validate if created successfully
-            eventHub = await _eventHubContainer.GetIfExistsAsync(eventhubName);
+            eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
             Assert.NotNull(eventHub);
-            Assert.IsTrue(await _eventHubContainer.CheckIfExistsAsync(eventhubName));
+            Assert.IsTrue(await _eventHubCollection.CheckIfExistsAsync(eventhubName));
 
             //delete eventhub
             await eventHub.DeleteAsync();
 
             //validate
-            eventHub = await _eventHubContainer.GetIfExistsAsync(eventhubName);
+            eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
             Assert.Null(eventHub);
-            Assert.IsFalse(await _eventHubContainer.CheckIfExistsAsync(eventhubName));
+            Assert.IsFalse(await _eventHubCollection.CheckIfExistsAsync(eventhubName));
         }
 
         [Test]
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     Destination = new Destination()
                     {
                         Name = "EventHubArchive.AzureBlockBlob",
-                        BlobContainer = "container",
+                        BlobContainer = "Container",
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
                         StorageAccountResourceId = account.Id.ToString()
                     }
                 }
             };
-            EventHub eventHub = (await _eventHubContainer.CreateOrUpdateAsync(eventHubName, parameter)).Value;
+            EventHub eventHub = (await _eventHubCollection.CreateOrUpdateAsync(eventHubName, parameter)).Value;
 
             //validate
             Assert.NotNull(eventHub);
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create two eventhubs
             string eventhubName1 = Recording.GenerateAssetName("eventhub1");
             string eventhubName2 = Recording.GenerateAssetName("eventhub2");
-            _ = (await _eventHubContainer.CreateOrUpdateAsync(eventhubName1, new EventHubData())).Value;
-            _ = (await _eventHubContainer.CreateOrUpdateAsync(eventhubName2, new EventHubData())).Value;
+            _ = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName1, new EventHubData())).Value;
+            _ = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName2, new EventHubData())).Value;
 
             //validate
             int count = 0;
             EventHub eventHub1 = null;
             EventHub eventHub2 = null;
-            await foreach (EventHub eventHub in _eventHubContainer.GetAllAsync())
+            await foreach (EventHub eventHub in _eventHubCollection.GetAllAsync())
             {
                 count++;
                 if (eventHub.Id.Name == eventhubName1)
@@ -163,32 +163,32 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHub eventHub = (await _eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+            EventHub eventHub = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleEventHubContainer ruleContainer = eventHub.GetAuthorizationRuleEventHubs();
+            EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
             AuthorizationRuleData parameter = new AuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            AuthorizationRuleEventHub authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            EventHubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get authorization rule
-            authorizationRule = await ruleContainer.GetAsync(ruleName);
+            authorizationRule = await ruleCollection.GetAsync(ruleName);
             Assert.AreEqual(authorizationRule.Id.Name, ruleName);
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<AuthorizationRuleEventHub> rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            List<EventHubAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
             Assert.True(rules.Count == 1);
             bool isContainAuthorizationRuleName = false;
-            foreach (AuthorizationRuleEventHub rule in rules)
+            foreach (EventHubAuthorizationRule rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleContainer.CheckIfExistsAsync(ruleName));
-            rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }
 
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create eventhub
             string eventhubName = Recording.GenerateAssetName("eventhub");
-            EventHub eventHub = (await _eventHubContainer.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
-            AuthorizationRuleEventHubContainer ruleContainer = eventHub.GetAuthorizationRuleEventHubs();
+            EventHub eventHub = (await _eventHubCollection.CreateOrUpdateAsync(eventhubName, new EventHubData())).Value;
+            EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            AuthorizationRuleEventHub authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            EventHubAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
