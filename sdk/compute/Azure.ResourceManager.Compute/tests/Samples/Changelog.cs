@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 
 #region Snippet:Changelog_New
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+            using Azure.Identity;
+            using Azure.ResourceManager;
+            using Azure.ResourceManager.Compute.Models;
+            using Azure.ResourceManager.Network;
+            using Azure.ResourceManager.Network.Models;
+            using Azure.ResourceManager.Resources;
+            using Azure.ResourceManager.Resources.Models;
+            using System.Linq;
+
 #if !SNIPPET
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -54,7 +56,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 },
             };
-            VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+            VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
+            VirtualNetwork vnet = vnetOperation.Value;
 
             // Create Network interface
             var nicData = new NetworkInterfaceData()
@@ -71,7 +74,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            NetworkInterface nic = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+            NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
+            NetworkInterface nic = nicOperation.Value;
 
             var vmData = new VirtualMachineData(location)
             {
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void CreateVmExtension()
         {
-            #region Snippet:Changelog_New
+            #region Snippet:Changelog_CreateVMExtension
             var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
             {
                 Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
