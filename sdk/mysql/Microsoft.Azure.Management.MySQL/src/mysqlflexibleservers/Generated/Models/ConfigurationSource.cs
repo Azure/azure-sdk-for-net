@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for ServerHAState.
+    /// Defines values for ConfigurationSource.
     /// </summary>
-    public static class ServerHAState
+    public static class ConfigurationSource
     {
-        public const string NotEnabled = "NotEnabled";
-        public const string CreatingStandby = "CreatingStandby";
-        public const string ReplicatingData = "ReplicatingData";
-        public const string FailingOver = "FailingOver";
-        public const string Healthy = "Healthy";
-        public const string RemovingStandby = "RemovingStandby";
+        public const string SystemDefault = "system-default";
+        public const string UserOverride = "user-override";
     }
 }

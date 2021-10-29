@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for SslEnforcementEnum.
+    /// Defines values for ReplicationRole.
     /// </summary>
-    public static class SslEnforcementEnum
+    public static class ReplicationRole
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string None = "None";
+        public const string Source = "Source";
+        public const string Replica = "Replica";
     }
 }

@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for InfrastructureEncryptionEnum.
+    /// Defines values for EnableStatusEnum.
     /// </summary>
-    public static class InfrastructureEncryptionEnum
+    public static class EnableStatusEnum
     {
         public const string Enabled = "Enabled";
         public const string Disabled = "Disabled";

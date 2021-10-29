@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for OperationOrigin.
+    /// Defines values for HighAvailabilityMode.
     /// </summary>
-    public static class OperationOrigin
+    public static class HighAvailabilityMode
     {
-        public const string NotSpecified = "NotSpecified";
-        public const string User = "user";
-        public const string System = "system";
+        public const string Disabled = "Disabled";
+        public const string ZoneRedundant = "ZoneRedundant";
+        public const string SameZone = "SameZone";
     }
 }

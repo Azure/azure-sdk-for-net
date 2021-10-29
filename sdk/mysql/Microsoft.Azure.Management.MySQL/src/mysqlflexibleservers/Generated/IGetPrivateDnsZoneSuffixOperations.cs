@@ -19,19 +19,13 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// CheckNameAvailabilityOperations operations.
+    /// GetPrivateDnsZoneSuffixOperations operations.
     /// </summary>
-    public partial interface ICheckNameAvailabilityOperations
+    public partial interface IGetPrivateDnsZoneSuffixOperations
     {
         /// <summary>
-        /// Check the availability of name for server
+        /// Get private DNS zone suffix in the cloud.
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the location.
-        /// </param>
-        /// <param name='nameAvailabilityRequest'>
-        /// The required parameters for checking if server name is available.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -47,6 +41,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NameAvailability>> ExecuteWithHttpMessagesAsync(string locationName, NameAvailabilityRequest nameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GetPrivateDnsZoneSuffixResponse>> ExecuteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
