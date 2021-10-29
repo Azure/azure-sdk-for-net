@@ -74,6 +74,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public ServiceBusOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions ClientRetryOptions { get { throw null; } set { } }
+        public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
