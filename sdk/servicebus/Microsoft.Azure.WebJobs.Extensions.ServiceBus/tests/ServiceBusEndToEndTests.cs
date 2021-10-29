@@ -1314,18 +1314,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task RunAsync(
                 [ServiceBusTrigger(FirstQueueNameKey)]
-                ServiceBusReceivedMessage message)
+                ServiceBusReceivedMessage message,
+                ServiceBusClient client)
             {
-                // Delay so that the lock will be lost when trying to complete automatically.
+                // Dispose the client so that we will trigger an error in the processor.
                 // We can't simply throw an exception here as it would be swallowed by TryExecuteAsync call in the listener.
                 // This means that the exception handler will not be used for errors originating from the function. This is the same
                 // behavior as in V4.
-                await Task.Delay(TimeSpan.FromSeconds(30));
+                await client.DisposeAsync();
             }
 
             public static Task ErrorHandler(ProcessErrorEventArgs e)
             {
-                Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, ((ServiceBusException) e.Exception).Reason);
+                Assert.IsInstanceOf<ObjectDisposedException>(e.Exception);
                 _waitHandle1.Set();
                 return Task.CompletedTask;
             }
