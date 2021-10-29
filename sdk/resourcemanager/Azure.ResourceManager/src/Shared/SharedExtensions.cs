@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core
         public static string GetParts(this ResourceIdentifier resourceId, int start)
         {
             var parts = resourceId.ToString().Split('/').ToList();
-            var indexOfProviders = parts.LastIndexOf(ResourceIdentifier.ProvidersKey);
+            var indexOfProviders = parts.LastIndexOf("providers");
             if (indexOfProviders < 0)
                 throw new InvalidOperationException($"{resourceId} does not have a providers segment");
             return string.Join("/", parts.Skip(indexOfProviders + start));
