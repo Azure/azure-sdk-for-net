@@ -1216,12 +1216,12 @@ namespace Azure.Messaging.EventHubs.Producer
             try
             {
                 Logger.BufferedProducerClearStart(Identifier, EventHubName, operationId);
-                cancellationToken.ThrowIfCancellationRequested();
 
                 foreach (var partitionStateItem in _activePartitionStateMap)
                 {
-                    if ((!cancellationToken.IsCancellationRequested)
-                        && (partitionStateItem.Value.BufferedEventCount > 0))
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    if (partitionStateItem.Value.BufferedEventCount > 0)
                     {
                         while (partitionStateItem.Value.TryReadEvent(out _))
                         {
@@ -1230,8 +1230,6 @@ namespace Azure.Messaging.EventHubs.Producer
                         Interlocked.Add(ref _totalBufferedEventCount, (partitionStateItem.Value.BufferedEventCount * -1));
                         partitionStateItem.Value.BufferedEventCount = 0;
                     }
-
-                    cancellationToken.ThrowIfCancellationRequested();
                 }
             }
             catch (Exception ex)
@@ -1272,10 +1270,14 @@ namespace Azure.Messaging.EventHubs.Producer
             try
             {
                 Logger.BufferedProducerFlushStart(Identifier, EventHubName, operationId);
-                cancellationToken.ThrowIfCancellationRequested();
 
                 foreach (var partitionStateItem in _activePartitionStateMap)
                 {
+                    // If cancellation has been requested then do so; outstanding drains and handlers
+                    // will manage their own cancellation.
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     // If needed, wait for drain tasks to complete so there is room.
 
                     while (activeDrains.Count >= _options.MaximumConcurrentSends)
@@ -1299,11 +1301,6 @@ namespace Azure.Messaging.EventHubs.Producer
                     {
                         activeDrains.Add(DrainAndPublishPartitionEvents(partitionStateItem.Value, operationId, activeHandlers, cancellationToken));
                     }
-
-                    // If cancellation has been requested then do so; outstanding drains and handlers
-                    // will manage their own cancellation.
-
-                    cancellationToken.ThrowIfCancellationRequested();
                 }
 
                 // Wait for any remaining partitions to complete, and then wait for outstanding handlers.  Both are

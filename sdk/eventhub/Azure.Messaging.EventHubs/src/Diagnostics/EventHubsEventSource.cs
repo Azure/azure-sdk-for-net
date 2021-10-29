@@ -1387,7 +1387,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -1404,7 +1404,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is about to begin processing events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -1421,7 +1421,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while starting to process events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while starting to process events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -1440,7 +1440,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is beginning to stop processing events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is beginning to stop processing events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer</param>
@@ -1457,7 +1457,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has been stopped and is no longer processing events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has been stopped and is no longer processing events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -1474,7 +1474,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while stopping.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while stopping.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -1493,7 +1493,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
         ///   background management task.
         /// </summary>
         ///
@@ -1637,7 +1637,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in its
         ///   background publishing task.
         /// </summary>
         ///
@@ -1657,7 +1657,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has begun a management
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has begun a management
         ///   cycle.
         /// </summary>
         ///
@@ -1675,7 +1675,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has begun a management
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has begun a management
         ///   cycle.
         /// </summary>
         ///
@@ -1699,7 +1699,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
         ///   has reached maximum concurrency and is waiting for a task to complete.
         /// </summary>
         ///
@@ -1721,7 +1721,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
         ///   has completed waiting for a task to complete.
         /// </summary>
         ///
@@ -1885,7 +1885,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1907,7 +1907,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
         ///   publishing success handler.
         /// </summary>
         ///
@@ -1931,7 +1931,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1953,7 +1953,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1975,7 +1975,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
         ///   publishing success handler.
         /// </summary>
         ///
@@ -1999,7 +1999,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -2154,7 +2154,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
         ///   publishing coordination task.
         /// </summary>
         ///
@@ -2174,7 +2174,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in the
         ///   background publishing coordination task.
         /// </summary>
         ///
@@ -2196,7 +2196,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
         ///   publishing coordination task.
         /// </summary>
         ///
@@ -2216,7 +2216,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
         ///   is waiting for all active publishing to complete.
         /// </summary>
         ///
@@ -2238,7 +2238,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance publishing task
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance publishing task
         ///   is done waiting for all active publishing to complete.
         /// </summary>
         ///
@@ -2262,7 +2262,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
         ///   a Flush operation.
         /// </summary>
         ///
@@ -2282,7 +2282,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
         ///   active Flush Operation
         /// </summary>
         ///
@@ -2304,7 +2304,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has completed an active
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed an active
         ///   a Flush operation.
         /// </summary>
         ///
@@ -2324,7 +2324,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
         ///   a Clear operation.
         /// </summary>
         ///
@@ -2344,7 +2344,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
         ///   active Clear operation.
         /// </summary>
         ///
@@ -2366,7 +2366,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has completed an active
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed an active
         ///   a Clear operation.
         /// </summary>
         ///
@@ -2386,7 +2386,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance is starting to drain a partition of events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to drain a partition of events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
@@ -2407,7 +2407,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while draining
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while draining
         ///   a partition of events.
         /// </summary>
         ///
@@ -2431,7 +2431,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="EventHubBufferedProducerClient" /> instance has completed draining a partition of events.
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed draining a partition of events.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
