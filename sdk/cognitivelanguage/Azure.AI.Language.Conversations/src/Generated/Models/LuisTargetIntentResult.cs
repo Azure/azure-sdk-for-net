@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>
-        /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. &apos;luis&apos; means the type is LUIS Generally Available. &apos;luis_deepstack&apos; means LUIS vNext. &apos;question_answering&apos; means Question Answering. </param>
+        /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidenceScore"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>

@@ -11,28 +11,20 @@ using System.Collections.Generic;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    public class SqlResourcesOperationsTests
+    public class SqlResourcesOperationsTests : IClassFixture<TestFixture>
     {
-        const string location = "EAST US 2";
+        public readonly TestFixture fixture;
 
-        // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "cli126";
-        const string databaseAccountName2 = "rbac126";
+        public SqlResourcesOperationsTests(TestFixture fixture)
+        {
+            this.fixture = fixture;
+        }
 
-        const string databaseName = "databaseName";
-        const string databaseName2 = "databaseName2";
-        const string containerName = "containerName";
-        const string containerName2 = "containerName2";
-        const string storedProcedureName = "storedProcedureName";
-        const string triggerName = "triggerName";
-        const string userDefinedFunctionName = "userDefinedFunctionName";
-
-        readonly string roleDefinitionId = "70580ac3-cd0b-4549-8336-2f0d55df111e";
-        readonly string roleDefinitionId2 = "fbf74201-f33f-46f0-8234-2b8bf15ecec4";
-        readonly string roleDefinitionId3 = "a5d92de7-1c34-481e-aafa-44f5cb03744c";
-        readonly string roleAssignmentId = "adcb35e1-e104-41c2-b76d-70a8b03e6463";
-        readonly string roleAssignmentId2 = "d5fcc566-a91c-4fce-8f54-138855981e63";
+        const string roleDefinitionId = "70580ac3-cd0b-4549-8336-2f0d55df111e";
+        const string roleDefinitionId2 = "fbf74201-f33f-46f0-8234-2b8bf15ecec4";
+        const string roleDefinitionId3 = "a5d92de7-1c34-481e-aafa-44f5cb03744c";
+        const string roleAssignmentId = "adcb35e1-e104-41c2-b76d-70a8b03e6463";
+        const string roleAssignmentId2 = "d5fcc566-a91c-4fce-8f54-138855981e63";
         const string principalId = "ed4c2395-a18c-4018-afb3-6e521e7534d2";
         const string principalId2 = "d60019b0-c5a8-4e38-beb9-fb80daa3ce90";
 
@@ -53,50 +45,43 @@ namespace CosmosDB.Tests.ScenarioTests
         [Fact]
         public void SqlCRUDTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
-                bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
 
-                DatabaseAccountGetResults databaseAccount = null;
-                if (!isDatabaseNameExists)
-                {
-                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
-                    {
-                        Location = location,
-                        Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location>()
-                        {
-                            {new Location(locationName: location) }
-                        }
-                    };
-
-                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                    Assert.Equal(databaseAccount.Name, databaseAccountName);
-                }
-
+                var databaseName = TestUtilities.GenerateName("database");
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
                     Resource = new SqlDatabaseResource { Id = databaseName },
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults);
                 Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
-                SqlDatabaseGetResults sqlDatabaseGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                SqlDatabaseGetResults sqlDatabaseGetResults2 = client.GetSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults2);
                 Assert.Equal(databaseName, sqlDatabaseGetResults2.Name);
 
                 VerifyEqualSqlDatabases(sqlDatabaseGetResults, sqlDatabaseGetResults2);
 
+                var databaseName2 = TestUtilities.GenerateName("database");
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters2 = new SqlDatabaseCreateUpdateParameters
                 {
-                    Location = location,
+                    Location = this.fixture.Location,
                     Tags = tags,
                     Resource = new SqlDatabaseResource { Id = databaseName2 },
                     Options = new CreateUpdateOptions
@@ -105,23 +90,29 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                SqlDatabaseGetResults sqlDatabaseGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, sqlDatabaseCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+                SqlDatabaseGetResults sqlDatabaseGetResults3 = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName2,
+                    sqlDatabaseCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults3);
                 Assert.Equal(databaseName2, sqlDatabaseGetResults3.Name);
 
-                IEnumerable<SqlDatabaseGetResults> sqlDatabases = cosmosDBManagementClient.SqlResources.ListSqlDatabasesWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlDatabaseGetResults> sqlDatabases = client.ListSqlDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabases);
 
-                ThroughputSettingsGetResults throughputSettingsGetResults = cosmosDBManagementClient.SqlResources.GetSqlDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2).GetAwaiter().GetResult().Body;
+                ThroughputSettingsGetResults throughputSettingsGetResults = client.GetSqlDatabaseThroughputWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(throughputSettingsGetResults);
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal(sqlThroughputType, throughputSettingsGetResults.Type);
 
+                var containerName = TestUtilities.GenerateName("container");
                 SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
                 {
                     Resource = new SqlContainerResource
                     {
-                        Id = containerName2,
+                        Id = containerName,
                         PartitionKey = new ContainerPartitionKey
                         {
                             Kind = "Hash",
@@ -132,26 +123,26 @@ namespace CosmosDB.Tests.ScenarioTests
                             Automatic = true,
                             IndexingMode = IndexingMode.Consistent,
                             IncludedPaths = new List<IncludedPath>
-                            {
-                                new IncludedPath { Path = "/*"}
-                            },
+                        {
+                            new IncludedPath { Path = "/*"}
+                        },
                             ExcludedPaths = new List<ExcludedPath>
-                            {
-                                new ExcludedPath { Path = "/pathToNotIndex/*"}
-                            },
+                        {
+                            new ExcludedPath { Path = "/pathToNotIndex/*"}
+                        },
                             CompositeIndexes = new List<IList<CompositePath>>
+                        {
+                            new List<CompositePath>
                             {
-                                new List<CompositePath>
-                                {
-                                    new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
-                                    new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
-                                },
-                                new List<CompositePath>
-                                {
-                                    new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
-                                    new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
-                                }
+                                new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
+                            },
+                            new List<CompositePath>
+                            {
+                                new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                             }
+                        }
                         }
                     },
                     Options = new CreateUpdateOptions
@@ -160,12 +151,13 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                SqlContainerGetResults sqlContainerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainerGetResults);
 
-                IEnumerable<SqlContainerGetResults> sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlContainerGetResults> sqlContainers = client.ListSqlContainersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainers);
 
+                var storedProcedureName = TestUtilities.GenerateName("storedproc");
                 SqlStoredProcedureCreateUpdateParameters sqlStoredProcedureCreateUpdateParameters = new SqlStoredProcedureCreateUpdateParameters
                 {
                     Resource = new SqlStoredProcedureResource
@@ -179,18 +171,19 @@ namespace CosmosDB.Tests.ScenarioTests
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlStoredProcedureGetResults sqlStoredProcedureGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlStoredProcedureGetResults sqlStoredProcedureGetResults = client.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlStoredProcedureGetResults);
                 Assert.Equal(sqlStoredProcedureGetResults.Resource.Body, sqlStoredProcedureGetResults.Resource.Body);
 
-                IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = cosmosDBManagementClient.SqlResources.ListSqlStoredProceduresWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = client.ListSqlStoredProceduresWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlStoredProcedures);
 
                 foreach (SqlStoredProcedureGetResults sqlStoredProcedure in sqlStoredProcedures)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlStoredProcedure.Name);
+                    client.DeleteSqlStoredProcedureWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlStoredProcedure.Name);
                 }
 
+                var userDefinedFunctionName = TestUtilities.GenerateName("udf");
                 SqlUserDefinedFunctionCreateUpdateParameters sqlUserDefinedFunctionCreateUpdateParameters = new SqlUserDefinedFunctionCreateUpdateParameters
                 {
                     Resource = new SqlUserDefinedFunctionResource
@@ -204,19 +197,20 @@ namespace CosmosDB.Tests.ScenarioTests
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlUserDefinedFunctionGetResults sqlUserDefinedFunctionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, userDefinedFunctionName, sqlUserDefinedFunctionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlUserDefinedFunctionGetResults sqlUserDefinedFunctionGetResults = client.CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, userDefinedFunctionName, sqlUserDefinedFunctionCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlUserDefinedFunctionGetResults);
                 Assert.Equal(sqlUserDefinedFunctionGetResults.Resource.Body, sqlUserDefinedFunctionGetResults.Resource.Body);
 
 
-                IEnumerable<SqlUserDefinedFunctionGetResults> sqlUserDefinedFunctions = cosmosDBManagementClient.SqlResources.ListSqlUserDefinedFunctionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlUserDefinedFunctionGetResults> sqlUserDefinedFunctions = client.ListSqlUserDefinedFunctionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlUserDefinedFunctions);
 
                 foreach (SqlUserDefinedFunctionGetResults sqlUserDefinedFunction in sqlUserDefinedFunctions)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlUserDefinedFunction.Name);
+                    client.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlUserDefinedFunction.Name);
                 }
 
+                var triggerName = TestUtilities.GenerateName("trigger");
                 SqlTriggerCreateUpdateParameters sqlTriggerCreateUpdateParameters = new SqlTriggerCreateUpdateParameters
                 {
                     Resource = new SqlTriggerResource
@@ -232,69 +226,87 @@ namespace CosmosDB.Tests.ScenarioTests
                     Options = new CreateUpdateOptions()
                 };
 
-                SqlTriggerGetResults sqlTriggerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlTriggerGetResults sqlTriggerGetResults = client.CreateUpdateSqlTriggerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlTriggerGetResults);
                 Assert.Equal(sqlTriggerGetResults.Resource.TriggerType, sqlTriggerCreateUpdateParameters.Resource.TriggerType);
                 Assert.Equal(sqlTriggerGetResults.Resource.TriggerOperation, sqlTriggerCreateUpdateParameters.Resource.TriggerOperation);
                 Assert.Equal(sqlTriggerGetResults.Resource.Body, sqlTriggerCreateUpdateParameters.Resource.Body);
 
-                IEnumerable<SqlTriggerGetResults> sqlTriggers = cosmosDBManagementClient.SqlResources.ListSqlTriggersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlTriggerGetResults> sqlTriggers = client.ListSqlTriggersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlTriggers);
 
                 foreach (SqlTriggerGetResults sqlTrigger in sqlTriggers)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName2, sqlTrigger.Name);
+                    client.DeleteSqlTriggerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, sqlTrigger.Name);
                 }
 
                 foreach (SqlContainerGetResults sqlContainer in sqlContainers)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlContainer.Name);
+                    client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, sqlContainer.Name);
                 }
 
                 foreach (SqlDatabaseGetResults sqlDatabase in sqlDatabases)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, sqlDatabase.Name);
+                    client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabase.Name);
                 }
             }
         }
+        
 
         [Fact]
         public void SqlRoleTests()
         {
-            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+                fixture.Init(context);
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters2 = new SqlDatabaseCreateUpdateParameters
+                {
+                    Location = this.fixture.Location,
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                };
+                client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters2
+                ).GetAwaiter().GetResult();
 
                 SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters = new SqlRoleDefinitionCreateUpdateParameters
                 {
                     RoleName = "roleName",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
-                    {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName2),
+                {
+                    string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}",
+                        this.fixture.CosmosDBManagementClient.SubscriptionId,
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName),
 
-                    },
+                },
                     Permissions = new List<Permission>
+                {
+                    new Permission
                     {
-                        new Permission
+                        DataActions = new List<string>
                         {
-                            DataActions = new List<string>
-                            {
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read"
-                            }
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read"
                         }
                     }
+                }
                 };
 
-                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults = client.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, this.fixture.ResourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults);
                 Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults.Name);
                 VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters, sqlRoleDefinitionGetResults);
 
-                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
+                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults2 = client.GetSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults2);
                 Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults2.Name);
 
@@ -305,25 +317,35 @@ namespace CosmosDB.Tests.ScenarioTests
                     RoleName = "roleName2",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
-                    {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName2)
-                    },
+                {
+                    string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}",
+                        this.fixture.CosmosDBManagementClient.SubscriptionId,
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName
+                    )
+                },
                     Permissions = new List<Permission>
+                {
+                    new Permission
                     {
-                        new Permission
+                        DataActions = new List<string>
                         {
-                            DataActions = new List<string>
-                            {
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
-                            }
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
                         }
                     }
+                }
                 };
 
-                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId2, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults3 = client.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(
+                    roleDefinitionId2,
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    sqlRoleDefinitionCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults3);
                 Assert.Equal(roleDefinitionId2, sqlRoleDefinitionGetResults3.Name);
                 VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters2, sqlRoleDefinitionGetResults3);
@@ -333,29 +355,34 @@ namespace CosmosDB.Tests.ScenarioTests
                     RoleName = "roleName3",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
-                    {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
-                    },
+                {
+                    string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}",
+                        this.fixture.CosmosDBManagementClient.SubscriptionId,
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName
+                    )
+                },
                     Permissions = new List<Permission>
+                {
+                    new Permission
                     {
-                        new Permission
+                        DataActions = new List<string>
                         {
-                            DataActions = new List<string>
-                            {
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
-                            }
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
                         }
                     }
+                }
                 };
 
-                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults4 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters3).GetAwaiter().GetResult().Body;
+                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults4 = client.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, this.fixture.ResourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters3).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults4);
                 Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults4.Name);
                 VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters3, sqlRoleDefinitionGetResults4);
 
-                IEnumerable<SqlRoleDefinitionGetResults> sqlRoleDefinitions = cosmosDBManagementClient.SqlResources.ListSqlRoleDefinitionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlRoleDefinitionGetResults> sqlRoleDefinitions = client.ListSqlRoleDefinitionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitions);
                 foreach (SqlRoleDefinitionGetResults sqlRoleDefinition in sqlRoleDefinitions)
                 {
@@ -372,16 +399,27 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters = new SqlRoleAssignmentCreateUpdateParameters
                 {
                     RoleDefinitionId = sqlRoleDefinitionGetResults.Id,
-                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/{3}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName2, databaseName),
+                    Scope = string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/{3}",
+                        this.fixture.CosmosDBManagementClient.SubscriptionId,
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName,
+                        databaseName
+                    ),
                     PrincipalId = principalId
                 };
 
-                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, resourceGroupName, databaseAccountName2, sqlRoleAssignmentCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults = client.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(
+                    roleAssignmentId,
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    sqlRoleAssignmentCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults);
                 Assert.Equal(roleAssignmentId, sqlRoleAssignmentGetResults.Name);
                 VerifyCreateUpdateRoleAssignment(sqlRoleAssignmentCreateUpdateParameters, sqlRoleAssignmentGetResults);
 
-                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
+                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults2 = client.GetSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults2);
                 Assert.Equal(roleAssignmentId, sqlRoleAssignmentGetResults2.Name);
 
@@ -390,16 +428,16 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters2 = new SqlRoleAssignmentCreateUpdateParameters
                 {
                     RoleDefinitionId = sqlRoleDefinitionGetResults3.Id,
-                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName2),
+                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", this.fixture.CosmosDBManagementClient.SubscriptionId, this.fixture.ResourceGroupName, databaseAccountName),
                     PrincipalId = principalId2
                 };
 
-                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId2, resourceGroupName, databaseAccountName2, sqlRoleAssignmentCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+                SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults3 = client.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId2, this.fixture.ResourceGroupName, databaseAccountName, sqlRoleAssignmentCreateUpdateParameters2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults3);
                 Assert.Equal(roleAssignmentId2, sqlRoleAssignmentGetResults3.Name);
                 VerifyCreateUpdateRoleAssignment(sqlRoleAssignmentCreateUpdateParameters2, sqlRoleAssignmentGetResults3);
 
-                IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = cosmosDBManagementClient.SqlResources.ListSqlRoleAssignmentsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = client.ListSqlRoleAssignmentsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignments);
                 foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
                 {
@@ -408,14 +446,14 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
                 {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlRoleAssignmentWithHttpMessagesAsync(sqlRoleAssignment.Name, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult();
+                    client.DeleteSqlRoleAssignmentWithHttpMessagesAsync(sqlRoleAssignment.Name, this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult();
                 }
 
                 foreach (SqlRoleDefinitionGetResults sqlRoleDefinition in sqlRoleDefinitions)
                 {
                     if (sqlRoleDefinition.Name == sqlRoleDefinitionGetResults3.Name || sqlRoleDefinition.Name == sqlRoleDefinitionGetResults4.Name)
                     {
-                        cosmosDBManagementClient.SqlResources.DeleteSqlRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Name, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult();
+                        client.DeleteSqlRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Name, this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult();
                     }
                 }
 
@@ -426,29 +464,97 @@ namespace CosmosDB.Tests.ScenarioTests
                     RoleName = "roleName4",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
-                    {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
-                    },
+                {
+                    string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", this.fixture.CosmosDBManagementClient.SubscriptionId, this.fixture.ResourceGroupName, databaseAccountName)
+                },
                     Permissions = new List<Permission>
+                {
+                    new Permission
                     {
-                        new Permission
+                        DataActions = new List<string>
                         {
-                            DataActions = new List<string>
-                            {
-                                InvalidActionName,
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
-                            }
+                            InvalidActionName,
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
+                            "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
                         }
                     }
+                }
                 };
 
                 Exception exception =
                     Assert.ThrowsAnyAsync<Exception>(() =>
-                        cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId3, resourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters4))
+                        client.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId3, this.fixture.ResourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters4))
                         .GetAwaiter().GetResult();
 
                 Assert.Contains(InvalidActionName, exception.Message);
+            }
+        }
+
+        [Fact]
+        public void SqlAccountBackupPolicyTests()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                CosmosDBManagementClient cosmosDBManagementClient = this.fixture.CosmosDBManagementClient;
+                string location = this.fixture.Location;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
+                var resourceGroupName = this.fixture.ResourceGroupName;
+                {
+                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                    {
+                        Location = location,
+                        Kind = DatabaseAccountKind.GlobalDocumentDB,
+                        Locations = new List<Location>()
+                    {
+                        {new Location(locationName: location) }
+                    },
+                        BackupPolicy = new PeriodicModeBackupPolicy()
+                        {
+                            PeriodicModeProperties = new PeriodicModeProperties()
+                            {
+                                BackupIntervalInMinutes = 60,
+                                BackupRetentionIntervalInHours = 8,
+                                BackupStorageRedundancy = BackupStorageRedundancy.Geo
+                            }
+                        }
+                    };
+
+                    DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    Assert.Equal(databaseAccount.Name, databaseAccountName);
+                    PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
+                    Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
+                    Assert.Equal(8, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
+                    Assert.Equal(BackupStorageRedundancy.Geo, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
+                }
+
+                {
+                    DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                    {
+                        Location = location,
+                        Kind = DatabaseAccountKind.GlobalDocumentDB,
+                        Locations = new List<Location>()
+                    {
+                        {new Location(locationName: location) }
+                    },
+                        BackupPolicy = new PeriodicModeBackupPolicy()
+                        {
+                            PeriodicModeProperties = new PeriodicModeProperties()
+                            {
+                                BackupIntervalInMinutes = 60,
+                                BackupRetentionIntervalInHours = 12,
+                                BackupStorageRedundancy = BackupStorageRedundancy.Local
+                            }
+                        }
+                    };
+
+                    DatabaseAccountGetResults databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    Assert.Equal(databaseAccount.Name, databaseAccountName);
+                    PeriodicModeBackupPolicy backupPolicy = databaseAccount.BackupPolicy as PeriodicModeBackupPolicy;
+                    Assert.Equal(60, backupPolicy.PeriodicModeProperties.BackupIntervalInMinutes);
+                    Assert.Equal(12, backupPolicy.PeriodicModeProperties.BackupRetentionIntervalInHours);
+                    Assert.Equal(BackupStorageRedundancy.Local, backupPolicy.PeriodicModeProperties.BackupStorageRedundancy);
+                }
             }
         }
 

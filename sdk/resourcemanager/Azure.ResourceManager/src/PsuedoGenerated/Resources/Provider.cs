@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Resources
         /// Gets the features under this provider
         /// </summary>
         /// <returns></returns>
-        public virtual FeatureContainer GetFeatures()
+        public virtual FeatureCollection GetFeatures()
         {
-            return new FeatureContainer(this);
+            return new FeatureCollection(this);
         }
     }
 }

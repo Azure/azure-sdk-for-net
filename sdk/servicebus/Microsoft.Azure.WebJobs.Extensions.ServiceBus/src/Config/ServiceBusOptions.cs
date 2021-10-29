@@ -156,6 +156,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented
         };
+
+        /// <summary>
+        /// <inheritdoc cref="ServiceBusClientOptions.EnableCrossEntityTransactions"/>
+        /// </summary>
+        public bool EnableCrossEntityTransactions { get; set; }
+
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 
         /// <summary>
@@ -185,7 +191,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
-                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
+                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
+                { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };
 
             return options.ToString(Formatting.Indented);
@@ -256,7 +263,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 RetryOptions = ClientRetryOptions,
                 WebProxy = WebProxy,
-                TransportType = TransportType
+                TransportType = TransportType,
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions
             };
     }
 }

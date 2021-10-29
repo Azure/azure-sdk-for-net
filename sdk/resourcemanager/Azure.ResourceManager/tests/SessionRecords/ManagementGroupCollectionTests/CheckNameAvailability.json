@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/checkNameAvailability?api-version=2021-04-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "79",
+        "Content-Type": "application/json",
+        "traceparent": "00-9e7c05a19bde59448e5e4e36bd9a6298-ec7bcbb82338fc4f-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "46c89da624c8e1341d444798fedcc17f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "this-should-not-exist",
+        "type": "Microsoft.Management/managementGroups"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "9cc331b6-938a-4319-8f47-9fb6b6e92e99",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Oct 2021 02:30:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "9cc331b6-938a-4319-8f47-9fb6b6e92e99",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "x-ba-restapi": "1.0.3.1640",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9cc331b6-938a-4319-8f47-9fb6b6e92e99",
+        "x-ms-ratelimit-remaining-tenant-writes": "1199",
+        "x-ms-request-id": "southeastasia:9cc331b6-938a-4319-8f47-9fb6b6e92e99",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T023044Z:9cc331b6-938a-4319-8f47-9fb6b6e92e99"
+      },
+      "ResponseBody": {
+        "nameAvailable": true
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1677613559",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
