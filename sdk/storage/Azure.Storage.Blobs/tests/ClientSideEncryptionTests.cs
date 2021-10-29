@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Test
             return new DisposingContainer(container);
         }
 
-        private Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(byte[] userKeyBytes = default, string keyId = default)
+        private Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(byte[] userKeyBytes = default, string keyId = default, TimeSpan optionalDelay = default)
         {
             if (userKeyBytes == default)
             {
@@ -90,16 +90,32 @@ namespace Azure.Storage.Blobs.Test
             if (IsAsync)
             {
                 keyMock.Setup(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Task.FromResult(Xor(userKeyBytes, key.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, key, cancellationToken) =>
+                    {
+                        await Task.Delay(optionalDelay);
+                        return Xor(userKeyBytes, key.ToArray());
+                    });
                 keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey.ToArray())));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, wrappedKey, cancellationToken) =>
+                    {
+                        await Task.Delay(optionalDelay);
+                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                    });
             }
             else
             {
                 keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) =>
+                    {
+                        Thread.Sleep(optionalDelay);
+                        return Xor(userKeyBytes, key.ToArray());
+                    });
                 keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
-                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) =>
+                    {
+                        Thread.Sleep(optionalDelay);
+                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                    });
             }
 
             return keyMock;
@@ -262,6 +278,31 @@ namespace Azure.Storage.Blobs.Test
             var encryptedDataStream = new MemoryStream();
             await InstrumentClient(new BlobClient(blob.Uri, Tenants.GetNewSharedKeyCredentials())).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
             return encryptedDataStream.ToArray();
+        }
+
+        private async Task<EncryptionData> GetMockEncryptionDataAsync(byte[] cek, IKeyEncryptionKey kek)
+        {
+            byte[] encryptedKey = IsAsync
+                ? await kek.WrapKeyAsync(s_algorithmName, cek, s_cancellationToken)
+                : kek.WrapKey(s_algorithmName, cek, s_cancellationToken);
+
+            return new EncryptionData
+            {
+                WrappedContentKey = new KeyEnvelope
+                {
+                    EncryptedKey = encryptedKey,
+                    Algorithm = s_algorithmName,
+                    KeyId = kek.KeyId
+                },
+                ContentEncryptionIV = GetRandomBuffer(32),
+                EncryptionAgent = new EncryptionAgent()
+                {
+                    EncryptionAlgorithm = "foo",
+                    EncryptionVersion = ClientSideEncryptionVersion.V1_0
+                },
+                EncryptionMode = "bar",
+                KeyWrappingMetadata = new Dictionary<string, string> { { "fizz", "buzz" } }
+            };
         }
 
         [Test]
@@ -1051,25 +1092,7 @@ namespace Azure.Storage.Blobs.Test
             var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
             var cek = GetRandomBuffer(32);
-            var simulatedEncryptionData = new EncryptionData
-            {
-                WrappedContentKey = new KeyEnvelope
-                {
-                    EncryptedKey = IsAsync
-                        ? await mockKey1.Object.WrapKeyAsync(s_algorithmName, cek, s_cancellationToken)
-                        : mockKey1.Object.WrapKey(s_algorithmName, cek, s_cancellationToken),
-                    Algorithm = s_algorithmName,
-                    KeyId = mockKey1.Object.KeyId
-                },
-                ContentEncryptionIV = GetRandomBuffer(32),
-                EncryptionAgent = new EncryptionAgent()
-                {
-                    EncryptionAlgorithm = "foo",
-                    EncryptionVersion = ClientSideEncryptionVersion.V1_0
-                },
-                EncryptionMode = "bar",
-                KeyWrappingMetadata = new Dictionary<string, string> { { "fizz", "buzz" } }
-            };
+            var simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
 
             // do NOT get an encryption client for data upload. we won't be able to record.
             await using DisposingContainer disposable = await GetTestContainerAsync();
@@ -1087,6 +1110,67 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             await AssertKeyAsync(blob, mockKey2.Object, cek);
+        }
+
+        [Test]
+        public async Task DoesETagLock()
+        {
+            /* Test does not actually upload encrypted data, only simulates it by setting specific
+             * metadata. This allows the test to be recordable and to hopefully catch breaks in playback CI.
+             */
+
+            // Arrange
+
+            var data = GetRandomBuffer(Constants.KB);
+            var mockKey1 = GetIKeyEncryptionKey();
+            // delay forces pause in rotation where we can mess with blob and change etag
+            var mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(1));
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
+
+            var cek = GetRandomBuffer(32);
+            var simulatedEncryptionData = await GetMockEncryptionDataAsync(cek, mockKey1.Object);
+
+            // do NOT get an encryption client for data upload. we won't be able to record.
+            await using DisposingContainer disposable = await GetTestContainerAsync();
+            var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(data), metadata: new Dictionary<string, string> {
+                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(simulatedEncryptionData) }
+            });
+            // assure proper setup
+            await AssertKeyAsync(blob, mockKey1.Object);
+
+            // Act
+
+            Task rotationResult;
+            // rotation will take a while thanks to delay on mockKey2
+            if (IsAsync)
+            {
+                rotationResult = blob.RotateClientSideEncryptionKeyAsync(
+                    newKeyOverride: mockKey2.Object,
+                    oldKeyResolverOverride: mockKeyResolver,
+                    keywrapAlgorithmOverride: s_algorithmName,
+                    cancellationToken: s_cancellationToken);
+            }
+            else
+            {
+                rotationResult = Task.Run(() => blob.RotateClientSideEncryptionKey(
+                    newKeyOverride: mockKey2.Object,
+                    oldKeyResolverOverride: mockKeyResolver,
+                    keywrapAlgorithmOverride: s_algorithmName,
+                    cancellationToken: s_cancellationToken));
+            }
+            // mess with blob while key is rotation, changing the etag
+            await blob.SetHttpHeadersAsync(new BlobHttpHeaders
+            {
+                ContentLanguage = "foo"
+            });
+
+            // Assert
+
+            // if it doesn't throw, consider upping `optionalDelay` on mockKey2 creation as a sanity check
+            // though current value (1 sec) should be more than enough
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rotationResult);
+            Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), ex.ErrorCode);
         }
 
         [TestCase(true)]
