@@ -4469,7 +4469,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasBuilder shareSasBuilder = new ShareSasBuilder
             {
                 ShareName = test.Share.Name,
-                ExpiresOn = Recording.UtcNow.AddDays(-1)
+                ExpiresOn = Recording.UtcNow.AddDays(1)
             };
             shareSasBuilder.SetPermissions(ShareSasPermissions.All);
             SasQueryParameters sasQueryParameters = shareSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
@@ -4480,7 +4480,6 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             sourceFile = InstrumentClient(new ShareFileClient(shareUriBuilder.ToUri(), GetOptions()));
-            await sourceFile.GetPropertiesAsync();
 
             // Act
             ShareFileClient destFile = await sourceFile.RenameAsync(
