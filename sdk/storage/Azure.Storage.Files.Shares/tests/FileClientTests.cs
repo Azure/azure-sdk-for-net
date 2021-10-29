@@ -4279,6 +4279,7 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [Ignore("serivce bug")]
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(true)]
