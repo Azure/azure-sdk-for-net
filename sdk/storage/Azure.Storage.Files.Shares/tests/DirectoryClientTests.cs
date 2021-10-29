@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Moq;
@@ -1243,6 +1244,217 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_DifferentDirectory()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceParentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceParentDirectory.CreateAsync();
+            ShareDirectoryClient sourceDirectory = InstrumentClient(sourceParentDirectory.GetSubdirectoryClient(GetNewDirectoryName()));
+            await sourceDirectory.CreateAsync();
+
+            ShareDirectoryClient destParentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await destParentDirectory.CreateAsync();
+
+            string destDirectoryName = GetNewDirectoryName();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destParentDirectory.Name + "/" + destDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RenameAsync_ReplaceIfExists(bool replaceIfExists)
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDir.CreateAsync();
+            ShareDirectoryClient destParentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await destParentDirectory.CreateAsync();
+            ShareFileClient destFile = InstrumentClient(destParentDirectory.GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(Constants.KB);
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ReplaceIfExists = replaceIfExists
+            };
+
+            // Act
+            if (replaceIfExists)
+            {
+                ShareDirectoryClient destDir = await sourceDir.RenameAsync(
+                    destinationPath: destParentDirectory.Name + "/" + destFile.Name,
+                    options: options);
+
+                // Assert
+                Response<ShareDirectoryProperties> response = await destDir.GetPropertiesAsync();
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceDir.RenameAsync(
+                    destinationPath: destParentDirectory.Name + "/" + destFile.Name,
+                    options: options),
+                    e => Assert.AreEqual(ShareErrorCode.ResourceAlreadyExists.ToString(), e.ErrorCode));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RenameAsync_IgnoreReadOnly(bool ignoreReadOnly)
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDir.CreateAsync();
+            ShareDirectoryClient destParentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await destParentDirectory.CreateAsync();
+            ShareFileClient destFile = InstrumentClient(destParentDirectory.GetFileClient(GetNewFileName()));
+
+            FileSmbProperties fileSmbProperties = new FileSmbProperties
+            {
+                FileAttributes = NtfsFileAttributes.ReadOnly
+            };
+            await destFile.CreateAsync(
+                maxSize: Constants.KB,
+                smbProperties: fileSmbProperties);
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ReplaceIfExists = true,
+                IgnoreReadOnly = ignoreReadOnly,
+                FileAttributes = NtfsFileAttributes.Directory
+            };
+
+            // Act
+            if (ignoreReadOnly)
+            {
+                ShareDirectoryClient destDirectory = await sourceDir.RenameAsync(
+                    destinationPath: destParentDirectory.Name + "/" + destFile.Name,
+                    options: options);
+
+                // Assert
+                Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceDir.RenameAsync(
+                    destinationPath: destParentDirectory.Name + "/" + destFile.Name,
+                    options: options),
+                    e => Assert.AreEqual(ShareErrorCode.ReadOnlyAttribute.ToString(), e.ErrorCode));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RenameAsync_DestinationLeaseId(bool includeLeaseId)
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDir.CreateAsync();
+
+            ShareDirectoryClient destParentDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await destParentDir.CreateAsync();
+            ShareFileClient destFile = InstrumentClient(destParentDir.GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(Constants.KB);
+            string leaseId = Recording.Random.NewGuid().ToString();
+            ShareLeaseClient shareLeaseClient = InstrumentClient(destFile.GetShareLeaseClient(leaseId));
+            await shareLeaseClient.AcquireAsync();
+
+            ShareFileRenameOptions options = new ShareFileRenameOptions
+            {
+                ReplaceIfExists = true
+            };
+
+            // Act
+            if (includeLeaseId)
+            {
+                options.DestinationRequestConditions = new ShareFileRequestConditions
+                {
+                    LeaseId = leaseId
+                };
+                ShareDirectoryClient destDir = await sourceDir.RenameAsync(
+                    destinationPath: destParentDir.Name + "/" + destFile.Name,
+                    options: options);
+
+                // Assert
+                await destDir.GetPropertiesAsync();
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    sourceDir.RenameAsync(
+                    destinationPath: destParentDir.Name + "/" + destFile.Name,
+                    options: options),
+                    e => Assert.AreEqual("LeaseIdMissing", e.ErrorCode));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_NonAsciiSourceAndDestination()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient SourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewNonAsciiDirectoryName()));
+            await SourceDir.CreateAsync();
+
+            string destDirName = GetNewNonAsciiDirectoryName();
+
+            // Act
+            ShareDirectoryClient destDir = await SourceDir.RenameAsync(destinationPath: destDirName);
+
+            // Assert
+            await destDir.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task RenameAsync_ShareSAS()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync();
+            ShareDirectoryClient sourceDir = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            await sourceDir.CreateAsync();
+            string destDirName = GetNewDirectoryName();
+
+            ShareSasBuilder shareSasBuilder = new ShareSasBuilder
+            {
+                ShareName = test.Share.Name,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            shareSasBuilder.SetPermissions(ShareSasPermissions.All);
+            SasQueryParameters sasQueryParameters = shareSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials());
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(sourceDir.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            sourceDir = InstrumentClient(new ShareDirectoryClient(shareUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            ShareDirectoryClient destDir = await sourceDir.RenameAsync(
+                destinationPath: destDirName + "?" + sasQueryParameters);
+
+            // Assert
+            await destDir.GetPropertiesAsync();
         }
 
         #region GenerateSasTests
