@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetResourceSetRuleAsync(RequestOptions options)
+        public virtual async Task<Response> GetResourceSetRuleAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
@@ -283,7 +283,7 @@ namespace Azure.Analytics.Purview.Account
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetResourceSetRule(RequestOptions options)
+        public virtual Response GetResourceSetRule(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");

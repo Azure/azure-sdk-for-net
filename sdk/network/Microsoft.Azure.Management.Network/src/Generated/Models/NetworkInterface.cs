@@ -57,6 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// interface.</param>
         /// <param name="primary">Whether this is a primary network interface
         /// on a virtual machine.</param>
+        /// <param name="vnetEncryptionSupported">Whether the virtual machine
+        /// this nic is attached to supports encryption.</param>
         /// <param name="enableAcceleratedNetworking">If the network interface
         /// is accelerated networking enabled.</param>
         /// <param name="enableIPForwarding">Indicates whether IP forwarding is
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Abort', 'Committed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string workloadType = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? vnetEncryptionSupported = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string workloadType = default(string), string nicType = default(string), PrivateLinkService privateLinkService = default(PrivateLinkService), string migrationPhase = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
             Primary = primary;
+            VnetEncryptionSupported = vnetEncryptionSupported;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             EnableIPForwarding = enableIPForwarding;
             HostedWorkloads = hostedWorkloads;
@@ -167,6 +170,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; private set; }
+
+        /// <summary>
+        /// Gets whether the virtual machine this nic is attached to supports
+        /// encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vnetEncryptionSupported")]
+        public bool? VnetEncryptionSupported { get; private set; }
 
         /// <summary>
         /// Gets or sets if the network interface is accelerated networking
