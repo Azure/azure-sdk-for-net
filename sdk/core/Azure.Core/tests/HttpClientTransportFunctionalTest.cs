@@ -75,8 +75,7 @@ namespace Azure.Core.Tests
         {
             var transport = (HttpClientTransport)GetTransport();
             transport.Dispose();
-            var _disposedField = typeof(HttpClient).GetField("_disposed", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsTrue((bool)_disposedField.GetValue(transport.Client));
+            Assert.ThrowsAsync<ObjectDisposedException>(async () => await transport.Client.GetAsync("http://localhost"));
         }
 
         private static object GetHandler(HttpClient transportClient)
