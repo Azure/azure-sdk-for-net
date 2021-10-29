@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 
         public ProcessorTest(TOptions options) : base(options)
         {
-            _checkpointStore = new BlobContainerClient(GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
+            _checkpointStore = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString,
                 $"CheckpointStore-{Guid.NewGuid()}".ToLowerInvariant());
 
             var clientOptions = new EventProcessorClientOptions() {
