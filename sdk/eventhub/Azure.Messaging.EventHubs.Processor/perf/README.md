@@ -1,4 +1,4 @@
-# Azure Event Hubs performance tests
+# Azure Event Hubs Processor performance tests
 
 The assets in this area comprise a set of performance tests for the [Azure Event Hubs Processor client library for .NET](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor) and its associated ecosystem.  The artifacts in this library are intended to be used primarily with the Azure SDK engineering system's testing infrastructure, but may also be run as stand-alone applications from the command line.
 
@@ -16,4 +16,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Perf%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor.Perf%2FREADME.png)
