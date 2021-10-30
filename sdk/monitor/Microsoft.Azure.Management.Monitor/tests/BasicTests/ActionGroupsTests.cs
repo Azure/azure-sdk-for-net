@@ -18,39 +18,6 @@ namespace Monitor.Tests.BasicTests
     {
         [Fact]
         [Trait("Category", "Mock")]
-        public void SendTestNotificationsTest()
-        {
-            TestNotificationResponse expectedResult = new TestNotificationResponse
-            {
-                CorrelationId = "df4c4b8b-ca90-4e6c-b453-c052fcf63650",
-                CreatedTime = DateTime.UtcNow.ToString(),
-                NotificationId = "11000334597939"
-            };
-
-            var handler = new RecordedDelegatingHandler();
-            var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedResult, insightsClient.SerializationSettings);
-
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            insightsClient = GetMonitorManagementClient(handler);
-
-            NotificationRequestBody requestBody = GetNotificationRequestBody();
-
-            var result = insightsClient.ActionGroups.PostTestNotificationsAsync(requestBody).Result;
-
-            Assert.NotNull(result);
-            Assert.Equal(result.CorrelationId, expectedResult.CorrelationId);
-            Assert.Equal(result.CreatedTime, expectedResult.CreatedTime);
-            Assert.Equal(result.NotificationId, expectedResult.NotificationId);
-        }
-
-        [Fact]
-        [Trait("Category", "Mock")]
         public void GetTestNotificationStatusTest()
         {
             TestNotificationDetailsResponse expectedActionGroup = GetTestNotificationStatusResponseBody();
