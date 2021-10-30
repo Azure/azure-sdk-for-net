@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <param name="data">The data to serialize to Avro and encode into the message.</param>
         /// <param name="inputType">The type to use to serialize the data.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public async Task EncodeMessageDataAsync(
+        public async ValueTask EncodeMessageDataAsync(
             IMessageWithContentType message,
             object data,
             Type inputType = default,
