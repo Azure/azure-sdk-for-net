@@ -11,7 +11,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.ServiceBus;
 using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
@@ -102,43 +101,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<ArgumentNullException>(async () => await serializer.DecodeAsync(new BinaryData(Array.Empty<byte>()), null, typeof(TimeZoneInfo), CancellationToken.None));
             await Task.CompletedTask;
-        }
-
-        [RecordedTest]
-        public async Task CanUseEncoderWithServiceBusMessage()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            using var memoryStream = new MemoryStream();
-            var encoder = new SchemaRegistryAvroEncoder(client, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            var message = new ServiceBusMessage();
-            await encoder.EncodeMessageDataAsync(message, employee);
-
-            string[] contentType = message.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            ServiceBusReceivedMessage received = ServiceBusModelFactory.ServiceBusReceivedMessage(body: message.Body, contentType: message.ContentType);
-            Employee deserialized = (Employee)await encoder.DecodeMessageDataAsync(received, typeof(Employee));
-
-            // decoding should not alter the message
-            contentType = received.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-
-            // calling encode on a received message should throw
-            await AsyncAssert.ThrowsAsync<InvalidOperationException>(
-                async () => await encoder.EncodeMessageDataAsync(received, employee));
         }
 
         [RecordedTest]
