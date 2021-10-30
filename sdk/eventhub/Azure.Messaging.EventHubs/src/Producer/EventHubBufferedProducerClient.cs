@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual bool IsClosed
         {
             get => _isClosed;
-            protected internal set => _isClosed = value;
+            internal set => _isClosed = value;
         }
 
         /// <summary>
@@ -196,6 +196,17 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
+
+        /// <summary>
+        ///     The resolver to use for assigning partitions for automatic routing and partition keys.
+        ///  </summary>
+        ///
+        /// <remarks>
+        ///   This member is exposed internally to support testing only; it is not intended
+        ///   for other use.
+        /// </remarks>
+        ///
+        internal PartitionResolver PartitionResolver { get; set; } = new();
 
         /// <summary>
         ///   The interval at which the background management operations should run.
@@ -691,6 +702,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             var logPartition = partitionKey ?? partitionId ?? string.Empty;
             var operationId = GenerateOperationId();
+
             Logger.BufferedProducerEventEnqueueStart(Identifier, EventHubName, logPartition, operationId);
 
             try
@@ -746,7 +758,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartitionForPartitionKey(partitionKey);
+                    partitionId = AssignPartition(partitionKey);
                     amqpMessage.SetPartitionKey(partitionKey);
                 }
 
@@ -857,6 +869,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             var logPartition = (partitionKey ?? partitionId ?? string.Empty);
             var operationId = GenerateOperationId();
+
             Logger.BufferedProducerEventEnqueueStart(Identifier, EventHubName, logPartition, operationId);
 
             try
@@ -904,7 +917,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartitionForPartitionKey(partitionKey);
+                    partitionId = AssignPartition(partitionKey);
                 }
 
                 // If there is a stable partition identifier for all events in the batch, acquire the publisher for it.
@@ -1917,14 +1930,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private string AssignPartition()
         {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
+            // The set of partitions is unstable; capture a local reference to
+            // avoid potentially creating an invalid index into the array.
 
-            //TODO: Implement AssignPartition
-            return _partitions[0];
+            var partitions = _partitions;
+            return partitions[PartitionResolver.AssignRoundRobin(partitions.Length)];
         }
 
         /// <summary>
@@ -1935,16 +1945,13 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The identifier of the partition assigned.</returns>
         ///
-        private string AssignPartitionForPartitionKey(string partitionKey)
+        private string AssignPartition(string partitionKey)
         {
-            // ======================================================================
-            //  NOTE:
-            //    This method is currently just a stub; full functionality will be
-            //    added in a later set of changes.
-            // ======================================================================
+            // The set of partitions is unstable; capture a local reference to
+            // avoid potentially creating an invalid index into the array.
 
-            //TODO: Implement AssignPartitionForPartitionKey
-            return partitionKey.Length >= 0 ? _partitions[0] : _partitions[0];
+            var partitions = _partitions;
+            return partitions[PartitionResolver.AssignPartitionKey(partitionKey, partitions.Length)];
         }
 
         /// <summary>
@@ -2080,7 +2087,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     var existingSource = Interlocked.Exchange(ref _activeSendOperationsCancellationSource, activeOperationCancellationSource);
                     existingSource?.Dispose();
 
-                    var partitionIndex = 0;
+                    var partitionIndex = 0u;
+                    var partitions = default(string[]);
                     var activeTasks = new List<Task>(_options.MaximumConcurrentSends);
 
                     while (!cancellationToken.IsCancellationRequested)
@@ -2100,10 +2108,16 @@ namespace Azure.Messaging.EventHubs.Producer
                             Logger.BufferedProducerPublishingAwaitComplete(Identifier, EventHubName, activeTasks.Count, operationId, awaiSingleWatch.GetElapsedTime().TotalSeconds);
                         }
 
-                        // Select a partition to process.
+                        // Select a partition to process; because the set of partitions is unstable, capture a local reference to
+                        // avoid potentially creating an invalid index into the array.
 
-                        var partition = _partitions[partitionIndex];
-                        partitionIndex = IncrementAndRollover(partitionIndex, _partitions.Length - 1);
+                        partitions = _partitions;
+                        var partition = partitions[partitionIndex % partitions.Length];
+
+                        unchecked
+                        {
+                            ++partitionIndex;
+                        }
 
                         // If the selected partition is not actively being used to enqueue or its semaphore cannot be
                         // acquired within the time limit, the partition is not available and the loop should iterate
@@ -2242,21 +2256,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The identifier that was generated.</returns>
         ///
         private static string GenerateOperationId() => Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
-
-        /// <summary>
-        ///   Increments a value and rolls over to the minimum value if it exceeds the
-        ///   maximum.
-        /// </summary>
-        ///
-        /// <param name="value">The value to increment.</param>
-        /// <param name="maximum">The maximum (inclusive) that the value can reach before rolling over.</param>
-        /// <param name="minimum">The minimum that the <paramref name="value" /> should roll over to, if it exceeds the <paramref name="maximum" />.</param>
-        ///
-        /// <returns>The incremented <paramref name="value" /> with rollover applied.</returns>
-        ///
-        private static int IncrementAndRollover(int value,
-                                                int maximum,
-                                                int minimum = 0) => (++value > maximum) ? minimum : value;
 
         /// <summary>
         ///   Determines if waiting should take place, taking into account <see cref="Timeout.InfiniteTimeSpan" />

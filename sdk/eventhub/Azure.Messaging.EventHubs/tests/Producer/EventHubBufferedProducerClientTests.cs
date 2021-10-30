@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
@@ -1703,6 +1704,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "7";
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -1717,6 +1719,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1739,6 +1742,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(1), Times.Exactly(events.Length));
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<int>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -1754,6 +1766,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var partitionKey = "test-key";
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -1768,6 +1781,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1792,6 +1806,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(partitionKey, 1), Times.Once);
         }
 
         /// <summary>
@@ -1806,6 +1826,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "2";
             var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -1820,6 +1841,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -1844,6 +1866,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<int>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -2412,19 +2443,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "7";
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
-            var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new[] { partitionId });
 
-            bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
             {
-                await bufferedProducer.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
-                Assert.That(bufferedProducer.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+                await mockBufferedProducer.Object.EnqueueEventAsync(expectedEvent, cancellationSource.Token);
+                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
 
                 var readEventCount = 0;
 
@@ -2439,8 +2472,17 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             finally
             {
-                await bufferedProducer.CloseAsync(false).IgnoreExceptions();
+                await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(1), Times.Once);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<int>()),
+                Times.Never);
         }
 
         /// <summary>
@@ -2456,6 +2498,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var partitionKey = "test-key";
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -2470,6 +2513,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -2494,6 +2538,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(partitionKey, 1), Times.Once);
         }
 
          /// <summary>
@@ -2508,6 +2558,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "2";
             var expectedEvent = new EventData("One");
+            var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -2522,6 +2573,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
 
             try
@@ -2546,6 +2598,15 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
             }
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+
+            mockPartitionResolver
+                .Verify(resolver => resolver.AssignPartitionKey(
+                    It.IsAny<string>(),
+                    It.IsAny<int>()),
+                Times.Never);
         }
 
         /// <summary>
