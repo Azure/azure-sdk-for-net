@@ -154,16 +154,9 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Messaging
 {
-    public abstract partial class MessageWithMetadata
+    public partial interface IMessageWithContentType
     {
-        protected MessageWithMetadata() { }
-        public abstract string ContentType { get; set; }
-        public abstract System.BinaryData Data { get; set; }
-    }
-    public abstract partial class ReadOnlyMessageWithMetadata
-    {
-        protected ReadOnlyMessageWithMetadata() { }
-        public abstract string ContentType { get; }
-        public abstract System.BinaryData Data { get; }
+        string ContentType { get; set; }
+        System.BinaryData Data { get; set; }
     }
 }

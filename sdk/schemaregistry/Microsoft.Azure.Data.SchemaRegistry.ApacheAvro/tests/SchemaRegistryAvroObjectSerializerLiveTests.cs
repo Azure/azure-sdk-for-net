@@ -135,6 +135,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotNull(deserialized);
             Assert.AreEqual("Caketown", deserialized.Name);
             Assert.AreEqual(42, deserialized.Age);
+
+            // calling encode on a received message should throw
+            await AsyncAssert.ThrowsAsync<InvalidOperationException>(
+                async () => await encoder.EncodeMessageDataAsync(received, employee));
         }
 
         [RecordedTest]

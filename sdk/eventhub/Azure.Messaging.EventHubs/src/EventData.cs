@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : MessageWithMetadata
+    public class EventData : IMessageWithContentType
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -48,12 +48,7 @@ namespace Azure.Messaging.EventHubs
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
         }
 
-        /// <summary>
-        ///   <inheritdoc cref="EventBody"/>
-        /// </summary>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override BinaryData Data
+        BinaryData IMessageWithContentType.Data
         {
             get => EventBody;
             set => EventBody = value;
@@ -82,7 +77,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso href="https://datatracker.ietf.org/doc/html/rfc2046">RFC2046 (MIME Types)</seealso>
         ///
-        public override string ContentType
+        public string ContentType
         {
             get
             {

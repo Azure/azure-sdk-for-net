@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusReceivedMessage : ReadOnlyMessageWithMetadata
+    public class ServiceBusReceivedMessage : IMessageWithContentType
     {
         /// <summary>
         /// Creates a new message from the specified payload.
@@ -161,11 +161,17 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To => AmqpMessage.Properties.To?.ToString();
 
-        /// <summary>
-        /// <inheritdoc cref="Body"/>
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override BinaryData Data => Body;
+        BinaryData IMessageWithContentType.Data
+        {
+            get => Body;
+            set => throw new InvalidOperationException("Message data cannot be set on a received message.");
+        }
+
+        string IMessageWithContentType.ContentType
+        {
+            get => ContentType;
+            set => throw new InvalidOperationException("Message content type cannot be set on a received message");
+        }
 
         /// <summary>Gets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -173,7 +179,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Optionally describes the payload of the message, with a descriptor following the format of
         ///   RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public override string ContentType => AmqpMessage.Properties.ContentType;
+        public string ContentType => AmqpMessage.Properties.ContentType;
 
         /// <summary>Gets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>

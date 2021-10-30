@@ -6,18 +6,18 @@ using System;
 namespace Azure.Messaging
 {
     /// <summary>
-    /// An abstraction for a message containing additional metadata along with its data.
+    /// An interface for a message containing a content type along with its data.
     /// </summary>
-    public abstract class MessageWithMetadata
+    public interface IMessageWithContentType
     {
         /// <summary>
         /// Gets or sets the message data.
         /// </summary>
-        public abstract BinaryData Data { get; set; }
+        BinaryData Data { get; set; }
 
         /// <summary>
         /// Gets or sets the message content type.
         /// </summary>
-        public abstract string ContentType { get; set; }
+        string ContentType { get; set; }
     }
 }
