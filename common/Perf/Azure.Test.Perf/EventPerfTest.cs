@@ -23,7 +23,7 @@ namespace Azure.Test.Perf
             throw new InvalidOperationException("EventPerfTest does not support CorrectedLatencies");
 
         private Exception _error;
-        private readonly CancellationTokenSource _errorCancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _errorCancellationTokenSource = new CancellationTokenSource();
 
         public EventPerfTest(TOptions options) : base(options)
         {
@@ -99,6 +99,7 @@ namespace Azure.Test.Perf
             {
                 _errorCancellationTokenSource?.Dispose();
             }
+            _errorCancellationTokenSource = null;
 
             base.Dispose(disposing);
         }
@@ -111,8 +112,9 @@ namespace Azure.Test.Perf
             }
             else
             {
-                _errorCancellationTokenSource.Dispose();
+                _errorCancellationTokenSource?.Dispose();
             }
+            _errorCancellationTokenSource = null;
 
             await base.DisposeAsyncCore();
         }
