@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -20,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusMessage : IMessageWithContentType
+    public class ServiceBusMessage
     {
         /// <summary>
         /// Creates a new message.
@@ -335,12 +334,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 AmqpMessage.Properties.To = new AmqpAddress(value);
             }
-        }
-
-        BinaryData IMessageWithContentType.Data
-        {
-            get => Body;
-            set => Body = value;
         }
 
         /// <summary>Gets or sets the content type descriptor.</summary>

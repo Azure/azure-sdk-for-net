@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus
         SessionLockLost = 11,
         MessagingEntityAlreadyExists = 12,
     }
-    public partial class ServiceBusMessage : Azure.Messaging.IMessageWithContentType
+    public partial class ServiceBusMessage
     {
         public ServiceBusMessage() { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
@@ -160,7 +160,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
-        System.BinaryData Azure.Messaging.IMessageWithContentType.Data { get { throw null; } set { } }
         public System.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
@@ -248,12 +247,10 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusReceivedMessage : Azure.Messaging.IMessageWithContentType
+    public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
-        string Azure.Messaging.IMessageWithContentType.ContentType { get { throw null; } set { } }
-        System.BinaryData Azure.Messaging.IMessageWithContentType.Data { get { throw null; } set { } }
         public System.BinaryData Body { get { throw null; } }
         public string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
@@ -20,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
     /// The message structure is discussed in detail in the
     /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
-    public class ServiceBusReceivedMessage : IMessageWithContentType
+    public class ServiceBusReceivedMessage
     {
         /// <summary>
         /// Creates a new message from the specified payload.
@@ -160,18 +159,6 @@ namespace Azure.Messaging.ServiceBus
         ///     intended logical destination of the message.
         /// </remarks>
         public string To => AmqpMessage.Properties.To?.ToString();
-
-        BinaryData IMessageWithContentType.Data
-        {
-            get => Body;
-            set => throw new InvalidOperationException("Message data cannot be set on a received message.");
-        }
-
-        string IMessageWithContentType.ContentType
-        {
-            get => ContentType;
-            set => throw new InvalidOperationException("Message content type cannot be set on a received message");
-        }
 
         /// <summary>Gets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
