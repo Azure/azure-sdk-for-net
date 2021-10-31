@@ -29,6 +29,7 @@ namespace Azure.Communication
                     Refresh,
                     RefreshAsync,
                     options.RefreshProactively,
+                    options.RefreshOffsetTime,
                     scheduler,
                     utcNowProvider);
             }
@@ -39,6 +40,7 @@ namespace Azure.Communication
                     RefreshAsync,
                     options.RefreshProactively,
                     initialValue: JwtTokenParser.CreateAccessToken(options.InitialToken),
+                    options.RefreshOffsetTime,
                     scheduler,
                     utcNowProvider);
             }

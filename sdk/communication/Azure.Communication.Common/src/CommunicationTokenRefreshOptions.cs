@@ -13,11 +13,16 @@ namespace Azure.Communication
     /// </summary>
     public class CommunicationTokenRefreshOptions
     {
+        /// <summary>Default proactive refreshing interval in minutes.</summary>
+        public const int DefaultExpiringOffsetMinutes = 5;
         internal bool RefreshProactively { get; }
         internal Func<CancellationToken, string> TokenRefresher { get; }
 
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
+
+        /// <summary>The proactive refreshing interval.</summary>
+        internal readonly TimeSpan RefreshOffsetTime;
 
         private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
@@ -39,6 +44,24 @@ namespace Azure.Communication
             Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
+            RefreshOffsetTime = new TimeSpan( 0, 0, DefaultExpiringOffsetMinutes, 0);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
+        /// </summary>
+        /// <param name="refreshProactively">Indicates whether the token should be proactively renewed prior to expiry or renew on demand.</param>
+        /// <param name="tokenRefresher">The function that provides the token acquired from CommunicationIdentityClient.</param>
+        /// <param name="refreshOffsetTime">Proactive refresh interval.</param>
+        public CommunicationTokenRefreshOptions(
+            bool refreshProactively,
+            TimeSpan refreshOffsetTime,
+            Func<CancellationToken, string> tokenRefresher)
+        {
+            Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
+            RefreshProactively = refreshProactively;
+            TokenRefresher = tokenRefresher;
+            RefreshOffsetTime = refreshOffsetTime;
         }
     }
 }
