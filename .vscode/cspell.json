@@ -148,7 +148,8 @@
         "Owasp",
         "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Sstp",
+        "Gcmaes"
       ]
     },
     {
@@ -187,7 +188,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {

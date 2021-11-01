@@ -63,12 +63,25 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+
+            AmqpMessageBody body = null;
+            if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetValue(out object valueBody))
+            {
+                body = AmqpMessageBody.FromValue(valueBody);
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequenceBody))
+            {
+                body = AmqpMessageBody.FromSequence(sequenceBody);
+            }
+            else
             {
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
