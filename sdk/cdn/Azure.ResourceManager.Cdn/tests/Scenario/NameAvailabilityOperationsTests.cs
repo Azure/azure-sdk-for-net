@@ -20,17 +20,18 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CheckNameAvailabilityWithSub()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string endpointName = Recording.GenerateAssetName("endpoint-");
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput(endpointName);
-            CheckNameAvailabilityOutput checkNameAvailabilityOutput  = await Client.DefaultSubscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput);
+            CheckNameAvailabilityOutput checkNameAvailabilityOutput  = await subscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput);
             Assert.True(checkNameAvailabilityOutput.NameAvailable);
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             endpointName = Recording.GenerateAssetName("endpoint-");
             Endpoint endpoint = await CreateEndpoint(profile, endpointName);
             CheckNameAvailabilityInput checkNameAvailabilityInput2 = new CheckNameAvailabilityInput(endpoint.Data.Name);
-            checkNameAvailabilityOutput = await Client.DefaultSubscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput2);
+            checkNameAvailabilityOutput = await subscription.CheckNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput2);
             Assert.False(checkNameAvailabilityOutput.NameAvailable);
         }
     }

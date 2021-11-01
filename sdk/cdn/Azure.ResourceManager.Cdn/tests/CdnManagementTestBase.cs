@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroup(string rgNamePrefix)
+        protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgNamePrefix)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(Location.WestUS);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
             return lro.Value;
         }
 

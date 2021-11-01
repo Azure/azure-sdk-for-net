@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task List()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
@@ -53,7 +55,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");

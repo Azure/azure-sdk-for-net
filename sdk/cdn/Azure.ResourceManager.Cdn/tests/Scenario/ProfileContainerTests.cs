@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             Assert.AreEqual(profileName, profile.Data.Name);
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task ListByRg()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             _ = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
@@ -49,11 +51,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
-            await foreach (var tempProfile in Client.DefaultSubscription.GetProfilesAsync())
+            await foreach (var tempProfile in subscription.GetProfilesAsync())
             {
                 if (tempProfile.Data.Id == profile.Data.Id)
                 {
@@ -67,7 +70,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             Profile getProfile = await rg.GetProfiles().GetAsync(profileName);

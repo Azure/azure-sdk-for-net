@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             Assert.AreEqual(AFDProfileName, AFDProfile.Data.Name);
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task ListByRg()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             _ = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             int count = 0;
@@ -49,11 +51,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             int count = 0;
-            await foreach (var tempAFDProfile in Client.DefaultSubscription.GetProfilesAsync())
+            await foreach (var tempAFDProfile in subscription.GetProfilesAsync())
             {
                 if (tempAFDProfile.Data.Id == AFDProfile.Data.Id)
                 {
@@ -67,7 +70,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             Profile getAFDProfile = await rg.GetProfiles().GetAsync(AFDProfileName);

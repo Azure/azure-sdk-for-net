@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task List()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
@@ -53,7 +55,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");

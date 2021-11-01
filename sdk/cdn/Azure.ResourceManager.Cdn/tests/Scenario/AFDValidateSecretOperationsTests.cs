@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.Core.TestFramework;
@@ -25,7 +26,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Id = "/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert"
             }, ValidateSecretType.CustomerCertificate);
-            ValidateSecretOutput validateSecretOutput = await Client.DefaultSubscription.ValidateSecretAsync(input);
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ValidateSecretOutput validateSecretOutput = await subscription.ValidateSecretAsync(input);
             Assert.AreEqual(validateSecretOutput.Status, Status.Valid);
         }
     }

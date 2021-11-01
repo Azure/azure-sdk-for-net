@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
             Assert.AreEqual(policyName, policy.Data.Name);
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task List()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             _ = await CreatePolicy(rg, policyName);
             int count = 0;
@@ -49,7 +51,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
             CdnWebApplicationFirewallPolicy getPolicy = await rg.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName);

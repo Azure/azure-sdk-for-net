@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +20,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task List()
         {
             int count = 0;
-            await foreach (var tempManagedRuleSetDefinition in Client.DefaultSubscription.GetManagedRuleSetsAsync())
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            await foreach (var tempManagedRuleSetDefinition in subscription.GetManagedRuleSetsAsync())
             {
                 count++;
                 Assert.AreEqual(tempManagedRuleSetDefinition.Type, new ResourceType("Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets"));

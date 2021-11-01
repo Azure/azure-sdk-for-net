@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             await profile.DeleteAsync();
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             ProfileUpdateParameters updateParameters = new ProfileUpdateParameters();
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GenerateSsoUri()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardVerizon);
             SsoUri ssoUri = await profile.GenerateSsoUriAsync();
@@ -59,7 +62,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetSupportedOptimizationTypes()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             SupportedOptimizationTypesListResult optimizationTypesList = await profile.GetSupportedOptimizationTypesAsync();
@@ -72,7 +76,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetResourceUsage()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;

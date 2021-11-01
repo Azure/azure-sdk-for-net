@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task CreateOrUpdate()
         {
             //In this test, the CName mapping from custom domain "customdomaintest-1.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task List()
         {
             //In this test, the CName mapping from custom domain "customdomaintest-2.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");
@@ -57,7 +59,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task Get()
         {
             //In this test, the CName mapping from custom domain "customdomaintest-3.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile profile = await rg.GetProfiles().GetAsync("testProfile");
             Endpoint endpoint = await profile.GetEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string customDomainName = Recording.GenerateAssetName("customDomain-");

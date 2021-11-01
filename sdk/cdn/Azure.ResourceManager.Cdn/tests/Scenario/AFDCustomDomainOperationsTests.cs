@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            ResourceGroup rg = await CreateResourceGroup("testRg-");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
             string AFDCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task Update()
         {
             //This test doesn't create a new afd custom domain bucause the update actoin needs to manualy add dns txt record and validate.
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             AFDDomain AFDCustomDomain = await AFDProfile.GetAFDDomains().GetAsync("customdomain4afd-azuretest-net");
             AFDDomainUpdateParameters updateParameters = new AFDDomainUpdateParameters
@@ -57,7 +59,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task RefreshVlidationToken()
         {
             //This test doesn't create a new afd custom domain bucause the refresh validation token actoin needs to manualy add dns txt record and validate.
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync("CdnTest");
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             Profile AFDProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             AFDDomain AFDCustomDomain = await AFDProfile.GetAFDDomains().GetAsync("customdomain4afd-azuretest-net");
             Assert.ThrowsAsync<RequestFailedException>(async () => await AFDCustomDomain.RefreshValidationTokenAsync());
