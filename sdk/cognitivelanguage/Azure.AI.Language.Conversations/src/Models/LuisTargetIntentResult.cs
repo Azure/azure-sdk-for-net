@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
     [CodeGenModel("LuisTargetIntentResult")]
