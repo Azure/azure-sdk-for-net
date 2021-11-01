@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationTypeEnum"/>. </summary>
+        /// <summary> Determines if two <see cref="AuthenticationTypeEnum"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationTypeEnum(string value)
         {

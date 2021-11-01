@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ArtifactArchitecture"/>. </summary>
+        /// <summary> Determines if two <see cref="ArtifactArchitecture"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArtifactArchitecture(string value)
         {

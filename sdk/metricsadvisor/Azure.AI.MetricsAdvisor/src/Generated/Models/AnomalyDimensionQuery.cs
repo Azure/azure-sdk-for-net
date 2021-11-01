@@ -35,7 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DateTimeOffset EndTime { get; }
         /// <summary> dimension to query. </summary>
         public string DimensionName { get; }
-        /// <summary> Gets or sets the dimension filter. </summary>
         public DimensionKey DimensionFilter { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
         /// <param name="workspaces"> List of workspaces for Firewall Policy Insights. </param>
         /// <param name="defaultWorkspaceId"> The default workspace Id for Firewall Policy Insights. </param>
-        internal FirewallPolicyLogAnalyticsResources(IList<FirewallPolicyLogAnalyticsWorkspace> workspaces, WritableSubResource defaultWorkspaceId)
+        internal FirewallPolicyLogAnalyticsResources(IList<FirewallPolicyLogAnalyticsWorkspace> workspaces, SubResource defaultWorkspaceId)
         {
             Workspaces = workspaces;
             DefaultWorkspaceId = defaultWorkspaceId;
@@ -32,6 +31,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of workspaces for Firewall Policy Insights. </summary>
         public IList<FirewallPolicyLogAnalyticsWorkspace> Workspaces { get; }
         /// <summary> The default workspace Id for Firewall Policy Insights. </summary>
-        public WritableSubResource DefaultWorkspaceId { get; set; }
+        public SubResource DefaultWorkspaceId { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<NetworkRuleBypassOptions> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
             Optional<IList<MhsmipRule>> ipRules = default;
-            Optional<IList<WritableSubResource>> virtualNetworkRules = default;
+            Optional<IList<MhsmVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
@@ -100,10 +99,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<MhsmVirtualNetworkRule> array = new List<MhsmVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(MhsmVirtualNetworkRule.DeserializeMhsmVirtualNetworkRule(item));
                     }
                     virtualNetworkRules = array;
                     continue;

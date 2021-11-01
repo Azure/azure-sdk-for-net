@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleDefinitionType(string value)
         {

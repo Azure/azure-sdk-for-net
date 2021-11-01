@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AccessTier"/>. </summary>
+        /// <summary> Determines if two <see cref="AccessTier"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessTier(string value)
         {

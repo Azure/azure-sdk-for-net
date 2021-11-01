@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionUpdate : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVMExtensionUpdate : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionUpdate. </summary>
         public VirtualMachineScaleSetVMExtensionUpdate()
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionUpdate. </summary>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>

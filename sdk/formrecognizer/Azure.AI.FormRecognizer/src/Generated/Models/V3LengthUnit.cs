@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="V3LengthUnit"/>. </summary>
+        /// <summary> Determines if two <see cref="V3LengthUnit"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public V3LengthUnit(string value)
         {

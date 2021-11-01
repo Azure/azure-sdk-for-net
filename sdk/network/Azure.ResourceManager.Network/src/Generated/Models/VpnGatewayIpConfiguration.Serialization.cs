@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,16 +15,11 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnGatewayIpConfiguration DeserializeVpnGatewayIpConfiguration(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> publicIpAddress = default;
             Optional<string> privateIpAddress = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("publicIpAddress"))
                 {
                     publicIpAddress = property.Value.GetString();
@@ -34,8 +30,13 @@ namespace Azure.ResourceManager.Network.Models
                     privateIpAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VpnGatewayIpConfiguration(id.Value, publicIpAddress.Value, privateIpAddress.Value);
+            return new VpnGatewayIpConfiguration(id, publicIpAddress.Value, privateIpAddress.Value);
         }
     }
 }

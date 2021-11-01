@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService");
-                JsonSerializer.Serialize(writer, SwappableCloudService);
+                writer.WriteObjectValue(SwappableCloudService);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
             Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<WritableSubResource> swappableCloudService = default;
+            Optional<SubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerConfigurations"))
@@ -63,11 +62,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    swappableCloudService = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), swappableCloudService.Value);
         }
     }
 }

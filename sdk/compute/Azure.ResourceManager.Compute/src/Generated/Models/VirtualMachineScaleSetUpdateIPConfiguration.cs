@@ -12,19 +12,19 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile&apos;s IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
-    public partial class VirtualMachineScaleSetUpdateIPConfiguration : SubResource
+    public partial class VirtualMachineScaleSetUpdateIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<SubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<SubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<SubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="subnet"> The subnet. </param>
         /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
-        internal VirtualMachineScaleSetUpdateIPConfiguration(string id, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id)
+        internal VirtualMachineScaleSetUpdateIPConfiguration(string id, string name, ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<SubResource> applicationGatewayBackendAddressPools, IList<SubResource> applicationSecurityGroups, IList<SubResource> loadBalancerBackendAddressPools, IList<SubResource> loadBalancerInboundNatPools) : base(id)
         {
             Name = name;
             Subnet = subnet;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
         /// <summary> The subnet. </summary>
-        public WritableSubResource Subnet { get; set; }
+        public ApiEntityReference Subnet { get; set; }
         /// <summary> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </summary>
         public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; }
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups { get; }
+        public IList<SubResource> ApplicationSecurityGroups { get; }
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+        public IList<SubResource> LoadBalancerBackendAddressPools { get; }
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
+        public IList<SubResource> LoadBalancerInboundNatPools { get; }
     }
 }

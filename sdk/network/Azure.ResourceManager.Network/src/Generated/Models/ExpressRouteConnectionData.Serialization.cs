@@ -7,8 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,17 +19,14 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering");
-                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
+                writer.WriteObjectValue(ExpressRouteCircuitPeering);
             }
             if (Optional.IsDefined(AuthorizationKey))
             {
@@ -63,9 +60,9 @@ namespace Azure.ResourceManager.Network
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element)
         {
             string name = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> expressRouteCircuitPeering = default;
+            Optional<ExpressRouteCircuitPeeringId> expressRouteCircuitPeering = default;
             Optional<string> authorizationKey = default;
             Optional<int> routingWeight = default;
             Optional<bool> enableInternetSecurity = default;
@@ -109,7 +106,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            expressRouteCircuitPeering = ExpressRouteCircuitPeeringId.DeserializeExpressRouteCircuitPeeringId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authorizationKey"))
@@ -161,7 +158,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteConnectionData(id.Value, name, Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(id, name, Optional.ToNullable(provisioningState), expressRouteCircuitPeering.Value, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), routingConfiguration.Value);
         }
     }
 }

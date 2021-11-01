@@ -16,13 +16,11 @@ namespace Azure.Messaging.WebPubSub
     /// <summary> The HealthApi service client. </summary>
     internal partial class HealthApiClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _endpoint;
-        private readonly string _apiVersion;
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get => _pipeline; }
+        public virtual HttpPipeline Pipeline { get; }
+        private string endpoint;
+        private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of HealthApiClient for mocking. </summary>
         protected HealthApiClient()
@@ -32,7 +30,6 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Initializes a new instance of HealthApiClient. </summary>
         /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
         {
             if (endpoint == null)
@@ -41,11 +38,10 @@ namespace Azure.Messaging.WebPubSub
             }
 
             options ??= new WebPubSubServiceClientOptions();
-
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get service health status. </summary>
@@ -54,12 +50,28 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> GetServiceStatusAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetServiceStatusRequest(options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatusRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -74,12 +86,28 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response GetServiceStatus(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
+            options ??= new RequestOptions();
+            using HttpMessage message = CreateGetServiceStatusRequest(options);
+            RequestOptions.Apply(options, message);
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatusRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
             }
             catch (Exception e)
             {
@@ -88,32 +116,19 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGetServiceStatusRequest()
+        /// <summary> Create Request for <see cref="GetServiceStatus"/> and <see cref="GetServiceStatusAsync"/> operations. </summary>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetServiceStatusRequest(RequestOptions options = null)
         {
-            var message = _pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(endpoint, false);
             uri.AppendPath("/api/health", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
-        }
-
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
         }
     }
 }

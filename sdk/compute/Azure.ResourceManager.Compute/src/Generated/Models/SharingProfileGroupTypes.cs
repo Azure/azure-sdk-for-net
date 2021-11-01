@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SharingProfileGroupTypes"/>. </summary>
+        /// <summary> Determines if two <see cref="SharingProfileGroupTypes"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SharingProfileGroupTypes(string value)
         {

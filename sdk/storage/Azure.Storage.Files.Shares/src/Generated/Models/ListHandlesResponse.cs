@@ -37,9 +37,7 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Gets the handle list. </summary>
         public IReadOnlyList<ShareFileHandle> HandleList { get; }
-        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

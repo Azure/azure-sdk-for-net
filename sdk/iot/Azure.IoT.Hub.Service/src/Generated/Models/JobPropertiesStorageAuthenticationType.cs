@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="JobPropertiesStorageAuthenticationType"/>. </summary>
+        /// <summary> Determines if two <see cref="JobPropertiesStorageAuthenticationType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobPropertiesStorageAuthenticationType(string value)
         {

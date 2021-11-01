@@ -35,7 +35,6 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> timestamp. </summary>
         public DateTimeOffset Timestamp { get; }
-        /// <summary> Gets the value. </summary>
         public AnomalyValue Value { get; }
         /// <summary> Error message when inference this timestamp. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }

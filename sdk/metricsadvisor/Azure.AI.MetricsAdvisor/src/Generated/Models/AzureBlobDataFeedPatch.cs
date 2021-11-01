@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureBlob;
         }
 
-        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureBlobParameterPatch DataSourceParameter { get; set; }
     }
 }

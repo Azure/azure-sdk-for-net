@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -14,16 +15,11 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TargetResource DeserializeTargetResource(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> resourceName = default;
             Optional<string> resourceType = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resourceName"))
                 {
                     resourceName = property.Value.GetString();
@@ -34,8 +30,13 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TargetResource(id.Value, resourceName.Value, resourceType.Value);
+            return new TargetResource(id, resourceName.Value, resourceType.Value);
         }
     }
 }

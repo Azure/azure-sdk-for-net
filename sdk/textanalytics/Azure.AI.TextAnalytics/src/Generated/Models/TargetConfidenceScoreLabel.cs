@@ -19,9 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             Negative = negative;
         }
 
-        /// <summary> Gets the positive. </summary>
         public double Positive { get; }
-        /// <summary> Gets the negative. </summary>
         public double Negative { get; }
     }
 }

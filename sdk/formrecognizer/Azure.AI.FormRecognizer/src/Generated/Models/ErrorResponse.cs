@@ -25,7 +25,6 @@ namespace Azure.AI.FormRecognizer.Models
             Error = error;
         }
 
-        /// <summary> Gets the error. </summary>
         public FormRecognizerError Error { get; }
     }
 }

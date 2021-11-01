@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ToneValue"/>. </summary>
+        /// <summary> Determines if two <see cref="ToneValue"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ToneValue(string value)
         {

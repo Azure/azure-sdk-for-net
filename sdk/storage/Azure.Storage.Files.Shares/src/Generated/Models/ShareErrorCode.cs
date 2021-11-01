@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ShareErrorCode"/>. </summary>
+        /// <summary> Determines if two <see cref="ShareErrorCode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareErrorCode(string value)
         {

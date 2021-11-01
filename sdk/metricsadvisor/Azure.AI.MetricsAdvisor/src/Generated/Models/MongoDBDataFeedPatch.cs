@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.MongoDb;
         }
 
-        /// <summary> Gets or sets the data source parameter. </summary>
         public MongoDBParameterPatch DataSourceParameter { get; set; }
     }
 }

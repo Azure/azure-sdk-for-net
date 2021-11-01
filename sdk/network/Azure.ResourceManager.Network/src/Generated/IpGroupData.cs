@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,12 +18,12 @@ namespace Azure.ResourceManager.Network
         public IpGroupData()
         {
             IpAddresses = new ChangeTrackingList<string>();
-            Firewalls = new ChangeTrackingList<WritableSubResource>();
-            FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
+            Firewalls = new ChangeTrackingList<SubResource>();
+            FirewallPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of IpGroupData. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
-        internal IpGroupData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, type, location, tags)
+        internal IpGroupData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<SubResource> firewalls, IReadOnlyList<SubResource> firewallPolicies) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -50,8 +49,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
         public IList<string> IpAddresses { get; }
         /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>
-        public IReadOnlyList<WritableSubResource> Firewalls { get; }
+        public IReadOnlyList<SubResource> Firewalls { get; }
         /// <summary> List of references to Firewall Policies resources that this IpGroups is associated with. </summary>
-        public IReadOnlyList<WritableSubResource> FirewallPolicies { get; }
+        public IReadOnlyList<SubResource> FirewallPolicies { get; }
     }
 }

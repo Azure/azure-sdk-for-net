@@ -15,7 +15,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BillingFrequency"/>. </summary>
+        /// <summary> Determines if two <see cref="BillingFrequency"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingFrequency(string value)
         {

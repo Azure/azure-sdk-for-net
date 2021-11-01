@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,11 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Primary))
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static NetworkInterfaceReference DeserializeNetworkInterfaceReference(JsonElement element)
         {
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<bool> primary = default;
             Optional<DeleteOptions> deleteOption = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceReference(id.Value, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
+            return new NetworkInterfaceReference(id, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
         }
     }
 }

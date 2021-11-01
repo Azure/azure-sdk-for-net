@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -46,18 +45,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkWatcher(ArmResource options, ResourceIdentifier id) : base(options, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="NetworkWatcher"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkWatcher(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -923,23 +910,23 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of PacketCaptures in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of PacketCaptures and their operations over a NetworkWatcher. </returns>
-        public PacketCaptureCollection GetPacketCaptures()
+        public PacketCaptureContainer GetPacketCaptures()
         {
-            return new PacketCaptureCollection(this);
+            return new PacketCaptureContainer(this);
         }
 
         /// <summary> Gets a list of ConnectionMonitors in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of ConnectionMonitors and their operations over a NetworkWatcher. </returns>
-        public ConnectionMonitorCollection GetConnectionMonitors()
+        public ConnectionMonitorContainer GetConnectionMonitors()
         {
-            return new ConnectionMonitorCollection(this);
+            return new ConnectionMonitorContainer(this);
         }
 
         /// <summary> Gets a list of FlowLogs in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of FlowLogs and their operations over a NetworkWatcher. </returns>
-        public FlowLogCollection GetFlowLogs()
+        public FlowLogContainer GetFlowLogs()
         {
-            return new FlowLogCollection(this);
+            return new FlowLogContainer(this);
         }
     }
 }

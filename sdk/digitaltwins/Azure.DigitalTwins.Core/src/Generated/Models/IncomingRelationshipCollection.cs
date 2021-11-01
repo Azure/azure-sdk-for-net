@@ -28,7 +28,6 @@ namespace Azure.DigitalTwins.Core
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IncomingRelationship> Value { get; }
         /// <summary> A URI to retrieve the next page of objects. </summary>
         public string NextLink { get; }

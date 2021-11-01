@@ -8,11 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PacketCapture data model. </summary>
-    public partial class PacketCaptureData
+    public partial class PacketCaptureData : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>
         internal PacketCaptureData()
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the packet capture session. </param>
-        /// <param name="id"> ID of the packet capture operation. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="target"> The ID of the targeted resource, only VM is currently supported. </param>
         /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
@@ -31,10 +32,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        internal PacketCaptureData(string name, string id, string etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, ProvisioningState? provisioningState)
+        internal PacketCaptureData(string id, string name, string etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
-            Id = id;
             Etag = etag;
             Target = target;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
@@ -47,8 +47,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Name of the packet capture session. </summary>
         public string Name { get; }
-        /// <summary> ID of the packet capture operation. </summary>
-        public string Id { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>

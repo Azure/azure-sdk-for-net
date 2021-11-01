@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,27 +16,22 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint");
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
-            string id = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("ignoreMissingVnetServiceEndpoint"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -44,6 +40,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
             }

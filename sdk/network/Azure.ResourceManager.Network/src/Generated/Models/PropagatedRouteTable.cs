@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         public PropagatedRouteTable()
         {
             Labels = new ChangeTrackingList<string>();
-            Ids = new ChangeTrackingList<WritableSubResource>();
+            Ids = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
         /// <param name="labels"> The list of labels. </param>
         /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
-        internal PropagatedRouteTable(IList<string> labels, IList<WritableSubResource> ids)
+        internal PropagatedRouteTable(IList<string> labels, IList<SubResource> ids)
         {
             Labels = labels;
             Ids = ids;
@@ -33,6 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of labels. </summary>
         public IList<string> Labels { get; }
         /// <summary> The list of resource ids of all the RouteTables. </summary>
-        public IList<WritableSubResource> Ids { get; }
+        public IList<SubResource> Ids { get; }
     }
 }

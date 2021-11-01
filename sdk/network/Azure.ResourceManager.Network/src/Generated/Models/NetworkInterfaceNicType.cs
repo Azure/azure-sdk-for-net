@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceNicType"/>. </summary>
+        /// <summary> Determines if two <see cref="NetworkInterfaceNicType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceNicType(string value)
         {

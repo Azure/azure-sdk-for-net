@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="StorageSource"/>. </summary>
+        /// <summary> Determines if two <see cref="StorageSource"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageSource(string value)
         {

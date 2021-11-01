@@ -28,9 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
         public IReadOnlyList<KqlScriptResource> Value { get; }
-        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

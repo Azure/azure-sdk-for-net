@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = NotificationHookKind.Email;
         }
 
-        /// <summary> Gets or sets the hook parameter. </summary>
         public EmailHookParameterPatch HookParameter { get; set; }
     }
 }

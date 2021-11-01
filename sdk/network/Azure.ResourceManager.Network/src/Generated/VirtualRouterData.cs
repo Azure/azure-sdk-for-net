@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,11 +18,11 @@ namespace Azure.ResourceManager.Network
         public VirtualRouterData()
         {
             VirtualRouterIps = new ChangeTrackingList<string>();
-            Peerings = new ChangeTrackingList<WritableSubResource>();
+            Peerings = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIps, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal VirtualRouterData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIps, SubResource hostedSubnet, SubResource hostedGateway, IReadOnlyList<SubResource> peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualRouterAsn = virtualRouterAsn;
@@ -53,11 +52,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> VirtualRouter IPs. </summary>
         public IList<string> VirtualRouterIps { get; }
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
-        public WritableSubResource HostedSubnet { get; set; }
+        public SubResource HostedSubnet { get; set; }
         /// <summary> The Gateway on which VirtualRouter is hosted. </summary>
-        public WritableSubResource HostedGateway { get; set; }
+        public SubResource HostedGateway { get; set; }
         /// <summary> List of references to VirtualRouterPeerings. </summary>
-        public IReadOnlyList<WritableSubResource> Peerings { get; }
+        public IReadOnlyList<SubResource> Peerings { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

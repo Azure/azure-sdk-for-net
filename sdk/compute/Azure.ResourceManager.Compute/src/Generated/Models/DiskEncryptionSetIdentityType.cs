@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetIdentityType"/>. </summary>
+        /// <summary> Determines if two <see cref="DiskEncryptionSetIdentityType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskEncryptionSetIdentityType(string value)
         {

@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rewrite rule set of an application gateway. </summary>
-    public partial class ApplicationGatewayRewriteRuleSet : SubResource
+    public partial class ApplicationGatewayRewriteRuleSet : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the rewrite rule set that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>

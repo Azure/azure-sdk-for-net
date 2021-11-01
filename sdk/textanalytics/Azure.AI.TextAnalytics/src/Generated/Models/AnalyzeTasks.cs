@@ -67,31 +67,18 @@ namespace Azure.AI.TextAnalytics.Models
             CustomMultiClassificationTasks = customMultiClassificationTasks;
         }
 
-        /// <summary> Gets the completed. </summary>
         public int Completed { get; }
-        /// <summary> Gets the failed. </summary>
         public int Failed { get; }
-        /// <summary> Gets the in progress. </summary>
         public int InProgress { get; }
-        /// <summary> Gets the total. </summary>
         public int Total { get; }
-        /// <summary> Gets the entity recognition tasks. </summary>
         public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
-        /// <summary> Gets the entity recognition pii tasks. </summary>
         public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
-        /// <summary> Gets the key phrase extraction tasks. </summary>
         public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
-        /// <summary> Gets the entity linking tasks. </summary>
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
-        /// <summary> Gets the sentiment analysis tasks. </summary>
         public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
-        /// <summary> Gets the extractive summarization tasks. </summary>
         public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
-        /// <summary> Gets the custom entity recognition tasks. </summary>
         public IReadOnlyList<CustomEntityRecognitionTasksItem> CustomEntityRecognitionTasks { get; }
-        /// <summary> Gets the custom single classification tasks. </summary>
         public IReadOnlyList<CustomSingleClassificationTasksItem> CustomSingleClassificationTasks { get; }
-        /// <summary> Gets the custom multi classification tasks. </summary>
         public IReadOnlyList<CustomMultiClassificationTasksItem> CustomMultiClassificationTasks { get; }
     }
 }

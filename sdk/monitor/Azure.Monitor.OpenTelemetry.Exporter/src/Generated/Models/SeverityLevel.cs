@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SeverityLevel"/>. </summary>
+        /// <summary> Determines if two <see cref="SeverityLevel"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SeverityLevel(string value)
         {

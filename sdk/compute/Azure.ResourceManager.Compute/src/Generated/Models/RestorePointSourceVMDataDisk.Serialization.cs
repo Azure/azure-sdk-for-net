@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<ManagedDiskParameters> managedDisk = default;
-            Optional<WritableSubResource> diskRestorePoint = default;
+            Optional<ApiEntityReference> diskRestorePoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -75,11 +74,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    diskRestorePoint = ApiEntityReference.DeserializeApiEntityReference(property.Value);
                     continue;
                 }
             }
-            return new RestorePointSourceVMDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
+            return new RestorePointSourceVMDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value);
         }
     }
 }

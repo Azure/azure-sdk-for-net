@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -35,11 +36,8 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<string> exactVersion = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"))
@@ -84,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value);
+            return new ImageReference(id, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value);
         }
     }
 }

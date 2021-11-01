@@ -38,9 +38,7 @@ namespace Azure.Storage.Blobs.Models
             BlobItems = blobItems;
         }
 
-        /// <summary> Gets the blob prefixes. </summary>
         public IReadOnlyList<BlobPrefix> BlobPrefixes { get; }
-        /// <summary> Gets the blob items. </summary>
         public IReadOnlyList<BlobItemInternal> BlobItems { get; }
     }
 }

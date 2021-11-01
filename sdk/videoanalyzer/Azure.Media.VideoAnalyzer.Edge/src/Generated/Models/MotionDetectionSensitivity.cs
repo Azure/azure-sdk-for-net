@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="MotionDetectionSensitivity"/>. </summary>
+        /// <summary> Determines if two <see cref="MotionDetectionSensitivity"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MotionDetectionSensitivity(string value)
         {

@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -33,11 +33,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -54,6 +49,8 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(IdleTimeoutInMinutes))
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PublicIpAddresses)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PublicIpPrefixes)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -90,15 +87,15 @@ namespace Azure.ResourceManager.Network
             Optional<NatGatewaySku> sku = default;
             Optional<IList<string>> zones = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<int> idleTimeoutInMinutes = default;
-            Optional<IList<WritableSubResource>> publicIpAddresses = default;
-            Optional<IList<WritableSubResource>> publicIpPrefixes = default;
-            Optional<IReadOnlyList<WritableSubResource>> subnets = default;
+            Optional<IList<SubResource>> publicIpAddresses = default;
+            Optional<IList<SubResource>> publicIpPrefixes = default;
+            Optional<IReadOnlyList<SubResource>> subnets = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -133,11 +130,6 @@ namespace Azure.ResourceManager.Network
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -168,6 +160,11 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -194,10 +191,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             publicIpAddresses = array;
                             continue;
@@ -209,10 +206,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             publicIpPrefixes = array;
                             continue;
@@ -224,10 +221,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             subnets = array;
                             continue;
@@ -251,7 +248,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NatGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToList(zones), etag.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToList(publicIpAddresses), Optional.ToList(publicIpPrefixes), Optional.ToList(subnets), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new NatGatewayData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToList(zones), etag.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToList(publicIpAddresses), Optional.ToList(publicIpPrefixes), Optional.ToList(subnets), resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -46,18 +45,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="VpnGateway"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VpnGateway(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VpnGatewaysRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -380,16 +367,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of VpnConnections in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnConnections and their operations over a VpnGateway. </returns>
-        public VpnConnectionCollection GetVpnConnections()
+        public VpnConnectionContainer GetVpnConnections()
         {
-            return new VpnConnectionCollection(this);
+            return new VpnConnectionContainer(this);
         }
 
         /// <summary> Gets a list of VpnGatewayNatRules in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnGatewayNatRules and their operations over a VpnGateway. </returns>
-        public VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
+        public VpnGatewayNatRuleContainer GetVpnGatewayNatRules()
         {
-            return new VpnGatewayNatRuleCollection(this);
+            return new VpnGatewayNatRuleContainer(this);
         }
     }
 }

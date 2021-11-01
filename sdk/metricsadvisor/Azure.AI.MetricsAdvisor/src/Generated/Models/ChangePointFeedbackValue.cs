@@ -17,7 +17,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             ChangePointValue = changePointValue;
         }
 
-        /// <summary> Gets or sets the change point value. </summary>
         public ChangePointValue ChangePointValue { get; set; }
     }
 }

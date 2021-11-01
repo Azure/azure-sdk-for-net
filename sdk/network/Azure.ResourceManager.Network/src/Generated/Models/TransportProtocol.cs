@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="TransportProtocol"/>. </summary>
+        /// <summary> Determines if two <see cref="TransportProtocol"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransportProtocol(string value)
         {

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -21,11 +22,8 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationKey))
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> authorizationKey = default;
             Optional<AuthorizationUseStatus> authorizationUseStatus = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitAuthorizationData(id.Value, name.Value, etag.Value, type.Value, authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitAuthorizationData(id, name.Value, etag.Value, type.Value, authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

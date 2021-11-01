@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="StampKind"/>. </summary>
+        /// <summary> Determines if two <see cref="StampKind"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StampKind(string value)
         {

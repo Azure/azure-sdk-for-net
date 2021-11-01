@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="IssueType"/>. </summary>
+        /// <summary> Determines if two <see cref="IssueType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IssueType(string value)
         {

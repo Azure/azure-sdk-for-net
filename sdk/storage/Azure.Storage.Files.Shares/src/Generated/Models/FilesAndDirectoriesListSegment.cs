@@ -42,9 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
             FileItems = fileItems;
         }
 
-        /// <summary> Gets the directory items. </summary>
         public IReadOnlyList<DirectoryItem> DirectoryItems { get; }
-        /// <summary> Gets the file items. </summary>
         public IReadOnlyList<FileItem> FileItems { get; }
     }
 }

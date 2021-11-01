@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork");
-                JsonSerializer.Serialize(writer, TargetVirtualNetwork);
+                writer.WriteObjectValue(TargetVirtualNetwork);
             }
             if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet");
-                JsonSerializer.Serialize(writer, TargetSubnet);
+                writer.WriteObjectValue(TargetSubnet);
             }
             writer.WriteEndObject();
         }

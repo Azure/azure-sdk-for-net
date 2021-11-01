@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DefaultWorkspaceId))
             {
                 writer.WritePropertyName("defaultWorkspaceId");
-                JsonSerializer.Serialize(writer, DefaultWorkspaceId);
+                writer.WriteObjectValue(DefaultWorkspaceId);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element)
         {
             Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
-            Optional<WritableSubResource> defaultWorkspaceId = default;
+            Optional<SubResource> defaultWorkspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaces"))
@@ -63,11 +62,11 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultWorkspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    defaultWorkspaceId = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
             }
-            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId);
+            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId.Value);
         }
     }
 }

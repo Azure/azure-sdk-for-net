@@ -31,7 +31,6 @@ namespace Azure.Security.KeyVault.Administration.Models
             FolderToRestore = folderToRestore;
         }
 
-        /// <summary> Gets the sas token parameters. </summary>
         public SASTokenParameter SasTokenParameters { get; }
         /// <summary> The Folder name of the blob where the previous successful full backup was stored. </summary>
         public string FolderToRestore { get; }

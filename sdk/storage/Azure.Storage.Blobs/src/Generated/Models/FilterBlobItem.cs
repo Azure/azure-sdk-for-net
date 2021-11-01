@@ -42,9 +42,7 @@ namespace Azure.Storage.Blobs.Models
             Tags = tags;
         }
 
-        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Gets the container name. </summary>
         public string ContainerName { get; }
         /// <summary> Blob tags. </summary>
         public BlobTags Tags { get; }

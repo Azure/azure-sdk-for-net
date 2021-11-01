@@ -26,9 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             Key2 = key2;
         }
 
-        /// <summary> Gets the key 1. </summary>
         public DateTimeOffset? Key1 { get; }
-        /// <summary> Gets the key 2. </summary>
         public DateTimeOffset? Key2 { get; }
     }
 }

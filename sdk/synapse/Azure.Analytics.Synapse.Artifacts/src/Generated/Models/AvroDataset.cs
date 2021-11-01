@@ -51,7 +51,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetLocation Location { get; set; }
         /// <summary> A string from AvroCompressionCodecEnum or an expression. </summary>
         public object AvroCompressionCodec { get; set; }
-        /// <summary> Gets or sets the avro compression level. </summary>
         public int? AvroCompressionLevel { get; set; }
     }
 }

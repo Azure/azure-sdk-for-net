@@ -6,11 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualApplianceSite data model. </summary>
-    public partial class VirtualApplianceSiteData : SubResource
+    public partial class VirtualApplianceSiteData : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
         public VirtualApplianceSiteData()
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the virtual appliance site. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Site type. </param>

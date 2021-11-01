@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -21,11 +22,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -43,6 +39,8 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IpConfigurations))
@@ -68,11 +66,11 @@ namespace Azure.ResourceManager.Network
         {
             Optional<string> etag = default;
             Optional<Sku> sku = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<IList<BastionHostIPConfiguration>> ipConfigurations = default;
             Optional<string> dnsName = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -91,11 +89,6 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     sku = Sku.DeserializeSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -126,6 +119,11 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -171,7 +169,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState));
+            return new BastionHostData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

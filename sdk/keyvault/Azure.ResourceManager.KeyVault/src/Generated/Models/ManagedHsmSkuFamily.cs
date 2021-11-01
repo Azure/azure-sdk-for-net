@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmSkuFamily"/>. </summary>
+        /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedHsmSkuFamily(string value)
         {

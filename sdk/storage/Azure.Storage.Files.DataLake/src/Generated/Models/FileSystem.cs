@@ -26,11 +26,8 @@ namespace Azure.Storage.Files.DataLake.Models
             ETag = eTag;
         }
 
-        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Gets the last modified. </summary>
         public string LastModified { get; }
-        /// <summary> Gets the e tag. </summary>
         public string ETag { get; }
     }
 }

@@ -26,7 +26,6 @@ namespace Azure.Storage.Files.DataLake.Models
             Filesystems = filesystems;
         }
 
-        /// <summary> Gets the filesystems. </summary>
         public IReadOnlyList<FileSystem> Filesystems { get; }
     }
 }

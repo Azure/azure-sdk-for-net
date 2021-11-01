@@ -25,7 +25,6 @@ namespace Azure.Storage.Blobs.Models
             Name = name;
         }
 
-        /// <summary> Gets the name. </summary>
         public string Name { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -17,11 +18,6 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -38,6 +34,8 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SecurityRules))
@@ -57,11 +55,11 @@ namespace Azure.ResourceManager.Network
         internal static NetworkSecurityGroupData DeserializeNetworkSecurityGroupData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<IList<SecurityRuleData>> securityRules = default;
             Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
@@ -74,11 +72,6 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -109,6 +102,11 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -214,7 +212,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkSecurityGroupData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), resourceGuid.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

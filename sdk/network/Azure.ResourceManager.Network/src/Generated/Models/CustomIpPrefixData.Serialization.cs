@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -33,11 +33,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -54,6 +49,8 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Cidr))
@@ -90,18 +87,18 @@ namespace Azure.ResourceManager.Network
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> etag = default;
             Optional<IList<string>> zones = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<string> cidr = default;
             Optional<string> signedMessage = default;
             Optional<string> authorizationMessage = default;
             Optional<CustomIpPrefixData> customIpPrefixParent = default;
             Optional<IReadOnlyList<CustomIpPrefixData>> childCustomIpPrefixes = default;
             Optional<CommissionedState> commissionedState = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIpPrefixes = default;
+            Optional<IReadOnlyList<SubResource>> publicIpPrefixes = default;
             Optional<string> resourceGuid = default;
             Optional<string> failedReason = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -137,11 +134,6 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -170,6 +162,11 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -238,10 +235,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             publicIpPrefixes = array;
                             continue;
@@ -270,7 +267,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new CustomIpPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), resourceGuid.Value, failedReason.Value, Optional.ToNullable(provisioningState));
+            return new CustomIpPrefixData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), resourceGuid.Value, failedReason.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

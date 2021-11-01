@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="MetricNamespaceClassification"/>. </summary>
+        /// <summary> Determines if two <see cref="MetricNamespaceClassification"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricNamespaceClassification(string value)
         {

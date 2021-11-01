@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -38,6 +33,8 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationKey))
@@ -46,15 +43,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1");
-            JsonSerializer.Serialize(writer, VirtualNetworkGateway1); if (Optional.IsDefined(VirtualNetworkGateway2))
+            writer.WriteObjectValue(VirtualNetworkGateway1);
+            if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2");
-                JsonSerializer.Serialize(writer, VirtualNetworkGateway2);
+                writer.WriteObjectValue(VirtualNetworkGateway2);
             }
             if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2");
-                JsonSerializer.Serialize(writer, LocalNetworkGateway2);
+                writer.WriteObjectValue(LocalNetworkGateway2);
             }
             writer.WritePropertyName("connectionType");
             writer.WriteStringValue(ConnectionType.ToString());
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer");
-                JsonSerializer.Serialize(writer, Peer);
+                writer.WriteObjectValue(Peer);
             }
             if (Optional.IsDefined(EnableBgp))
             {
@@ -125,15 +123,15 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkGatewayConnectionListEntity DeserializeVirtualNetworkGatewayConnectionListEntity(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<string> authorizationKey = default;
-            WritableSubResource virtualNetworkGateway1 = default;
-            Optional<WritableSubResource> virtualNetworkGateway2 = default;
-            Optional<WritableSubResource> localNetworkGateway2 = default;
+            VirtualNetworkConnectionGatewayReference virtualNetworkGateway1 = default;
+            Optional<VirtualNetworkConnectionGatewayReference> virtualNetworkGateway2 = default;
+            Optional<VirtualNetworkConnectionGatewayReference> localNetworkGateway2 = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
             Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
             Optional<int> routingWeight = default;
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
             Optional<long> egressBytesTransferred = default;
             Optional<long> ingressBytesTransferred = default;
-            Optional<WritableSubResource> peer = default;
+            Optional<SubResource> peer = default;
             Optional<bool> enableBgp = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
             Optional<IList<IpsecPolicy>> ipsecPolicies = default;
@@ -156,11 +154,6 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -193,6 +186,11 @@ namespace Azure.ResourceManager.Network.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -209,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("virtualNetworkGateway1"))
                         {
-                            virtualNetworkGateway1 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualNetworkGateway1 = VirtualNetworkConnectionGatewayReference.DeserializeVirtualNetworkConnectionGatewayReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGateway2"))
@@ -219,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetworkGateway2 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualNetworkGateway2 = VirtualNetworkConnectionGatewayReference.DeserializeVirtualNetworkConnectionGatewayReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("localNetworkGateway2"))
@@ -229,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            localNetworkGateway2 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            localNetworkGateway2 = VirtualNetworkConnectionGatewayReference.DeserializeVirtualNetworkConnectionGatewayReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionType"))
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            peer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            peer = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableBgp"))
@@ -406,7 +404,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
+            return new VirtualNetworkGatewayConnectionListEntity(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareEntityCategory"/>. </summary>
+        /// <summary> Determines if two <see cref="HealthcareEntityCategory"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthcareEntityCategory(string value)
         {

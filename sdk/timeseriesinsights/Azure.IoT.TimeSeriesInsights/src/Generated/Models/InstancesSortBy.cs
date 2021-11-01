@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="InstancesSortBy"/>. </summary>
+        /// <summary> Determines if two <see cref="InstancesSortBy"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstancesSortBy(string value)
         {

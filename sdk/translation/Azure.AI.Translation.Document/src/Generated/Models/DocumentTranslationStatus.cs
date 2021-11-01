@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslationStatus"/>. </summary>
+        /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentTranslationStatus(string value)
         {

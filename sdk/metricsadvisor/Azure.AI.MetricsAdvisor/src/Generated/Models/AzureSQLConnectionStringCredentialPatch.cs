@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceCredentialType = DataSourceCredentialKind.SqlConnectionString;
         }
 
-        /// <summary> Gets or sets the parameters. </summary>
         public AzureSQLConnectionStringParamPatch Parameters { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleInRules"/>. </summary>
+        /// <summary> Determines if two <see cref="VirtualMachineScaleSetScaleInRules"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineScaleSetScaleInRules(string value)
         {

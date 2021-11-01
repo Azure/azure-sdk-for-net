@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CallRecordingState"/>. </summary>
+        /// <summary> Determines if two <see cref="CallRecordingState"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CallRecordingState(string value)
         {

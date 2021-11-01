@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                writer.WriteObjectValue(ProximityPlacementGroup);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

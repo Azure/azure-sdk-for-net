@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="TextAnalyticsOperationStatus"/>. </summary>
+        /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextAnalyticsOperationStatus(string value)
         {

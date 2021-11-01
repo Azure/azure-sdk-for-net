@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="LeaseState"/>. </summary>
+        /// <summary> Determines if two <see cref="LeaseState"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LeaseState(string value)
         {

@@ -22,7 +22,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Language = language;
         }
 
-        /// <summary> Gets or sets the language. </summary>
         public string Language { get; set; }
     }
 }

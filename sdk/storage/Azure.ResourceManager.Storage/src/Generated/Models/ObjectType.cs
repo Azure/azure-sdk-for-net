@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ObjectType"/>. </summary>
+        /// <summary> Determines if two <see cref="ObjectType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ObjectType(string value)
         {

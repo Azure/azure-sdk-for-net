@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-    public partial class RestorePointCollectionSourceProperties
+    public partial class RestorePointCollectionSourceProperties : WritableSubResource
     {
         /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
         public RestorePointCollectionSourceProperties()
@@ -16,17 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
+        /// <param name="id"> The id. </param>
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
-        /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
-        internal RestorePointCollectionSourceProperties(string location, string id)
+        internal RestorePointCollectionSourceProperties(string id, string location) : base(id)
         {
             Location = location;
-            Id = id;
         }
 
         /// <summary> Location of the source resource used to create this restore point collection. </summary>
         public string Location { get; }
-        /// <summary> Resource Id of the source resource used to create this restore point collection. </summary>
-        public string Id { get; set; }
     }
 }

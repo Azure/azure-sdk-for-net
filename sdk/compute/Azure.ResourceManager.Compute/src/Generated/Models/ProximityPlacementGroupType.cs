@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupType"/>. </summary>
+        /// <summary> Determines if two <see cref="ProximityPlacementGroupType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProximityPlacementGroupType(string value)
         {

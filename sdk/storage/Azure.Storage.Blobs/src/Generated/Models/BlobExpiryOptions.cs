@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BlobExpiryOptions"/>. </summary>
+        /// <summary> Determines if two <see cref="BlobExpiryOptions"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobExpiryOptions(string value)
         {

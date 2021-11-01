@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +17,6 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element)
         {
             Optional<string> type = default;
-            Optional<string> id = default;
             Optional<string> address = default;
             Optional<string> resourceId = default;
             Optional<IReadOnlyList<string>> nextHopIds = default;
@@ -24,16 +24,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<HopLink>> links = default;
             Optional<IReadOnlyList<HopLink>> previousLinks = default;
             Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("address"))
@@ -121,8 +117,13 @@ namespace Azure.ResourceManager.Network.Models
                     issues = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
+            return new ConnectivityHop(id, type.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
         }
     }
 }

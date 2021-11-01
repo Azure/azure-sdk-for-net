@@ -31,7 +31,6 @@ namespace Azure.AI.TextAnalytics.Internal
             Results = results;
         }
 
-        /// <summary> Gets the results. </summary>
         public CustomEntitiesResult Results { get; }
     }
 }

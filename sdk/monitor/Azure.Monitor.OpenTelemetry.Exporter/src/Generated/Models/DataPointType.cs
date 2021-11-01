@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DataPointType"/>. </summary>
+        /// <summary> Determines if two <see cref="DataPointType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataPointType(string value)
         {

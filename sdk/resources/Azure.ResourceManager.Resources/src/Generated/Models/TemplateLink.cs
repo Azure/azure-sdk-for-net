@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Entity representing the reference to the template. </summary>
-    public partial class TemplateLink
+    public partial class TemplateLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of TemplateLink. </summary>
         public TemplateLink()
@@ -16,15 +16,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of TemplateLink. </summary>
+        /// <param name="id"> The id. </param>
         /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
-        /// <param name="id"> The resource id of a Template Spec. Use either the id or uri property, but not both. </param>
         /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
-        internal TemplateLink(string uri, string id, string relativePath, string contentVersion, string queryString)
+        internal TemplateLink(string id, string uri, string relativePath, string contentVersion, string queryString) : base(id)
         {
             Uri = uri;
-            Id = id;
             RelativePath = relativePath;
             ContentVersion = contentVersion;
             QueryString = queryString;
@@ -32,8 +31,6 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The URI of the template to deploy. Use either the uri or id property, but not both. </summary>
         public string Uri { get; set; }
-        /// <summary> The resource id of a Template Spec. Use either the id or uri property, but not both. </summary>
-        public string Id { get; set; }
         /// <summary> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </summary>
         public string RelativePath { get; set; }
         /// <summary> If included, must match the ContentVersion in the template. </summary>

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault");
-                JsonSerializer.Serialize(writer, SourceVault);
+                writer.WriteObjectValue(SourceVault);
             }
             if (Optional.IsDefined(SecretUrl))
             {
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceVaultAndSecretReference DeserializeCloudServiceVaultAndSecretReference(JsonElement element)
         {
-            Optional<WritableSubResource> sourceVault = default;
+            Optional<SubResource> sourceVault = default;
             Optional<string> secretUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    sourceVault = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretUrl"))
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceVaultAndSecretReference(sourceVault, secretUrl.Value);
+            return new CloudServiceVaultAndSecretReference(sourceVault.Value, secretUrl.Value);
         }
     }
 }

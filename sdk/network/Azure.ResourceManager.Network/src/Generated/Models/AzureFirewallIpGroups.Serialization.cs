@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,22 +15,22 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureFirewallIpGroups DeserializeAzureFirewallIpGroups(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> changeNumber = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("changeNumber"))
                 {
                     changeNumber = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AzureFirewallIpGroups(id.Value, changeNumber.Value);
+            return new AzureFirewallIpGroups(id, changeNumber.Value);
         }
     }
 }

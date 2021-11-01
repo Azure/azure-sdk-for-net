@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocationType"/>. </summary>
+        /// <summary> Determines if two <see cref="ExtendedLocationType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExtendedLocationType(string value)
         {

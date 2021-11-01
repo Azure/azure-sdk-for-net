@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
+        /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {

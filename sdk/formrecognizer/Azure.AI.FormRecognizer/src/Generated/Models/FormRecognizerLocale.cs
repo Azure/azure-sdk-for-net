@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="FormRecognizerLocale"/>. </summary>
+        /// <summary> Determines if two <see cref="FormRecognizerLocale"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FormRecognizerLocale(string value)
         {

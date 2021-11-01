@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -22,11 +23,8 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateDnsZoneConfigs))
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<PrivateDnsZoneConfig>> privateDnsZoneConfigs = default;
             foreach (var property in element.EnumerateObject())
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateDnsZoneGroupData(id.Value, name.Value, etag.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateDnsZoneConfigs));
+            return new PrivateDnsZoneGroupData(id, name.Value, etag.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateDnsZoneConfigs));
         }
     }
 }

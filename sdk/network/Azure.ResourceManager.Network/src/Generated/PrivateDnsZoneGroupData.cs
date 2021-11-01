@@ -8,11 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PrivateDnsZoneGroup data model. </summary>
-    public partial class PrivateDnsZoneGroupData : SubResource
+    public partial class PrivateDnsZoneGroupData : WritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
         public PrivateDnsZoneGroupData()
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>

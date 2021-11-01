@@ -33,11 +33,8 @@ namespace Azure.AI.TextAnalytics.Models
             Status = status;
         }
 
-        /// <summary> Gets the last update date time. </summary>
         public DateTimeOffset LastUpdateDateTime { get; }
-        /// <summary> Gets the task name. </summary>
         public string TaskName { get; }
-        /// <summary> Gets the status. </summary>
         public TextAnalyticsOperationStatus Status { get; }
     }
 }

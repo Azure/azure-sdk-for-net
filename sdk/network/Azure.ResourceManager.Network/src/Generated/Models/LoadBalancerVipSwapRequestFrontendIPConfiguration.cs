@@ -10,16 +10,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VIP swap request&apos;s frontend IP configuration object. </summary>
-    public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration
+    public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of LoadBalancerVipSwapRequestFrontendIPConfiguration. </summary>
         public LoadBalancerVipSwapRequestFrontendIPConfiguration()
         {
         }
 
-        /// <summary> The ID of frontend IP configuration resource. </summary>
-        public string Id { get; set; }
         /// <summary> A reference to public IP address resource. </summary>
-        public WritableSubResource PublicIPAddress { get; set; }
+        public SubResource PublicIPAddress { get; set; }
     }
 }

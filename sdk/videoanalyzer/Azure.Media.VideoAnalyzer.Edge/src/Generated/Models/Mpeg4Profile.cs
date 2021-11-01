@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Mpeg4Profile"/>. </summary>
+        /// <summary> Determines if two <see cref="Mpeg4Profile"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Mpeg4Profile(string value)
         {

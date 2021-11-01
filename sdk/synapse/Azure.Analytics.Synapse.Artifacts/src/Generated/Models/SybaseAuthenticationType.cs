@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SybaseAuthenticationType"/>. </summary>
+        /// <summary> Determines if two <see cref="SybaseAuthenticationType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SybaseAuthenticationType(string value)
         {

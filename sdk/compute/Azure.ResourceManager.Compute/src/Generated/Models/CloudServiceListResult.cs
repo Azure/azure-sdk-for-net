@@ -37,9 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
         public IReadOnlyList<CloudServiceData> Value { get; }
-        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

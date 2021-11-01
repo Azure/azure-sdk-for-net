@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="MediaType"/>. </summary>
+        /// <summary> Determines if two <see cref="MediaType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MediaType(string value)
         {

@@ -30,9 +30,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Statements = statements;
         }
 
-        /// <summary> Gets the total. </summary>
         public int Total { get; }
-        /// <summary> Gets the statements. </summary>
         public IReadOnlyList<SparkStatement> Statements { get; }
     }
 }

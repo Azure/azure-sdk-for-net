@@ -15,7 +15,7 @@ namespace Azure.Quantum.Jobs.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DimensionScope"/>. </summary>
+        /// <summary> Determines if two <see cref="DimensionScope"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DimensionScope(string value)
         {

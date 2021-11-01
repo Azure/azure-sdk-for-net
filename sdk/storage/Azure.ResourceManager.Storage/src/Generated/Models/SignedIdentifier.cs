@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The SignedIdentifier. </summary>
-    public partial class SignedIdentifier
+    public partial class SignedIdentifier : WritableSubResource
     {
         /// <summary> Initializes a new instance of SignedIdentifier. </summary>
         public SignedIdentifier()
@@ -16,16 +18,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of SignedIdentifier. </summary>
-        /// <param name="id"> An unique identifier of the stored access policy. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="accessPolicy"> Access policy. </param>
-        internal SignedIdentifier(string id, AccessPolicy accessPolicy)
+        internal SignedIdentifier(string id, AccessPolicy accessPolicy) : base(id)
         {
-            Id = id;
             AccessPolicy = accessPolicy;
         }
 
-        /// <summary> An unique identifier of the stored access policy. </summary>
-        public string Id { get; set; }
         /// <summary> Access policy. </summary>
         public AccessPolicy AccessPolicy { get; set; }
     }

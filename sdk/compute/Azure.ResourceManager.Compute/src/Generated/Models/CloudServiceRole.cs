@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Location { get; }
         /// <summary> Describes the cloud service role sku. </summary>
         public CloudServiceRoleSku Sku { get; }
-        /// <summary> Gets the properties. </summary>
         public CloudServiceRoleProperties Properties { get; }
     }
 }

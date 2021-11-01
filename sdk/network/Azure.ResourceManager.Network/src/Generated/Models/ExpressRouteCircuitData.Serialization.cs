@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
@@ -44,6 +39,8 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowClassicOperations))
@@ -99,7 +96,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRoutePort))
             {
                 writer.WritePropertyName("expressRoutePort");
-                JsonSerializer.Serialize(writer, ExpressRoutePort);
+                writer.WriteObjectValue(ExpressRoutePort);
             }
             if (Optional.IsDefined(BandwidthInGbps))
             {
@@ -124,11 +121,11 @@ namespace Azure.ResourceManager.Network
         {
             Optional<ExpressRouteCircuitSku> sku = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
             Optional<bool> allowClassicOperations = default;
             Optional<string> circuitProvisioningState = default;
             Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
@@ -137,7 +134,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> serviceKey = default;
             Optional<string> serviceProviderNotes = default;
             Optional<ExpressRouteCircuitServiceProviderProperties> serviceProviderProperties = default;
-            Optional<WritableSubResource> expressRoutePort = default;
+            Optional<SubResource> expressRoutePort = default;
             Optional<float> bandwidthInGbps = default;
             Optional<int> stag = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -158,11 +155,6 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -193,6 +185,11 @@ namespace Azure.ResourceManager.Network
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -286,7 +283,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRoutePort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            expressRoutePort = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bandwidthInGbps"))
@@ -338,7 +335,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, etag.Value, Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, Optional.ToNullable(globalReachEnabled));
+            return new ExpressRouteCircuitData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, etag.Value, Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, Optional.ToNullable(globalReachEnabled));
         }
     }
 }

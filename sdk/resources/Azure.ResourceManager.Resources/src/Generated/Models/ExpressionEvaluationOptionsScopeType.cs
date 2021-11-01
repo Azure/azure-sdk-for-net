@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptionsScopeType"/>. </summary>
+        /// <summary> Determines if two <see cref="ExpressionEvaluationOptionsScopeType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressionEvaluationOptionsScopeType(string value)
         {

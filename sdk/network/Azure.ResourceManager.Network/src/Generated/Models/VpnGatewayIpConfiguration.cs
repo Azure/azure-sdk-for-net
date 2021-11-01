@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
-    public partial class VpnGatewayIpConfiguration
+    public partial class VpnGatewayIpConfiguration : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VpnGatewayIpConfiguration. </summary>
         internal VpnGatewayIpConfiguration()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VpnGatewayIpConfiguration. </summary>
-        /// <param name="id"> The identifier of the IP configuration for a VPN Gateway. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="publicIpAddress"> The public IP address of this IP configuration. </param>
         /// <param name="privateIpAddress"> The private IP address of this IP configuration. </param>
-        internal VpnGatewayIpConfiguration(string id, string publicIpAddress, string privateIpAddress)
+        internal VpnGatewayIpConfiguration(string id, string publicIpAddress, string privateIpAddress) : base(id)
         {
-            Id = id;
             PublicIpAddress = publicIpAddress;
             PrivateIpAddress = privateIpAddress;
         }
 
-        /// <summary> The identifier of the IP configuration for a VPN Gateway. </summary>
-        public string Id { get; }
         /// <summary> The public IP address of this IP configuration. </summary>
         public string PublicIpAddress { get; }
         /// <summary> The private IP address of this IP configuration. </summary>

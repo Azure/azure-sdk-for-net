@@ -29,9 +29,7 @@ namespace Azure.Storage.Blobs.Models
             ClearRange = clearRange;
         }
 
-        /// <summary> Gets the page range. </summary>
         public IReadOnlyList<PageRange> PageRange { get; }
-        /// <summary> Gets the clear range. </summary>
         public IReadOnlyList<ClearRange> ClearRange { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ShareAccessTier"/>. </summary>
+        /// <summary> Determines if two <see cref="ShareAccessTier"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareAccessTier(string value)
         {

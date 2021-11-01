@@ -7,8 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -22,17 +22,14 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork");
-                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
+                writer.WriteObjectValue(RemoteVirtualNetwork);
             }
             if (Optional.IsDefined(AllowHubToRemoteVnetTransit))
             {
@@ -62,8 +59,8 @@ namespace Azure.ResourceManager.Network
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<WritableSubResource> remoteVirtualNetwork = default;
+            ResourceIdentifier id = default;
+            Optional<SubResource> remoteVirtualNetwork = default;
             Optional<bool> allowHubToRemoteVnetTransit = default;
             Optional<bool> allowRemoteVnetToUseHubVnetGateways = default;
             Optional<bool> enableInternetSecurity = default;
@@ -102,7 +99,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            remoteVirtualNetwork = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowHubToRemoteVnetTransit"))
@@ -159,7 +156,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubVirtualNetworkConnectionData(id.Value, name.Value, etag.Value, remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new HubVirtualNetworkConnectionData(id, name.Value, etag.Value, remoteVirtualNetwork.Value, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

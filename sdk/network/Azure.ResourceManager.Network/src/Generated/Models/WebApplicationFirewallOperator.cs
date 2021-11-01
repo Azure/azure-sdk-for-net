@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallOperator"/>. </summary>
+        /// <summary> Determines if two <see cref="WebApplicationFirewallOperator"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallOperator(string value)
         {

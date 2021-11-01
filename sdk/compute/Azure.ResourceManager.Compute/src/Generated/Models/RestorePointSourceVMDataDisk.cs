@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, ApiEntityReference diskRestorePoint)
         {
             Lun = lun;
             Name = name;
@@ -45,6 +43,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the managed disk details. </summary>
         public ManagedDiskParameters ManagedDisk { get; }
         /// <summary> Gets the disk restore point Id. </summary>
-        public WritableSubResource DiskRestorePoint { get; }
+        public ApiEntityReference DiskRestorePoint { get; }
     }
 }

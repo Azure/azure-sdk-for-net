@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorCode"/>. </summary>
+        /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InnerErrorCode(string value)
         {

@@ -15,7 +15,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberAssignmentType"/>. </summary>
+        /// <summary> Determines if two <see cref="PhoneNumberAssignmentType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberAssignmentType(string value)
         {

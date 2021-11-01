@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="PublicIPPrefixSkuTier"/>. </summary>
+        /// <summary> Determines if two <see cref="PublicIPPrefixSkuTier"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicIPPrefixSkuTier(string value)
         {

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,11 +22,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
@@ -42,27 +39,27 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                writer.WriteObjectValue(BackendAddressPool);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings");
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                writer.WriteObjectValue(BackendHttpSettings);
             }
             if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration");
-                JsonSerializer.Serialize(writer, RedirectConfiguration);
+                writer.WriteObjectValue(RedirectConfiguration);
             }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet");
-                JsonSerializer.Serialize(writer, RewriteRuleSet);
+                writer.WriteObjectValue(RewriteRuleSet);
             }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy");
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                writer.WriteObjectValue(FirewallPolicy);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -73,14 +70,14 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<IList<string>> paths = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<WritableSubResource> backendHttpSettings = default;
-            Optional<WritableSubResource> redirectConfiguration = default;
-            Optional<WritableSubResource> rewriteRuleSet = default;
+            Optional<SubResource> backendAddressPool = default;
+            Optional<SubResource> backendHttpSettings = default;
+            Optional<SubResource> redirectConfiguration = default;
+            Optional<SubResource> rewriteRuleSet = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> firewallPolicy = default;
+            Optional<SubResource> firewallPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -134,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            backendAddressPool = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"))
@@ -144,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            backendHttpSettings = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"))
@@ -154,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            redirectConfiguration = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"))
@@ -164,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            rewriteRuleSet = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -184,14 +181,14 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            firewallPolicy = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, Optional.ToNullable(provisioningState), firewallPolicy);
+            return new ApplicationGatewayPathRule(id, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool.Value, backendHttpSettings.Value, redirectConfiguration.Value, rewriteRuleSet.Value, Optional.ToNullable(provisioningState), firewallPolicy.Value);
         }
     }
 }

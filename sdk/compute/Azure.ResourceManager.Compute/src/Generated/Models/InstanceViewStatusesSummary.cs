@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Compute.Models
             StatusesSummary = statusesSummary;
         }
 
-        /// <summary> Gets the statuses summary. </summary>
         public IReadOnlyList<StatusCodeCount> StatusesSummary { get; }
     }
 }

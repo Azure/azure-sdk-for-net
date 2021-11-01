@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress");
-                JsonSerializer.Serialize(writer, PublicIPAddress);
+                writer.WriteObjectValue(PublicIPAddress);
             }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                JsonSerializer.Serialize(writer, Subnet);
+                writer.WriteObjectValue(Subnet);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -36,8 +35,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LoadBalancerFrontendIPConfigurationProperties DeserializeLoadBalancerFrontendIPConfigurationProperties(JsonElement element)
         {
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<WritableSubResource> subnet = default;
+            Optional<SubResource> publicIPAddress = default;
+            Optional<SubResource> subnet = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    publicIPAddress = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    subnet = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"))
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LoadBalancerFrontendIPConfigurationProperties(publicIPAddress, subnet, privateIPAddress.Value);
+            return new LoadBalancerFrontendIPConfigurationProperties(publicIPAddress.Value, subnet.Value, privateIPAddress.Value);
         }
     }
 }

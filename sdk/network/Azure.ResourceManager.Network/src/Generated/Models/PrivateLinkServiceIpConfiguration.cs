@@ -6,11 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIpConfiguration : SubResource
+    public partial class PrivateLinkServiceIpConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceIpConfiguration. </summary>
         public PrivateLinkServiceIpConfiguration()
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceIpConfiguration. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of private link service ip configuration. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The resource type. </param>

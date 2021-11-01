@@ -28,11 +28,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Gets or sets the id. </summary>
         public string Id { get; set; }
-        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the type. </summary>
         public string Type { get; set; }
         /// <summary> Properties of sql script. </summary>
         public KqlScript Properties { get; set; }

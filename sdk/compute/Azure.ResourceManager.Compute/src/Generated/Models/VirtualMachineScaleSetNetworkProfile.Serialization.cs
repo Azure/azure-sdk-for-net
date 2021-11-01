@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe");
-                JsonSerializer.Serialize(writer, HealthProbe);
+                writer.WriteObjectValue(HealthProbe);
             }
             if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetNetworkProfile DeserializeVirtualMachineScaleSetNetworkProfile(JsonElement element)
         {
-            Optional<WritableSubResource> healthProbe = default;
+            Optional<ApiEntityReference> healthProbe = default;
             Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthProbe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    healthProbe = ApiEntityReference.DeserializeApiEntityReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfigurations"))
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion));
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe.Value, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion));
         }
     }
 }

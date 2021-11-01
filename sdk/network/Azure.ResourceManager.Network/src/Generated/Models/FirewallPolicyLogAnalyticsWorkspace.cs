@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Log Analytics Workspace for Firewall Policy Insights. </summary>
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsWorkspace. </summary>
         /// <param name="region"> Region to configure the Workspace. </param>
         /// <param name="workspaceId"> The workspace Id for Firewall Policy Insights. </param>
-        internal FirewallPolicyLogAnalyticsWorkspace(string region, WritableSubResource workspaceId)
+        internal FirewallPolicyLogAnalyticsWorkspace(string region, SubResource workspaceId)
         {
             Region = region;
             WorkspaceId = workspaceId;
@@ -29,6 +27,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Region to configure the Workspace. </summary>
         public string Region { get; set; }
         /// <summary> The workspace Id for Firewall Policy Insights. </summary>
-        public WritableSubResource WorkspaceId { get; set; }
+        public SubResource WorkspaceId { get; set; }
     }
 }

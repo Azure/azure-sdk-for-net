@@ -21,7 +21,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> dimension filter. </summary>
         public IList<DimensionKey> DimensionFilter { get; }
-        /// <summary> Gets or sets the severity filter. </summary>
         public SeverityFilterCondition SeverityFilter { get; set; }
     }
 }

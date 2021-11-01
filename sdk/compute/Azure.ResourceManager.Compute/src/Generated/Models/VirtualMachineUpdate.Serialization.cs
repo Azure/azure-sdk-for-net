@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet");
-                JsonSerializer.Serialize(writer, AvailabilitySet);
+                writer.WriteObjectValue(AvailabilitySet);
             }
             if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
+                writer.WriteObjectValue(VirtualMachineScaleSet);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                writer.WriteObjectValue(ProximityPlacementGroup);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host");
-                JsonSerializer.Serialize(writer, Host);
+                writer.WriteObjectValue(Host);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup");
-                JsonSerializer.Serialize(writer, HostGroup);
+                writer.WriteObjectValue(HostGroup);
             }
             if (Optional.IsDefined(LicenseType))
             {

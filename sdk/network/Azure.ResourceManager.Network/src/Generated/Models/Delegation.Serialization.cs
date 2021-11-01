@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,11 +27,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceName))
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> serviceName = default;
             Optional<IReadOnlyList<string>> actions = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Delegation(id.Value, name.Value, etag.Value, type.Value, serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new Delegation(id, name.Value, etag.Value, type.Value, serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
         }
     }
 }

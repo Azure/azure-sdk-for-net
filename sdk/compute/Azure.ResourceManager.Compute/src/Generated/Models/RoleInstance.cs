@@ -41,9 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Location { get; }
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> Gets the sku. </summary>
         public InstanceSku Sku { get; }
-        /// <summary> Gets the properties. </summary>
         public RoleInstanceProperties Properties { get; }
     }
 }

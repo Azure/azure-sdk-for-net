@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,11 +23,8 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -64,14 +61,14 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             Optional<string> location = default;
             Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
             Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
             Optional<IReadOnlyList<NetworkInterfaceIPConfiguration>> backendIPConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<WritableSubResource> outboundRule = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
+            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
+            Optional<SubResource> outboundRule = default;
+            Optional<IReadOnlyList<SubResource>> outboundRules = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -161,10 +158,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -176,7 +173,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            outboundRule = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            outboundRule = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outboundRules"))
@@ -186,10 +183,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             outboundRules = array;
                             continue;
@@ -208,7 +205,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BackendAddressPoolData(id.Value, name.Value, etag.Value, type.Value, location.Value, Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToNullable(provisioningState));
+            return new BackendAddressPoolData(id, name.Value, etag.Value, type.Value, location.Value, Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule.Value, Optional.ToList(outboundRules), Optional.ToNullable(provisioningState));
         }
     }
 }

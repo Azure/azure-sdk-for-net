@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup");
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                writer.WriteObjectValue(ProximityPlacementGroup);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

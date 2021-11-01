@@ -34,7 +34,6 @@ namespace Azure.Storage.Blobs.Models
             BlobTagSet = blobTagSet;
         }
 
-        /// <summary> Gets the blob tag set. </summary>
         public IList<BlobTag> BlobTagSet { get; }
     }
 }

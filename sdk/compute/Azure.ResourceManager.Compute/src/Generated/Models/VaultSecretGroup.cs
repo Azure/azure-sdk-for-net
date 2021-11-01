@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
-        internal VaultSecretGroup(WritableSubResource sourceVault, IList<VaultCertificate> vaultCertificates)
+        internal VaultSecretGroup(SubResource sourceVault, IList<VaultCertificate> vaultCertificates)
         {
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates;
         }
 
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        public SubResource SourceVault { get; set; }
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
     }

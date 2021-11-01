@@ -48,7 +48,6 @@ namespace Azure.AI.AnomalyDetector.Models
         public DetectionStatus Status { get; }
         /// <summary> Error message when creating or training model fails. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
         /// <summary> Request when creating the model. </summary>
         public DetectionRequest SetupInfo { get; }

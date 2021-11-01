@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault");
-                JsonSerializer.Serialize(writer, SourceVault);
+                writer.WriteObjectValue(SourceVault);
             }
             if (Optional.IsCollectionDefined(VaultCertificates))
             {
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceVaultSecretGroup DeserializeCloudServiceVaultSecretGroup(JsonElement element)
         {
-            Optional<WritableSubResource> sourceVault = default;
+            Optional<SubResource> sourceVault = default;
             Optional<IList<CloudServiceVaultCertificate>> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    sourceVault = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vaultCertificates"))
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceVaultSecretGroup(sourceVault, Optional.ToList(vaultCertificates));
+            return new CloudServiceVaultSecretGroup(sourceVault.Value, Optional.ToList(vaultCertificates));
         }
     }
 }

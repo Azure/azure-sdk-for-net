@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VerbosityLevel"/>. </summary>
+        /// <summary> Determines if two <see cref="VerbosityLevel"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VerbosityLevel(string value)
         {

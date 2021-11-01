@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="TwinAuthenticationType"/>. </summary>
+        /// <summary> Determines if two <see cref="TwinAuthenticationType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TwinAuthenticationType(string value)
         {

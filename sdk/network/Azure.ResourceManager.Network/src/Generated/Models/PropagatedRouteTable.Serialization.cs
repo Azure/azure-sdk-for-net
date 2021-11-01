@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Ids)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static PropagatedRouteTable DeserializePropagatedRouteTable(JsonElement element)
         {
             Optional<IList<string>> labels = default;
-            Optional<IList<WritableSubResource>> ids = default;
+            Optional<IList<SubResource>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labels"))
@@ -68,10 +67,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(SubResource.DeserializeSubResource(item));
                     }
                     ids = array;
                     continue;

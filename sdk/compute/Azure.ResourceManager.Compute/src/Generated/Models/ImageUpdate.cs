@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The source virtual machine from which Image is created. </summary>
-        public WritableSubResource SourceVirtualMachine { get; set; }
+        public SubResource SourceVirtualMachine { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public ImageStorageProfile StorageProfile { get; set; }
         /// <summary> The provisioning state. </summary>

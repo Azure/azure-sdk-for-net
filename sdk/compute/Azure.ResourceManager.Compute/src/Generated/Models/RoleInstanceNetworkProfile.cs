@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
         internal RoleInstanceNetworkProfile()
         {
-            NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
+            NetworkInterfaces = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the role instance. </param>
-        internal RoleInstanceNetworkProfile(IReadOnlyList<WritableSubResource> networkInterfaces)
+        internal RoleInstanceNetworkProfile(IReadOnlyList<SubResource> networkInterfaces)
         {
             NetworkInterfaces = networkInterfaces;
         }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the role instance. </summary>
-        public IReadOnlyList<WritableSubResource> NetworkInterfaces { get; }
+        public IReadOnlyList<SubResource> NetworkInterfaces { get; }
     }
 }

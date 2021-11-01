@@ -15,9 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
         }
 
-        /// <summary> Gets or sets the code. </summary>
         public string Code { get; set; }
-        /// <summary> Gets or sets the kind. </summary>
         public SparkStatementLanguageType? Kind { get; set; }
     }
 }

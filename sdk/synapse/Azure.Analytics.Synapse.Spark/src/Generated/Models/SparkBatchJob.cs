@@ -65,7 +65,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
             LogLines = logLines;
         }
 
-        /// <summary> Gets the livy info. </summary>
         public SparkBatchJobState LivyInfo { get; }
         /// <summary> The batch name. </summary>
         public string Name { get; }

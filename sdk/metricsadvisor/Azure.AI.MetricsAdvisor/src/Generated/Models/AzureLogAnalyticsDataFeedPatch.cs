@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.LogAnalytics;
         }
 
-        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureLogAnalyticsParameterPatch DataSourceParameter { get; set; }
     }
 }

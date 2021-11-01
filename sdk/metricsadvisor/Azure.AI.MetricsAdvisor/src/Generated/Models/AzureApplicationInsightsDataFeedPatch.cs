@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureApplicationInsights;
         }
 
-        /// <summary> Gets or sets the data source parameter. </summary>
         public AzureApplicationInsightsParameterPatch DataSourceParameter { get; set; }
     }
 }

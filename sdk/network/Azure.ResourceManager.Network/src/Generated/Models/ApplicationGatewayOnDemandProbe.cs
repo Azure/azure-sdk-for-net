@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of on demand test probe request. </summary>
@@ -30,8 +28,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Criterion for classifying a healthy probe response. </summary>
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> Reference to backend pool of application gateway to which probe request will be sent. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        public SubResource BackendAddressPool { get; set; }
         /// <summary> Reference to backend http setting of application gateway to be used for test probe. </summary>
-        public WritableSubResource BackendHttpSettings { get; set; }
+        public SubResource BackendHttpSettings { get; set; }
     }
 }

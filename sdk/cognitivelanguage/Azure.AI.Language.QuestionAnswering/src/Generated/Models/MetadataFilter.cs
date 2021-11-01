@@ -19,7 +19,6 @@ namespace Azure.AI.Language.QuestionAnswering
             Metadata = new ChangeTrackingList<MetadataRecord>();
         }
 
-        /// <summary> Gets the metadata. </summary>
         public IList<MetadataRecord> Metadata { get; }
         /// <summary> Operation used to join metadata filters. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkAdminState"/>. </summary>
+        /// <summary> Determines if two <see cref="ExpressRouteLinkAdminState"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteLinkAdminState(string value)
         {

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the DeploymentOperation data model. </summary>
-    public partial class DeploymentOperationData
+    public partial class DeploymentOperationData : SubResource
     {
         /// <summary> Initializes a new instance of DeploymentOperationData. </summary>
         internal DeploymentOperationData()
@@ -18,18 +18,15 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of DeploymentOperationData. </summary>
-        /// <param name="id"> Full deployment operation ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
-        internal DeploymentOperationData(string id, string operationId, DeploymentOperationProperties properties)
+        internal DeploymentOperationData(string id, string operationId, DeploymentOperationProperties properties) : base(id)
         {
-            Id = id;
             OperationId = operationId;
             Properties = properties;
         }
 
-        /// <summary> Full deployment operation ID. </summary>
-        public string Id { get; }
         /// <summary> Deployment operation ID. </summary>
         public string OperationId { get; }
         /// <summary> Deployment properties. </summary>

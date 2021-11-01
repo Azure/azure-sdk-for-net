@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCellKind"/>. </summary>
+        /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentTableCellKind(string value)
         {

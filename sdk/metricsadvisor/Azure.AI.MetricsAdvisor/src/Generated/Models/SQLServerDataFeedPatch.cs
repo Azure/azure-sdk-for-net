@@ -16,7 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.SqlServer;
         }
 
-        /// <summary> Gets or sets the data source parameter. </summary>
         public SQLSourceParameterPatch DataSourceParameter { get; set; }
     }
 }

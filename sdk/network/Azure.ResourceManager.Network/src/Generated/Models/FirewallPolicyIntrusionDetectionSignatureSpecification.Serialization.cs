@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,30 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode");
                 writer.WriteStringValue(Mode.Value.ToString());
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static FirewallPolicyIntrusionDetectionSignatureSpecification DeserializeFirewallPolicyIntrusionDetectionSignatureSpecification(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("mode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -49,8 +42,13 @@ namespace Azure.ResourceManager.Network.Models
                     mode = new FirewallPolicyIntrusionDetectionStateType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new FirewallPolicyIntrusionDetectionSignatureSpecification(id.Value, Optional.ToNullable(mode));
+            return new FirewallPolicyIntrusionDetectionSignatureSpecification(id, Optional.ToNullable(mode));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Storage.Queues.Models
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="QueueErrorCode"/>. </summary>
+        /// <summary> Determines if two <see cref="QueueErrorCode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueueErrorCode(string value)
         {

@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DebugSetting> debugSetting = default;
             Optional<OnErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
-            Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            Optional<IReadOnlyList<ResourceReference>> outputResources = default;
+            Optional<IReadOnlyList<ResourceReference>> validatedResources = default;
             Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ResourceReference> array = new List<ResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                        array.Add(ResourceReference.DeserializeResourceReference(item));
                     }
                     outputResources = array;
                     continue;
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ResourceReference> array = new List<ResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                        array.Add(ResourceReference.DeserializeResourceReference(item));
                     }
                     validatedResources = array;
                     continue;
