@@ -47,7 +47,7 @@ For local development, use the `local.settings.json` file to store the connectio
 ```json
 {
   "Values": {
-    "<connection_name>": "<connection string>"
+    "<connection_name>": "<connection-string>"
   }
 }
 ```
@@ -87,12 +87,9 @@ Please follow the [Azure SignalR trigger](https://docs.microsoft.com/azure/azure
 
 ## Supported scenarios
 - Negotiate for a SignalR client.
-- Broadcast messages to all SignalR clients connected to a SignalR Service hub.
-- Send messages to a single user, or all the users in a group.
-- Manage group users like add/remove a single user in a group.
-<!-- TODO: Add this point in next PR
-Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple SignalR service endpoint support](./docs/sharding.md).
--->
+- Manage group like add/remove a single user/connection in a group.
+- Send messages to a single user/connection, to a group, to all users/connections.
+- Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple Azure SignalR Service Instances Support in Azure Functions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/docs/sharding.md).
 
 ## Examples
 
