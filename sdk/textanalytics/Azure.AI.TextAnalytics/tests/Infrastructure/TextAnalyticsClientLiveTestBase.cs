@@ -33,6 +33,11 @@ namespace Azure.AI.TextAnalytics.Tests
             var endpoint = new Uri(TestEnvironment.Endpoint);
             options ??= new TextAnalyticsClientOptions(_serviceVersion);
 
+            // While we use a persistent resource for live tests, we need to increase our retries.
+            // We should remove when having dynamic resource again
+            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
+            options.Retry.MaxRetries = 6;
+
             if (useTokenCredential)
             {
                 return InstrumentClient(new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
