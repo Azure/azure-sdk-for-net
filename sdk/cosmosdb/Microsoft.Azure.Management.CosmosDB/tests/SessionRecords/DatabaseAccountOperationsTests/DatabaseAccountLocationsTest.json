@@ -1,0 +1,342 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/resourceGroups/CosmosDBDotNetSDKTestsRG2606/providers/Microsoft.DocumentDB/databaseAccounts/accountname2450/regenerateKey?api-version=2021-10-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQzMWVjYWUtNDUyMi00NjhlLThiMjctNWJlZmQwNTFkZDUzL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzI2MDYvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvYWNjb3VudG5hbWUyNDUwL3JlZ2VuZXJhdGVLZXk/YXBpLXZlcnNpb249MjAyMS0xMC0xNQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"keyKind\": \"primary\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "870566cb-d318-46fd-9729-446b6e0c66bc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/resourceGroups/CosmosDBDotNetSDKTestsRG2606/providers/Microsoft.DocumentDB/databaseAccounts/accountname2450/regenerateKey/operationResults/b0e3a779-1607-4e47-a7ee-0a309da01770?api-version=2021-10-15"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/centraluseuap/operationsStatus/b0e3a779-1607-4e47-a7ee-0a309da01770?api-version=2021-10-15"
+        ],
+        "x-ms-request-id": [
+          "b0e3a779-1607-4e47-a7ee-0a309da01770"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-gatewayversion": [
+          "version=2.14.0"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "060234bc-919d-419d-a3d0-3f0736903ec9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211026T094208Z:060234bc-919d-419d-a3d0-3f0736903ec9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 26 Oct 2021 09:42:08 GMT"
+        ],
+        "Content-Length": [
+          "21"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Enqueued\"\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/resourceGroups/CosmosDBDotNetSDKTestsRG2606/providers/Microsoft.DocumentDB/databaseAccounts/accountname2450?api-version=2021-10-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQzMWVjYWUtNDUyMi00NjhlLThiMjctNWJlZmQwNTFkZDUzL3Jlc291cmNlR3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzI2MDYvcHJvdmlkZXJzL01pY3Jvc29mdC5Eb2N1bWVudERCL2RhdGFiYXNlQWNjb3VudHMvYWNjb3VudG5hbWUyNDUwP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1d6a5b03-c527-40e9-98c1-7acc9ad0e3e0"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-gatewayversion": [
+          "version=2.14.0"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "0785ae89-3ba3-4683-bf2f-0ac491104708"
+        ],
+        "x-ms-correlation-request-id": [
+          "0785ae89-3ba3-4683-bf2f-0ac491104708"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211026T094209Z:0785ae89-3ba3-4683-bf2f-0ac491104708"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 26 Oct 2021 09:42:09 GMT"
+        ],
+        "Content-Length": [
+          "282"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"PreconditionFailed\",\r\n  \"message\": \"There is already an operation in progress which requires exclusive lock on this service accountname2450. Please retry the operation after sometime.\\r\\nActivityId: 1d6a5b03-c527-40e9-98c1-7acc9ad0e3e0, Microsoft.Azure.Documents.Common/2.14.0\"\r\n}",
+      "StatusCode": 412
+    },
+    {
+      "RequestUri": "/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/resourcegroups/CosmosDBDotNetSDKTestsRG6627?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQzMWVjYWUtNDUyMi00NjhlLThiMjctNWJlZmQwNTFkZDUzL3Jlc291cmNlZ3JvdXBzL0Nvc21vc0RCRG90TmV0U0RLVGVzdHNSRzY2Mjc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"central us euap\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "672e344e-9d26-40aa-b618-f3b13726c370"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "37"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "ac5d9ada-8c23-47dd-9b67-8a9804d4ea71"
+        ],
+        "x-ms-correlation-request-id": [
+          "ac5d9ada-8c23-47dd-9b67-8a9804d4ea71"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211026T094210Z:ac5d9ada-8c23-47dd-9b67-8a9804d4ea71"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 26 Oct 2021 09:42:10 GMT"
+        ],
+        "Content-Length": [
+          "216"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/resourceGroups/CosmosDBDotNetSDKTestsRG6627\",\r\n  \"name\": \"CosmosDBDotNetSDKTestsRG6627\",\r\n  \"location\": \"centraluseuap\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations?api-version=2021-10-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQzMWVjYWUtNDUyMi00NjhlLThiMjctNWJlZmQwNTFkZDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnM/YXBpLXZlcnNpb249MjAyMS0xMC0xNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "98d5826c-66e4-4982-a944-a81010c6d1dd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-gatewayversion": [
+          "version=2.14.0"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "978bd67d-d977-4f3b-b352-29c5ff060adf"
+        ],
+        "x-ms-correlation-request-id": [
+          "978bd67d-d977-4f3b-b352-29c5ff060adf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211026T094227Z:978bd67d-d977-4f3b-b352-29c5ff060adf"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 26 Oct 2021 09:42:27 GMT"
+        ],
+        "Content-Length": [
+          "14213"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/brazilsoutheast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Brazil Southeast\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/centralus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Central US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/australiasoutheast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Australia Southeast\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/canadacentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Canada Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/centralindia/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Central India\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/southeastasia/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Southeast Asia\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": true,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/switzerlandnorth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Switzerland North\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/uaenorth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"UAE North\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/eastasia/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"East Asia\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/ukwest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"UK West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/switzerlandwest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Switzerland West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westeurope/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West Europe\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/eastus2/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"East US 2\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/eastus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"East US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westus3/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West US 3\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/australiaeast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Australia East\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/brazilsouth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Brazil South\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": true,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/germanywestcentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Germany West Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/francecentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"France Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/japaneast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Japan East\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/japanwest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Japan West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/koreasouth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Korea South\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/germanynorth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Germany North\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/francesouth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"France South\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/australiacentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Australia Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/southcentralus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"South Central US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/southafricanorth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"South Africa North\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/koreacentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Korea Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/southindia/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"South India\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/norwayeast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Norway East\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/canadaeast/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Canada East\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/northcentralus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"North Central US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/norwaywest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Norway West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/northeurope/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"North Europe\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/southafricawest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"South Africa West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/australiacentral2/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Australia Central 2\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/uaecentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"UAE Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/uksouth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"UK South\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westcentralus/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West Central US\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westindia/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West India\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/westus2/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"West US 2\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Zone\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/jioindiawest/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Jio India West\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/jioindiacentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Jio India Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/swedencentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Sweden Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": true,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\",\r\n          \"Zone\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/swedensouth/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Sweden South\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": false,\r\n        \"backupStorageRedundancies\": [\r\n          \"Geo\",\r\n          \"Local\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/qatarcentral/\",\r\n      \"type\": \"Microsoft.DocumentDB/locations\",\r\n      \"name\": \"Qatar Central\",\r\n      \"properties\": {\r\n        \"supportsAvailabilityZone\": false,\r\n        \"isResidencyRestricted\": true,\r\n        \"backupStorageRedundancies\": [\r\n          \"Local\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/Qatar%20Central?api-version=2021-10-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQzMWVjYWUtNDUyMi00NjhlLThiMjctNWJlZmQwNTFkZDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRG9jdW1lbnREQi9sb2NhdGlvbnMvUWF0YXIlMjBDZW50cmFsP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cdc4af1b-6210-417c-b023-6ac11464fbd5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.CosmosDB.CosmosDBManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-gatewayversion": [
+          "version=2.14.0"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "72af537d-57fc-4a0d-8bf8-6d9697356a62"
+        ],
+        "x-ms-correlation-request-id": [
+          "72af537d-57fc-4a0d-8bf8-6d9697356a62"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211026T094227Z:72af537d-57fc-4a0d-8bf8-6d9697356a62"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 26 Oct 2021 09:42:27 GMT"
+        ],
+        "Content-Length": [
+          "293"
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"subscriptionId/dd31ecae-4522-468e-8b27-5befd051dd53/providers/Microsoft.DocumentDB/locations/qatarcentral/\",\r\n  \"type\": \"Microsoft.DocumentDB/locations\",\r\n  \"name\": \"Qatar Central\",\r\n  \"properties\": {\r\n    \"supportsAvailabilityZone\": false,\r\n    \"isResidencyRestricted\": true,\r\n    \"backupStorageRedundancies\": [\r\n      \"Local\"\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "Init": [
+      "CosmosDBDotNetSDKTestsRG6627"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "dd31ecae-4522-468e-8b27-5befd051dd53"
+  }
+}

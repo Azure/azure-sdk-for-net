@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Class to contain criteria for item level restore
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ItemLevelRestoreCriteria")]
     public partial class ItemLevelRestoreCriteria
     {
         /// <summary>

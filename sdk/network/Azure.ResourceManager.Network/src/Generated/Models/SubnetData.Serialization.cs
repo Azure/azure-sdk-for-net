@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -28,8 +28,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressPrefix))
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway");
-                writer.WriteObjectValue(NatGateway);
+                JsonSerializer.Serialize(writer, NatGateway);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IpAllocations)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -131,18 +134,18 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
+            Optional<string> id = default;
             Optional<string> addressPrefix = default;
             Optional<IList<string>> addressPrefixes = default;
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<RouteTableData> routeTable = default;
-            Optional<SubResource> natGateway = default;
+            Optional<WritableSubResource> natGateway = default;
             Optional<IList<ServiceEndpointPropertiesFormat>> serviceEndpoints = default;
             Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
             Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
             Optional<IReadOnlyList<IPConfiguration>> ipConfigurations = default;
             Optional<IReadOnlyList<IPConfigurationProfile>> ipConfigurationProfiles = default;
-            Optional<IList<SubResource>> ipAllocations = default;
+            Optional<IList<WritableSubResource>> ipAllocations = default;
             Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
             Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
             Optional<IList<Delegation>> delegations = default;
@@ -229,7 +232,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            natGateway = SubResource.DeserializeSubResource(property0.Value);
+                            natGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("serviceEndpoints"))
@@ -314,10 +317,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             ipAllocations = array;
                             continue;
@@ -421,7 +424,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new SubnetData(id, name.Value, etag.Value, type.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway.Value, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIpConfigurations));
+            return new SubnetData(id.Value, name.Value, etag.Value, type.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIpConfigurations));
         }
     }
 }

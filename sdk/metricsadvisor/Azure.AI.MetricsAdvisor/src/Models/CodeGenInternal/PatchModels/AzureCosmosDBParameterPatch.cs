@@ -18,9 +18,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WriteNullStringValue("sqlQuery", SqlQuery);
-            writer.WriteNullStringValue("database", Database);
-            writer.WriteNullStringValue("collectionId", CollectionId);
+            writer.WriteNullObjectValue("sqlQuery", SqlQuery);
+            writer.WriteNullObjectValue("database", Database);
+            writer.WriteNullObjectValue("collectionId", CollectionId);
             writer.WriteEndObject();
         }
     }

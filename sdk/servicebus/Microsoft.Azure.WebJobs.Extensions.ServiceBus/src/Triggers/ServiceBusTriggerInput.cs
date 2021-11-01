@@ -20,9 +20,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public ServiceBusMessageActions MessageActions { get; set; }
 
+        public ServiceBusClient Client { get; set; }
+
         public ServiceBusReceivedMessage[] Messages { get; set; }
 
-        public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message)
+        public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message, ServiceBusMessageActions actions, ServiceBusClient client)
         {
             return new ServiceBusTriggerInput
             {
@@ -30,16 +32,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 {
                       message
                 },
-                _isSingleDispatch = true
+                _isSingleDispatch = true,
+                MessageActions = actions,
+                Client = client
             };
         }
 
-        public static ServiceBusTriggerInput CreateBatch(ServiceBusReceivedMessage[] messages)
+        public static ServiceBusTriggerInput CreateBatch(ServiceBusReceivedMessage[] messages, ServiceBusMessageActions actions, ServiceBusClient client)
         {
             return new ServiceBusTriggerInput
             {
                 Messages = messages,
-                _isSingleDispatch = false
+                _isSingleDispatch = false,
+                MessageActions = actions,
+                Client = client
             };
         }
 

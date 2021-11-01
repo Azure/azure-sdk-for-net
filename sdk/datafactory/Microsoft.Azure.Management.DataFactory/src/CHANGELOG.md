@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.27.0
+###  Feature Additions
+- Supported Dataflow flowlets in ADF
+
 ## Version 4.26.0
 ###  Feature Additions
 - Supported Power Query model changes for multiple queries

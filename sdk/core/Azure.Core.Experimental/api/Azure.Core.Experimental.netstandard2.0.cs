@@ -137,6 +137,12 @@ namespace Azure.Core
         public long WriteTo(System.IO.Stream stream) { throw null; }
         public System.Threading.Tasks.Task<long> WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public partial class ResponsePropertiesPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        public ResponsePropertiesPolicy(Azure.Core.ClientOptions options) { }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+    }
 }
 namespace Azure.Core.Pipeline
 {
@@ -144,5 +150,13 @@ namespace Azure.Core.Pipeline
     {
         public static Azure.RequestFailedException CreateRequestFailedException(this Azure.Response response) { throw null; }
         public static bool IsError(this Azure.Response response) { throw null; }
+    }
+}
+namespace Azure.Messaging
+{
+    public partial interface IMessageWithContentType
+    {
+        string ContentType { get; set; }
+        System.BinaryData Data { get; set; }
     }
 }

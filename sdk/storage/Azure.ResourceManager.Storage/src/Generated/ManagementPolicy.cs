@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Storage
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagementPolicy(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ManagementPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -83,6 +85,9 @@ namespace Azure.ResourceManager.Storage
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,6 +181,55 @@ namespace Azure.ResourceManager.Storage
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<ManagementPolicy>> CreateOrUpdateAsync(ManagementPolicyData properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets the managementpolicy to the specified storage account. </summary>
+        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<ManagementPolicy> CreateOrUpdate(ManagementPolicyData properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ManagementPolicy.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
+                return Response.FromValue(new ManagementPolicy(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

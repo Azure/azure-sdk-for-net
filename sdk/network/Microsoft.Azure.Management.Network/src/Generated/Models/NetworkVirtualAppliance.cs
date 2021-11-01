@@ -187,16 +187,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VirtualApplianceAsn != null)
+            if (VirtualApplianceAsn > 4294967295)
             {
-                if (VirtualApplianceAsn > 4294967295)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualApplianceAsn", 4294967295);
-                }
-                if (VirtualApplianceAsn < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualApplianceAsn", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualApplianceAsn", 4294967295);
+            }
+            if (VirtualApplianceAsn < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualApplianceAsn", 0);
             }
         }
     }

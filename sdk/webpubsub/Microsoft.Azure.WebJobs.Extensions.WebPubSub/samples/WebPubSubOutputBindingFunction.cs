@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
+using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Samples
 {
@@ -15,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Samples
         [FunctionName("WebPubSubOutputBindingFunction")]
         public static async Task RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-            [WebPubSub(Hub = "hub")] IAsyncCollector<WebPubSubOperation> operation)
+            [WebPubSub(Hub = "hub", Connection = "<connection-string>")] IAsyncCollector<WebPubSubOperation> operation)
         {
             await operation.AddAsync(new SendToAll
             {
