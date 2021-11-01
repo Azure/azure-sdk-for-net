@@ -1,6 +1,6 @@
 param (
     [Parameter()]
-    [string] $TemplateParameters
+    [string] $TemplateParametersPath
 )
 
 $secrets = @{}
@@ -16,7 +16,7 @@ Get-ChildItem -Path $secretsDir | ForEach-Object {
     }
 }
 
-$templateParams = Get-Content $TemplateParameters | ConvertFrom-json -AsHashTable
+$templateParams = Get-Content $TemplateParametersPath | ConvertFrom-json -AsHashTable
 mkdir /azure
 Copy-Item "/common/scripts/stress-testing/test-resources-post.ps1" -Destination "/azure/"
 Copy-Item "/mnt/testresources/*" -Destination "/azure/"
