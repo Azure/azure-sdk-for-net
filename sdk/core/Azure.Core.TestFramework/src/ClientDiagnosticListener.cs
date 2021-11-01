@@ -191,7 +191,7 @@ namespace Azure.Core.Tests
                         return producedDiagnosticScope;
                     }
                 }
-                throw new InvalidOperationException($"Event '{name}' was not started.Found scope names:\n{string.Join("\n", foundScopeNames)}\n");
+                throw new InvalidOperationException($"Event '{name}' was not started. Found scope names:\n{string.Join("\n", foundScopeNames)}\n");
             }
         }
 
