@@ -36,7 +36,9 @@ namespace Azure.Communication
     }
     public partial class CommunicationTokenRefreshOptions
     {
+        public const int DefaultExpiringOffsetMinutes = 5;
         public CommunicationTokenRefreshOptions(bool refreshProactively, System.Func<System.Threading.CancellationToken, string> tokenRefresher) { }
+        public CommunicationTokenRefreshOptions(bool refreshProactively, System.TimeSpan refreshOffsetTime, System.Func<System.Threading.CancellationToken, string> tokenRefresher) { }
         public System.Func<System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<string>> AsyncTokenRefresher { get { throw null; } set { } }
         public string InitialToken { get { throw null; } set { } }
     }
