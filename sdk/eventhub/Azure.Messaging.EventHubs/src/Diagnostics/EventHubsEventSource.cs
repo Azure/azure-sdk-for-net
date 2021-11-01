@@ -1885,7 +1885,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1931,7 +1931,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1953,7 +1953,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -1999,7 +1999,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the send
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the send
         ///   success handler.
         /// </summary>
         ///
@@ -2154,7 +2154,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the background
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
         ///   publishing coordination task.
         /// </summary>
         ///
@@ -2196,7 +2196,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has is invoking the background
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is invoking the background
         ///   publishing coordination task.
         /// </summary>
         ///
@@ -2258,6 +2258,196 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(110, identifier ?? string.Empty, eventHubName ?? string.Empty, totalActiveTasks, operationId ?? string.Empty, durationSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
+        ///   a Flush operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(111, Level = EventLevel.Informational, Message = "Starting to flush events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.")]
+        public virtual void BufferedProducerFlushStart(string identifier,
+                                                       string eventHubName,
+                                                       string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(111, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
+        ///   active Flush Operation
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(112, Level = EventLevel.Error, Message = "An exception occurred while flushing events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.  Error Message: '{3}'")]
+        public virtual void BufferedProducerFlushError(string identifier,
+                                                       string eventHubName,
+                                                       string operationId,
+                                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(112, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed an active
+        ///   a Flush operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(113, Level = EventLevel.Informational, Message = "Completed flushing events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.")]
+        public virtual void BufferedProducerFlushComplete(string identifier,
+                                                          string eventHubName,
+                                                          string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(113, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to perform
+        ///   a Clear operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(114, Level = EventLevel.Informational, Message = "Starting to clear events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.")]
+        public virtual void BufferedProducerClearStart(string identifier,
+                                                       string eventHubName,
+                                                       string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(114, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception in an
+        ///   active Clear operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(115, Level = EventLevel.Error, Message = "An exception occurred while clearing events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.  Error Message: '{3}'")]
+        public virtual void BufferedProducerClearError(string identifier,
+                                                       string eventHubName,
+                                                       string operationId,
+                                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(115, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed an active
+        ///   a Clear operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(116, Level = EventLevel.Informational, Message = "Completed clearing events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Operation Id: '{2}'.")]
+        public virtual void BufferedProducerClearComplete(string identifier,
+                                                          string eventHubName,
+                                                          string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(116, identifier ?? string.Empty, eventHubName ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance is starting to drain a partition of events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition being drained.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(117, Level = EventLevel.Informational, Message = "Starting to draining events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Partition: '{2}', Operation Id: '{3}'.")]
+        public virtual void BufferedProducerDrainStart(string identifier,
+                                                       string eventHubName,
+                                                       string partitionId,
+                                                       string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(117, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered an exception while draining
+        ///   a partition of events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition being drained.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(118, Level = EventLevel.Error, Message = "An exception occurred while draining events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Partition: '{2}', Operation Id: '{3}'.  Error Message: '{4}'")]
+        public virtual void BufferedProducerDrainError(string identifier,
+                                                       string eventHubName,
+                                                       string partitionId,
+                                                       string operationId,
+                                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(118, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has completed draining a partition of events.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition being drained.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        ///
+        [Event(119, Level = EventLevel.Informational, Message = "Completed draining events for the buffered producer instance with identifier '{0}', Event Hub: {1}, Partition: '{2}', Operation Id: '{3}'.")]
+        public virtual void BufferedProducerDrainComplete(string identifier,
+                                                          string eventHubName,
+                                                          string partitionId,
+                                                          string operationId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(119, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty);
             }
         }
     }

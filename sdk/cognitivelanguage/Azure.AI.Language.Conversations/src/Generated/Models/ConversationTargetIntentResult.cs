@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> A wrap up of Conversation project response. </summary>
     public partial class ConversationTargetIntentResult : TargetIntentResult

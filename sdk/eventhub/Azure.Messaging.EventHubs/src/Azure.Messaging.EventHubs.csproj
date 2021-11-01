@@ -13,8 +13,20 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <!--
+    TEMP: This is needed for schema registry support and includes the IMessageWithContentType interface used
+          with EventData.
+  -->
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Restore when the experimental features needed are moved and published.
+
+      <PackageReference Include="Azure.Core" />
+    -->
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
