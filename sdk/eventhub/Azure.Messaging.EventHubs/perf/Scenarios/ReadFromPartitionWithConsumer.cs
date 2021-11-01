@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="ReadPerfTest" />
     ///
-    public sealed class ReadFromPartitionWithConsumer : ReadPerfTest
+    public sealed class ReadFromPartitionWithConsumer : ReadPerfTest<EventHubsOptions>
     {
         /// <summary>The consumer to use for reading from the partition.</summary>
         private EventHubConsumerClient _consumer;
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public ReadFromPartitionWithConsumer(SizeCountOptions options) : base(options)
+        public ReadFromPartitionWithConsumer(EventHubsOptions options) : base(options)
         {
         }
 
@@ -92,13 +92,13 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public async override Task RunAsync(CancellationToken cancellationToken)
+        public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
             // Read the requested number of events.
 
             var readCount = 0;
 
-            while ((!cancellationToken.IsCancellationRequested) && (++readCount <= Options.Count))
+            while ((!cancellationToken.IsCancellationRequested) && (++readCount <= Options.BatchSize))
             {
                 if (!(await _readEnumerator.MoveNextAsync()))
                 {
@@ -109,6 +109,8 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
             // If iteration stopped due to cancellation, ensure that the expected exception is thrown.
 
             cancellationToken.ThrowIfCancellationRequested();
+
+            return Options.BatchSize;
         }
     }
 }
