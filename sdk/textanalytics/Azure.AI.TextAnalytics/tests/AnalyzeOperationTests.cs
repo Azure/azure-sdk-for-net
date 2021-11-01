@@ -10,7 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+    [ClientTestFixture(
+    TextAnalyticsClientOptions.ServiceVersion.V3_1,
+    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)

@@ -30,23 +30,21 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// Initializes a new instance of the StorageEditionCapability class.
         /// </summary>
         /// <param name="name">storage edition name</param>
-        /// <param name="minStorageSize">The minimal supported storage size in
-        /// MB</param>
-        /// <param name="maxStorageSize">The maximum supported storage size in
-        /// MB</param>
+        /// <param name="minStorageSize">The minimal supported storage
+        /// size.</param>
+        /// <param name="maxStorageSize">The maximum supported storage
+        /// size.</param>
         /// <param name="minBackupRetentionDays">Minimal backup retention
         /// days</param>
         /// <param name="maxBackupRetentionDays">Maximum backup retention
         /// days</param>
-        /// <param name="status">The status of the capability.</param>
-        public StorageEditionCapability(string name = default(string), StorageMBCapability minStorageSize = default(StorageMBCapability), StorageMBCapability maxStorageSize = default(StorageMBCapability), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?), string status = default(string))
+        public StorageEditionCapability(string name = default(string), long? minStorageSize = default(long?), long? maxStorageSize = default(long?), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?))
         {
             Name = name;
             MinStorageSize = minStorageSize;
             MaxStorageSize = maxStorageSize;
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxBackupRetentionDays = maxBackupRetentionDays;
-            Status = status;
             CustomInit();
         }
 
@@ -62,16 +60,16 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the minimal supported storage size in MB
+        /// Gets the minimal supported storage size.
         /// </summary>
         [JsonProperty(PropertyName = "minStorageSize")]
-        public StorageMBCapability MinStorageSize { get; private set; }
+        public long? MinStorageSize { get; private set; }
 
         /// <summary>
-        /// Gets the maximum supported storage size in MB
+        /// Gets the maximum supported storage size.
         /// </summary>
         [JsonProperty(PropertyName = "maxStorageSize")]
-        public StorageMBCapability MaxStorageSize { get; private set; }
+        public long? MaxStorageSize { get; private set; }
 
         /// <summary>
         /// Gets minimal backup retention days
@@ -84,12 +82,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxBackupRetentionDays")]
         public long? MaxBackupRetentionDays { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the capability.
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; private set; }
 
     }
 }

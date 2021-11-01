@@ -443,6 +443,7 @@ namespace Azure.Data.Tables.Tests
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
         {
             var tokenTransport = TableAlreadyExistsTransport();
+            var tokenTransport2 = TableAlreadyExistsTransport();
             var sharedKeyTransport = TableAlreadyExistsTransport();
             var connStrTransport = TableAlreadyExistsTransport();
             var devTransport = TableAlreadyExistsTransport();
@@ -454,11 +455,13 @@ namespace Azure.Data.Tables.Tests
                 new TableClientOptions { Transport = connStrTransport });
             var devStorageClient = new TableClient("UseDevelopmentStorage=true", TableName, new TableClientOptions { Transport = devTransport });
             var tokenCredClient = new TableClient(_urlWithTableName, TableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport });
+            var tokenCredClientFromServiceClient = new TableServiceClient(_urlWithTableName, new MockCredential(), new TableClientOptions { Transport = tokenTransport2 }).GetTableClient(TableName);
 
             yield return new object[] { sharedKeyClient, sharedKeyTransport };
             yield return new object[] { connStringClient, connStrTransport };
             yield return new object[] { devStorageClient, devTransport };
             yield return new object[] { tokenCredClient, tokenTransport };
+            yield return new object[] { tokenCredClientFromServiceClient, tokenTransport2 };
         }
 
         [TestCaseSource(nameof(TableClientsWithTableNameInUri))]

@@ -197,6 +197,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
         public async Task ExtractKeyPhrasesWithMultipleActions()
         {

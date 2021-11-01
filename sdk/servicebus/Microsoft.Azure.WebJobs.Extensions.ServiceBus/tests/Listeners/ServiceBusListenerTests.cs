@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             ServiceBusOptions config = new ServiceBusOptions
             {
-                ExceptionHandler = ExceptionReceivedHandler
+                ProcessErrorAsync = ExceptionReceivedHandler
             };
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
 

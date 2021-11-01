@@ -2297,13 +2297,22 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2322,13 +2331,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
@@ -2347,13 +2365,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>
@@ -2371,13 +2398,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
-        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3"/>.</para>
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/data-limits?tabs=version-3">here</see>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// See the service <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional support of custom action features.
         /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different <see cref="TextAnalyticsActions"/> to execute in the list of documents.</param>

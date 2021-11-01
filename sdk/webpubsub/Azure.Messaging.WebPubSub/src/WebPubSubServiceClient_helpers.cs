@@ -105,8 +105,8 @@ namespace Azure.Messaging.WebPubSub
                 RequestOptions options = new() { CancellationToken = cancellationToken };
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(options, userId, roles, expiresAt.Minute).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(options, userId, roles, expiresAt.Minute);
+                    await GenerateClientTokenImplAsync(userId, roles, expiresAt.Minute, options).ConfigureAwait(false) :
+                    GenerateClientTokenImpl(userId, roles, expiresAt.Minute, options);
                 token = JsonDocument.Parse(clientTokenResponse.Content).RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)

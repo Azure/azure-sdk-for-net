@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.TextAnalytics.Tests.Samples
+namespace Azure.AI.TextAnalytics.Samples
 {
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
@@ -36,13 +37,17 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
                 documentB
             };
 
-            // prepare actions
+            // Set project and deployment names of the target model
+            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
+            string projectName = TestEnvironment.RecognizeCustomEntitiesProjectName;
+            string deploymentName = TestEnvironment.RecognizeCustomEntitiesDeploymentName;
+
+            var recognizeCustomEntitiesAction = new RecognizeCustomEntitiesAction(projectName, deploymentName);
+
+            // prepare actions.
             var actions = new TextAnalyticsActions()
             {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
+                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { recognizeCustomEntitiesAction }
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);

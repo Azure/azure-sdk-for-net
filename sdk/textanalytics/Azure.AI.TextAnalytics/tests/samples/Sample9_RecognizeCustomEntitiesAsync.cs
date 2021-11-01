@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.TextAnalytics.Tests.Samples
+namespace Azure.AI.TextAnalytics.Samples
 {
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
@@ -45,6 +46,7 @@ namespace Azure.AI.TextAnalytics.Tests.Samples
 
             // prepare actions.
 #if SNIPPET
+            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
             var actions = new TextAnalyticsActions()
