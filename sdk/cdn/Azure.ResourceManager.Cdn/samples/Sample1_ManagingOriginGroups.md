@@ -16,17 +16,17 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
 ```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with a specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -74,9 +74,9 @@ OriginGroup originGroup = lro3.Value;
 // First we need to get the origin group container from the specific endpoint
 Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
 Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
-OriginGroupContainer originGroupContainer = endpoint.GetOriginGroups();
+OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
 // With GetAllAsync(), we can get a list of the origin group in the container
-AsyncPageable<OriginGroup> response = originGroupContainer.GetAllAsync();
+AsyncPageable<OriginGroup> response = originGroupCollection.GetAllAsync();
 await foreach (OriginGroup originGroup in response)
 {
     Console.WriteLine(originGroup.Data.Name);
@@ -89,9 +89,9 @@ await foreach (OriginGroup originGroup in response)
 // First we need to get the origin group container from the specific endpoint
 Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
 Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
-OriginGroupContainer originGroupContainer = endpoint.GetOriginGroups();
+OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
 // Now we can get the origin group with GetAsync()
-OriginGroup originGroup = await originGroupContainer.GetAsync("myOriginGroup");
+OriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
 // With UpdateAsync(), we can update the origin group
 OriginGroupUpdateParameters input = new OriginGroupUpdateParameters()
 {
@@ -113,9 +113,9 @@ originGroup = lro.Value;
 // First we need to get the origin group container from the specific endpoint
 Profile profile = await resourceGroup.GetProfiles().GetAsync("myProfile");
 Endpoint endpoint = await profile.GetEndpoints().GetAsync("myEndpoint");
-OriginGroupContainer originGroupContainer = endpoint.GetOriginGroups();
+OriginGroupCollection originGroupCollection = endpoint.GetOriginGroups();
 // Now we can get the origin group with GetAsync()
-OriginGroup originGroup = await originGroupContainer.GetAsync("myOriginGroup");
+OriginGroup originGroup = await originGroupCollection.GetAsync("myOriginGroup");
 // With DeleteAsync(), we can delete the origin group
 await originGroup.DeleteAsync();
 ```

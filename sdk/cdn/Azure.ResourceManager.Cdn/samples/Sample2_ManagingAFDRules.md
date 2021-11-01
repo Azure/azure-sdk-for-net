@@ -16,17 +16,17 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
 ```C# Snippet:Readme_GetResourceGroupContainer
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with a specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -65,9 +65,9 @@ Rule rule = lro3.Value;
 // First we need to get the rule container from the specific rule set
 Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
 RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
-RuleContainer ruleContainer = ruleSet.GetRules();
+RuleCollection ruleCollection = ruleSet.GetRules();
 // With GetAllAsync(), we can get a list of the rule in the container
-AsyncPageable<Rule> response = ruleContainer.GetAllAsync();
+AsyncPageable<Rule> response = ruleCollection.GetAllAsync();
 await foreach (Rule rule in response)
 {
     Console.WriteLine(rule.Data.Name);
@@ -80,9 +80,9 @@ await foreach (Rule rule in response)
 // First we need to get the rule container from the specific rule set
 Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
 RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
-RuleContainer ruleContainer = ruleSet.GetRules();
+RuleCollection ruleCollection = ruleSet.GetRules();
 // Now we can get the rule with GetAsync()
-Rule rule = await ruleContainer.GetAsync("myAFDRule");
+Rule rule = await ruleCollection.GetAsync("myAFDRule");
 // With UpdateAsync(), we can update the rule
 RuleUpdateParameters input = new RuleUpdateParameters
 {
@@ -103,9 +103,9 @@ rule = lro.Value;
 // First we need to get the rule container from the specific rule set
 Profile AFDProfile = await resourceGroup.GetProfiles().GetAsync("myAFDProfile");
 RuleSet ruleSet = await AFDProfile.GetRuleSets().GetAsync("myAFDRuleSet");
-RuleContainer ruleContainer = ruleSet.GetRules();
+RuleCollection ruleCollection = ruleSet.GetRules();
 // Now we can get the rule with GetAsync()
-Rule rule = await ruleContainer.GetAsync("myAFDRule");
+Rule rule = await ruleCollection.GetAsync("myAFDRule");
 // With DeleteAsync(), we can delete the rule
 await rule.DeleteAsync();
 ```
