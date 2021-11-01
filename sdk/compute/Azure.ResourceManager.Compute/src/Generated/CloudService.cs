@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServicesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServicesRestClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudService(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -803,15 +803,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomainAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomainsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServicesUpdateDomainRestClient.GetUpdateDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -822,11 +822,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServicesUpdateDomainRestClient.GetUpdateDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -841,15 +841,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomain(CancellationToken cancellationToken = default)
+        public virtual Pageable<UpdateDomain> GetUpdateDomainsCloudServicesUpdateDomains(CancellationToken cancellationToken = default)
         {
             Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServicesUpdateDomainRestClient.GetUpdateDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -860,11 +860,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomain");
+                using var scope = _clientDiagnostics.CreateScope("CloudService.GetUpdateDomainsCloudServicesUpdateDomains");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServicesUpdateDomainRestClient.GetUpdateDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServicesUpdateDomainRestClient.ListUpdateDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -878,21 +878,21 @@ namespace Azure.ResourceManager.Compute
 
         #region RoleInstance
 
-        /// <summary> Gets a container of RoleInstances in the CloudService. </summary>
+        /// <summary> Gets a collection of RoleInstances in the CloudService. </summary>
         /// <returns> An object representing collection of RoleInstances and their operations over a CloudService. </returns>
-        public RoleInstanceContainer GetRoleInstances()
+        public RoleInstanceCollection GetRoleInstances()
         {
-            return new RoleInstanceContainer(this);
+            return new RoleInstanceCollection(this);
         }
         #endregion
 
         #region CloudServiceRole
 
-        /// <summary> Gets a container of CloudServiceRoles in the CloudService. </summary>
+        /// <summary> Gets a collection of CloudServiceRoles in the CloudService. </summary>
         /// <returns> An object representing collection of CloudServiceRoles and their operations over a CloudService. </returns>
-        public CloudServiceRoleContainer GetCloudServiceRoles()
+        public CloudServiceRoleCollection GetCloudServiceRoles()
         {
-            return new CloudServiceRoleContainer(this);
+            return new CloudServiceRoleCollection(this);
         }
         #endregion
     }

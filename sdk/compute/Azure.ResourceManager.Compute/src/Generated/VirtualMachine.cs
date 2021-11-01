@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachinesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachinesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachinesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachinesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _virtualMachinesRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _virtualMachinesRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _virtualMachinesRestClient.GetAvailableSizesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachinesRestClient.ListAvailableSizesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _virtualMachinesRestClient.GetAvailableSizes(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _virtualMachinesRestClient.ListAvailableSizes(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1230,21 +1230,21 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachineExtension
 
-        /// <summary> Gets a container of VirtualMachineExtensions in the VirtualMachine. </summary>
+        /// <summary> Gets a collection of VirtualMachineExtensions in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachineExtensions and their operations over a VirtualMachine. </returns>
-        public VirtualMachineExtensionContainer GetVirtualMachineExtensions()
+        public VirtualMachineExtensionCollection GetVirtualMachineExtensions()
         {
-            return new VirtualMachineExtensionContainer(this);
+            return new VirtualMachineExtensionCollection(this);
         }
         #endregion
 
         #region VirtualMachineRunCommand
 
-        /// <summary> Gets a container of VirtualMachineRunCommands in the VirtualMachine. </summary>
+        /// <summary> Gets a collection of VirtualMachineRunCommands in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
-        public VirtualMachineRunCommandContainer GetVirtualMachineRunCommands()
+        public VirtualMachineRunCommandCollection GetVirtualMachineRunCommands()
         {
-            return new VirtualMachineRunCommandContainer(this);
+            return new VirtualMachineRunCommandCollection(this);
         }
         #endregion
     }

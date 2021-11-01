@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region RestorePoint
-        /// <summary> Gets an object representing a RestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorePointItem
+        /// <summary> Gets an object representing a RestorePointItem along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
-        public static RestorePoint GetRestorePoint(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorePointItem" /> object. </returns>
+        public static RestorePointItem GetRestorePointItem(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorePoint(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new RestorePointItem(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

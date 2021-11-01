@@ -24,32 +24,32 @@ namespace Azure.ResourceManager.Compute
     public static partial class SubscriptionExtensions
     {
         #region VirtualMachineExtensionImage
-        /// <summary> Gets an object representing a VirtualMachineExtensionImageContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualMachineExtensionImageCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineExtensionImageContainer" /> object. </returns>
-        public static VirtualMachineExtensionImageContainer GetVirtualMachineExtensionImages(this Subscription subscription)
+        /// <returns> Returns a <see cref="VirtualMachineExtensionImageCollection" /> object. </returns>
+        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this Subscription subscription)
         {
-            return new VirtualMachineExtensionImageContainer(subscription);
+            return new VirtualMachineExtensionImageCollection(subscription);
         }
         #endregion
 
         #region OSVersion
-        /// <summary> Gets an object representing a OSVersionContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a OSVersionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="OSVersionContainer" /> object. </returns>
-        public static OSVersionContainer GetOSVersions(this Subscription subscription)
+        /// <returns> Returns a <see cref="OSVersionCollection" /> object. </returns>
+        public static OSVersionCollection GetOSVersions(this Subscription subscription)
         {
-            return new OSVersionContainer(subscription);
+            return new OSVersionCollection(subscription);
         }
         #endregion
 
         #region OSFamily
-        /// <summary> Gets an object representing a OSFamilyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a OSFamilyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="OSFamilyContainer" /> object. </returns>
-        public static OSFamilyContainer GetOSFamilies(this Subscription subscription)
+        /// <returns> Returns a <see cref="OSFamilyCollection" /> object. </returns>
+        public static OSFamilyCollection GetOSFamilies(this Subscription subscription)
         {
-            return new OSFamilyContainer(subscription);
+            return new OSFamilyCollection(subscription);
         }
         #endregion
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailabilitySet> GetAvailabilitySetsAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailabilitySet> GetBySubscriptionAvailabilitySetsAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetAvailabilitySetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<AvailabilitySet>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailabilitySets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAvailabilitySets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<AvailabilitySet>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailabilitySets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAvailabilitySets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailabilitySet> GetAvailabilitySets(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<AvailabilitySet> GetBySubscriptionAvailabilitySets(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetAvailabilitySetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<AvailabilitySet> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailabilitySets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAvailabilitySets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(expand, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(expand, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<AvailabilitySet> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAvailabilitySets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionAvailabilitySets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, expand, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, expand, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProximityPlacementGroup> GetProximityPlacementGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProximityPlacementGroup> GetBySubscriptionProximityPlacementGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetProximityPlacementGroupsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<ProximityPlacementGroup>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProximityPlacementGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionProximityPlacementGroups");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -320,11 +320,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<ProximityPlacementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProximityPlacementGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionProximityPlacementGroups");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProximityPlacementGroup> GetProximityPlacementGroups(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ProximityPlacementGroup> GetBySubscriptionProximityPlacementGroups(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -350,11 +350,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetProximityPlacementGroupsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<ProximityPlacementGroup> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProximityPlacementGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionProximityPlacementGroups");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<ProximityPlacementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetProximityPlacementGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionProximityPlacementGroups");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ProximityPlacementGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DedicatedHostGroup> GetDedicatedHostGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DedicatedHostGroup> GetBySubscriptionDedicatedHostGroupsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetDedicatedHostGroupsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<DedicatedHostGroup>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDedicatedHostGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDedicatedHostGroups");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DedicatedHostGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -438,11 +438,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<DedicatedHostGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDedicatedHostGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDedicatedHostGroups");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DedicatedHostGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DedicatedHostGroup> GetDedicatedHostGroups(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DedicatedHostGroup> GetBySubscriptionDedicatedHostGroups(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetDedicatedHostGroupsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<DedicatedHostGroup> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDedicatedHostGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDedicatedHostGroups");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DedicatedHostGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -483,11 +483,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<DedicatedHostGroup> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDedicatedHostGroups");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDedicatedHostGroups");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DedicatedHostGroup(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SshPublicKey> GetSshPublicKeyResourcesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SshPublicKey> GetBySubscriptionSshPublicKeysAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSshPublicKeysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<SshPublicKey>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSshPublicKeyResources");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionSshPublicKeys");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new SshPublicKey(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -556,11 +556,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<SshPublicKey>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSshPublicKeyResources");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionSshPublicKeys");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new SshPublicKey(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SshPublicKey> GetSshPublicKeyResources(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<SshPublicKey> GetBySubscriptionSshPublicKeys(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -586,11 +586,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSshPublicKeysRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<SshPublicKey> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSshPublicKeyResources");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionSshPublicKeys");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new SshPublicKey(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<SshPublicKey> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSshPublicKeyResources");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionSshPublicKeys");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new SshPublicKey(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOfferSkuAsync(this Subscription subscription, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImagesAsync(this Subscription subscription, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -784,12 +784,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOfferSku");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetAllAsync(location, publisherName, offer, skus, expand, top, orderby, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListAsync(location, publisherName, offer, skus, expand, top, orderby, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOfferSku(this Subscription subscription, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImages(this Subscription subscription, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -834,12 +834,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOfferSku");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetAll(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+                    var response = restOperations.List(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeAsync(this Subscription subscription, string location, string publisherName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetOffersVirtualMachineImagesAsync(this Subscription subscription, string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -871,12 +871,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttype");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOffersVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetOffersAsync(location, publisherName, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListOffersAsync(location, publisherName, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttype(this Subscription subscription, string location, string publisherName, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetOffersVirtualMachineImages(this Subscription subscription, string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -908,12 +908,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttype");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOffersVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetOffers(location, publisherName, cancellationToken);
+                    var response = restOperations.ListOffers(location, publisherName, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetPublishersVirtualMachineImagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -940,12 +940,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocation");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublishersVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetPublishersAsync(location, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListPublishersAsync(location, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetPublishersVirtualMachineImages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -972,12 +972,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocation");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublishersVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetPublishers(location, cancellationToken);
+                    var response = restOperations.ListPublishers(location, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOfferAsync(this Subscription subscription, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetSkusVirtualMachineImagesAsync(this Subscription subscription, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1014,12 +1014,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOffer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSkusVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetSkusAsync(location, publisherName, offer, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListSkusAsync(location, publisherName, offer, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOffer(this Subscription subscription, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetSkusVirtualMachineImages(this Subscription subscription, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1056,12 +1056,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationPublisherArtifacttypeOffer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSkusVirtualMachineImages");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetSkus(location, publisherName, offer, cancellationToken);
+                    var response = restOperations.ListSkus(location, publisherName, offer, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOfferSkuAsync(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImagesEdgeZonesAsync(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1225,12 +1225,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOfferSku");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetAllAsync(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListAsync(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOfferSku(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImagesEdgeZones(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1280,12 +1280,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOfferSku");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetAll(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+                    var response = restOperations.List(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, or <paramref name="publisherName"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeAsync(this Subscription subscription, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetOffersVirtualMachineImagesEdgeZonesAsync(this Subscription subscription, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1322,12 +1322,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttype");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetOffersAsync(location, edgeZone, publisherName, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListOffersAsync(location, edgeZone, publisherName, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, or <paramref name="publisherName"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttype(this Subscription subscription, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetOffersVirtualMachineImagesEdgeZones(this Subscription subscription, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1364,12 +1364,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttype");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetOffers(location, edgeZone, publisherName, cancellationToken);
+                    var response = restOperations.ListOffers(location, edgeZone, publisherName, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationEdgeZoneAsync(this Subscription subscription, string location, string edgeZone, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetPublishersVirtualMachineImagesEdgeZonesAsync(this Subscription subscription, string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1401,12 +1401,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZone");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetPublishersAsync(location, edgeZone, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListPublishersAsync(location, edgeZone, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationEdgeZone(this Subscription subscription, string location, string edgeZone, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetPublishersVirtualMachineImagesEdgeZones(this Subscription subscription, string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1438,12 +1438,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZone");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetPublishers(location, edgeZone, cancellationToken);
+                    var response = restOperations.ListPublishers(location, edgeZone, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1463,7 +1463,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOfferAsync(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetSkusVirtualMachineImagesEdgeZonesAsync(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1485,12 +1485,12 @@ namespace Azure.ResourceManager.Compute
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOffer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSkusVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = await restOperations.GetSkusAsync(location, edgeZone, publisherName, offer, cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.ListSkusAsync(location, edgeZone, publisherName, offer, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOffer(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<VirtualMachineImageResource>> GetSkusVirtualMachineImagesEdgeZones(this Subscription subscription, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1532,12 +1532,12 @@ namespace Azure.ResourceManager.Compute
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineImageResourcesByLocationEdgeZonePublisherArtifacttypeOffer");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSkusVirtualMachineImagesEdgeZones");
                 scope.Start();
                 try
                 {
                     var restOperations = GetVirtualMachineImagesEdgeZoneRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                    var response = restOperations.GetSkus(location, edgeZone, publisherName, offer, cancellationToken);
+                    var response = restOperations.ListSkus(location, edgeZone, publisherName, offer, cancellationToken);
                     return Response.FromValue(response.Value, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<Usage> GetUsagesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Usage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1568,11 +1568,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetUsageRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsagesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1583,11 +1583,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsagesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<Usage> GetUsagesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<Usage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1620,11 +1620,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetUsageRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<Usage> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsagesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1635,11 +1635,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsagesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetUsages");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<VirtualMachineData> GetVirtualMachinesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineData> GetByLocationVirtualMachinesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1672,11 +1672,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<VirtualMachineData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachinesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllByLocationAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByLocationAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1687,11 +1687,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<VirtualMachineData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachinesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllByLocationNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByLocationNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<VirtualMachineData> GetVirtualMachinesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineData> GetByLocationVirtualMachines(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1724,11 +1724,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<VirtualMachineData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachinesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllByLocation(location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByLocation(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1739,11 +1739,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<VirtualMachineData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachinesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllByLocationNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByLocationNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachine> GetVirtualMachinesAsync(this Subscription subscription, string statusOnly = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachine> GetAllVirtualMachinesAsync(this Subscription subscription, string statusOnly = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1798,11 +1798,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<VirtualMachine>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(statusOnly, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllAsync(statusOnly, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1813,11 +1813,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<VirtualMachine>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, statusOnly, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllNextPageAsync(nextLink, statusOnly, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1836,7 +1836,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachine> GetVirtualMachines(this Subscription subscription, string statusOnly = null, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachine> GetAllVirtualMachines(this Subscription subscription, string statusOnly = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -1844,11 +1844,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachinesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<VirtualMachine> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(statusOnly, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAll(statusOnly, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1859,11 +1859,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<VirtualMachine> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachines");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachines");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, statusOnly, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAllNextPage(nextLink, statusOnly, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1883,7 +1883,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<VirtualMachineScaleSetData> GetVirtualMachineScaleSetsByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineScaleSetData> GetByLocationVirtualMachineScaleSetsAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1896,11 +1896,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineScaleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<VirtualMachineScaleSetData>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSetsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllByLocationAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByLocationAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1911,11 +1911,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<VirtualMachineScaleSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSetsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllByLocationNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListByLocationNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<VirtualMachineScaleSetData> GetVirtualMachineScaleSetsByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineScaleSetData> GetByLocationVirtualMachineScaleSets(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -1948,11 +1948,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineScaleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<VirtualMachineScaleSetData> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSetsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllByLocation(location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByLocation(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -1963,11 +1963,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<VirtualMachineScaleSetData> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSetsByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetByLocationVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllByLocationNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListByLocationNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2013,7 +2013,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineScaleSet> GetVirtualMachineScaleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineScaleSet> GetAllVirtualMachineScaleSetsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2021,11 +2021,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineScaleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<VirtualMachineScaleSet>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2036,11 +2036,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<VirtualMachineScaleSet>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2058,7 +2058,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineScaleSet> GetVirtualMachineScaleSets(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineScaleSet> GetAllVirtualMachineScaleSets(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2066,11 +2066,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineScaleSetsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<VirtualMachineScaleSet> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListAll(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2081,11 +2081,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<VirtualMachineScaleSet> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineScaleSets");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllVirtualMachineScaleSets");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAllNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2105,7 +2105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2118,11 +2118,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineSizesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineSizesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineSizes");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2142,7 +2142,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<VirtualMachineSize> GetVirtualMachineSizesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2155,11 +2155,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineSizesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineSizesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineSizes");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Image(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2204,7 +2204,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Image(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2234,7 +2234,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Image(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2249,7 +2249,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Image(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RestorePointCollection> GetRestorePointCollectionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RestorePointCollection> GetAllRestorePointCollectionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2303,11 +2303,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetRestorePointCollectionsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<RestorePointCollection>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllRestorePointCollections");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RestorePointCollection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2318,11 +2318,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<RestorePointCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllRestorePointCollections");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new RestorePointCollection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2340,7 +2340,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RestorePointCollection> GetRestorePointCollections(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<RestorePointCollection> GetAllRestorePointCollections(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -2348,11 +2348,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetRestorePointCollectionsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<RestorePointCollection> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllRestorePointCollections");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListAll(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RestorePointCollection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2363,11 +2363,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<RestorePointCollection> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRestorePointCollections");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllRestorePointCollections");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAllNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new RestorePointCollection(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2579,7 +2579,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<RunCommandDocumentBase> GetRunCommandDocumentBasesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2592,11 +2592,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineRunCommandsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<RunCommandDocumentBase>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRunCommandDocumentBasesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineRunCommands");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2607,11 +2607,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<RunCommandDocumentBase>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRunCommandDocumentBasesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineRunCommands");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2631,7 +2631,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<RunCommandDocumentBase> GetRunCommandDocumentBasesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -2644,11 +2644,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetVirtualMachineRunCommandsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<RunCommandDocumentBase> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRunCommandDocumentBasesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineRunCommands");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2659,11 +2659,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<RunCommandDocumentBase> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetRunCommandDocumentBasesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetVirtualMachineRunCommands");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2768,7 +2768,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2783,7 +2783,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2814,7 +2814,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(filter, cancellationToken: cancellationToken);
+                        var response = restOperations.List(filter, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, filter, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Disk(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2874,7 +2874,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Disk(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2904,7 +2904,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Disk(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2919,7 +2919,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Disk(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2977,7 +2977,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Snapshot(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2992,7 +2992,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Snapshot(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3022,7 +3022,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Snapshot(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3037,7 +3037,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Snapshot(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3095,7 +3095,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3110,7 +3110,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3140,7 +3140,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3155,7 +3155,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskEncryptionSet(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3213,7 +3213,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskAccess(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3228,7 +3228,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskAccess(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3258,7 +3258,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskAccess(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3273,7 +3273,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DiskAccess(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3331,7 +3331,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Gallery(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3346,7 +3346,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Gallery(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3376,7 +3376,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
+                        var response = restOperations.List(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Gallery(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3391,7 +3391,7 @@ namespace Azure.ResourceManager.Compute
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Gallery(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3440,7 +3440,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<SharedGallery> GetSharedGalleriesByLocationAsync(this Subscription subscription, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SharedGallery> GetSharedGalleriesAsync(this Subscription subscription, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3453,11 +3453,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleriesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<SharedGallery>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleriesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleries");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3468,11 +3468,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<SharedGallery>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleriesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleries");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3493,7 +3493,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<SharedGallery> GetSharedGalleriesByLocation(this Subscription subscription, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static Pageable<SharedGallery> GetSharedGalleries(this Subscription subscription, string location, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3506,11 +3506,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleriesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<SharedGallery> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleriesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleries");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3521,11 +3521,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<SharedGallery> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleriesByLocation");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleries");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, location, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, location, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3621,7 +3621,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public static AsyncPageable<SharedGalleryImage> GetSharedGalleryImagesByLocationSharedGalleryAsync(this Subscription subscription, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SharedGalleryImage> GetSharedGalleryImagesAsync(this Subscription subscription, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3638,11 +3638,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleryImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<SharedGalleryImage>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImagesByLocationSharedGallery");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImages");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3653,11 +3653,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<SharedGalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImagesByLocationSharedGallery");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImages");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3679,7 +3679,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public static Pageable<SharedGalleryImage> GetSharedGalleryImagesByLocationSharedGallery(this Subscription subscription, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static Pageable<SharedGalleryImage> GetSharedGalleryImages(this Subscription subscription, string location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3696,11 +3696,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleryImagesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<SharedGalleryImage> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImagesByLocationSharedGallery");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImages");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3711,11 +3711,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<SharedGalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImagesByLocationSharedGallery");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImages");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, location, galleryUniqueName, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3822,7 +3822,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public static AsyncPageable<SharedGalleryImageVersion> GetSharedGalleryImageVersionsByLocationSharedGalleryImageAsync(this Subscription subscription, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SharedGalleryImageVersion> GetSharedGalleryImageVersionsAsync(this Subscription subscription, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3843,11 +3843,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleryImageVersionsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<SharedGalleryImageVersion>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersionsByLocationSharedGalleryImage");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersions");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllAsync(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAsync(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3858,11 +3858,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<SharedGalleryImageVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersionsByLocationSharedGalleryImage");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersions");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListNextPageAsync(nextLink, location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3885,7 +3885,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public static Pageable<SharedGalleryImageVersion> GetSharedGalleryImageVersionsByLocationSharedGalleryImage(this Subscription subscription, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public static Pageable<SharedGalleryImageVersion> GetSharedGalleryImageVersions(this Subscription subscription, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -3906,11 +3906,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetSharedGalleryImageVersionsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<SharedGalleryImageVersion> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersionsByLocationSharedGalleryImage");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersions");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAll(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.List(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -3921,11 +3921,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<SharedGalleryImageVersion> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersionsByLocationSharedGalleryImage");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSharedGalleryImageVersions");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllNextPage(nextLink, location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken);
+                        var response = restOperations.ListNextPage(nextLink, location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -4037,7 +4037,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CloudService> GetCloudServicesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CloudService> GetAllCloudServicesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -4045,11 +4045,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<CloudService>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCloudServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllCloudServices");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -4060,11 +4060,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 async Task<Page<CloudService>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCloudServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllCloudServices");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -4082,7 +4082,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CloudService> GetCloudServices(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<CloudService> GetAllCloudServices(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -4090,11 +4090,11 @@ namespace Azure.ResourceManager.Compute
                 var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<CloudService> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCloudServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllCloudServices");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListAll(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -4105,11 +4105,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 Page<CloudService> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetCloudServices");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetAllCloudServices");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListAllNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

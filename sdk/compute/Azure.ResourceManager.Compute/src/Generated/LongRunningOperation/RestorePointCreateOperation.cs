@@ -18,9 +18,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The operation to create the restore point. Updating properties of an existing restore point is not allowed. </summary>
-    public partial class RestorePointCreateOperation : Operation<RestorePoint>, IOperationSource<RestorePoint>
+    public partial class RestorePointCreateOperation : Operation<RestorePointItem>, IOperationSource<RestorePointItem>
     {
-        private readonly OperationInternals<RestorePoint> _operation;
+        private readonly OperationInternals<RestorePointItem> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal RestorePointCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<RestorePoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "RestorePointCreateOperation");
+            _operation = new OperationInternals<RestorePointItem>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "RestorePointCreateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override RestorePoint Value => _operation.Value;
+        public override RestorePointItem Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Compute.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestorePoint>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<RestorePointItem>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestorePoint>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<RestorePointItem>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        RestorePoint IOperationSource<RestorePoint>.CreateResult(Response response, CancellationToken cancellationToken)
+        RestorePointItem IOperationSource<RestorePointItem>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RestorePoint(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
+            return new RestorePointItem(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
         }
 
-        async ValueTask<RestorePoint> IOperationSource<RestorePoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RestorePointItem> IOperationSource<RestorePointItem>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RestorePoint(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
+            return new RestorePointItem(_operationBase, RestorePointData.DeserializeRestorePointData(document.RootElement));
         }
     }
 }

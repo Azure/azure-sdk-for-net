@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetUpdateDomainsRequest(string resourceGroupName, string cloudServiceName)
+        internal HttpMessage CreateListUpdateDomainsRequest(string resourceGroupName, string cloudServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<UpdateDomainListResult>> GetUpdateDomainsAsync(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<UpdateDomainListResult>> ListUpdateDomainsAsync(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetUpdateDomainsRequest(resourceGroupName, cloudServiceName);
+            using var message = CreateListUpdateDomainsRequest(resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<UpdateDomainListResult> GetUpdateDomains(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public Response<UpdateDomainListResult> ListUpdateDomains(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetUpdateDomainsRequest(resourceGroupName, cloudServiceName);
+            using var message = CreateListUpdateDomainsRequest(resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetUpdateDomainsNextPageRequest(string nextLink, string resourceGroupName, string cloudServiceName)
+        internal HttpMessage CreateListUpdateDomainsNextPageRequest(string nextLink, string resourceGroupName, string cloudServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<UpdateDomainListResult>> GetUpdateDomainsNextPageAsync(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<UpdateDomainListResult>> ListUpdateDomainsNextPageAsync(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetUpdateDomainsNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
+            using var message = CreateListUpdateDomainsNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<UpdateDomainListResult> GetUpdateDomainsNextPage(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public Response<UpdateDomainListResult> ListUpdateDomainsNextPage(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateGetUpdateDomainsNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
+            using var message = CreateListUpdateDomainsNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

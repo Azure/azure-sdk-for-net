@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointCollectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointCollectionsRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointCollectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointCollectionsRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointCollectionsRestClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointCollectionsRestClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointCollection(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -408,23 +408,13 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        #region RestorePoint
+        #region RestorePointItem
 
-        /// <summary> Gets a container of RestorePoints in the RestorePointCollection. </summary>
-        /// <returns> An object representing collection of RestorePoints and their operations over a RestorePointCollection. </returns>
-        public RestorePointContainer GetRestorePoints()
+        /// <summary> Gets a collection of RestorePointItems in the RestorePointCollection. </summary>
+        /// <returns> An object representing collection of RestorePointItems and their operations over a RestorePointCollection. </returns>
+        public RestorePointItemCollection GetRestorePointItems()
         {
-            return new RestorePointContainer(this);
-        }
-        #endregion
-
-        #region DiskRestorePoint
-
-        /// <summary> Gets a container of DiskRestorePoints in the RestorePointCollection. </summary>
-        /// <returns> An object representing collection of DiskRestorePoints and their operations over a RestorePointCollection. </returns>
-        public DiskRestorePointContainer GetDiskRestorePoints()
-        {
-            return new DiskRestorePointContainer(this);
+            return new RestorePointItemCollection(this);
         }
         #endregion
     }

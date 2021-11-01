@@ -5,13 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -20,258 +13,143 @@ namespace Azure.ResourceManager.Compute
     public static partial class ResourceGroupExtensions
     {
         #region AvailabilitySet
-        /// <summary> Gets an object representing a AvailabilitySetContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a AvailabilitySetCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="AvailabilitySetContainer" /> object. </returns>
-        public static AvailabilitySetContainer GetAvailabilitySets(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="AvailabilitySetCollection" /> object. </returns>
+        public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroup resourceGroup)
         {
-            return new AvailabilitySetContainer(resourceGroup);
+            return new AvailabilitySetCollection(resourceGroup);
         }
         #endregion
 
         #region ProximityPlacementGroup
-        /// <summary> Gets an object representing a ProximityPlacementGroupContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ProximityPlacementGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ProximityPlacementGroupContainer" /> object. </returns>
-        public static ProximityPlacementGroupContainer GetProximityPlacementGroups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ProximityPlacementGroupCollection" /> object. </returns>
+        public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroup resourceGroup)
         {
-            return new ProximityPlacementGroupContainer(resourceGroup);
+            return new ProximityPlacementGroupCollection(resourceGroup);
         }
         #endregion
 
         #region DedicatedHostGroup
-        /// <summary> Gets an object representing a DedicatedHostGroupContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DedicatedHostGroupCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DedicatedHostGroupContainer" /> object. </returns>
-        public static DedicatedHostGroupContainer GetDedicatedHostGroups(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DedicatedHostGroupCollection" /> object. </returns>
+        public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroup resourceGroup)
         {
-            return new DedicatedHostGroupContainer(resourceGroup);
+            return new DedicatedHostGroupCollection(resourceGroup);
         }
         #endregion
 
         #region SshPublicKey
-        /// <summary> Gets an object representing a SshPublicKeyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SshPublicKeyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SshPublicKeyContainer" /> object. </returns>
-        public static SshPublicKeyContainer GetSshPublicKeys(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SshPublicKeyCollection" /> object. </returns>
+        public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroup resourceGroup)
         {
-            return new SshPublicKeyContainer(resourceGroup);
+            return new SshPublicKeyCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachineContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualMachineCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineContainer" /> object. </returns>
-        public static VirtualMachineContainer GetVirtualMachines(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualMachineCollection" /> object. </returns>
+        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
         {
-            return new VirtualMachineContainer(resourceGroup);
+            return new VirtualMachineCollection(resourceGroup);
         }
         #endregion
 
         #region VirtualMachineScaleSet
-        /// <summary> Gets an object representing a VirtualMachineScaleSetContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a VirtualMachineScaleSetCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetContainer" /> object. </returns>
-        public static VirtualMachineScaleSetContainer GetVirtualMachineScaleSets(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetCollection" /> object. </returns>
+        public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroup resourceGroup)
         {
-            return new VirtualMachineScaleSetContainer(resourceGroup);
+            return new VirtualMachineScaleSetCollection(resourceGroup);
         }
         #endregion
 
         #region Image
-        /// <summary> Gets an object representing a ImageContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ImageCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ImageContainer" /> object. </returns>
-        public static ImageContainer GetImages(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ImageCollection" /> object. </returns>
+        public static ImageCollection GetImages(this ResourceGroup resourceGroup)
         {
-            return new ImageContainer(resourceGroup);
+            return new ImageCollection(resourceGroup);
         }
         #endregion
 
         #region RestorePointCollection
-        /// <summary> Gets an object representing a RestorePointCollectionContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a RestorePointCollectionCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RestorePointCollectionContainer" /> object. </returns>
-        public static RestorePointCollectionContainer GetRestorePointCollections(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="RestorePointCollectionCollection" /> object. </returns>
+        public static RestorePointCollectionCollection GetRestorePointCollections(this ResourceGroup resourceGroup)
         {
-            return new RestorePointCollectionContainer(resourceGroup);
+            return new RestorePointCollectionCollection(resourceGroup);
         }
         #endregion
 
         #region Disk
-        /// <summary> Gets an object representing a DiskContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DiskCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiskContainer" /> object. </returns>
-        public static DiskContainer GetDisks(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DiskCollection" /> object. </returns>
+        public static DiskCollection GetDisks(this ResourceGroup resourceGroup)
         {
-            return new DiskContainer(resourceGroup);
+            return new DiskCollection(resourceGroup);
         }
         #endregion
 
         #region Snapshot
-        /// <summary> Gets an object representing a SnapshotContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a SnapshotCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SnapshotContainer" /> object. </returns>
-        public static SnapshotContainer GetSnapshots(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="SnapshotCollection" /> object. </returns>
+        public static SnapshotCollection GetSnapshots(this ResourceGroup resourceGroup)
         {
-            return new SnapshotContainer(resourceGroup);
+            return new SnapshotCollection(resourceGroup);
         }
         #endregion
 
         #region DiskEncryptionSet
-        /// <summary> Gets an object representing a DiskEncryptionSetContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DiskEncryptionSetCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiskEncryptionSetContainer" /> object. </returns>
-        public static DiskEncryptionSetContainer GetDiskEncryptionSets(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DiskEncryptionSetCollection" /> object. </returns>
+        public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroup resourceGroup)
         {
-            return new DiskEncryptionSetContainer(resourceGroup);
+            return new DiskEncryptionSetCollection(resourceGroup);
         }
         #endregion
 
         #region DiskAccess
-        /// <summary> Gets an object representing a DiskAccessContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a DiskAccessCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DiskAccessContainer" /> object. </returns>
-        public static DiskAccessContainer GetDiskAccesses(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="DiskAccessCollection" /> object. </returns>
+        public static DiskAccessCollection GetDiskAccesses(this ResourceGroup resourceGroup)
         {
-            return new DiskAccessContainer(resourceGroup);
+            return new DiskAccessCollection(resourceGroup);
         }
         #endregion
 
         #region Gallery
-        /// <summary> Gets an object representing a GalleryContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a GalleryCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="GalleryContainer" /> object. </returns>
-        public static GalleryContainer GetGalleries(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="GalleryCollection" /> object. </returns>
+        public static GalleryCollection GetGalleries(this ResourceGroup resourceGroup)
         {
-            return new GalleryContainer(resourceGroup);
+            return new GalleryCollection(resourceGroup);
         }
         #endregion
 
         #region CloudService
-        /// <summary> Gets an object representing a CloudServiceContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a CloudServiceCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CloudServiceContainer" /> object. </returns>
-        public static CloudServiceContainer GetCloudServices(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="CloudServiceCollection" /> object. </returns>
+        public static CloudServiceCollection GetCloudServices(this ResourceGroup resourceGroup)
         {
-            return new CloudServiceContainer(resourceGroup);
+            return new CloudServiceCollection(resourceGroup);
         }
         #endregion
-
-        private static VirtualMachineScaleSetVMsRestOperations GetVirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new VirtualMachineScaleSetVMsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
-
-        /// <summary> Lists the VirtualMachineScaleSetVMDatas for this <see cref="ResourceGroup" />. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
-        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public static AsyncPageable<VirtualMachineScaleSetVMData> GetVirtualMachineScaleSetVMsByVirtualMachineScaleSetAsync(this ResourceGroup resourceGroup, string virtualMachineScaleSetName, string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachineScaleSetVMsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                async Task<Page<VirtualMachineScaleSetVMData>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllAsync(resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<VirtualMachineScaleSetVMData>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.GetAllNextPageAsync(nextLink, resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the VirtualMachineScaleSetVMDatas for this <see cref="ResourceGroup" />. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="filter"> The filter to apply to the operation. Allowed values are &apos;startswith(instanceView/statuses/code, &apos;PowerState&apos;) eq true&apos;, &apos;properties/latestModelApplied eq true&apos;, &apos;properties/latestModelApplied eq false&apos;. </param>
-        /// <param name="select"> The list parameters. Allowed values are &apos;instanceView&apos;, &apos;instanceView/statuses&apos;. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public static Pageable<VirtualMachineScaleSetVMData> GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet(this ResourceGroup resourceGroup, string virtualMachineScaleSetName, string filter = null, string select = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetVirtualMachineScaleSetVMsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                Page<VirtualMachineScaleSetVMData> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAll(resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<VirtualMachineScaleSetVMData> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetVirtualMachineScaleSetVMsByVirtualMachineScaleSet");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.GetAllNextPage(nextLink, resourceGroup.Id.ResourceGroupName, virtualMachineScaleSetName, filter, select, expand, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
     }
 }

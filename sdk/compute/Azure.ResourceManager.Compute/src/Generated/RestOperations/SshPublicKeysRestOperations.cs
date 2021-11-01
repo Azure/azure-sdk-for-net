@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionRequest()
+        internal HttpMessage CreateListBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SshPublicKeysGroupListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SshPublicKeysGroupListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SshPublicKeysGroupListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
+        public Response<SshPublicKeysGroupListResult> ListBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAllBySubscriptionRequest();
+            using var message = CreateListBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<SshPublicKeysGroupListResult>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SshPublicKeysGroupListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<SshPublicKeysGroupListResult> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SshPublicKeysGroupListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
+            using var message = CreateListByResourceGroupRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -635,14 +635,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<SshPublicKeysGroupListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<SshPublicKeysGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -662,14 +662,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<SshPublicKeysGroupListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<SshPublicKeysGroupListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<SshPublicKeysGroupListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SshPublicKeysGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<SshPublicKeysGroupListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SshPublicKeysGroupListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

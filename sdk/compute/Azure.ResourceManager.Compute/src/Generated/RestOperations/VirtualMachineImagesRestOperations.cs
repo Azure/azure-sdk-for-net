@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string location, string publisherName, string offer, string skus, string expand, int? top, string orderby)
+        internal HttpMessage CreateListRequest(string location, string publisherName, string offer, string skus, string expand, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetAllAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(skus));
             }
 
-            using var message = CreateGetAllRequest(location, publisherName, offer, skus, expand, top, orderby);
+            using var message = CreateListRequest(location, publisherName, offer, skus, expand, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, or <paramref name="skus"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> GetAll(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageResource>> List(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(skus));
             }
 
-            using var message = CreateGetAllRequest(location, publisherName, offer, skus, expand, top, orderby);
+            using var message = CreateListRequest(location, publisherName, offer, skus, expand, top, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetOffersRequest(string location, string publisherName)
+        internal HttpMessage CreateListOffersRequest(string location, string publisherName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(publisherName));
             }
 
-            using var message = CreateGetOffersRequest(location, publisherName);
+            using var message = CreateListOffersRequest(location, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> GetOffers(string location, string publisherName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageResource>> ListOffers(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(publisherName));
             }
 
-            using var message = CreateGetOffersRequest(location, publisherName);
+            using var message = CreateListOffersRequest(location, publisherName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetPublishersRequest(string location)
+        internal HttpMessage CreateListPublishersRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -417,14 +417,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetPublishersAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetPublishersRequest(location);
+            using var message = CreateListPublishersRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -449,14 +449,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> GetPublishers(string location, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageResource>> ListPublishers(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetPublishersRequest(location);
+            using var message = CreateListPublishersRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetSkusRequest(string location, string publisherName, string offer)
+        internal HttpMessage CreateListSkusRequest(string location, string publisherName, string offer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> GetSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(offer));
             }
 
-            using var message = CreateGetSkusRequest(location, publisherName, offer);
+            using var message = CreateListSkusRequest(location, publisherName, offer);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="offer"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> GetSkus(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageResource>> ListSkus(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(offer));
             }
 
-            using var message = CreateGetSkusRequest(location, publisherName, offer);
+            using var message = CreateListSkusRequest(location, publisherName, offer);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
