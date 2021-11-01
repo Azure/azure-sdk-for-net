@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class EndpointContainerTests : CdnManagementTestBase
+    public class OriginGroupCollectionTests : CdnManagementTestBase
     {
-        public EndpointContainerTests(bool isAsync)
+        public OriginGroupCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -28,9 +28,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
             Endpoint endpoint = await CreateEndpoint(profile, endpointName);
-            Assert.AreEqual(endpointName, endpoint.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await profile.GetEndpoints().CreateOrUpdateAsync(null, endpoint.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await profile.GetEndpoints().CreateOrUpdateAsync(endpointName, null));
+            string originGroupName = Recording.GenerateAssetName("origingroup-");
+            OriginGroup originGroup = await CreateOriginGroup(endpoint, originGroupName, endpoint.Data.Origins[0].Name);
+            Assert.AreEqual(originGroupName, originGroup.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetOriginGroups().CreateOrUpdateAsync(null, originGroup.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetOriginGroups().CreateOrUpdateAsync(originGroupName, null));
         }
 
         [TestCase]
@@ -42,9 +44,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             string profileName = Recording.GenerateAssetName("profile-");
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
-            _ = await CreateEndpoint(profile, endpointName);
+            Endpoint endpoint = await CreateEndpoint(profile, endpointName);
+            string originGroupName = Recording.GenerateAssetName("origingroup-");
+            _ = await CreateOriginGroup(endpoint, originGroupName, endpoint.Data.Origins[0].Name);
             int count = 0;
-            await foreach (var tempEndpoint in profile.GetEndpoints().GetAllAsync())
+            await foreach (var tempOriginGroup in endpoint.GetOriginGroups().GetAllAsync())
             {
                 count++;
             }
@@ -61,9 +65,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Profile profile = await CreateProfile(rg, profileName, SkuName.StandardMicrosoft);
             string endpointName = Recording.GenerateAssetName("endpoint-");
             Endpoint endpoint = await CreateEndpoint(profile, endpointName);
-            Endpoint getEndpoint = await profile.GetEndpoints().GetAsync(endpointName);
-            ResourceDataHelper.AssertValidEndpoint(endpoint, getEndpoint);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await profile.GetEndpoints().GetAsync(null));
+            string originGroupName = Recording.GenerateAssetName("origingroup-");
+            OriginGroup originGroup = await CreateOriginGroup(endpoint, originGroupName, endpoint.Data.Origins[0].Name);
+            OriginGroup getOriginGroup = await endpoint.GetOriginGroups().GetAsync(originGroupName);
+            ResourceDataHelper.AssertValidOriginGroup(originGroup, getOriginGroup);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await endpoint.GetOriginGroups().GetAsync(null));
         }
     }
 }

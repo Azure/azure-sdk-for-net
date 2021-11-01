@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class AFDSecretContainerTests : CdnManagementTestBase
+    public class AFDEndpointCollectionTests : CdnManagementTestBase
     {
-        public AFDSecretContainerTests(bool isAsync)
+        public AFDEndpointCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string secretName = Recording.GenerateAssetName("AFDSecret-");
-            Secret secret = await CreateSecret(AFDProfile, secretName);
-            Assert.AreEqual(secretName, secret.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().CreateOrUpdateAsync(null, secret.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().CreateOrUpdateAsync(secretName, null));
+            string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
+            AFDEndpoint AFDEndpointInstance = await CreateAFDEndpoint(AFDProfile, AFDEndpointName);
+            Assert.AreEqual(AFDEndpointName, AFDEndpointInstance.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDEndpoints().CreateOrUpdateAsync(null, AFDEndpointInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDEndpoints().CreateOrUpdateAsync(AFDEndpointName, null));
         }
 
         [TestCase]
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string secretName = Recording.GenerateAssetName("AFDSecret-");
-            _ = await CreateSecret(AFDProfile, secretName);
+            string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
+            _ = await CreateAFDEndpoint(AFDProfile, AFDEndpointName);
             int count = 0;
-            await foreach (var tempSecret in AFDProfile.GetSecrets().GetAllAsync())
+            await foreach (var tempAFDEndpoint in AFDProfile.GetAFDEndpoints().GetAllAsync())
             {
                 count++;
             }
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string secretName = Recording.GenerateAssetName("AFDSecret-");
-            Secret secret = await CreateSecret(AFDProfile, secretName);
-            Secret getSecret = await AFDProfile.GetSecrets().GetAsync(secretName);
-            ResourceDataHelper.AssertValidSecret(secret, getSecret);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().GetAsync(null));
+            string AFDEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
+            AFDEndpoint AFDEndpointInstance = await CreateAFDEndpoint(AFDProfile, AFDEndpointName);
+            AFDEndpoint getAFDEndpointInstance = await AFDProfile.GetAFDEndpoints().GetAsync(AFDEndpointName);
+            ResourceDataHelper.AssertValidAFDEndpoint(AFDEndpointInstance, getAFDEndpointInstance);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDEndpoints().GetAsync(null));
         }
     }
 }

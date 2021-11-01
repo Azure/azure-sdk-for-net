@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class AFDCustomDomainContainerTests : CdnManagementTestBase
+    public class AFDRuleCollectionTests : CdnManagementTestBase
     {
-        public AFDCustomDomainContainerTests(bool isAsync)
+        public AFDRuleCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -26,12 +26,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string AFDCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
-            string AFDHostName = "customdomain4afd-1.azuretest.net";
-            AFDDomain AFDCustomDomain = await CreateAFDCustomDomain(AFDProfile, AFDCustomDomainName, AFDHostName);
-            Assert.AreEqual(AFDCustomDomainName, AFDCustomDomain.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDDomains().CreateOrUpdateAsync(null, AFDCustomDomain.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDDomains().CreateOrUpdateAsync(AFDCustomDomainName, null));
+            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
+            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
+            string ruleName = Recording.GenerateAssetName("AFDRule");
+            Rule rule = await CreateRule(ruleSet, ruleName);
+            Assert.AreEqual(ruleName, rule.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().CreateOrUpdateAsync(null, rule.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().CreateOrUpdateAsync(ruleName, null));
         }
 
         [TestCase]
@@ -42,11 +43,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string AFDCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
-            string AFDHostName = "customdomain4afd-2.azuretest.net";
-            _ = await CreateAFDCustomDomain(AFDProfile, AFDCustomDomainName, AFDHostName);
+            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
+            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
+            string ruleName = Recording.GenerateAssetName("AFDRule");
+            _ = await CreateRule(ruleSet, ruleName);
             int count = 0;
-            await foreach (var tempAFDCustomDomain in AFDProfile.GetAFDDomains().GetAllAsync())
+            await foreach (var tempRule in ruleSet.GetRules().GetAllAsync())
             {
                 count++;
             }
@@ -61,12 +63,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string AFDCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
-            string AFDHostName = "customdomain4afd-3.azuretest.net";
-            AFDDomain AFDCustomDomain = await CreateAFDCustomDomain(AFDProfile, AFDCustomDomainName, AFDHostName);
-            AFDDomain getAFDCustomDomain = await AFDProfile.GetAFDDomains().GetAsync(AFDCustomDomainName);
-            ResourceDataHelper.AssertValidAFDCustomDomain(AFDCustomDomain, getAFDCustomDomain);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetAFDDomains().GetAsync(null));
+            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
+            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
+            string ruleName = Recording.GenerateAssetName("AFDRule");
+            Rule rule = await CreateRule(ruleSet, ruleName);
+            Rule getRule = await ruleSet.GetRules().GetAsync(ruleName);
+            ResourceDataHelper.AssertValidRule(rule, getRule);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().GetAsync(null));
         }
     }
 }

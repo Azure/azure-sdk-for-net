@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class AFDRuleContainerTests : CdnManagementTestBase
+    public class AFDSecretCollectionTests : CdnManagementTestBase
     {
-        public AFDRuleContainerTests(bool isAsync)
+        public AFDSecretCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -26,13 +26,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
-            string ruleName = Recording.GenerateAssetName("AFDRule");
-            Rule rule = await CreateRule(ruleSet, ruleName);
-            Assert.AreEqual(ruleName, rule.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().CreateOrUpdateAsync(null, rule.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().CreateOrUpdateAsync(ruleName, null));
+            string secretName = Recording.GenerateAssetName("AFDSecret-");
+            Secret secret = await CreateSecret(AFDProfile, secretName);
+            Assert.AreEqual(secretName, secret.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().CreateOrUpdateAsync(null, secret.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().CreateOrUpdateAsync(secretName, null));
         }
 
         [TestCase]
@@ -43,12 +41,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
-            string ruleName = Recording.GenerateAssetName("AFDRule");
-            _ = await CreateRule(ruleSet, ruleName);
+            string secretName = Recording.GenerateAssetName("AFDSecret-");
+            _ = await CreateSecret(AFDProfile, secretName);
             int count = 0;
-            await foreach (var tempRule in ruleSet.GetRules().GetAllAsync())
+            await foreach (var tempSecret in AFDProfile.GetSecrets().GetAllAsync())
             {
                 count++;
             }
@@ -63,13 +59,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
             Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            string ruleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            RuleSet ruleSet = await CreateRuleSet(AFDProfile, ruleSetName);
-            string ruleName = Recording.GenerateAssetName("AFDRule");
-            Rule rule = await CreateRule(ruleSet, ruleName);
-            Rule getRule = await ruleSet.GetRules().GetAsync(ruleName);
-            ResourceDataHelper.AssertValidRule(rule, getRule);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await ruleSet.GetRules().GetAsync(null));
+            string secretName = Recording.GenerateAssetName("AFDSecret-");
+            Secret secret = await CreateSecret(AFDProfile, secretName);
+            Secret getSecret = await AFDProfile.GetSecrets().GetAsync(secretName);
+            ResourceDataHelper.AssertValidSecret(secret, getSecret);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await AFDProfile.GetSecrets().GetAsync(null));
         }
     }
 }

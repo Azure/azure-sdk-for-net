@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class OriginContainerTests : CdnManagementTestBase
+    public class OriginCollectionTests : CdnManagementTestBase
     {
-        public OriginContainerTests(bool isAsync)
+        public OriginCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

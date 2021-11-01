@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class CdnWebApplicationFirewallPolicyContainerTests : CdnManagementTestBase
+    public class CdnWebApplicationFirewallPolicyCollectionTests : CdnManagementTestBase
     {
-        public CdnWebApplicationFirewallPolicyContainerTests(bool isAsync)
+        public CdnWebApplicationFirewallPolicyCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

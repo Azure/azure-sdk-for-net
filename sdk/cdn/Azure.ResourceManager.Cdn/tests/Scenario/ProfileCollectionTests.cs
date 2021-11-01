@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class AFDProfileContainerTests : CdnManagementTestBase
+    public class ProfileCollectionTests : CdnManagementTestBase
     {
-        public AFDProfileContainerTests(bool isAsync)
+        public ProfileCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            Assert.AreEqual(AFDProfileName, AFDProfile.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(null, AFDProfile.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(AFDProfileName, null));
+            string profileName = Recording.GenerateAssetName("profile-");
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
+            Assert.AreEqual(profileName, profile.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(null, profile.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(profileName, null));
         }
 
         [TestCase]
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            _ = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
+            string profileName = Recording.GenerateAssetName("profile-");
+            _ = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
-            await foreach (var tempAFDProfile in rg.GetProfiles().GetAllAsync())
+            await foreach (var tempProfile in rg.GetProfiles().GetAllAsync())
             {
                 count++;
             }
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
+            string profileName = Recording.GenerateAssetName("profile-");
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
             int count = 0;
-            await foreach (var tempAFDProfile in subscription.GetProfilesAsync())
+            await foreach (var tempProfile in subscription.GetProfilesAsync())
             {
-                if (tempAFDProfile.Data.Id == AFDProfile.Data.Id)
+                if (tempProfile.Data.Id == profile.Data.Id)
                 {
                     count++;
                 }
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
-            string AFDProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile AFDProfile = await CreateAFDProfile(rg, AFDProfileName, SkuName.StandardAzureFrontDoor);
-            Profile getAFDProfile = await rg.GetProfiles().GetAsync(AFDProfileName);
-            ResourceDataHelper.AssertValidProfile(AFDProfile, getAFDProfile);
+            string profileName = Recording.GenerateAssetName("profile-");
+            Profile profile = await CreateProfile(rg, profileName, SkuName.StandardAkamai);
+            Profile getProfile = await rg.GetProfiles().GetAsync(profileName);
+            ResourceDataHelper.AssertValidProfile(profile, getProfile);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().GetAsync(null));
         }
     }

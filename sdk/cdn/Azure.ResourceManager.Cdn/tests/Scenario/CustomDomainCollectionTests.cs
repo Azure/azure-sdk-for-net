@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
-    public class CustomDomainContainerTests : CdnManagementTestBase
+    public class CustomDomainCollectionTests : CdnManagementTestBase
     {
-        public CustomDomainContainerTests(bool isAsync)
+        public CustomDomainCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
