@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This represents the prediction result of an Orchestrator project. </summary>
     public partial class OrchestratorPrediction : BasePrediction
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
 
             Intents = intents;
-            ProjectKind = Models.ProjectKind.Workflow;
+            ProjectKind = ProjectKind.Workflow;
         }
 
         /// <summary> Initializes a new instance of OrchestratorPrediction. </summary>

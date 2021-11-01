@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> Represents the prediction section of a Conversation project. </summary>
     public partial class ConversationPrediction : BasePrediction
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Models
 
             Intents = intents.ToList();
             Entities = entities.ToList();
-            ProjectKind = Models.ProjectKind.Conversation;
+            ProjectKind = ProjectKind.Conversation;
         }
 
         /// <summary> Initializes a new instance of ConversationPrediction. </summary>

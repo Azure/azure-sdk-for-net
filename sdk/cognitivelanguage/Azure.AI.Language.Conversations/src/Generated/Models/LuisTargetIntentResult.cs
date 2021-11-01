@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.Language.Conversations;
+
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is a wrap up of LUIS Generally Available response. </summary>

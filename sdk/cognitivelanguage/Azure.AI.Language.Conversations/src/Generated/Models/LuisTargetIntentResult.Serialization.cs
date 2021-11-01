@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.Language.Conversations;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models

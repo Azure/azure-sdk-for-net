@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     public partial class TargetIntentResult
     {

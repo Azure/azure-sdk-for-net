@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This is the base class of prediction. </summary>
     public partial class BasePrediction
@@ -23,6 +23,9 @@ namespace Azure.AI.Language.Conversations.Models
             ProjectKind = projectKind;
             TopIntent = topIntent;
         }
+
+        /// <summary> The type of the project. </summary>
+        internal ProjectKind ProjectKind { get; set; }
         /// <summary> The intent with the highest score. </summary>
         public string TopIntent { get; }
     }
