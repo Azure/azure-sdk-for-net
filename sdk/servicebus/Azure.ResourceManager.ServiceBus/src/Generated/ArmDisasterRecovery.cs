@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly DisasterRecoveryConfigsRestOperations _restClient;
         private readonly ArmDisasterRecoveryData _data;
-        private DisasterRecoveryConfigAuthorizationRulesRestOperations _disasterRecoveryConfigAuthorizationRulesRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecovery"/> class for mocking. </summary>
         protected ArmDisasterRecovery()
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.ServiceBus
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecovery"/> class. </summary>
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="ArmDisasterRecovery"/> class. </summary>
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DisasterRecoveryConfigsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-            _disasterRecoveryConfigAuthorizationRulesRestClient = new DisasterRecoveryConfigAuthorizationRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -261,152 +257,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SBAuthorizationRuleData>> GetDisasterRecoveryConfigAuthorizationRuleAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a list of DisasterRecoveryConfigSBAuthorizationRules in the ArmDisasterRecovery. </summary>
+        /// <returns> An object representing collection of DisasterRecoveryConfigSBAuthorizationRules and their operations over a ArmDisasterRecovery. </returns>
+        public DisasterRecoveryConfigSBAuthorizationRuleCollection GetDisasterRecoveryConfigSBAuthorizationRules()
         {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets an authorization rule for a namespace by rule name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SBAuthorizationRuleData> GetDisasterRecoveryConfigAuthorizationRule(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRule");
-            scope.Start();
-            try
-            {
-                var response = _disasterRecoveryConfigAuthorizationRulesRestClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the primary and secondary connection strings for the namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessKeys>> GetDisasterRecoveryConfigAuthorizationRuleKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRuleKeys");
-            scope.Start();
-            try
-            {
-                var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the primary and secondary connection strings for the namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessKeys> GetDisasterRecoveryConfigAuthorizationRuleKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRuleKeys");
-            scope.Start();
-            try
-            {
-                var response = _disasterRecoveryConfigAuthorizationRulesRestClient.GetKeys(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the authorization rules for a namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SBAuthorizationRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SBAuthorizationRuleData> GetDisasterRecoveryConfigAuthorizationRules(CancellationToken cancellationToken = default)
-        {
-            Page<SBAuthorizationRuleData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = _disasterRecoveryConfigAuthorizationRulesRestClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SBAuthorizationRuleData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = _disasterRecoveryConfigAuthorizationRulesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets the authorization rules for a namespace. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SBAuthorizationRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SBAuthorizationRuleData> GetDisasterRecoveryConfigAuthorizationRulesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SBAuthorizationRuleData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SBAuthorizationRuleData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ArmDisasterRecovery.GetDisasterRecoveryConfigAuthorizationRules");
-                scope.Start();
-                try
-                {
-                    var response = await _disasterRecoveryConfigAuthorizationRulesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return new DisasterRecoveryConfigSBAuthorizationRuleCollection(this);
         }
     }
 }

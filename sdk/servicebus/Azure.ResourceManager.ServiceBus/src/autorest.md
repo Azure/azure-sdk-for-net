@@ -15,10 +15,12 @@ operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.ServiceBus/namespaces/privateLinkResources
     NamespaceName: nonresourcetype1
     DisasterRecoveryConfigName: nonresourcetype2
+    DisasterRecoveryConfigAuthorizationRules: Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules
 operation-group-to-resource:
     PrivateLinkResources: NonResource
     NamespaceName: NonResource
     DisasterRecoveryConfigName: NonResource
+    DisasterRecoveryConfigAuthorizationRules: SBAuthorizationRule
 operation-group-to-parent:
     Queues: Microsoft.ServiceBus/namespaces
     Topics: Microsoft.ServiceBus/namespaces
@@ -93,18 +95,6 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
       transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].delete.operationId
-      transform: return "TopicAuthorizationRules_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].get.operationId
-      transform: return "TopicAuthorizationRules_Get"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/ListKeys'].post.operationId
-      transform: return "TopicAuthorizationRules_ListKeys"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
-      transform: return "TopicAuthorizationRules_RegenerateKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability'].post.operationId
       transform: return "NamespaceName_CheckAvailability"

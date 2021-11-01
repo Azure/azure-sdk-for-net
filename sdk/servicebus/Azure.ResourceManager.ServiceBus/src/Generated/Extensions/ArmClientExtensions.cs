@@ -45,6 +45,17 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
+        #region DisasterRecoveryConfigSBAuthorizationRule
+        /// <summary> Gets an object representing a DisasterRecoveryConfigSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigSBAuthorizationRule" /> object. </returns>
+        public static DisasterRecoveryConfigSBAuthorizationRule GetDisasterRecoveryConfigSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryConfigSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region MigrationConfigProperties
         /// <summary> Gets an object representing a MigrationConfigProperties along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
