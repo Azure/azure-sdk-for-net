@@ -157,7 +157,7 @@ function New-GitHubPullRequest {
           -MaximumRetryCount 3
 }
 
-function Create-GithubIssue {
+function New-GitHubIssue {
   param (
     [Parameter(Mandatory = $true)]
     $RepoOwner,
