@@ -23,9 +23,6 @@ namespace Azure.AI.Language.Conversations
             ProjectKind = projectKind;
             TopIntent = topIntent;
         }
-
-        /// <summary> The type of the project. </summary>
-        internal ProjectKind ProjectKind { get; set; }
         /// <summary> The intent with the highest score. </summary>
         public string TopIntent { get; }
     }

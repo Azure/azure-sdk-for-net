@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations
 
             Intents = intents.ToList();
             Entities = entities.ToList();
-            ProjectKind = ProjectKind.Conversation;
+            ProjectKind = Conversations.ProjectKind.Conversation;
         }
 
         /// <summary> Initializes a new instance of ConversationPrediction. </summary>
