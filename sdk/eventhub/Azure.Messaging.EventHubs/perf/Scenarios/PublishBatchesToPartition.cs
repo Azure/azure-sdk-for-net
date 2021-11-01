@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Test.Perf;
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="BatchPublishPerfTest" />
     ///
-    public sealed class PublishBatchesToPartition : BatchPublishPerfTest
+    public sealed class PublishBatchesToPartition : BatchPublishPerfTest<EventHubsPartitionOptions>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="PublishBatchesToPartition"/> class.
@@ -23,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public PublishBatchesToPartition(SizeCountOptions options) : base(options)
+        public PublishBatchesToPartition(EventHubsPartitionOptions options) : base(options)
         {
         }
 
@@ -38,9 +39,10 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         protected async override Task<CreateBatchOptions> CreateBatchOptions(EventHubProducerClient producer)
         {
-            // Query the available partitions and select the first for use in the batch options.
-
-            var partition = (await producer.GetPartitionIdsAsync().ConfigureAwait(false)).First();
+            // Query the available partitions and select the partition for use in the batch options.
+            var partitions = await producer.GetPartitionIdsAsync().ConfigureAwait(false);
+            var partitionsToPublish = Options.Partitions == -1 ? partitions.Length : Options.Partitions;
+            var partition = partitions[ParallelIndex % partitionsToPublish];
 
             return new CreateBatchOptions
             {
