@@ -330,7 +330,7 @@ namespace Azure.Communication.Identity
         {
             var testClock = new TestClock();
             var twentyMinToken = GenerateTokenValidForMinutes(testClock.UtcNow, 20);
-            var proactiveRefreshIntervalInMinutes = 5;
+            var proactiveRefreshIntervalInMinutes = 10;
             var refreshOffsetTime = new TimeSpan(0, 0, proactiveRefreshIntervalInMinutes, 0);
             using var tokenCredential = new AutoRefreshTokenCredential(
                 new CommunicationTokenRefreshOptions(true, refreshOffsetTime, _ => GenerateTokenValidForMinutes(testClock.UtcNow, 20))
