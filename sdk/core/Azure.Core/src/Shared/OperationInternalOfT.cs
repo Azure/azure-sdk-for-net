@@ -165,7 +165,7 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                TimeSpan serverDelay = GetServerDelay(response);
+                TimeSpan serverDelay = OperationHelpers.GetServerDelay(response);
 
                 TimeSpan delay = serverDelay > pollingInterval
                     ? serverDelay : pollingInterval;

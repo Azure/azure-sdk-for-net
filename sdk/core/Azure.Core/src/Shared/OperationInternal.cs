@@ -29,10 +29,6 @@ namespace Azure.Core
     /// </summary>
     internal class OperationInternal
     {
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
-
         private readonly IOperation _operation;
 
         private readonly ClientDiagnostics _diagnostics;
@@ -65,7 +61,12 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation operation, Response rawResponse, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
+        public OperationInternal(
+            ClientDiagnostics clientDiagnostics,
+            IOperation operation,
+            Response rawResponse,
+            string operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
         {
             operationTypeName ??= operation.GetType().Name;
 
@@ -191,10 +192,11 @@ namespace Azure.Core
                     return response;
                 }
 
-                TimeSpan serverDelay = GetServerDelay(response);
+                TimeSpan serverDelay = OperationHelpers.GetServerDelay(response);
 
                 TimeSpan delay = serverDelay > pollingInterval
-                    ? serverDelay : pollingInterval;
+                    ? serverDelay
+                    : pollingInterval;
 
                 await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
             }
@@ -242,9 +244,10 @@ namespace Azure.Core
                 }
                 else
                 {
-                    _operationFailedException = state.OperationFailedException ?? (async
-                        ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
-                        : _diagnostics.CreateRequestFailedException(state.RawResponse));
+                    _operationFailedException = state.OperationFailedException ??
+                                                (async
+                                                    ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
+                                                    : _diagnostics.CreateRequestFailedException(state.RawResponse));
                     HasCompleted = true;
 
                     throw _operationFailedException;
@@ -252,28 +255,6 @@ namespace Azure.Core
             }
 
             return state.RawResponse;
-        }
-
-        protected static TimeSpan GetServerDelay(Response response)
-        {
-            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string retryAfterValue)
-                || response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
-                {
-                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
-                }
-            }
-
-            if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
-                {
-                    return TimeSpan.FromSeconds(serverDelayInSeconds);
-                }
-            }
-
-            return TimeSpan.Zero;
         }
     }
 
