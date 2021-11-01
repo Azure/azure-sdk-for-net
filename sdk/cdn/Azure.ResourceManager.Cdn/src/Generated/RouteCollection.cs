@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of Route and their operations over a AFDEndpoint. </summary>
-    public partial class RouteContainer : ArmContainer
+    public partial class RouteCollection : ArmCollection, IEnumerable<Route>, IAsyncEnumerable<Route>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RoutesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RouteContainer"/> class for mocking. </summary>
-        protected RouteContainer()
+        /// <summary> Initializes a new instance of the <see cref="RouteCollection"/> class for mocking. </summary>
+        protected RouteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteContainer class. </summary>
+        /// <summary> Initializes a new instance of RouteCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RouteContainer(ArmResource parent) : base(parent)
+        internal RouteCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RoutesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<Route> IEnumerable<Route>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Route> IAsyncEnumerable<Route>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => AFDEndpoint.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(route));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(route));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Route> Get(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Route>> GetAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Route> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Route>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RouteCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Route> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Route> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Route>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Route>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RouteCollection.GetAll");
                 scope.Start();
                 try
                 {

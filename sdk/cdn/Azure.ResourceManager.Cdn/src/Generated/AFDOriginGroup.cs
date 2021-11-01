@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a list of AFDOrigins in the AFDOriginGroup. </summary>
         /// <returns> An object representing collection of AFDOrigins and their operations over a AFDOriginGroup. </returns>
-        public AFDOriginContainer GetAFDOrigins()
+        public AFDOriginCollection GetAFDOrigins()
         {
-            return new AFDOriginContainer(this);
+            return new AFDOriginCollection(this);
         }
     }
 }

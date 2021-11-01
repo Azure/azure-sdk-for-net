@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AFDOriginGroup and their operations over a Profile. </summary>
-    public partial class AFDOriginGroupContainer : ArmContainer
+    public partial class AFDOriginGroupCollection : ArmCollection, IEnumerable<AFDOriginGroup>, IAsyncEnumerable<AFDOriginGroup>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AFDOriginGroupsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AFDOriginGroupContainer"/> class for mocking. </summary>
-        protected AFDOriginGroupContainer()
+        /// <summary> Initializes a new instance of the <see cref="AFDOriginGroupCollection"/> class for mocking. </summary>
+        protected AFDOriginGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDOriginGroupContainer class. </summary>
+        /// <summary> Initializes a new instance of AFDOriginGroupCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AFDOriginGroupContainer(ArmResource parent) : base(parent)
+        internal AFDOriginGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new AFDOriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<AFDOriginGroup> IEnumerable<AFDOriginGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<AFDOriginGroup> IAsyncEnumerable<AFDOriginGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Profile.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new origin group within the specified profile. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<AFDOriginGroup> Get(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<AFDOriginGroup>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<AFDOriginGroup> GetIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<AFDOriginGroup>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<AFDOriginGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<AFDOriginGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<AFDOriginGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<AFDOriginGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDOriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {

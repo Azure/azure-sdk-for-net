@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new Endpoint(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -745,23 +745,23 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a list of Origins in the Endpoint. </summary>
         /// <returns> An object representing collection of Origins and their operations over a Endpoint. </returns>
-        public OriginContainer GetOrigins()
+        public OriginCollection GetOrigins()
         {
-            return new OriginContainer(this);
+            return new OriginCollection(this);
         }
 
         /// <summary> Gets a list of OriginGroups in the Endpoint. </summary>
         /// <returns> An object representing collection of OriginGroups and their operations over a Endpoint. </returns>
-        public OriginGroupContainer GetOriginGroups()
+        public OriginGroupCollection GetOriginGroups()
         {
-            return new OriginGroupContainer(this);
+            return new OriginGroupCollection(this);
         }
 
         /// <summary> Gets a list of CustomDomains in the Endpoint. </summary>
         /// <returns> An object representing collection of CustomDomains and their operations over a Endpoint. </returns>
-        public CustomDomainContainer GetCustomDomains()
+        public CustomDomainCollection GetCustomDomains()
         {
-            return new CustomDomainContainer(this);
+            return new CustomDomainCollection(this);
         }
     }
 }

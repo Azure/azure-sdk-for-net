@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of OriginGroup and their operations over a Endpoint. </summary>
-    public partial class OriginGroupContainer : ArmContainer
+    public partial class OriginGroupCollection : ArmCollection, IEnumerable<OriginGroup>, IAsyncEnumerable<OriginGroup>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly OriginGroupsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OriginGroupContainer"/> class for mocking. </summary>
-        protected OriginGroupContainer()
+        /// <summary> Initializes a new instance of the <see cref="OriginGroupCollection"/> class for mocking. </summary>
+        protected OriginGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of OriginGroupContainer class. </summary>
+        /// <summary> Initializes a new instance of OriginGroupCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OriginGroupContainer(ArmResource parent) : base(parent)
+        internal OriginGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new OriginGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<OriginGroup> IEnumerable<OriginGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<OriginGroup> IAsyncEnumerable<OriginGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Endpoint.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new origin group within the specified endpoint. </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<OriginGroup> Get(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<OriginGroup>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<OriginGroup> GetIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<OriginGroup>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<OriginGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<OriginGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<OriginGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<OriginGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginGroupContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginGroupCollection.GetAll");
                 scope.Start();
                 try
                 {

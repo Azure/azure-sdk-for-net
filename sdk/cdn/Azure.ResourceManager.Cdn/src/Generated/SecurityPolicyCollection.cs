@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of SecurityPolicy and their operations over a Profile. </summary>
-    public partial class SecurityPolicyContainer : ArmContainer
+    public partial class SecurityPolicyCollection : ArmCollection, IEnumerable<SecurityPolicy>, IAsyncEnumerable<SecurityPolicy>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecurityPoliciesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyContainer"/> class for mocking. </summary>
-        protected SecurityPolicyContainer()
+        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyCollection"/> class for mocking. </summary>
+        protected SecurityPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyContainer class. </summary>
+        /// <summary> Initializes a new instance of SecurityPolicyCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SecurityPolicyContainer(ArmResource parent) : base(parent)
+        internal SecurityPolicyCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SecurityPoliciesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<SecurityPolicy> IEnumerable<SecurityPolicy>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<SecurityPolicy> IAsyncEnumerable<SecurityPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Profile.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new security policy within the specified profile. </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicy));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(securityPolicy));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SecurityPolicy> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SecurityPolicy>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<SecurityPolicy> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<SecurityPolicy>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<SecurityPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<SecurityPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<SecurityPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<SecurityPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecurityPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {

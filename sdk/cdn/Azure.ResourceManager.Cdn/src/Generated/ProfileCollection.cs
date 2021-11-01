@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,28 +22,43 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of Profile and their operations over a ResourceGroup. </summary>
-    public partial class ProfileContainer : ArmContainer
+    public partial class ProfileCollection : ArmCollection, IEnumerable<Profile>, IAsyncEnumerable<Profile>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ProfilesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProfileContainer"/> class for mocking. </summary>
-        protected ProfileContainer()
+        /// <summary> Initializes a new instance of the <see cref="ProfileCollection"/> class for mocking. </summary>
+        protected ProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ProfileContainer class. </summary>
+        /// <summary> Initializes a new instance of ProfileCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ProfileContainer(ArmResource parent) : base(parent)
+        internal ProfileCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<Profile> IEnumerable<Profile>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Profile> IAsyncEnumerable<Profile>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new CDN profile with a profile name under the specified subscription and resource group. </summary>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
@@ -60,7 +77,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profile));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,7 +111,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(profile));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -116,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Profile> Get(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
             try
             {
@@ -142,7 +159,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Profile>> GetAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.Get");
             scope.Start();
             try
             {
@@ -168,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Profile> GetIfExists(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -194,7 +211,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Profile>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -220,7 +237,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -244,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -270,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Profile> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -285,7 +302,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Profile> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -308,7 +325,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Profile>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -323,7 +340,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Profile>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -347,7 +364,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -370,7 +387,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProfileContainer.GetAllAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ProfileCollection.GetAllAsGenericResources");
             scope.Start();
             try
             {

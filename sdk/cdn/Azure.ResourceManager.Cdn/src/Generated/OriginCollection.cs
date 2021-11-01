@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of Origin and their operations over a Endpoint. </summary>
-    public partial class OriginContainer : ArmContainer
+    public partial class OriginCollection : ArmCollection, IEnumerable<Origin>, IAsyncEnumerable<Origin>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly OriginsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OriginContainer"/> class for mocking. </summary>
-        protected OriginContainer()
+        /// <summary> Initializes a new instance of the <see cref="OriginCollection"/> class for mocking. </summary>
+        protected OriginCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of OriginContainer class. </summary>
+        /// <summary> Initializes a new instance of OriginCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OriginContainer(ArmResource parent) : base(parent)
+        internal OriginCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new OriginsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<Origin> IEnumerable<Origin>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Origin> IAsyncEnumerable<Origin>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Endpoint.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new origin within the specified endpoint. </summary>
         /// <param name="originName"> Name of the origin that is unique within the endpoint. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Origin> Get(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Origin>> GetAsync(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Origin> GetIfExists(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Origin>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string originName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OriginContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("OriginCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Origin> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Origin> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Origin>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Origin>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("OriginContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("OriginCollection.GetAll");
                 scope.Start();
                 try
                 {

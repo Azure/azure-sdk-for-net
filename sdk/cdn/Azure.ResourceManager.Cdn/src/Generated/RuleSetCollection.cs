@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of RuleSet and their operations over a Profile. </summary>
-    public partial class RuleSetContainer : ArmContainer
+    public partial class RuleSetCollection : ArmCollection, IEnumerable<RuleSet>, IAsyncEnumerable<RuleSet>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RuleSetsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RuleSetContainer"/> class for mocking. </summary>
-        protected RuleSetContainer()
+        /// <summary> Initializes a new instance of the <see cref="RuleSetCollection"/> class for mocking. </summary>
+        protected RuleSetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleSetContainer class. </summary>
+        /// <summary> Initializes a new instance of RuleSetCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RuleSetContainer(ArmResource parent) : base(parent)
+        internal RuleSetCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RuleSetsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<RuleSet> IEnumerable<RuleSet>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<RuleSet> IAsyncEnumerable<RuleSet>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Profile.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new rule set within the specified profile. </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
@@ -54,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -83,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(ruleSetName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -105,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<RuleSet> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.Get");
             scope.Start();
             try
             {
@@ -131,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<RuleSet>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.Get");
             scope.Start();
             try
             {
@@ -157,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<RuleSet> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -183,7 +200,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<RuleSet>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -209,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -233,7 +250,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -259,7 +276,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<RuleSet> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -274,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<RuleSet> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -297,7 +314,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<RuleSet>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -312,7 +329,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<RuleSet>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleSetContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("RuleSetCollection.GetAll");
                 scope.Start();
                 try
                 {

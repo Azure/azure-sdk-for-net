@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new Profile(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1043,51 +1043,51 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a list of Endpoints in the Profile. </summary>
         /// <returns> An object representing collection of Endpoints and their operations over a Profile. </returns>
-        public EndpointContainer GetEndpoints()
+        public EndpointCollection GetEndpoints()
         {
-            return new EndpointContainer(this);
+            return new EndpointCollection(this);
         }
 
         /// <summary> Gets a list of AFDDomains in the Profile. </summary>
         /// <returns> An object representing collection of AFDDomains and their operations over a Profile. </returns>
-        public AFDDomainContainer GetAFDDomains()
+        public AFDDomainCollection GetAFDDomains()
         {
-            return new AFDDomainContainer(this);
+            return new AFDDomainCollection(this);
         }
 
         /// <summary> Gets a list of AFDEndpoints in the Profile. </summary>
         /// <returns> An object representing collection of AFDEndpoints and their operations over a Profile. </returns>
-        public AFDEndpointContainer GetAFDEndpoints()
+        public AFDEndpointCollection GetAFDEndpoints()
         {
-            return new AFDEndpointContainer(this);
+            return new AFDEndpointCollection(this);
         }
 
         /// <summary> Gets a list of AFDOriginGroups in the Profile. </summary>
         /// <returns> An object representing collection of AFDOriginGroups and their operations over a Profile. </returns>
-        public AFDOriginGroupContainer GetAFDOriginGroups()
+        public AFDOriginGroupCollection GetAFDOriginGroups()
         {
-            return new AFDOriginGroupContainer(this);
+            return new AFDOriginGroupCollection(this);
         }
 
         /// <summary> Gets a list of RuleSets in the Profile. </summary>
         /// <returns> An object representing collection of RuleSets and their operations over a Profile. </returns>
-        public RuleSetContainer GetRuleSets()
+        public RuleSetCollection GetRuleSets()
         {
-            return new RuleSetContainer(this);
+            return new RuleSetCollection(this);
         }
 
         /// <summary> Gets a list of SecurityPolicies in the Profile. </summary>
         /// <returns> An object representing collection of SecurityPolicies and their operations over a Profile. </returns>
-        public SecurityPolicyContainer GetSecurityPolicies()
+        public SecurityPolicyCollection GetSecurityPolicies()
         {
-            return new SecurityPolicyContainer(this);
+            return new SecurityPolicyCollection(this);
         }
 
         /// <summary> Gets a list of Secrets in the Profile. </summary>
         /// <returns> An object representing collection of Secrets and their operations over a Profile. </returns>
-        public SecretContainer GetSecrets()
+        public SecretCollection GetSecrets()
         {
-            return new SecretContainer(this);
+            return new SecretCollection(this);
         }
     }
 }

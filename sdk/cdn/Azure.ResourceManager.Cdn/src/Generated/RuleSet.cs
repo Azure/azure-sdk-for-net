@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets a list of Rules in the RuleSet. </summary>
         /// <returns> An object representing collection of Rules and their operations over a RuleSet. </returns>
-        public RuleContainer GetRules()
+        public RuleCollection GetRules()
         {
-            return new RuleContainer(this);
+            return new RuleCollection(this);
         }
     }
 }

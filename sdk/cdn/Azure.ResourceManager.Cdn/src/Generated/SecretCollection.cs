@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of Secret and their operations over a Profile. </summary>
-    public partial class SecretContainer : ArmContainer
+    public partial class SecretCollection : ArmCollection, IEnumerable<Secret>, IAsyncEnumerable<Secret>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SecretsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecretContainer"/> class for mocking. </summary>
-        protected SecretContainer()
+        /// <summary> Initializes a new instance of the <see cref="SecretCollection"/> class for mocking. </summary>
+        protected SecretCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretContainer class. </summary>
+        /// <summary> Initializes a new instance of SecretCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SecretContainer(ArmResource parent) : base(parent)
+        internal SecretCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SecretsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<Secret> IEnumerable<Secret>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<Secret> IAsyncEnumerable<Secret>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Profile.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new Secret within the specified profile. </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secret));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(secret));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Secret> Get(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Secret>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<Secret> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<Secret>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SecretContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SecretCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<Secret> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<Secret> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<Secret>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<Secret>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SecretContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SecretCollection.GetAll");
                 scope.Start();
                 try
                 {

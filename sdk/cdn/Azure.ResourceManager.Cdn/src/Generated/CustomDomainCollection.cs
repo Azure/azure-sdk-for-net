@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of CustomDomain and their operations over a Endpoint. </summary>
-    public partial class CustomDomainContainer : ArmContainer
+    public partial class CustomDomainCollection : ArmCollection, IEnumerable<CustomDomain>, IAsyncEnumerable<CustomDomain>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly CustomDomainsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CustomDomainContainer"/> class for mocking. </summary>
-        protected CustomDomainContainer()
+        /// <summary> Initializes a new instance of the <see cref="CustomDomainCollection"/> class for mocking. </summary>
+        protected CustomDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomDomainContainer class. </summary>
+        /// <summary> Initializes a new instance of CustomDomainCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CustomDomainContainer(ArmResource parent) : base(parent)
+        internal CustomDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new CustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<CustomDomain> IEnumerable<CustomDomain>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<CustomDomain> IAsyncEnumerable<CustomDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Endpoint.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new custom domain within an endpoint. </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomainProperties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<CustomDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<CustomDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<CustomDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<CustomDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<CustomDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CustomDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<CustomDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CustomDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CustomDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("CustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {

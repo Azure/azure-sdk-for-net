@@ -13,22 +13,22 @@ namespace Azure.ResourceManager.Cdn
     public static partial class ResourceGroupExtensions
     {
         #region Profile
-        /// <summary> Gets an object representing a ProfileContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a ProfileCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ProfileContainer" /> object. </returns>
-        public static ProfileContainer GetProfiles(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="ProfileCollection" /> object. </returns>
+        public static ProfileCollection GetProfiles(this ResourceGroup resourceGroup)
         {
-            return new ProfileContainer(resourceGroup);
+            return new ProfileCollection(resourceGroup);
         }
         #endregion
 
         #region CdnWebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicyContainer along with the instance operations that can be performed on it. </summary>
+        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicyCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyContainer" /> object. </returns>
-        public static CdnWebApplicationFirewallPolicyContainer GetCdnWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
+        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyCollection" /> object. </returns>
+        public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
         {
-            return new CdnWebApplicationFirewallPolicyContainer(resourceGroup);
+            return new CdnWebApplicationFirewallPolicyCollection(resourceGroup);
         }
         #endregion
     }

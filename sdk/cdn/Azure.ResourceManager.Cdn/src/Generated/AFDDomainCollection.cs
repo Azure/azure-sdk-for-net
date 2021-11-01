@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,28 +21,43 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing collection of AFDDomain and their operations over a Profile. </summary>
-    public partial class AFDDomainContainer : ArmContainer
+    public partial class AFDDomainCollection : ArmCollection, IEnumerable<AFDDomain>, IAsyncEnumerable<AFDDomain>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AFDCustomDomainsRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AFDDomainContainer"/> class for mocking. </summary>
-        protected AFDDomainContainer()
+        /// <summary> Initializes a new instance of the <see cref="AFDDomainCollection"/> class for mocking. </summary>
+        protected AFDDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of AFDDomainContainer class. </summary>
+        /// <summary> Initializes a new instance of AFDDomainCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal AFDDomainContainer(ArmResource parent) : base(parent)
+        internal AFDDomainCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new AFDCustomDomainsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        IEnumerator<AFDDomain> IEnumerable<AFDDomain>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<AFDDomain> IAsyncEnumerable<AFDDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Profile.ResourceType;
 
-        // Container level operations.
+        // Collection level operations.
 
         /// <summary> Creates a new domain within the specified profile. </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -93,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentNullException(nameof(customDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -115,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<AFDDomain> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<AFDDomain>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.Get");
             scope.Start();
             try
             {
@@ -167,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<AFDDomain> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -193,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<AFDDomain>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -219,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -243,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -269,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<AFDDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -284,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<AFDDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -307,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<AFDDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -322,7 +339,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<AFDDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AFDDomainContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("AFDDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
