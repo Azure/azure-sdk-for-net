@@ -2,7 +2,11 @@
   "version": "0.1",
   "language": "en_US",
   "languageId": "csharp",
-  "dictionaries": ["powershell", "softwareTerms", "csharp"],
+  "dictionaries": [
+    "powershell",
+    "softwareTerms",
+    "csharp"
+  ],
   "ignorePaths": [
     "**/SessionRecords/**",
     "**/packages/**",
@@ -27,7 +31,6 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
-
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -50,10 +53,13 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "AAAAABBB",
+    "AAAAABBBBBCCCCC",
     "apos",
     "azsdk",
     "blazor",
     "contoso",
+    "cref",
     "deduplication",
     "deserializable",
     "deserializes",
@@ -73,6 +79,7 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -81,19 +88,29 @@
     "retriable",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "words": [
+        "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/tests/**/*.cs",
+      "words": [
+        "adcde",
+        "cbca",
+        "FFFD",
+        "Jsons"
+      ]
     },
     {
       "filename": "**/sdk/compute/**/*.cs",
@@ -121,7 +138,9 @@
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
-      "words": ["ZhHant"]
+      "words": [
+        "ZhHant"
+      ]
     },
     {
       "filename": "**/sdk/network/**/*.cs",
@@ -139,7 +158,7 @@
         "WAFV",
         "Eapmscha",
         "Eaptls",
-        "TLSDHEDSS", 
+        "TLSDHEDSS",
         "TLSDHERSA",
         "Dnat",
         "Azfw",
@@ -165,7 +184,9 @@
     },
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
-      "words": ["Puid"]
+      "words": [
+        "Puid"
+      ]
     },
     {
       "filename": "**/sdk/search/**/*.cs",

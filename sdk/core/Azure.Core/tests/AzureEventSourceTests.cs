@@ -52,15 +52,15 @@ namespace Azure.Core.Tests
                 LogEvent(es1);
                 LogEvent(es2);
 
-                Assert.AreEqual("Azure-Corez", es0.Name);
-                Assert.AreEqual("Azure-Corez-1", es1.Name);
-                Assert.AreEqual("Azure-Corez-2", es2.Name);
+                Assert.AreEqual("Azure-Core", es0.Name);
+                Assert.AreEqual("Azure-Core-1", es1.Name);
+                Assert.AreEqual("Azure-Core-2", es2.Name);
 
                 Assert.AreEqual(3, events.Count);
 
-                Assert.AreEqual("Azure-Corez", events[0].EventSource.Name);
-                Assert.AreEqual("Azure-Corez-1", events[1].EventSource.Name);
-                Assert.AreEqual("Azure-Corez-2", events[2].EventSource.Name);
+                Assert.AreEqual("Azure-Core", events[0].EventSource.Name);
+                Assert.AreEqual("Azure-Core-1", events[1].EventSource.Name);
+                Assert.AreEqual("Azure-Core-2", events[2].EventSource.Name);
             }
             finally
             {
@@ -85,7 +85,7 @@ namespace Azure.Core.Tests
 
         internal class TestEventSource: AzureEventSource
         {
-            public TestEventSource() : base("Azure-Corez")
+            public TestEventSource() : base("Azure-Core")
             {
             }
 
