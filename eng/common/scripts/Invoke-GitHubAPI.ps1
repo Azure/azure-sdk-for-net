@@ -165,6 +165,8 @@ function Create-GithubIssue {
     $RepoName,
     [Parameter(Mandatory = $true)]
     $Title,
+    [Parameter(Mandatory = $true)]
+    $Description,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
@@ -174,6 +176,7 @@ function Create-GithubIssue {
 
   $parameters = @{
     title = $Title
+    body = $Description
   }
 
   return Invoke-RestMethod `
