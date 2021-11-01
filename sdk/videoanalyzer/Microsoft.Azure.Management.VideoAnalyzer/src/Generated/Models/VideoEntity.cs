@@ -16,7 +16,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
     using System.Linq;
 
     /// <summary>
-    /// The representation of a single video in a Video Analyzer account.
+    /// Represents a video resource within Azure Video Analyzer. Videos can be
+    /// ingested from RTSP cameras through live pipelines or can be created by
+    /// exporting sequences from existing captured video through a pipeline
+    /// job. Videos ingested through live pipelines can be streamed through
+    /// Azure Video Analyzer Player Widget or compatible players. Exported
+    /// videos can be downloaded as MP4 files.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VideoEntity : ProxyResource
@@ -38,32 +43,32 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="title">Optional video title provided by the user.
         /// Value can be up to 256 characters long.</param>
         /// <param name="description">Optional video description provided by
         /// the user. Value can be up to 2048 characters long.</param>
-        /// <param name="videoEntityType">Type of the video archive. Different
-        /// archive formats provide different capabilities. Possible values
-        /// include: 'Archive'</param>
+        /// <param name="videoEntityType">Video content type. Different content
+        /// types are suitable for different applications and scenarios.
+        /// Possible values include: 'Archive', 'File'</param>
         /// <param name="flags">Video flags contain information about the
         /// available video actions and its dynamic properties based on the
         /// current video state.</param>
-        /// <param name="streaming">Video streaming holds information about
-        /// video streaming URLs.</param>
+        /// <param name="contentUrls">Set of URLs to the video content.</param>
         /// <param name="mediaInfo">Contains information about the video and
         /// audio content.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public VideoEntity(string id = default(string), string name = default(string), string type = default(string), string title = default(string), string description = default(string), VideoType videoEntityType = default(VideoType), VideoFlags flags = default(VideoFlags), VideoStreaming streaming = default(VideoStreaming), VideoMediaInfo mediaInfo = default(VideoMediaInfo), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        /// <param name="archival">Video archival properties.</param>
+        public VideoEntity(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string title = default(string), string description = default(string), VideoType videoEntityType = default(VideoType), VideoFlags flags = default(VideoFlags), VideoContentUrls contentUrls = default(VideoContentUrls), VideoMediaInfo mediaInfo = default(VideoMediaInfo), VideoArchival archival = default(VideoArchival))
+            : base(id, name, type, systemData)
         {
             Title = title;
             Description = description;
             VideoEntityType = videoEntityType;
             Flags = flags;
-            Streaming = streaming;
+            ContentUrls = contentUrls;
             MediaInfo = mediaInfo;
-            SystemData = systemData;
+            Archival = archival;
             CustomInit();
         }
 
@@ -87,8 +92,9 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets type of the video archive. Different archive formats provide
-        /// different capabilities. Possible values include: 'Archive'
+        /// Gets video content type. Different content types are suitable for
+        /// different applications and scenarios. Possible values include:
+        /// 'Archive', 'File'
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
         public VideoType VideoEntityType { get; private set; }
@@ -102,22 +108,23 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         public VideoFlags Flags { get; private set; }
 
         /// <summary>
-        /// Gets video streaming holds information about video streaming URLs.
+        /// Gets set of URLs to the video content.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.streaming")]
-        public VideoStreaming Streaming { get; private set; }
+        [JsonProperty(PropertyName = "properties.contentUrls")]
+        public VideoContentUrls ContentUrls { get; private set; }
 
         /// <summary>
-        /// Gets contains information about the video and audio content.
+        /// Gets or sets contains information about the video and audio
+        /// content.
         /// </summary>
         [JsonProperty(PropertyName = "properties.mediaInfo")]
-        public VideoMediaInfo MediaInfo { get; private set; }
+        public VideoMediaInfo MediaInfo { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to this resource.
+        /// Gets or sets video archival properties.
         /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
+        [JsonProperty(PropertyName = "properties.archival")]
+        public VideoArchival Archival { get; set; }
 
         /// <summary>
         /// Validate the object.

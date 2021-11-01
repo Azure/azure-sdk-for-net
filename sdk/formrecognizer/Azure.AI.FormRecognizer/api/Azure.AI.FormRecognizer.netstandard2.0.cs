@@ -359,22 +359,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             V2021_09_30_preview = 1,
         }
     }
-    public partial class DocumentAnalysisError
-    {
-        internal DocumentAnalysisError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisError> Details { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisInnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
-    public partial class DocumentAnalysisInnerError
-    {
-        internal DocumentAnalysisInnerError() { }
-        public string Code { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisInnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
     public partial class DocumentEntity
     {
         internal DocumentEntity() { }
@@ -626,7 +610,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class ModelOperation : Azure.AI.FormRecognizer.DocumentAnalysis.ModelOperationInfo
     {
         internal ModelOperation() { }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisError Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModel Result { get { throw null; } }
     }
     public partial class ModelOperationInfo

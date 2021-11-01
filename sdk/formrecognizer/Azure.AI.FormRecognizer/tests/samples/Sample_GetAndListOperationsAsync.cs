@@ -21,6 +21,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            // Make sure there is at least one operation, so we are going to build a custom model.
+#if SNIPPET
+            Uri trainingFileUri = <trainingFileUri>;
+#else
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+#endif
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+            await operation.WaitForCompletionAsync();
+
             // List the first ten or fewer operations that have been executed in the last 24h.
             AsyncPageable<ModelOperationInfo> modelOperations = client.GetOperationsAsync();
 
@@ -56,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             else if (specificOperation.Status == DocumentOperationStatus.Failed)
             {
                 Console.WriteLine($"My {specificOperation.Kind} operation failed.");
-                DocumentAnalysisError error = specificOperation.Error;
+                ResponseError error = specificOperation.Error;
                 Console.WriteLine($"Code: {error.Code}: Message: {error.Message}");
             }
             else

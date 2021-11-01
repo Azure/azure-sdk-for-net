@@ -838,6 +838,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Retrieves continuous backup information for a Mongodb collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation RetrieveContinuousBackupInformation(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.RetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, collectionName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a Mongodb collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> RetrieveContinuousBackupInformationAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or updates Azure Cosmos DB MongoDB database
             /// </summary>
             /// <param name='operations'>
@@ -1352,6 +1410,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginMigrateMongoDBCollectionToManualThroughputAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateMongoDBCollectionToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a Mongodb collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation BeginRetrieveContinuousBackupInformation(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.BeginRetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, collectionName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a Mongodb collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> BeginRetrieveContinuousBackupInformationAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -30,7 +30,9 @@
       "RequestUri": "https://aoaprodstoreeu2.blob.core.windows.net/6b3ce8f5-fe52-47f1-ae7a-f6e7513ee09b/6da45678-4040-463c-a8a2-b4c3e1e0ed3b?sv=2018-03-28\u0026sr=b\u0026sig=fH5qFpSKg3px3qyZm%2Fg83gv%2FlCR2ZZ8ma41b437tmgc%3D\u0026se=2021-04-08T18%3A11%3A29Z\u0026sp=cw",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Content-Length": "215369",
+        "Content-Type": "application/octet-stream",
         "If-None-Match": "*",
         "traceparent": "00-eb133d7d8cd4aa4faf49721b0dfe8d77-346d07a6ceee884f-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19041 )",
@@ -219,6 +221,7 @@
       "RequestUri": "https://aoaprodstoreeu2.blob.core.windows.net/6b3ce8f5-fe52-47f1-ae7a-f6e7513ee09b/d44c1e91-fcf1-6aa1-a753-2f809c0342fb.ou?sv=2018-03-28\u0026sr=b\u0026sig=egTO6AJsOkoVaM9zo9DMn6Gq%2BU9VNbmR4717jHI9qrQ%3D\u0026se=2021-04-08T18%3A11%3A45Z\u0026sp=r",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "traceparent": "00-296ec2898f929146a91b9dc378e21e39-90e0bc0df897bc44-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19041 )",
         "x-ms-client-request-id": "e7bd70076c32fa9a0e355b338eac5fd1",

@@ -32,7 +32,7 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
+            Subscription subscription = armClient.GetDefaultSubscription();
             #endregion
         }
 
@@ -40,14 +40,14 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         [Ignore("Only verifying that the sample builds")]
         public async Task CreateResourceGroup()
         {
-            #region Snippet:Readme_GetResourceGroupContainer
+            #region Snippet:Readme_GetResourceGroupCollection
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-            // With the container, we can create a new resource group with an specific name
+            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgContainer.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
             #endregion
         }

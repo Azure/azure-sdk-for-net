@@ -22,10 +22,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     public static partial class VideosOperationsExtensions
     {
             /// <summary>
-            /// List all existing video resources.
+            /// Retrieves all existing video resources.
             /// </summary>
             /// <remarks>
-            /// List all existing video resources in the specified account.
+            /// Retrieves a list of video resources that have been created, along with
+            /// their JSON representations.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,10 +48,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing video resources.
+            /// Retrieves all existing video resources.
             /// </summary>
             /// <remarks>
-            /// List all existing video resources in the specified account.
+            /// Retrieves a list of video resources that have been created, along with
+            /// their JSON representations.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,10 +80,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Retrieves a video resource.
+            /// Retrieves an existing video resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing video resource within an account with a given name.
+            /// Retrieves an existing video resource with the given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to retrieve.
+            /// The Video name.
             /// </param>
             public static VideoEntity Get(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName)
             {
@@ -101,10 +103,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Retrieves a video resource.
+            /// Retrieves an existing video resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing video resource within an account with a given name.
+            /// Retrieves an existing video resource with the given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,7 +118,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to retrieve.
+            /// The Video name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -130,10 +132,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Create or updates a video resource.
+            /// Creates a new video resource or updates an existing one.
             /// </summary>
             /// <remarks>
-            /// Creates a new video resource or updates an existing one in an account.
+            /// Creates a new video resource or updates an existing video resource with the
+            /// given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,26 +148,22 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to create or update.
+            /// The Video name.
             /// </param>
-            /// <param name='title'>
-            /// Optional video title provided by the user. Value can be up to 256
-            /// characters long.
+            /// <param name='parameters'>
+            /// The request parameters
             /// </param>
-            /// <param name='description'>
-            /// Optional video description provided by the user. Value can be up to 2048
-            /// characters long.
-            /// </param>
-            public static VideoEntity CreateOrUpdate(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string))
+            public static VideoEntity CreateOrUpdate(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, VideoEntity parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, videoName, title, description).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, videoName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or updates a video resource.
+            /// Creates a new video resource or updates an existing one.
             /// </summary>
             /// <remarks>
-            /// Creates a new video resource or updates an existing one in an account.
+            /// Creates a new video resource or updates an existing video resource with the
+            /// given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,29 +175,24 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to create or update.
+            /// The Video name.
             /// </param>
-            /// <param name='title'>
-            /// Optional video title provided by the user. Value can be up to 256
-            /// characters long.
-            /// </param>
-            /// <param name='description'>
-            /// Optional video description provided by the user. Value can be up to 2048
-            /// characters long.
+            /// <param name='parameters'>
+            /// The request parameters
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoEntity> CreateOrUpdateAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoEntity> CreateOrUpdateAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, VideoEntity parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, videoName, title, description, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, videoName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a video resource.
+            /// Deletes an existing video resource and its underlying data.
             /// </summary>
             /// <remarks>
             /// Deletes an existing video resource and its underlying data. This operation
@@ -214,7 +208,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to delete.
+            /// The Video name.
             /// </param>
             public static void Delete(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName)
             {
@@ -222,7 +216,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Deletes a video resource.
+            /// Deletes an existing video resource and its underlying data.
             /// </summary>
             /// <remarks>
             /// Deletes an existing video resource and its underlying data. This operation
@@ -238,7 +232,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to delete.
+            /// The Video name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -249,10 +243,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Updates the properties of a video resource.
+            /// Updates individual properties of an existing video resource.
             /// </summary>
             /// <remarks>
-            /// Updates individual properties of an existing video resource.
+            /// Updates individual properties of an existing video resource with the given
+            /// name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -264,26 +259,22 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to update.
+            /// The Video name.
             /// </param>
-            /// <param name='title'>
-            /// Optional video title provided by the user. Value can be up to 256
-            /// characters long.
+            /// <param name='parameters'>
+            /// The request parameters
             /// </param>
-            /// <param name='description'>
-            /// Optional video description provided by the user. Value can be up to 2048
-            /// characters long.
-            /// </param>
-            public static VideoEntity Update(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string))
+            public static VideoEntity Update(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, VideoEntity parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, videoName, title, description).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, videoName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the properties of a video resource.
+            /// Updates individual properties of an existing video resource.
             /// </summary>
             /// <remarks>
-            /// Updates individual properties of an existing video resource.
+            /// Updates individual properties of an existing video resource with the given
+            /// name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -295,32 +286,29 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to update.
+            /// The Video name.
             /// </param>
-            /// <param name='title'>
-            /// Optional video title provided by the user. Value can be up to 256
-            /// characters long.
-            /// </param>
-            /// <param name='description'>
-            /// Optional video description provided by the user. Value can be up to 2048
-            /// characters long.
+            /// <param name='parameters'>
+            /// The request parameters
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoEntity> UpdateAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoEntity> UpdateAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, VideoEntity parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, videoName, title, description, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, videoName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Generates a streaming token for video playback.
+            /// Generates a streaming token which can be used for accessing content from
+            /// video content URLs.
             /// </summary>
             /// <remarks>
-            /// Generates a streaming token used for authenticating video playback.
+            /// Generates a streaming token which can be used for accessing content from
+            /// video content URLs, for a video resource with the given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,18 +320,20 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to generate a token for playback.
+            /// The Video name.
             /// </param>
-            public static VideoStreamingToken ListStreamingToken(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName)
+            public static VideoContentToken ListContentToken(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName)
             {
-                return operations.ListStreamingTokenAsync(resourceGroupName, accountName, videoName).GetAwaiter().GetResult();
+                return operations.ListContentTokenAsync(resourceGroupName, accountName, videoName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Generates a streaming token for video playback.
+            /// Generates a streaming token which can be used for accessing content from
+            /// video content URLs.
             /// </summary>
             /// <remarks>
-            /// Generates a streaming token used for authenticating video playback.
+            /// Generates a streaming token which can be used for accessing content from
+            /// video content URLs, for a video resource with the given name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -355,24 +345,25 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='videoName'>
-            /// The name of the video to generate a token for playback.
+            /// The Video name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoStreamingToken> ListStreamingTokenAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoContentToken> ListContentTokenAsync(this IVideosOperations operations, string resourceGroupName, string accountName, string videoName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListStreamingTokenWithHttpMessagesAsync(resourceGroupName, accountName, videoName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListContentTokenWithHttpMessagesAsync(resourceGroupName, accountName, videoName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List all existing video resources.
+            /// Retrieves all existing video resources.
             /// </summary>
             /// <remarks>
-            /// List all existing video resources in the specified account.
+            /// Retrieves a list of video resources that have been created, along with
+            /// their JSON representations.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -386,10 +377,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing video resources.
+            /// Retrieves all existing video resources.
             /// </summary>
             /// <remarks>
-            /// List all existing video resources in the specified account.
+            /// Retrieves a list of video resources that have been created, along with
+            /// their JSON representations.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

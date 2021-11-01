@@ -17,5 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Gets or sets the parameters. </summary>
         public ExtractiveSummarizationTaskParameters Parameters { get; set; }
+        /// <summary> Gets or sets the task name. </summary>
+        public string TaskName { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.TestFramework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -16,9 +17,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public ArmClient ArmClient { get; set; }
         public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
         public PrivateEndpointConnectionsOperations PrivateEndpointConnectionsOperations { get; set; }
-        public ResourceGroupContainer ResourceGroupContainer { get; set; }
-        public VirtualNetworkContainer VirtualNetworkContainer { get; set; }
-        public PrivateEndpointContainer PrivateEndpointContainer { get; set; }
+        public ResourceGroupCollection ResourceGroupCollection { get; set; }
+        public VirtualNetworkCollection VirtualNetworkCollection { get; set; }
+        public PrivateEndpointCollection PrivateEndpointCollection { get; set; }
         public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
         public Operations Operations { get; set; }
         public string AzureLocation { get; set; }
@@ -34,7 +35,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
         }
 
-        protected void Initialize()
+        protected AppConfigurationClientBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
+        {
+        }
+
+        protected async Task Initialize()
         {
             AzureLocation = "eastus";
             KeyUuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";
@@ -50,7 +56,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
             Operations = AppConfigurationManagementClient.Operations;
             ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
-            ResourceGroupContainer = ArmClient.DefaultSubscription.GetResourceGroups();
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection = sub.GetResourceGroups();
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()
