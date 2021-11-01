@@ -12,4 +12,4 @@ description: Samples for the Azure.ResourceManager.Resources client library
 # Azure.ResourceManager.Resources Samples
 
 - [Managing Application Definitions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resources/Azure.ResourceManager.Resources/samples/Sample1_ManagingApplicationDefinitions.md)
-- [Managing Deployments](https://github.com/Yao725/azure-sdk-for-net/blob/fix-issue-24840/sdk/resources/Azure.ResourceManager.Resources/samples/Sample2_ManagingDeployments.md)
+- [Managing Deployments](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resources/Azure.ResourceManager.Resources/samples/Sample2_ManagingDeployments.md)

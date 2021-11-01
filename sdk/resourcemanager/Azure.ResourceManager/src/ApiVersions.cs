@@ -72,7 +72,7 @@ namespace Azure.ResourceManager
             if (!_apiForNamespaceCache.TryGetValue(nameSpace, out version))
             {
                 DateTime maxVersion = new DateTime(1, 1, 1);
-                Provider results = _armClient.DefaultSubscription.GetProviders().Get(nameSpace, null);
+                Provider results = _armClient.GetDefaultSubscription().GetProviders().Get(nameSpace, null);
                 foreach (var type in results.Data.ResourceTypes)
                 {
                     string[] parts = type.ApiVersions[0].Split('-');
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager
             Response<Provider> results;
             try
             {
-                results = _armClient.DefaultSubscription.GetProviders().Get(resourceType.Namespace, null, cancellationToken);
+                results = _armClient.GetDefaultSubscription(cancellationToken).GetProviders().Get(resourceType.Namespace, null, cancellationToken);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -133,7 +133,8 @@ namespace Azure.ResourceManager
             Response<Provider> results;
             try
             {
-                results = await _armClient.DefaultSubscription.GetProviders().GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+                Subscription subscription = await _armClient.GetDefaultSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+                results = await subscription.GetProviders().GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {

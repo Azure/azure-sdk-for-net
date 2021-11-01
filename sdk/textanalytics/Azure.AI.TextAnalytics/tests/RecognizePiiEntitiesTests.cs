@@ -237,6 +237,43 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+        [RecordedTest]
+        public async Task RecognizePiiEntitiesWithMultipleActions()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>()
+                {
+                    new RecognizePiiEntitiesAction()
+                    {
+                        DisableServiceLogs = true,
+                        ActionName = "RecognizePiiEntitiesWithDisabledServiceLogs"
+                    },
+                    new RecognizePiiEntitiesAction()
+                    {
+                        ActionName = "RecognizePiiEntities"
+                    }
+                }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults = resultCollection.RecognizePiiEntitiesResults;
+
+            Assert.IsNotNull(RecognizePiiEntitiesActionsResults);
+
+            IList<string> expected = new List<string> { "RecognizePiiEntities", "RecognizePiiEntitiesWithDisabledServiceLogs" };
+            CollectionAssert.AreEquivalent(expected, RecognizePiiEntitiesActionsResults.Select(result => result.ActionName));
+        }
+
         private void ValidateInDocumenResult(PiiEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
