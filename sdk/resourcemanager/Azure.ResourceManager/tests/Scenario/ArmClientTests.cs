@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Tests
 
         private static ReadOnlyMemory<HttpPipelinePolicy> GetPoliciesFromPipeline(HttpPipeline pipeline)
         {
-            var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
+            var policyField = pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
         }
     }
