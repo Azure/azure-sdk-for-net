@@ -6,16 +6,15 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial struct DocumentTranslationError
+    internal partial class TranslationError
     {
-        internal static DocumentTranslationError DeserializeDocumentTranslationError(JsonElement element)
+        internal static TranslationError DeserializeTranslationError(JsonElement element)
         {
-            DocumentTranslationErrorCode code = default;
+            TranslationErrorCode code = default;
             string message = default;
             Optional<string> target = default;
             Optional<InnerTranslationError> innerError = default;
@@ -23,7 +22,7 @@ namespace Azure.AI.Translation.Document
             {
                 if (property.NameEquals("code"))
                 {
-                    code = new DocumentTranslationErrorCode(property.Value.GetString());
+                    code = new TranslationErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -47,7 +46,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentTranslationError(code, message, target.Value, innerError.Value);
+            return new TranslationError(code, message, target.Value, innerError.Value);
         }
     }
 }
