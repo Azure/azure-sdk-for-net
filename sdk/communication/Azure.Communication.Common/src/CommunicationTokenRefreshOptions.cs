@@ -22,7 +22,7 @@ namespace Azure.Communication
         public string InitialToken { get; set; }
 
         /// <summary>The proactive refreshing interval.</summary>
-        internal readonly TimeSpan RefreshOffsetTime;
+        internal TimeSpan RefreshOffsetTime { get; }
 
         private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
 
@@ -56,11 +56,8 @@ namespace Azure.Communication
         public CommunicationTokenRefreshOptions(
             bool refreshProactively,
             TimeSpan refreshOffsetTime,
-            Func<CancellationToken, string> tokenRefresher)
+            Func<CancellationToken, string> tokenRefresher) :this(refreshProactively, tokenRefresher)
         {
-            Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
-            RefreshProactively = refreshProactively;
-            TokenRefresher = tokenRefresher;
             RefreshOffsetTime = refreshOffsetTime;
         }
     }

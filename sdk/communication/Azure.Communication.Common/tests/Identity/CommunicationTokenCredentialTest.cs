@@ -335,7 +335,6 @@ namespace Azure.Communication.Identity
             using var tokenCredential = new AutoRefreshTokenCredential(
                 new CommunicationTokenRefreshOptions(true, refreshOffsetTime, _ => GenerateTokenValidForMinutes(testClock.UtcNow, 20))
                 {
-                    AsyncTokenRefresher = _ => throw new NotImplementedException(),
                     InitialToken = twentyMinToken
                 },
                 testClock.Schedule,
