@@ -1,5 +1,8 @@
 # Release History
 
+## 12.11.0-beta.2 (Unreleased)
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+
 ## 12.11.0-beta.1 (Unreleased)
 - Added support for service version 2020-12-06.
 - Added support for Encryption Scope SAS.
