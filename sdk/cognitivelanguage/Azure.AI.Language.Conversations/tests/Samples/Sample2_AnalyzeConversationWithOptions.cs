@@ -19,17 +19,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production",
                 "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
                 "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(TestEnvironment.Project, options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
@@ -49,17 +48,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 
 #if SNIPPET
+            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                "Menu",
-                "production",
                 "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
 #else
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-                TestEnvironment.ProjectName,
-                TestEnvironment.DeploymentName,
                 "We'll have 2 plates of seared salmon nigiri.");
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+
+            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(TestEnvironment.Project, options);
 #endif
 
             Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");

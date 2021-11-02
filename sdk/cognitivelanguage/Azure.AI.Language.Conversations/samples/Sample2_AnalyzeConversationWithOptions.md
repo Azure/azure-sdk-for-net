@@ -16,11 +16,11 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
     "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -28,11 +28,11 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
     "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(options);
+
+Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(conversationsProject, options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```

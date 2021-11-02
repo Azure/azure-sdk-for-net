@@ -79,10 +79,11 @@ The following examples show common scenarios using the `client` [created above](
 To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes the project name, deployment name, and query as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Menu",
-    "production",
-    "We'll have 2 plates of seared salmon nigiri.");
+    "We'll have 2 plates of seared salmon nigiri.",
+    conversationsProject);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -90,11 +91,11 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production",
     "We'll have 2 plates of seared salmon nigiri.");
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -104,14 +105,13 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-    "Menu",
-    "production", 
     "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(options);
+Response<AnalyzeConversationResult> response = client.AnalyzeConversation(conversationsProject, options);
 
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
@@ -129,10 +129,10 @@ For example, if you submit a query to a non-existant project, a `400` error is r
 ```C# Snippet:ConversationAnalysisClient_BadRequest
 try
 {
+    ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
     Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-        "invalid-project",
-        "production",
-        "We'll have 2 plates of seared salmon nigiri.");
+        "We'll have 2 plates of seared salmon nigiri.",
+        conversationsProject);
 }
 catch (RequestFailedException ex)
 {
