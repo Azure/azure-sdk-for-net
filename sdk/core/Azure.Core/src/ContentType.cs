@@ -51,7 +51,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public bool Equals(string other)
+        public bool Equals(string? other)
             => string.Equals(_contentType, _contentType, StringComparison.Ordinal);
 
         /// <inheritdoc />
