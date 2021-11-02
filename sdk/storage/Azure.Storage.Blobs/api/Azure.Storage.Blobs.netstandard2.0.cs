@@ -1375,6 +1375,12 @@ namespace Azure.Storage.Blobs.Models
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class UpdateClientSideEncryptionKeyOptions
+    {
+        public UpdateClientSideEncryptionKeyOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.ClientSideEncryptionOptions EncryptionOptionsOverride { get { throw null; } set { } }
+    }
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
@@ -1553,8 +1559,8 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public static partial class BlobClientSpecializedExtensions
     {
-        public static void RotateClientSideEncryptionKey(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.BlobRequestConditions requestConditions = null, Azure.Core.Cryptography.IKeyEncryptionKey newKeyOverride = null, Azure.Core.Cryptography.IKeyEncryptionKeyResolver oldKeyResolverOverride = null, string keywrapAlgorithmOverride = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public static System.Threading.Tasks.Task RotateClientSideEncryptionKeyAsync(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.BlobRequestConditions requestConditions = null, Azure.Core.Cryptography.IKeyEncryptionKey newKeyOverride = null, Azure.Core.Cryptography.IKeyEncryptionKeyResolver oldKeyResolverOverride = null, string keywrapAlgorithmOverride = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static void UpdateClientSideEncryptionKey(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public static System.Threading.Tasks.Task UpdateClientSideEncryptionKeyAsync(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.Blobs.Models.UpdateClientSideEncryptionKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BlobLeaseClient
     {
