@@ -22,6 +22,15 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
+        internal JobQueue(string id, string name, string distributionPolicyId, LabelCollection labels, string exceptionPolicyId)
+        {
+            Id = id;
+            Name = name;
+            DistributionPolicyId = distributionPolicyId;
+            Labels = labels;
+            ExceptionPolicyId = exceptionPolicyId;
+        }
+
         public LabelCollection Labels { get; set; }
     }
 }
