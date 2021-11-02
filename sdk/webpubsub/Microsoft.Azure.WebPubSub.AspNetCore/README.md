@@ -14,7 +14,7 @@ This library can be used to do the following actions. Details about the terms us
 Package |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
-Samples |
+[Samples](sample_ref) |
 
 ## Getting started
 
@@ -49,41 +49,19 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 ### Add Web PubSub service with options
 
-```C#
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddWebPubSub(o =>
-    {
-        o.ValidationOptions.Add("<connection-string>");
-    });
-}
+```C# Snippet:WebPubSubDependencyInjection
 ```
 
 ### Map `WebPubSubHub` to endpoint routing.
 
 The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
 
-```C#
-public void Configure(IApplicationBuilder app)
-{
-    app.UseEndpoints(endpoint =>
-    {
-        endpoint.MapWebPubSubHub<SampleHub>("/eventhander");
-    });
-}
+```C# Snippet:WebPubSubMapHub
 ```
 
 ### Handle Upstream event
 
-```C#
-public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
-{
-    var response = new ConnectEventResponse
-    {
-        UserId = request.ConnectionContext.UserId
-    };
-    return new ValueTask<WebPubSubEventResponse>(response);
-}
+```C# Snippet:WebPubSubConnectMethods
 ```
 
 ## Troubleshooting
@@ -113,3 +91,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
+[sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples
