@@ -34,24 +34,6 @@ namespace Azure.Core
         protected override bool TryGetHeader(string name, out string? value) { throw null; }
         protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContentType(string contentType) { throw null; }
-        public static Azure.Core.ContentType ApplicationJson { get { throw null; } }
-        public static Azure.Core.ContentType ApplicationOctetStream { get { throw null; } }
-        public static Azure.Core.ContentType TextPlain { get { throw null; } }
-        public bool Equals(Azure.Core.ContentType other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
-        public bool Equals(string other) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
-        public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public partial class JsonData : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.JsonData>
     {
