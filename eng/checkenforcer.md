@@ -56,4 +56,3 @@
   ## For track 1 management-plane SDKs
   
   Please open a separate PR and to your service SDK path in [this file](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/pipelines/mgmt.yml). Once that PR has been merged, you can re-run the pipeline to trigger the verification.
-  
