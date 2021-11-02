@@ -18,6 +18,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
         }
 
+        private readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(10);
+
         private const string EnglishDocument1 = @"A recent report by the Government Accountability Office found a dramatic increase in oil.";
         private static readonly List<string> e_document1ExpectedOutput = new List<string>
         {
@@ -79,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
@@ -101,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
@@ -128,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(documentsBatch, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
 
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
@@ -157,7 +159,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
 
@@ -184,7 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
 
@@ -211,7 +213,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
 
@@ -265,7 +267,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(_pollingInterval);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
