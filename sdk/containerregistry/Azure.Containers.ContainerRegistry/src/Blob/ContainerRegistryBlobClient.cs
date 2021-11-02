@@ -26,6 +26,35 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called from this client.
+        /// </summary>
+        /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repository) :
+            this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, new ContainerRegistryClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called from this client.
+        /// </summary>
+        /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
+        /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> is null. </exception>
+        public ContainerRegistryBlobClient(Uri endpoint, string repository, ContainerRegistryClientOptions options) :
+            this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, options)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing upload and download of container images and artifacts.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
