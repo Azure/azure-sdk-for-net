@@ -345,8 +345,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string guid, RequestOptions options, bool? extendedInfo = null)
+        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
@@ -404,8 +404,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="options"> The request options. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
+        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -444,7 +444,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string guid, RequestOptions options, bool? extendedInfo = null)
+        public virtual Response Get(string guid, bool? extendedInfo = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> The intent classification result of a Conversation project. </summary>
     public partial class ConversationIntent

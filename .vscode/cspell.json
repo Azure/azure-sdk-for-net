@@ -32,7 +32,6 @@
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
-    "sdk/compute/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
     "sdk/dns/*/api/*.cs",
@@ -97,6 +96,23 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "skus",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
@@ -132,7 +148,8 @@
         "Owasp",
         "Conditon",
         "Pfsmm",
-        "Sstp"
+        "Sstp",
+        "Gcmaes"
       ]
     },
     {
@@ -171,7 +188,8 @@
         "Rslp",
         "Soundex",
         "Sorani",
-        "Unprocessable"
+        "Unprocessable",
+        "Beider"
       ]
     },
     {

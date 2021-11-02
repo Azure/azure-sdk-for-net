@@ -380,16 +380,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of VpnConnections in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnConnections and their operations over a VpnGateway. </returns>
-        public VpnConnectionContainer GetVpnConnections()
+        public VpnConnectionCollection GetVpnConnections()
         {
-            return new VpnConnectionContainer(this);
+            return new VpnConnectionCollection(this);
         }
 
         /// <summary> Gets a list of VpnGatewayNatRules in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnGatewayNatRules and their operations over a VpnGateway. </returns>
-        public VpnGatewayNatRuleContainer GetVpnGatewayNatRules()
+        public VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
         {
-            return new VpnGatewayNatRuleContainer(this);
+            return new VpnGatewayNatRuleCollection(this);
         }
     }
 }

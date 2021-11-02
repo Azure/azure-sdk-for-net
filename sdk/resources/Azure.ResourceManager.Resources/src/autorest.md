@@ -47,7 +47,7 @@ directive:
     transform: $['x-ms-client-name'] = 'DeploymentInput'
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
-  # Keep the get method at each scope so that generator can know the possible values of container's parent
+  # Keep the get method at each scope so that generator can know the possible values of collection's parent
   - remove-operation: Deployments_DeleteAtTenantScope
   - remove-operation: Deployments_CheckExistenceAtTenantScope
   - remove-operation: Deployments_CreateOrUpdateAtTenantScope
