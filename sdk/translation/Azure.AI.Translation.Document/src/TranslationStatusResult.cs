@@ -71,7 +71,7 @@ namespace Azure.AI.Translation.Document
         public long TotalCharactersCharged => Summary.TotalCharacterCharged;
 
         /// <summary>
-        /// This contains an outer error with error code, message, details, target and an inner error with more descriptive details.
+        /// This contains an outer error with the error code, message, details, target and an inner error with more descriptive details.
         /// </summary>
         public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
