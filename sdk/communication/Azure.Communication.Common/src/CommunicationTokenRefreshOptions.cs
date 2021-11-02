@@ -15,23 +15,26 @@ namespace Azure.Communication
     {
         /// <summary>Default proactive refreshing interval in minutes.</summary>
         public const int DefaultExpiringOffsetMinutes = 5;
-        internal bool RefreshProactively { get; }
-        internal Func<CancellationToken, string> TokenRefresher { get; }
-
         /// <summary>The initial token.</summary>
         public string InitialToken { get; set; }
-
-        /// <summary>The proactive refreshing interval.</summary>
-        internal TimeSpan RefreshOffsetTime { get; }
-
-        private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
-
         /// <summary>The asynchronous token refresher.</summary>
         public Func<CancellationToken, ValueTask<string>> AsyncTokenRefresher
         {
             get => _asyncTokenRefresher = _asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(TokenRefresher(cancellationToken)));
             set => _asyncTokenRefresher = value;
         }
+
+        /// <summary>The proactive refreshing interval.</summary>
+        internal TimeSpan RefreshOffsetTime { get; }
+        /// <summary>Determines whether the token should be proactively renewed prior to expiry or renew on demand./// </summary>
+        internal bool RefreshProactively { get; }
+        /// <summary>The function that provides the token acquired from CommunicationIdentityClient. </summary>
+        internal Func<CancellationToken, string> TokenRefresher { get; }
+
+
+        /// <summary>The asynchronous token refresher.</summary>
+        private Func<CancellationToken, ValueTask<string>> _asyncTokenRefresher;
+
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationTokenRefreshOptions"/>.
         /// </summary>
