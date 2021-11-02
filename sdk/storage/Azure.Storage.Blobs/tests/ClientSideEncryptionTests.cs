@@ -1078,14 +1078,13 @@ namespace Azure.Storage.Blobs.Test
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task RotateKey(bool useOverrides)
+        public async Task UpdateKey(bool useOverrides)
         {
             /* Test does not actually upload encrypted data, only simulates it by setting specific
              * metadata. This allows the test to be recordable and to hopefully catch breaks in playback CI.
              */
 
             // Arrange
-
             byte[] data = GetRandomBuffer(Constants.KB);
             Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
             Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey();
@@ -1104,28 +1103,26 @@ namespace Azure.Storage.Blobs.Test
             await AssertKeyAsync(blob, mockKey1.Object);
 
             // Act
-
-            await CallCorrectKeyRotationAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
+            await CallCorrectKeyUpdateAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
 
             // Assert
-
             await AssertKeyAsync(blob, mockKey2.Object, cek);
         }
 
         [Test]
-        public async Task DoesETagLock()
+        public async Task DoesETagLockOnKeyUpdate()
         {
             /* Test does not actually upload encrypted data, only simulates it by setting specific
              * metadata. This allows the test to be recordable and to hopefully catch breaks in playback CI.
              */
 
             // Arrange
-            const float rotationPauseTimeSeconds = 1f;
+            const float updatePauseTimeSeconds = 1f;
 
             byte[] data = GetRandomBuffer(Constants.KB);
             Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
-            // delay forces pause in rotation where we can mess with blob and change etag
-            Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(rotationPauseTimeSeconds));
+            // delay forces pause in update where we can mess with blob and change etag
+            Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey(optionalDelay: TimeSpan.FromSeconds(updatePauseTimeSeconds));
             IKeyEncryptionKeyResolver mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey1.Object, mockKey2.Object).Object;
 
             byte[] cek = GetRandomBuffer(32);
@@ -1141,48 +1138,57 @@ namespace Azure.Storage.Blobs.Test
             await AssertKeyAsync(blob, mockKey1.Object);
 
             // Act
-
-            Task rotationResult;
-            // rotation will take a while thanks to delay on mockKey2
+            Task updateResult;
+            // update will take a while thanks to delay on mockKey2
             if (IsAsync)
             {
-                rotationResult = blob.RotateClientSideEncryptionKeyAsync(
-                    newKeyOverride: mockKey2.Object,
-                    oldKeyResolverOverride: mockKeyResolver,
-                    keywrapAlgorithmOverride: s_algorithmName,
+                updateResult = blob.UpdateClientSideEncryptionKeyAsync(
+                    new UpdateClientSideEncryptionKeyOptions
+                    {
+                        EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                        {
+                            KeyEncryptionKey = mockKey2.Object,
+                            KeyResolver = mockKeyResolver,
+                            KeyWrapAlgorithm = s_algorithmName
+                        }
+                    },
                     cancellationToken: s_cancellationToken);
             }
             else
             {
-                rotationResult = Task.Run(() => blob.RotateClientSideEncryptionKey(
-                    newKeyOverride: mockKey2.Object,
-                    oldKeyResolverOverride: mockKeyResolver,
-                    keywrapAlgorithmOverride: s_algorithmName,
+                updateResult = Task.Run(() => blob.UpdateClientSideEncryptionKey(
+                    new UpdateClientSideEncryptionKeyOptions
+                    {
+                        EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                        {
+                            KeyEncryptionKey = mockKey2.Object,
+                            KeyResolver = mockKeyResolver,
+                            KeyWrapAlgorithm = s_algorithmName
+                        }
+                    },
                     cancellationToken: s_cancellationToken));
             }
 
-            // partway through, mess with blob while key is rotation, changing the etag
-            await Task.Delay(TimeSpan.FromSeconds(rotationPauseTimeSeconds / 2));
+            // partway through, mess with blob while key is updating, changing the etag
+            await Task.Delay(TimeSpan.FromSeconds(updatePauseTimeSeconds / 2));
             await blob.SetHttpHeadersAsync(new BlobHttpHeaders
             {
                 ContentLanguage = "foo"
             });
 
             // Assert
-
             // if it doesn't throw, consider upping `optionalDelay` on mockKey2 creation as a sanity check
             // though current value (1 sec) should be more than enough
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rotationResult);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await updateResult);
             Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), ex.ErrorCode);
         }
 
         [TestCase(true)]
         [TestCase(false)]
         [LiveOnly]
-        public async Task CanRoundtripWithKeyRotation(bool useOverrides)
+        public async Task CanRoundtripWithKeyUpdate(bool useOverrides)
         {
             // Arrange
-
             byte[] data = GetRandomBuffer(Constants.KB);
             Mock<IKeyEncryptionKey> mockKey1 = GetIKeyEncryptionKey();
             Mock<IKeyEncryptionKey> mockKey2 = GetIKeyEncryptionKey();
@@ -1206,11 +1212,9 @@ namespace Azure.Storage.Blobs.Test
             await AssertKeyAsync(blob, mockKey1.Object);
 
             // Act
-
-            await CallCorrectKeyRotationAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
+            await CallCorrectKeyUpdateAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver);
 
             // Assert
-
             await AssertKeyAsync(blob, mockKey2.Object);
 
             // can download and decrypt
@@ -1224,14 +1228,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
-        /// There's a few too many things to switch on for key rotation. Separate method to determine the correct way to call it.
+        /// There's a few too many things to switch on for key updates. Separate method to determine the correct way to call it.
         /// </summary>
-        /// <param name="blob">Blob to rotate key on.</param>
-        /// <param name="useOverrides">Whether to use client options or method overrides as parameters for key rotation.</param>
+        /// <param name="blob">Blob to update key on.</param>
+        /// <param name="useOverrides">Whether to use client options or method overrides as parameters for key update.</param>
         /// <param name="newKey">New KEK for encryption data.</param>
         /// <param name="keyResolver">Key resolver for unwraping the old key.</param>
         /// <returns></returns>
-        private async Task CallCorrectKeyRotationAsync(BlobClient blob, bool useOverrides, IKeyEncryptionKey newKey, IKeyEncryptionKeyResolver keyResolver)
+        private async Task CallCorrectKeyUpdateAsync(BlobClient blob, bool useOverrides, IKeyEncryptionKey newKey, IKeyEncryptionKeyResolver keyResolver)
         {
             if (useOverrides)
             {
@@ -1241,18 +1245,30 @@ namespace Azure.Storage.Blobs.Test
                 // have to actually switch on IsAsync for extension methods
                 if (IsAsync)
                 {
-                    await blob.RotateClientSideEncryptionKeyAsync(
-                        newKeyOverride: newKey,
-                        oldKeyResolverOverride: keyResolver,
-                        keywrapAlgorithmOverride: s_algorithmName,
+                    await blob.UpdateClientSideEncryptionKeyAsync(
+                        new UpdateClientSideEncryptionKeyOptions
+                        {
+                            EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                            {
+                                KeyEncryptionKey = newKey,
+                                KeyResolver = keyResolver,
+                                KeyWrapAlgorithm = s_algorithmName
+                            }
+                        },
                         cancellationToken: s_cancellationToken);
                 }
                 else
                 {
-                    blob.RotateClientSideEncryptionKey(
-                        newKeyOverride: newKey,
-                        oldKeyResolverOverride: keyResolver,
-                        keywrapAlgorithmOverride: s_algorithmName,
+                    blob.UpdateClientSideEncryptionKey(
+                        new UpdateClientSideEncryptionKeyOptions
+                        {
+                            EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                            {
+                                KeyEncryptionKey = newKey,
+                                KeyResolver = keyResolver,
+                                KeyWrapAlgorithm = s_algorithmName
+                            }
+                        },
                         cancellationToken: s_cancellationToken);
                 }
             }
@@ -1269,11 +1285,11 @@ namespace Azure.Storage.Blobs.Test
                 // have to actually switch on IsAsync for extension methods
                 if (IsAsync)
                 {
-                    await blob.RotateClientSideEncryptionKeyAsync(cancellationToken: s_cancellationToken);
+                    await blob.UpdateClientSideEncryptionKeyAsync(cancellationToken: s_cancellationToken);
                 }
                 else
                 {
-                    blob.RotateClientSideEncryptionKey(cancellationToken: s_cancellationToken);
+                    blob.UpdateClientSideEncryptionKey(cancellationToken: s_cancellationToken);
                 }
             }
         }

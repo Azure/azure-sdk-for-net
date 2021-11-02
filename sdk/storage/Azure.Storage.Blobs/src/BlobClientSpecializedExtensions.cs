@@ -26,37 +26,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// Client to the blob.
         /// </param>
-        /// <param name="requestConditions">
-        /// Request conditions for accessing the blob.
-        /// </param>
-        /// <param name="newKeyOverride">
-        /// Optional override of the new Key Encryption Key for the blob. Will default to the
-        /// client's <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/>.
-        /// </param>
-        /// <param name="oldKeyResolverOverride">
-        /// Optional override for the resolver to resolve the blob's current Key Encryption
-        /// Key. Will default to the client's <see cref="ClientSideEncryptionOptions.KeyResolver"/>.
-        /// </param>
-        /// <param name="keywrapAlgorithmOverride">
-        /// Optional override for the key-wrap algorithm to re-wrap the Content Encryption Key.
-        /// Will default to the client's <see cref="ClientSideEncryptionOptions.KeyWrapAlgorithm"/>.
+        /// <param name="options">
+        /// Optional parameters for the operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
-        public static void RotateClientSideEncryptionKey(
+        public static void UpdateClientSideEncryptionKey(
             this BlobClient client,
-            BlobRequestConditions requestConditions = default,
-            IKeyEncryptionKey newKeyOverride = default,
-            IKeyEncryptionKeyResolver oldKeyResolverOverride = default,
-            string keywrapAlgorithmOverride = default,
+            UpdateClientSideEncryptionKeyOptions options = default,
             CancellationToken cancellationToken = default)
-            => RotateClientsideEncryptionKeyInternal(
+            => UpdateClientsideEncryptionKeyInternal(
                 client,
-                requestConditions,
-                newKeyOverride,
-                oldKeyResolverOverride,
-                keywrapAlgorithmOverride,
+                options,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -67,54 +49,36 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// Client to the blob.
         /// </param>
-        /// <param name="requestConditions">
-        /// Request conditions for accessing the blob.
-        /// </param>
-        /// <param name="newKeyOverride">
-        /// Optional override of the new Key Encryption Key for the blob. Will default to the
-        /// client's <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/>.
-        /// </param>
-        /// <param name="oldKeyResolverOverride">
-        /// Optional override for the resolver to resolve the blob's current Key Encryption
-        /// Key. Will default to the client's <see cref="ClientSideEncryptionOptions.KeyResolver"/>.
-        /// </param>
-        /// <param name="keywrapAlgorithmOverride">
-        /// Optional override for the key-wrap algorithm to re-wrap the Content Encryption Key.
-        /// Will default to the client's <see cref="ClientSideEncryptionOptions.KeyWrapAlgorithm"/>.
+        /// <param name="options">
+        /// Optional parameters for the operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
-        public static async Task RotateClientSideEncryptionKeyAsync(
+        public static async Task UpdateClientSideEncryptionKeyAsync(
             this BlobClient client,
-            BlobRequestConditions requestConditions = default,
-            IKeyEncryptionKey newKeyOverride = default,
-            IKeyEncryptionKeyResolver oldKeyResolverOverride = default,
-            string keywrapAlgorithmOverride = default,
+            UpdateClientSideEncryptionKeyOptions options = default,
             CancellationToken cancellationToken = default)
-            => await RotateClientsideEncryptionKeyInternal(
+            => await UpdateClientsideEncryptionKeyInternal(
                 client,
-                requestConditions,
-                newKeyOverride,
-                oldKeyResolverOverride,
-                keywrapAlgorithmOverride,
+                options,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
-        private static async Task RotateClientsideEncryptionKeyInternal(
+        private static async Task UpdateClientsideEncryptionKeyInternal(
             BlobClient client,
-            BlobRequestConditions requestConditions,
-            IKeyEncryptionKey newKeyOverride,
-            IKeyEncryptionKeyResolver oldKeyResolverOverride,
-            string keywrapAlgorithmOverride,
+            UpdateClientSideEncryptionKeyOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
             // argument validation
             Argument.AssertNotNull(client, nameof(client));
-            IKeyEncryptionKey newKey = newKeyOverride ?? client.ClientSideEncryption?.KeyEncryptionKey ?? throw new ArgumentException("");
-            IKeyEncryptionKeyResolver oldKeyResolver = oldKeyResolverOverride ?? client.ClientSideEncryption?.KeyResolver ?? throw new ArgumentException("");
-            string newKeywrapAlgorithm = keywrapAlgorithmOverride ?? client.ClientSideEncryption.KeyWrapAlgorithm ?? throw new ArgumentException("");
+            ClientSideEncryptionOptions operationEncryptionOptions = options?.EncryptionOptionsOverride
+                ?? client.ClientSideEncryption
+                ?? throw new ArgumentException($"{nameof(ClientSideEncryptionOptions)} are not configured on this client and none were provided for the operation.");
+            Argument.AssertNotNull(operationEncryptionOptions.KeyEncryptionKey, nameof(ClientSideEncryptionOptions.KeyEncryptionKey));
+            Argument.AssertNotNull(operationEncryptionOptions.KeyResolver, nameof(ClientSideEncryptionOptions.KeyResolver));
+            Argument.AssertNotNull(operationEncryptionOptions.KeyWrapAlgorithm, nameof(ClientSideEncryptionOptions.KeyWrapAlgorithm));
 
             using (client.ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -122,16 +86,16 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                         $"{nameof(Uri)}: {client.Uri}\n" +
-                        $"{nameof(requestConditions)}: {requestConditions}");
+                        $"{nameof(options.Conditions)}: {options?.Conditions}");
 
-                DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(RotateClientSideEncryptionKey)}");
+                DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(UpdateClientSideEncryptionKey)}");
 
                 try
                 {
                     // hold onto etag, metadata, encryptiondata
-                    var getPropertiesResponse = await client.GetPropertiesInternal(requestConditions, async, cancellationToken).ConfigureAwait(false);
-                    ETag etag = getPropertiesResponse.Value.ETag;
-                    var metadata = getPropertiesResponse.Value.Metadata;
+                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(options?.Conditions, async, cancellationToken).ConfigureAwait(false);
+                    ETag etag = getPropertiesResponse.ETag;
+                    IDictionary<string, string> metadata = getPropertiesResponse.Metadata;
                     EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)
                         ?? throw new InvalidOperationException("Resource has no client-side encryption key to rotate.");
 
@@ -139,11 +103,11 @@ namespace Azure.Storage.Blobs.Specialized
                     byte[] newWrappedKey = await WrapKeyInternal(
                         await UnwrapKeyInternal(
                             encryptionData,
-                            oldKeyResolver,
+                            operationEncryptionOptions.KeyResolver,
                             async,
                             cancellationToken).ConfigureAwait(false),
-                        newKeywrapAlgorithm,
-                        newKey,
+                        operationEncryptionOptions.KeyWrapAlgorithm,
+                        operationEncryptionOptions.KeyEncryptionKey,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -151,13 +115,13 @@ namespace Azure.Storage.Blobs.Specialized
                     encryptionData.WrappedContentKey = new KeyEnvelope
                     {
                         EncryptedKey = newWrappedKey,
-                        Algorithm = newKeywrapAlgorithm,
-                        KeyId = newKey.KeyId
+                        Algorithm = operationEncryptionOptions.KeyWrapAlgorithm,
+                        KeyId = operationEncryptionOptions.KeyEncryptionKey.KeyId
                     };
                     metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
 
                     // update blob ONLY IF ETAG MATCHES (do not take chances encryption info is now out of sync)
-                    var modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(requestConditions) ?? new BlobRequestConditions();
+                    BlobRequestConditions modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(options?.Conditions) ?? new BlobRequestConditions();
                     modifiedRequestConditions.IfMatch = etag;
                     await client.SetMetadataInternal(metadata, modifiedRequestConditions, async, cancellationToken).ConfigureAwait(false);
                 }
