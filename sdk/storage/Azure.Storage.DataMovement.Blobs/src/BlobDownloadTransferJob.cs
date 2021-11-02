@@ -34,11 +34,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The <see cref="BlobDownloadOptions"/>.
         /// </summary>
-        internal BlobDownloadOptions _options;
+        internal BlobDownloadToOptions _options;
         /// <summary>
         /// Gets the <see cref="BlobDownloadOptions"/>.
         /// </summary>
-        public BlobDownloadOptions Options => _options;
+        public BlobDownloadToOptions Options => _options;
 
         /// <summary>
         /// Constructor. Creates Single Blob Download Job.
@@ -61,10 +61,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         public BlobDownloadTransferJob(
-            string jobId
+            string jobId,
             BlobBaseClient sourceClient,
             string destinationPath,
-            BlobDownloadOptions options,
+            BlobDownloadToOptions options,
             CancellationToken cancellationToken)
             : base(jobId)
         {

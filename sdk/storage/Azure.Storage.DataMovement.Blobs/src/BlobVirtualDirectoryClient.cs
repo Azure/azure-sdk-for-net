@@ -8,12 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-namespace Azure.Storage.Blobs.Specialized
+namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Represents a virtual directory of blobs, designated by a delimiter character.

@@ -16,10 +16,10 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
-        ///// <summary>
-        ///// Progress handler for tracking download progress.
-        ///// </summary>
-        // public IProgress<long> ProgressHandler { get; set; }
+        /// <summary>
+        /// Progress handler for tracking download progress.
+        /// </summary>
+        public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
         /// Transfer options for managing individual read requests.

@@ -2034,7 +2034,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(string, BlobDownloadToOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
@@ -2063,7 +2063,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler, // TODO: #8506
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2072,7 +2072,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(string, BlobDownloadToOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
@@ -2102,7 +2102,7 @@ namespace Azure.Storage.Blobs.Specialized
             return StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options?.ProgressHandler, // TODO: #8506
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: false,
@@ -2111,7 +2111,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(Stream, BlobDownloadToOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
@@ -2140,7 +2140,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options.ProgressHandler, // TODO: #8506
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2149,7 +2149,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(Stream, BlobDownloadToOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
         /// </summary>
@@ -2179,7 +2179,7 @@ namespace Azure.Storage.Blobs.Specialized
             return await StagedDownloadAsync(
                 destination,
                 options?.Conditions,
-                //options.ProgressHandler, // TODO: #8506
+                options.ProgressHandler, // TODO: #8506
                 options?.TransferOptions ?? default,
                 options?.TransactionalHashingOptions,
                 async: true,
@@ -2188,7 +2188,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadTo(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(Stream, BlobDownloadToOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -2406,7 +2406,9 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response> StagedDownloadAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
-            IProgress<long> progressHandler, // TODO: #8506
+#pragma warning disable CA1801 // Review unused parameters
+            IProgress<long> progressHandler = default, // TODO: #8506
+#pragma warning restore CA1801 // Review unused parameters
             StorageTransferOptions transferOptions = default,
             DownloadTransactionalHashingOptions hashingOptions = default,
             bool async = true,

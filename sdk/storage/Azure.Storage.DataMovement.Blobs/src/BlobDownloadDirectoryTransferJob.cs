@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -37,15 +36,24 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The <see cref="StorageTransferOptions"/>.
         /// </summary>
-        internal BlobDirectoryDownloadOptions _options;
-        /// <summary>
-        /// Gets the <see cref="StorageTransferOptions"/>.
-        /// </summary>
-        public BlobDirectoryDownloadOptions Options => _options;
+        private BlobDirectoryDownloadOptions _options;
 
-        // this is if we decide to prescan everything instead of
-        // scanning right before upload/downloading
-        internal Queue<Uri> sourceTransferItems;
+        /// <summary>
+        /// The <see cref="BlobDirectoryDownloadOptions"/>.
+        /// </summary>
+        protected internal BlobDirectoryDownloadOptions Options;
+
+        /// <summary>
+        /// Stores the source of each transfer item
+        /// </summary>
+#pragma warning disable CA1823 // Avoid unused private fields
+        private Queue<Uri> _sourceTransferItems;
+#pragma warning restore CA1823 // Avoid unused private fields
+
+        /// <summary>
+        /// Stores the source of each transfer item
+        /// </summary>
+        protected internal Queue<Uri> SourceTransferItems;
 
         /// <summary>
         /// Creates Download Transfer Job
@@ -77,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(DestinationLocalPath, options: Options, cancellationToken: CancellationToken);
+            return _sourceBlobClient.DownloadAsync(DestinationLocalPath, options: Options.TransferOptions, cancellationToken: CancellationToken);
         }
     }
 }

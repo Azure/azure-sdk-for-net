@@ -10,6 +10,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -55,7 +56,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string jobId = Guid.NewGuid().ToString();
 
             BlobUploadTransferJob transferJob = new BlobUploadTransferJob(jobId, sourceLocalPath, destinationClient, uploadOptions, token);
-            _jobsToProcess.Enqueue(transferJob);
+            JobsToProcess.Enqueue(transferJob);
 
             // TODO: remove stub
             return jobId;
@@ -74,7 +75,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public string ScheduleDownload(
             BlobClient sourceClient,
             string destinationLocalPath,
-            BlobDownloadOptions options = default,
+            BlobDownloadToOptions options = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
@@ -82,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString();
             BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            _jobsToProcess.Enqueue(transferJob);
+            JobsToProcess.Enqueue(transferJob);
 
             // TODO; remove stub
             return jobId;
@@ -110,7 +111,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString();
             BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(jobId, sourceLocalPath, destinationClient, options, token);
-            _toScanQueue.Enqueue(transferJob);
+            ToScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
             return jobId;
@@ -138,7 +139,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // having to check the existence of the path twice.
             string jobId = Guid.NewGuid().ToString();
             BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(jobId, sourceClient, destinationLocalPath, options, token);
-            _toScanQueue.Enqueue(transferJob);
+            ToScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
             return jobId;

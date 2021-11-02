@@ -24,19 +24,45 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class StorageTransferManager
     {
-        // To hold the jobs to scan
-        // This is a weird thing to have because we have regular Blob Directory Upload / Download which will
-        // also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
-        // part of DMLib instead of scanning right before the job is benefical.
-        internal AsyncQueue<StorageTransferJob> _toScanQueue;
-        // To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
-        // authentication from the original job and for updating the jobs for progress tracking
-        internal AsyncQueue<StorageTransferJob> _jobsToProcess;
+        /// <summary>
+        /// To hold the jobs to scan
+        /// This is a weird thing to have because we have regular Blob Directory Upload / Download which will
+        /// also call the scanner on it's own. Something to think about is whehter or not doing scanning in a separate
+        /// part of DMLib instead of scanning right before the job is benefical.
+        /// </summary>
+        private AsyncQueue<StorageTransferJob> _toScanQueue;
+
+        /// <summary>
+        /// To hold the jobs to scan
+        /// </summary>
+        protected internal AsyncQueue<StorageTransferJob> ToScanQueue => _toScanQueue;
+
+        /// <summary>
+        /// To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
+        /// authentication from the original job and for updating the jobs for progress tracking
+        /// </summary>
+        private AsyncQueue<StorageTransferJob> _jobsToProcess;
+
+        /// <summary>
+        /// To hold the jobs that have finished scanning and ready to run; This will help with grabbing required
+        /// authentication from the original job and for updating the jobs for progress tracking
+        /// </summary>
+        protected internal AsyncQueue<StorageTransferJob> JobsToProcess => _jobsToProcess;
+
         // Not sure if we should keep the jobs that in in progress here
         //private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
-        internal StorageTransferManagerOptions _options;
+
+        /// <summary>
+        /// Transfer Manager options
+        /// </summary>
+        private StorageTransferManagerOptions _options;
+
+        /// <summary>
+        /// Transfer Manager options
+        /// </summary>
+        private StorageTransferManagerOptions Options => _options;
 
         ///<summary>
         /// Initializes a new instance of the <see cref="StorageTransferManager"/>
