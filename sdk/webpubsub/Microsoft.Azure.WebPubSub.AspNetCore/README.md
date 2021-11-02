@@ -14,7 +14,7 @@ This library can be used to do the following actions. Details about the terms us
 Package |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
-Samples |
+[Samples][sample_ref] |
 
 ## Getting started
 
@@ -113,3 +113,4 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
+[sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples/
