@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Status = EntityStatus.Disabled
             };
 
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 queueOptions.MaxMessageSizeInKilobytes = 100000;
             }
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             QueueProperties createdQueue = createdQueueResponse.Value;
 
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 Assert.AreEqual(100000, createdQueue.MaxMessageSizeInKilobytes);
             }
@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getQueue.Status = EntityStatus.Disabled;
             getQueue.AutoDeleteOnIdle = TimeSpan.FromMinutes(6);
             getQueue.MaxSizeInMegabytes = 1024;
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 getQueue.MaxMessageSizeInKilobytes = 10000;
             }
@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 UserMetadata = nameof(BasicTopicCrudOperations),
             };
 
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 options.MaxMessageSizeInKilobytes = 100000;
             }
@@ -239,7 +239,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             TopicProperties createdTopic = createdTopicResponse.Value;
 
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 Assert.AreEqual(100000, createdTopic.MaxMessageSizeInKilobytes);
             }
@@ -271,7 +271,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getTopic.DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(2);
             getTopic.EnableBatchedOperations = false;
             getTopic.MaxSizeInMegabytes = 1024;
-            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            if (CanSetMaxMessageSize(premium))
             {
                 getTopic.MaxMessageSizeInKilobytes = 10000;
             }
@@ -309,6 +309,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             exists = await client.TopicExistsAsync(topicName);
             Assert.False(exists);
+        }
+
+        private bool CanSetMaxMessageSize(bool premium)
+        {
+            return premium && _serviceVersion >= ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05;
         }
 
         [Test]
