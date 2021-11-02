@@ -26,6 +26,7 @@
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
+    <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
 
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
 
