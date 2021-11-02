@@ -6,6 +6,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Experimental.Tests.Models;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests
@@ -178,6 +179,14 @@ namespace Azure.Core.Experimental.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+#pragma warning disable AZC0002
+        public virtual Operation<Pet> ImportPet(RequestContent content)
+#pragma warning restore AZC0002
+        {
+            LowLevelFuncOperation<BinaryData> operation = (LowLevelFuncOperation<BinaryData>)ImportPet(content, default);
+            return new LowLevelFuncOperation<Pet>((OperationInternals)(operation._operation), r => (Pet)(object)r);
         }
 
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
