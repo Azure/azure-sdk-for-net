@@ -10,18 +10,20 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The CompressionCodec. </summary>
-    public readonly partial struct CompressionCodec : IEquatable<CompressionCodec>
+    /// <summary> All available compressionCodec values. </summary>
+    internal readonly partial struct CompressionCodec : IEquatable<CompressionCodec>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CompressionCodec"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionCodec"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CompressionCodec(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NoneValue = "none";
+        private const string LzoValue = "lzo";
         private const string Bzip2Value = "bzip2";
         private const string GzipValue = "gzip";
         private const string DeflateValue = "deflate";
@@ -31,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string TarValue = "tar";
         private const string TarGZipValue = "tarGZip";
 
+        /// <summary> none. </summary>
+        public static CompressionCodec None { get; } = new CompressionCodec(NoneValue);
+        /// <summary> lzo. </summary>
+        public static CompressionCodec Lzo { get; } = new CompressionCodec(LzoValue);
         /// <summary> bzip2. </summary>
         public static CompressionCodec Bzip2 { get; } = new CompressionCodec(Bzip2Value);
         /// <summary> gzip. </summary>

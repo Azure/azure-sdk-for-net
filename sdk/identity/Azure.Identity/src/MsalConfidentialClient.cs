@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace Azure.Identity
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
+        private readonly Func<string> _assertionCallback;
+
+        internal string RedirectUrl { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -20,10 +24,11 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
             : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
         {
             _clientSecret = clientSecret;
+            RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -32,6 +37,13 @@ namespace Azure.Identity
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
+            RegionalAuthority = regionalAuthority;
+        }
+
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
+            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        {
+            _assertionCallback = assertionCallback;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -49,6 +61,11 @@ namespace Azure.Identity
                 confClientBuilder.WithClientSecret(_clientSecret);
             }
 
+            if (_assertionCallback != null)
+            {
+                confClientBuilder.WithClientAssertion(_assertionCallback);
+            }
+
             if (_certificateProvider != null)
             {
                 X509Certificate2 clientCertificate = await _certificateProvider.GetCertificateAsync(async, cancellationToken).ConfigureAwait(false);
@@ -58,6 +75,11 @@ namespace Azure.Identity
             if (RegionalAuthority.HasValue)
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(RedirectUrl))
+            {
+                confClientBuilder.WithRedirectUri(RedirectUrl);
             }
 
             return confClientBuilder.Build();

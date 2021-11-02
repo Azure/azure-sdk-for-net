@@ -15,9 +15,9 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters, string? assemblyName)
+        public LoggingPolicy(bool logContent, int maxLength, HttpMessageSanitizer sanitizer, string? assemblyName)
         {
-            _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
+            _sanitizer = sanitizer;
             _logContent = logContent;
             _maxLength = maxLength;
             _assemblyName = assemblyName;
@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
 
         private readonly bool _logContent;
         private readonly int _maxLength;
-        private HttpMessageSanitizer _sanitizer;
+        private readonly HttpMessageSanitizer _sanitizer;
         private readonly string? _assemblyName;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

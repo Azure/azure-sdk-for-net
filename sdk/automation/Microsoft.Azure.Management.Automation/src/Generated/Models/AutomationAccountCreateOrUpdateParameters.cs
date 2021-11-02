@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="publicNetworkAccess">Indicates whether traffic on the
         /// non-ARM endpoint (Webhook/Agent) is allowed from the public
         /// internet</param>
+        /// <param name="disableLocalAuth">Indicates whether requests using
+        /// non-AAD authentication are blocked</param>
         /// <param name="name">Gets or sets name of the resource.</param>
         /// <param name="location">Gets or sets the location of the
         /// resource.</param>
@@ -50,11 +52,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// account</param>
         /// <param name="tags">Gets or sets the tags attached to the
         /// resource.</param>
-        public AutomationAccountCreateOrUpdateParameters(Sku sku = default(Sku), EncryptionProperties encryption = default(EncryptionProperties), bool? publicNetworkAccess = default(bool?), string name = default(string), string location = default(string), Identity identity = default(Identity), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public AutomationAccountCreateOrUpdateParameters(Sku sku = default(Sku), EncryptionProperties encryption = default(EncryptionProperties), bool? publicNetworkAccess = default(bool?), bool? disableLocalAuth = default(bool?), string name = default(string), string location = default(string), Identity identity = default(Identity), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Encryption = encryption;
             PublicNetworkAccess = publicNetworkAccess;
+            DisableLocalAuth = disableLocalAuth;
             Name = name;
             Location = location;
             Identity = identity;
@@ -86,6 +89,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public bool? PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether requests using non-AAD
+        /// authentication are blocked
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
 
         /// <summary>
         /// Gets or sets name of the resource.

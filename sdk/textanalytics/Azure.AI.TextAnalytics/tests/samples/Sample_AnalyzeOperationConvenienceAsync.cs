@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
@@ -68,6 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 int docNumber = 1;
                 foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
                 {
+                    Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
                     foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
                     {
                         Console.WriteLine($" Document #{docNumber++}");

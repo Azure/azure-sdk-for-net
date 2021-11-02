@@ -109,11 +109,15 @@ else
 $releaseDateString = $ParsedReleaseDate.ToString("MM/dd/yyyy")
 $month = $ParsedReleaseDate.ToString("MMMM")
 
-Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+if (Test-Path "Function:GetExistingPackageVersions")
+{
+    $releasedVersions = GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
+    $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
+    Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+}
 
 $currentProjectVersion = $packageProperties.Version
-
 $newVersion = Read-Host -Prompt "Input the new version, or press Enter to use use current project version '$currentProjectVersion'"
 
 if (!$newVersion)
@@ -184,11 +188,11 @@ else
   exit 1
 }
 
-$changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion -ForRelease $true
+$changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion -ForRelease $true -SantizeEntry
 
 if (!$changelogIsValid)
 {
-  Write-Host "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build." -ForegroundColor Red
+  Write-Warning "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build."
 }
 
 git diff -s --exit-code $packageProperties.DirectoryPath

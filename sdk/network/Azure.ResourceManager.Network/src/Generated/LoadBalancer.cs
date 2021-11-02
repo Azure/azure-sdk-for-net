@@ -66,6 +66,23 @@ namespace Azure.ResourceManager.Network
             _loadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal LoadBalancer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _loadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers";
 
@@ -819,16 +836,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of BackendAddressPools in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public BackendAddressPoolContainer GetBackendAddressPools()
+        public BackendAddressPoolCollection GetBackendAddressPools()
         {
-            return new BackendAddressPoolContainer(this);
+            return new BackendAddressPoolCollection(this);
         }
 
         /// <summary> Gets a list of InboundNatRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public InboundNatRuleContainer GetInboundNatRules()
+        public InboundNatRuleCollection GetInboundNatRules()
         {
-            return new InboundNatRuleContainer(this);
+            return new InboundNatRuleCollection(this);
         }
     }
 }

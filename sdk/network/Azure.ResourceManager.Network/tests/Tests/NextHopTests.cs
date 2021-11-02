@@ -10,7 +10,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class NextHopTests : NetworkServiceClientTestBase
     {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //Create Network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
-            string sourceIPAddress = networkInterfaceContainer
+            var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
+            string sourceIPAddress = networkInterfaceCollection
                                                             .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             NextHopParameters nhProperties2 = new NextHopParameters(vm.Id, sourceIPAddress, "12.11.12.14");
 
-            var networkWatcherContainer = resourceGroup.GetNetworkWatchers();
-            var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");
+            var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
+            var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
             var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 

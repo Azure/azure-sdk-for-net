@@ -42,6 +42,7 @@ namespace Azure.Data.Tables.Tests
 
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
+        protected const string PartitionKeyValueWithSingleQuotes = "partition'key''with'''singlequotes'";
         protected const string PartitionKeyValue2 = "somPartition2";
         protected const string StringTypePropertyName = "SomeStringProperty";
         protected const string DateTypePropertyName = "SomeDateProperty";
@@ -111,19 +112,8 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
-            service = _endpointType switch
-            {
-                TableEndpointType.StorageAAD => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        TestEnvironment.Credential,
-                        options)),
-                _ => InstrumentClient(
-                    new TableServiceClient(
-                        new Uri(ServiceUri),
-                        new TableSharedKeyCredential(AccountName, AccountKey),
-                        options))
-            };
+
+            service = CreateService(ServiceUri, options);
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -131,6 +121,23 @@ namespace Azure.Data.Tables.Tests
 
             client = InstrumentClient(service.GetTableClient(tableName));
             connectionStringClient = InstrumentClient(new TableClient(ConnectionString, tableName, options));
+        }
+
+        internal TableServiceClient CreateService(string serviceUri, TableClientOptions options)
+        {
+            return _endpointType switch
+            {
+                TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                _ => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(serviceUri),
+                        new TableSharedKeyCredential(AccountName, AccountKey),
+                        options))
+            };
         }
 
         [TearDown]
@@ -233,6 +240,7 @@ namespace Azure.Data.Tables.Tests
                             GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                             BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                             Int64TypeProperty = long.Parse(number),
+                            UInt64TypeProperty = ulong.Parse(number),
                             DoubleTypeProperty = double.Parse($"{number}.0"),
                             IntTypeProperty = n,
                         };
@@ -370,6 +378,7 @@ namespace Azure.Data.Tables.Tests
             public byte[] BinaryTypeProperty { get; set; }
 
             public long Int64TypeProperty { get; set; }
+            public ulong UInt64TypeProperty { get; set; }
 
             public double DoubleTypeProperty { get; set; }
 

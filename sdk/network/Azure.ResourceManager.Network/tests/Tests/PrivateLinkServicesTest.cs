@@ -9,7 +9,7 @@ using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class PrivateLinkServicesTest : NetworkServiceClientTestBase
     {

@@ -7,7 +7,6 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]

@@ -8,8 +8,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Key Vault management library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-dotnet add package Azure.ResourceManager.KeyVault --version 1.0.0-beta.1
+```dotnetcli
+dotnet add package Azure.ResourceManager.KeyVault --version 1.0.0-beta.3
 ```
 
 ### Prerequisites

@@ -52,12 +52,12 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResult(participantId);
         }
 
-        /// <summary> Initializes a new instance of StartCallRecordingResult. </summary>
+        /// <summary> Initializes a new instance of StartRecordingResult. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
-        /// <returns> A new <see cref="CallingServer.StartCallRecordingResult"/> instance for mocking. </returns>
-        public static StartCallRecordingResult StartCallRecordingResult(string recordingId = null)
+        /// <returns> A new <see cref="CallingServer.StartRecordingResult"/> instance for mocking. </returns>
+        public static StartRecordingResult StartRecordingResult(string recordingId = null)
         {
-            return new StartCallRecordingResult(recordingId);
+            return new StartRecordingResult(recordingId);
         }
 
         /// <summary> Initializes a new instance of CallRecordingProperties. </summary>

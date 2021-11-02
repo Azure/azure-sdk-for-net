@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
+    <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
+    <Version>1.7.0-beta.1</Version>
+    <SignAssembly>true</SignAssembly>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <NoWarn>$(NoWarn);CS1591;AZC0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
+    <PackageReference Include="Microsoft.Azure.SignalR.Management" />
+    <PackageReference Include="Microsoft.Azure.SignalR" />
+    <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
+    <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" />
+  </ItemGroup>
+</Project>

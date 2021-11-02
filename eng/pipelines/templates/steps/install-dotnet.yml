@@ -1,10 +1,8 @@
-# All required SDKs/runtimes are available on DevOps agents
-steps: []
-# Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
-# parameters:
-#   NuGetCacheKey: 'Build'
+parameters:
+  NuGetCacheKey: 'Build'
 
-# steps:
+steps:
+# Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
 #   - task: UseDotNet@2
 #     displayName: 'Use .NET Core SDK'
 #     inputs:
@@ -16,8 +14,8 @@ steps: []
 #     inputs:
 #       packageType: runtime
 #       version: "3.1.x"
-#   - task: Cache@2
-#     inputs:
-#       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
-#       path: $(NUGET_PACKAGES)
-#     displayName: Cache NuGet packages
+  - task: Cache@2
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
+      path: $(NUGET_PACKAGES)
+    displayName: Cache NuGet packages

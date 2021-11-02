@@ -20,6 +20,8 @@ using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs.Host.Scale;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
@@ -36,10 +38,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             ServiceBusOptions options = new ServiceBusOptions();
 
+            var loggerFactory = new LoggerFactory();
+            var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
+            var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
+            var concurrencyManager = new ConcurrencyManager(concurrencyOptions, loggerFactory, mockConcurrencyThrottleManager.Object);
+
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
             var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(options));
-            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory);
+            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory, concurrencyManager);
         }
 
         [Test]

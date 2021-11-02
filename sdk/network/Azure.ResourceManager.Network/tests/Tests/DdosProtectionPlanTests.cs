@@ -11,13 +11,14 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class DdosProtectionPlanTests
         : NetworkServiceClientTestBase
     {
         private const string NamePrefix = "test_ddos_";
         private Resources.ResourceGroup resourceGroup;
+        private Resources.Subscription _subscription;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
         {
@@ -30,10 +31,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
-        public DdosProtectionPlanContainer GetContainer()
+        public DdosProtectionPlanCollection GetCollection()
         {
             return resourceGroup.GetDdosProtectionPlans();
         }
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [RecordedTest]
         public async Task DdosProtectionPlanApiTest()
         {
-            var container = GetContainer();
+            var container = GetCollection();
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
         }
 

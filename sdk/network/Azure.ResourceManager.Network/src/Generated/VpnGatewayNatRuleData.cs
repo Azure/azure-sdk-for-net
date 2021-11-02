@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnGatewayNatRule data model. </summary>
-    public partial class VpnGatewayNatRuleData : WritableSubResource
+    public partial class VpnGatewayNatRuleData : Models.SubResource
     {
         /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
         public VpnGatewayNatRuleData()
         {
             InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
             ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            EgressVpnSiteLinkConnections = new ChangeTrackingList<Models.SubResource>();
-            IngressVpnSiteLinkConnections = new ChangeTrackingList<Models.SubResource>();
+            EgressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
+            IngressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> Resource type. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
         /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
         /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
-        internal VpnGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<Models.SubResource> egressVpnSiteLinkConnections, IReadOnlyList<Models.SubResource> ingressVpnSiteLinkConnections) : base(id)
+        internal VpnGatewayNatRuleData(string id, string name, string etag, string type, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The IP Configuration ID this NAT rule applies to. </summary>
         public string IpConfigurationId { get; set; }
         /// <summary> List of egress VpnSiteLinkConnections. </summary>
-        public IReadOnlyList<Models.SubResource> EgressVpnSiteLinkConnections { get; }
+        public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections { get; }
         /// <summary> List of ingress VpnSiteLinkConnections. </summary>
-        public IReadOnlyList<Models.SubResource> IngressVpnSiteLinkConnections { get; }
+        public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections { get; }
     }
 }

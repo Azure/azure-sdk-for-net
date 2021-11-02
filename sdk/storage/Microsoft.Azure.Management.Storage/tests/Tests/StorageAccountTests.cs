@@ -2682,5 +2682,121 @@ namespace Storage.Tests
                 Assert.NotNull(account.KeyCreationTime.Key2);
             }
         }
+
+
+        [Fact]
+        public void StorageAccountHNFSMigration()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = "centraluseuap"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                // HNFS Migration
+                storageMgmtClient.StorageAccounts.HierarchicalNamespaceMigration(rgname, accountName, "HnsOnValidationRequest");
+
+                storageMgmtClient.StorageAccounts.HierarchicalNamespaceMigration(rgname, accountName, "HnsOnHydrationRequest");
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.True(account.IsHnsEnabled);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountLevelVLW_publicnetworkaccess_defaultToOAuthAuthentication()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                
+                // Create storage account 1
+                string accountName1 = TestUtilities.GenerateName("sto1");
+                var parameters1 = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                    DefaultToOAuthAuthentication = true,
+                    ImmutableStorageWithVersioning = new ImmutableStorageAccount(false)
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName1, parameters1);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.False(account.ImmutableStorageWithVersioning.Enabled);
+                Assert.Null(account.ImmutableStorageWithVersioning.ImmutabilityPolicy);
+                Assert.True(account.DefaultToOAuthAuthentication);
+                Assert.Equal(PublicNetworkAccess.Enabled, account.PublicNetworkAccess);
+
+                // Create storage account 2
+                string accountName = TestUtilities.GenerateName("sto2");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                    DefaultToOAuthAuthentication = true,
+                    ImmutableStorageWithVersioning = new ImmutableStorageAccount(true, new AccountImmutabilityPolicyProperties(1, ImmutabilityPolicyState.Unlocked, allowProtectedAppendWrites: true))
+                };
+                account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.ImmutableStorageWithVersioning.Enabled);
+                Assert.Equal(1, account.ImmutableStorageWithVersioning.ImmutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                Assert.Equal(ImmutabilityPolicyState.Unlocked, account.ImmutableStorageWithVersioning.ImmutabilityPolicy.State);
+                Assert.True(account.ImmutableStorageWithVersioning.ImmutabilityPolicy.AllowProtectedAppendWrites);
+                Assert.True(account.DefaultToOAuthAuthentication);
+                Assert.Equal(PublicNetworkAccess.Enabled, account.PublicNetworkAccess);
+                
+                //Update account 2
+                var parameter = new StorageAccountUpdateParameters
+                {
+                    ImmutableStorageWithVersioning = new ImmutableStorageAccount(true)
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.ImmutableStorageWithVersioning.Enabled);
+                Assert.True(account.DefaultToOAuthAuthentication);
+                Assert.Equal(PublicNetworkAccess.Enabled, account.PublicNetworkAccess);
+
+                parameter = new StorageAccountUpdateParameters
+                {
+                    PublicNetworkAccess = PublicNetworkAccess.Disabled,
+                    DefaultToOAuthAuthentication = false,
+                    ImmutableStorageWithVersioning = new ImmutableStorageAccount(true, new AccountImmutabilityPolicyProperties(2, ImmutabilityPolicyState.Unlocked, allowProtectedAppendWrites: false))
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.ImmutableStorageWithVersioning.Enabled);
+                Assert.Equal(2, account.ImmutableStorageWithVersioning.ImmutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
+                Assert.Equal(ImmutabilityPolicyState.Unlocked, account.ImmutableStorageWithVersioning.ImmutabilityPolicy.State);
+                Assert.False(account.ImmutableStorageWithVersioning.ImmutabilityPolicy.AllowProtectedAppendWrites);
+                Assert.False(account.DefaultToOAuthAuthentication);
+                Assert.Equal(PublicNetworkAccess.Disabled, account.PublicNetworkAccess);
+            }
+        }
     }
 }

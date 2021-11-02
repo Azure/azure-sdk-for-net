@@ -51,6 +51,18 @@ namespace Azure.ResourceManager.Network
             _restClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetwork"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualNetwork(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks";
 
@@ -351,16 +363,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of Subnets in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of Subnets and their operations over a VirtualNetwork. </returns>
-        public SubnetContainer GetSubnets()
+        public SubnetCollection GetSubnets()
         {
-            return new SubnetContainer(this);
+            return new SubnetCollection(this);
         }
 
         /// <summary> Gets a list of VirtualNetworkPeerings in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetwork. </returns>
-        public VirtualNetworkPeeringContainer GetVirtualNetworkPeerings()
+        public VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
-            return new VirtualNetworkPeeringContainer(this);
+            return new VirtualNetworkPeeringCollection(this);
         }
     }
 }

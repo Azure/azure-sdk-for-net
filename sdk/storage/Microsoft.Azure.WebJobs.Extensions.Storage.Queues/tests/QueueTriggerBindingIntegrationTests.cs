@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
@@ -36,10 +37,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);
             var enqueueWatcher = new SharedQueueWatcher();
+            var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
             _binding = new QueueTriggerBinding("parameterName", queueServiceClient, queue, argumentBinding,
                 new QueuesOptions(), exceptionHandler,
                 enqueueWatcher,
-                new NullLoggerFactory(), null, new QueueCausalityManager(new NullLoggerFactory()));
+                new NullLoggerFactory(), null, new QueueCausalityManager(new NullLoggerFactory()), mockConcurrencyManager.Object);
         }
 
         [TearDown]

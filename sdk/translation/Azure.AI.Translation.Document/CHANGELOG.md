@@ -1,11 +1,18 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
+
+### Breaking Changes
+- Removed types `DocumentTranslationError` and `DocumentTranslationErrorCode`. These affected the classes `DocumentStatusResult` and `TranslationStatusResult`. Errors in both classes are now exposed as `ResponseError`.
+- Renamed method `DocumentStatus` to `DocumentStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
+- Renamed method `TranslationStatus` to `TranslationStatusResult` in `DocumentTranslationModelFactory`, which now takes a `BinaryData` type instead of `DocumentTranslationError`.
+
+## 1.0.0-beta.5 (2021-09-08)
 
 ### Breaking Changes
 - `DocumentFilter.CreatedAfter` and `DocumentFilter.CreatedBefore` are now nullable properties.
-- Renamed method `GetAllTranslationStatuses` to `GetTranslationStasuses`.
-- Renamed method `GetAllDocumentStatuses` to `GetDocumentStasuses`.
+- Renamed method `GetAllTranslationStatuses` to `GetTranslationStatuses`.
+- Renamed method `GetAllDocumentStatuses` to `GetDocumentStatuses`.
 - Renamed type `TranslationFilter` to `GetTranslationStatusesOptions`.
 - Renamed type `DocumentFilter` to `GetDocumentStatusesOptions`.
 - Renamed type `DocumentStatus` to `DocumentStatusResult`.
@@ -22,7 +29,7 @@
 
 ### Bugs Fixed
 - `GetDocumentStasus` and `GetDocumentStatusesAsync` no longer set CreatedAfter and CreatedBefore if the user doesn't set it.
-- In `GetTranslationStasuses`, `GetDocumentStasuses` and their async counterparts; URL parameters for `Ids`, `Statuses`, and `OrderBy` are no longer included in the request URL if the user does not set them.
+- In `GetTranslationStatuses`, `GetDocumentStatuses` and their async counterparts; URL parameters for `Ids`, `Statuses`, and `OrderBy` are no longer included in the request URL if the user does not set them.
 
 ## 1.0.0-beta.4 (2021-08-10)
 

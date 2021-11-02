@@ -20,12 +20,12 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
-        private readonly bool _allowMultiTenantAuthentication;
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
         internal const string AzNotLogIn = "Please run 'az login' to set up account";
         internal const string WinAzureCLIError = "'az' is not recognized";
         internal const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         private const int CliProcessTimeoutMs = 13000;
@@ -69,7 +69,6 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _tenantId = options?.TenantId;
         }
 
@@ -113,7 +112,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
-            string tenantId = TenantIdResolver.Resolve(_tenantId, context, _allowMultiTenantAuthentication);
+            string tenantId = TenantIdResolver.Resolve(_tenantId, context);
 
             ScopeUtilities.ValidateScope(resource);
 
@@ -158,7 +157,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
+                throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             return DeserializeOutput(output);

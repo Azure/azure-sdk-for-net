@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                var msgs = GetMessages(2);
+                var msgs = ServiceBusTestUtilities.GetMessages(2);
                 await sender.SendMessagesAsync(msgs);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var message1 = await receiver.PeekMessageAsync();
@@ -125,7 +125,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore("reverted cancellation support outside of processor")]
         public async Task ReceiveMessagesWhenQueueEmpty()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -142,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 2;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
                 await sender.SendMessagesAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -174,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
                 await sender.SendMessagesAsync(batch);
                 var receiver = client.CreateReceiver(
                     scope.QueueName,
@@ -211,7 +210,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("Not yet implemented")]
         public async Task CancellingDoesNotBlockSubsequentReceives(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -227,7 +225,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(60), cancellationToken: cancellationTokenSource.Token),
                     Throws.InstanceOf<TaskCanceledException>());
 
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 var msg = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual(1, msg.DeliveryCount);
                 var end = DateTime.UtcNow;
@@ -246,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -283,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -317,8 +315,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                var messages = GetMessages(messageCount);
-                var secondSet = GetMessages(messageCount);
+                var messages = ServiceBusTestUtilities.GetMessages(messageCount);
+                var secondSet = ServiceBusTestUtilities.GetMessages(messageCount);
                 await sender.SendMessagesAsync(messages);
                 _ = Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(
                     async _ => await sender.SendMessagesAsync(secondSet));
@@ -353,7 +351,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -403,7 +401,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.GetMessages(messageCount);
 
                 await sender.SendMessagesAsync(messages);
 
@@ -462,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -516,7 +514,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -564,7 +562,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -619,7 +617,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMsg = await receiver.ReceiveMessageAsync();
@@ -645,7 +643,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -679,7 +677,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                ServiceBusMessage sentMessage = GetMessage();
+                ServiceBusMessage sentMessage = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(sentMessage);
 
                 var clientOptions = new ServiceBusReceiverOptions()
@@ -702,7 +700,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                ServiceBusMessage sentMessage = GetMessage("sessionId");
+                ServiceBusMessage sentMessage = ServiceBusTestUtilities.GetMessage("sessionId");
                 await sender.SendMessageAsync(sentMessage);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -720,7 +718,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCount = 1;
-                ServiceBusMessage message = GetMessage();
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(message);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -789,7 +787,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -809,7 +807,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -829,7 +827,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -849,7 +847,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -869,7 +867,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(
                     scope.QueueName,
@@ -915,7 +913,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 for (int i = 0; i < sentCount / messagesPerBatch; i++)
                 {
-                    await sender.SendMessagesAsync(GetMessages(messagesPerBatch));
+                    await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messagesPerBatch));
                 }
 
                 var receiver = client.CreateReceiver(scope.QueueName);
@@ -937,7 +935,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage());
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -961,7 +959,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the first message.
@@ -993,7 +991,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the first batch message.
@@ -1025,7 +1023,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the first message.
@@ -1069,7 +1067,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the first batch message.
@@ -1129,7 +1127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Peek the first message.
@@ -1161,7 +1159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), messageCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Peek the first batch message.
@@ -1193,7 +1191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the messages.
@@ -1229,7 +1227,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the messages.
@@ -1265,7 +1263,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the messages.
@@ -1301,7 +1299,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Send a batch of messages.
 
-                using var batch = AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
+                using var batch = ServiceBusTestUtilities.AddMessages(await sender.CreateMessageBatchAsync(), sendCount);
                 await sender.SendMessagesAsync(batch);
 
                 // Receive the messages.
@@ -1321,6 +1319,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.That(async () => await receiver.DeferMessageAsync(receivedMessages[1]),
                     Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
+
+        [Test]
+        public async Task NullableAmqpPropertiesRoundTripCorrectly()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                var message = new ServiceBusMessage
+                {
+                    ReplyTo = null,
+                    To = null,
+                    CorrelationId = null
+                };
+
+                Assert.IsNull(message.ReplyTo);
+                Assert.IsNull(message.To);
+                Assert.IsNull(message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                await using var receiver = client.CreateReceiver(scope.QueueName);
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.IsNull(receivedMessage.ReplyTo);
+                Assert.IsNull(receivedMessage.To);
+                Assert.IsNull(receivedMessage.CorrelationId);
+
+                // verify default behavior for backcompat
+
+                message = new ServiceBusMessage();
+
+                Assert.AreEqual("", message.ReplyTo);
+                Assert.AreEqual("", message.To);
+                Assert.AreEqual("", message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual("", receivedMessage.ReplyTo);
+                Assert.AreEqual("", receivedMessage.To);
+                Assert.AreEqual("", receivedMessage.CorrelationId);
             }
         }
 

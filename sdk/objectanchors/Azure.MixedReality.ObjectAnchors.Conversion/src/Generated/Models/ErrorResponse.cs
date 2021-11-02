@@ -22,6 +22,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             Error = error;
         }
 
+        /// <summary> Gets the error. </summary>
         public Error Error { get; }
     }
 }

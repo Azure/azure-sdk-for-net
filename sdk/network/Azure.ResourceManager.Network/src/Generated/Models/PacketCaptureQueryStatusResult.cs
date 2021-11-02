@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Status of packet capture session. </summary>
-    public partial class PacketCaptureQueryStatusResult : Resources.Models.SubResource
+    public partial class PacketCaptureQueryStatusResult
     {
         /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
         internal PacketCaptureQueryStatusResult()
@@ -22,15 +21,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
-        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the packet capture resource. </param>
+        /// <param name="id"> The ID of the packet capture resource. </param>
         /// <param name="captureStartTime"> The start time of the packet capture session. </param>
         /// <param name="packetCaptureStatus"> The status of the packet capture session. </param>
         /// <param name="stopReason"> The reason the current packet capture session was stopped. </param>
         /// <param name="packetCaptureError"> List of errors of packet capture session. </param>
-        internal PacketCaptureQueryStatusResult(string id, string name, DateTimeOffset? captureStartTime, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError) : base(id)
+        internal PacketCaptureQueryStatusResult(string name, string id, DateTimeOffset? captureStartTime, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError)
         {
             Name = name;
+            Id = id;
             CaptureStartTime = captureStartTime;
             PacketCaptureStatus = packetCaptureStatus;
             StopReason = stopReason;
@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the packet capture resource. </summary>
         public string Name { get; }
+        /// <summary> The ID of the packet capture resource. </summary>
+        public string Id { get; }
         /// <summary> The start time of the packet capture session. </summary>
         public DateTimeOffset? CaptureStartTime { get; }
         /// <summary> The status of the packet capture session. </summary>

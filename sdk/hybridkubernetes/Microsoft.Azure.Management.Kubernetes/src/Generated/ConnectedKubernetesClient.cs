@@ -329,7 +329,7 @@ namespace Microsoft.Kubernetes
             ConnectedCluster = new ConnectedClusterOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01";
+            ApiVersion = "2021-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -13,7 +13,7 @@ This section should include everything a developer needs to do to install and cr
 
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
-```bash
+```dotnetcli
 dotnet add package Azure.Security.ConfidentialLedger --prerelease
 ```
 
@@ -53,7 +53,7 @@ var identityClient = new ConfidentialLedgerIdentityServiceClient(identityService
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
-Response response = identityClient.GetLedgerIdentity(ledgerId);
+Response response = identityClient.GetLedgerIdentity(ledgerId, new());
 X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
 ```
 
@@ -109,7 +109,7 @@ Console.WriteLine($"Appended transaction with Id: {transactionId}");
 Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status.
 
 ```C# Snippet:GetStatus
-Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
 
 string status = JsonDocument.Parse(statusResponse.Content)
     .RootElement
@@ -121,7 +121,7 @@ Console.WriteLine($"Transaction status: {status}");
 // Wait for the entry to be committed
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -136,7 +136,7 @@ Console.WriteLine($"Transaction status: {status}");
 State changes to the Confidential Ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
 ```C# Snippet:GetReceipt
-Response receiptResponse = ledgerClient.GetReceipt(transactionId);
+Response receiptResponse = ledgerClient.GetReceipt(transactionId, new());
 string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(receiptJson);
@@ -172,7 +172,7 @@ string subLedgerId = JsonDocument.Parse(postResponse.Content)
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -237,7 +237,7 @@ firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.Transa
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -305,7 +305,7 @@ subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Transactio
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId, new());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -370,7 +370,7 @@ ledgerClient.CreateOrUpdateUser(
 One may want to validate details about the Confidential Ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your Confidential Ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your Confidential Ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
-Response consortiumResponse = ledgerClient.GetConsortiumMembers();
+Response consortiumResponse = ledgerClient.GetConsortiumMembers(new());
 string membersJson = new StreamReader(consortiumResponse.ContentStream).ReadToEnd();
 
 // Consortium members can manage and alter the Confidential Ledger, such as by replacing unhealthy nodes.
@@ -378,13 +378,13 @@ Console.WriteLine(membersJson);
 
 // The constitution is a collection of JavaScript code that defines actions available to members,
 // and vets proposals by members to execute those actions.
-Response constitutionResponse = ledgerClient.GetConstitution();
+Response constitutionResponse = ledgerClient.GetConstitution(new());
 string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(constitutionJson);
 
 // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
+Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new());
 string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(enclavesJson);

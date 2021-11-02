@@ -2,7 +2,7 @@
 
 The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
 
-[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Product documentation][questionanswering_docs] | [Samples][questionanswering_samples]
+[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Product documentation][questionanswering_docs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide]
 
 ## Getting started
 
@@ -10,7 +10,7 @@ The Question Answering service is a cloud-based API service that lets you create
 
 Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
 
-```powershell
+```dotnetcli
 dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 ```
 
@@ -78,14 +78,15 @@ The following examples show common scenarios using the `client` [created above](
 
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
-
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+```C# Snippet:QuestionAnsweringClient_GetAnswers
+string projectName = "FAQ";
+string deploymentName = "prod";
+QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+Response<AnswersResult> response = client.GetAnswers("How long should my Surface battery last?", project);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
 }
@@ -98,18 +99,21 @@ You can set additional properties on `QuestionAnsweringClientOptions` to limit t
 If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
 
 ```C# Snippet:QuestionAnsweringClient_Chat
+string projectName = "FAQ";
+string deploymentName = "prod";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
 KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
+QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
+AnswersOptions options = new AnswersOptions
 {
-    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
+    AnswerContext = new KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)
 };
 
-Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
+Response<AnswersResult> response = client.GetAnswers("How long should charging take?", project, options);
 
 foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
-    Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
+    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
 }
@@ -126,7 +130,8 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", options);
+    QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");
+    Response<AnswersResult> response = client.GetAnswers("Does this knowledge base exist?", project);
 }
 catch (RequestFailedException ex)
 {
@@ -208,5 +213,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
 [questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)

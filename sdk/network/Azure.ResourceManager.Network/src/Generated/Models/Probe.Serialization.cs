@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,8 +22,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
@@ -60,8 +63,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
-            Optional<IReadOnlyList<SubResource>> loadBalancingRules = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
             Optional<ProbeProtocol> protocol = default;
             Optional<int> port = default;
             Optional<int> intervalInSeconds = default;
@@ -106,10 +109,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -173,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Probe(id, name.Value, etag.Value, type.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new Probe(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), requestPath.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -16,37 +16,23 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     internal class EventHubBufferedProducerClientOptions
     {
-        /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
+        /// <summary>The number of batches that may be sent concurrently across all partitions.</summary>
+        private int _maximumConcurrentSends = Environment.ProcessorCount * 2;
+
+        /// <summary>The number of batches that may be sent concurrently to each partition.</summary>
         private int _maximumConcurrentSendsPerPartition = 1;
+
+        /// <summary>The total number of events that can be buffered for publishing at a given time for a given partition.</summary>
+        private int _maximumEventBufferLengthPerPartition = 1500;
+
+        /// <summary> The amount of time to wait for a new event to be enqueued in the buffer before publishing a partially full batch.</summary>
+        private TimeSpan? _maximumWaitTime = TimeSpan.FromSeconds(1);
 
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
-
-        /// <summary>
-        ///   The amount of time to wait for a new event to be added to the buffer before sending a partially
-        ///   full batch.
-        /// </summary>
-        ///
-        /// <value>
-        ///   The default wait time is 250 milliseconds.
-        /// </value>
-        ///
-        public TimeSpan? MaximumWaitTime { get; set; } = TimeSpan.FromMilliseconds(250);
-
-        /// <summary>
-        ///   The total number of events that can be buffered for publishing at a given time across all partitions.
-        ///   Once this capacity is reached, more events can enqueued by calling <see cref="EventHubBufferedProducerClient.EnqueueEventAsync(EventData, EnqueueEventOptions, System.Threading.CancellationToken)" /> or
-        ///   <see cref="EventHubBufferedProducerClient.EnqueueEventsAsync(System.Collections.Generic.IEnumerable{EventData}, EnqueueEventOptions, System.Threading.CancellationToken)" />, which will automatically wait for room to be available.
-        /// </summary>
-        ///
-        /// <value>
-        ///   The default limit is 2,500 queued events.
-        /// </value>
-        ///
-        public int MaximumEventBufferLength { get; set; } = 2500;
 
         /// <summary>
         ///    Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
@@ -56,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <value>
         ///   By default, idempotent retries are disabled.
-        ///</value>
+        /// </value>
         ///
         /// <remarks>
         ///   It is important to note that enabling idempotent retries does not guarantee exactly-once semantics.  The existing
@@ -66,7 +52,92 @@ namespace Azure.Messaging.EventHubs.Producer
         public bool EnableIdempotentRetries { get; set; }
 
         /// <summary>
-        ///   The number of batches that may be sent concurrently to each partition.
+        ///   The amount of time to wait for a batch to be built with events in the buffer before publishing
+        ///   a partially full batch.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The default wait time is 1 second.  For most scenarios, it is recommended to allow for at least 1
+        ///   second in order to ensure consistent performance.
+        ///
+        ///   <para>If <c>null</c>, batches will only be published when full unless <see cref="EventHubBufferedProducerClient.FlushAsync(System.Threading.CancellationToken)"/>
+        ///   is called.</para>
+        /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
+        public TimeSpan? MaximumWaitTime
+        {
+            get => _maximumWaitTime;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertNotNegative(value.Value, nameof(MaximumWaitTime));
+                }
+
+                _maximumWaitTime = value;
+            }
+        }
+
+        /// <summary>
+        ///   The total number of events that can be buffered for publishing at a given time for a given partition.  Once this capacity is reached, more events can enqueued by calling
+        ///   <see cref="EventHubBufferedProducerClient.EnqueueEventAsync(EventData, EnqueueEventOptions, System.Threading.CancellationToken)" /> or
+        ///   <see cref="EventHubBufferedProducerClient.EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, System.Threading.CancellationToken)" />, which will automatically wait for room to be available.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The default limit is 1500 queued events for each partition.
+        /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 1 million (inclusive).</exception>
+        ///
+        public int MaximumEventBufferLengthPerPartition
+        {
+            get => _maximumEventBufferLengthPerPartition;
+            set
+            {
+                // An upper bound of 1 million was chosen because it offers enough room for
+                // 2147 partitions to be completely full before overflowing an integer value.
+                // The current cap for general Event Hubs use is 32 partitions.
+                //
+                // Important enterprise customers can request up to 2000.
+
+                Argument.AssertInRange(value, 1, 1_000_000, nameof(MaximumEventBufferLengthPerPartition));
+                _maximumEventBufferLengthPerPartition = value;
+            }
+        }
+
+        /// <summary>
+        ///   The total number of batches that may be sent concurrently, across all partitions.  This limit takes precedence over
+        ///   the value specified in <see cref="MaximumConcurrentSendsPerPartition" />, ensuring this maximum is respected.
+        /// </summary>
+        ///
+        /// <value>
+        ///   By default, this will be set to twice the number of processors available in the host environment.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   When batches for the same partition are published concurrently, the ordering of events is not guaranteed.  If the order events are published
+        ///   must be maintained, <see cref="MaximumConcurrentSendsPerPartition" /> should not exceed 1.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 100 (inclusive).</exception>
+        ///
+        public int MaximumConcurrentSends
+        {
+            get => _maximumConcurrentSends;
+            set
+            {
+                Argument.AssertInRange(value, 1, 100, nameof(MaximumConcurrentSends));
+                _maximumConcurrentSends = value;
+            }
+        }
+
+        /// <summary>
+        ///   The number of batches that may be sent concurrently for a given partition.  This option is superseded by
+        ///   the value specified for <see cref="MaximumConcurrentSends" />, ensuring that limit is respected.
         /// </summary>
         ///
         /// <value>
@@ -75,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///</value>
         ///
         /// <remarks>
-        ///   When batches are published concurrently, the ordering of events is not guaranteed.  If the order events are published
+        ///   When batches for the same partition are published concurrently, the ordering of events is not guaranteed.  If the order of events
         ///   must be maintained, <see cref="MaximumConcurrentSendsPerPartition" /> should not exceed 1.
         /// </remarks>
         ///
@@ -168,11 +239,12 @@ namespace Azure.Messaging.EventHubs.Producer
             var copiedOptions = new EventHubBufferedProducerClientOptions
             {
                 Identifier = Identifier,
-                MaximumEventBufferLength = MaximumEventBufferLength,
-                MaximumWaitTime = MaximumWaitTime,
                 EnableIdempotentRetries = EnableIdempotentRetries,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
+                _maximumEventBufferLengthPerPartition = MaximumEventBufferLengthPerPartition,
+                _maximumWaitTime = MaximumWaitTime,
+                _maximumConcurrentSends = MaximumConcurrentSends,
                 _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition
             };
 

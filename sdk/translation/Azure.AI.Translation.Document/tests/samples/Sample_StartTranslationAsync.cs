@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    [LiveOnly]
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
@@ -61,7 +60,7 @@ namespace Azure.AI.Translation.Document.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+                    Console.WriteLine($"  Error Code: {document.Error.Code}");
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }

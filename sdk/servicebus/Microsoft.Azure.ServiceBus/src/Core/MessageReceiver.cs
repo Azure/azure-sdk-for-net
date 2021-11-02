@@ -1005,7 +1005,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 throw new ServiceBusException(true, Resources.SessionFilterMissing);
             }
 
-            if (string.IsNullOrWhiteSpace(tempSessionId))
+            if (tempSessionId == null)
             {
                 receivingAmqpLink.Session.SafeClose();
                 throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
@@ -1124,7 +1124,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception, receiveLink?.GetTrackingId(), null, receiveLink?.IsClosing() ?? false);
+                throw AmqpExceptionHelper.GetClientException(exception, true, receiveLink?.GetTrackingId(), null, receiveLink?.IsClosing() ?? false);
             }
         }
 
@@ -1183,7 +1183,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
 
@@ -1231,7 +1231,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
 
             return messages;
@@ -1316,7 +1316,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
 
             return lockedUntilUtc;
@@ -1489,7 +1489,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     throw new MessageLockLostException(Resources.MessageLockLost);
                 }
                 
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
 
@@ -1552,7 +1552,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.GetClientException(exception);
+                throw AmqpExceptionHelper.GetClientException(exception, true);
             }
         }
 

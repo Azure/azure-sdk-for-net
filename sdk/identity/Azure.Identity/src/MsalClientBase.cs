@@ -43,7 +43,7 @@ namespace Azure.Identity
 
         internal TokenCache TokenCache { get; }
 
-        protected CredentialPipeline Pipeline { get; }
+        protected internal CredentialPipeline Pipeline { get; }
 
         protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
 

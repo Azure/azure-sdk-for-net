@@ -19,9 +19,10 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Delete()
         {
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            var lro = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
@@ -30,11 +31,5 @@ namespace Azure.ResourceManager.Resources.Tests
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await applicationDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
-        private static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(Location.WestUS2, ApplicationLockLevel.None)
-        {
-            DisplayName = displayName,
-            Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
-        };
     }
 }

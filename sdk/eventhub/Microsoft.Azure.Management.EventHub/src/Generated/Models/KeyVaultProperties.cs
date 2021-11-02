@@ -32,11 +32,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="keyName">Name of the Key from KeyVault</param>
         /// <param name="keyVaultUri">Uri of KeyVault</param>
         /// <param name="keyVersion">Key Version</param>
-        public KeyVaultProperties(string keyName = default(string), string keyVaultUri = default(string), string keyVersion = default(string))
+        public KeyVaultProperties(string keyName = default(string), string keyVaultUri = default(string), string keyVersion = default(string), UserAssignedIdentityProperties identity = default(UserAssignedIdentityProperties))
         {
             KeyName = keyName;
             KeyVaultUri = keyVaultUri;
             KeyVersion = keyVersion;
+            Identity = identity;
             CustomInit();
         }
 
@@ -62,6 +63,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public UserAssignedIdentityProperties Identity { get; set; }
 
     }
 }

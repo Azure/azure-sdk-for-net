@@ -1,16 +1,35 @@
 # Release History
 
-## 7.3.0-beta.2 (Unreleased)
+## 7.5.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.5.0-beta.1 (2021-10-05)
+
+### Features Added
+- Added support for specifying the maximum message size for entities in Premium namespaces.
+
+## 7.4.0 (2021-10-05)
+
+### Features Added
+- Added support for cancelling send and receives while in-flight.
+
+### Bugs Fixed
+- Leveraged fix in AMQP library that allows messages to be properly unlocked when shutting down the processor.
+
+## 7.3.0 (2021-09-07)
 
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - John Call _([GitHub](https://github.com/johnthcall))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 

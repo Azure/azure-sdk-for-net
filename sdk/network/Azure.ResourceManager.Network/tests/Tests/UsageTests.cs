@@ -10,7 +10,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
     public class UsageTests : NetworkServiceClientTestBase
     {
@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [RecordedTest]
         public async Task UsageTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -39,15 +40,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkSecurityGroupData networkSecurityGroup = new NetworkSecurityGroupData() { Location = location, };
 
             // Put Nsg
-            var networkSecurityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupContainer.CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
+            var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
-            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
+            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<Usage> usagesResponseAP = ArmClient.DefaultSubscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
+            AsyncPageable<Usage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
             List<Usage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);

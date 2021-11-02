@@ -19,6 +19,9 @@ model-namespace: true
 public-clients: false
 head-as-boolean: false
 flatten-payloads: false
+#TODO: remove after we resolve why DdosCustomPolicy has no list
+list-exception:
+  DdosCustomPolicies
 operation-group-to-resource-type:
     # applicationgateway.json
     ApplicationGatewayPrivateLinkResources: Microsoft.Network/applicationGateways/privateLinkResources

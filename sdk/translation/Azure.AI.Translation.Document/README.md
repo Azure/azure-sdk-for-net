@@ -13,7 +13,7 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 ### Install the package
 Install the Azure Document Translation client library for .NET with [NuGet][nuget]:
 
-```PowerShell
+```dotnetcli
 dotnet add package Azure.AI.Translation.Document --prerelease
 ```
 
@@ -219,14 +219,14 @@ await foreach (DocumentStatusResult document in operation.Value)
     }
     else
     {
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
 ```
 
 ### Get Operations History Asynchronously
-Get History of all submitted translation operations
+Get History of submitted translation operations from the last 7 days. The options parameter can be ommitted if the user would like to return all submitted operations.
 
 ```C# Snippet:OperationsHistoryAsync
 int operationsCount = 0;
@@ -235,7 +235,14 @@ int docsCanceled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusResult translationStatus in client.GetTranslationStatusesAsync())
+DateTimeOffset lastWeekTimestamp = DateTimeOffset.Now.AddDays(-7);
+
+var options = new GetTranslationStatusesOptions
+{
+    CreatedAfter = lastWeekTimestamp
+};
+
+await foreach (TranslationStatusResult translationStatus in client.GetTranslationStatusesAsync(options))
 {
     if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
         translationStatus.Status == DocumentTranslationStatus.Running)
@@ -300,7 +307,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
@@ -358,7 +365,7 @@ foreach (DocumentStatusResult document in operation.GetValues())
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }

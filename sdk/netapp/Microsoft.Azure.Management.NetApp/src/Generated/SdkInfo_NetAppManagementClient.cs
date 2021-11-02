@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.NetApp
                 new Tuple<string, string, string>("NetApp", "BackupPolicies", "2021-06-01"),
                 new Tuple<string, string, string>("NetApp", "Backups", "2021-06-01"),
                 new Tuple<string, string, string>("NetApp", "NetAppResource", "2021-06-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResourceQuotaLimits", "2021-06-01"),
                 new Tuple<string, string, string>("NetApp", "Operations", "2021-06-01"),
                 new Tuple<string, string, string>("NetApp", "Pools", "2021-06-01"),
                 new Tuple<string, string, string>("NetApp", "SnapshotPolicies", "2021-06-01"),
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.NetApp
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=C:\\Users\\audunn\\Source\\repos\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "1a5e9c6601a9611ac23c58bc9857693dcd9884f3";
+      public static readonly String GithubCommidId = "ce90f9b45945c73b8f38649ee6ead390ff6efe7b";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

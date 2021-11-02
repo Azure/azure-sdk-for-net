@@ -6,30 +6,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Tests
+namespace Azure.ResourceManager.Network.Tests
 {
-    public class PublicIpPrefixTests
-        : NetworkServiceClientTestBase
+    public class PublicIpPrefixTests : NetworkServiceClientTestBase
     {
+        private Subscription _subscription;
+
         public PublicIpPrefixTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
+            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
         }
 
-        public async Task<PublicIPPrefixContainer> GetContainer()
+        public async Task<PublicIPPrefixCollection> GetCollection()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_public_ip_prefix_"));
             return resourceGroup.GetPublicIPPrefixes();
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [RecordedTest]
         public async Task PublicIpPrefixApiTest()
         {
-            var container = await GetContainer();
+            var container = await GetCollection();
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create

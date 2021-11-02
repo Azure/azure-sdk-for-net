@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-text?api-version=2021-05-01-preview",
+      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-text?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "640",
+        "Content-Length": "690",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-64b64fa953d7e6409bf2b6e4f142e9a0-b1fd75d50ede0d41-00",
+        "traceparent": "00-7b688589f90578439abfa6c7727c6164-7b4a93eb2dd4d744-00",
         "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20210630.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
+          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
         ],
         "x-ms-client-request-id": "34bae169faa320cf3811494e7fefda37",
         "x-ms-return-client-request-id": "true"
@@ -27,24 +27,27 @@
             "id": "2",
             "text": "You can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface."
           }
-        ]
+        ],
+        "language": "en",
+        "stringIndexType": "Utf16CodeUnit"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "db198dfb-f4d3-417f-bbc0-985eba461c42",
+        "apim-request-id": "4b9b1366-86c3-47db-9cd6-bbfe7a601620",
         "Content-Length": "1479",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 18:12:24 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=2",
+        "Date": "Thu, 28 Oct 2021 20:05:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "538"
+        "x-envoy-upstream-service-time": "409"
       },
       "ResponseBody": [
         "{\n",
         "  \u0022answers\u0022: [\n",
         "    {\n",
         "      \u0022answer\u0022: \u0022Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9298818111419678,\n",
+        "      \u0022confidenceScore\u0022: 0.9298818707466125,\n",
         "      \u0022id\u0022: \u00221\u0022,\n",
         "      \u0022answerSpan\u0022: {\n",
         "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
@@ -57,7 +60,7 @@
         "    },\n",
         "    {\n",
         "      \u0022answer\u0022: \u0022It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.9254360198974609,\n",
+        "      \u0022confidenceScore\u0022: 0.9254359602928162,\n",
         "      \u0022id\u0022: \u00221\u0022,\n",
         "      \u0022answerSpan\u0022: {\n",
         "        \u0022text\u0022: \u0022two to four hours\u0022,\n",
@@ -87,8 +90,8 @@
     }
   ],
   "Variables": {
-    "QNAMAKER_API_KEY": "Sanitized",
-    "QNAMAKER_URI": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_KEY": "Sanitized",
     "RandomSeed": "713474829"
   }
 }
