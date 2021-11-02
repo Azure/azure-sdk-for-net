@@ -46,7 +46,7 @@ namespace Azure.Communication
             TimeSpan proactiveRefreshingInterval,
             Func<Action, TimeSpan, IScheduledAction>? scheduler,
             Func<DateTimeOffset>? utcNowProvider)
-            : this(refresher, asyncRefresher, refreshProactively, initialValue: default!, hasInitialValue: false, proactiveRefreshingInterval,scheduler, utcNowProvider)
+            : this(refresher, asyncRefresher, refreshProactively, initialValue: default!, hasInitialValue: false, proactiveRefreshingInterval, scheduler, utcNowProvider)
         { }
 
         internal ThreadSafeRefreshableAccessTokenCache(
