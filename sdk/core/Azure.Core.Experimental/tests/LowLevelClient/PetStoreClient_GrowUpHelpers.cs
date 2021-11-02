@@ -27,7 +27,7 @@ namespace Azure.Core.Experimental.Tests
         //        public virtual AsyncPageable<BinaryData> GetPetsAsync()
         //#pragma warning restore AZC0002
         //        {
-        //            // TODO: handle need for continuation token and 
+        //            // TODO: handle need for continuation token and
         //            AsyncPageable<BinaryData> pets = GetPetsAsync(new());
         //            pets.AsPages()
 
@@ -60,9 +60,9 @@ namespace Azure.Core.Experimental.Tests
             //public override IReadOnlyList<Pet> Values => (IReadOnlyList<Pet>)_page.Values.Select(data => GetPetFromBinaryData(data));//.ToList().AsReadOnly();
             public override IReadOnlyList<Pet> Values => (IReadOnlyList<Pet>)_page.Values.Select(data =>
             {
-                Pet pet = (Pet)data;
-                return pet;
-            });//.ToList().AsReadOnly();
+                // Pet pet = (Pet)data; // does not compile
+                return GetPetFromBinaryData(data);
+            });
 
             public override string ContinuationToken => _page.ContinuationToken;
 

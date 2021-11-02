@@ -164,7 +164,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetPetsAsync(RequestOptions options)
+        public virtual AsyncPageable<BinaryData> GetPetsAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PetStoreClient.GetPets");
@@ -175,7 +175,7 @@ namespace Azure.Core.Experimental.Tests
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetPetsRequest()
                         : CreateGetPetsNextPageRequest(nextLink);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(Pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(Pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -183,7 +183,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetPets(RequestOptions options)
+        public virtual Pageable<BinaryData> GetPets(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PetStoreClient.GetPets");
@@ -194,7 +194,7 @@ namespace Azure.Core.Experimental.Tests
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetPetsRequest()
                         : CreateGetPetsNextPageRequest(nextLink);
-                    var page = LowLevelPageableHelpers.ProcessMessage(Pipeline, message, _clientDiagnostics, options, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(Pipeline, message, _clientDiagnostics, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
