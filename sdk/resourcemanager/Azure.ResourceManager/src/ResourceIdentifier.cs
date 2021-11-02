@@ -102,12 +102,20 @@ namespace Azure.ResourceManager
             _stringValue = parent == null ? RootStringValue : null;
         }
 
-        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
+        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent)
         {
-            ResourceGroupsLowerKey => ResourceGroup.ResourceType,
-            SubscriptionsKey => Subscription.ResourceType,
-            _ => new ResourceType(parent.ResourceType, resourceTypeName)
-        };
+            string resourceTypeNameLower = resourceTypeName.ToLowerInvariant();
+            if (resourceTypeNameLower == ResourceGroupsLowerKey)
+            {
+                return ResourceGroup.ResourceType;
+            }
+            //Only the front subscriptions' type is Microsoft.Resources/subscriptions.
+            if (resourceTypeNameLower == SubscriptionsKey && string.IsNullOrEmpty(parent.SubscriptionId))
+            {
+                return Subscription.ResourceType;
+            }
+            return new ResourceType(parent.ResourceType, resourceTypeName);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
@@ -127,7 +135,7 @@ namespace Azure.ResourceManager
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
 
             var firstToLower = parts[0].ToLowerInvariant();
-            if (firstToLower != SubscriptionsKey  && firstToLower != ProvidersKey)
+            if (firstToLower != SubscriptionsKey && firstToLower != ProvidersKey)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
 
             return AppendNext(RootResourceIdentifier, parts);
@@ -384,7 +392,7 @@ namespace Azure.ResourceManager
         /// <returns></returns>
         public static bool operator ==(ResourceIdentifier id1, ResourceIdentifier id2)
         {
-            return ResourceIdentifier.Equals(id1,id2);
+            return ResourceIdentifier.Equals(id1, id2);
         }
 
         /// <summary>
@@ -395,7 +403,7 @@ namespace Azure.ResourceManager
         /// <returns></returns>
         public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
         {
-            return !ResourceIdentifier.Equals(id1,id2);
+            return !ResourceIdentifier.Equals(id1, id2);
         }
 
         /// <summary>

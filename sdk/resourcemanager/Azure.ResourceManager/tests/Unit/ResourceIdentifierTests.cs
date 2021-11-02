@@ -111,6 +111,16 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(targetResourceId, subject.Parent);
         }
 
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/providers/Microsoft.ApiManagement/service/myservicename/subscriptions/mysubscription", "Microsoft.ApiManagement/service/subscriptions",
+            Description = "From ApiManagement")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/providers/Microsoft.ServiceBus/namespaces/mynamespace/topics/mytopic/subscriptions/mysubscription", "Microsoft.ServiceBus/namespaces/topics/subscriptions",
+            Description = "From ServiceBus")]
+        public void CanParseResourceIdsWithSubscriptionsOfOtherResourceTypes(string resourceId, string expectedResourcetype)
+        {
+            ResourceIdentifier subject = resourceId;
+            Assert.AreEqual(expectedResourcetype, subject.ResourceType.ToString());
+        }
+
         [TestCase("UnformattedString", Description = "Too Few Elements")]
         [TestCase("/subs/sub1/rgs/rg1/", Description = "No known parts")]
         [TestCase("/subscriptions/sub1/rgs/rg1/", Description = "Subscription not a Guid")]
