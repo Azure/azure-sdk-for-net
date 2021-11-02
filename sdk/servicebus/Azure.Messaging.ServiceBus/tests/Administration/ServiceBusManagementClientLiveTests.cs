@@ -76,7 +76,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        [ServiceVersion(Min = ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)]
         public async Task BasicQueueCrudOperations(bool premium)
         {
             var queueName = nameof(BasicQueueCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -101,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Status = EntityStatus.Disabled
             };
 
-            if (premium)
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 queueOptions.MaxMessageSizeInKilobytes = 100000;
             }
@@ -118,14 +117,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             QueueProperties createdQueue = createdQueueResponse.Value;
 
-            if (premium)
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 Assert.AreEqual(100000, createdQueue.MaxMessageSizeInKilobytes);
             }
-            else
+            else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
                 Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1024);
+            }
+            else
+            {
+                Assert.IsNull(createdQueue.MaxMessageSizeInKilobytes);
             }
 
             AssertQueueOptions(queueOptions, createdQueue);
@@ -197,7 +200,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        [ServiceVersion(Min = ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)]
         public async Task BasicTopicCrudOperations(bool premium)
         {
             var topicName = nameof(BasicTopicCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -215,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 UserMetadata = nameof(BasicTopicCrudOperations),
             };
 
-            if (premium)
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 options.MaxMessageSizeInKilobytes = 100000;
             }
@@ -232,14 +234,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             TopicProperties createdTopic = createdTopicResponse.Value;
 
-            if (premium)
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 Assert.AreEqual(100000, createdTopic.MaxMessageSizeInKilobytes);
             }
-            else
+            else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
             {
                 // standard namespaces either use 256KB or 1024KB when in Canary
                 Assert.LessOrEqual(createdTopic.MaxMessageSizeInKilobytes, 1024);
+            }
+            else
+            {
+                Assert.IsNull(createdTopic.MaxMessageSizeInKilobytes);
             }
 
             AssertTopicOptions(options, createdTopic);
