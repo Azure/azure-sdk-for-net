@@ -24,6 +24,23 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
+        internal RouterJob(string id, string channelReference, JobStatus jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IReadOnlyList<LabelSelector> workerSelectors, LabelCollection labels, IReadOnlyDictionary<string, JobAssignment> assignments, IReadOnlyDictionary<string, string> notes)
+        {
+            Id = id;
+            ChannelReference = channelReference;
+            JobStatus = jobStatus;
+            EnqueueTimeUtc = enqueueTimeUtc;
+            ChannelId = channelId;
+            ClassificationPolicyId = classificationPolicyId;
+            QueueId = queueId;
+            Priority = priority;
+            DispositionCode = dispositionCode;
+            WorkerSelectors = workerSelectors;
+            Labels = labels;
+            Assignments = assignments;
+            Notes = notes;
+        }
+
         public LabelCollection Labels { get; set; }
     }
 }

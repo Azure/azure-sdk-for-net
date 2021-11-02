@@ -24,6 +24,18 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
+        internal RouterWorker(string id, WorkerState state, IReadOnlyList<QueueAssignment> queueAssignments, int totalCapacity, LabelCollection labels, IReadOnlyList<ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs)
+        {
+            Id = id;
+            State = state;
+            QueueAssignments = queueAssignments;
+            TotalCapacity = totalCapacity;
+            Labels = labels;
+            ChannelConfigurations = channelConfigurations;
+            Offers = offers;
+            AssignedJobs = assignedJobs;
+        }
+
         public LabelCollection Labels { get; private set; }
     }
 }

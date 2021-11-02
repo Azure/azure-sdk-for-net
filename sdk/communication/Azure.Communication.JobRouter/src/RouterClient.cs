@@ -1276,7 +1276,9 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<RouterJob> job = await RestClient.GetJobAsync(jobId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(job.Value, job.GetRawResponse());
+                return Response.FromValue(new RouterJob(job.Value.Id, job.Value.ChannelReference, job.Value.JobStatus,
+                    job.Value.EnqueueTimeUtc, job.Value.ChannelId, job.Value.ClassificationPolicyId, job.Value.QueueId, job.Value.Priority,
+                    job.Value.DispositionCode, job.Value.WorkerSelectors, job.Value.Labels, job.Value.Assignments, job.Value.Notes), job.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1299,7 +1301,9 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<RouterJob> job = RestClient.GetJob(jobId, cancellationToken);
-                return Response.FromValue(job.Value, job.GetRawResponse());
+                return Response.FromValue(new RouterJob(job.Value.Id, job.Value.ChannelReference, job.Value.JobStatus,
+                    job.Value.EnqueueTimeUtc, job.Value.ChannelId, job.Value.ClassificationPolicyId, job.Value.QueueId, job.Value.Priority,
+                    job.Value.DispositionCode, job.Value.WorkerSelectors, job.Value.Labels, job.Value.Assignments, job.Value.Notes), job.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1324,7 +1328,9 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<JobCollection> response = await RestClient.ListEnqueuedJobsAsync(queueId, maxPageSize, null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference, x.JobStatus,
+                        x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority, x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1344,7 +1350,11 @@ namespace Azure.Communication.JobRouter
                     Response<JobCollection> response = await RestClient
                         .ListEnqueuedJobsNextPageAsync(nextLink, queueId, maxPageSize, null, cancellationToken)
                         .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference,
+                            x.JobStatus,
+                            x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority,
+                            x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)), response.Value.NextLink,
+                        response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1372,7 +1382,9 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<JobCollection> response = RestClient.ListEnqueuedJobs(queueId, maxPageSize, null, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference, x.JobStatus,
+                        x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority, x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1391,7 +1403,11 @@ namespace Azure.Communication.JobRouter
                 {
                     Response<JobCollection> response = RestClient
                         .ListEnqueuedJobsNextPage(nextLink, queueId, maxPageSize, null, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference,
+                            x.JobStatus,
+                            x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority,
+                            x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)), response.Value.NextLink,
+                        response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1424,7 +1440,13 @@ namespace Azure.Communication.JobRouter
                 var response = await RestClient.UpdateJobLabelsAsync(jobId,
                         labels.ToDictionary(x => x.Key, x => x.Value), note, cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId,
+                        response.Value.QueueId,
+                        response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors,
+                        response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1453,7 +1475,13 @@ namespace Azure.Communication.JobRouter
             {
                 var response = RestClient.UpdateJobLabels(jobId, labels.ToDictionary(x => x.Key, x => x.Value), note,
                     cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId,
+                        response.Value.QueueId,
+                        response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors,
+                        response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1483,7 +1511,11 @@ namespace Azure.Communication.JobRouter
                 request.LabelsToUpsert = labelsToUpdate;
 
                 var response = await RestClient.ReclassifyJobAsync(jobId, request, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId, response.Value.QueueId,
+                        response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors, response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1513,7 +1545,11 @@ namespace Azure.Communication.JobRouter
                 request.LabelsToUpsert = labelsToUpdate;
 
                 var response = RestClient.ReclassifyJob(jobId, request, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId, response.Value.QueueId,
+                        response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors, response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1550,7 +1586,10 @@ namespace Azure.Communication.JobRouter
             try
             {
                 var response = await RestClient.UpdateJobClassificationAsync(jobId, queueId, priority, workerSelectors, note, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId, response.Value.QueueId, response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors, response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1587,7 +1626,10 @@ namespace Azure.Communication.JobRouter
             try
             {
                 var response = RestClient.UpdateJobClassification(jobId, queueId, priority, workerSelectors, note, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterJob(response.Value.Id, response.Value.ChannelReference, response.Value.JobStatus,
+                        response.Value.EnqueueTimeUtc, response.Value.ChannelId, response.Value.ClassificationPolicyId, response.Value.QueueId, response.Value.Priority, response.Value.DispositionCode, response.Value.WorkerSelectors, response.Value.Labels, response.Value.Assignments, response.Value.Notes),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1769,7 +1811,9 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<JobCollection> response = await RestClient.ListJobsAsync(status, maxPageSize, continuationToken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference, x.JobStatus,
+                        x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority, x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1789,7 +1833,11 @@ namespace Azure.Communication.JobRouter
                     Response<JobCollection> response = await RestClient
                         .ListJobsNextPageAsync(nextLink, status, maxPageSize, null, cancellationToken)
                         .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference,
+                            x.JobStatus,
+                            x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority,
+                            x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)), response.Value.NextLink,
+                        response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1817,7 +1865,9 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<JobCollection> response = RestClient.ListJobs(status, maxPageSize, continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference, x.JobStatus,
+                        x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority, x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1836,7 +1886,11 @@ namespace Azure.Communication.JobRouter
                 {
                     Response<JobCollection> response = RestClient
                         .ListJobsNextPage(nextLink, status, maxPageSize, continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterJob(x.Id, x.ChannelReference,
+                            x.JobStatus,
+                            x.EnqueueTimeUtc, x.ChannelId, x.ClassificationPolicyId, x.QueueId, x.Priority,
+                            x.DispositionCode, x.WorkerSelectors, x.Labels, x.Assignments, x.Notes)), response.Value.NextLink,
+                        response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2070,7 +2124,7 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<QueueCollection> response = await RestClient.ListQueuesAsync(maxPageSize, continuationToken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new JobQueue(x.Id, x.Name, x.DistributionPolicyId, x.Labels, x.ExceptionPolicyId)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2087,7 +2141,7 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<QueueCollection> response = await RestClient.ListQueuesNextPageAsync(nextLink, maxPageSize, continuationToken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new JobQueue(x.Id, x.Name, x.DistributionPolicyId, x.Labels, x.ExceptionPolicyId)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2112,7 +2166,7 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<QueueCollection> response = RestClient.ListQueues(maxPageSize, continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new JobQueue(x.Id, x.Name, x.DistributionPolicyId, x.Labels, x.ExceptionPolicyId)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2130,7 +2184,7 @@ namespace Azure.Communication.JobRouter
                 {
                     Response<QueueCollection> response =
                         RestClient.ListQueuesNextPage(nextLink, maxPageSize, continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new JobQueue(x.Id, x.Name, x.DistributionPolicyId, x.Labels, x.ExceptionPolicyId)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2155,7 +2209,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<JobQueue> queue = await RestClient.GetQueueAsync(id, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(queue.Value, queue.GetRawResponse());
+                return Response.FromValue(new JobQueue(queue.Value.Id, queue.Value.Name, queue.Value.DistributionPolicyId, queue.Value.Labels, queue.Value.ExceptionPolicyId), queue.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -2177,7 +2231,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<JobQueue> queue = RestClient.GetQueue(id, cancellationToken);
-                return Response.FromValue(queue.Value, queue.GetRawResponse());
+                return Response.FromValue(new JobQueue(queue.Value.Id, queue.Value.Name, queue.Value.DistributionPolicyId, queue.Value.Labels, queue.Value.ExceptionPolicyId), queue.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -2253,7 +2307,9 @@ namespace Azure.Communication.JobRouter
 
                 var response = await RestClient.RegisterWorkerAsync(request, cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterWorker(response.Value.Id, response.Value.State, response.Value.QueueAssignments, response.Value.TotalCapacity, response.Value.Labels, response.Value.ChannelConfigurations, response.Value.Offers, response.Value.AssignedJobs),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -2285,7 +2341,9 @@ namespace Azure.Communication.JobRouter
                 request.ChannelConfigurations = channelConfigurations;
 
                 var response = RestClient.RegisterWorker(request, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(
+                    new RouterWorker(response.Value.Id, response.Value.State, response.Value.QueueAssignments, response.Value.TotalCapacity, response.Value.Labels, response.Value.ChannelConfigurations, response.Value.Offers, response.Value.AssignedJobs),
+                    response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -2364,7 +2422,8 @@ namespace Azure.Communication.JobRouter
                 try
                 {
                     Response<WorkerCollection> response = await RestClient.ListWorkersAsync(status, channelId, queueId, hasCapacity, maxPageSize, continuationToken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterWorker(x.Id, x.State, x.QueueAssignments, x.TotalCapacity, x.Labels, x.ChannelConfigurations, x.Offers, x.AssignedJobs)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2384,7 +2443,8 @@ namespace Azure.Communication.JobRouter
                     Response<WorkerCollection> response = await RestClient
                         .ListWorkersNextPageAsync(nextLink, status, channelId, queueId, hasCapacity, maxPageSize, continuationToken, cancellationToken)
                         .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterWorker(x.Id, x.State, x.QueueAssignments, x.TotalCapacity, x.Labels, x.ChannelConfigurations, x.Offers, x.AssignedJobs)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2424,7 +2484,8 @@ namespace Azure.Communication.JobRouter
                 {
                     Response<WorkerCollection> response = RestClient.ListWorkers(status, channelId, queueId, hasCapacity, maxPageSize,
                         continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterWorker(x.Id, x.State, x.QueueAssignments, x.TotalCapacity, x.Labels, x.ChannelConfigurations, x.Offers, x.AssignedJobs)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2443,7 +2504,8 @@ namespace Azure.Communication.JobRouter
                 {
                     Response<WorkerCollection> response = RestClient
                         .ListWorkersNextPage(nextLink, status, channelId, queueId, hasCapacity, maxPageSize, continuationToken, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => new RouterWorker(x.Id, x.State, x.QueueAssignments, x.TotalCapacity, x.Labels, x.ChannelConfigurations, x.Offers, x.AssignedJobs)),
+                        response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2469,7 +2531,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<RouterWorker> worker = await RestClient.GetWorkerAsync(workerId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(worker.Value, worker.GetRawResponse());
+                return Response.FromValue(new RouterWorker(worker.Value.Id, worker.Value.State, worker.Value.QueueAssignments, worker.Value.TotalCapacity, worker.Value.Labels, worker.Value.ChannelConfigurations, worker.Value.Offers, worker.Value.AssignedJobs), worker.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -2492,7 +2554,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 Response<RouterWorker> worker = RestClient.GetWorker(workerId, cancellationToken);
-                return Response.FromValue(worker.Value, worker.GetRawResponse());
+                return Response.FromValue(new RouterWorker(worker.Value.Id, worker.Value.State, worker.Value.QueueAssignments, worker.Value.TotalCapacity, worker.Value.Labels, worker.Value.ChannelConfigurations, worker.Value.Offers, worker.Value.AssignedJobs), worker.GetRawResponse());
             }
             catch (Exception ex)
             {

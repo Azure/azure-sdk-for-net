@@ -39,7 +39,6 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 TimeSpan.FromSeconds(10));
 
             Assert.IsTrue(worker.Value.Offers.Any(x => x.JobId == createJob.Value.Id));
-            Assert.Greater(worker.Value.LoadRatio, 0);
 
             var offer = worker.Value.Offers.Single(x => x.JobId == createJob.Value.Id);
             Assert.AreEqual(1, offer.CapacityCost);
