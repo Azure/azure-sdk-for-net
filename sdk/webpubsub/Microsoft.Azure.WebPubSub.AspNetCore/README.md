@@ -50,6 +50,13 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 ### Add Web PubSub service with options
 
 ```C# Snippet:WebPubSubDependencyInjection
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddWebPubSub(o =>
+    {
+        o.ValidationOptions.Add("<connection-string>");
+    });
+}
 ```
 
 ### Map `WebPubSubHub` to endpoint routing.
@@ -57,11 +64,26 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 The path should match the value configured in the Azure Web PubSub service `EventHandler`. For example, if placeholder is using like `/api/{event}`, then the path set in code should be `/api/{event}` as well.
 
 ```C# Snippet:WebPubSubMapHub
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhander");
+    });
+}
 ```
 
 ### Handle Upstream event
 
 ```C# Snippet:WebPubSubConnectMethods
+public override ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+{
+    var response = new ConnectEventResponse
+    {
+        UserId = request.ConnectionContext.UserId
+    };
+    return new ValueTask<WebPubSubEventResponse>(response);
+}
 ```
 
 ## Troubleshooting
