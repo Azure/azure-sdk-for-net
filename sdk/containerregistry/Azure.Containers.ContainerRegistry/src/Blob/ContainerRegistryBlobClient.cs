@@ -32,8 +32,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
-        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> is null. </exception>
+        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, string repository) :
             this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, new ContainerRegistryClientOptions())
         {
@@ -46,16 +46,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
-        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
+        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, string repository, ContainerRegistryClientOptions options) :
             this(endpoint, new ContainerRegistryAnonymousAccessCredential(), repository, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing upload and download of container images and artifacts.
+        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
@@ -68,13 +68,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
+        /// Initializes a new instance of the <see cref="ContainerRegistryBlobClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <param name="repository"> The name of the repository that logically groups the artifact parts</param>
+        /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
         public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options)
@@ -134,7 +134,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var manifestStream = SerializeManifest(manifest);
+                Stream manifestStream = SerializeManifest(manifest);
                 string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
                 string tagOrDigest = options.Tag ?? manifestDigest;
 
@@ -200,7 +200,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(OciManifest manifest, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifest, nameof(manifest));
 
@@ -210,7 +210,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var manifestStream = SerializeManifest(manifest);
+                Stream manifestStream = SerializeManifest(manifest);
                 string manifestDigest = OciBlobDescriptor.ComputeDigest(manifestStream);
                 string tagOrDigest = options.Tag ?? manifestDigest;
 
@@ -237,7 +237,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="options">Options for configuring the upload operation.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public async virtual Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UploadManifestResult>> UploadManifestAsync(Stream manifestStream, UploadManifestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(manifestStream, nameof(manifestStream));
 
@@ -271,8 +271,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private static Stream SerializeManifest(OciManifest manifest)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter jsonWriter = new Utf8JsonWriter(stream);
+            MemoryStream stream = new();
+            Utf8JsonWriter jsonWriter = new(stream);
             ((IUtf8JsonSerializable)manifest).Write(jsonWriter);
             jsonWriter.Flush();
 
