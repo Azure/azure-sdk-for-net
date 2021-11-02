@@ -133,7 +133,7 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public new async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
+        public async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
             await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.Core
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
-        public new async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
