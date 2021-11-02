@@ -22,11 +22,11 @@ namespace Azure.Messaging.EventHubs.Core
         ///   Assigns a partition using a round-robin approach.
         /// </summary>
         ///
-        /// <param name="partitionCount">The number of partitions available.</param>
+        /// <param name="partitions">The set of available partitions.</param>
         ///
         /// <returns>The zero-based index of the selected partition from the available set.</returns>
         ///
-        public virtual int AssignRoundRobin(int partitionCount)
+        public virtual string AssignRoundRobin(string[] partitions)
         {
             // At some point, overflow is possible; ensure that the increment is
             // unchecked to allow rollover without an exception.
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Core
                     index = (index == original) ? 0 : Interlocked.Increment(ref _partitionAssignmentIndex);
                 }
 
-                return (index % partitionCount);
+                return partitions[(index % partitions.Length)];
             }
         }
 
@@ -68,15 +68,15 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="partitionKey">The partition key to use as the basis for partition assignment.</param>
-        /// <param name="partitionCount">The number of partitions available.</param>
+        /// <param name="partitions">The set of available partitions.</param>
         ///
         /// <returns>The zero-based index of the selected partition from the available set.</returns>
         ///
-        public virtual int AssignPartitionKey(string partitionKey,
-                                              int partitionCount)
+        public virtual string AssignForPartitionKey(string partitionKey,
+                                                 string[] partitions)
         {
             var hashValue = GenerateHashCode(partitionKey);
-            return Math.Abs(hashValue % partitionCount);
+            return partitions[Math.Abs(hashValue % partitions.Length)];
         }
 
         /// <summary>

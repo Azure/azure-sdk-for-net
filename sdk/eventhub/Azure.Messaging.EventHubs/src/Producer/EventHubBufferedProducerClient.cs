@@ -758,7 +758,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartition(partitionKey);
+                    partitionId = PartitionResolver.AssignForPartitionKey(partitionKey, _partitions);
                     amqpMessage.SetPartitionKey(partitionKey);
                 }
 
@@ -766,7 +766,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (string.IsNullOrEmpty(partitionId))
                 {
-                    partitionId = AssignPartition();
+                    partitionId = PartitionResolver.AssignRoundRobin(_partitions);
                 }
 
                 // Enqueue the event into the channel for the assigned partition.  Note that this call will wait
@@ -917,7 +917,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (!string.IsNullOrEmpty(partitionKey))
                 {
-                    partitionId = AssignPartition(partitionKey);
+                    partitionId = PartitionResolver.AssignForPartitionKey(partitionKey, _partitions);
                 }
 
                 // If there is a stable partition identifier for all events in the batch, acquire the publisher for it.
@@ -953,7 +953,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     if (string.IsNullOrEmpty(eventPartitionId))
                     {
-                        eventPartitionId = AssignPartition();
+                        eventPartitionId = PartitionResolver.AssignRoundRobin(_partitions);
                     }
 
                     // Enqueue the event into the channel for the assigned partition.  Note that this call will wait
@@ -1921,38 +1921,6 @@ namespace Azure.Messaging.EventHubs.Producer
         private Task InvokeOnSendFailedAsync(IReadOnlyList<EventData> events,
                                              Exception exception,
                                              string partitionId) => Task.Run(() => OnSendFailedAsync(events, exception, partitionId), CancellationToken.None);
-
-        /// <summary>
-        ///   Assigns a partition for a single event using a round-robin approach.
-        /// </summary>
-        ///
-        /// <returns>The identifier of the partition assigned.</returns>
-        ///
-        private string AssignPartition()
-        {
-            // The set of partitions is unstable; capture a local reference to
-            // avoid potentially creating an invalid index into the array.
-
-            var partitions = _partitions;
-            return partitions[PartitionResolver.AssignRoundRobin(partitions.Length)];
-        }
-
-        /// <summary>
-        ///   Assigns a partition for a partition key, using a stable hash calculation.
-        /// </summary>
-        ///
-        /// <param name="partitionKey">The partition key to assign a partition for.</param>
-        ///
-        /// <returns>The identifier of the partition assigned.</returns>
-        ///
-        private string AssignPartition(string partitionKey)
-        {
-            // The set of partitions is unstable; capture a local reference to
-            // avoid potentially creating an invalid index into the array.
-
-            var partitions = _partitions;
-            return partitions[PartitionResolver.AssignPartitionKey(partitionKey, partitions.Length)];
-        }
 
         /// <summary>
         ///   Performs the tasks needed to manage state for the <see cref="EventHubBufferedProducerClient" /> and

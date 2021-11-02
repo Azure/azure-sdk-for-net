@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
             for (var index = 0; index < 100; index++)
             {
                 var expected = partitions[index % partitions.Length];
-                var assigned = partitions[resolver.AssignRoundRobin(partitions.Length)];
+                var assigned = resolver.AssignRoundRobin(partitions);
 
                 Assert.That(assigned, Is.EqualTo(expected), $"The assignment was unexpected for index: [{ index }].");
             }
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 for (var index = 0; index < iterationCount; index++)
                 {
-                    assigned.Add(partitions[resolver.AssignRoundRobin(partitions.Length)]);
+                    assigned.Add(resolver.AssignRoundRobin(partitions));
                 }
 
                 return Task.CompletedTask;
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < iterationCount; index++)
             {
-                assigned.Add(partitions[resolver.AssignRoundRobin(partitions.Length)]);
+                assigned.Add(resolver.AssignRoundRobin(partitions));
             }
 
             // When grouped, the count of each partition should equal the iteration count for each
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 for (var index = 0; index < iterationCount; index++)
                 {
-                    assigned.Add(partitions[resolver.AssignRoundRobin(partitions.Length)]);
+                    assigned.Add(resolver.AssignRoundRobin(partitions));
                 }
 
                 return Task.CompletedTask;
@@ -257,11 +257,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var iterationCount = 25;
             var key = "this-is-a-key-1";
             var resolver = new PartitionResolver();
-            var expected = partitions[resolver.AssignPartitionKey(key, partitions.Length)];
+            var expected = resolver.AssignForPartitionKey(key, partitions);
 
             for (var index = 0; index < iterationCount; ++index)
             {
-                Assert.That(partitions[resolver.AssignPartitionKey(key, partitions.Length)], Is.EqualTo(expected), $"The assignment for iteration: [{ index }] was unstable.");
+                Assert.That(resolver.AssignForPartitionKey(key, partitions), Is.EqualTo(expected), $"The assignment for iteration: [{ index }] was unstable.");
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 var key = keyBuilder.ToString();
-                var partition = partitions[resolver.AssignPartitionKey(key, partitions.Length)];
+                var partition = resolver.AssignForPartitionKey(key, partitions);
 
                 assignedHash.Add(partition);
 

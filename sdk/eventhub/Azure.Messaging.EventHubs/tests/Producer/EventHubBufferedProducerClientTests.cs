@@ -1703,14 +1703,19 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "7";
+            var partitions = new[] { partitionId };
             var events = new[] { new EventData("One"), new EventData("Two") };
             var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -1744,12 +1749,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(1), Times.Exactly(events.Length));
+                .Verify(resolver => resolver.AssignRoundRobin(partitions), Times.Exactly(events.Length));
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(
+                .Verify(resolver => resolver.AssignForPartitionKey(
                     It.IsAny<string>(),
-                    It.IsAny<int>()),
+                    It.IsAny<string[]>()),
                 Times.Never);
         }
 
@@ -1764,15 +1769,20 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
+            var partitions = new[] { partitionId };
             var partitionKey = "test-key";
             var events = new[] { new EventData("One"), new EventData("Two") };
             var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignForPartitionKey(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -1808,10 +1818,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(partitionKey, 1), Times.Once);
+                .Verify(resolver => resolver.AssignForPartitionKey(partitionKey, partitions), Times.Once);
         }
 
         /// <summary>
@@ -1868,12 +1878,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(
+                .Verify(resolver => resolver.AssignForPartitionKey(
                     It.IsAny<string>(),
-                    It.IsAny<int>()),
+                    It.IsAny<string[]>()),
                 Times.Never);
         }
 
@@ -2442,14 +2452,19 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "7";
+            var partitions = new[] { partitionId };
             var expectedEvent = new EventData("One");
             var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
             mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -2476,12 +2491,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(1), Times.Once);
+                .Verify(resolver => resolver.AssignRoundRobin(partitions), Times.Once);
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(
+                .Verify(resolver => resolver.AssignForPartitionKey(
                     It.IsAny<string>(),
-                    It.IsAny<int>()),
+                    It.IsAny<string[]>()),
                 Times.Never);
         }
 
@@ -2496,15 +2511,20 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
+            var partitions = new[] { partitionId };
             var partitionKey = "test-key";
             var expectedEvent = new EventData("One");
             var mockPartitionResolver = new Mock<PartitionResolver>();
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignForPartitionKey(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(partitionId);
+
             mockProducer
                 .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
+                .ReturnsAsync(partitions);
 
             mockBufferedProducer
                 .Setup(producer => producer.PublishBatchToPartition(
@@ -2540,10 +2560,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(partitionKey, 1), Times.Once);
+                .Verify(resolver => resolver.AssignForPartitionKey(partitionKey, partitions), Times.Once);
         }
 
          /// <summary>
@@ -2600,12 +2620,12 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<int>()), Times.Never);
+                .Verify(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()), Times.Never);
 
             mockPartitionResolver
-                .Verify(resolver => resolver.AssignPartitionKey(
+                .Verify(resolver => resolver.AssignForPartitionKey(
                     It.IsAny<string>(),
-                    It.IsAny<int>()),
+                    It.IsAny<string[]>()),
                 Times.Never);
         }
 
