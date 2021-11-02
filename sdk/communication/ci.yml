@@ -26,6 +26,8 @@ extends:
     ServiceDirectory: communication
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Communication.JobRouter
+      safeName: AzureCommunicationJobRouter
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
