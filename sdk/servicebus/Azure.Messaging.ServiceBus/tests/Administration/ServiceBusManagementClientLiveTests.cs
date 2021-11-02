@@ -152,6 +152,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getQueue.Status = EntityStatus.Disabled;
             getQueue.AutoDeleteOnIdle = TimeSpan.FromMinutes(6);
             getQueue.MaxSizeInMegabytes = 1024;
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            {
+                getQueue.MaxMessageSizeInKilobytes = 10000;
+            }
+
             QueueProperties updatedQueue = await client.UpdateQueueAsync(getQueue);
 
             if (Mode == RecordedTestMode.Playback)
@@ -266,6 +271,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getTopic.DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(2);
             getTopic.EnableBatchedOperations = false;
             getTopic.MaxSizeInMegabytes = 1024;
+            if (premium && _serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            {
+                getTopic.MaxMessageSizeInKilobytes = 10000;
+            }
 
             Response<TopicProperties> updatedTopicResponse = await client.UpdateTopicAsync(getTopic);
             rawResponse = updatedTopicResponse.GetRawResponse();
