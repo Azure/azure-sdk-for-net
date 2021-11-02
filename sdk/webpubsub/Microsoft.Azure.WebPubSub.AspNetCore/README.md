@@ -14,7 +14,7 @@ This library can be used to do the following actions. Details about the terms us
 Package |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
-[Samples](sample_ref) |
+[Samples][sample_ref] |
 
 ## Getting started
 
