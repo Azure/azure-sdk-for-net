@@ -101,7 +101,7 @@ namespace Azure.Core
         public Response RawResponse { get; set; }
 
         /// <summary>
-        /// Can be set to control the default interval used between service calls in <see cref="WaitForCompletionAsync(CancellationToken)"/>.
+        /// Can be set to control the default interval used between service calls in <see cref="WaitForCompletionResponseAsync(CancellationToken)"/>.
         /// Defaults to 1 second.
         /// </summary>
         public TimeSpan DefaultPollingInterval { get; set; }
