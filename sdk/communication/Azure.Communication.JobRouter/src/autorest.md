@@ -7,9 +7,8 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev 
 
-> see [https://aka.ms/autorest](https://aka.ms/autorest)
-
-## Configuration
+### AutoRest Configuration
+> see https://aka.ms/autorest
 
 ```yaml
 input-file: "./swagger/2021-04-07_ACSRouter.json"
