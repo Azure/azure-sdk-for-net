@@ -549,7 +549,7 @@ namespace Azure.AI.Translation.Document
         {
             if (string.IsNullOrEmpty(error.ToString()))
                 return null;
-            return new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
+            return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
         }
     }
 }
