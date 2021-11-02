@@ -25,44 +25,44 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create namespace
             ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceContainer namespaceContainer = resourceGroup.GetSBNamespaces();
-            SBNamespace sBNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, new SBNamespaceData(DefaultLocation))).Value;
+            SBNamespaceCollection namespaceCollection = resourceGroup.GetSBNamespaces();
+            SBNamespace sBNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new SBNamespaceData(DefaultLocation))).Value;
 
             //create a topic
-            SBTopicContainer topicContainer = sBNamespace.GetSBTopics();
+            SBTopicCollection topicCollection = sBNamespace.GetSBTopics();
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await topicContainer.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            SBTopic topic = (await topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
             //create a subscription
-            SBSubscriptionContainer sBSubscriptionContainer = topic.GetSBSubscriptions();
+            SBSubscriptionCollection sBSubscriptionCollection = topic.GetSBSubscriptions();
             string subscriptionName = Recording.GenerateAssetName("subscription");
             SBSubscriptionData parameters = new SBSubscriptionData();
-            SBSubscription sBSubscription = (await sBSubscriptionContainer.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
+            SBSubscription sBSubscription = (await sBSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
             Assert.NotNull(sBSubscription);
             Assert.AreEqual(sBSubscription.Id.Name, subscriptionName);
 
             //create rule with no filters
             string ruleName1 = Recording.GenerateAssetName("rule");
-            RuleContainer ruleContainer = sBSubscription.GetRules();
-            Rule rule1 = (await ruleContainer.CreateOrUpdateAsync(ruleName1, new RuleData())).Value;
+            RuleCollection ruleCollection = sBSubscription.GetRules();
+            Rule rule1 = (await ruleCollection.CreateOrUpdateAsync(ruleName1, new RuleData())).Value;
             Assert.NotNull(rule1);
             Assert.AreEqual(rule1.Id.Name, ruleName1);
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
-            Rule rule2 = (await ruleContainer.CreateOrUpdateAsync(ruleName2, new RuleData(){FilterType = FilterType.CorrelationFilter})).Value;
+            Rule rule2 = (await ruleCollection.CreateOrUpdateAsync(ruleName2, new RuleData(){FilterType = FilterType.CorrelationFilter})).Value;
             Assert.NotNull(rule2);
             Assert.AreEqual(rule2.Id.Name, ruleName2);
 
             //get created rules
-            rule1 = await ruleContainer.GetAsync(ruleName1);
+            rule1 = await ruleCollection.GetAsync(ruleName1);
             Assert.NotNull(rule1);
             Assert.AreEqual(rule1.Id.Name, ruleName1);
 
             //get all rules
-            List<Rule> rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            List<Rule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, rules.Count);
 
             //update rule with sql filter and action
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 FilterType = FilterType.SqlFilter,
                 CorrelationFilter = new CorrelationFilter()
             };
-            rule1 = (await ruleContainer.CreateOrUpdateAsync(ruleName1, updateParameters)).Value;
+            rule1 = (await ruleCollection.CreateOrUpdateAsync(ruleName1, updateParameters)).Value;
 
             await rule1.DeleteAsync();
             await rule2.DeleteAsync();

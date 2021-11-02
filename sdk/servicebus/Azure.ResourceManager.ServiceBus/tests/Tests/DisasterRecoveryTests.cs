@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
-                List<SBNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
+                List<SBNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (SBNamespace sBNamespace in namespaceList)
                 {
                     await sBNamespace.DeleteAsync();
@@ -39,12 +40,28 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
-            SBNamespace sBNamespace1 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName1, new SBNamespaceData(DefaultLocation))).Value;
+            SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
+            SBNamespaceData parameters1 = new SBNamespaceData(DefaultLocation)
+            {
+                Sku = new SBSku(SkuName.Premium)
+                {
+                    Tier = SkuTier.Premium,
+                    Capacity = 1
+                }
+            };
+            SBNamespace sBNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName1, parameters1)).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespace sBNamespace2 = (await namespaceContainer.CreateOrUpdateAsync(namespaceName2, new SBNamespaceData(Location.EastUS))).Value;
+            SBNamespaceData parameters2 = new SBNamespaceData(Location.EastUS)
+            {
+                Sku = new SBSku(SkuName.Premium)
+                {
+                    Tier = SkuTier.Premium,
+                    Capacity = 1
+                }
+            };
+            SBNamespace sBNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, parameters2)).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -52,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            SBAuthorizationRuleNamespace authorizationRule = (await sBNamespace1.GetSBAuthorizationRuleNamespaces().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
+            NamespaceSBAuthorizationRule authorizationRule = (await sBNamespace1.GetNamespaceSBAuthorizationRules().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
@@ -92,11 +109,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             CheckNameAvailabilityResult nameAvailability = await sBNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<SBAuthorizationRuleDisasterRecoveryConfig> rules = await armDisasterRecovery.GetSBAuthorizationRuleDisasterRecoveryConfigs().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecoveryConfigSBAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryConfigSBAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            AuthorizationRuleDisasterRecoveryConfig rule = rules.First();
+            DisasterRecoveryConfigSBAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 

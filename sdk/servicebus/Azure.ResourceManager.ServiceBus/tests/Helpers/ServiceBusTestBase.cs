@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
     {
         public static Location DefaultLocation => Location.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        protected Subscription DefaultSubscription => Client.DefaultSubscription;
+        protected Subscription DefaultSubscription;
         protected ArmClient Client { get; private set; }
-        protected ServiceBusTestBase(bool isAsync) : base(isAsync,RecordedTestMode.Playback)
+        protected ServiceBusTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
@@ -28,9 +28,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
         public async Task<ResourceGroup> CreateResourceGroupAsync()
         {

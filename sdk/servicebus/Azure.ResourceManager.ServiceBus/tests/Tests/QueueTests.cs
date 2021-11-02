@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
     public class QueueTests : ServiceBusTestBase
     {
         private ResourceGroup _resourceGroup;
-        private SBQueueContainer _queueContainer;
+        private SBQueueCollection _queueCollection;
         public QueueTests(bool isAsync) : base(isAsync)
         {
         }
         [SetUp]
-        public async Task CreateNamespaceAndGetQueueContainer()
+        public async Task CreateNamespaceAndGetQueueCollection()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
+            SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
             SBNamespaceData parameters = new SBNamespaceData(DefaultLocation)
             {
                 Sku = new SBSku(SkuName.Premium)
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     Tier = SkuTier.Premium
                 }
             };
-            SBNamespace sBNamespace = (await namespaceContainer.CreateOrUpdateAsync(namespaceName, parameters)).Value;
-            _queueContainer = sBNamespace.GetSBQueues();
+            SBNamespace sBNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, parameters)).Value;
+            _queueCollection = sBNamespace.GetSBQueues();
         }
         [TearDown]
         public async Task ClearNamespaces()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                SBNamespaceContainer namespaceContainer = _resourceGroup.GetSBNamespaces();
-                List<SBNamespace> namespaceList = await namespaceContainer.GetAllAsync().ToEnumerableAsync();
+                SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
+                List<SBNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (SBNamespace sBNamespace in namespaceList)
                 {
                     await sBNamespace.DeleteAsync();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            SBQueue queue = (await _queueContainer.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
+            SBQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
             Assert.NotNull(queue);
             Assert.AreEqual(queue.Id.Name, queueName);
 
             //validate if created successfully
-            queue = await _queueContainer.GetIfExistsAsync(queueName);
+            queue = await _queueCollection.GetIfExistsAsync(queueName);
             Assert.NotNull(queue);
-            Assert.IsTrue(await _queueContainer.CheckIfExistsAsync(queueName));
+            Assert.IsTrue(await _queueCollection.CheckIfExistsAsync(queueName));
 
             //delete queue
             await queue.DeleteAsync();
 
             //validate
-            queue = await _queueContainer.GetIfExistsAsync(queueName);
+            queue = await _queueCollection.GetIfExistsAsync(queueName);
             Assert.Null(queue);
-            Assert.IsFalse(await _queueContainer.CheckIfExistsAsync(queueName));
+            Assert.IsFalse(await _queueCollection.CheckIfExistsAsync(queueName));
         }
 
         [Test]
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create two queues
             string queueName1 = Recording.GenerateAssetName("queue1");
             string queueName2 = Recording.GenerateAssetName("queue2");
-            _ = (await _queueContainer.CreateOrUpdateAsync(queueName1, new SBQueueData())).Value;
-            _ = (await _queueContainer.CreateOrUpdateAsync(queueName2, new SBQueueData())).Value;
+            _ = (await _queueCollection.CreateOrUpdateAsync(queueName1, new SBQueueData())).Value;
+            _ = (await _queueCollection.CreateOrUpdateAsync(queueName2, new SBQueueData())).Value;
 
             //validate
             int count = 0;
             SBQueue queue1 = null;
             SBQueue queue2 = null;
-            await foreach (SBQueue queue in _queueContainer.GetAllAsync())
+            await foreach (SBQueue queue in _queueCollection.GetAllAsync())
             {
                 count++;
                 if (queue.Id.Name == queueName1)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            SBQueue queue = (await _queueContainer.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
+            SBQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
             Assert.NotNull(queue);
             Assert.AreEqual(queue.Id.Name, queueName);
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 MaxSizeInMegabytes = 1024
             };
-            queue = (await _queueContainer.CreateOrUpdateAsync(queueName, parameters)).Value;
+            queue = (await _queueCollection.CreateOrUpdateAsync(queueName, parameters)).Value;
             Assert.AreEqual(queue.Data.MaxMessageSizeInKilobytes, 1024);
         }
 
@@ -125,32 +125,32 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            SBQueue queue = (await _queueContainer.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
+            SBQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            SBAuthorizationRuleQueueContainer ruleContainer = queue.GetSBAuthorizationRuleQueues();
+            QueueSBAuthorizationRuleCollection ruleCollection = queue.GetQueueSBAuthorizationRules();
             SBAuthorizationRuleData parameter = new SBAuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            SBAuthorizationRuleQueue authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            QueueSBAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get authorization rule
-            authorizationRule = await ruleContainer.GetAsync(ruleName);
+            authorizationRule = await ruleCollection.GetAsync(ruleName);
             Assert.AreEqual(authorizationRule.Id.Name, ruleName);
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<SBAuthorizationRuleQueue> rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            List<QueueSBAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
             Assert.True(rules.Count == 1);
             bool isContainAuthorizationRuleName = false;
-            foreach (SBAuthorizationRuleQueue rule in rules)
+            foreach (QueueSBAuthorizationRule rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //update authorization rule
             parameter.Rights.Add(AccessRights.Manage);
-            authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await authorizationRule.DeleteAsync();
 
             //validate if deleted
-            Assert.IsFalse(await ruleContainer.CheckIfExistsAsync(ruleName));
-            rules = await ruleContainer.GetAllAsync().ToEnumerableAsync();
+            Assert.IsFalse(await ruleCollection.CheckIfExistsAsync(ruleName));
+            rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.True(rules.Count == 0);
         }
 
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create queue
             string queueName = Recording.GenerateAssetName("queue");
-            SBQueue queue = (await _queueContainer.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
-            SBAuthorizationRuleQueueContainer ruleContainer = queue.GetSBAuthorizationRuleQueues();
+            SBQueue queue = (await _queueCollection.CreateOrUpdateAsync(queueName, new SBQueueData())).Value;
+            QueueSBAuthorizationRuleCollection ruleCollection = queue.GetQueueSBAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            SBAuthorizationRuleQueue authorizationRule = (await ruleContainer.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            QueueSBAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
