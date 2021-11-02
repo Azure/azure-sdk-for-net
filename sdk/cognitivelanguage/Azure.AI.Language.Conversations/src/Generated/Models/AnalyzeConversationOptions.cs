@@ -14,6 +14,19 @@ namespace Azure.AI.Language.Conversations
     /// <summary> The request body. </summary>
     public partial class AnalyzeConversationOptions
     {
+        /// <summary> Initializes a new instance of AnalyzeConversationOptions. </summary>
+        /// <param name="query"> The conversation utterance to be analyzed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        public AnalyzeConversationOptions(string query)
+        {
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
+            Query = query;
+            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
+        }
 
         /// <summary> The conversation utterance to be analyzed. </summary>
         public string Query { get; }
