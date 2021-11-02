@@ -20,15 +20,19 @@ namespace Azure.ResourceManager.Core
         /// Collects the segments in a resource identifier into a string
         /// </summary>
         /// <param name="resourceId">the resource identifier</param>
-        /// <param name="start">the index of segment we would like to start</param>
         /// <returns></returns>
-        public static string GetParts(this ResourceIdentifier resourceId, int start)
+        public static string SubstringAfterProviderNamespace(this ResourceIdentifier resourceId)
         {
-            var parts = resourceId.ToString().Split('/').ToList();
-            var indexOfProviders = parts.LastIndexOf("providers");
+            const string providersKey = "/providers/";
+            var rawId = resourceId.ToString();
+            var indexOfProviders = rawId.LastIndexOf(providersKey, StringComparison.InvariantCultureIgnoreCase);
             if (indexOfProviders < 0)
-                throw new InvalidOperationException($"{resourceId} does not have a providers segment");
-            return string.Join("/", parts.Skip(indexOfProviders + start));
+                return string.Empty;
+            var whateverRemains = rawId.Substring(indexOfProviders + providersKey.Length);
+            var firstSlashIndex = whateverRemains.IndexOf('/');
+            if (firstSlashIndex < 0)
+                return string.Empty;
+            return whateverRemains.Substring(firstSlashIndex + 1);
         }
 
         /// <summary>
