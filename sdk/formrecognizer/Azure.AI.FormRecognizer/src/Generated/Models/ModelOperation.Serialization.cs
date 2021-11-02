@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static ModelOperation DeserializeModelOperation(JsonElement element)
         {
-            Optional<JsonElement> error = default;
+            Optional<DocumentAnalysisError> error = default;
             Optional<DocumentModel> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
@@ -28,7 +28,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 if (property.NameEquals("error"))
                 {
-                    error = property.Value.Clone();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = DocumentAnalysisError.DeserializeDocumentAnalysisError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("result"))
@@ -82,7 +87,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ModelOperation(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, error, result.Value);
+            return new ModelOperation(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, error.Value, result.Value);
         }
     }
 }

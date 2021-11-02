@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListBySubscription()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;
@@ -74,8 +73,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task ListByRg()
         {
             // Setup resource group for the test. This resource group is deleted by CleanupResourceGroupsAsync after the test ends
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(
+            var lro = await ResourcesManagementClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 Recording.GenerateAssetName(ResourceGroupPrefix),
                 new ResourceGroupData(Location));
             ResourceGroup rg = lro.Value;

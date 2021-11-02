@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {"key2","value2"}
         };
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription { get; private set; }
+        protected Subscription DefaultSubscription => Client.DefaultSubscription;
         protected StorageTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -50,10 +50,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
         [TearDown]

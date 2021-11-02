@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1227,18 +1227,18 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of VirtualMachineVirtualMachineExtensions in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of VirtualMachineVirtualMachineExtensions and their operations over a VirtualMachine. </returns>
-        public VirtualMachineVirtualMachineExtensionCollection GetVirtualMachineVirtualMachineExtensions()
+        /// <summary> Gets a list of VirtualMachineExtensionVirtualMachines in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of VirtualMachineExtensionVirtualMachines and their operations over a VirtualMachine. </returns>
+        public VirtualMachineExtensionVirtualMachineContainer GetVirtualMachineExtensionVirtualMachines()
         {
-            return new VirtualMachineVirtualMachineExtensionCollection(this);
+            return new VirtualMachineExtensionVirtualMachineContainer(this);
         }
 
-        /// <summary> Gets a list of VirtualMachineVirtualMachineRunCommands in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of VirtualMachineVirtualMachineRunCommands and their operations over a VirtualMachine. </returns>
-        public VirtualMachineVirtualMachineRunCommandCollection GetVirtualMachineVirtualMachineRunCommands()
+        /// <summary> Gets a list of VirtualMachineRunCommandVirtualMachines in the VirtualMachine. </summary>
+        /// <returns> An object representing collection of VirtualMachineRunCommandVirtualMachines and their operations over a VirtualMachine. </returns>
+        public VirtualMachineRunCommandVirtualMachineContainer GetVirtualMachineRunCommandVirtualMachines()
         {
-            return new VirtualMachineVirtualMachineRunCommandCollection(this);
+            return new VirtualMachineRunCommandVirtualMachineContainer(this);
         }
     }
 }

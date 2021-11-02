@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 5.0.0 (2021-10-21)
-
-### Features Added
-
-- General availability of Microsoft.Azure.WebJobs.Extensions.EventHubs 5.0.0.
 
 ## 5.0.0-beta.7 (2021-07-07)
 

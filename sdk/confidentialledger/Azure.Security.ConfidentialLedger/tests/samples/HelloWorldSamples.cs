@@ -169,7 +169,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine($"Transaction status: {status}");
 
             // Provide both the transactionId and subLedgerId.
-            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+            Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
 
             // Try until the entry is available.
             bool loaded = false;
@@ -186,14 +186,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
                 }
             }
 
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
-            getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
+            getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, new());
 
             string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
                 .RootElement
@@ -236,7 +236,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             }
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
-            Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+            Response getResponse = ledgerClient.GetLedgerEntry(transactionId, new());
 
             // Try until the entry is available.
             loaded = false;
@@ -253,7 +253,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                    getResponse = ledgerClient.GetLedgerEntry(transactionId, new(), subLedgerId);
                 }
             }
 
@@ -266,7 +266,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
             // This will return the latest entry available in the default sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry();
+            getResponse = ledgerClient.GetCurrentLedgerEntry(new());
 
             // Try until the entry is available.
             loaded = false;
@@ -283,7 +283,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetCurrentLedgerEntry();
+                    getResponse = ledgerClient.GetCurrentLedgerEntry(new());
                 }
             }
 
@@ -303,7 +303,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                     .GetString();
             }
 
-            getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+            getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
             // Try until the entry is available.
             loaded = false;
             element = default;
@@ -319,14 +319,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, new(), "my sub-ledger");
                 }
             }
 
             Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
             // This will return the latest entry available in the sub-ledger.
-            getResponse = ledgerClient.GetCurrentLedgerEntry("my sub-ledger");
+            getResponse = ledgerClient.GetCurrentLedgerEntry(new(), "my sub-ledger");
             string latestSubLedger = JsonDocument.Parse(getResponse.Content)
                 .RootElement
                 .GetProperty("contents")
@@ -338,7 +338,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:RangedQuery
 
-            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
+            ledgerClient.GetLedgerEntries(new(), fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
 
             #endregion
 

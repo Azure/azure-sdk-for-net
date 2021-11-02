@@ -30,8 +30,6 @@ operation-group-to-parent:
     Queue: Microsoft.Storage/storageAccounts/queueServices
     Table: Microsoft.Storage/storageAccounts/tableServices
     StorageAccountName: subscriptions
-operation-group-to-singleton-resource:
-  ManagementPolicies: managementPolicies/default
 directive:
   - rename-model:
       from: BlobServiceProperties

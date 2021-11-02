@@ -51,9 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// shared VHD attached. String value of SrsDataContract.PresenceStatus
         /// enum. Possible values include: 'Unknown', 'Present',
         /// 'NotPresent'</param>
-        /// <param name="hyperVHostId">The Id of the hyper-v host in
-        /// fabric.</param>
-        public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string), string hyperVHostId = default(string))
+        public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), string hasPhysicalDisk = default(string), string hasFibreChannelAdapter = default(string), string hasSharedVhd = default(string))
         {
             SourceItemId = sourceItemId;
             Generation = generation;
@@ -62,7 +60,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             HasPhysicalDisk = hasPhysicalDisk;
             HasFibreChannelAdapter = hasFibreChannelAdapter;
             HasSharedVhd = hasSharedVhd;
-            HyperVHostId = hyperVHostId;
             CustomInit();
         }
 
@@ -118,12 +115,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "hasSharedVhd")]
         public string HasSharedVhd { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the hyper-v host in fabric.
-        /// </summary>
-        [JsonProperty(PropertyName = "hyperVHostId")]
-        public string HyperVHostId { get; set; }
 
     }
 }

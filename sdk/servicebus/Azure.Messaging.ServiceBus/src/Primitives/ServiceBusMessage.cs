@@ -63,25 +63,12 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-
-            AmqpMessageBody body = null;
-            if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
-            {
-                body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
-            }
-            else if (receivedMessage.AmqpMessage.Body.TryGetValue(out object valueBody))
-            {
-                body = AmqpMessageBody.FromValue(valueBody);
-            }
-            else if (receivedMessage.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequenceBody))
-            {
-                body = AmqpMessageBody.FromSequence(sequenceBody);
-            }
-            else
+            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
+            AmqpMessageBody body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -301,14 +288,15 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get => _correlationIdSet ? AmqpMessage.Properties.CorrelationId?.ToString() : AmqpMessage.Properties.CorrelationId.ToString();
+            get
+            {
+                return AmqpMessage.Properties.CorrelationId.ToString();
+            }
             set
             {
-                _correlationIdSet = true;
-                AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
+                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
             }
         }
-        private bool _correlationIdSet;
 
         /// <summary>Gets or sets an application specific subject.</summary>
         /// <value>The application specific subject.</value>
@@ -338,14 +326,15 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get => _toSet ? AmqpMessage.Properties.To?.ToString() : AmqpMessage.Properties.To.ToString();
+            get
+            {
+                return AmqpMessage.Properties.To.ToString();
+            }
             set
             {
-                _toSet = true;
-                AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
+                AmqpMessage.Properties.To = new AmqpAddress(value);
             }
         }
-        private bool _toSet;
 
         /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -375,14 +364,15 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get => _replyToSet ? AmqpMessage.Properties.ReplyTo?.ToString() :  AmqpMessage.Properties.ReplyTo.ToString();
+            get
+            {
+                return AmqpMessage.Properties.ReplyTo.ToString();
+            }
             set
             {
-                _replyToSet = true;
-                AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
+                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
             }
         }
-        private bool _replyToSet;
 
         /// <summary>
         /// Gets or sets the date and time in UTC at which the message will be enqueued. This

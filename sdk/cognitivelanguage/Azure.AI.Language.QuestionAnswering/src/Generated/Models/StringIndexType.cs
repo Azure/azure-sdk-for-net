@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
-    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 

@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// Initializes a new instance of the
         /// VirtualNetworkSubnetUsageParameter class.
         /// </summary>
-        /// <param name="virtualNetworkResourceId">Virtual network resource
+        /// <param name="virtualNetworkArmResourceId">Virtual network resource
         /// id.</param>
-        public VirtualNetworkSubnetUsageParameter(string virtualNetworkResourceId = default(string))
+        public VirtualNetworkSubnetUsageParameter(string virtualNetworkArmResourceId = default(string))
         {
-            VirtualNetworkResourceId = virtualNetworkResourceId;
+            VirtualNetworkArmResourceId = virtualNetworkArmResourceId;
             CustomInit();
         }
 
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <summary>
         /// Gets or sets virtual network resource id.
         /// </summary>
-        [JsonProperty(PropertyName = "virtualNetworkResourceId")]
-        public string VirtualNetworkResourceId { get; set; }
+        [JsonProperty(PropertyName = "virtualNetworkArmResourceId")]
+        public string VirtualNetworkArmResourceId { get; set; }
 
     }
 }

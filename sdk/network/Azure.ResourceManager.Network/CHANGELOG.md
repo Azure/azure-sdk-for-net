@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.0.0-beta.3 (2021-10-28)
-
-### Breaking Changes
-
-- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -48,7 +42,7 @@ Example: Create a VNet:
 
 Before upgrade:
 
-```C#
+```csharp
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Rest;
@@ -78,32 +72,27 @@ vnet = await networkClient.VirtualNetworks
 
 After upgrade:
 
-```C# Snippet:Changelog_NewCode
-using System;
+```csharp
+using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
-VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
+var armClient = new ArmClient(new DefaultAzureCredential());
+var resourceGroup = (await armClient.DefaultSubscription.GetResourceGroups().GetAsync("abc")).Value;
+var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
-VirtualNetworkData vnet = new VirtualNetworkData()
+var vnet = new VirtualNetworkData()
 {
     Location = "westus",
 };
 vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
-vnet.Subnets.Add(new SubnetData
-{
+vnet.Subnets.Add(new SubnetData {
     Name = "mySubnet",
     AddressPrefix = "10.0.0.0/24",
 });
 
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync("_vent", vnet);
-VirtualNetwork virtualNetwork = vnetOperation.Value;
+var virtualNetwork = (await virtualNetworkContainer.CreateOrUpdateAsync("_vent", vnet)).Value;
 ```
 
 #### Object Model Changes
@@ -112,7 +101,7 @@ Example: Create a IpsecPolicy Model
 
 Before upgrade:
 
-```C#
+```csharp
 var policy = new IpsecPolicy()
     {
         SaLifeTimeSeconds = 300,
@@ -128,14 +117,14 @@ var policy = new IpsecPolicy()
 
 After upgrade:
 
-```C# Snippet:Changelog_CreateModel
-IpsecPolicy policy = new IpsecPolicy(
-   300,
-   1024,
-   IpsecEncryption.AES128,
-   IpsecIntegrity.SHA256,
-   IkeEncryption.AES192,
-   IkeIntegrity.SHA1,
-   DhGroup.DHGroup2,
-   PfsGroup.PFS1);
+```csharp
+var policy = new IpsecPolicy(
+    300,
+    1024,
+    IpsecEncryption.AES128,
+    IpsecIntegrity.SHA256,
+    IkeEncryption.AES192,
+    IkeIntegrity.SHA1,
+    DhGroup.DHGroup2,
+    PfsGroup.PFS1)
 ```

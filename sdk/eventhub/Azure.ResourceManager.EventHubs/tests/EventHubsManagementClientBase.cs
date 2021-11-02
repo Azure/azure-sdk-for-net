@@ -62,8 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
         public async Task<string> GetLocation()
         {
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            var provider = (await sub.GetProviders().GetAsync("Microsoft.EventHub")).Value;
+            var provider = (await ArmClient.DefaultSubscription.GetProviders().GetAsync("Microsoft.EventHub")).Value;
             return provider.Data.ResourceTypes.Where(
                 (resType) =>
                 {

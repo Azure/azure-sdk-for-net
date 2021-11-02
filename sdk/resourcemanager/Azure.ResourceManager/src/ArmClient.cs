@@ -111,12 +111,16 @@ namespace Azure.ResourceManager
             ClientOptions = options.Clone();
 
             _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
-            _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), ResourceIdentifier.RootResourceIdentifier.AppendChildResource(Subscription.ResourceType.Type, defaultSubscriptionId));
+            DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
+                ? GetDefaultSubscription()
+                : GetSubscriptions().Get(defaultSubscriptionId);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
-        private Subscription _defaultSubscription;
+        /// <summary>
+        /// Gets the default Azure subscription.
+        /// </summary>
+        public virtual Subscription DefaultSubscription { get; private set; }
 
         /// <summary>
         /// Gets the Azure Resource Manager client options.
@@ -141,16 +145,16 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the Azure subscriptions.
         /// </summary>
-        /// <returns> Subscription collection. </returns>
-        public virtual SubscriptionCollection GetSubscriptions()  => _tenant.GetSubscriptions();
+        /// <returns> Subscription container. </returns>
+        public virtual SubscriptionContainer GetSubscriptions()  => _tenant.GetSubscriptions();
 
         /// <summary>
         /// Gets the tenants.
         /// </summary>
-        /// <returns> Tenant collection. </returns>
-        public virtual TenantCollection GetTenants()
+        /// <returns> Tenant container. </returns>
+        public virtual TenantContainer GetTenants()
         {
-            return new TenantCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
         }
 
         /// <summary>
@@ -203,78 +207,12 @@ namespace Azure.ResourceManager
             return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
-        /// <summary>
-        /// Gets the default subscription.
-        /// </summary>
-        /// <returns> Resource operations of the Subscription. </returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
+        private Subscription GetDefaultSubscription()
         {
-            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
-            scope.Start();
-            try
-            {
-                if (_defaultSubscription == null)
-                {
-                    _defaultSubscription = GetSubscriptions().GetAll(cancellationToken).FirstOrDefault();
-                }
-                else if (_defaultSubscription.HasData)
-                {
-                    return _defaultSubscription;
-                }
-                else
-                {
-                    _defaultSubscription = _defaultSubscription.Get(cancellationToken);
-                }
-                if (_defaultSubscription is null)
-                {
-                    throw new InvalidOperationException("No subscriptions found for the given credentials");
-                }
-                return _defaultSubscription;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the default subscription.
-        /// </summary>
-        /// <returns> Resource operations of the Subscription. </returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            using var scope = new ClientDiagnostics(ClientOptions).CreateScope("ArmClient.GetDefaultSubscription");
-            scope.Start();
-            try
-            {
-                if (_defaultSubscription == null)
-                {
-                    _defaultSubscription = await GetSubscriptions().GetAllAsync(cancellationToken).FirstOrDefaultAsync(_ => true, cancellationToken).ConfigureAwait(false);
-                }
-                else if (_defaultSubscription.HasData)
-                {
-                    return _defaultSubscription;
-                }
-                else
-                {
-                    _defaultSubscription = await _defaultSubscription.GetAsync(cancellationToken).ConfigureAwait(false);
-                }
-                if (_defaultSubscription is null)
-                {
-                    throw new InvalidOperationException("No subscriptions found for the given credentials");
-                }
-                return _defaultSubscription;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var sub = GetSubscriptions().GetAll().FirstOrDefault();
+            if (sub is null)
+                throw new Exception("No subscriptions found for the given credentials");
+            return sub;
         }
 
         /// <summary>
@@ -337,12 +275,12 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var genericResourceOperations = new ChangeTrackingList<GenericResource>();
+            var genericRespirceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericResourceOperations.Add(new GenericResource(GetDefaultSubscription(), id));
+                genericRespirceOperations.Add(new GenericResource(DefaultSubscription, id));
             }
-            return genericResourceOperations;
+            return genericRespirceOperations;
         }
 
         /// <summary>
@@ -357,17 +295,17 @@ namespace Azure.ResourceManager
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return new GenericResource(GetDefaultSubscription(), id);
+            return new GenericResource(DefaultSubscription, id);
         }
 
         /// <summary>
         /// Gets the RestApi definition for a given Azure namespace.
         /// </summary>
         /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
-        /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
+        /// <returns> A container representing the rest apis for the namespace. </returns>
+        public virtual RestApiContainer GetRestApis(string azureNamespace)
         {
-            return new RestApiCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
+            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>
@@ -401,13 +339,13 @@ namespace Azure.ResourceManager
         public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Gets the management group collection for this tenant.
+        /// Gets the management group container for this tenant.
         /// </summary>
-        /// <returns> A collection of the management groups. </returns>
-        public virtual ManagementGroupCollection GetManagementGroups() => _tenant.GetManagementGroups();
+        /// <returns> A container of the management groups. </returns>
+        public virtual ManagementGroupContainer GetManagementGroups() => _tenant.GetManagementGroups();
 
         /// <summary>
-        /// Gets the management group operations object associated with the id.
+        /// Gets the managmeent group operations object associated with the id.
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>

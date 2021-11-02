@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.0.0-beta.3 (2021-10-28)
-
-### Breaking Changes
-
-- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -36,7 +30,7 @@ The package name has been changed from `Microsoft.Azure.Management.Compute` to `
 Example: Create a VM:
 
 Before upgrade:
-```C#
+```csharp
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -156,7 +150,11 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 ```
 
 After upgrade:
-```C# Snippet:Changelog_New
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
@@ -164,15 +162,12 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using System.Linq;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
 var location = Location.WestUS;
 // Create ResourceGroup
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupCreateOrUpdateOperation rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync("myResourceGroup", new ResourceGroupData(location));
-ResourceGroup resourceGroup = rgOperation.Value;
+ResourceGroup resourceGroup = await armClient.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
 
 // Create AvailabilitySet
 var availabilitySetData = new AvailabilitySetData(location)
@@ -181,8 +176,7 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-AvailabilitySetCreateOrUpdateOperation asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync("myAvailabilitySet", availabilitySetData);
-AvailabilitySet availabilitySet = asetOperation.Value;
+AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", availabilitySetData);
 
 // Create VNet
 var vnetData = new VirtualNetworkData()
@@ -198,8 +192,7 @@ var vnetData = new VirtualNetworkData()
         }
     },
 };
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync("myVirtualNetwork", vnetData);
-VirtualNetwork vnet = vnetOperation.Value;
+VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vmName + "_vent", vnetData);
 
 // Create Network interface
 var nicData = new NetworkInterfaceData()
@@ -216,12 +209,11 @@ var nicData = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterfaceCreateOrUpdateOperation nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync("myNetworkInterface", nicData);
-NetworkInterface nic = nicOperation.Value;
+NetworkInterface nic = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(vmName + "_nic", nicData);
 
 var vmData = new VirtualMachineData(location)
 {
-    AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
+    AvailabilitySet = new Compute.Models.SubResource() { Id = availabilitySet.Id },
     NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
     OsProfile = new OSProfile
     {
@@ -242,8 +234,7 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-VirtualMachineCreateOrUpdateOperation vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync("myVirtualMachine", vmData);
-VirtualMachine vm = vmOperation.Value;
+VirtualMachine vm = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData);
 ```
 
 #### Object Model Changes
@@ -251,7 +242,7 @@ VirtualMachine vm = vmOperation.Value;
 Example: Create a Virtual Machine Extension
 
 Before upgrade:
-```C#
+```csharp
 var vmExtension = new VirtualMachineExtension
             {
                 Location = "westus",
@@ -269,12 +260,12 @@ var vmExtension = new VirtualMachineExtension
 ```
 
 After upgrade:
-```C# Snippet:Changelog_CreateVMExtension
+```csharp
 var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",
-    TypePropertiesType = "VMAccessAgent",
+    VirtualMachineExtensionType = "VMAccessAgent",
     TypeHandlerVersion = "2.0",
     AutoUpgradeMinorVersion = true,
     ForceUpdateTag = "RerunExtension",

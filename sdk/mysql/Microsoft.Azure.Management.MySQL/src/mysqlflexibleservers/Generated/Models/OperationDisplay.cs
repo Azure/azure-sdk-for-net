@@ -50,28 +50,28 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation resource provider name.
+        /// Gets operation resource provider name.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource on which the operation is performed.
+        /// Gets resource on which the operation is performed.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets localized friendly name for the operation.
+        /// Gets localized friendly name for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets or sets operation description.
+        /// Gets operation description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
     }
 }

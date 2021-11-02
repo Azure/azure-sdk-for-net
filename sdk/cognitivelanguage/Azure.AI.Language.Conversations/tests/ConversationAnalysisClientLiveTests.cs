@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -55,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversationsWithConversationPrediction()
+        public async Task AnalyzeConversationsDeepstack()
         {
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(
                TestEnvironment.ProjectName,
@@ -64,13 +65,13 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
 
-            ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
+            DeepstackPrediction deepstackPrediction = response.Value.Prediction as DeepstackPrediction;
 
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
 
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Order"));
+            Assert.That(deepstackPrediction.TopIntent, Is.EqualTo("Order"));
 
-            IList<string> entitiesText = conversationPrediction.Entities.Select(entity => entity.Text).ToList();
+            IList<string> entitiesText = deepstackPrediction.Entities.Select(entity => entity.Text).ToList();
             Assert.That(entitiesText, Has.Count.EqualTo(2));
             Assert.That(entitiesText, Is.EquivalentTo(ExpectedOutput));
         }

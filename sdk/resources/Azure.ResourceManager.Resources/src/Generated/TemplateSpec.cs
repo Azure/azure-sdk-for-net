@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a list of TemplateSpecVersions in the TemplateSpec. </summary>
         /// <returns> An object representing collection of TemplateSpecVersions and their operations over a TemplateSpec. </returns>
-        public TemplateSpecVersionCollection GetTemplateSpecVersions()
+        public TemplateSpecVersionContainer GetTemplateSpecVersions()
         {
-            return new TemplateSpecVersionCollection(this);
+            return new TemplateSpecVersionContainer(this);
         }
     }
 }

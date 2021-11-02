@@ -58,9 +58,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -99,14 +99,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual async Task<Response> ListRoleDefinitionsAsync(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope);
+                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -117,9 +117,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role definitions. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -158,14 +158,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        public virtual Response ListRoleDefinitions(RequestOptions options, bool? isBuiltIn = null, string scope = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleDefinitionsRequest(isBuiltIn, scope);
+                using HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options = null)
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
@@ -276,7 +276,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
@@ -315,14 +315,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetScopesAsync(RequestOptions options = null)
+        public virtual async Task<Response> ListScopesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetScopesRequest();
+                using HttpMessage message = CreateListScopesRequest();
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -354,14 +354,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetScopes(RequestOptions options = null)
+        public virtual Response ListScopes(RequestOptions options)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleDefinitionsClient.ListScopes");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetScopesRequest();
+                using HttpMessage message = CreateListScopesRequest();
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        internal HttpMessage CreateGetRoleDefinitionsRequest(bool? isBuiltIn, string scope)
+        internal HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -410,7 +410,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateGetScopesRequest()
+        internal HttpMessage CreateListScopesRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

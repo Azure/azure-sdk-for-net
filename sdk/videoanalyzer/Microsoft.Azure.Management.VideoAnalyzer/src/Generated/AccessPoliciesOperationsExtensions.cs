@@ -22,11 +22,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     public static partial class AccessPoliciesOperationsExtensions
     {
             /// <summary>
-            /// List all existing access policy resources.
+            /// List access policy resources.
             /// </summary>
             /// <remarks>
-            /// Retrieves all existing access policy resources, along with their JSON
-            /// representations.
+            /// List all existing access policy resources for the specified account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,11 +47,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing access policy resources.
+            /// List access policy resources.
             /// </summary>
             /// <remarks>
-            /// Retrieves all existing access policy resources, along with their JSON
-            /// representations.
+            /// List all existing access policy resources for the specified account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,10 +78,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Retrieves an existing access policy resource.
+            /// Retrieves an access policy resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing access policy resource with the given name.
+            /// Retrieves an existing access policy resource from an account by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,7 +93,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to retrieve.
             /// </param>
             public static AccessPolicyEntity Get(this IAccessPoliciesOperations operations, string resourceGroupName, string accountName, string accessPolicyName)
             {
@@ -103,10 +101,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Retrieves an existing access policy resource.
+            /// Retrieves an access policy resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing access policy resource with the given name.
+            /// Retrieves an existing access policy resource from an account by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,7 +116,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -132,11 +130,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Creates a new access policy resource or updates an existing one.
+            /// Creates or updates an access policy.
             /// </summary>
             /// <remarks>
-            /// Creates a new access policy resource or updates an existing one with the
-            /// given name.
+            /// Creates a new access policy resource or updates an existing one.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -148,7 +145,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to create or update.
             /// </param>
             /// <param name='role'>
             /// Defines the access level granted by this policy. Possible values include:
@@ -163,11 +160,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Creates a new access policy resource or updates an existing one.
+            /// Creates or updates an access policy.
             /// </summary>
             /// <remarks>
-            /// Creates a new access policy resource or updates an existing one with the
-            /// given name.
+            /// Creates a new access policy resource or updates an existing one.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,7 +175,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to create or update.
             /// </param>
             /// <param name='role'>
             /// Defines the access level granted by this policy. Possible values include:
@@ -200,10 +196,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Deletes an existing access policy resource.
+            /// Deletes an access policy.
             /// </summary>
             /// <remarks>
-            /// Deletes an existing access policy resource with the given name.
+            /// Deletes an existing access policy resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,7 +211,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to delete.
             /// </param>
             public static void Delete(this IAccessPoliciesOperations operations, string resourceGroupName, string accountName, string accessPolicyName)
             {
@@ -223,10 +219,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Deletes an existing access policy resource.
+            /// Deletes an access policy.
             /// </summary>
             /// <remarks>
-            /// Deletes an existing access policy resource with the given name.
+            /// Deletes an existing access policy resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -238,7 +234,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -249,11 +245,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Updates individual properties of an existing access policy resource.
+            /// Updates an existing access policy.
             /// </summary>
             /// <remarks>
-            /// Updates individual properties of an existing access policy resource with
-            /// the given name.
+            /// Updates individual properties of an existing access policy resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,7 +260,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to update.
             /// </param>
             /// <param name='role'>
             /// Defines the access level granted by this policy. Possible values include:
@@ -280,11 +275,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// Updates individual properties of an existing access policy resource.
+            /// Updates an existing access policy.
             /// </summary>
             /// <remarks>
-            /// Updates individual properties of an existing access policy resource with
-            /// the given name.
+            /// Updates individual properties of an existing access policy resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -296,7 +290,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='accessPolicyName'>
-            /// The Access Policy name.
+            /// The name of the access policy to update.
             /// </param>
             /// <param name='role'>
             /// Defines the access level granted by this policy. Possible values include:
@@ -317,11 +311,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing access policy resources.
+            /// List access policy resources.
             /// </summary>
             /// <remarks>
-            /// Retrieves all existing access policy resources, along with their JSON
-            /// representations.
+            /// List all existing access policy resources for the specified account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -335,11 +328,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing access policy resources.
+            /// List access policy resources.
             /// </summary>
             /// <remarks>
-            /// Retrieves all existing access policy resources, along with their JSON
-            /// representations.
+            /// List all existing access policy resources for the specified account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
@@ -46,16 +45,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="summary"></param>
-        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary)
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, DocumentTranslationError? error, StatusSummary summary)
         {
             Id = id;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
-            _error = error;
+            Error = error;
             Summary = summary;
         }
         /// <summary> List of possible statuses for job or document. </summary>
         public DocumentTranslationStatus Status { get; }
+        /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
+        public DocumentTranslationError? Error { get; }
     }
 }

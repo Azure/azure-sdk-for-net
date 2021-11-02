@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of StorageQueues in the QueueService. </summary>
         /// <returns> An object representing collection of StorageQueues and their operations over a QueueService. </returns>
-        public StorageQueueCollection GetStorageQueues()
+        public StorageQueueContainer GetStorageQueues()
         {
-            return new StorageQueueCollection(this);
+            return new StorageQueueContainer(this);
         }
     }
 }

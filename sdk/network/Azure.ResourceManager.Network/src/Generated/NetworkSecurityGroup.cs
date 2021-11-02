@@ -353,9 +353,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of SecurityRules in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public SecurityRuleCollection GetSecurityRules()
+        public SecurityRuleContainer GetSecurityRules()
         {
-            return new SecurityRuleCollection(this);
+            return new SecurityRuleContainer(this);
         }
     }
 }

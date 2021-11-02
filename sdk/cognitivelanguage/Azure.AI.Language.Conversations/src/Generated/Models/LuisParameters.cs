@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-    public partial class LuisParameters : AnalysisParameters
+    public partial class LuisParameters : AnalyzeParameters
     {
         /// <summary> Initializes a new instance of LuisParameters. </summary>
         public LuisParameters()

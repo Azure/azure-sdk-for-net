@@ -236,8 +236,7 @@ namespace Compute.Tests
             string osDiskName = osDisk.Name;
             ApiEntityReference diskToExcludeEntityRef = new ApiEntityReference() { Id = diskToExclude };
             List<ApiEntityReference> disksToExclude = new List<ApiEntityReference> { diskToExcludeEntityRef };
-            RestorePoint inputRestorePoint = new RestorePoint() { ExcludeDisks = disksToExclude };
-            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, inputRestorePoint);
+            return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, disksToExclude);
         }
 
         // Verify restore point properties.
@@ -249,6 +248,10 @@ namespace Compute.Tests
         {
             Assert.Equal(restorePointName, restorePoint.Name);
             Assert.NotNull(restorePoint.Id);
+            Assert.NotNull(restorePoint.ProvisioningDetails.CreationTime);
+            Assert.NotNull(restorePoint.ProvisioningDetails.StatusCode);
+            Assert.NotNull(restorePoint.ProvisioningDetails.StatusMessage);
+            Assert.NotNull(restorePoint.ProvisioningDetails.TotalUsedSizeInBytes);
             Assert.Equal(ProvisioningState.Succeeded.ToString(), restorePoint.ProvisioningState);
             Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, restorePoint.ConsistencyMode);
             RestorePointSourceVMStorageProfile storageProfile = restorePoint.SourceMetadata.StorageProfile;

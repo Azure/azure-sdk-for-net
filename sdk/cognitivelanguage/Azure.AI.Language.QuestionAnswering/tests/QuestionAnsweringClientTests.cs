@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [Test]
         public void QuestionAnswerClientEndpointNull()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(null, null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
@@ -25,90 +25,58 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             Uri endpoint = new Uri("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(endpoint, null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 
         [Test]
-        public void GetAnswersQuestionNull()
+        public void QueryKnowledgeBaseProjectNameNull()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers(null, null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase(null, null, null));
+            Assert.AreEqual("projectName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync(null, null, null));
+            Assert.AreEqual("projectName", ex.ParamName);
+        }
+
+        [Test]
+        public void QueryKnowledgeBaseDeploymentNameNull()
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase("projectName", null, null));
+            Assert.AreEqual("deploymentName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync("projectName", null, null));
+            Assert.AreEqual("deploymentName", ex.ParamName);
+        }
+
+        [Test]
+        public void QueryKnowledgeBaseQuestionNull()
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase("projectName", "deploymentName", null));
             Assert.AreEqual("question", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync(null, null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync("projectName", "deploymentName", null));
             Assert.AreEqual("question", ex.ParamName);
         }
 
         [Test]
-        public void GetAnswersQuestionEmpty()
+        public void QueryKnowledgeBaseOptionsNull()
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(() => Client.GetAnswers(string.Empty, null));
-            Assert.AreEqual("question", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetAnswersAsync(string.Empty, null));
-            Assert.AreEqual("question", ex.ParamName);
-        }
-
-        [Test]
-        public void GetAnswersProjectNull()
-        {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers("question", null));
-            Assert.AreEqual("project", ex.ParamName);
-
-            ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswers(1, null));
-            Assert.AreEqual("project", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync("question", null));
-            Assert.AreEqual("project", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersAsync(1, null));
-            Assert.AreEqual("project", ex.ParamName);
-        }
-
-        [Test]
-        public void GetAnswersFromTextQuestionNull()
-        {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText(null, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync(null, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
-        }
-
-        [Test]
-        public void GetAnswersFromTextQuestionEmpty()
-        {
-            ArgumentException ex = Assert.Throws<ArgumentException>(() => Client.GetAnswersFromText(string.Empty, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.GetAnswersFromTextAsync(string.Empty, (string[])null));
-            Assert.AreEqual("question", ex.ParamName);
-        }
-
-        [Test]
-        public void GetAnswersFromTextTextDocumentsNull()
-        {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText("question", (string[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
-
-            ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText("question", (TextDocument[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync("question", (string[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync("question", (TextDocument[])null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
-        }
-
-        [Test]
-        public void GetAnswersFromTextOptionsNull()
-        {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText(null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase(null));
             Assert.AreEqual("options", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync(null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync(null));
+            Assert.AreEqual("options", ex.ParamName);
+        }
+
+        [Test]
+        public void QueryTextOptionsNull()
+        {
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryText(null));
+            Assert.AreEqual("options", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryTextAsync(null));
             Assert.AreEqual("options", ex.ParamName);
         }
     }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         private StorageAccount storageAccount;
         private BlobService blobService;
         [SetUp]
-        public async Task createStorageAccountAndGetBlobContainerCollection()
+        public async Task createStorageAccountAndGetBlobContainerContainer()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
             Location location = Location.WestUS2;
             ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Kind kind = Kind.Storage;
             string locationStr = "westus2";
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
-            StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+            StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+            StorageAccountCreateOperation accountCreateOperation = await accountContainer.CreateOrUpdateAsync(accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_BlobContainers_GetBlobService
-            BlobServiceCollection blobServiceCollection = storageAccount.GetBlobServices();
-            BlobService blobService =await blobServiceCollection.GetAsync("default");
+            BlobServiceContainer blobServiceContainer = storageAccount.GetBlobServices();
+            BlobService blobService =await blobServiceContainer.GetAsync("default");
             #endregion
             this.blobService = blobService;
         }
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_BlobContainers_CreateBlobContainer
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData= new BlobContainerData();
-            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(blobContainerName, blobContainerData);
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(blobContainerName, blobContainerData);
             BlobContainer blobContainer = blobContainerCreateOperation.Value;
             #endregion
         }
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_BlobContainers_ListBlobContainers
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            AsyncPageable<BlobContainer> response = blobContainerCollection.GetAllAsync();
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
+            AsyncPageable<BlobContainer> response = blobContainerContainer.GetAllAsync();
             await foreach (BlobContainer blobContainer in response)
             {
                 Console.WriteLine(blobContainer.Id.Name);
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_BlobContainers_GetBlobContainer
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer =await blobContainerCollection.GetAsync("myBlobContainer");
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
+            BlobContainer blobContainer =await blobContainerContainer.GetAsync("myBlobContainer");
             Console.WriteLine(blobContainer.Id.Name);
             #endregion
         }
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task GetIfExist()
         {
             #region Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
+            BlobContainer blobContainer = await blobContainerContainer.GetIfExistsAsync("foo");
             if (blobContainer != null)
             {
                 Console.WriteLine(blobContainer.Id.Name);
             }
-            if (await blobContainerCollection.CheckIfExistsAsync("bar"))
+            if (await blobContainerContainer.CheckIfExistsAsync("bar"))
             {
                 Console.WriteLine("blob container 'bar' exists");
             }
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task Delete()
         {
             #region Snippet:Managing_BlobContainers_DeleteBlobContainer
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
+            BlobContainer blobContainer = await blobContainerContainer.GetAsync("myBlobContainer");
             await blobContainer.DeleteAsync();
             #endregion
         }

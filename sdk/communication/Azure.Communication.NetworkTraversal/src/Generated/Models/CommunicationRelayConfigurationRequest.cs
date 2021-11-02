@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Request for a CommunicationRelayConfiguration. </summary>
     internal partial class CommunicationRelayConfigurationRequest
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfigurationRequest. </summary>
-        public CommunicationRelayConfigurationRequest()
+        /// <param name="id"> An existing ACS identity. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public CommunicationRelayConfigurationRequest(string id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            Id = id;
         }
 
         /// <summary> An existing ACS identity. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

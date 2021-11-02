@@ -48,16 +48,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// restore point. Please refer to https://aka.ms/RestorePoints for
         /// more details. Possible values include: 'CrashConsistent',
         /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
-        /// <param name="timeCreated">Gets the creation time of the restore
-        /// point.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), System.DateTime? timeCreated = default(System.DateTime?))
+        /// <param name="provisioningDetails">Gets the provisioning details set
+        /// by the server during Create restore point operation.</param>
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails))
             : base(id, name, type)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
-            TimeCreated = timeCreated;
+            ProvisioningDetails = provisioningDetails;
             CustomInit();
         }
 
@@ -97,10 +97,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ConsistencyMode { get; private set; }
 
         /// <summary>
-        /// Gets the creation time of the restore point.
+        /// Gets the provisioning details set by the server during Create
+        /// restore point operation.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.timeCreated")]
-        public System.DateTime? TimeCreated { get; set; }
+        [JsonProperty(PropertyName = "properties.provisioningDetails")]
+        public RestorePointProvisioningDetails ProvisioningDetails { get; private set; }
 
         /// <summary>
         /// Validate the object.

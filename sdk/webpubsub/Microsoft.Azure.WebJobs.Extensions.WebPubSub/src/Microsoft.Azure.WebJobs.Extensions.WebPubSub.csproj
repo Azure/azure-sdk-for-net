@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.4</Version>
     <NoWarn>$(NoWarn);AZC0001;CS8632;CA1056</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>

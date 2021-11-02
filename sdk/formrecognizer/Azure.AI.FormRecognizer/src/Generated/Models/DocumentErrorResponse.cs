@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentErrorResponse. </summary>
         /// <param name="error"> Error info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal DocumentErrorResponse(Error error)
+        internal DocumentErrorResponse(DocumentAnalysisError error)
         {
             if (error == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Error info. </summary>
-        public Error Error { get; }
+        public DocumentAnalysisError Error { get; }
     }
 }

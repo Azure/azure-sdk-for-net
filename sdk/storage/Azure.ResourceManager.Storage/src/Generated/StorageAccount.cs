@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetPropertiesAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetProperties(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Storage
                 await TagResource.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetPropertiesAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage
                 TagResource.Delete(cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetProperties(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetPropertiesAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restClient.GetProperties(Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new StorageAccount(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -771,67 +771,67 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets an object representing a ManagementPolicy along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ManagementPolicy" /> object. </returns>
-        public ManagementPolicy GetManagementPolicy()
+        /// <summary> Gets a list of ManagementPolicies in the StorageAccount. </summary>
+        /// <returns> An object representing collection of ManagementPolicies and their operations over a StorageAccount. </returns>
+        public ManagementPolicyContainer GetManagementPolicies()
         {
-            return new ManagementPolicy(this, Id + "/managementPolicies/default");
+            return new ManagementPolicyContainer(this);
         }
 
         /// <summary> Gets a list of BlobInventoryPolicies in the StorageAccount. </summary>
         /// <returns> An object representing collection of BlobInventoryPolicies and their operations over a StorageAccount. </returns>
-        public BlobInventoryPolicyCollection GetBlobInventoryPolicies()
+        public BlobInventoryPolicyContainer GetBlobInventoryPolicies()
         {
-            return new BlobInventoryPolicyCollection(this);
+            return new BlobInventoryPolicyContainer(this);
         }
 
         /// <summary> Gets a list of PrivateEndpointConnections in the StorageAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a StorageAccount. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(this);
+            return new PrivateEndpointConnectionContainer(this);
         }
 
         /// <summary> Gets a list of ObjectReplicationPolicies in the StorageAccount. </summary>
         /// <returns> An object representing collection of ObjectReplicationPolicies and their operations over a StorageAccount. </returns>
-        public ObjectReplicationPolicyCollection GetObjectReplicationPolicies()
+        public ObjectReplicationPolicyContainer GetObjectReplicationPolicies()
         {
-            return new ObjectReplicationPolicyCollection(this);
+            return new ObjectReplicationPolicyContainer(this);
         }
 
         /// <summary> Gets a list of EncryptionScopes in the StorageAccount. </summary>
         /// <returns> An object representing collection of EncryptionScopes and their operations over a StorageAccount. </returns>
-        public EncryptionScopeCollection GetEncryptionScopes()
+        public EncryptionScopeContainer GetEncryptionScopes()
         {
-            return new EncryptionScopeCollection(this);
+            return new EncryptionScopeContainer(this);
         }
 
         /// <summary> Gets a list of BlobServices in the StorageAccount. </summary>
         /// <returns> An object representing collection of BlobServices and their operations over a StorageAccount. </returns>
-        public BlobServiceCollection GetBlobServices()
+        public BlobServiceContainer GetBlobServices()
         {
-            return new BlobServiceCollection(this);
+            return new BlobServiceContainer(this);
         }
 
         /// <summary> Gets a list of FileServices in the StorageAccount. </summary>
         /// <returns> An object representing collection of FileServices and their operations over a StorageAccount. </returns>
-        public FileServiceCollection GetFileServices()
+        public FileServiceContainer GetFileServices()
         {
-            return new FileServiceCollection(this);
+            return new FileServiceContainer(this);
         }
 
         /// <summary> Gets a list of QueueServices in the StorageAccount. </summary>
         /// <returns> An object representing collection of QueueServices and their operations over a StorageAccount. </returns>
-        public QueueServiceCollection GetQueueServices()
+        public QueueServiceContainer GetQueueServices()
         {
-            return new QueueServiceCollection(this);
+            return new QueueServiceContainer(this);
         }
 
         /// <summary> Gets a list of TableServices in the StorageAccount. </summary>
         /// <returns> An object representing collection of TableServices and their operations over a StorageAccount. </returns>
-        public TableServiceCollection GetTableServices()
+        public TableServiceContainer GetTableServices()
         {
-            return new TableServiceCollection(this);
+            return new TableServiceContainer(this);
         }
     }
 }

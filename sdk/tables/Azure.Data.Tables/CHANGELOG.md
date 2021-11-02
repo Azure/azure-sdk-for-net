@@ -7,7 +7,6 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Table entities now support UInt64 (ulong) properties. ([#24750](https://github.com/Azure/azure-sdk-for-net/issues/24750))
 
 ### Other Changes
 

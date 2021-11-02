@@ -21,6 +21,13 @@ namespace Azure.ResourceManager.TestFramework
             EnsureMockServerRunning();
         }
 
+        protected async Task<ResourceGroupContainer> GetResourceGroupContainer(ArmClientOptions clientOptions = default)
+        {
+            var client = GetArmClient(clientOptions);
+            var sub = await client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
+            return sub.Value.GetResourceGroups();
+        }
+
         private void EnsureMockServerRunning()
         {
             if (Mode == RecordedTestMode.Record)

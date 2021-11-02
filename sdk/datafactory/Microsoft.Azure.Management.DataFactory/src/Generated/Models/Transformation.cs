@@ -32,12 +32,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">Transformation name.</param>
         /// <param name="description">Transformation description.</param>
-        /// <param name="flowlet">Flowlet Reference</param>
-        public Transformation(string name, string description = default(string), DataFlowReference flowlet = default(DataFlowReference))
+        public Transformation(string name, string description = default(string))
         {
             Name = name;
             Description = description;
-            Flowlet = flowlet;
             CustomInit();
         }
 
@@ -59,12 +57,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets flowlet Reference
-        /// </summary>
-        [JsonProperty(PropertyName = "flowlet")]
-        public DataFlowReference Flowlet { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -75,10 +67,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Flowlet != null)
-            {
-                Flowlet.Validate();
             }
         }
     }

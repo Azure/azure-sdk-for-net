@@ -10,7 +10,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
-        QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_07_15_Preview,
+        QuestionAnsweringClientOptions.ServiceVersion.V2021_05_01_preview
     )]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
     {

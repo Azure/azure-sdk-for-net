@@ -8,7 +8,6 @@ using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Moq;
 

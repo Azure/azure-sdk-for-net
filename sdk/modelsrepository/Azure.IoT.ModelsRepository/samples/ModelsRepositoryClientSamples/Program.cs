@@ -19,19 +19,20 @@ namespace Azure.IoT.ModelsRepository.Samples
                 level: EventLevel.Verbose);
 
             // Client init samples
-            GetModelSamples.ClientInitialization();
+            ModelResolutionSamples.ClientInitialization();
 
-            // GetModel samples
-            await GetModelSamples.GetModelFromGlobalRepoAsync();
-            await GetModelSamples.GetModelFromLocalRepoAsync();
-            await GetModelSamples.GetModelDisabledDependencyResolution();
-            await GetModelSamples.TryGetModelFromGlobalRepoButNotFoundAsync();
-            await GetModelSamples.TryGetModelFromLocalRepoButNotFoundAsync();
-            await GetModelSamples.TryGetModelsWithInvalidDtmiAsync();
+            // Model Resolution samples
+            await ModelResolutionSamples.GetModelsFromGlobalRepoAsync();
+            await ModelResolutionSamples.GetModelsFromLocalRepoAsync();
+            await ModelResolutionSamples.GetMultipleModelsFromGlobalRepoAsync();
+            await ModelResolutionSamples.GetModelsDisabledDependencyResolution();
+            await ModelResolutionSamples.TryGetModelsFromGlobalRepoButNotFoundAsync();
+            await ModelResolutionSamples.TryGetModelsFromLocalRepoButNotFoundAsync();
+            await ModelResolutionSamples.TryGetModelsWithInvalidDtmiAsync();
 
             // Parser integration samples
-            await ParserIntegrationSamples.GetModelAndParseAsync();
-            await ParserIntegrationSamples.ParseAndGetModelWithExtensionAsync();
+            await ParserIntegrationSamples.GetModelsAndParseAsync();
+            await ParserIntegrationSamples.ParseAndGetModelsWithExtensionAsync();
 
             // DtmiConventions utility samples
             DtmiConventionsSamples.IsValidDtmi();

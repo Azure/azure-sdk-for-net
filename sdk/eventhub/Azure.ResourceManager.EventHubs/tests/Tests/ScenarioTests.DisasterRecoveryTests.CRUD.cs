@@ -19,8 +19,7 @@ namespace Azure.Management.EventHub.Tests
             var location = "South Central US";
             var location2 = "North Central US";
             var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            await sub.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));;
+            await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));;
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             // Create namespace 1
             var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,

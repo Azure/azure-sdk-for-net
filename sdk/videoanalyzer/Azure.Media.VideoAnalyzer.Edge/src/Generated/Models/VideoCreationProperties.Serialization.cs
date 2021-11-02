@@ -30,11 +30,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("segmentLength");
                 writer.WriteStringValue(SegmentLength);
             }
-            if (Optional.IsDefined(RetentionPeriod))
-            {
-                writer.WritePropertyName("retentionPeriod");
-                writer.WriteStringValue(RetentionPeriod);
-            }
             writer.WriteEndObject();
         }
 
@@ -43,7 +38,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<string> segmentLength = default;
-            Optional<string> retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"))
@@ -61,13 +55,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     segmentLength = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionPeriod"))
-                {
-                    retentionPeriod = property.Value.GetString();
-                    continue;
-                }
             }
-            return new VideoCreationProperties(title.Value, description.Value, segmentLength.Value, retentionPeriod.Value);
+            return new VideoCreationProperties(title.Value, description.Value, segmentLength.Value);
         }
     }
 }

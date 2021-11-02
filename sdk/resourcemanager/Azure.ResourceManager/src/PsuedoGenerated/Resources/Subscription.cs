@@ -102,30 +102,30 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets the resource group collection under this subscription.
+        /// Gets the resource group container under this subscription.
         /// </summary>
-        /// <returns> The resource group collection. </returns>
-        public virtual ResourceGroupCollection GetResourceGroups()
+        /// <returns> The resource group container. </returns>
+        public virtual ResourceGroupContainer GetResourceGroups()
         {
-            return new ResourceGroupCollection(this);
+            return new ResourceGroupContainer(this);
         }
 
         /// <summary>
-        /// Gets the predefined tag collection under this subscription.
+        /// Gets the predefined tag container under this subscription.
         /// </summary>
-        /// <returns> The tags collection. </returns>
-        public virtual PredefinedTagCollection GetPredefinedTags()
+        /// <returns> The tags container. </returns>
+        public virtual PredefinedTagContainer GetPredefinedTags()
         {
-            return new PredefinedTagCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new PredefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
         /// <summary>
-        /// Gets the provider collection under this subscription.
+        /// Gets the provider container under this subscription.
         /// </summary>
-        /// <returns> The provider collection. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <returns> The provider container. </returns>
+        public virtual ProviderContainer GetProviders()
         {
-            return new ProviderCollection(this);
+            return new ProviderContainer(this);
         }
 
         /// <summary> Gets the current Subscription from Azure. </summary>
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a collection representing all resources as generic objects in the current tenant.
+        /// Gets a container representing all resources as generic objects in the current tenant.
         /// </summary>
-        /// <returns> GenericResource collection. </returns>
-        public virtual GenericResourceCollection GetGenericResources()
+        /// <returns> GenericResource container. </returns>
+        public virtual GenericResourceContainer GetGenericResources()
         {
-            return new GenericResourceCollection(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>

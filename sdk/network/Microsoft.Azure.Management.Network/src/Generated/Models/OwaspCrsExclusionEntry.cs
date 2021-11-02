@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.Network.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,9 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="matchVariable">The variable to be excluded. Possible
         /// values include: 'RequestHeaderNames', 'RequestCookieNames',
-        /// 'RequestArgNames', 'RequestHeaderKeys', 'RequestHeaderValues',
-        /// 'RequestCookieKeys', 'RequestCookieValues', 'RequestArgKeys',
-        /// 'RequestArgValues'</param>
+        /// 'RequestArgNames'</param>
         /// <param name="selectorMatchOperator">When matchVariable is a
         /// collection, operate on the selector to specify which elements in
         /// the collection this exclusion applies to. Possible values include:
@@ -44,14 +40,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="selector">When matchVariable is a collection, operator
         /// used to specify which elements in the collection this exclusion
         /// applies to.</param>
-        /// <param name="exclusionManagedRuleSets">The managed rule sets that
-        /// are associated with the exclusion.</param>
-        public OwaspCrsExclusionEntry(string matchVariable, string selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets = default(IList<ExclusionManagedRuleSet>))
+        public OwaspCrsExclusionEntry(string matchVariable, string selectorMatchOperator, string selector)
         {
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
-            ExclusionManagedRuleSets = exclusionManagedRuleSets;
             CustomInit();
         }
 
@@ -62,9 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the variable to be excluded. Possible values include:
-        /// 'RequestHeaderNames', 'RequestCookieNames', 'RequestArgNames',
-        /// 'RequestHeaderKeys', 'RequestHeaderValues', 'RequestCookieKeys',
-        /// 'RequestCookieValues', 'RequestArgKeys', 'RequestArgValues'
+        /// 'RequestHeaderNames', 'RequestCookieNames', 'RequestArgNames'
         /// </summary>
         [JsonProperty(PropertyName = "matchVariable")]
         public string MatchVariable { get; set; }
@@ -86,13 +77,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Selector { get; set; }
 
         /// <summary>
-        /// Gets or sets the managed rule sets that are associated with the
-        /// exclusion.
-        /// </summary>
-        [JsonProperty(PropertyName = "exclusionManagedRuleSets")]
-        public IList<ExclusionManagedRuleSet> ExclusionManagedRuleSets { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -111,16 +95,6 @@ namespace Microsoft.Azure.Management.Network.Models
             if (Selector == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Selector");
-            }
-            if (ExclusionManagedRuleSets != null)
-            {
-                foreach (var element in ExclusionManagedRuleSets)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

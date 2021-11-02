@@ -26,9 +26,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <summary>
         /// Check the availability of name for server
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the location.
-        /// </param>
         /// <param name='nameAvailabilityRequest'>
         /// The required parameters for checking if server name is available.
         /// </param>
@@ -47,6 +44,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NameAvailability>> ExecuteWithHttpMessagesAsync(string locationName, NameAvailabilityRequest nameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NameAvailability>> ExecuteWithHttpMessagesAsync(NameAvailabilityRequest nameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

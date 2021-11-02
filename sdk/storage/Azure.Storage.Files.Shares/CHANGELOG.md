@@ -3,7 +3,6 @@
 ## 12.9.0-beta.1 (Unreleased)
 - Added support for service version 2020-12-06.
 - Added support for SDK-calculated transactional hash checksums on data transfer.
-- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.7.0.
 
 ## 12.8.0 (2021-09-08)
 - Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
@@ -31,7 +30,7 @@
 ## 12.7.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added support for Share and Share Snapshot Lease.
-- ShareLeaseClient now remembers the Lease ID after a lease change.
+- DataLakeLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a ShareSasBuilder parameter.
 - Deprecated property ShareSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 

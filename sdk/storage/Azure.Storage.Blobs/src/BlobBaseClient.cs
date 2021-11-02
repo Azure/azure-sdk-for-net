@@ -239,6 +239,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
             : this(blobUri, (HttpPipelinePolicy)null, options, null)
         {
+            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -262,6 +263,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(), options, credential)
         {
+            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -289,6 +291,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, null)
         {
+            _blobRestClient = BuildBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -312,6 +315,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(options), options, null)
         {
+            _blobRestClient = BuildBlobRestClient(blobUri);
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
 
@@ -1256,7 +1260,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (UsingClientSideEncryption)
                     {
-                        options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
+                        options ??= new BlobDownloadOptions();
                         options.Range = BlobClientSideDecryptor.GetEncryptedBlobRange(options.Range);
                     }
 
@@ -1275,8 +1279,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ETag etag = response.Value.Details.ETag;
                     BlobRequestConditions conditionsWithEtag = options?.Conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
-                    options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
-                    options.Conditions = conditionsWithEtag;
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
@@ -1392,17 +1394,13 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
-            if ((options?.Range ?? default) != default)
+            if ((options?.Range ?? default) != default || startOffset != 0)
             {
                 pageRange = new HttpRange(
                     options.Range.Offset + startOffset,
                     options.Range.Length.HasValue ?
                         options.Range.Length.Value - startOffset :
                         (long?)null);
-            }
-            else if (startOffset != 0)
-            {
-                pageRange = new HttpRange(startOffset);
             }
 
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
@@ -2732,9 +2730,9 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     // This also makes sure that we fail fast if file doesn't exist.
-                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+                    var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                    ETag etag = blobProperties.Value.ETag;
+                    var etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
                     if (!allowModifications)
                     {

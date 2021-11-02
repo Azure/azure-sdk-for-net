@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of BlobContainers in the BlobService. </summary>
         /// <returns> An object representing collection of BlobContainers and their operations over a BlobService. </returns>
-        public BlobContainerCollection GetBlobContainers()
+        public BlobContainerContainer GetBlobContainers()
         {
-            return new BlobContainerCollection(this);
+            return new BlobContainerContainer(this);
         }
     }
 }

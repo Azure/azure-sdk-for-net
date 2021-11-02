@@ -64,15 +64,7 @@ namespace Azure.Storage.Test.Shared
 
         public RecordedTestBase AzureCoreRecordedTestBase => Tenants.AzureCoreRecordedTestBase;
 
-        /// <summary>
-        /// Recording reference. Unsafe to access until [Setup] step.
-        /// </summary>
         public TestRecording Recording => AzureCoreRecordedTestBase.Recording;
-
-        /// <summary>
-        /// Test mode reference. Safe to access even when <see cref="Recording"/> is not.
-        /// </summary>
-        public RecordedTestMode Mode => AzureCoreRecordedTestBase.Mode;
 
         /// <summary>
         /// Constructor.
@@ -151,11 +143,11 @@ namespace Azure.Storage.Test.Shared
             options.Diagnostics.IsLoggingEnabled = true;
             options.Retry.Mode = RetryMode.Exponential;
             options.Retry.MaxRetries = Constants.MaxReliabilityRetries;
-            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
-            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60);
-            options.Retry.NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400);
+            options.Retry.Delay = TimeSpan.FromSeconds(Recording.Mode == RecordedTestMode.Playback ? 0.01 : 1);
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(Recording.Mode == RecordedTestMode.Playback ? 0.1 : 60);
+            options.Retry.NetworkTimeout = TimeSpan.FromSeconds(Recording.Mode == RecordedTestMode.Playback ? 100 : 400);
 
-            if (Mode != RecordedTestMode.Live)
+            if (Recording.Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
             }

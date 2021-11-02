@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WriteNullObjectValue("consumerGroup", ConsumerGroup);
+            writer.WriteNullStringValue("consumerGroup", ConsumerGroup);
             writer.WriteEndObject();
         }
     }

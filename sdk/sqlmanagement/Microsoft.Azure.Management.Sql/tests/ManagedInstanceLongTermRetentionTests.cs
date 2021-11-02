@@ -21,7 +21,7 @@ namespace Sql.Tests
 {
     public class ManagedInstanceLongTermRetentionTests
     {
-        [Fact(Skip = "Long running tests. Execute manually.")]
+        [Fact]
         public void TestManagedInstanceLongTermRetentionPolicies()
         {
             // MANUAL TEST INSTRUCTIONS
@@ -61,7 +61,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact(Skip = "Long running tests. Execute manually.")]
+        [Fact]
         public void TestManagedIntanceLongTermRetentionCrud()
         {
             // MANUAL TEST INSTRUCTIONS
@@ -111,7 +111,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact(Skip = "Long running tests. Execute manually.")]
+        [Fact]
         public void TestManagedInstanceLongTermRetentionResourceGroupBasedCrud()
         {
             // MANUAL TEST INSTRUCTIONS

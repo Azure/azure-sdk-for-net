@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
                 {
-                    await InitializeClients();
+                    InitializeClients();
                     GenerateSampleValues();
                     await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                         CosmosDBTestUtilities.Location,
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 }
                 else if (setupRun)
                 {
-                    await initNewRecord();
+                    initNewRecord();
                 }
             }
         }

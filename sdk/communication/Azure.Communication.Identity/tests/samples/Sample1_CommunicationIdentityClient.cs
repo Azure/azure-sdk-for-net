@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [SyncOnly]
-        public void GetTokenForTeamsUser()
+        public void ExchangeTeamsToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
@@ -161,16 +161,16 @@ namespace Azure.Communication.Identity.Samples
             var teamsToken = generateTeamsToken().Result;
             var client = CreateClientWithConnectionString();
 
-            #region Snippet:GetTokenForTeamsUser
-            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
+            #region  Snippet:ExchangeTeamsToken
+            Response<AccessToken> tokenResponse = client.ExchangeTeamsToken(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
-            #endregion Snippet:GetTokenForTeamsUser
+            #endregion Snippet:ExchangeTeamsToken
         }
 
         [Test]
         [AsyncOnly]
-        public async Task GetTokenForTeamsUserAsync()
+        public async Task ExchangeTeamsTokenAsync()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -179,11 +179,11 @@ namespace Azure.Communication.Identity.Samples
             var teamsToken = await generateTeamsToken();
             var client = CreateClientWithConnectionString();
 
-            #region Snippet:GetTokenForTeamsUserAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
+            #region  Snippet:ExchangeTeamsTokenAsync
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
-            #endregion Snippet:GetTokenForTeamsUserAsync
+            #endregion Snippet:ExchangeTeamsTokenAsync
         }
 
         [Test]

@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24576")]
     public class VirtualMachineScaleSetOperationsTests : VirtualMachineScaleSetTestBase
     {
         public VirtualMachineScaleSetOperationsTests(bool isAsync)
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
-            var collection = await GetVirtualMachineScaleSetCollectionAsync();
+            var container = await GetVirtualMachineScaleSetContainerAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            var lro = await collection.CreateOrUpdateAsync(vmssName, input);
+            var lro = await container.CreateOrUpdateAsync(vmssName, input);
             return lro.Value;
         }
 

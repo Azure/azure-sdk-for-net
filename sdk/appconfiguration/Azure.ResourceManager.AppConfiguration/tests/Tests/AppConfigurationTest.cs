@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public class AppConfigurationTest : AppConfigurationClientBase
     {
         public AppConfigurationTest(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
         [SetUp]
-        public async Task ClearChallengeCacheforRecord()
+        public void ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                await Initialize();
+                Initialize();
             }
         }
 
@@ -43,8 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task AppConfigurationListKeyValues()
         {
             var resourceGroupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await sub.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
             //create configuration
             var configurationStoreName = Recording.GenerateAssetName("configuration");
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroupName, configurationStoreName,
@@ -77,8 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName = Recording.GenerateAssetName("configuration");
             string privateEndpointConnectionName = Recording.GenerateAssetName("privateendpoint");
             var resourceGroupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await sub.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdate(resourceGroupName, new Resources.ResourceGroupData(AzureLocation)).WaitForCompletionAsync();
 
             var configurationCreateResponse = await ConfigurationStoresOperations.StartCreateAsync(resourceGroupName, configurationStoreName, new ConfigurationStore("westus", new Sku("Standard")));
             var configurationCreateResult = await WaitForCompletionAsync(configurationCreateResponse);

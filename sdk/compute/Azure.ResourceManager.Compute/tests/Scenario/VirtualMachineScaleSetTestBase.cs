@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        protected async Task<VirtualMachineScaleSetCollection> GetVirtualMachineScaleSetCollectionAsync()
+        protected async Task<VirtualMachineScaleSetContainer> GetVirtualMachineScaleSetContainerAsync()
         {
-            _genericResourceCollection = DefaultSubscription.GetGenericResources();
+            _genericResourceContainer = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachineScaleSets();
         }

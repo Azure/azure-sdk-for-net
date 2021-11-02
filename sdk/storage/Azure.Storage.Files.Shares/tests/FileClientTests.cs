@@ -170,8 +170,6 @@ namespace Azure.Storage.Files.Shares.Tests
             var shareName = new ShareUriBuilder(file.Uri).ShareName;
             TestHelper.AssertCacheableProperty(shareName, () => file.ShareName);
             TestHelper.AssertCacheableProperty(name, () => file.Name);
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -590,8 +588,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -669,8 +665,6 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(getPropertiesResponse.Value.ETag.ToString(), $"\"{getPropertiesResponse.GetRawResponse().Headers.ETag}\"");
             Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
             Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
             Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
@@ -919,7 +913,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient file = test.File;
 
             // Act
-            Response<ShareFileInfo> response = await file.SetHttpHeadersAsync(
+            await file.SetHttpHeadersAsync(
                 httpHeaders: new ShareFileHttpHeaders
                 {
                     CacheControl = constants.CacheControl,
@@ -931,20 +925,15 @@ namespace Azure.Storage.Files.Shares.Tests
                 });
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
-            // Ensure the correct values are set by calling GetProperties
-            Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, propertiesResponse.Value.ContentType);
-            TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), propertiesResponse.Value.ContentHash.ToList());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, propertiesResponse.Value.ContentEncoding.First());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, propertiesResponse.Value.ContentLanguage.First());
-            Assert.AreEqual(constants.ContentDisposition, propertiesResponse.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, propertiesResponse.Value.CacheControl);
+            Response<ShareFileProperties> response = await file.GetPropertiesAsync();
+            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
+            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
+            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
+            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
         }
 
         [RecordedTest]
@@ -1205,8 +1194,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -1656,8 +1643,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
-                // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(downloadResponse.Value.Details.ETag.ToString(), $"\"{downloadResponse.GetRawResponse().Headers.ETag}\"");
 
                 // Properties are equal
                 Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
@@ -1890,9 +1875,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.LastModified);
             Assert.IsTrue(response.Value.FileContentLength > 0);
         }
@@ -2083,7 +2066,7 @@ namespace Azure.Storage.Files.Shares.Tests
                    content: stream);
 
             HttpRange range3 = new HttpRange(0, 512);
-            Response<ShareFileUploadInfo> response = await file.ClearRangeAsync(range3);
+            await file.ClearRangeAsync(range3);
 
             Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
 
@@ -2094,17 +2077,13 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            Response<ShareFileRangeInfo> rangeListResponse = await file.GetRangeListDiffAsync(options);
+            Response<ShareFileRangeInfo> response = await file.GetRangeListDiffAsync(options);
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
-            // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
-            Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
-            Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
-            Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
-            Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+            Assert.AreEqual(1, response.Value.Ranges.Count());
+            Assert.AreEqual(range2, response.Value.Ranges.First());
+            Assert.AreEqual(1, response.Value.ClearRanges.Count());
+            Assert.AreEqual(range3, response.Value.ClearRanges.First());
         }
 
         [RecordedTest]
@@ -2772,16 +2751,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 .GetFileClient(fileName));
 
             // Act
-            Response<ShareFileUploadInfo> response =  await destFile.UploadRangeFromUriAsync(
+            await destFile.UploadRangeFromUriAsync(
                 sourceUri: sasFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange);
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
-            // Ensure the contents of the source and destination Files after the UploadRangeFromUri call
             var sourceDownloadResponse = await sourceFile.DownloadAsync(range: sourceRange);
             var destDownloadResponse = await destFile.DownloadAsync(range: destRange);
 
@@ -3090,11 +3065,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.AcquireAsync();
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
             Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
@@ -3135,8 +3107,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<FileLeaseReleaseInfo> response = await leaseClient.ReleaseAsync();
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.LastModified);
         }
 
@@ -3176,12 +3147,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
             Assert.AreEqual(response.Value.LeaseId, newLeaseId);
             Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
@@ -3206,24 +3174,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task RenewLeaseAsync_Error()
-        {
-            // Arrange
-            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
-            ShareDirectoryClient directory = test.Directory;
-
-            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewDirectoryName()));
-            string id = Recording.Random.NewGuid().ToString();
-            ShareLeaseClient leaseClient = InstrumentClient(file.GetShareLeaseClient(id));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<InvalidOperationException>(
-                leaseClient.RenewAsync(),
-                e => Assert.AreEqual(e.Message, "Renew only supports Share Leases"));
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task BreakLeaseAsync()
         {
@@ -3241,8 +3191,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.BreakAsync();
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNull(response.Value.LeaseId);
             Assert.AreEqual(0, response.Value.LeaseTime);

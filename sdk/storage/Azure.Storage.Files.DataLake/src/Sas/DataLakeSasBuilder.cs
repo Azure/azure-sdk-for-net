@@ -357,7 +357,12 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
+            string stringToSign;
+
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            {
+                stringToSign = string.Join("\n",
                     Permissions,
                     startTime,
                     expiryTime,
@@ -374,6 +379,26 @@ namespace Azure.Storage.Sas
                     ContentEncoding,
                     ContentLanguage,
                     ContentType);
+            }
+            else
+            {
+                stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                    Identifier,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    null, // snapshot
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
+            }
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
@@ -423,7 +448,12 @@ namespace Azure.Storage.Sas
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
+            string stringToSign;
+
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/23369
+            if (SasQueryParametersInternals.DefaultSasVersionInternal == "2020-12-06")
+            {
+                stringToSign = string.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
@@ -448,6 +478,34 @@ namespace Azure.Storage.Sas
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
+            }
+            else
+            {
+                stringToSign = string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                userDelegationKey.SignedObjectId,
+                userDelegationKey.SignedTenantId,
+                signedStart,
+                signedExpiry,
+                userDelegationKey.SignedService,
+                userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
+                CorrelationId,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version,
+                Resource,
+                null, // snapshot
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
+            }
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 

@@ -21,14 +21,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WritePropertyName("dataSourceType");
             writer.WriteStringValue(DataSourceType.ToString());
-            writer.WriteNullObjectValue("dataFeedName", DataFeedName);
-            writer.WriteNullObjectValue("dataFeedDescription", DataFeedDescription);
-            writer.WriteNullObjectValue("timestampColumn", TimestampColumn);
+            writer.WriteNullStringValue("dataFeedName", DataFeedName);
+            writer.WriteNullStringValue("dataFeedDescription", DataFeedDescription);
+            writer.WriteNullStringValue("timestampColumn", TimestampColumn);
             writer.WriteNullStringValue("dataStartFrom", DataStartFrom, "O");
-            writer.WriteNullObjectValue("startOffsetInSeconds", StartOffsetInSeconds);
-            writer.WriteNullObjectValue("maxConcurrency", MaxConcurrency);
-            writer.WriteNullObjectValue("minRetryIntervalInSeconds", MinRetryIntervalInSeconds);
-            writer.WriteNullObjectValue("stopRetryAfterInSeconds", StopRetryAfterInSeconds);
+            writer.WriteNullNumberValue("startOffsetInSeconds", StartOffsetInSeconds);
+            writer.WriteNullNumberValue("maxConcurrency", MaxConcurrency);
+            writer.WriteNullNumberValue("minRetryIntervalInSeconds", MinRetryIntervalInSeconds);
+            writer.WriteNullNumberValue("stopRetryAfterInSeconds", StopRetryAfterInSeconds);
             writer.WriteNullStringValue("needRollup", NeedRollup);
             writer.WriteNullStringValue("rollUpMethod", RollUpMethod);
             if (Optional.IsCollectionDefined(RollUpColumns))
@@ -41,9 +41,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteNullObjectValue("allUpIdentification", AllUpIdentification);
+            writer.WriteNullStringValue("allUpIdentification", AllUpIdentification);
             writer.WriteNullStringValue("fillMissingPointType", FillMissingPointType);
-            writer.WriteNullObjectValue("fillMissingPointValue", FillMissingPointValue);
+            writer.WriteNullNumberValue("fillMissingPointValue", FillMissingPointValue);
             writer.WriteNullStringValue("viewMode", ViewMode);
             if (Optional.IsCollectionDefined(Admins))
             {
@@ -66,9 +66,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteEndArray();
             }
             writer.WriteNullStringValue("status", Status);
-            writer.WriteNullObjectValue("actionLinkTemplate", ActionLinkTemplate);
+            writer.WriteNullStringValue("actionLinkTemplate", ActionLinkTemplate);
             writer.WriteNullStringValue("authenticationType", AuthenticationType);
-            writer.WriteNullObjectValue("credentialId", CredentialId);
+            writer.WriteNullStringValue("credentialId", CredentialId);
         }
 
         // Full qualification must be used so CodeGen skips the generation of this method.

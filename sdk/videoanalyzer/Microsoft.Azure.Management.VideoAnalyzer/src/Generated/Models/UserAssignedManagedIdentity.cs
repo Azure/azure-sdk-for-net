@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// </summary>
         /// <param name="clientId">The client ID.</param>
         /// <param name="principalId">The principal ID.</param>
-        public UserAssignedManagedIdentity(System.Guid? clientId = default(System.Guid?), System.Guid? principalId = default(System.Guid?))
+        public UserAssignedManagedIdentity(string clientId = default(string), string principalId = default(string))
         {
             ClientId = clientId;
             PrincipalId = principalId;
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// Gets the client ID.
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
-        public System.Guid? ClientId { get; private set; }
+        public string ClientId { get; private set; }
 
         /// <summary>
         /// Gets the principal ID.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public System.Guid? PrincipalId { get; private set; }
+        public string PrincipalId { get; private set; }
 
     }
 }

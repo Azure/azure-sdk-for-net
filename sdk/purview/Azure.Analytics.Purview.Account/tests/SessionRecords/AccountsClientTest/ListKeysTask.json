@@ -29,8 +29,8 @@
         "x-ms-correlation-request-id": "3ac84d65-0cfd-4623-a994-cb83c86b22db"
       },
       "ResponseBody": {
-        "atlasKafkaPrimaryEndpoint": "Sanitized",
-        "atlasKafkaSecondaryEndpoint": "Sanitized"
+        "atlasKafkaPrimaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=Lp58m4PXPdjA\u002BOKwBT717op3fc/PXtVaPuONkWVVnh0=",
+        "atlasKafkaSecondaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=GcMVTNPGShESagjYw\u002B\u002BLGPPYfZ1h3Bj1IjL4tdejn9k="
       }
     },
     {
@@ -58,8 +58,8 @@
         "x-ms-correlation-request-id": "974f914a-c4db-40aa-b27a-6396b74ee5b5"
       },
       "ResponseBody": {
-        "atlasKafkaPrimaryEndpoint": "Sanitized",
-        "atlasKafkaSecondaryEndpoint": "Sanitized"
+        "atlasKafkaPrimaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=Lp58m4PXPdjA\u002BOKwBT717op3fc/PXtVaPuONkWVVnh0=",
+        "atlasKafkaSecondaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=GcMVTNPGShESagjYw\u002B\u002BLGPPYfZ1h3Bj1IjL4tdejn9k="
       }
     }
   ],

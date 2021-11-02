@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             if (match == ReceivedETag)
             {
                 Response<PathProperties> headers = await path.GetPropertiesAsync();
-                return headers.GetRawResponse().Headers.ETag.ToString();
+                return headers.Value.ETag.ToString();
             }
             else
             {

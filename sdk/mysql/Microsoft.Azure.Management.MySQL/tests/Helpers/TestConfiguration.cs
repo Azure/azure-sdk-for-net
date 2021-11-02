@@ -6,6 +6,5 @@ namespace MySQL.Tests.Helpers
     public static class TestConfiguration
     {
         public const string Location = "northeurope";
-        public const string FlexibleServerLocation = "northeurope";
     }
 }

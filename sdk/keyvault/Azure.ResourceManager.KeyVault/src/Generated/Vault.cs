@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets a list of PrivateEndpointConnections in the Vault. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a Vault. </returns>
-        public PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(this);
+            return new PrivateEndpointConnectionContainer(this);
         }
     }
 }

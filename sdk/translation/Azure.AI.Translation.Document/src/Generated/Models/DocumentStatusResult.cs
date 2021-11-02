@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 
 namespace Azure.AI.Translation.Document
 {
@@ -57,7 +56,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged)
+        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, DocumentTranslationError error, float progress, string id, long charactersCharged)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;
@@ -65,7 +64,7 @@ namespace Azure.AI.Translation.Document
             LastModified = lastModified;
             Status = status;
             TranslatedToLanguageCode = translatedToLanguageCode;
-            _error = error;
+            Error = error;
             Progress = progress;
             Id = id;
             CharactersCharged = charactersCharged;

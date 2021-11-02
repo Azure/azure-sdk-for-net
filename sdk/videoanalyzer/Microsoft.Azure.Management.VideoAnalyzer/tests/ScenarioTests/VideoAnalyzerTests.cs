@@ -136,7 +136,6 @@ namespace VideoAnalyzer.Tests.ScenarioTests
 
                 var managedIdentity = VideoAnalyzerManagementTestUtilities.CreateManagedIdentity(identityManagementClient, resourceGroup, location);
                 VideoAnalyzerManagementTestUtilities.AddRoleAssignment(authorizationManagementClient, storageAccount.Id, "Storage Blob Data Contributor", TestUtilities.GenerateGuid().ToString(), managedIdentity.PrincipalId.ToString());
-                VideoAnalyzerManagementTestUtilities.AddRoleAssignment(authorizationManagementClient, storageAccount.Id, "Reader", TestUtilities.GenerateGuid().ToString(), managedIdentity.PrincipalId.ToString());
 
                 // Create a video analyzer account
                 var accountName = TestUtilities.GenerateName("media");

@@ -9,8 +9,6 @@ namespace Azure.Analytics.Purview.Catalog
         private PurviewGlossaries purviewGlossaries;
         private PurviewRelationships purviewRelationships;
         private PurviewTypes purviewTypes;
-        private PurviewCollections purviewCollections;
-        private PurviewLineages purviewLineages;
 
         /// <summary>
         /// Provides access to operations which interact with entities in the catalog.
@@ -31,15 +29,5 @@ namespace Azure.Analytics.Purview.Catalog
         /// Provides access to operations which interact with types in the catalog.
         /// </summary>
         public PurviewTypes Types { get => purviewTypes ??= new PurviewTypes(Pipeline, _clientDiagnostics, _endpoint, _apiVersion); }
-
-        /// <summary>
-        /// Provides access to operations which interact with collections in the catalog.
-        /// </summary>
-        public PurviewCollections Collections { get => purviewCollections ??= new PurviewCollections(Pipeline, _clientDiagnostics, _endpoint, _apiVersion); }
-
-        /// <summary>
-        /// Provides access to operations which interact with lineages in the catalog.
-        /// </summary>
-        public PurviewLineages Lineages { get => purviewLineages ??= new PurviewLineages(Pipeline, _clientDiagnostics, _endpoint, _apiVersion); }
     }
 }

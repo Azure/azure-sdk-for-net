@@ -23,14 +23,9 @@ namespace Azure.Storage.Test.Shared
         public RecordedTestBase AzureCoreRecordedTestBase { get; }
 
         /// <summary>
-        /// Recording reference. Unsafe to access until [Setup] step.
+        /// Recording reference.
         /// </summary>
         public TestRecording Recording => AzureCoreRecordedTestBase.Recording;
-
-        /// <summary>
-        /// Test mode reference. Safe to access even when <see cref="Recording"/> is not.
-        /// </summary>
-        public RecordedTestMode Mode => AzureCoreRecordedTestBase.Mode;
 
         /// <summary>
         /// Gets a cache used for storing deserialized tenant configurations.
@@ -145,7 +140,7 @@ namespace Azure.Storage.Test.Shared
                 new Uri(config.ActiveDirectoryAuthEndpoint));
 
         public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
-            Mode == RecordedTestMode.Playback ?
+            Recording.Mode == RecordedTestMode.Playback ?
                 (TokenCredential)new StorageTestTokenCredential() :
                 new ClientSecretCredential(
                     tenantId,
@@ -175,7 +170,7 @@ namespace Azure.Storage.Test.Shared
         {
             TenantConfiguration config;
             string text;
-            switch (Mode)
+            switch (Recording.Mode)
             {
                 case RecordedTestMode.Playback:
                     if (!_playbackConfigCache.TryGetValue(name, out config))

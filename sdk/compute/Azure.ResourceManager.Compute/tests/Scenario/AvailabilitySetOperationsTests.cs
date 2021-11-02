@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<AvailabilitySet> CreateAvailabilitySetAsync(string setName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetAvailabilitySets();
+            var container = (await CreateResourceGroupAsync()).GetAvailabilitySets();
             var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
             input.Tags.ReplaceWith(new Dictionary<string, string>
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(setName, input);
+            var lro = await container.CreateOrUpdateAsync(setName, input);
             return lro.Value;
         }
 

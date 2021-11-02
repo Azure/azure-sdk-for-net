@@ -5,6 +5,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
 </Project>

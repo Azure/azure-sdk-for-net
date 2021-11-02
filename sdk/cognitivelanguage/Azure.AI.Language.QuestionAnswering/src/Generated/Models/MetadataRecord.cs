@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Object to provide the key value pair for each metadata. </summary>
     public partial class MetadataRecord

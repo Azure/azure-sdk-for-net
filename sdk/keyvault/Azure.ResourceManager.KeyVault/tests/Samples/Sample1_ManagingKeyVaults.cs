@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task CreateOrUpdate()
         {
             #region Snippet:Managing_KeyVaults_CreateAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            VaultContainer vaultContainer = resourceGroup.GetVaults();
 
             string vaultName = "myVault";
             Guid tenantIdGuid = new Guid("Your tenantId");
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS, VaultProperties);
 
-            var rawVault = await vaultCollection.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
+            var rawVault = await vaultContainer.CreateOrUpdateAsync(vaultName, parameters).ConfigureAwait(false);
             Vault vault = await rawVault.WaitForCompletionAsync();
             #endregion
         }
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_KeyVaults_ListAllVaults
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            VaultContainer vaultContainer = resourceGroup.GetVaults();
 
-            AsyncPageable<Vault> response = vaultCollection.GetAllAsync();
+            AsyncPageable<Vault> response = vaultContainer.GetAllAsync();
             await foreach (Vault vault in response)
             {
                 Console.WriteLine(vault.Data.Name);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task Get()
         {
             #region Snippet:Managing_KeyVaults_GetAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            VaultContainer vaultContainer = resourceGroup.GetVaults();
 
-            Vault vault = await vaultCollection.GetAsync("myVault");
+            Vault vault = await vaultContainer.GetAsync("myVault");
             Console.WriteLine(vault.Data.Name);
             #endregion
         }
@@ -92,15 +92,15 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task GetIfExists()
         {
             #region Snippet:Managing_KeyVaults_GetAVaultIfExists
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            VaultContainer vaultContainer = resourceGroup.GetVaults();
 
-            Vault vault = await vaultCollection.GetIfExistsAsync("foo");
+            Vault vault = await vaultContainer.GetIfExistsAsync("foo");
             if (vault != null)
             {
                 Console.WriteLine(vault.Data.Name);
             }
 
-            if (await vaultCollection.CheckIfExistsAsync("bar"))
+            if (await vaultContainer.CheckIfExistsAsync("bar"))
             {
                 Console.WriteLine("KeyVault 'bar' exists.");
             }
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public async Task Delete()
         {
             #region Snippet:Managing_KeyVaults_DeleteAVault
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
+            VaultContainer vaultContainer = resourceGroup.GetVaults();
 
-            Vault vault = await vaultCollection.GetAsync("myVault");
+            Vault vault = await vaultContainer.GetAsync("myVault");
             await vault.DeleteAsync();
             #endregion
         }
@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            Subscription subscription = armClient.DefaultSubscription;
             #endregion
 
-            #region Snippet:Readme_GetResourceGroupCollection
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the collection, we can create a new resource group with an specific name
+            #region Snippet:Readme_GetResourceGroupContainer
+            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+            // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdate(rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

@@ -1885,7 +1885,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
@@ -2015,7 +2015,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
+            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 

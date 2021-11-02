@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Internal;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -31,9 +30,6 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
             ExtractiveSummarizationTasks = new ChangeTrackingList<ExtractiveSummarizationTasksItem>();
-            CustomEntityRecognitionTasks = new ChangeTrackingList<CustomEntityRecognitionTasksItem>();
-            CustomSingleClassificationTasks = new ChangeTrackingList<CustomSingleClassificationTasksItem>();
-            CustomMultiClassificationTasks = new ChangeTrackingList<CustomMultiClassificationTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
@@ -47,10 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entityLinkingTasks"></param>
         /// <param name="sentimentAnalysisTasks"></param>
         /// <param name="extractiveSummarizationTasks"></param>
-        /// <param name="customEntityRecognitionTasks"></param>
-        /// <param name="customSingleClassificationTasks"></param>
-        /// <param name="customMultiClassificationTasks"></param>
-        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks, IReadOnlyList<CustomEntityRecognitionTasksItem> customEntityRecognitionTasks, IReadOnlyList<CustomSingleClassificationTasksItem> customSingleClassificationTasks, IReadOnlyList<CustomMultiClassificationTasksItem> customMultiClassificationTasks)
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks)
         {
             Completed = completed;
             Failed = failed;
@@ -62,9 +55,6 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = entityLinkingTasks;
             SentimentAnalysisTasks = sentimentAnalysisTasks;
             ExtractiveSummarizationTasks = extractiveSummarizationTasks;
-            CustomEntityRecognitionTasks = customEntityRecognitionTasks;
-            CustomSingleClassificationTasks = customSingleClassificationTasks;
-            CustomMultiClassificationTasks = customMultiClassificationTasks;
         }
 
         /// <summary> Gets the completed. </summary>
@@ -87,11 +77,5 @@ namespace Azure.AI.TextAnalytics.Models
         public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
         /// <summary> Gets the extractive summarization tasks. </summary>
         public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
-        /// <summary> Gets the custom entity recognition tasks. </summary>
-        public IReadOnlyList<CustomEntityRecognitionTasksItem> CustomEntityRecognitionTasks { get; }
-        /// <summary> Gets the custom single classification tasks. </summary>
-        public IReadOnlyList<CustomSingleClassificationTasksItem> CustomSingleClassificationTasks { get; }
-        /// <summary> Gets the custom multi classification tasks. </summary>
-        public IReadOnlyList<CustomMultiClassificationTasksItem> CustomMultiClassificationTasks { get; }
     }
 }

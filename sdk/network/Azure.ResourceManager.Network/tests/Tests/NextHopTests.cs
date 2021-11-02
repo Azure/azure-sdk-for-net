@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network.Tests
             //Create Network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            string sourceIPAddress = networkInterfaceCollection
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
+            string sourceIPAddress = networkInterfaceContainer
                                                             .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             NextHopParameters nhProperties2 = new NextHopParameters(vm.Id, sourceIPAddress, "12.11.12.14");
 
-            var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
-            var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
+            var networkWatcherContainer = resourceGroup.GetNetworkWatchers();
+            var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");
             var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 

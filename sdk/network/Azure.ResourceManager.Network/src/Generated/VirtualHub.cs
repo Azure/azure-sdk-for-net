@@ -281,37 +281,37 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of HubVirtualNetworkConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a VirtualHub. </returns>
-        public HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
+        public HubVirtualNetworkConnectionContainer GetHubVirtualNetworkConnections()
         {
-            return new HubVirtualNetworkConnectionCollection(this);
+            return new HubVirtualNetworkConnectionContainer(this);
         }
 
         /// <summary> Gets a list of VirtualHubRouteTableV2s in the VirtualHub. </summary>
         /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHub. </returns>
-        public VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
+        public VirtualHubRouteTableV2Container GetVirtualHubRouteTableV2s()
         {
-            return new VirtualHubRouteTableV2Collection(this);
+            return new VirtualHubRouteTableV2Container(this);
         }
 
         /// <summary> Gets a list of BgpConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of BgpConnections and their operations over a VirtualHub. </returns>
-        public BgpConnectionCollection GetBgpConnections()
+        public BgpConnectionContainer GetBgpConnections()
         {
-            return new BgpConnectionCollection(this);
+            return new BgpConnectionContainer(this);
         }
 
         /// <summary> Gets a list of HubIpConfigurations in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubIpConfigurations and their operations over a VirtualHub. </returns>
-        public HubIpConfigurationCollection GetHubIpConfigurations()
+        public HubIpConfigurationContainer GetHubIpConfigurations()
         {
-            return new HubIpConfigurationCollection(this);
+            return new HubIpConfigurationContainer(this);
         }
 
         /// <summary> Gets a list of HubRouteTables in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubRouteTables and their operations over a VirtualHub. </returns>
-        public HubRouteTableCollection GetHubRouteTables()
+        public HubRouteTableContainer GetHubRouteTables()
         {
-            return new HubRouteTableCollection(this);
+            return new HubRouteTableContainer(this);
         }
     }
 }

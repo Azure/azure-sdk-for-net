@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -17,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="EventHubsPerfTest" />
     ///
-    public abstract class BatchPublishPerfTest<TOptions> : EventHubsPerfTest<TOptions> where TOptions : EventHubsOptions
+    public abstract class BatchPublishPerfTest : EventHubsPerfTest
     {
         /// <summary>The Event Hub to publish events to; shared across all concurrent instances of the scenario.</summary>
         private static EventHubScope s_scope;
@@ -28,8 +27,8 @@ namespace Azure.Messaging.EventHubs.Perf
         /// <summary>The body to use when creating events; shared across all concurrent instances of the scenario.</summary>
         private static ReadOnlyMemory<byte> s_eventBody;
 
-        /// <summary>The set of options to use when creating batches.</summary>
-        private CreateBatchOptions _batchOptions;
+        /// <summary>The set of options to use when creating batches; shared across all concurrent instances of the scenario.</summary>
+        private static CreateBatchOptions s_batchOptions;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BatchPublishPerfTest"/> class.
@@ -37,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public BatchPublishPerfTest(TOptions options) : base(options)
+        public BatchPublishPerfTest(SizeCountOptions options) : base(options)
         {
         }
 
@@ -53,17 +52,12 @@ namespace Azure.Messaging.EventHubs.Perf
 
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
-            s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
-        }
-
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
-
-            _batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
+            s_batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
+            s_eventBody = EventGenerator.CreateRandomBody(Options.Size);
 
             // Publish an empty event to force the connection and link to be established.
-            using var batch = await s_producer.CreateBatchAsync(_batchOptions).ConfigureAwait(false);
+
+            using var batch = await s_producer.CreateBatchAsync(s_batchOptions).ConfigureAwait(false);
 
             if (!batch.TryAdd(new EventData(Array.Empty<byte>())))
             {
@@ -92,14 +86,14 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
+        public async override Task RunAsync(CancellationToken cancellationToken)
         {
-            using var batch = await s_producer.CreateBatchAsync(_batchOptions, cancellationToken).ConfigureAwait(false);
+            using var batch = await s_producer.CreateBatchAsync(s_batchOptions, cancellationToken).ConfigureAwait(false);
 
             // Fill the batch with events using the same body.  This will result in a batch of events of equal size.
             // The events will only differ by the id property that is assigned to them.
 
-            foreach (var eventData in EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody))
+            foreach (var eventData in EventGenerator.CreateEventsFromBody(Options.Count, s_eventBody))
             {
                 if (!batch.TryAdd(eventData))
                 {
@@ -107,18 +101,7 @@ namespace Azure.Messaging.EventHubs.Perf
                 }
             }
 
-            try
-            {
-                await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
-                return Options.BatchSize;
-            }
-            catch (EventHubsException e) when (cancellationToken.IsCancellationRequested && e.IsTransient)
-            {
-                // If SendAsync() is cancelled during a retry loop, the most recent exception is thrown.
-                // If the exception is transient, it should be wrapped in an OperationCanceledException
-                // which is ignored by the perf framework.
-                throw new OperationCanceledException("EventHubsException thrown during cancellation", e);
-            }
+            await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
