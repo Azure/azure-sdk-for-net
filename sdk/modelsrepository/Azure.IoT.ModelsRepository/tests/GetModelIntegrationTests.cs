@@ -5,6 +5,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Azure.IoT.ModelsRepository.Tests
 {
@@ -54,14 +55,27 @@ namespace Azure.IoT.ModelsRepository.Tests
             act.Should().Throw<RequestFailedException>();
         }
 
+        [Test]
+        public void GetModelInvalidFileContentFormatThrowsException()
+        {
+            const string dtmi = "dtmi:com:example:invalidformat;1";
+
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
+            Func<Task> act = async () => await client.GetModelAsync(dtmi);
+            act.Should().Throw<JsonException>();
+        }
+
+        [Test]
         public void GetModelInvalidDtmiDependencyThrowsException()
         {
             const string dtmi = "dtmi:com:example:invalidmodel;1";
             const string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
+            string invalidDepPath = DtmiConventions.GetModelUri(invalidDep, new Uri(ModelsRepositoryTestBase.TestLocalModelsRepository)).LocalPath;
+            string expectedExMsg = $"{string.Format(StandardStrings.GenericGetModelsError, invalidDep)} {string.Format(StandardStrings.ErrorFetchingModelContent, invalidDepPath)}";
 
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<RequestFailedException>().WithMessage($"Unable to resolve \"{invalidDep}\"");
+            act.Should().Throw<RequestFailedException>().WithMessage(expectedExMsg);
         }
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
@@ -108,6 +122,27 @@ namespace Azure.IoT.ModelsRepository.Tests
             }
         }
 
+        [Test]
+        public async Task GetModelDependenciesComponentsInline()
+        {
+            const string dtmi = "dtmi:com:example:Phone;2";
+            const string expectedDeps = "dtmi:com:example:Camera;3,dtmi:azure:DeviceManagement:DeviceInformation;1," +
+                "dtmi:azure:DeviceManagement:DeviceInformation;2";
+
+            ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
+            ModelResult result = await client.GetModelAsync(dtmi);
+            var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+            result.Content.Count.Should().Be(expectedDtmis.Length);
+
+            foreach (var id in expectedDtmis)
+            {
+                result.Content.ContainsKey(id).Should().BeTrue();
+                ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[id]).Should().Be(id);
+            }
+        }
+
+        [Test]
         public async Task GetModelDependenciesExtendsSingleRef()
         {
             const string dtmi = "dtmi:com:example:ConferenceRoom;1";
@@ -146,6 +181,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             }
         }
 
+        [Test]
         public async Task GetModelNoDependenciesExtendsInline()
         {
             const string dtmi = "dtmi:com:example:base;1";
@@ -158,6 +194,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
         }
 
+        [Test]
         public async Task GetModelDependenciesExtendsArrayMixed()
         {
             const string dtmi = "dtmi:com:example:base;2";
@@ -191,6 +228,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
         }
 
+        [Test]
         public async Task GetModelDependenciesUseMetadataEnsureTryFromExpanded()
         {
             const string dtmi = "dtmi:com:example:DanglingExpanded;1";
