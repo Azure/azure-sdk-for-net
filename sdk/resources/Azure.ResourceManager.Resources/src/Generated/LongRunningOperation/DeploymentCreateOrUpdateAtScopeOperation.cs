@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> You can provide the template and parameters directly in the request or link to JSON files. </summary>
-    public partial class DeploymentCreateOrUpdateAtScopeOperation : Operation<DeploymentExtended>, IOperationSource<DeploymentExtended>
+    public partial class DeploymentCreateOrUpdateAtScopeOperation : Operation<Deployment>, IOperationSource<Deployment>
     {
-        private readonly OperationInternals<DeploymentExtended> _operation;
+        private readonly OperationInternals<Deployment> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal DeploymentCreateOrUpdateAtScopeOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<DeploymentExtended>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentCreateOrUpdateAtScopeOperation");
+            _operation = new OperationInternals<Deployment>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentCreateOrUpdateAtScopeOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override DeploymentExtended Value => _operation.Value;
+        public override Deployment Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Resources.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DeploymentExtended>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<Deployment>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<DeploymentExtended>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<Deployment>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        DeploymentExtended IOperationSource<DeploymentExtended>.CreateResult(Response response, CancellationToken cancellationToken)
+        Deployment IOperationSource<Deployment>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new DeploymentExtended(_operationBase, DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement));
+            return new Deployment(_operationBase, DeploymentData.DeserializeDeploymentData(document.RootElement));
         }
 
-        async ValueTask<DeploymentExtended> IOperationSource<DeploymentExtended>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Deployment> IOperationSource<Deployment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new DeploymentExtended(_operationBase, DeploymentExtendedData.DeserializeDeploymentExtendedData(document.RootElement));
+            return new Deployment(_operationBase, DeploymentData.DeserializeDeploymentData(document.RootElement));
         }
     }
 }

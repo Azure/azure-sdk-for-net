@@ -7,6 +7,7 @@
 - Added support for generating SAS URLs with the Permanent Delete ('y') SAS permission.
 - Added support for SDK-calculated transactional hash checksums on data transfer.
 - Fixed bug where BlobContainerClient.GetBlobs() and .GetBlobsByHierarchyAsync() was not parsing the Object Replication Metadata correctly
+- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.9.0.
 
 ## 12.10.0 (2021-09-08)
 - Includes all features from 12.10.0-beta.1 and 12.10.0-beta.2.

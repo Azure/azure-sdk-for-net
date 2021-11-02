@@ -173,11 +173,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
 
-            ModelOperationInfo modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            // Guarantee there is going to be at least one operation
+            var modelId = Recording.GenerateId();
+            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
-            ValidateModelOperationInfo(modelOperationFromList);
+            var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
+            Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
 
-            ModelOperation modelOperationInfo = await client.GetOperationAsync(modelOperationFromList.OperationId);
+            ValidateModelOperationInfo(modelOperationFromList.FirstOrDefault());
+
+            ModelOperation modelOperationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
             ValidateModelOperationInfo(modelOperationInfo);
             if (modelOperationInfo.Status == DocumentOperationStatus.Failed)

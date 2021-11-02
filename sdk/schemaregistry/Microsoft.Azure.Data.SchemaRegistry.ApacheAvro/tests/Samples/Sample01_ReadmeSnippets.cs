@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry;
 using Azure.Identity;
 using NUnit.Framework;
 using System.IO;
 using System.Threading;
+using Azure.Messaging.EventHubs;
 using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
@@ -16,7 +18,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
 #pragma warning disable IDE1006 // Naming Styles
         private SchemaRegistryClient schemaRegistryClient;
 #pragma warning restore IDE1006 // Naming Styles
-        private byte[] _memoryStreamBytes;
 
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
@@ -34,38 +35,26 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         }
 
         [Test]
-        [Order(1)]
-        public void Serialize()
+        public void EncodeDecodeEventData()
         {
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
-            #region Snippet:SchemaRegistryAvroSerialize
+            #region Snippet:SchemaRegistryAvroEncodeEventData
             var employee = new Employee { Age = 42, Name = "John Doe" };
+            var encoder = new SchemaRegistryAvroEncoder(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectEncoderOptions { AutoRegisterSchemas = true });
+            var eventData = new EventData();
 
-            using var memoryStream = new MemoryStream();
-            var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-            serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
+            encoder.EncodeMessageData(eventData, employee, typeof(Employee));
+
+            // the schema Id will be included as a parameter of the content type
+            Console.WriteLine(eventData.ContentType);
+
+            // the serialized Avro data will be stored in the EventBody
+            Console.WriteLine(eventData.EventBody);
+
+            // We can also get the Employee model back out from the serialized data
+            employee = (Employee) encoder.DecodeMessageData(eventData, typeof(Employee));
             #endregion
-
-            Assert.IsTrue(memoryStream.Length > 0);
-            _memoryStreamBytes = memoryStream.ToArray();
-        }
-
-        [Test]
-        [Order(2)]
-        public void Deserialize()
-        {
-            using var memoryStream = new MemoryStream(_memoryStreamBytes);
-            string groupName = TestEnvironment.SchemaRegistryGroup;
-
-            #region Snippet:SchemaRegistryAvroDeserialize
-            var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
-            memoryStream.Position = 0;
-            Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
-            #endregion
-
-            Assert.AreEqual(42, employee.Age);
-            Assert.AreEqual("John Doe", employee.Name);
         }
     }
 }

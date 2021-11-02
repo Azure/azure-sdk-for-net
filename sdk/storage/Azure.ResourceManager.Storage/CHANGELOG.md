@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
 
 ## 1.0.0-beta.2 (2021-09-14)
 
@@ -77,13 +83,13 @@ using Azure.ResourceManager.Storage.Models;
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.DefaultSubscription.GetResourceGroups().Get(resourceGroupName);
-StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 Sku sku = new Sku(SkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
 parameters.Tags.Add("key1", "value1");
 parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountContainer.CreateOrUpdate(accountName, parameters).Value;
+StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
 ```
 
 #### Object Model Changes

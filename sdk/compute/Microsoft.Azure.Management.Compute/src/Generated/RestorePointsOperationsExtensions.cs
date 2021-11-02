@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Compute
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -39,13 +37,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            /// <param name='excludeDisks'>
-            /// List of disk resource ids that the customer wishes to exclude from the
-            /// restore point. If no disks are specified, all disks will be included.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create restore point operation.
             /// </param>
-            public static RestorePoint Create(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>))
+            public static RestorePoint Create(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters)
             {
-                return operations.CreateAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,16 +61,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            /// <param name='excludeDisks'>
-            /// List of disk resource ids that the customer wishes to exclude from the
-            /// restore point. If no disks are specified, all disks will be included.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create restore point operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorePoint> CreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> CreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -184,13 +180,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            /// <param name='excludeDisks'>
-            /// List of disk resource ids that the customer wishes to exclude from the
-            /// restore point. If no disks are specified, all disks will be included.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create restore point operation.
             /// </param>
-            public static RestorePoint BeginCreate(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>))
+            public static RestorePoint BeginCreate(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,16 +204,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            /// <param name='excludeDisks'>
-            /// List of disk resource ids that the customer wishes to exclude from the
-            /// restore point. If no disks are specified, all disks will be included.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create restore point operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorePoint> BeginCreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> BeginCreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Tests
         [SetUp]
         public async Task SetUpAsync()
         {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            var rgOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
             _rg = rgOp.Value;
             _rg = await _rg.AddTagAsync("key1", "value1");
             _rg = await _rg.AddTagAsync("key2", "value2");
