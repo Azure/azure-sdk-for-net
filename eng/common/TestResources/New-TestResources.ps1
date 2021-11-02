@@ -76,11 +76,7 @@ param (
     [switch] $Force,
 
     [Parameter()]
-    [switch] $OutFile,
-
-    [Parameter()]
-    [ValidateSet('json', 'dotenv', 'pwshenv')]
-    [string] $OutFileFormat = 'json'
+    [switch] $OutFile
 )
 
 # By default stop for any error.
@@ -602,23 +598,8 @@ try {
             }
 
             $outputFile = "$($templateFile.originalFilePath).env"
-            if ($env:ENV_FILE) {
-                $outputFile = "$env:ENV_FILE"
-            }
 
-            $environmentText = ''
-            if ($OutFileFormat -eq 'json') {
-                $environmentText = $deploymentOutputs | ConvertTo-Json;
-            } elseif ($OutFileFormat -eq 'dotenv') {
-                foreach($entry in $deploymentOutputs.GetEnumerator()) {
-                    $environmentText += "$($entry.name)=$($entry.value)`n"
-                }
-            } elseif ($OutFileFormat -eq 'pwshenv') {
-                foreach($entry in $deploymentOutputs.GetEnumerator()) {
-                    $environmentText += "`$$($entry.name)=$($entry.value)`n"
-                }
-            }
-
+            $environmentText = $deploymentOutputs | ConvertTo-Json;
             $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
             $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 
