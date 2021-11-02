@@ -31,11 +31,9 @@ dotnet add package Azure.Messaging.WebPubSub --prerelease
 - An [Azure subscription][azure_sub].
 - An existing Azure Web PubSub service instance.
 
-### Authenticate the client
+### Create and authenticate a WebPubSubServiceClient
 
-In order to interact with the service, you'll need to create an instance of the WebPubSubServiceClient class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
-
-### Create a `WebPubSubServiceClient`
+In order to interact with the service, you'll need to create an instance of the `WebPubSubServiceClient` class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
 
 ```C# Snippet:WebPubSubAuthenticate
 var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
