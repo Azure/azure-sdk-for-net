@@ -1,0 +1,113 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationpolicies?api-version=2021-04-07-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "traceparent": "00-38e6f4e85f50344ba7c824d835ed9cdb-e99778fdace0c944-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "cda69854b7a513d32a1deeb7a582e2cb",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:33 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-iHo9Za48Y0y1mxHWy8BvAQ--CPWR",
+        "name": "Priority-ClassificationPolicy",
+        "workerSelectors": [
+          {
+            "labelSelector": {
+              "key": "department",
+              "operator": "equal",
+              "value": "sales"
+            },
+            "kind": "static"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:32 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "38e6f4e85f50344ba7c824d835ed9cdb",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0hB9mYQAAAADthOFHhZo8TqsSBcEanyNqWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-iHo9Za48Y0y1mxHWy8BvAQ--CPWR",
+        "name": "Priority-ClassificationPolicy",
+        "fallbackQueueId": null,
+        "queueSelector": null,
+        "prioritizationRule": null,
+        "workerSelectors": [
+          {
+            "kind": "static",
+            "labelSelector": {
+              "key": "department",
+              "operator": "Equal",
+              "value": "sales",
+              "ttl": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationpolicies/sdk-iHo9Za48Y0y1mxHWy8BvAQ--CPWR?api-version=2021-04-07-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-907473996daf3747a7bf9562ed44888e-aac63824279f2649-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5e3a26033184466ca79db1e26da190a5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:33 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:32 GMT",
+        "ETag": "\u00221100bce4-0000-0700-0000-61661f840000\u0022",
+        "Request-Context": "appId=",
+        "trace-id": "907473996daf3747a7bf9562ed44888e",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0hR9mYQAAAABGF\u002BGS8UGSQrAJHioGsrGMWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-iHo9Za48Y0y1mxHWy8BvAQ--CPWR",
+        "name": "Priority-ClassificationPolicy",
+        "fallbackQueueId": null,
+        "queueSelector": null,
+        "prioritizationRule": null,
+        "workerSelectors": [
+          {
+            "kind": "static",
+            "labelSelector": {
+              "key": "department",
+              "operator": "Equal",
+              "value": "sales",
+              "ttl": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-iHo9Za48Y0y1mxHWy8BvAQ-",
+    "RandomSeed": "1888919846"
+  }
+}
