@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Subnet and it&apos;s custom security rules. </summary>
-    public partial class SubnetAssociation : Resources.Models.SubResource
+    public partial class SubnetAssociation
     {
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         internal SubnetAssociation()
@@ -22,13 +21,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
-        /// <param name="id"> The id. </param>
+        /// <param name="id"> Subnet ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
-        internal SubnetAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules) : base(id)
+        internal SubnetAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules)
         {
+            Id = id;
             SecurityRules = securityRules;
         }
 
+        /// <summary> Subnet ID. </summary>
+        public string Id { get; }
         /// <summary> Collection of custom security rules. </summary>
         public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }

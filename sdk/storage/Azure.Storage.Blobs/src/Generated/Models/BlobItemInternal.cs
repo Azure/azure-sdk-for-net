@@ -68,10 +68,15 @@ namespace Azure.Storage.Blobs.Models
             OrMetadata = orMetadata;
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the deleted. </summary>
         public bool Deleted { get; }
+        /// <summary> Gets the snapshot. </summary>
         public string Snapshot { get; }
+        /// <summary> Gets the version id. </summary>
         public string VersionId { get; }
+        /// <summary> Gets the is current version. </summary>
         public bool? IsCurrentVersion { get; }
         /// <summary> Properties of a blob. </summary>
         public BlobPropertiesInternal Properties { get; }
@@ -79,6 +84,7 @@ namespace Azure.Storage.Blobs.Models
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Blob tags. </summary>
         public BlobTags BlobTags { get; }
+        /// <summary> Gets the has versions only. </summary>
         public bool? HasVersionsOnly { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IReadOnlyDictionary<string, string> OrMetadata { get; }

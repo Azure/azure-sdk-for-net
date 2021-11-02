@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = NotificationHookKind.Webhook;
         }
 
+        /// <summary> Gets or sets the hook parameter. </summary>
         public WebhookHookParameterPatch HookParameter { get; set; }
     }
 }

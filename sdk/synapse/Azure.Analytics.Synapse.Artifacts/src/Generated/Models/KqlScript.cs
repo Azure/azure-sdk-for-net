@@ -22,6 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Content = content;
         }
 
+        /// <summary> Gets or sets the content. </summary>
         public KqlScriptContent Content { get; set; }
     }
 }

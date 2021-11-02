@@ -15,7 +15,7 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchemaFormat(string value)
         {

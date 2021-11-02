@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="H264Profile"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="H264Profile"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public H264Profile(string value)
         {

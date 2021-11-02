@@ -54,6 +54,19 @@ namespace Azure.ResourceManager.Network
             _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroup"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal NetworkSecurityGroup(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _defaultSecurityRulesRestClient = new DefaultSecurityRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups";
 
@@ -340,9 +353,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of SecurityRules in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of SecurityRules and their operations over a NetworkSecurityGroup. </returns>
-        public SecurityRuleContainer GetSecurityRules()
+        public SecurityRuleCollection GetSecurityRules()
         {
-            return new SecurityRuleContainer(this);
+            return new SecurityRuleCollection(this);
         }
     }
 }

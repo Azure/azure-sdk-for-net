@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -45,6 +46,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualHub(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="VirtualHub"/> class. </summary>
+        /// <param name="clientOptions"> The client options to build client context. </param>
+        /// <param name="credential"> The credential to build client context. </param>
+        /// <param name="uri"> The uri to build client context. </param>
+        /// <param name="pipeline"> The pipeline to build client context. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualHub(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualHubsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -268,37 +281,37 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of HubVirtualNetworkConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a VirtualHub. </returns>
-        public HubVirtualNetworkConnectionContainer GetHubVirtualNetworkConnections()
+        public HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
-            return new HubVirtualNetworkConnectionContainer(this);
+            return new HubVirtualNetworkConnectionCollection(this);
         }
 
         /// <summary> Gets a list of VirtualHubRouteTableV2s in the VirtualHub. </summary>
         /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHub. </returns>
-        public VirtualHubRouteTableV2Container GetVirtualHubRouteTableV2s()
+        public VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
-            return new VirtualHubRouteTableV2Container(this);
+            return new VirtualHubRouteTableV2Collection(this);
         }
 
         /// <summary> Gets a list of BgpConnections in the VirtualHub. </summary>
         /// <returns> An object representing collection of BgpConnections and their operations over a VirtualHub. </returns>
-        public BgpConnectionContainer GetBgpConnections()
+        public BgpConnectionCollection GetBgpConnections()
         {
-            return new BgpConnectionContainer(this);
+            return new BgpConnectionCollection(this);
         }
 
         /// <summary> Gets a list of HubIpConfigurations in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubIpConfigurations and their operations over a VirtualHub. </returns>
-        public HubIpConfigurationContainer GetHubIpConfigurations()
+        public HubIpConfigurationCollection GetHubIpConfigurations()
         {
-            return new HubIpConfigurationContainer(this);
+            return new HubIpConfigurationCollection(this);
         }
 
         /// <summary> Gets a list of HubRouteTables in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubRouteTables and their operations over a VirtualHub. </returns>
-        public HubRouteTableContainer GetHubRouteTables()
+        public HubRouteTableCollection GetHubRouteTables()
         {
-            return new HubRouteTableContainer(this);
+            return new HubRouteTableCollection(this);
         }
     }
 }

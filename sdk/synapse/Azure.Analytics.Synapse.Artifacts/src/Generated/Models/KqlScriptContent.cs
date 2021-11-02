@@ -26,8 +26,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             CurrentConnection = currentConnection;
         }
 
+        /// <summary> Gets or sets the query. </summary>
         public string Query { get; set; }
+        /// <summary> Gets or sets the metadata. </summary>
         public KqlScriptContentMetadata Metadata { get; set; }
+        /// <summary> Gets or sets the current connection. </summary>
         public KqlScriptContentCurrentConnection CurrentConnection { get; set; }
     }
 }

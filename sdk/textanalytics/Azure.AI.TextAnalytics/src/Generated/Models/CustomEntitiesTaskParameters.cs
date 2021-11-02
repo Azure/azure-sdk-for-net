@@ -31,9 +31,13 @@ namespace Azure.AI.TextAnalytics.Models
             DeploymentName = deploymentName;
         }
 
+        /// <summary> Gets the project name. </summary>
         public string ProjectName { get; }
+        /// <summary> Gets the deployment name. </summary>
         public string DeploymentName { get; }
+        /// <summary> Gets or sets the logging opt out. </summary>
         public bool? LoggingOptOut { get; set; }
+        /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }
 }

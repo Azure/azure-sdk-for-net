@@ -28,7 +28,9 @@ namespace Azure.AI.TextAnalytics.Models
             Errors = errors;
         }
 
+        /// <summary> Gets the results. </summary>
         public HealthcareResult Results { get; }
+        /// <summary> Gets the errors. </summary>
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LivyStatementStates"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivyStatementStates"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LivyStatementStates(string value)
         {

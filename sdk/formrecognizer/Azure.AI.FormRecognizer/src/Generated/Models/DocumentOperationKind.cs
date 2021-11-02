@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DocumentOperationKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentOperationKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentOperationKind(string value)
         {
