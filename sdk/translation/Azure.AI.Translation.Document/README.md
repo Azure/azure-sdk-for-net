@@ -219,7 +219,7 @@ await foreach (DocumentStatusResult document in operation.Value)
     }
     else
     {
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
@@ -307,7 +307,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
@@ -365,7 +365,7 @@ foreach (DocumentStatusResult document in operation.GetValues())
     else
     {
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
-        Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
+        Console.WriteLine($"  Error Code: {document.Error.Code}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }
 }
