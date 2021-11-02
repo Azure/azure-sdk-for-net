@@ -26,12 +26,9 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               EnglishText);
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(EnglishText);
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(TestEnvironment.Project, options);
 
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
@@ -40,15 +37,12 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationWithLanguage()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               SpanishText)
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(SpanishText)
             {
                 Language = "es"
             };
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(TestEnvironment.Project, options);
 
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
             Assert.That(response.Value.Prediction.ProjectKind, Is.EqualTo(ProjectKind.Conversation));
@@ -57,12 +51,9 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationsWithConversationPrediction()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-               TestEnvironment.ProjectName,
-               TestEnvironment.DeploymentName,
-               EnglishText);
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(EnglishText);
 
-            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(options);
+            Response<AnalyzeConversationResult> response = await Client.AnalyzeConversationAsync(TestEnvironment.Project, options);
 
             ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
 
@@ -78,14 +69,11 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public void AnalyzeConversationsInvalidArgument()
         {
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(
-              TestEnvironment.ProjectName,
-              TestEnvironment.DeploymentName,
-              "");
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions("");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await Client.AnalyzeConversationAsync(options);
+                await Client.AnalyzeConversationAsync(TestEnvironment.Project, options);
             });
 
             Assert.That(ex.Status, Is.EqualTo(400));
