@@ -7,13 +7,11 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class AnalyzeConversationOptions
     {
-        public AnalyzeConversationOptions(string projectName, string deploymentName, string query) { }
-        public string DeploymentName { get { throw null; } }
+        public AnalyzeConversationOptions(string query) { }
         public string DirectTarget { get { throw null; } set { } }
         public bool? IsLoggingEnabled { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.AnalysisParameters> Parameters { get { throw null; } }
-        public string ProjectName { get { throw null; } }
         public string Query { get { throw null; } }
         public bool? Verbose { get { throw null; } set { } }
     }
@@ -44,10 +42,10 @@ namespace Azure.AI.Language.Conversations
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult> AnalyzeConversation(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult> AnalyzeConversation(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult>> AnalyzeConversationAsync(string projectName, string deploymentName, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult> AnalyzeConversation(Azure.AI.Language.Conversations.ConversationsProject conversationsProject, Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult> AnalyzeConversation(string query, Azure.AI.Language.Conversations.ConversationsProject conversationsProject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.ConversationsProject conversationsProject, Azure.AI.Language.Conversations.AnalyzeConversationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationResult>> AnalyzeConversationAsync(string query, Azure.AI.Language.Conversations.ConversationsProject conversationsProject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConversationAnalysisClientOptions : Azure.Core.ClientOptions
     {
@@ -117,6 +115,12 @@ namespace Azure.AI.Language.Conversations
         public static Azure.AI.Language.Conversations.OrchestratorPrediction OrchestratorPrediction(Azure.AI.Language.Conversations.ProjectKind projectKind = default(Azure.AI.Language.Conversations.ProjectKind), string topIntent = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.TargetIntentResult> intents = null) { throw null; }
         public static Azure.AI.Language.Conversations.QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0, Azure.AI.Language.Conversations.KnowledgeBaseAnswers result = null) { throw null; }
         public static Azure.AI.Language.Conversations.TargetIntentResult TargetIntentResult(Azure.AI.Language.Conversations.TargetKind targetKind = default(Azure.AI.Language.Conversations.TargetKind), string apiVersion = null, double confidenceScore = 0) { throw null; }
+    }
+    public partial class ConversationsProject
+    {
+        public ConversationsProject(string projectName, string deploymentName) { }
+        public string DeploymentName { get { throw null; } }
+        public string ProjectName { get { throw null; } }
     }
     public partial class ConversationTargetIntentResult : Azure.AI.Language.Conversations.TargetIntentResult
     {
