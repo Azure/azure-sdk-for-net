@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 using Microsoft.Azure.WebPubSub.Common;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -101,29 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [TestCase]
-        public void TestBinaryDataConverter_String()
-        {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", message: ""2""}";
-
-            var converted = JObject.Parse(input).ToObject<SendToAll>();
-
-            Assert.AreEqual("2", converted.Message.ToString());
-        }
-
-        [TestCase]
-        public void TestBinaryDataConverter_NonStringThrows()
-        {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-
-            var input = @"{ operationKind : ""sendToAll"", dataType: ""text"", message: 2}";
-
-            Assert.Throws<ArgumentException>(() => JObject.Parse(input).ToObject<SendToAll>(), "Message should be string, please stringify object.");
-        }
-
-        [TestCase]
-        public void TestBinaryDataConvertFromByteArray_SystemJson()
+        public void TestBinaryDataConvertFromByteArray()
         {
             var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
 
@@ -131,17 +109,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             options.Converters.Add(new System.BinaryDataJsonConverter());
 
             var converted = SystemJson.JsonSerializer.Deserialize<BinaryData>(testData, options);
-
-            Assert.AreEqual("BinaryData", converted.ToString());
-        }
-
-        [TestCase]
-        public void TestBinaryDataConvertFromByteArray_Newtonsoft()
-        {
-            WebPubSubConfigProvider.RegisterJsonConverter();
-            var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
-
-            var converted = JObject.Parse(testData).ToObject<BinaryData>();
 
             Assert.AreEqual("BinaryData", converted.ToString());
         }

@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     public static partial class EdgeModulesOperationsExtensions
     {
             /// <summary>
-            /// List all existing edge module resources.
+            /// List edge module resources.
             /// </summary>
             /// <remarks>
-            /// List all existing edge module resources, along with their JSON
-            /// representations.
+            /// List all of the existing edge module resources for a given Video Analyzer
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,22 +37,28 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='accountName'>
             /// The Azure Video Analyzer account name.
             /// </param>
+            /// <param name='filter'>
+            /// Restricts the set of items returned.
+            /// </param>
             /// <param name='top'>
             /// Specifies a non-negative integer n that limits the number of items returned
             /// from a collection. The service returns the number of available items up to
             /// but not greater than the specified value n.
             /// </param>
-            public static IPage<EdgeModuleEntity> List(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, int? top = default(int?))
+            /// <param name='orderby'>
+            /// Specifies the key by which the result collection should be ordered.
+            /// </param>
+            public static IPage<EdgeModuleEntity> List(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, string filter = default(string), int? top = default(int?), string orderby = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName, top).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, filter, top, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List all existing edge module resources.
+            /// List edge module resources.
             /// </summary>
             /// <remarks>
-            /// List all existing edge module resources, along with their JSON
-            /// representations.
+            /// List all of the existing edge module resources for a given Video Analyzer
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -63,17 +69,23 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='accountName'>
             /// The Azure Video Analyzer account name.
             /// </param>
+            /// <param name='filter'>
+            /// Restricts the set of items returned.
+            /// </param>
             /// <param name='top'>
             /// Specifies a non-negative integer n that limits the number of items returned
             /// from a collection. The service returns the number of available items up to
             /// but not greater than the specified value n.
+            /// </param>
+            /// <param name='orderby'>
+            /// Specifies the key by which the result collection should be ordered.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EdgeModuleEntity>> ListAsync(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EdgeModuleEntity>> ListAsync(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, string filter = default(string), int? top = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, filter, top, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -83,7 +95,8 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// Retrieves an existing edge module resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing edge module resource with the given name.
+            /// Retrieves a specific existing edge module resource in the given Video
+            /// Analyzer account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,7 +108,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to retrieve.
             /// </param>
             public static EdgeModuleEntity Get(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, string edgeModuleName)
             {
@@ -106,7 +119,8 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// Retrieves an existing edge module resource.
             /// </summary>
             /// <remarks>
-            /// Retrieves an existing edge module resource with the given name.
+            /// Retrieves a specific existing edge module resource in the given Video
+            /// Analyzer account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,7 +132,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -155,7 +169,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to create or update.
             /// </param>
             public static EdgeModuleEntity CreateOrUpdate(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, string edgeModuleName)
             {
@@ -186,7 +200,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to create or update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -218,7 +232,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to be deleted.
             /// </param>
             public static void Delete(this IEdgeModulesOperations operations, string resourceGroupName, string accountName, string edgeModuleName)
             {
@@ -244,7 +258,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -278,7 +292,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module used to create a new provisioning token.
             /// </param>
             /// <param name='expirationDate'>
             /// The desired expiration date of the registration token. The Azure Video
@@ -314,7 +328,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// The Azure Video Analyzer account name.
             /// </param>
             /// <param name='edgeModuleName'>
-            /// The Edge Module name.
+            /// The name of the edge module used to create a new provisioning token.
             /// </param>
             /// <param name='expirationDate'>
             /// The desired expiration date of the registration token. The Azure Video
@@ -333,11 +347,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing edge module resources.
+            /// List edge module resources.
             /// </summary>
             /// <remarks>
-            /// List all existing edge module resources, along with their JSON
-            /// representations.
+            /// List all of the existing edge module resources for a given Video Analyzer
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -351,11 +365,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             }
 
             /// <summary>
-            /// List all existing edge module resources.
+            /// List edge module resources.
             /// </summary>
             /// <remarks>
-            /// List all existing edge module resources, along with their JSON
-            /// representations.
+            /// List all of the existing edge module resources for a given Video Analyzer
+            /// account.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -94,29 +94,38 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (HttpPort > 64000)
+            if (HttpPort != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpPort", 64000);
+                if (HttpPort > 64000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpPort", 64000);
+                }
+                if (HttpPort < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpPort", 0);
+                }
             }
-            if (HttpPort < 0)
+            if (HttpsPort != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpPort", 0);
+                if (HttpsPort > 64000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpsPort", 64000);
+                }
+                if (HttpsPort < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpsPort", 0);
+                }
             }
-            if (HttpsPort > 64000)
+            if (PacFilePort != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "HttpsPort", 64000);
-            }
-            if (HttpsPort < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "HttpsPort", 0);
-            }
-            if (PacFilePort > 64000)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "PacFilePort", 64000);
-            }
-            if (PacFilePort < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PacFilePort", 0);
+                if (PacFilePort > 64000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "PacFilePort", 64000);
+                }
+                if (PacFilePort < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PacFilePort", 0);
+                }
             }
         }
     }

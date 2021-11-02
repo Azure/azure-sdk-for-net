@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Video Analyzer provides a platform for you to build intelligent
-    /// video applications that span the edge and the cloud
+    /// Azure Video Analyzer ARM Client
     /// </summary>
     public partial interface IVideoAnalyzerClient : System.IDisposable
     {
@@ -71,36 +70,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
 
 
         /// <summary>
-        /// Gets the IEdgeModulesOperations.
-        /// </summary>
-        IEdgeModulesOperations EdgeModules { get; }
-
-        /// <summary>
-        /// Gets the IPipelineTopologiesOperations.
-        /// </summary>
-        IPipelineTopologiesOperations PipelineTopologies { get; }
-
-        /// <summary>
-        /// Gets the ILivePipelinesOperations.
-        /// </summary>
-        ILivePipelinesOperations LivePipelines { get; }
-
-        /// <summary>
-        /// Gets the IPipelineJobsOperations.
-        /// </summary>
-        IPipelineJobsOperations PipelineJobs { get; }
-
-        /// <summary>
-        /// Gets the ILivePipelineOperationStatusesOperations.
-        /// </summary>
-        ILivePipelineOperationStatusesOperations LivePipelineOperationStatuses { get; }
-
-        /// <summary>
-        /// Gets the IPipelineJobOperationStatusesOperations.
-        /// </summary>
-        IPipelineJobOperationStatusesOperations PipelineJobOperationStatuses { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -111,39 +80,14 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         IVideoAnalyzersOperations VideoAnalyzers { get; }
 
         /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IOperationStatusesOperations.
-        /// </summary>
-        IOperationStatusesOperations OperationStatuses { get; }
-
-        /// <summary>
-        /// Gets the IOperationResultsOperations.
-        /// </summary>
-        IOperationResultsOperations OperationResults { get; }
-
-        /// <summary>
-        /// Gets the IVideoAnalyzerOperationStatusesOperations.
-        /// </summary>
-        IVideoAnalyzerOperationStatusesOperations VideoAnalyzerOperationStatuses { get; }
-
-        /// <summary>
-        /// Gets the IVideoAnalyzerOperationResultsOperations.
-        /// </summary>
-        IVideoAnalyzerOperationResultsOperations VideoAnalyzerOperationResults { get; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the IEdgeModulesOperations.
+        /// </summary>
+        IEdgeModulesOperations EdgeModules { get; }
 
         /// <summary>
         /// Gets the IVideosOperations.

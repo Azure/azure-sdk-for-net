@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             AnalyzeResultOperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<JsonElement> error = default;
+            Optional<DocumentAnalysisError> error = default;
             Optional<AnalyzeResult> analyzeResult = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +39,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("error"))
                 {
-                    error = property.Value.Clone();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = DocumentAnalysisError.DeserializeDocumentAnalysisError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyzeResult"))
@@ -53,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error, analyzeResult.Value);
+            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error.Value, analyzeResult.Value);
         }
     }
 }

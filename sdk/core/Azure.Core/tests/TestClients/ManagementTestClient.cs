@@ -24,9 +24,9 @@ namespace Azure.Core.Tests
             return new TestResource();
         }
 
-        public virtual TestResourceCollection GetTestResourceCollection()
+        public virtual TestResourceContainer GetTestResourceContainer()
         {
-            return new TestResourceCollection();
+            return new TestResourceContainer();
         }
 
         public virtual TestResource DefaultSubscription => new TestResource();

@@ -24,11 +24,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
     public partial interface IVideosOperations
     {
         /// <summary>
-        /// Retrieves all existing video resources.
+        /// List all existing video resources.
         /// </summary>
         /// <remarks>
-        /// Retrieves a list of video resources that have been created, along
-        /// with their JSON representations.
+        /// List all existing video resources in the specified account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -58,10 +57,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// </exception>
         Task<AzureOperationResponse<IPage<VideoEntity>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves an existing video resource.
+        /// Retrieves a video resource.
         /// </summary>
         /// <remarks>
-        /// Retrieves an existing video resource with the given name.
+        /// Retrieves an existing video resource within an account with a given
+        /// name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -89,11 +89,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// </exception>
         Task<AzureOperationResponse<VideoEntity>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new video resource or updates an existing one.
+        /// Create or updates a video resource.
         /// </summary>
         /// <remarks>
-        /// Creates a new video resource or updates an existing video resource
-        /// with the given name.
+        /// Creates a new video resource or updates an existing one in an
+        /// account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -102,10 +102,15 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to create or update.
         /// </param>
-        /// <param name='parameters'>
-        /// The request parameters
+        /// <param name='title'>
+        /// Optional video title provided by the user. Value can be up to 256
+        /// characters long.
+        /// </param>
+        /// <param name='description'>
+        /// Optional video description provided by the user. Value can be up to
+        /// 2048 characters long.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -122,9 +127,9 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoEntity>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, VideoEntity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoEntity>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing video resource and its underlying data.
+        /// Deletes a video resource.
         /// </summary>
         /// <remarks>
         /// Deletes an existing video resource and its underlying data. This
@@ -137,7 +142,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -153,11 +158,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates the properties of a video resource.
+        /// </summary>
+        /// <remarks>
         /// Updates individual properties of an existing video resource.
-        /// </summary>
-        /// <remarks>
-        /// Updates individual properties of an existing video resource with
-        /// the given name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -166,10 +170,15 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to update.
         /// </param>
-        /// <param name='parameters'>
-        /// The request parameters
+        /// <param name='title'>
+        /// Optional video title provided by the user. Value can be up to 256
+        /// characters long.
+        /// </param>
+        /// <param name='description'>
+        /// Optional video description provided by the user. Value can be up to
+        /// 2048 characters long.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -186,14 +195,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoEntity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, VideoEntity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoEntity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Generates a streaming token which can be used for accessing content
-        /// from video content URLs.
+        /// Generates a streaming token for video playback.
         /// </summary>
         /// <remarks>
-        /// Generates a streaming token which can be used for accessing content
-        /// from video content URLs, for a video resource with the given name.
+        /// Generates a streaming token used for authenticating video playback.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -202,7 +209,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to generate a token for playback.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -219,13 +226,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoContentToken>> ListContentTokenWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoStreamingToken>> ListStreamingTokenWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves all existing video resources.
+        /// List all existing video resources.
         /// </summary>
         /// <remarks>
-        /// Retrieves a list of video resources that have been created, along
-        /// with their JSON representations.
+        /// List all existing video resources in the specified account.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

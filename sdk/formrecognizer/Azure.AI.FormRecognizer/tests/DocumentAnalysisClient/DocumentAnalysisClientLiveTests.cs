@@ -351,7 +351,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartAnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
@@ -405,7 +404,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         public async Task StartAnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
         {
             var client = CreateDocumentAnalysisClient();
@@ -490,7 +488,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         public async Task StartAnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
             var client = CreateDocumentAnalysisClient();

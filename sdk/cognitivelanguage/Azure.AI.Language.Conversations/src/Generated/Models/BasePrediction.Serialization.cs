@@ -8,27 +8,27 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     public partial class BasePrediction
     {
         internal static BasePrediction DeserializeBasePrediction(JsonElement element)
         {
-            if (element.TryGetProperty("projectKind", out JsonElement discriminator))
+            if (element.TryGetProperty("projectType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "workflow": return OrchestratorPrediction.DeserializeOrchestratorPrediction(element);
-                    case "conversation": return ConversationPrediction.DeserializeConversationPrediction(element);
+                    case "workflow": return WorkflowPrediction.DeserializeWorkflowPrediction(element);
+                    case "conversation": return DeepstackPrediction.DeserializeDeepstackPrediction(element);
                 }
             }
-            ProjectKind projectKind = default;
+            ProjectKind projectType = default;
             Optional<string> topIntent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("projectKind"))
+                if (property.NameEquals("projectType"))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectType = new ProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topIntent"))
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new BasePrediction(projectKind, topIntent.Value);
+            return new BasePrediction(projectType, topIntent.Value);
         }
     }
 }

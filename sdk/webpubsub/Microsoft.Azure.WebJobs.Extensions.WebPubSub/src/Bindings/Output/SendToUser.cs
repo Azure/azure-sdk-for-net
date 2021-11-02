@@ -6,7 +6,7 @@ using Microsoft.Azure.WebPubSub.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     /// <summary>
     /// Operation to send message to a user.

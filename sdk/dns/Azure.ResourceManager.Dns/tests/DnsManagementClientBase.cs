@@ -16,37 +16,30 @@ namespace Azure.ResourceManager.Dns.Tests
         public ArmClient ResourcesManagementClient { get; set; }
         //public ResourcesOperations ResourcesOperations { get; set; }
         //public ProvidersOperations ResourceProvidersOperations { get; set; }
-        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
+        public ResourceGroupContainer ResourceGroupsOperations { get; set; }
         public RecordSetsOperations RecordSetsOperations { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
         public ZonesOperations ZonesOperations { get; set; }
         protected DnsManagementClientBase(bool isAsync) : base(isAsync)
         {
         }
-
-        protected DnsManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-        }
-
-        protected async Task InitializeClients()
+        protected void InitializeClients()
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = this.GetResourceManagementClient();
             //ResourcesOperations = ResourcesManagementClient.Resources;
             //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            ResourceGroupsOperations = sub.GetResourceGroups();
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }
-        protected async Task initNewRecord()
+        protected void initNewRecord()
         {
             ResourcesManagementClient = this.GetResourceManagementClient();
             //ResourcesOperations = ResourcesManagementClient.Resources;
             //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            ResourceGroupsOperations = sub.GetResourceGroups();
+            ResourceGroupsOperations = ResourcesManagementClient.DefaultSubscription.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;

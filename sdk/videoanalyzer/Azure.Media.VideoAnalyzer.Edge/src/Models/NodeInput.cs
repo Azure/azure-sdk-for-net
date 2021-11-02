@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary>
-    /// Extension for <see cref="NodeInput"/>.
-    /// </summary>
     public partial class NodeInput
     {
         /// <summary>

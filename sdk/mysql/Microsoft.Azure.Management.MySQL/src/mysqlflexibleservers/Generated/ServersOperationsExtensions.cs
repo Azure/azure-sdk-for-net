@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             }
 
             /// <summary>
-            /// Manual failover a server.
+            /// Restarts a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -268,29 +268,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void Failover(this IServersOperations operations, string resourceGroupName, string serverName)
+            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName)
             {
-                operations.FailoverAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Manual failover a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task FailoverAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                operations.RestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -305,35 +285,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for restarting a server.
-            /// </param>
-            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName, ServerRestartParameter parameters)
-            {
-                operations.RestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restarts a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for restarting a server.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerRestartParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -544,7 +501,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             }
 
             /// <summary>
-            /// Manual failover a server.
+            /// Restarts a server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -555,29 +512,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void BeginFailover(this IServersOperations operations, string resourceGroupName, string serverName)
+            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName)
             {
-                operations.BeginFailoverAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Manual failover a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginFailoverAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                operations.BeginRestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -592,35 +529,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for restarting a server.
-            /// </param>
-            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName, ServerRestartParameter parameters)
-            {
-                operations.BeginRestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restarts a server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for restarting a server.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerRestartParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

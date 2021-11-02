@@ -13,23 +13,23 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
     {
         private ResourceGroup _resourceGroup;
         private StorageAccount _storageAccount;
-        private TableServiceCollection _tableServiceCollection;
+        private TableServiceContainer _tableServiceContainer;
         private TableService _tableService;
-        private TableCollection _tableCollection;
+        private TableContainer _tableContainer;
         public TableTests(bool async) : base(async)
         {
         }
 
         [SetUp]
-        public async Task CreateStorageAccountAndGetTableCollection()
+        public async Task CreateStorageAccountAndGetTableContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
-            _tableServiceCollection = _storageAccount.GetTableServices();
-            _tableService = await _tableServiceCollection.GetAsync("default");
-            _tableCollection = _tableService.GetTables();
+            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            _storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
+            _tableServiceContainer = _storageAccount.GetTableServices();
+            _tableService = await _tableServiceContainer.GetAsync("default");
+            _tableContainer = _tableService.GetTables();
         }
 
         [TearDown]
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             if (_resourceGroup != null)
             {
-                var storageAccountCollection = _resourceGroup.GetStorageAccounts();
-                await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
+                var storageAccountContainer = _resourceGroup.GetStorageAccounts();
+                await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
                 {
                     await account.DeleteAsync();
                 }
@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(tableName)).Value;
+            Table table1 = (await _tableContainer.CreateOrUpdateAsync(tableName)).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
             //validate if created successfully
-            Table table2 = await _tableCollection.GetAsync(tableName);
+            Table table2 = await _tableContainer.GetAsync(tableName);
             AssertTableEqual(table1, table2);
-            Assert.IsTrue(await _tableCollection.CheckIfExistsAsync(tableName));
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName + "1"));
+            Assert.IsTrue(await _tableContainer.CheckIfExistsAsync(tableName));
+            Assert.IsFalse(await _tableContainer.CheckIfExistsAsync(tableName + "1"));
 
             //delete table
             await table1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await _tableCollection.CheckIfExistsAsync(tableName));
-            Table table3 = await _tableCollection.GetIfExistsAsync(tableName);
+            Assert.IsFalse(await _tableContainer.CheckIfExistsAsync(tableName));
+            Table table3 = await _tableContainer.GetIfExistsAsync(tableName);
             Assert.IsNull(table3);
         }
 
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            Table table1 = (await _tableCollection.CreateOrUpdateAsync(tableName1)).Value;
-            Table table2 = (await _tableCollection.CreateOrUpdateAsync(tableName2)).Value;
+            Table table1 = (await _tableContainer.CreateOrUpdateAsync(tableName1)).Value;
+            Table table2 = (await _tableContainer.CreateOrUpdateAsync(tableName2)).Value;
 
             //validate two tables
             Table table3 = null;
             Table table4 = null;
             int count = 0;
-            await foreach (Table table in _tableCollection.GetAllAsync())
+            await foreach (Table table in _tableContainer.GetAllAsync())
             {
                 count++;
                 if (table.Id.Name == tableName1)

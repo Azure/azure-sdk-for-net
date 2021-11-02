@@ -99,7 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string attachmentId, RequestOptions options = null)
+        public virtual async Task<Response> GetAsync(string farmerId, string attachmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
@@ -155,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string attachmentId, RequestOptions options = null)
+        public virtual Response Get(string farmerId, string attachmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Get");
@@ -392,7 +392,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestOptions options = null)
+        public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
@@ -433,7 +433,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Download(string farmerId, string attachmentId, RequestOptions options = null)
+        public virtual Response Download(string farmerId, string attachmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("AttachmentsClient.Download");
@@ -452,6 +452,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes"> Resource Types of the resource. </param>
         /// <param name="ids"> Ids of the resource. </param>
@@ -470,7 +471,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -512,7 +512,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetAttachmentsByFarmerIdAsync(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> ListByFarmerIdAsync(string farmerId, RequestOptions options, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -520,14 +520,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(farmerId));
             }
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "AttachmentsClient.ListByFarmerId");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAttachmentsByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetAttachmentsByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, options, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -537,6 +537,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of attachment resources under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="options"> The request options. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes"> Resource Types of the resource. </param>
         /// <param name="ids"> Ids of the resource. </param>
@@ -555,7 +556,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -597,7 +597,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetAttachmentsByFarmerId(string farmerId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
+        public virtual Pageable<BinaryData> ListByFarmerId(string farmerId, RequestOptions options, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null)
 #pragma warning restore AZC0002
         {
             if (farmerId == null)
@@ -605,14 +605,14 @@ namespace Azure.Verticals.AgriFood.Farming
                 throw new ArgumentNullException(nameof(farmerId));
             }
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "AttachmentsClient.GetAttachmentsByFarmerId");
+            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "AttachmentsClient.ListByFarmerId");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAttachmentsByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
-                        : CreateGetAttachmentsByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
+                        ? CreateListByFarmerIdRequest(farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken)
+                        : CreateListByFarmerIdNextPageRequest(nextLink, farmerId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, options, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -620,7 +620,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetAttachmentsByFarmerIdRequest(string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateListByFarmerIdRequest(string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -778,7 +778,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetAttachmentsByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
+        internal HttpMessage CreateListByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

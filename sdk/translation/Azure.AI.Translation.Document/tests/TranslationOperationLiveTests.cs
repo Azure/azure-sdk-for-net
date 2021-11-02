@@ -258,7 +258,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.AreEqual("InvalidDocumentAccessLevel", ex.ErrorCode);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -279,7 +279,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            Assert.AreEqual("InvalidTargetDocumentAccessLevel", ex.ErrorCode);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -321,7 +321,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task EmptyDocumentError()
+        public async Task WrongDocumentEncoding()
         {
             var document = new List<TestDocument>
             {
@@ -352,7 +352,7 @@ namespace Azure.AI.Translation.Document.Tests
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
-            Assert.AreEqual("InvalidRequest", documentsList[0].Error.Code);
+            Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
         }
 
         [RecordedTest]
@@ -382,7 +382,7 @@ namespace Azure.AI.Translation.Document.Tests
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
-            Assert.AreEqual("InvalidRequest", documentsList[0].Error.Code);
+            Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
         }
 
         [RecordedTest]
@@ -459,7 +459,7 @@ namespace Azure.AI.Translation.Document.Tests
                 {
                     Console.WriteLine($"Document: {document.Id}");
                     Console.WriteLine($"    Status: {document.Status}");
-                    Console.WriteLine($"    ErrorCode: {document.Error.Code}");
+                    Console.WriteLine($"    ErrorCode: {document.Error.ErrorCode}");
                     Console.WriteLine($"    Message: {document.Error.Message}");
                 }
             }

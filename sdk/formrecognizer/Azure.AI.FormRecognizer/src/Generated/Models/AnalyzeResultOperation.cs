@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -30,12 +29,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="error"> Encountered error during document analysis. </param>
         /// <param name="analyzeResult"> Document analysis result. </param>
-        internal AnalyzeResultOperation(AnalyzeResultOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JsonElement error, AnalyzeResult analyzeResult)
+        internal AnalyzeResultOperation(AnalyzeResultOperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DocumentAnalysisError error, AnalyzeResult analyzeResult)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
-            _error = error;
+            Error = error;
             AnalyzeResult = analyzeResult;
         }
 
@@ -45,6 +44,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DateTimeOffset CreatedDateTime { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
+        /// <summary> Encountered error during document analysis. </summary>
+        public DocumentAnalysisError Error { get; }
         /// <summary> Document analysis result. </summary>
         public AnalyzeResult AnalyzeResult { get; }
     }

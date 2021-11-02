@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.VideoAnalyzer.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// use to access the storage account.</param>
         /// <param name="status">The current status of the storage account
         /// mapping.</param>
-        public StorageAccount(string id, ResourceIdentity identity = default(ResourceIdentity), string status = default(string))
+        public StorageAccount(string id = default(string), ResourceIdentity identity = default(ResourceIdentity), string status = default(string))
         {
             Id = id;
             Identity = identity;
@@ -76,15 +75,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
             if (Identity != null)
             {
                 Identity.Validate();

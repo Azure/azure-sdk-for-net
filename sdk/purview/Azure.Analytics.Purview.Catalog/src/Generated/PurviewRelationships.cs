@@ -82,13 +82,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -158,13 +151,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number,
         ///   updatedBy: string,
         ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
         /// }
         /// </code>
         /// 
@@ -238,13 +224,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -316,13 +295,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   version: number
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
@@ -345,8 +317,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -375,17 +347,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestOptions options = null)
+        public virtual async Task<Response> GetAsync(string guid, RequestOptions options, bool? extendedInfo = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
@@ -404,8 +369,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="options"> The request options. </param>
+        /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
@@ -434,17 +399,10 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response Get(string guid, bool? extendedInfo = null, RequestOptions options = null)
+        public virtual Response Get(string guid, RequestOptions options, bool? extendedInfo = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
@@ -465,16 +423,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
 #pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -497,16 +445,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="options"> The request options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
 #pragma warning disable AZC0002
         public virtual Response Delete(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
@@ -532,7 +470,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/catalog/api", false);
+            uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/relationship", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -549,7 +487,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/catalog/api", false);
+            uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/relationship", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -566,7 +504,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/catalog/api", false);
+            uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/relationship/guid/", false);
             uri.AppendPath(guid, true);
             if (extendedInfo != null)
@@ -586,11 +524,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/catalog/api", false);
+            uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/relationship/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }

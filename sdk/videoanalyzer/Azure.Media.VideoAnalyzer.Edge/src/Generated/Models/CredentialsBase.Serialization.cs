@@ -27,7 +27,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.VideoAnalyzer.HttpHeaderCredentials": return HttpHeaderCredentials.DeserializeHttpHeaderCredentials(element);
-                    case "#Microsoft.VideoAnalyzer.SymmetricKeyCredentials": return SymmetricKeyCredentials.DeserializeSymmetricKeyCredentials(element);
                     case "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials": return UsernamePasswordCredentials.DeserializeUsernamePasswordCredentials(element);
                 }
             }

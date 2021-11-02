@@ -9,22 +9,23 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    public class OperationsTests : IClassFixture<TestFixture>
+    public class OperationsTests
     {
-        private readonly TestFixture fixture;
-
-        public OperationsTests(TestFixture fixture)
-        {
-            this.fixture = fixture;
-        }
-    
         [Fact]
         public void ListOperationsTest()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                this.fixture.Init(MockContext.Start(this.GetType()));
-                var operations = this.fixture.CosmosDBManagementClient.Operations.List();
+                // Create client
+                CosmosDBManagementClient cosmosDBMgmtClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
+
+                // Get operations
+                var operations = cosmosDBMgmtClient.Operations.List();
+
+                // Verify operations are returned
                 Assert.NotNull(operations);
                 Assert.NotEmpty(operations);
             }

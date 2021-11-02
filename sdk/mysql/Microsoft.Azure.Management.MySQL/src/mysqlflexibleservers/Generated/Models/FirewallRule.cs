@@ -42,14 +42,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -71,12 +68,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

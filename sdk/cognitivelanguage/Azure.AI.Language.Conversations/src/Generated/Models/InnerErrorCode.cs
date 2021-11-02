@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Human-readable error code. </summary>
     internal readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>

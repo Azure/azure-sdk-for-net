@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -52,22 +51,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Response response = await GetRoleAssignmentByIdAsync(roleAssignmentId, default).ConfigureAwait(false);
             return Response.FromValue((RoleAssignmentDetails)response, response);
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="checkAccessRequest"></param>
-        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(CheckPrincipalAccessRequest checkAccessRequest)
-        {
-            Response response = CheckPrincipalAccess(checkAccessRequest, default);
-            return Response.FromValue((CheckPrincipalAccessResponse)response, response);
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="checkAccessRequest"></param>
-        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(CheckPrincipalAccessRequest checkAccessRequest)
-        {
-            Response response = await CheckPrincipalAccessAsync(checkAccessRequest, default).ConfigureAwait(false);
-            return Response.FromValue((CheckPrincipalAccessResponse)response, response);
         }
     }
 }

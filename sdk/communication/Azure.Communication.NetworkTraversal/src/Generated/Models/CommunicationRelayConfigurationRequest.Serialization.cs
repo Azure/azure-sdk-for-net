@@ -15,11 +15,8 @@ namespace Azure.Communication.NetworkTraversal
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
     }

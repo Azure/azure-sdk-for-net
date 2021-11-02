@@ -51,11 +51,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         public VideoAnalyzerClient Client { get; private set; }
 
         /// <summary>
-        /// Retrieves all existing video resources.
+        /// List all existing video resources.
         /// </summary>
         /// <remarks>
-        /// Retrieves a list of video resources that have been created, along with
-        /// their JSON representations.
+        /// List all existing video resources in the specified account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -115,6 +114,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -281,10 +284,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Retrieves an existing video resource.
+        /// Retrieves a video resource.
         /// </summary>
         /// <remarks>
-        /// Retrieves an existing video resource with the given name.
+        /// Retrieves an existing video resource within an account with a given name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -293,7 +296,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -342,6 +345,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -509,11 +516,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Creates a new video resource or updates an existing one.
+        /// Create or updates a video resource.
         /// </summary>
         /// <remarks>
-        /// Creates a new video resource or updates an existing video resource with the
-        /// given name.
+        /// Creates a new video resource or updates an existing one in an account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -522,10 +528,15 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to create or update.
         /// </param>
-        /// <param name='parameters'>
-        /// The request parameters
+        /// <param name='title'>
+        /// Optional video title provided by the user. Value can be up to 256
+        /// characters long.
+        /// </param>
+        /// <param name='description'>
+        /// Optional video description provided by the user. Value can be up to 2048
+        /// characters long.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -548,7 +559,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoEntity>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, VideoEntity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoEntity>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -575,6 +586,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (accountName == null)
             {
@@ -583,14 +598,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             if (videoName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "videoName");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
             }
             if (Client.ApiVersion == null)
             {
@@ -602,6 +609,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
+            }
+            VideoEntity parameters = new VideoEntity();
+            if (title != null || description != null)
+            {
+                parameters.Title = title;
+                parameters.Description = description;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -774,7 +787,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Deletes an existing video resource and its underlying data.
+        /// Deletes a video resource.
         /// </summary>
         /// <remarks>
         /// Deletes an existing video resource and its underlying data. This operation
@@ -787,7 +800,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -833,6 +846,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -982,11 +999,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Updates individual properties of an existing video resource.
+        /// Updates the properties of a video resource.
         /// </summary>
         /// <remarks>
-        /// Updates individual properties of an existing video resource with the given
-        /// name.
+        /// Updates individual properties of an existing video resource.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -995,10 +1011,15 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to update.
         /// </param>
-        /// <param name='parameters'>
-        /// The request parameters
+        /// <param name='title'>
+        /// Optional video title provided by the user. Value can be up to 256
+        /// characters long.
+        /// </param>
+        /// <param name='description'>
+        /// Optional video description provided by the user. Value can be up to 2048
+        /// characters long.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1021,7 +1042,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoEntity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, VideoEntity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoEntity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, string title = default(string), string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1048,6 +1069,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (accountName == null)
             {
@@ -1056,10 +1081,6 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             if (videoName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "videoName");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             if (Client.ApiVersion == null)
             {
@@ -1071,6 +1092,12 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
+            }
+            VideoEntity parameters = new VideoEntity();
+            if (title != null || description != null)
+            {
+                parameters.Title = title;
+                parameters.Description = description;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1225,12 +1252,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Generates a streaming token which can be used for accessing content from
-        /// video content URLs.
+        /// Generates a streaming token for video playback.
         /// </summary>
         /// <remarks>
-        /// Generates a streaming token which can be used for accessing content from
-        /// video content URLs, for a video resource with the given name.
+        /// Generates a streaming token used for authenticating video playback.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -1239,7 +1264,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// The Azure Video Analyzer account name.
         /// </param>
         /// <param name='videoName'>
-        /// The Video name.
+        /// The name of the video to generate a token for playback.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1262,7 +1287,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoContentToken>> ListContentTokenWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoStreamingToken>> ListStreamingTokenWithHttpMessagesAsync(string resourceGroupName, string accountName, string videoName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1288,6 +1313,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (accountName == null)
@@ -1320,11 +1349,11 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("videoName", videoName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListContentToken", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListStreamingToken", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/videoAnalyzers/{accountName}/videos/{videoName}/listContentToken").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/videoAnalyzers/{accountName}/videos/{videoName}/listStreamingToken").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -1422,7 +1451,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VideoContentToken>();
+            var _result = new AzureOperationResponse<VideoStreamingToken>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1435,7 +1464,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoContentToken>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoStreamingToken>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1455,11 +1484,10 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         }
 
         /// <summary>
-        /// Retrieves all existing video resources.
+        /// List all existing video resources.
         /// </summary>
         /// <remarks>
-        /// Retrieves a list of video resources that have been created, along with
-        /// their JSON representations.
+        /// List all existing video resources in the specified account.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

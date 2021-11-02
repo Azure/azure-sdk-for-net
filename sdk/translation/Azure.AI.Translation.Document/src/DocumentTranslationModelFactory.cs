@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using Azure.AI.Translation.Document.Models;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.AI.Translation.Document.Models;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
@@ -13,6 +13,24 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("BatchDocumentTranslationModelFactory")]
     public static partial class DocumentTranslationModelFactory
     {
+        #region Errors
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.DocumentTranslationError"/> for mocking purposes.
+        /// </summary>
+        /// <param name="errorCode">Sets the <see cref="DocumentTranslationError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="DocumentTranslationError.Message"/> property.</param>
+        /// <param name="target">Sets the <see cref="DocumentTranslationError.Target"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentTranslationError"/> for mocking purposes.</returns>
+        public static DocumentTranslationError DocumentTranslationError(
+            DocumentTranslationErrorCode  errorCode,
+            string message,
+            string target
+            )
+        {
+            return new DocumentTranslationError(errorCode, message, target, default);
+        }
+        #endregion Errors
+
         #region Statuses
         /// <summary>
         /// Initializes a new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.
@@ -27,7 +45,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>
-        public static DocumentStatusResult DocumentStatusResult(
+        public static DocumentStatusResult DocumentStatus(
             string id,
             Uri sourceDocumentUri,
             Uri translatedDocumentUri,
@@ -55,10 +73,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>
-        public static DocumentStatusResult DocumentStatusResult(
+        public static DocumentStatusResult DocumentStatus(
             string id,
             Uri sourceDocumentUri,
-            BinaryData error,
+            DocumentTranslationError error,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
             DocumentTranslationStatus status,
@@ -67,8 +85,7 @@ namespace Azure.AI.Translation.Document
             long charactersCharged
             )
         {
-            JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new DocumentStatusResult(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo, errorJson, progress, id, charactersCharged);
+            return new DocumentStatusResult(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, id, charactersCharged);
         }
 
         /// <summary>
@@ -87,12 +104,12 @@ namespace Azure.AI.Translation.Document
         /// <param name="canceled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatusResult.DocumentsCanceled"/> properties.</param>
         /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatusResult.TotalCharactersCharged"/> properties.</param>
         /// <returns>A new instance of <see cref="Document.TranslationStatusResult"/> for mocking purposes.</returns>
-        public static TranslationStatusResult TranslationStatusResult(
+        public static TranslationStatusResult TranslationStatus(
             string id,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
             DocumentTranslationStatus status,
-            BinaryData error,
+            DocumentTranslationError error,
             int total,
             int failed,
             int success,
@@ -103,8 +120,7 @@ namespace Azure.AI.Translation.Document
             )
         {
             StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
-            JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new TranslationStatusResult(id, createdOn, lastModified, status, errorJson, newSummary);
+            return new TranslationStatusResult(id, createdOn, lastModified, status, error, newSummary);
         }
         #endregion Statuses
     }

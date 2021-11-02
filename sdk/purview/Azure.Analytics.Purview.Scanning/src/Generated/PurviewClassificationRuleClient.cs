@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetProperties(RequestOptions options = null)
+        public virtual Response GetProperties(RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
@@ -412,7 +412,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestOptions options = null)
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
@@ -476,7 +476,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestOptions options = null)
+        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
@@ -529,7 +529,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestOptions options = null)
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewClassificationRuleClient.GetVersions");
@@ -583,7 +583,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Pageable<BinaryData> GetVersions(RequestOptions options = null)
+        public virtual Pageable<BinaryData> GetVersions(RequestOptions options)
 #pragma warning restore AZC0002
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewClassificationRuleClient.GetVersions");

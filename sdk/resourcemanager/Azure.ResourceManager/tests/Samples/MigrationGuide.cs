@@ -9,7 +9,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-#endregion
+#endregion Snippet:Readme_AuthClient
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Tests.Samples
             #endregion
 
             #region Snippet:Create_ResourceGroup
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            Subscription subscription = armClient.DefaultSubscription;
+            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
             Location location = Location.WestUS2;
             string rgName = "QuickStartRG";
 
             ResourceGroupData rgData = new ResourceGroupData(location);
-            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgCollection.CreateOrUpdateAsync(rgName, rgData);
+            ResourceGroupCreateOrUpdateOperation rgCreateLro = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
             ResourceGroup resourceGroup = rgCreateLro.Value;
             #endregion
 

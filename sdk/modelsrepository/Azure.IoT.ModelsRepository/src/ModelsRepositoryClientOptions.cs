@@ -33,9 +33,9 @@ namespace Azure.IoT.ModelsRepository
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Gets the <see cref="ModelsRepositoryClientMetadataOptions"/> configuring interaction with models repository metadata.
+        /// Gets the <see cref="ModelsRepositoryClientMetadataOptions"/> indicating how the client will process Models Repository metadata.
         /// </summary>
-        public ModelsRepositoryClientMetadataOptions RepositoryMetadata { get; }
+        public ModelsRepositoryClientMetadataOptions Metadata { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelsRepositoryClientOptions"/> class with default options.
@@ -47,7 +47,7 @@ namespace Azure.IoT.ModelsRepository
             ServiceVersion version = LatestVersion)
         {
             Version = version;
-            RepositoryMetadata = new ModelsRepositoryClientMetadataOptions();
+            Metadata = new ModelsRepositoryClientMetadataOptions();
         }
     }
 }

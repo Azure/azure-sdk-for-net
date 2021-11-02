@@ -35,8 +35,7 @@ namespace Azure.ResourceManager.Tests
         [SyncOnly]
         public void ConstructWithInvalidSubscription()
         {
-            var client = new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential);
-            var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
+            var ex = Assert.Throws<RequestFailedException>(() => new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential));
             Assert.AreEqual(404, ex.Status);
         }
 

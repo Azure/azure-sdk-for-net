@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
@@ -27,8 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #region Snippet:QuestionAnsweringClient_BadRequest
             try
             {
-                QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");
-                Response<AnswersResult> response = client.GetAnswers("Does this knowledge base exist?", project);
+                Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", "test", "Does this knowledge base exist?");
             }
             catch (RequestFailedException ex)
             {

@@ -13,14 +13,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullObjectValue("azureCloud", AzureCloud);
-            writer.WriteNullObjectValue("applicationId", ApplicationId);
+            writer.WriteNullStringValue("azureCloud", AzureCloud);
+            writer.WriteNullStringValue("applicationId", ApplicationId);
             if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey");
                 writer.WriteStringValue(ApiKey);
             }
-            writer.WriteNullObjectValue("query", Query);
+            writer.WriteNullStringValue("query", Query);
             writer.WriteEndObject();
         }
     }

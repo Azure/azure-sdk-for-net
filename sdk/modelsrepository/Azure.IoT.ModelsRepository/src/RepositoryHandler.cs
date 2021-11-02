@@ -33,26 +33,36 @@ namespace Azure.IoT.ModelsRepository
             _modelFetcher = _repositoryUri.Scheme == ModelsRepositoryConstants.UriFileSchema
                 ? new FileModelFetcher(_clientDiagnostics)
                 : new HttpModelFetcher(_clientDiagnostics, _clientOptions);
-            _metadataScheduler = new MetadataScheduler(_clientOptions.RepositoryMetadata);
+            _metadataScheduler = new MetadataScheduler(_clientOptions.Metadata);
             ModelsRepositoryEventSource.Instance.InitFetcher(_clientId, repositoryUri.Scheme);
             _repositorySupportsExpanded = false;
         }
 
-        public async Task<ModelResult> ProcessAsync(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, string>> ProcessAsync(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return await ProcessAsync(dtmi, true, dependencyResolution, cancellationToken).ConfigureAwait(false);
+            return await ProcessAsync(new List<string> { dtmi }, true, dependencyResolution, cancellationToken).ConfigureAwait(false);
         }
 
-        public ModelResult Process(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
+        public IDictionary<string, string> Process(string dtmi, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            return ProcessAsync(dtmi, false, dependencyResolution, cancellationToken).EnsureCompleted();
+            return ProcessAsync(new List<string> { dtmi }, false, dependencyResolution, cancellationToken).EnsureCompleted();
         }
 
-        private async Task<ModelResult> ProcessAsync(
-            string dtmi, bool async, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
+        public Task<IDictionary<string, string>> ProcessAsync(IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
         {
-            Queue<string> toProcessModels = PrepareWork(dtmi);
+            return ProcessAsync(dtmis, true, dependencyResolution, cancellationToken);
+        }
+
+        public IDictionary<string, string> Process(IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
+        {
+            return ProcessAsync(dtmis, false, dependencyResolution, cancellationToken).EnsureCompleted();
+        }
+
+        private async Task<IDictionary<string, string>> ProcessAsync(
+            IEnumerable<string> dtmis, bool async, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken)
+        {
             var processedModels = new Dictionary<string, string>();
+            Queue<string> toProcessModels = PrepareWork(dtmis);
 
             // If ModelDependencyResolution.Enabled is requested the client will first attempt to fetch
             // metadata.json content from the target repository. The metadata object includes supported features
@@ -60,7 +70,7 @@ namespace Azure.IoT.ModelsRepository
             // If the metadata indicates expanded models are available. The client will try to fetch pre-computed model
             // dependencies using .expanded.json.
             // If the model expanded form does not exist fall back to computing model dependencies just-in-time.
-            if (dependencyResolution == ModelDependencyResolution.Enabled && _metadataScheduler.ShouldFetchMetadata())
+            if (dependencyResolution == ModelDependencyResolution.Enabled && _metadataScheduler.HasElapsed())
             {
                 ModelsRepositoryMetadata repositoryMetadata = async
                     ? await FetchMetadataAsync(cancellationToken).ConfigureAwait(false)
@@ -76,7 +86,7 @@ namespace Azure.IoT.ModelsRepository
                     _repositorySupportsExpanded = false;
                 }
 
-                _metadataScheduler.MarkAsFetched();
+                _metadataScheduler.Reset();
             }
 
             // Covers case when the repository supports expanded but dependency resolution is disabled.
@@ -145,7 +155,7 @@ namespace Azure.IoT.ModelsRepository
                 processedModels.Add(targetDtmi, result.Definition);
             }
 
-            return new ModelResult(processedModels);
+            return processedModels;
         }
 
         private Task<FetchModelResult> FetchModelAsync(string dtmi, bool tryFromExpanded, CancellationToken cancellationToken)
@@ -168,22 +178,25 @@ namespace Azure.IoT.ModelsRepository
             return _modelFetcher.FetchMetadata(_repositoryUri, cancellationToken);
         }
 
-        private static Queue<string> PrepareWork(string dtmi)
+        private static Queue<string> PrepareWork(IEnumerable<string> dtmis)
         {
             var toProcessModels = new Queue<string>();
-
-            if (!DtmiConventions.IsValidDtmi(dtmi))
+            foreach (string dtmi in dtmis)
             {
-                ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
+                if (!DtmiConventions.IsValidDtmi(dtmi))
+                {
+                    ModelsRepositoryEventSource.Instance.InvalidDtmiInput(dtmi);
 
-                string invalidArgMsg =
-                    $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} " +
-                    string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
+                    string invalidArgMsg =
+                        $"{string.Format(CultureInfo.InvariantCulture, StandardStrings.GenericGetModelsError, dtmi)} " +
+                        string.Format(CultureInfo.InvariantCulture, StandardStrings.InvalidDtmiFormat, dtmi);
 
-                throw new ArgumentException(invalidArgMsg);
+                    throw new ArgumentException(invalidArgMsg);
+                }
+
+                toProcessModels.Enqueue(dtmi);
             }
 
-            toProcessModels.Enqueue(dtmi);
             return toProcessModels;
         }
     }

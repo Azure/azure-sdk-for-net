@@ -119,13 +119,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
                 {
                     Assert.AreSame(sender, localProcessor);
                     Assert.AreSame(_poisonQueue, e.PoisonQueue);
                     Assert.NotNull(e.Message);
                     poisonMessageHandlerCalled = true;
-                    return Task.CompletedTask;
                 };
 
             string messageContent = Guid.NewGuid().ToString();
@@ -189,13 +188,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             bool poisonMessageHandlerCalled = false;
-            localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
+            localProcessor.MessageAddedToPoisonQueue += (sender, e) =>
             {
                 Assert.AreSame(sender, localProcessor);
                 Assert.AreSame(_poisonQueue, e.PoisonQueue);
                 Assert.NotNull(e.Message);
                 poisonMessageHandlerCalled = true;
-                return Task.CompletedTask;
             };
 
             string messageContent = Guid.NewGuid().ToString();

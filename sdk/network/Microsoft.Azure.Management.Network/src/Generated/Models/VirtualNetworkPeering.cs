@@ -58,8 +58,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// current address space of the remote virtual network.</param>
         /// <param name="remoteBgpCommunities">The reference to the remote
         /// virtual network's Bgp Communities.</param>
-        /// <param name="remoteVirtualNetworkEncryption">The reference to the
-        /// remote virtual network's encryption</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values include: 'Initiated', 'Connected',
         /// 'Disconnected'</param>
@@ -80,7 +78,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Resource type.</param>
-        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), AddressSpace remoteVirtualNetworkAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), VirtualNetworkEncryption remoteVirtualNetworkEncryption = default(VirtualNetworkEncryption), string peeringState = default(string), string peeringSyncLevel = default(string), string provisioningState = default(string), bool? doNotVerifyRemoteGateways = default(bool?), string resourceGuid = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), AddressSpace remoteVirtualNetworkAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string peeringSyncLevel = default(string), string provisioningState = default(string), bool? doNotVerifyRemoteGateways = default(bool?), string resourceGuid = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -91,7 +89,6 @@ namespace Microsoft.Azure.Management.Network.Models
             RemoteAddressSpace = remoteAddressSpace;
             RemoteVirtualNetworkAddressSpace = remoteVirtualNetworkAddressSpace;
             RemoteBgpCommunities = remoteBgpCommunities;
-            RemoteVirtualNetworkEncryption = remoteVirtualNetworkEncryption;
             PeeringState = peeringState;
             PeeringSyncLevel = peeringSyncLevel;
             ProvisioningState = provisioningState;
@@ -172,12 +169,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
 
         /// <summary>
-        /// Gets the reference to the remote virtual network's encryption
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.remoteVirtualNetworkEncryption")]
-        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption { get; private set; }
-
-        /// <summary>
         /// Gets or sets the status of the virtual network peering. Possible
         /// values include: 'Initiated', 'Connected', 'Disconnected'
         /// </summary>
@@ -245,10 +236,6 @@ namespace Microsoft.Azure.Management.Network.Models
             if (RemoteBgpCommunities != null)
             {
                 RemoteBgpCommunities.Validate();
-            }
-            if (RemoteVirtualNetworkEncryption != null)
-            {
-                RemoteVirtualNetworkEncryption.Validate();
             }
         }
     }

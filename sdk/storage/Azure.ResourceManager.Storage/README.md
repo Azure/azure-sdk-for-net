@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta.3
+Install-Package Azure.ResourceManager.Storage -Version 1.0.0-beta1
 ```
 
 ### Prerequisites
@@ -49,9 +49,9 @@ Before creating a storage account, we need to have a resource group.
 
 ```C# Snippet:Managing_StorageAccounts_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+Subscription subscription = armClient.DefaultSubscription;
 ```
-```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
+```C# Snippet:Managing_StorageAccounts_GetResourceGroupContainer
 string rgName = "myRgName";
 Location location = Location.WestUS2;
 ResourceGroupCreateOrUpdateOperation operation= await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
@@ -67,17 +67,17 @@ Kind kind = Kind.Storage;
 string location = "westus2";
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-StorageAccountCreateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(accountName, parameters);
+StorageAccountCreateOperation accountCreateOperation = await accountContainer.CreateOrUpdateAsync(accountName, parameters);
 StorageAccount storageAccount = accountCreateOperation.Value;
 ```
 
 ### Get all storage accounts in a resource group
 
 ```C# Snippet:Managing_StorageAccounts_ListStorageAccounts
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-AsyncPageable<StorageAccount> response = accountCollection.GetAllAsync();
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+AsyncPageable<StorageAccount> response = accountContainer.GetAllAsync();
 await foreach (StorageAccount storageAccount in response)
 {
     Console.WriteLine(storageAccount.Id.Name);
@@ -87,8 +87,8 @@ await foreach (StorageAccount storageAccount in response)
 ### Get a storage account
 
 ```C# Snippet:Managing_StorageAccounts_GetStorageAccount
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
 Console.WriteLine(storageAccount.Id.Name);
 ```
 
@@ -96,13 +96,13 @@ Console.WriteLine(storageAccount.Id.Name);
 
 
 ```C# Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccount storageAccount = await accountCollection.GetIfExistsAsync("foo");
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountContainer.GetIfExistsAsync("foo");
 if (storageAccount != null)
 {
     Console.WriteLine(storageAccount.Id.Name);
 }
-if (await accountCollection.CheckIfExistsAsync("bar"))
+if (await accountContainer.CheckIfExistsAsync("bar"))
 {
     Console.WriteLine("storage account 'bar' exists");
 }
@@ -111,16 +111,16 @@ if (await accountCollection.CheckIfExistsAsync("bar"))
 ### Delete a storage account
 
 ```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
 await storageAccount.DeleteAsync();
 ```
 
 ### Add a tag to the storage account
 
 ```C# Snippet:Managing_StorageAccounts_AddTagStorageAccount
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+StorageAccountContainer accountContainer = resourceGroup.GetStorageAccounts();
+StorageAccount storageAccount = await accountContainer.GetAsync("myAccount");
 // add a tag on this storage account
 await storageAccount.AddTagAsync("key", "value");
 ```

@@ -6,8 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> The request body. </summary>
-    [CodeGenModel("ConversationAnalysisOptions")]
+    [CodeGenModel("AnalyzeConversationOptions")]
     public partial class AnalyzeConversationOptions
     {
         /// <summary>
@@ -25,13 +24,10 @@ namespace Azure.AI.Language.Conversations
 
         internal AnalyzeConversationOptions(string query)
         {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
-            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
+            Parameters = new ChangeTrackingDictionary<string, Models.AnalyzeParameters>();
         }
 
         /// <summary>

@@ -39,8 +39,7 @@ Param (
   [Parameter(Mandatory=$True)]
   [string] $PackageName,
   [string] $NewVersionString,
-  [string] $ReleaseDate,
-  [boolean] $ReplaceLatestEntryTitle=$true
+  [string] $ReleaseDate
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
@@ -68,7 +67,7 @@ else {
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
   -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $False `
-  -ReplaceLatestEntryTitle $ReplaceLatestEntryTitle -ReleaseDate $ReleaseDate
+  -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
 }
 
 Write-Host "New Version: ${packageSemVer}"

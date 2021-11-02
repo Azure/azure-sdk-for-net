@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Language.Conversations
+namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents a conversation analysis response. </summary>
     public partial class AnalyzeConversationResult

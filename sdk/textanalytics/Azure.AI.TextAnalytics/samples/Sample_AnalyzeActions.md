@@ -64,7 +64,6 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         int docNumber = 1;
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
-            Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
             foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");

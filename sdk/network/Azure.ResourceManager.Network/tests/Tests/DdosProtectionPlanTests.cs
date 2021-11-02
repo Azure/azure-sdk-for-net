@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string NamePrefix = "test_ddos_";
         private Resources.ResourceGroup resourceGroup;
-        private Resources.Subscription _subscription;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
         {
@@ -31,11 +30,10 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Initialize();
             }
-            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
-        public DdosProtectionPlanCollection GetCollection()
+        public DdosProtectionPlanContainer GetContainer()
         {
             return resourceGroup.GetDdosProtectionPlans();
         }
@@ -44,7 +42,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task DdosProtectionPlanApiTest()
         {
-            var container = GetCollection();
+            var container = GetContainer();
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            ddosProtectionPlans = await _subscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
             Assert.IsEmpty(ddosProtectionPlans);
         }
 

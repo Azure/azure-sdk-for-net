@@ -35,17 +35,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="sessionId">The ID of data flow debug session.</param>
         /// <param name="dataFlow">Data flow instance.</param>
-        /// <param name="dataFlows">List of Data flows</param>
         /// <param name="datasets">List of datasets.</param>
         /// <param name="linkedServices">List of linked services.</param>
         /// <param name="staging">Staging info for debug session.</param>
         /// <param name="debugSettings">Data flow debug settings.</param>
-        public DataFlowDebugPackage(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sessionId = default(string), DataFlowDebugResource dataFlow = default(DataFlowDebugResource), IList<DataFlowDebugResource> dataFlows = default(IList<DataFlowDebugResource>), IList<DatasetDebugResource> datasets = default(IList<DatasetDebugResource>), IList<LinkedServiceDebugResource> linkedServices = default(IList<LinkedServiceDebugResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings))
+        public DataFlowDebugPackage(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sessionId = default(string), DataFlowDebugResource dataFlow = default(DataFlowDebugResource), IList<DatasetDebugResource> datasets = default(IList<DatasetDebugResource>), IList<LinkedServiceDebugResource> linkedServices = default(IList<LinkedServiceDebugResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings))
         {
             AdditionalProperties = additionalProperties;
             SessionId = sessionId;
             DataFlow = dataFlow;
-            DataFlows = dataFlows;
             Datasets = datasets;
             LinkedServices = linkedServices;
             Staging = staging;
@@ -76,12 +74,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataFlow")]
         public DataFlowDebugResource DataFlow { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of Data flows
-        /// </summary>
-        [JsonProperty(PropertyName = "dataFlows")]
-        public IList<DataFlowDebugResource> DataFlows { get; set; }
 
         /// <summary>
         /// Gets or sets list of datasets.
@@ -119,9 +111,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 DataFlow.Validate();
             }
-            if (DataFlows != null)
+            if (Datasets != null)
             {
-                foreach (var element in DataFlows)
+                foreach (var element in Datasets)
                 {
                     if (element != null)
                     {
@@ -129,23 +121,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     }
                 }
             }
-            if (Datasets != null)
+            if (LinkedServices != null)
             {
-                foreach (var element1 in Datasets)
+                foreach (var element1 in LinkedServices)
                 {
                     if (element1 != null)
                     {
                         element1.Validate();
-                    }
-                }
-            }
-            if (LinkedServices != null)
-            {
-                foreach (var element2 in LinkedServices)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
                     }
                 }
             }

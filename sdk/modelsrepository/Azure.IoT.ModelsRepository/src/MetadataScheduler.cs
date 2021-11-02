@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
@@ -8,38 +10,49 @@ namespace Azure.IoT.ModelsRepository
     /// </summary>
     internal class MetadataScheduler
     {
-        private bool _isInitialFetch;
-        private readonly bool _isEnabled;
+        private DateTime _lastFetched;
+        private readonly TimeSpan _desiredElapsedTimeSpan;
+        private bool _initialFetch;
+        private readonly bool _enabled;
 
         /// <param name="metadataOptions">The desired configuration for metadata processing.</param>
         public MetadataScheduler(ModelsRepositoryClientMetadataOptions metadataOptions)
         {
-            _isInitialFetch = true;
-            _isEnabled = metadataOptions.IsMetadataProcessingEnabled;
+            _lastFetched = DateTime.MinValue;
+            _initialFetch = true;
+            _desiredElapsedTimeSpan = metadataOptions.Expiration;
+            _enabled = metadataOptions.Enabled;
         }
 
         /// <summary>
-        /// To be invoked by caller indicating repository metadata has been fetched.
+        /// Updates the last fetched DateTime attribute of the scheduler to <c>DateTime.Now</c>.
         /// </summary>
-        public void MarkAsFetched()
+        public void Reset()
         {
-            if (_isInitialFetch)
+            if (_initialFetch)
             {
-                _isInitialFetch = false;
+                _initialFetch = false;
             }
+
+            _lastFetched = DateTime.UtcNow;
         }
 
         /// <summary>
-        /// Indicates whether the caller should fetch metadata.
+        /// Determines whether the desired time span has elapsed with respect to the last fetched DateTime attribute.
         /// </summary>
-        public bool ShouldFetchMetadata()
+        public bool HasElapsed()
         {
-            if (_isEnabled && _isInitialFetch)
+            if (!_enabled)
+            {
+                return false;
+            }
+
+            if (_initialFetch)
             {
                 return true;
             }
 
-            return false;
+            return (DateTime.UtcNow - _lastFetched) >= _desiredElapsedTimeSpan;
         }
     }
 }

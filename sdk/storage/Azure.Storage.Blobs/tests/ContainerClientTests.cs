@@ -343,8 +343,6 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobContainerInfo> response = await container.CreateAsync();
 
                 // Assert
-                // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 var accountName = new BlobUriBuilder(service.Uri).AccountName;
@@ -823,10 +821,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.PublicAccess);
             Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
             Assert.IsNotNull(response.Value.HasLegalHold);
+            Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.Metadata);
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
 
             if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
             {
@@ -901,16 +897,11 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            Response<BlobContainerInfo> response = await test.Container.SetMetadataAsync(metadata);
+            await test.Container.SetMetadataAsync(metadata);
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
-            // Check if we correctly set the metadata properly
-            Response<BlobContainerProperties> getPropertiesResponse = await test.Container.GetPropertiesAsync();
-            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
+            Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [RecordedTest]
@@ -1046,8 +1037,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response);
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
@@ -1159,23 +1148,19 @@ namespace Azure.Storage.Blobs.Test
             BlobSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
-            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
+            await test.Container.SetAccessPolicyAsync(
                 accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
             Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
 
-            Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
-            Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
+            Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
+            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
-            BlobSignedIdentifier acl = getPolicyResponse.Value.SignedIdentifiers.First();
+            BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
             Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
             Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
@@ -1479,8 +1464,6 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> response = await leaseClient.AcquireAsync(duration: duration);
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.AreEqual(id, response.Value.LeaseId);
             Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
 
@@ -1630,9 +1613,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
             Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
 
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(renewResponse.Value.ETag.ToString(), $"\"{renewResponse.GetRawResponse().Headers.ETag}\"");
-
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = renewResponse.Value.LeaseId });
         }
@@ -1759,10 +1739,6 @@ namespace Azure.Storage.Blobs.Test
             Response<ReleasedObjectInfo> releaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).ReleaseAsync();
 
             // Assert
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(releaseResponse.Value.ETag.ToString(), $"\"{releaseResponse.GetRawResponse().Headers.ETag}\"");
-
-            // Ensure the correct status by doing a GetProperties call
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
             Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
@@ -2022,9 +1998,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(newId, changeResponse.Value.LeaseId);
             Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
-
-            // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(changeResponse.Value.ETag.ToString(), $"\"{changeResponse.GetRawResponse().Headers.ETag}\"");
 
             // Cleanup
             await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();

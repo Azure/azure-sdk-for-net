@@ -281,15 +281,15 @@ namespace Azure.Storage.Files.DataLake
                 if (account != null)
                 {
                     // Replace "dfs" with "blob"
-                    int serviceIndex = Host.IndexOf(Constants.DataLake.DfsUriPeriodSuffix, StringComparison.OrdinalIgnoreCase);
+                    int serviceIndex = Host.IndexOf(Constants.DataLake.DfsUriSuffix, StringComparison.OrdinalIgnoreCase);
                     if (serviceIndex > 0)
                     {
                         StringBuilder stringBuilder = new StringBuilder(Host);
                         stringBuilder.Replace(
-                            Constants.DataLake.DfsUriPeriodSuffix,
-                            Constants.DataLake.BlobUriPeriodSuffix,
+                            Constants.DataLake.DfsUriSuffix,
+                            Constants.DataLake.BlobUriSuffix,
                             serviceIndex,
-                            5);
+                            3);
                         Host = stringBuilder.ToString();
                     }
                 }
@@ -309,15 +309,15 @@ namespace Azure.Storage.Files.DataLake
 
                 if (account != null)
                 {
-                    int serviceIndex = Host.IndexOf(Constants.DataLake.BlobUriPeriodSuffix, StringComparison.OrdinalIgnoreCase);
+                    int serviceIndex = Host.IndexOf(Constants.DataLake.BlobUriSuffix, StringComparison.OrdinalIgnoreCase);
                     if (serviceIndex > 0)
                     {
                         StringBuilder stringBuilder = new StringBuilder(Host);
                         stringBuilder.Replace(
-                            Constants.DataLake.BlobUriPeriodSuffix,
-                            Constants.DataLake.DfsUriPeriodSuffix,
+                            Constants.DataLake.BlobUriSuffix,
+                            Constants.DataLake.DfsUriSuffix,
                             serviceIndex,
-                            6);
+                            4);
                         Host = stringBuilder.ToString();
                     }
                 }

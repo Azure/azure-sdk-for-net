@@ -18,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WriteNullObjectValue("table", Table);
-            writer.WriteNullObjectValue("query", Query);
+            writer.WriteNullStringValue("table", Table);
+            writer.WriteNullStringValue("query", Query);
             writer.WriteEndObject();
         }
     }

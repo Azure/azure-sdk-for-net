@@ -53,7 +53,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             var client = GetPurviewScanClient("test-datasource1014", "test-scan1014");
             string runUUID = "32767c50-ccd7-c3fd-5aea-94abe54044de";
             //Run
-            Response runScanResponse = await client.RunScanAsync(runUUID);
+            Response runScanResponse = await client.RunScanAsync(runUUID, new(), null);
             Assert.AreEqual(202, runScanResponse.Status);
             //Get list
             var getScanRunListResponseList = client.GetRunsAsync(new()).GetAsyncEnumerator();

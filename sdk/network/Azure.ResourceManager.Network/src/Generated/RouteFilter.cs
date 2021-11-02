@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of RouteFilterRules in the RouteFilter. </summary>
         /// <returns> An object representing collection of RouteFilterRules and their operations over a RouteFilter. </returns>
-        public RouteFilterRuleCollection GetRouteFilterRules()
+        public RouteFilterRuleContainer GetRouteFilterRules()
         {
-            return new RouteFilterRuleCollection(this);
+            return new RouteFilterRuleContainer(this);
         }
     }
 }

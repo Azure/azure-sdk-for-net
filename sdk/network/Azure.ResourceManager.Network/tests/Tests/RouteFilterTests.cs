@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class RouteFilterTests : NetworkServiceClientTestBase
     {
         public RouteFilterTests(bool isAsync) : base(isAsync)
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         private const string Filter_Commmunity = "12076:51006";
 
-        private async Task<RouteFilterCollection> GetCollection()
+        private async Task<RouteFilterContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("route_filter_test_"));
             return resourceGroup.GetRouteFilters();
@@ -42,25 +43,24 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task RouteFilterApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            var filterCollection = await GetCollection();
+            var filterContainer = await GetContainer();
 
             // Create route filter
             string filterName = Recording.GenerateAssetName("filter");
             string ruleName = Recording.GenerateAssetName("rule");
 
-            RouteFilter filter = await CreateDefaultRouteFilter(filterCollection,
+            RouteFilter filter = await CreateDefaultRouteFilter(filterContainer,
                 filterName);
             Assert.AreEqual("Succeeded", filter.Data.ProvisioningState.ToString());
             Assert.AreEqual(filterName, filter.Data.Name);
             Assert.IsEmpty(filter.Data.Rules);
 
-            var filters = await filterCollection.GetAllAsync().ToEnumerableAsync();
+            var filters = await filterContainer.GetAllAsync().ToEnumerableAsync();
             Has.One.Equals(filters);
             Assert.AreEqual(filterName, filters[0].Data.Name);
             Assert.IsEmpty(filters[0].Data.Rules);
 
-            var allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
+            var allFilters = await ArmClient.DefaultSubscription.GetRouteFiltersAsync().ToEnumerableAsync();
             // there could be other filters in the current subscription
             Assert.True(allFilters.Any(f => filterName == f.Data.Name && f.Data.Rules.Count == 0));
 
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("Succeeded", filterRule.Data.ProvisioningState.ToString());
             Assert.AreEqual(ruleName, filterRule.Data.Name);
 
-            Response<RouteFilter> getFilterResponse = await filterCollection.GetAsync(filterName);
+            Response<RouteFilter> getFilterResponse = await filterContainer.GetAsync(filterName);
             Assert.AreEqual(filterName, getFilterResponse.Value.Data.Name);
 
-            filter = await filterCollection.GetAsync(filterName);
+            filter = await filterContainer.GetAsync(filterName);
             Assert.AreEqual(filterName, filter.Data.Name);
             Has.One.Equals(filter.Data.Rules);
             Assert.AreEqual(ruleName, filter.Data.Rules[0].Name);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Add filter rule, this will fail due to the limitation of maximum 1 rule per filter
             Assert.ThrowsAsync<RequestFailedException>(async () => await CreateDefaultRouteFilterRule(filter, Recording.GenerateAssetName("rule2")));
 
-            filter = await filterCollection.GetAsync(filterName);
+            filter = await filterContainer.GetAsync(filterName);
             Has.One.Equals(filter.Data.Rules);
             Assert.AreEqual(ruleName, filter.Data.Rules[0].Name);
 
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete filter
             await filter.DeleteAsync();
-            allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
+            allFilters = await ArmClient.DefaultSubscription.GetRouteFiltersAsync().ToEnumerableAsync();
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
 
-        private async Task<RouteFilter> CreateDefaultRouteFilter(RouteFilterCollection filterCollection, string filterName,
+        private async Task<RouteFilter> CreateDefaultRouteFilter(RouteFilterContainer filterContainer, string filterName,
             bool containsRule = false)
         {
             var filter = new RouteFilterData()
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Put route filter
-            Operation<RouteFilter> filterOperation = await filterCollection.CreateOrUpdateAsync(filterName, filter);
+            Operation<RouteFilter> filterOperation = await filterContainer.CreateOrUpdateAsync(filterName, filter);
             return await filterOperation.WaitForCompletionAsync();;
         }
 

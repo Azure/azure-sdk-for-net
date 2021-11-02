@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,7 +66,8 @@ namespace Azure.IoT.ModelsRepository
         /// Gets a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// A <see cref="ModelResult" /> containing the desired model content.
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
+        /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
@@ -75,10 +77,10 @@ namespace Azure.IoT.ModelsRepository
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
-        public virtual async Task<ModelResult> GetModelAsync(
+        public virtual async Task<IDictionary<string, string>> GetModelsAsync(
             string dtmi, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModel)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
             try
             {
@@ -95,7 +97,8 @@ namespace Azure.IoT.ModelsRepository
         /// Gets a model definition identified by <paramref name="dtmi"/> and optionally its dependencies.
         /// </summary>
         /// <returns>
-        /// A <see cref="ModelResult" /> containing the desired model content.
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
+        /// and the value is the raw model definition string.
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
@@ -105,15 +108,79 @@ namespace Azure.IoT.ModelsRepository
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
-        public virtual ModelResult GetModel(
+        public virtual IDictionary<string, string> GetModels(
             string dtmi, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModel)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
 
             try
             {
                 return _repositoryHandler.Process(dtmi, dependencyResolution, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of model definitions identified by <paramref name="dtmis"/> and optionally their dependencies.
+        /// </summary>
+        /// <returns>
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
+        /// and the value is the raw model definition string.
+        /// </returns>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
+        /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="cancellationToken">The cancellationToken.</param>
+        [SuppressMessage(
+            "Usage",
+            "AZC0015:Unexpected client method return type.",
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
+        public virtual async Task<IDictionary<string, string>> GetModelsAsync(
+            IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
+            scope.Start();
+
+            try
+            {
+                return await _repositoryHandler.ProcessAsync(dtmis, dependencyResolution, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of model definitions identified by <paramref name="dtmis"/> and optionally their dependencies.
+        /// </summary>
+        /// <returns>
+        /// An IDictionary containing the model definition(s) where the key is the dtmi
+        /// and the value is the raw model definition string.
+        /// </returns>
+        /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
+        /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="cancellationToken">The cancellationToken.</param>
+        [SuppressMessage(
+            "Usage",
+            "AZC0015:Unexpected client method return type.",
+            Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
+        public virtual IDictionary<string, string> GetModels(
+            IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
+            scope.Start();
+
+            try
+            {
+                return _repositoryHandler.Process(dtmis, dependencyResolution, cancellationToken);
             }
             catch (Exception ex)
             {

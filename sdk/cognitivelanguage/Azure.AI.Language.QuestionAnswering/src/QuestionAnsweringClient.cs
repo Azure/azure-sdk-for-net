@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -17,7 +18,8 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
-        private readonly QuestionAnsweringRestClient _restClient;
+        private readonly QuestionAnsweringKnowledgeBaseRestClient _knowledgebaseRestClient;
+        private readonly QuestionAnsweringTextRestClient _textRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QuestionAnsweringClient"/> class.
@@ -49,7 +51,8 @@ namespace Azure.AI.Language.QuestionAnswering
                 Options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
 
-            _restClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
+            _knowledgebaseRestClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
+            _textRestClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
         }
 
         /// <summary>
@@ -80,41 +83,35 @@ namespace Azure.AI.Language.QuestionAnswering
         private protected virtual HttpPipeline Pipeline { get; }
 
         /// <summary>Answers the specified question using your knowledge base.</summary>
-        /// <param name="question">The question to ask of the knowledge base.</param>
-        /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="projectName">The name of the project to use.</param>
+        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "prod".</param>
+        /// <param name="question">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="project"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="question"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Task<Response<AnswersResult>> GetAnswersAsync(string question, QuestionAnsweringProject project, AnswersOptions options = null, CancellationToken cancellationToken = default) =>
-            GetAnswersAsync(project, (options ?? new()).WithQuestion(question), cancellationToken);
+        public virtual Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, string deploymentName, string question, CancellationToken cancellationToken = default) =>
+            QueryKnowledgeBaseAsync(new QueryKnowledgeBaseOptions(projectName, deploymentName, question), cancellationToken);
 
-        /// <summary>Gets the specified QnA.</summary>
-        /// <param name="qnaId">The exact QnA ID to fetch from the knowledge base.</param>
-        /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <summary>Answers the specified question using your knowledge base.</summary>
+        /// <param name="options">
+        /// An <see cref="QueryKnowledgeBaseOptions"/> containing the <see cref="QueryKnowledgeBaseOptions.ProjectName"/>,
+        /// <see cref="QueryKnowledgeBaseOptions.DeploymentName"/>, <see cref="QueryKnowledgeBaseOptions.Question"/>, and other options to answer a question.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Task<Response<AnswersResult>> GetAnswersAsync(int qnaId, QuestionAnsweringProject project, AnswersOptions options = null, CancellationToken cancellationToken = default) =>
-            GetAnswersAsync(project, (options ?? new()).WithQnaId(qnaId), cancellationToken);
-
-        private async Task<Response<AnswersResult>> GetAnswersAsync(QuestionAnsweringProject project, AnswersOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(QueryKnowledgeBaseOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(project, nameof(project));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswers)}");
-            scope.AddAttribute("projectName", project.ProjectName);
-            scope.AddAttribute("deploymentName", project.DeploymentName);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
+            scope.AddAttribute("projectName", options.ProjectName);
+            scope.AddAttribute("deploymentName", options.DeploymentName);
             scope.Start();
 
             try
             {
-                return await _restClient.GetAnswersAsync(project.ProjectName, project.DeploymentName, options, cancellationToken).ConfigureAwait(false);
+                return await _knowledgebaseRestClient.QueryAsync(options.ProjectName, options.DeploymentName, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -124,41 +121,35 @@ namespace Azure.AI.Language.QuestionAnswering
         }
 
         /// <summary>Answers the specified question using your knowledge base.</summary>
-        /// <param name="question">The question to ask of the knowledge base.</param>
-        /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="projectName">The name of the project to use.</param>
+        /// <param name="deploymentName">The deployment name of the project to use, such as "test" or "prod".</param>
+        /// <param name="question">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="project"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="projectName"/>, <paramref name="deploymentName"/>, or <paramref name="question"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnswersResult> GetAnswers(string question, QuestionAnsweringProject project, AnswersOptions options = null, CancellationToken cancellationToken = default) =>
-            GetAnswers(project, (options ?? new()).WithQuestion(question), cancellationToken);
+        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, string deploymentName, string question, CancellationToken cancellationToken = default) =>
+            QueryKnowledgeBase(new QueryKnowledgeBaseOptions(projectName, deploymentName, question), cancellationToken);
 
-        /// <summary>Gets the specified QnA.</summary>
-        /// <param name="qnaId">The exact QnA ID to fetch from the knowledge base.</param>
-        /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <summary>Answers the specified question using your knowledge base.</summary>
+        /// <param name="options">
+        /// An <see cref="QueryKnowledgeBaseOptions"/> containing the <see cref="QueryKnowledgeBaseOptions.ProjectName"/>,
+        /// <see cref="QueryKnowledgeBaseOptions.DeploymentName"/>, <see cref="QueryKnowledgeBaseOptions.Question"/>, and other options to answer a question.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnswersResult> GetAnswers(int qnaId, QuestionAnsweringProject project, AnswersOptions options = null, CancellationToken cancellationToken = default) =>
-            GetAnswers(project, (options ?? new()).WithQnaId(qnaId), cancellationToken);
-
-        private Response<AnswersResult> GetAnswers(QuestionAnsweringProject project, AnswersOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(QueryKnowledgeBaseOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(project, nameof(project));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswers)}");
-            scope.AddAttribute("projectName", project.ProjectName);
-            scope.AddAttribute("deploymentName", project.DeploymentName);
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
+            scope.AddAttribute("projectName", options.ProjectName);
+            scope.AddAttribute("deploymentName", options.DeploymentName);
             scope.Start();
 
             try
             {
-                return _restClient.GetAnswers(project.ProjectName, project.DeploymentName, options, cancellationToken);
+                return _knowledgebaseRestClient.Query(options.ProjectName, options.DeploymentName, options, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -167,91 +158,87 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary>Answers the specified question using the text <paramref name="textDocuments"/>.</summary>
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
-        /// <param name="textDocuments">The text documents to query.</param>
+        /// <param name="records">The text records to query.</param>
         /// <param name="language">
-        /// The language of the text documents.
-        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// The language of the text records. This is the BCP-47 representation of a language.
+        /// For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
-        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <paramref name="question"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(string question, IEnumerable<string> textDocuments, string language = default, CancellationToken cancellationToken = default) =>
-            GetAnswersFromTextAsync(AnswersFromTextOptions.From(question, textDocuments, language ?? Options.DefaultLanguage), cancellationToken);
+        public virtual Task<Response<TextAnswers>> QueryTextAsync(string question, IEnumerable<string> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryTextAsync(QueryTextOptions.From(question, records, language ?? Options.DefaultLanguage), cancellationToken);
 
-        /// <summary>Answers the specified question using the text <paramref name="textDocuments"/>.</summary>
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
-        /// <param name="textDocuments">The text documents to query.</param>
+        /// <param name="records">The text records to query.</param>
         /// <param name="language">
-        /// The language of the text documents.
-        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// The language of the text records. This is the BCP-47 representation of a language.
+        /// For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
-        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <paramref name="question"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnswersFromTextResult> GetAnswersFromText(string question, IEnumerable<string> textDocuments, string language = default, CancellationToken cancellationToken = default) =>
-            GetAnswersFromText(AnswersFromTextOptions.From(question, textDocuments, language ?? Options.DefaultLanguage), cancellationToken);
+        public virtual Response<TextAnswers> QueryText(string question, IEnumerable<string> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryText(QueryTextOptions.From(question, records, language ?? Options.DefaultLanguage), cancellationToken);
 
-        /// <summary>Answers the specified question using the text <paramref name="textDocuments"/>.</summary>
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
-        /// <param name="textDocuments">A collection of <see cref="TextDocument"/> to query.</param>
+        /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
         /// <param name="language">
-        /// The language of the text documents.
-        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// The language of the text records. This is the BCP-47 representation of a language.
+        /// For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
-        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <paramref name="question"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(string question, IEnumerable<TextDocument> textDocuments, string language = default, CancellationToken cancellationToken = default) =>
-            GetAnswersFromTextAsync(AnswersFromTextOptions.From(question, textDocuments, language ?? Options.DefaultLanguage), cancellationToken);
+        public virtual Task<Response<TextAnswers>> QueryTextAsync(string question, IEnumerable<TextRecord> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryTextAsync(QueryTextOptions.From(question, records, language ?? Options.DefaultLanguage), cancellationToken);
 
-        /// <summary>Answers the specified question using the text <paramref name="textDocuments"/>.</summary>
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
-        /// <param name="textDocuments">A collection of <see cref="TextDocument"/> to query.</param>
+        /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
         /// <param name="language">
-        /// The language of the text documents.
-        /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
+        /// The language of the text records. This is the BCP-47 representation of a language.
+        /// For example, use "en" for English, "es" for Spanish, etc.
         /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default.
         /// If <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> is not set, the service default, "en" for English, is used.
-        /// See <see href="https://docs.microsoft.com/azure/cognitive-services/qnamaker/overview/language-support"/> for list of currently supported languages.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <paramref name="question"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnswersFromTextResult> GetAnswersFromText(string question, IEnumerable<TextDocument> textDocuments, string language = default, CancellationToken cancellationToken = default) =>
-            GetAnswersFromText(AnswersFromTextOptions.From(question, textDocuments, language ?? Options.DefaultLanguage), cancellationToken);
+        public virtual Response<TextAnswers> QueryText(string question, IEnumerable<TextRecord> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryText(QueryTextOptions.From(question, records, language ?? Options.DefaultLanguage), cancellationToken);
 
         /// <summary>Answers the specified question using the provided text in the body.</summary>
         /// <param name="options">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <see cref="AnswersFromTextOptions.Question"/>.</returns>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <see cref="QueryTextOptions.Question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(AnswersFromTextOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAnswers>> QueryTextAsync(QueryTextOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswersFromText)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryText)}");
             scope.Start();
 
             try
             {
                 options = options.Clone(Options.DefaultLanguage);
-                return await _restClient.GetAnswersFromTextAsync(options, cancellationToken).ConfigureAwait(false);
+                return await _textRestClient.QueryAsync(options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -263,20 +250,20 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the provided text in the body.</summary>
         /// <param name="options">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <returns><see cref="AnswersFromTextResult"/> containing answers to the <see cref="AnswersFromTextOptions.Question"/>.</returns>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <see cref="QueryTextOptions.Question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnswersFromTextResult> GetAnswersFromText(AnswersFromTextOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TextAnswers> QueryText(QueryTextOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswersFromText)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryText)}");
             scope.Start();
 
             try
             {
                 options = options.Clone(Options.DefaultLanguage);
-                return _restClient.GetAnswersFromText(options, cancellationToken);
+                return _textRestClient.Query(options, cancellationToken);
             }
             catch (Exception ex)
             {

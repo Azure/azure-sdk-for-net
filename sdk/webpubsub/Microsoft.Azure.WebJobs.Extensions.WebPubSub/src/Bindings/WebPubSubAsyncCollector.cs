@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSub.Operations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {

@@ -1153,7 +1153,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.DataLake.PathAlreadyExists)
+            when (storageRequestFailedException.ErrorCode == "PathAlreadyExists")
             {
                 response = default;
             }

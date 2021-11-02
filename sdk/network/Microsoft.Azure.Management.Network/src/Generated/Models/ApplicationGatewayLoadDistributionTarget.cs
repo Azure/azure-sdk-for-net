@@ -101,13 +101,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (WeightPerServer > 100)
+            if (WeightPerServer != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "WeightPerServer", 100);
-            }
-            if (WeightPerServer < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "WeightPerServer", 1);
+                if (WeightPerServer > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "WeightPerServer", 100);
+                }
+                if (WeightPerServer < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "WeightPerServer", 1);
+                }
             }
         }
     }

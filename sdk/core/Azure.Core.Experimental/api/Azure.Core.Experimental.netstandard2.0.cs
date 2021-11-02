@@ -152,11 +152,3 @@ namespace Azure.Core.Pipeline
         public static bool IsError(this Azure.Response response) { throw null; }
     }
 }
-namespace Azure.Messaging
-{
-    public partial interface IMessageWithContentType
-    {
-        string ContentType { get; set; }
-        System.BinaryData Data { get; set; }
-    }
-}

@@ -179,11 +179,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role assignments. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -218,14 +218,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
+        public virtual async Task<Response> ListRoleAssignmentsAsync(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
                 return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -236,11 +236,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List role assignments. </summary>
+        /// <param name="options"> The request options. </param>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="options"> The request options. </param>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -275,14 +275,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
+        public virtual Response ListRoleAssignments(RequestOptions options, string roleId = null, string principalId = null, string scope = null, string continuationToken = null)
 #pragma warning restore AZC0002
         {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
+                using HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken);
                 return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
             }
             catch (Exception e)
@@ -443,7 +443,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options = null)
+        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
@@ -493,7 +493,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// </remarks>
 #pragma warning disable AZC0002
-        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options = null)
+        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options)
 #pragma warning restore AZC0002
         {
             using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
@@ -611,7 +611,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
+        internal HttpMessage CreateListRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24577")]
     public class PublicIpAddressTests : NetworkServiceClientTestBase
     {
         public PublicIpAddressTests(bool isAsync) : base(isAsync)
@@ -32,7 +33,6 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTest()
         {
-            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -54,24 +54,24 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, publicIp);
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
+            var putPublicIpAddressResponseOperation = await publicIPAddressContainer.CreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(publicIpName);
             Assert.AreEqual(4, getPublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes);
             Assert.NotNull(getPublicIpAddressResponse.Value.Data.ResourceGuid);
 
             // Get List of PublicIPAddress
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             List<PublicIPAddress> getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(getPublicIpAddressListResponse);
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests
             await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Get PublicIPAddress
-            getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getPublicIpAddressListResponse);
         }
@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn()
         {
-            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
@@ -109,35 +108,35 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, publicIp);
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
+            var putPublicIpAddressResponseOperation = await publicIPAddressContainer.CreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(publicIpName);
 
             // Add Reverse FQDN
             reverseFqdn = getPublicIpAddressResponse.Value.Data.DnsSettings.Fqdn;
             getPublicIpAddressResponse.Value.Data.DnsSettings.ReverseFqdn = reverseFqdn;
 
-            putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(publicIpName, getPublicIpAddressResponse.Value.Data);
+            putPublicIpAddressResponseOperation = await publicIPAddressContainer.CreateOrUpdateAsync(publicIpName, getPublicIpAddressResponse.Value.Data);
             putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
-            getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(publicIpName);
+            getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(publicIpName);
             Assert.AreEqual(16, getPublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes);
             Assert.AreEqual(reverseFqdn, getPublicIpAddressResponse.Value.Data.DnsSettings.ReverseFqdn);
 
             // Get List of PublicIPAddress
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             List<PublicIPAddress> getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(getPublicIpAddressListResponse);
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests
             await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Get PublicIPAddress
-            getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getPublicIpAddressListResponse);
         }
@@ -155,7 +154,6 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task PublicIpAddressApiTestIPv6()
         {
-            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
@@ -177,13 +175,13 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(ipv6PublicIpName, ipv6PublicIp);
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
+            var putPublicIpAddressResponseOperation = await publicIPAddressContainer.CreateOrUpdateAsync(ipv6PublicIpName, ipv6PublicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv6PublicIpName);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(ipv6PublicIpName);
             Assert.NotNull(getPublicIpAddressResponse);
 
             Assert.AreEqual(IPVersion.IPv6, getPublicIpAddressResponse.Value.Data.PublicIPAddressVersion);
@@ -191,13 +189,13 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getPublicIpAddressResponse.Value.Data.ResourceGuid);
 
             // Get List of PublicIPAddress
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             List<PublicIPAddress> getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(getPublicIpAddressListResponse);
             ArePublicIpAddressesEqual(getPublicIpAddressResponse.Value.Data, getPublicIpAddressListResponse.First().Data);
 
             // Get List of PublicIPAddress in a subscription
-            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = subscription.GetPublicIPAddressesAsync();
+            AsyncPageable<PublicIPAddress> getPublicIpAddressListSubscriptionResponseAP = ArmClient.DefaultSubscription.GetPublicIPAddressesAsync();
             List<PublicIPAddress> getPublicIpAddressListSubscriptionResponse = await getPublicIpAddressListSubscriptionResponseAP.ToEnumerableAsync();
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
@@ -206,7 +204,7 @@ namespace Azure.ResourceManager.Network.Tests
             await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Get PublicIPAddress
-            getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
+            getPublicIpAddressListResponseAP = publicIPAddressContainer.GetAllAsync();
             getPublicIpAddressListResponse = await getPublicIpAddressListResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(getPublicIpAddressListResponse);
 
@@ -227,12 +225,12 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var putIpv4PublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(ipv4PublicIpName, ipv4PublicIp);
+            var putIpv4PublicIpAddressResponseOperation = await publicIPAddressContainer.CreateOrUpdateAsync(ipv4PublicIpName, ipv4PublicIp);
             Response<PublicIPAddress> putIpv4PublicIpAddressResponse = await putIpv4PublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putIpv4PublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
-            Response<PublicIPAddress> getIpv4PublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv4PublicIpName);
+            Response<PublicIPAddress> getIpv4PublicIpAddressResponse = await publicIPAddressContainer.GetAsync(ipv4PublicIpName);
             Assert.NotNull(getIpv4PublicIpAddressResponse);
 
             Assert.AreEqual(IPVersion.IPv4, getIpv4PublicIpAddressResponse.Value.Data.PublicIPAddressVersion);

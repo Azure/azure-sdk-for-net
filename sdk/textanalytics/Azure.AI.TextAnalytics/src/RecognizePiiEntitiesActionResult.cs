@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, string actionName, DateTimeOffset completedOn)
-            : base(actionName, completedOn)
+        internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, DateTimeOffset completedOn)
+            : base(completedOn)
         {
             _documentsResults = result;
         }
@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Action with an error.
         /// </summary>
-        internal RecognizePiiEntitiesActionResult(string actionName, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(actionName, completedOn, error) { }
+        internal RecognizePiiEntitiesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+            : base(completedOn, error) { }
 
         /// <summary>
         /// Gets the result of the execution of a <see cref="RecognizePiiEntitiesAction"/> per each input document.

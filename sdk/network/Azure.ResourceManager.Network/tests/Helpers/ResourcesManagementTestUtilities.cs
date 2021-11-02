@@ -22,8 +22,7 @@ namespace Azure.Azure.Test
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
-            Provider provider = await subscription.GetProviders().GetAsync(providerName);
+            Provider provider = await client.DefaultSubscription.GetProviders().GetAsync(providerName);
             foreach (var resource in provider.Data.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))

@@ -3,7 +3,6 @@
 
 using System;
 using System.Net.Http;
-using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
@@ -13,12 +12,10 @@ namespace Azure.Analytics.Purview.Account.Tests
     {
         public AccountsClientTestBase(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
         }
 
         public AccountsClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
         }
 
         public PurviewAccountClient GetAccountClient()

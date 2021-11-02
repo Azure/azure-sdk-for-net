@@ -16,9 +16,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteNullObjectValue("endpoint", Endpoint);
-            writer.WriteNullObjectValue("username", Username);
-            writer.WriteNullObjectValue("password", Password);
+            writer.WriteNullStringValue("endpoint", Endpoint);
+            writer.WriteNullStringValue("username", Username);
+            writer.WriteNullStringValue("password", Password);
             if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers");
@@ -30,8 +30,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteNullObjectValue("certificateKey", CertificateKey);
-            writer.WriteNullObjectValue("certificatePassword", CertificatePassword);
+            writer.WriteNullStringValue("certificateKey", CertificateKey);
+            writer.WriteNullStringValue("certificatePassword", CertificatePassword);
             writer.WriteEndObject();
         }
     }

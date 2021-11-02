@@ -387,10 +387,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.That(
                     () => received.Body,
                     Throws.InstanceOf<NotSupportedException>());
-
-                var sendable = new ServiceBusMessage(received);
-                sendable.GetRawAmqpMessage().Body.TryGetValue(out var sendData);
-                Assert.AreEqual(value, sendData);
             }
         }
 
@@ -437,10 +433,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.That(
                     () => received.Body,
                     Throws.InstanceOf<NotSupportedException>());
-
-                var sendable = new ServiceBusMessage(received);
-                sendable.GetRawAmqpMessage().Body.TryGetSequence(out var sendData);
-                Assert.AreEqual(sequence, sendData);
             }
         }
 
