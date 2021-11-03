@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- NaN, +inf, and -inf double values can now be retrieved from 'LogsQueryResult'
 
 ### Other Changes
 
