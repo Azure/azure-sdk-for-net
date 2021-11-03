@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //wait for completion, this may take several minutes in live and record mode
             armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 i++;
                 armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
+            System.Console.WriteLine(i);
 
             //check name availability
             CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailabilityParameter(disasterRecoveryName));
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await armDisasterRecovery.BreakPairingAsync();
             armDisasterRecovery = await eHNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
