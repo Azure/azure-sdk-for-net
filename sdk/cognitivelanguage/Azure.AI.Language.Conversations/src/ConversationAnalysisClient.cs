@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
