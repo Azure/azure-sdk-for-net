@@ -71,26 +71,5 @@ namespace Azure.IoT.ModelsRepository.Tests
             Local,
             Remote
         }
-
-        public enum TimeSpanAlias
-        {
-            TimeSpanZero,
-            TimeSpanDefault
-        }
-
-        public static TimeSpan ConvertAliasToTimeSpan(TimeSpanAlias alias)
-        {
-            if (alias == TimeSpanAlias.TimeSpanZero)
-            {
-                return TimeSpan.Zero;
-            }
-
-            if (alias == TimeSpanAlias.TimeSpanDefault)
-            {
-                return ModelsRepositoryClientMetadataOptions.DefaultMetadataExpiration;
-            }
-
-            throw new ArgumentException();
-        }
     }
 }

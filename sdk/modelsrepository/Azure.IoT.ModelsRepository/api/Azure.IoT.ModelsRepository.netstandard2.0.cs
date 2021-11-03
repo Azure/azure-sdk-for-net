@@ -10,29 +10,29 @@ namespace Azure.IoT.ModelsRepository
         Disabled = 0,
         Enabled = 1,
     }
+    public partial class ModelResult
+    {
+        internal ModelResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Content { get { throw null; } }
+    }
     public partial class ModelsRepositoryClient
     {
         public ModelsRepositoryClient() { }
         public ModelsRepositoryClient(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions options) { }
         public ModelsRepositoryClient(System.Uri repositoryUri, Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions options = null) { }
         public System.Uri RepositoryUri { get { throw null; } }
-        public virtual System.Collections.Generic.IDictionary<string, string> GetModels(System.Collections.Generic.IEnumerable<string> dtmis, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IDictionary<string, string> GetModels(string dtmi, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, string>> GetModelsAsync(System.Collections.Generic.IEnumerable<string> dtmis, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, string>> GetModelsAsync(string dtmi, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.ModelsRepository.ModelResult GetModel(string dtmi, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.IoT.ModelsRepository.ModelResult> GetModelAsync(string dtmi, Azure.IoT.ModelsRepository.ModelDependencyResolution dependencyResolution = Azure.IoT.ModelsRepository.ModelDependencyResolution.Enabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ModelsRepositoryClientMetadataOptions
     {
         public ModelsRepositoryClientMetadataOptions() { }
-        public ModelsRepositoryClientMetadataOptions(System.TimeSpan expiration) { }
-        public static System.TimeSpan DefaultMetadataExpiration { get { throw null; } }
-        public bool Enabled { get { throw null; } set { } }
-        public System.TimeSpan Expiration { get { throw null; } set { } }
+        public bool IsMetadataProcessingEnabled { get { throw null; } set { } }
     }
     public partial class ModelsRepositoryClientOptions : Azure.Core.ClientOptions
     {
         public ModelsRepositoryClientOptions(Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion version = Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11) { }
-        public Azure.IoT.ModelsRepository.ModelsRepositoryClientMetadataOptions Metadata { get { throw null; } }
+        public Azure.IoT.ModelsRepository.ModelsRepositoryClientMetadataOptions RepositoryMetadata { get { throw null; } }
         public Azure.IoT.ModelsRepository.ModelsRepositoryClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

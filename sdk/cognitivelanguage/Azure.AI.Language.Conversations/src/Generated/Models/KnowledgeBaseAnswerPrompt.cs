@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> Prompt for an answer. </summary>
     public partial class KnowledgeBaseAnswerPrompt
