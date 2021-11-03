@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Tests.ScenarioTests
 {
     public class AccountOperationsTests : DeviceUpdateTestBase
     {
-        private const string AccountName = "aducpsdktestaccount1";
+        private const string AccountName = "aducpsdktestaccount3";
 
         [Fact]
         public async Task AccountCrudTests()

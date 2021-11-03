@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Tests.ScenarioTests
 {
     public class InstanceOperationsTests : DeviceUpdateTestBase
     {
-        private const string AccountName = "aducpsdktestaccount2";
+        private const string AccountName = "aducpsdktestaccount4";
         private const string InstanceName = "orange";
 
         [Fact]
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.DeviceUpdate.Tests.ScenarioTests
                 IotHubs = new[]
                 {
                     new IotHubSettings(
-                        resourceId: "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.Devices/IotHubs/orange-aducpsdktestaccount2-iothub",
-                        ioTHubConnectionString: "HostName=orange-aducpsdktestaccount2-iothub.azure-devices.net;SharedAccessKeyName=deviceupdateservice;SharedAccessKey=xyz=",
-                        eventHubConnectionString: "Endpoint=sb://orange-aducpsdktestaccount2-b93fc34123.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=xyz=;EntityPath=orange-aducpsdktestaccount2")
+                        resourceId: "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.Devices/IotHubs/orange-aducpsdktestaccount4-iothub",
+                        ioTHubConnectionString: "",
+                        eventHubConnectionString: "")
                     }
             };
 

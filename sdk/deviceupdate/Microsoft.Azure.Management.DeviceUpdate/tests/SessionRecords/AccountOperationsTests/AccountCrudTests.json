@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2JhMDk3YTAtZTFjZS00YzQzLThiZjYtYTlkYzc3ODI3OGUwL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDE/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU3NDc3NWMtNWJiZS00MzMyLWFiOTItYmQ0MWZmNmRmODgyL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4248173b-de3e-46d7-ad7b-62762f9849b0"
+          "0b1195ce-9531-4f39-b10c-cb36ba923055"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,14 +29,20 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:25:21 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"01009f94-0000-0800-0000-604031050000\""
+          "\"30004abd-0000-0800-0000-6181c8e10000\""
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,28 +54,22 @@
           "2020-03-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/573ebee7-5d5e-42e2-a8c0-2eb3c5968d01?api-version=2020-03-01-preview"
+          "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/f095e305-598c-4f78-808c-1761ca02b342*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview"
         ],
         "x-ms-request-id": [
-          "573ebee7-5d5e-42e2-a8c0-2eb3c5968d01"
+          "f095e305-598c-4f78-808c-1761ca02b342"
         ],
         "x-ms-correlation-request-id": [
-          "b5c6391e-40c6-482d-a286-5680c428d6f3"
-        ],
-        "Server": [
-          "Kestrel"
+          "af58364c-08a9-4a1e-b768-c47701de5614"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T005949Z:b5c6391e-40c6-482d-a286-5680c428d6f3"
+          "WESTUS:20211102T232522Z:af58364c-08a9-4a1e-b768-c47701de5614"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 00:59:48 GMT"
-        ],
         "Content-Length": [
-          "349"
+          "636"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -78,46 +78,46 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"name\": \"aducpsdktestaccount1\",\r\n  \"type\": \"Microsoft.DeviceUpdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Accepted\",\r\n    \"hostName\": \"aducpsdktestaccount1.api.adu.microsoft.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"name\": \"aducpsdktestaccount3\",\r\n  \"type\": \"microsoft.deviceupdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-02T23:25:19.8389133Z\",\r\n    \"lastModifiedBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-02T23:25:19.8389133Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Accepted\",\r\n    \"hostName\": \"aducpsdktestaccount3.api.adu.microsoft.com\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/573ebee7-5d5e-42e2-a8c0-2eb3c5968d01?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzLzU3M2ViZWU3LTVkNWUtNDJlMi1hOGMwLTJlYjNjNTk2OGQwMT9hcGktdmVyc2lvbj0yMDIwLTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/f095e305-598c-4f78-808c-1761ca02b342*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2YwOTVlMzA1LTU5OGMtNGY3OC04MDhjLTE3NjFjYTAyYjM0MioxMTZEMUFFMTRGODlGNEJGMEQzQ0I3MTI5RUM0OUFDNTc2NUJEMDcyQTc2QzAzQzIzMUY5MjZDNTk3RTI1ODVGP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:25:55 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0c006f8c-0000-0800-0000-604031210000\""
+          "\"3e00c84b-0000-0800-0000-6181c8fc0000\""
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "11999"
         ],
         "x-ms-request-id": [
-          "6f4ef983-d9f9-440f-a716-fe51a43026b3"
+          "c0ac1c1f-5055-433e-9cf9-3a7b3b4a865f"
         ],
         "x-ms-correlation-request-id": [
-          "13880f2a-e23f-4612-9f86-5a6ef40c7840"
-        ],
-        "Server": [
-          "Kestrel"
+          "9003132d-2db6-469a-a8bb-6c98ae2f3817"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010019Z:13880f2a-e23f-4612-9f86-5a6ef40c7840"
+          "WESTUS:20211102T232556Z:9003132d-2db6-469a-a8bb-6c98ae2f3817"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -125,11 +125,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:19 GMT"
-        ],
         "Content-Length": [
-          "446"
+          "584"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -138,46 +135,49 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/573ebee7-5d5e-42e2-a8c0-2eb3c5968d01\",\r\n  \"name\": \"573ebee7-5d5e-42e2-a8c0-2eb3c5968d01\",\r\n  \"resourceId\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-04T00:59:49.1724584Z\",\r\n  \"endTime\": \"2021-03-04T01:00:17.2605661Z\",\r\n  \"properties\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/f095e305-598c-4f78-808c-1761ca02b342*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"name\": \"f095e305-598c-4f78-808c-1761ca02b342*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"resourceId\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-11-02T23:25:21.220612Z\",\r\n  \"endTime\": \"2021-11-02T23:25:48.7086662Z\",\r\n  \"properties\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2JhMDk3YTAtZTFjZS00YzQzLThiZjYtYTlkYzc3ODI3OGUwL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDE/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU3NDc3NWMtNWJiZS00MzMyLWFiOTItYmQ0MWZmNmRmODgyL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:25:56 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0100ab94-0000-0800-0000-604031210000\""
+          "\"300075bd-0000-0800-0000-6181c8fc0000\""
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
         "x-ms-request-id": [
-          "559e1744-ec21-4769-826b-710534133785"
+          "6b341ca1-d065-464c-8298-478d260357e0"
         ],
         "x-ms-correlation-request-id": [
-          "8fd12c5e-0437-4996-a1e3-55c2f4cbc73b"
-        ],
-        "Server": [
-          "Kestrel"
+          "e29c33bc-fa28-4804-8736-6bf52489d391"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010019Z:8fd12c5e-0437-4996-a1e3-55c2f4cbc73b"
+          "WESTUS:20211102T232556Z:e29c33bc-fa28-4804-8736-6bf52489d391"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -185,11 +185,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:19 GMT"
-        ],
         "Content-Length": [
-          "350"
+          "637"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -198,52 +195,55 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"name\": \"aducpsdktestaccount1\",\r\n  \"type\": \"Microsoft.DeviceUpdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"hostName\": \"aducpsdktestaccount1.api.adu.microsoft.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"name\": \"aducpsdktestaccount3\",\r\n  \"type\": \"microsoft.deviceupdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-02T23:25:19.8389133Z\",\r\n    \"lastModifiedBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-02T23:25:19.8389133Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"hostName\": \"aducpsdktestaccount3.api.adu.microsoft.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2JhMDk3YTAtZTFjZS00YzQzLThiZjYtYTlkYzc3ODI3OGUwL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDE/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU3NDc3NWMtNWJiZS00MzMyLWFiOTItYmQ0MWZmNmRmODgyL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "84edbad1-3d86-4051-8cb5-0d83aa835cc6"
+          "682c8635-c690-4e18-969b-e82fae1492f5"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:26:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0100ab94-0000-0800-0000-604031210000\""
+          "\"300075bd-0000-0800-0000-6181c8fc0000\""
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
         "x-ms-request-id": [
-          "ec659f9a-2eaf-4b80-8459-fffce0067d6b"
+          "ead911c4-a959-4280-ae70-517abdf7541b"
         ],
         "x-ms-correlation-request-id": [
-          "86c240b6-7ab9-4344-8285-2ef57acd2055"
-        ],
-        "Server": [
-          "Kestrel"
+          "e97533ee-b969-422b-8cc3-03f6b3c6a854"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010020Z:86c240b6-7ab9-4344-8285-2ef57acd2055"
+          "WESTUS:20211102T232603Z:e97533ee-b969-422b-8cc3-03f6b3c6a854"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -251,11 +251,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:19 GMT"
-        ],
         "Content-Length": [
-          "350"
+          "637"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,49 +261,55 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"name\": \"aducpsdktestaccount1\",\r\n  \"type\": \"Microsoft.DeviceUpdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"hostName\": \"aducpsdktestaccount1.api.adu.microsoft.com\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"name\": \"aducpsdktestaccount3\",\r\n  \"type\": \"microsoft.deviceupdate/accounts\",\r\n  \"location\": \"westus2\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-11-02T23:25:19.8389133Z\",\r\n    \"lastModifiedBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-11-02T23:25:19.8389133Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"hostName\": \"aducpsdktestaccount3.api.adu.microsoft.com\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2JhMDk3YTAtZTFjZS00YzQzLThiZjYtYTlkYzc3ODI3OGUwL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU3NDc3NWMtNWJiZS00MzMyLWFiOTItYmQ0MWZmNmRmODgyL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7277fe2d-4640-4c57-b7c2-93dc7b6dc4ff"
+          "3e654f7d-d8bd-407b-94a1-df2971b4d754"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:26:06 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "07da0cec-d117-4d68-98a6-651bb5d3409f",
+          "ee7f18da-74ba-45c4-a8a3-2f6b8084fcb1",
+          "c49a1eeb-c969-42f2-890c-4642b6b91bb1",
+          "8f304e9e-5be0-4c13-a826-15fec32ad372"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
         "x-ms-request-id": [
-          "197c2410-0c3c-4ffe-8d7b-46b874442b88"
+          "fc105148-6861-4aca-81b8-ad37fdb7c16e"
         ],
         "x-ms-correlation-request-id": [
-          "84e65e2a-a1a5-4b74-a2b6-57ffeda8b3d1"
-        ],
-        "Server": [
-          "Kestrel"
+          "fc105148-6861-4aca-81b8-ad37fdb7c16e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010020Z:84e65e2a-a1a5-4b74-a2b6-57ffeda8b3d1"
+          "WESTUS:20211102T232607Z:fc105148-6861-4aca-81b8-ad37fdb7c16e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -314,11 +317,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:19 GMT"
-        ],
         "Content-Length": [
-          "1397"
+          "649"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -327,64 +327,67 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n      \"name\": \"aducpsdktestaccount1\",\r\n      \"type\": \"Microsoft.DeviceUpdate/accounts\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"hostName\": \"aducpsdktestaccount1.api.adu.microsoft.com\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n      \"name\": \"aducpsdktestaccount3\",\r\n      \"type\": \"microsoft.deviceupdate/accounts\",\r\n      \"location\": \"westus2\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-11-02T23:25:19.8389133Z\",\r\n        \"lastModifiedBy\": \"71318fd3-e515-4267-979a-98e06d2b139e\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-11-02T23:25:19.8389133Z\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"hostName\": \"aducpsdktestaccount3.api.adu.microsoft.com\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2JhMDk3YTAtZTFjZS00YzQzLThiZjYtYTlkYzc3ODI3OGUwL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDE/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU3NDc3NWMtNWJiZS00MzMyLWFiOTItYmQ0MWZmNmRmODgyL3Jlc291cmNlR3JvdXBzL0RldmljZVVwZGF0ZVJlc291cmNlR3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VVcGRhdGUvYWNjb3VudHMvYWR1Y3BzZGt0ZXN0YWNjb3VudDM/YXBpLXZlcnNpb249MjAyMC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8f672cec-d6d7-4843-96a9-3fd47c2b557d"
+          "2459fad8-d8dd-4eca-8343-089a368be7c0"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:26:16 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0100ae94-0000-0800-0000-604031240000\""
+          "\"30009cbd-0000-0800-0000-6181c9190000\""
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0?api-version=2020-03-01-preview"
+          "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview"
+        ],
         "x-ms-request-id": [
-          "d4270eb3-1c69-485d-aa05-9829ef2be7e0"
+          "fb096644-fd22-4354-b7ae-426f703c3e35"
         ],
         "x-ms-correlation-request-id": [
-          "6f115f1f-717c-4220-b32e-0a3086aa2cb3"
-        ],
-        "Server": [
-          "Kestrel"
+          "6d351246-cdbe-4f99-839d-42a1f85baac5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010020Z:6f115f1f-717c-4220-b32e-0a3086aa2cb3"
+          "WESTUS:20211102T232617Z:6d351246-cdbe-4f99-839d-42a1f85baac5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:20 GMT"
         ],
         "Content-Length": [
           "4"
@@ -400,42 +403,42 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2Q0MjcwZWIzLTFjNjktNDg1ZC1hYTA1LTk4MjllZjJiZTdlMD9hcGktdmVyc2lvbj0yMDIwLTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2ZiMDk2NjQ0LWZkMjItNDM1NC1iN2FlLTQyNmY3MDNjM2UzNSoxMTZEMUFFMTRGODlGNEJGMEQzQ0I3MTI5RUM0OUFDNTc2NUJEMDcyQTc2QzAzQzIzMUY5MjZDNTk3RTI1ODVGP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:26:47 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0c007b8c-0000-0800-0000-604031240000\""
+          "\"3e00a04c-0000-0800-0000-6181c9190000\""
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "11998"
         ],
         "x-ms-request-id": [
-          "9a391cbb-d1f6-43b2-923b-395fb31b1ce3"
+          "564cf7b4-9963-4e24-b11e-d1b8f3155bf5"
         ],
         "x-ms-correlation-request-id": [
-          "0db98f05-69dc-4c82-8b53-ebd905da4a9f"
-        ],
-        "Server": [
-          "Kestrel"
+          "8483110d-f7c4-426a-8bfa-b6f5cdbbdf4b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010050Z:0db98f05-69dc-4c82-8b53-ebd905da4a9f"
+          "WESTUS:20211102T232647Z:8483110d-f7c4-426a-8bfa-b6f5cdbbdf4b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -443,11 +446,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:00:49 GMT"
-        ],
         "Content-Length": [
-          "386"
+          "525"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -456,46 +456,46 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"name\": \"d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"resourceId\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"status\": \"Deleting\",\r\n  \"startTime\": \"2021-03-04T01:00:20.4866626Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"name\": \"fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"resourceId\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"status\": \"Deleting\",\r\n  \"startTime\": \"2021-11-02T23:26:17.1259316Z\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2Q0MjcwZWIzLTFjNjktNDg1ZC1hYTA1LTk4MjllZjJiZTdlMD9hcGktdmVyc2lvbj0yMDIwLTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2ZiMDk2NjQ0LWZkMjItNDM1NC1iN2FlLTQyNmY3MDNjM2UzNSoxMTZEMUFFMTRGODlGNEJGMEQzQ0I3MTI5RUM0OUFDNTc2NUJEMDcyQTc2QzAzQzIzMUY5MjZDNTk3RTI1ODVGP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:27:17 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0c00e58c-0000-0800-0000-604031480000\""
+          "\"3e00d94d-0000-0800-0000-6181c93f0000\""
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "11997"
         ],
         "x-ms-request-id": [
-          "76619ade-5670-4a78-adb3-a1e1785d308b"
+          "0cdd6a52-dfce-4a25-92c8-f62ef295b4fa"
         ],
         "x-ms-correlation-request-id": [
-          "2088bcba-f945-47ec-9858-2620295edbad"
-        ],
-        "Server": [
-          "Kestrel"
+          "e97f10b2-7721-48b7-a0c2-335750337ef9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010120Z:2088bcba-f945-47ec-9858-2620295edbad"
+          "WESTUS:20211102T232717Z:e97f10b2-7721-48b7-a0c2-335750337ef9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -503,11 +503,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:01:20 GMT"
-        ],
         "Content-Length": [
-          "405"
+          "544"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -516,46 +513,46 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"name\": \"d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"resourceId\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-04T01:00:20.4866626Z\",\r\n  \"properties\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"name\": \"fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"resourceId\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-11-02T23:26:17.1259316Z\",\r\n  \"properties\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0?api-version=2020-03-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2Q0MjcwZWIzLTFjNjktNDg1ZC1hYTA1LTk4MjllZjJiZTdlMD9hcGktdmVyc2lvbj0yMDIwLTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F?api-version=2020-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlVXBkYXRlL2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzL2ZiMDk2NjQ0LWZkMjItNDM1NC1iN2FlLTQyNmY3MDNjM2UzNSoxMTZEMUFFMTRGODlGNEJGMEQzQ0I3MTI5RUM0OUFDNTc2NUJEMDcyQTc2QzAzQzIzMUY5MjZDNTk3RTI1ODVGP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.DeviceUpdate.DeviceUpdateClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Tue, 02 Nov 2021 23:27:17 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0c00e58c-0000-0800-0000-604031480000\""
+          "\"3e00d94d-0000-0800-0000-6181c93f0000\""
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "11996"
         ],
         "x-ms-request-id": [
-          "3da3fdde-ee98-4497-a49f-62967bfcb020"
+          "8644b790-4698-43e2-b2c1-db55a41298ca"
         ],
         "x-ms-correlation-request-id": [
-          "115721ac-2f36-4aef-aa5a-9f1cb67a6a2a"
-        ],
-        "Server": [
-          "Kestrel"
+          "bf8c3da9-e3cf-42eb-a24d-8ef1d8bd7b7e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210304T010120Z:115721ac-2f36-4aef-aa5a-9f1cb67a6a2a"
+          "WESTUS:20211102T232717Z:bf8c3da9-e3cf-42eb-a24d-8ef1d8bd7b7e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -563,11 +560,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 04 Mar 2021 01:01:20 GMT"
-        ],
         "Content-Length": [
-          "405"
+          "544"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -576,12 +570,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"name\": \"d4270eb3-1c69-485d-aa05-9829ef2be7e0\",\r\n  \"resourceId\": \"/subscriptions/cba097a0-e1ce-4c43-8bf6-a9dc778278e0/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-04T01:00:20.4866626Z\",\r\n  \"properties\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"name\": \"fb096644-fd22-4354-b7ae-426f703c3e35*116D1AE14F89F4BF0D3CB7129EC49AC5765BD072A76C03C231F926C597E2585F\",\r\n  \"resourceId\": \"/subscriptions/c574775c-5bbe-4332-ab92-bd41ff6df882/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.DeviceUpdate/accounts/aducpsdktestaccount3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-11-02T23:26:17.1259316Z\",\r\n  \"properties\": null\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "cba097a0-e1ce-4c43-8bf6-a9dc778278e0"
+    "SubscriptionId": "c574775c-5bbe-4332-ab92-bd41ff6df882"
   }
 }

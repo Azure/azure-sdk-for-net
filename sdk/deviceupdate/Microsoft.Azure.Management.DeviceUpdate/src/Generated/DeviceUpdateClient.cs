@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionProxiesOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionProxiesOperations PrivateEndpointConnectionProxies { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -346,6 +351,7 @@ namespace Microsoft.Azure.Management.DeviceUpdate
             Instances = new InstancesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnectionProxies = new PrivateEndpointConnectionProxiesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2020-03-01-preview";

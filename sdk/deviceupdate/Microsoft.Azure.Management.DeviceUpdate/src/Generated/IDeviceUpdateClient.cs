@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.DeviceUpdate
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionProxiesOperations.
+        /// </summary>
+        IPrivateEndpointConnectionProxiesOperations PrivateEndpointConnectionProxies { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
