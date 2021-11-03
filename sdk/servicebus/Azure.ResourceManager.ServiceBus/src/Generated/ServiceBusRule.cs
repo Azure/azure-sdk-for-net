@@ -19,22 +19,22 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A Class representing a Rule along with the instance operations that can be performed on it. </summary>
-    public partial class Rule : ArmResource
+    /// <summary> A Class representing a ServiceBusRule along with the instance operations that can be performed on it. </summary>
+    public partial class ServiceBusRule : ArmResource
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RulesRestOperations _restClient;
-        private readonly RuleData _data;
+        private readonly ServiceBusRuleData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Rule"/> class for mocking. </summary>
-        protected Rule()
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class for mocking. </summary>
+        protected ServiceBusRule()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Rule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ServiceBusRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Rule(ArmResource options, RuleData resource) : base(options, resource.Id)
+        internal ServiceBusRule(ArmResource options, ServiceBusRuleData resource) : base(options, resource.Id)
         {
             HasData = true;
             _data = resource;
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.ServiceBus
             _restClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Rule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Rule(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal ServiceBusRule(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Rule"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRule"/> class. </summary>
         /// <param name="clientOptions"> The client options to build client context. </param>
         /// <param name="credential"> The credential to build client context. </param>
         /// <param name="uri"> The uri to build client context. </param>
         /// <param name="pipeline"> The pipeline to build client context. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Rule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
+        internal ServiceBusRule(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RuleData Data
+        public virtual ServiceBusRuleData Data
         {
             get
             {
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Retrieves the description for the specified rule. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Rule>> GetAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ServiceBusRule>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Rule.Get");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Rule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Retrieves the description for the specified rule. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Rule> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusRule> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Rule.Get");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Rule(this, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<RuleDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Rule.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Delete");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual RuleDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Rule.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRule.Delete");
             scope.Start();
             try
             {

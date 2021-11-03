@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class RuleData : IUtf8JsonSerializable
+    public partial class ServiceBusRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteEndObject();
         }
 
-        internal static RuleData DeserializeRuleData(JsonElement element)
+        internal static ServiceBusRuleData DeserializeServiceBusRuleData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new RuleData(id, name, type, systemData, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
+            return new ServiceBusRuleData(id, name, type, systemData, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value);
         }
     }
 }

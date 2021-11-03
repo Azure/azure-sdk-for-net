@@ -11,15 +11,15 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the Rule data model. </summary>
-    public partial class RuleData : Resource
+    /// <summary> A class representing the ServiceBusRule data model. </summary>
+    public partial class ServiceBusRuleData : Resource
     {
-        /// <summary> Initializes a new instance of RuleData. </summary>
-        public RuleData()
+        /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>
+        public ServiceBusRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleData. </summary>
+        /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        internal RuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Action action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, type)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Action action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, type)
         {
             SystemData = systemData;
             Action = action;

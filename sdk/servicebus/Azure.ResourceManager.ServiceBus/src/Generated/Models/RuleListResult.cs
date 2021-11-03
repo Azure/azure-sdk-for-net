@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         internal RuleListResult()
         {
-            Value = new ChangeTrackingList<RuleData>();
+            Value = new ChangeTrackingList<ServiceBusRuleData>();
         }
 
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         /// <param name="value"> Result of the List Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of rules. </param>
-        internal RuleListResult(IReadOnlyList<RuleData> value, string nextLink)
+        internal RuleListResult(IReadOnlyList<ServiceBusRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List Rules operation. </summary>
-        public IReadOnlyList<RuleData> Value { get; }
+        public IReadOnlyList<ServiceBusRuleData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of rules. </summary>
         public string NextLink { get; }
     }

@@ -20,26 +20,26 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of Rule and their operations over a ServiceBusSubscription. </summary>
-    public partial class RuleCollection : ArmCollection, IEnumerable<Rule>, IAsyncEnumerable<Rule>
+    /// <summary> A class representing collection of ServiceBusRule and their operations over a ServiceBusSubscription. </summary>
+    public partial class ServiceBusRuleCollection : ArmCollection, IEnumerable<ServiceBusRule>, IAsyncEnumerable<ServiceBusRule>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RulesRestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RuleCollection"/> class for mocking. </summary>
-        protected RuleCollection()
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleCollection"/> class for mocking. </summary>
+        protected ServiceBusRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleCollection class. </summary>
+        /// <summary> Initializes a new instance of ServiceBusRuleCollection class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RuleCollection(ArmResource parent) : base(parent)
+        internal ServiceBusRuleCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new RulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
-        IEnumerator<Rule> IEnumerable<Rule>.GetEnumerator()
+        IEnumerator<ServiceBusRule> IEnumerable<ServiceBusRule>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Rule> IAsyncEnumerable<Rule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceBusRule> IAsyncEnumerable<ServiceBusRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RuleCreateOrUpdateOperation CreateOrUpdate(string ruleName, RuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual RuleCreateOrUpdateOperation CreateOrUpdate(string ruleName, ServiceBusRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RuleCreateOrUpdateOperation> CreateOrUpdateAsync(string ruleName, RuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public async virtual Task<RuleCreateOrUpdateOperation> CreateOrUpdateAsync(string ruleName, ServiceBusRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (ruleName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<Rule> Get(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusRule> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
             scope.Start();
             try
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Rule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<Rule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ServiceBusRule>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.Get");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.Get");
             scope.Start();
             try
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Rule(Parent, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRule(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<Rule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusRule> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.ServiceBus
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken);
                 return response.Value == null
-                    ? Response.FromValue<Rule>(null, response.GetRawResponse())
-                    : Response.FromValue(new Rule(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<ServiceBusRule>(null, response.GetRawResponse())
+                    : Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<Rule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ServiceBusRule>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.ServiceBus
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
-                    ? Response.FromValue<Rule>(null, response.GetRawResponse())
-                    : Response.FromValue(new Rule(this, response.Value), response.GetRawResponse());
+                    ? Response.FromValue<ServiceBusRule>(null, response.GetRawResponse())
+                    : Response.FromValue(new ServiceBusRule(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<bool> CheckIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RuleCollection.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.CheckIfExists");
             scope.Start();
             try
             {
@@ -283,17 +283,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Rule> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusRule> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<Rule> FirstPageFunc(int? pageSizeHint)
+            Page<ServiceBusRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restClient.GetAllBySubscriptions(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Rule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            Page<Rule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServiceBusRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restClient.GetAllBySubscriptionsNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Rule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Rule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Rule> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceBusRule" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusRule> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Rule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceBusRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restClient.GetAllBySubscriptionsAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Rule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            async Task<Page<Rule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServiceBusRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RuleCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ServiceBusRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restClient.GetAllBySubscriptionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Rule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -360,6 +360,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, Rule, RuleData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ServiceBusRule, ServiceBusRuleData> Construct() { }
     }
 }

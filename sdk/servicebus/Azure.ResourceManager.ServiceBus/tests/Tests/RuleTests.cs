@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create rule with no filters
             string ruleName1 = Recording.GenerateAssetName("rule");
-            RuleCollection ruleCollection = serviceBusSubscription.GetRules();
-            Rule rule1 = (await ruleCollection.CreateOrUpdateAsync(ruleName1, new RuleData())).Value;
+            ServiceBusRuleCollection ruleCollection = serviceBusSubscription.GetServiceBusRules();
+            ServiceBusRule rule1 = (await ruleCollection.CreateOrUpdateAsync(ruleName1, new ServiceBusRuleData())).Value;
             Assert.NotNull(rule1);
             Assert.AreEqual(rule1.Id.Name, ruleName1);
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
-            Rule rule2 = (await ruleCollection.CreateOrUpdateAsync(ruleName2, new RuleData(){FilterType = FilterType.CorrelationFilter})).Value;
+            ServiceBusRule rule2 = (await ruleCollection.CreateOrUpdateAsync(ruleName2, new ServiceBusRuleData(){FilterType = FilterType.CorrelationFilter})).Value;
             Assert.NotNull(rule2);
             Assert.AreEqual(rule2.Id.Name, ruleName2);
 
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(rule1.Id.Name, ruleName1);
 
             //get all rules
-            List<Rule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(2, rules.Count);
 
             //update rule with sql filter and action
-            RuleData updateParameters = new RuleData()
+            ServiceBusRuleData updateParameters = new ServiceBusRuleData()
             {
                 Action = new SqlRuleAction()
                 {

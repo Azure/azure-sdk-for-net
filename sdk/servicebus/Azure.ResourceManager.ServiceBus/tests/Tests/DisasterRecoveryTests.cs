@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await armDisasterRecovery.BreakPairingAsync();
             armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {

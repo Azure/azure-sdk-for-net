@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region Rule
-        /// <summary> Gets an object representing a Rule along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceBusRule
+        /// <summary> Gets an object representing a ServiceBusRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Rule" /> object. </returns>
-        public static Rule GetRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusRule" /> object. </returns>
+        public static ServiceBusRule GetServiceBusRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new Rule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 

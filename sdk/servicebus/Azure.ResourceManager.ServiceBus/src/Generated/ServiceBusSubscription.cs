@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a list of Rules in the ServiceBusSubscription. </summary>
-        /// <returns> An object representing collection of Rules and their operations over a ServiceBusSubscription. </returns>
-        public RuleCollection GetRules()
+        /// <summary> Gets a list of ServiceBusRules in the ServiceBusSubscription. </summary>
+        /// <returns> An object representing collection of ServiceBusRules and their operations over a ServiceBusSubscription. </returns>
+        public ServiceBusRuleCollection GetServiceBusRules()
         {
-            return new RuleCollection(this);
+            return new ServiceBusRuleCollection(this);
         }
     }
 }

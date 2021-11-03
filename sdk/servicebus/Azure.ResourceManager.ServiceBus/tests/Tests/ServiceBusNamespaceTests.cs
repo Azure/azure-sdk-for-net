@@ -420,7 +420,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("DR config cannot be deleted because replication is in progress.")]
         public async Task StandardToPremiumMigration()
         {
             //create namespace with premium
@@ -492,6 +491,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(10, queues.Count);
 
             //wait for migration config and premium namespace
+            migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
             count = 0;
             while (count < 100 && migrationConfig.Data.MigrationState != "Active")
             {

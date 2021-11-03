@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, RuleData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, ServiceBusRuleData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RuleData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, RuleData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusRuleData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        RuleData value = default;
+                        ServiceBusRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleData.DeserializeRuleData(document.RootElement);
+                        value = ServiceBusRuleData.DeserializeServiceBusRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create a rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, <paramref name="ruleName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<RuleData> CreateOrUpdate(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, RuleData parameters, CancellationToken cancellationToken = default)
+        public Response<ServiceBusRuleData> CreateOrUpdate(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, ServiceBusRuleData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        RuleData value = default;
+                        ServiceBusRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleData.DeserializeRuleData(document.RootElement);
+                        value = ServiceBusRuleData.DeserializeServiceBusRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public async Task<Response<RuleData>> GetAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusRuleData>> GetAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -474,13 +474,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        RuleData value = default;
+                        ServiceBusRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleData.DeserializeRuleData(document.RootElement);
+                        value = ServiceBusRuleData.DeserializeServiceBusRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RuleData)null, message.Response);
+                    return Response.FromValue((ServiceBusRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="ruleName"> The rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="ruleName"/> is null. </exception>
-        public Response<RuleData> Get(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusRuleData> Get(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -523,13 +523,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        RuleData value = default;
+                        ServiceBusRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleData.DeserializeRuleData(document.RootElement);
+                        value = ServiceBusRuleData.DeserializeServiceBusRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RuleData)null, message.Response);
+                    return Response.FromValue((ServiceBusRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

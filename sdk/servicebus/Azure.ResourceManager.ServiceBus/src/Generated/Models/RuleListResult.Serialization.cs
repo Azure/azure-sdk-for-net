@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static RuleListResult DeserializeRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RuleData>> value = default;
+            Optional<IReadOnlyList<ServiceBusRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RuleData> array = new List<RuleData>();
+                    List<ServiceBusRuleData> array = new List<ServiceBusRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuleData.DeserializeRuleData(item));
+                        array.Add(ServiceBusRuleData.DeserializeServiceBusRuleData(item));
                     }
                     value = array;
                     continue;

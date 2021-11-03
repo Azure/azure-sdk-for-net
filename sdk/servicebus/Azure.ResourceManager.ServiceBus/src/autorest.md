@@ -80,6 +80,9 @@ directive:
     - rename-model:
         from: SBTopicListResult
         to: ServiceBusTopicListResult
+    - rename-model:
+        from: Rule
+        to: ServiceBusRule
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"
