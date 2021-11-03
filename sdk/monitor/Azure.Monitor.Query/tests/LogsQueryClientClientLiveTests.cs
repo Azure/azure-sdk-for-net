@@ -758,7 +758,7 @@ namespace Azure.Monitor.Query.Tests
         public async Task ValidateNanAndInfResultsDoubleAsync()
         {
             var client = CreateClient();
-            var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "print real(nan), real(+inf), real(-inf), real(null), real(123)", _logsTestData.DataTimeRange);
+            var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, "print real(nan), real(+inf), real(-inf), real(null), real(123)", TimeSpan.FromMinutes(1));
 
             var resultTable = results.Value.Table;
             CollectionAssert.IsNotEmpty(resultTable.Columns);
