@@ -3,13 +3,16 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/AVS/dotnet/specification/vmware/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\Users\cataggar\io\azure-sdk-for-net\sdk
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/vmware/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\Users\cataggar\io\azure-sdk-for-net\sdk
 Autorest CSharp Version: 2.3.82
-2021-05-27 14:12:59 UTC
+2021-11-03 15:35:19 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
-Branch:      AVS/dotnet
-Commit:      13dc07975e72d633349c2f0696610f7ddf25fc16
-AutoRest information
-Requested version: v2
-Bootstrapper version:    autorest@2.0.4413
+Branch:      master
+System.Net.WebException: The remote server returned an error: (404) Not Found.
+   at Microsoft.PowerShell.Commands.WebRequestPSCmdlet.GetResponse(WebRequest request)
+   at Microsoft.PowerShell.Commands.WebRequestPSCmdlet.ProcessRecord()
+System.Net.WebException: The remote server returned an error: (404) Not Found.
+   at Microsoft.PowerShell.Commands.WebRequestPSCmdlet.GetResponse(WebRequest request)
+   at Microsoft.PowerShell.Commands.WebRequestPSCmdlet.ProcessRecord()
+Metadata generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/vmware/resource-manager/readme.md failed. Please try again
