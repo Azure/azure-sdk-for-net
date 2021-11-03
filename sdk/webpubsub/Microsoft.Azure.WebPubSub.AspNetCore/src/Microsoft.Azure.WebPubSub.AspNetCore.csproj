@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure SDK client library for the WebPubSub service</Description>
+    <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure, WebPubSub</PackageTags>
+    <RequiredTargetFrameworks>netstandard2.0;netcoreapp3.1</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);419</NoWarn>
+    <GenerateAPIListing>true</GenerateAPIListing>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard2.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+  </ItemGroup>
+
+</Project>

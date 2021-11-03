@@ -12,22 +12,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class ServiceHubContextStore : IInternalServiceHubContextStore
     {
-        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> store = new(StringComparer.OrdinalIgnoreCase);
-        private readonly IServiceEndpointManager endpointManager;
+        private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> _store = new(StringComparer.OrdinalIgnoreCase);
+        private readonly IServiceEndpointManager _endpointManager;
 
         public IServiceManager ServiceManager { get; }
 
-        public AccessKey[] AccessKeys => endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
+        public AccessKey[] AccessKeys => _endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
 
         public ServiceHubContextStore(IServiceEndpointManager endpointManager, IServiceManager serviceManager)
         {
-            this.endpointManager = endpointManager;
+            _endpointManager = endpointManager;
             ServiceManager = serviceManager;
         }
 
         public ValueTask<IServiceHubContext> GetAsync(string hubName)
         {
-            var pair = store.GetOrAdd(hubName,
+            var pair = _store.GetOrAdd(hubName,
                 (new Lazy<Task<IServiceHubContext>>(
                     () => ServiceManager.CreateHubContextAsync(hubName)), default));
             return GetAsyncCore(hubName, pair);
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             try
             {
                 var value = await pair.Lazy.Value.ConfigureAwait(false);
-                store.TryUpdate(hubName, (null, value), pair);
+                _store.TryUpdate(hubName, (null, value), pair);
                 return value;
             }
             catch (Exception)
             {
-                store.TryRemove(hubName, out _);
+                _store.TryRemove(hubName, out _);
                 throw;
             }
         }

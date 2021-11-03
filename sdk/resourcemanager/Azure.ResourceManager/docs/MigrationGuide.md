@@ -17,8 +17,7 @@ using System;
 using System.Threading.Tasks;
 ```
 #### New (Azure.ResourceManager._ Beta)
-<!---Snippet:Using_Statements-->
-```C#
+```C# Snippet:Using_Statements
 using System;
 using System.Linq;
 using Azure.Identity;
@@ -40,8 +39,7 @@ NetworkManagementClient networkClient = new NetworkManagementClient(credentials)
 ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
 ```
 #### New
-<!---Snippet:Construct_Client-->
-```C#
+```C# Snippet:Construct_Client
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
@@ -63,8 +61,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
     });
 ```
 #### New
-<!---Snippet:Create_ResourceGroup-->
-```C#
+```C# Snippet:Create_ResourceGroup
 Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 
@@ -103,8 +100,7 @@ AvailabilitySet asCreateOrUpdateResponse = computeClient.AvailabilitySets.Create
 string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/{aSetName}";
 ```
 #### New
-<!---Snippet:Create_AvailabilitySet-->
-```C#
+```C# Snippet:Create_AvailabilitySet
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
 AvailabilitySetCreateOrUpdateOperation asetCreateLro = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData);
@@ -143,8 +139,7 @@ VirtualNetwork putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rg
 VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
 #### New
-<!---Snippet:Create_Vnet_and_Subnet-->
-```C#
+```C# Snippet:Create_Vnet_and_Subnet
 string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
 AddressSpace addressSpace = new AddressSpace();
@@ -181,8 +176,7 @@ NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.Create
 NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
 #### New
-<!---Snippet:Create_NetworkSecurityGroup-->
-```C#
+```C# Snippet:Create_NetworkSecurityGroup
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
 NetworkSecurityGroupCreateOrUpdateOperation nsgCreateLro = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
@@ -218,8 +212,7 @@ NetworkInterface putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate
 NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
-<!---Snippet:Create_NetworkInterface-->
-```C#
+```C# Snippet:Create_NetworkInterface
 string nicName = vmName + "_nic";
 NetworkInterfaceIPConfiguration nicIPConfig = new NetworkInterfaceIPConfiguration()
 {
@@ -291,8 +284,7 @@ inputVM.NetworkProfile = vmNetworkProfile;
 VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 ```
 #### New
-<!---Snippet:Create_VirtualMachine-->
-```C#
+```C# Snippet:Create_VirtualMachine
 VirtualMachineData vmData = new VirtualMachineData(location);
 vmData.OsProfile.AdminUsername = "admin-username";
 vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";

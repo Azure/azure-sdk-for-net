@@ -1,0 +1,31 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <OutputType>Exe</OutputType>
+    <LangVersion>latest</LangVersion>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="SharedSource\" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Polly" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Messaging.EventHubs.Processor.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+
+  <!-- Import Event Hubs shared source -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Perf.projitems" Label="Perf" />
+</Project>
