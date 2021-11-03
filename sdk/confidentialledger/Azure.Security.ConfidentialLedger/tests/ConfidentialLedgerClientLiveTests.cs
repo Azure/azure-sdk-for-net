@@ -92,7 +92,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
 
-            var result = await Client.GetReceiptAsync(transactionId, new RequestOptions()).ConfigureAwait(false);
+            var result = await Client.GetReceiptAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -107,7 +107,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
 
-            var result = await Client.GetTransactionStatusAsync(transactionId, new RequestOptions()).ConfigureAwait(false);
+            var result = await Client.GetTransactionStatusAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
