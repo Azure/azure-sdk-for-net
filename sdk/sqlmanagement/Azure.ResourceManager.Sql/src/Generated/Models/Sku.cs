@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> An ARM Resource SKU. </summary>
     public partial class Sku

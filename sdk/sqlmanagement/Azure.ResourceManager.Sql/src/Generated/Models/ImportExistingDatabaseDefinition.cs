@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains the information necessary to perform import operation for existing database. </summary>
     public partial class ImportExistingDatabaseDefinition

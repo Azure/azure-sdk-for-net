@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ManagedTransparentDataEncryptionListResult
     {
         internal static ManagedTransparentDataEncryptionListResult DeserializeManagedTransparentDataEncryptionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedTransparentDataEncryption>> value = default;
+            Optional<IReadOnlyList<ManagedTransparentDataEncryptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedTransparentDataEncryption> array = new List<ManagedTransparentDataEncryption>();
+                    List<ManagedTransparentDataEncryptionData> array = new List<ManagedTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedTransparentDataEncryption.DeserializeManagedTransparentDataEncryption(item));
+                        array.Add(ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(item));
                     }
                     value = array;
                     continue;

@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The RestoreDetailsName. </summary>
     public readonly partial struct RestoreDetailsName : IEquatable<RestoreDetailsName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreDetailsName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RestoreDetailsName(string value)
         {

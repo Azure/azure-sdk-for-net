@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The maximum size range capability. </summary>
     public partial class MaxSizeRangeCapability

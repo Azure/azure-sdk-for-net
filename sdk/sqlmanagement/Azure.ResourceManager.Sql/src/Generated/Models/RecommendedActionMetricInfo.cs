@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains time series of various impacted metrics for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionMetricInfo

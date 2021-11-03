@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Gets the status of availability of this advisor to customers. Possible values are &apos;GA&apos;, &apos;PublicPreview&apos;, &apos;LimitedPublicPreview&apos; and &apos;PrivatePreview&apos;. </summary>
     public enum AdvisorStatus

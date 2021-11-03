@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of the database&apos;s security alert policies. </summary>
     internal partial class DatabaseSecurityAlertListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
         internal DatabaseSecurityAlertListResult()
         {
-            Value = new ChangeTrackingList<DatabaseSecurityAlertPolicy>();
+            Value = new ChangeTrackingList<DatabaseSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DatabaseSecurityAlertListResult(IReadOnlyList<DatabaseSecurityAlertPolicy> value, string nextLink)
+        internal DatabaseSecurityAlertListResult(IReadOnlyList<DatabaseSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DatabaseSecurityAlertPolicy> Value { get; }
+        public IReadOnlyList<DatabaseSecurityAlertPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

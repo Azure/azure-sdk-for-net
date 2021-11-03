@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ManagedInstanceOperationListResult
     {
         internal static ManagedInstanceOperationListResult DeserializeManagedInstanceOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstanceOperation>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstanceOperation> array = new List<ManagedInstanceOperation>();
+                    List<ManagedInstanceOperationData> array = new List<ManagedInstanceOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceOperation.DeserializeManagedInstanceOperation(item));
+                        array.Add(ManagedInstanceOperationData.DeserializeManagedInstanceOperationData(item));
                     }
                     value = array;
                     continue;

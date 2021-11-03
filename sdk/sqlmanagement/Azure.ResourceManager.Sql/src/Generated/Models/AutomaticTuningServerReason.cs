@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Reason description if desired and actual state are different. </summary>
     public enum AutomaticTuningServerReason

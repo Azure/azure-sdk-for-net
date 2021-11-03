@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains information of current state for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionStateInfo

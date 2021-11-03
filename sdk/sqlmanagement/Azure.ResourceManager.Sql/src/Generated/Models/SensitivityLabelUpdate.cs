@@ -5,10 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using SqlManagementClient;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> A sensitivity label update operation. </summary>
-    public partial class SensitivityLabelUpdate : ProxyResource
+    public partial class SensitivityLabelUpdate : Resource
     {
         /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
         public SensitivityLabelUpdate()
@@ -16,15 +20,15 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of SensitivityLabelUpdate. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="op"> . </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="op"></param>
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
-        internal SensitivityLabelUpdate(string id, string name, string type, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabel sensitivityLabel) : base(id, name, type)
+        internal SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType type, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel) : base(id, name, type)
         {
             Op = op;
             Schema = schema;
@@ -33,6 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             SensitivityLabel = sensitivityLabel;
         }
 
+        /// <summary> Gets or sets the op. </summary>
         public SensitivityLabelUpdateKind? Op { get; set; }
         /// <summary> Schema name of the column to update. </summary>
         public string Schema { get; set; }
@@ -41,6 +46,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Column name to update. </summary>
         public string Column { get; set; }
         /// <summary> The sensitivity label information to apply on a column. </summary>
-        public SensitivityLabel SensitivityLabel { get; set; }
+        public SensitivityLabelData SensitivityLabel { get; set; }
     }
 }

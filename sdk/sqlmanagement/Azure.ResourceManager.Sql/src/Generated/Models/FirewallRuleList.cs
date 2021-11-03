@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of server firewall rules. </summary>
     internal partial class FirewallRuleList
@@ -16,9 +17,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of FirewallRuleList. </summary>
         internal FirewallRuleList()
         {
-            Values = new ChangeTrackingList<FirewallRule>();
+            Values = new ChangeTrackingList<FirewallRuleData>();
         }
 
-        public IReadOnlyList<FirewallRule> Values { get; }
+        /// <summary> Gets the values. </summary>
+        public IReadOnlyList<FirewallRuleData> Values { get; }
     }
 }

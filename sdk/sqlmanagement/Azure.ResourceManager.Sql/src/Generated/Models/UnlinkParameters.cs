@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Represents the parameters for Unlink Replication Link request. </summary>
     public partial class UnlinkParameters

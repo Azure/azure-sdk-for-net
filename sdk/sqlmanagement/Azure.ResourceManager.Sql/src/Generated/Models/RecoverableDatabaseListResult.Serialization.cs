@@ -8,22 +8,23 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class RecoverableDatabaseListResult
     {
         internal static RecoverableDatabaseListResult DeserializeRecoverableDatabaseListResult(JsonElement element)
         {
-            IReadOnlyList<RecoverableDatabase> value = default;
+            IReadOnlyList<RecoverableDatabaseData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RecoverableDatabase> array = new List<RecoverableDatabase>();
+                    List<RecoverableDatabaseData> array = new List<RecoverableDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoverableDatabase.DeserializeRecoverableDatabase(item));
+                        array.Add(RecoverableDatabaseData.DeserializeRecoverableDatabaseData(item));
                     }
                     value = array;
                     continue;

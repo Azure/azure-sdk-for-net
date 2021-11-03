@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains the information necessary to perform export database operation. </summary>
     public partial class ExportDatabaseDefinition

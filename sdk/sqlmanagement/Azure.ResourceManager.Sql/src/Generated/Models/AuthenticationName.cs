@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The AuthenticationName. </summary>
     public readonly partial struct AuthenticationName : IEquatable<AuthenticationName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AuthenticationName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationName(string value)
         {

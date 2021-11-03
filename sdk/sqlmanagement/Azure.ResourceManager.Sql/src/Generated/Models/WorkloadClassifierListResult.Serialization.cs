@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class WorkloadClassifierListResult
     {
         internal static WorkloadClassifierListResult DeserializeWorkloadClassifierListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadClassifier>> value = default;
+            Optional<IReadOnlyList<WorkloadClassifierData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadClassifier> array = new List<WorkloadClassifier>();
+                    List<WorkloadClassifierData> array = new List<WorkloadClassifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadClassifier.DeserializeWorkloadClassifier(item));
+                        array.Add(WorkloadClassifierData.DeserializeWorkloadClassifierData(item));
                     }
                     value = array;
                     continue;

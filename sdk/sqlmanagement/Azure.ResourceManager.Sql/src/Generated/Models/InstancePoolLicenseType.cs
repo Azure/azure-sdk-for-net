@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </summary>
     public readonly partial struct InstancePoolLicenseType : IEquatable<InstancePoolLicenseType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="InstancePoolLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstancePoolLicenseType(string value)
         {

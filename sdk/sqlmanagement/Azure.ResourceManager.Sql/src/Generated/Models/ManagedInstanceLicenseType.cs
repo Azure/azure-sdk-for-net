@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </summary>
     public readonly partial struct ManagedInstanceLicenseType : IEquatable<ManagedInstanceLicenseType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceLicenseType(string value)
         {

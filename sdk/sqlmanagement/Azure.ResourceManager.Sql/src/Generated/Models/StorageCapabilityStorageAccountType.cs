@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The storage account type for the database&apos;s backups. </summary>
     public readonly partial struct StorageCapabilityStorageAccountType : IEquatable<StorageCapabilityStorageAccountType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCapabilityStorageAccountType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCapabilityStorageAccountType(string value)
         {

@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </summary>
     public readonly partial struct ReadWriteEndpointFailoverPolicy : IEquatable<ReadWriteEndpointFailoverPolicy>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReadWriteEndpointFailoverPolicy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadWriteEndpointFailoverPolicy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReadWriteEndpointFailoverPolicy(string value)
         {

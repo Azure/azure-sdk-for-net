@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of long term retention policies. </summary>
     internal partial class ManagedInstanceLongTermRetentionPolicyListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyListResult. </summary>
         internal ManagedInstanceLongTermRetentionPolicyListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceLongTermRetentionPolicy>();
+            Value = new ChangeTrackingList<ManagedInstanceLongTermRetentionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceLongTermRetentionPolicyListResult(IReadOnlyList<ManagedInstanceLongTermRetentionPolicy> value, string nextLink)
+        internal ManagedInstanceLongTermRetentionPolicyListResult(IReadOnlyList<ManagedInstanceLongTermRetentionPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ManagedInstanceLongTermRetentionPolicy> Value { get; }
+        public IReadOnlyList<ManagedInstanceLongTermRetentionPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

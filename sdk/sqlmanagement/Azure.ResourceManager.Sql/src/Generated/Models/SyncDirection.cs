@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Sync direction of the sync member. </summary>
     public readonly partial struct SyncDirection : IEquatable<SyncDirection>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SyncDirection"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncDirection"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncDirection(string value)
         {

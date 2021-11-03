@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Collation of the metadata catalog. </summary>
     public readonly partial struct CatalogCollationType : IEquatable<CatalogCollationType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CatalogCollationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogCollationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CatalogCollationType(string value)
         {

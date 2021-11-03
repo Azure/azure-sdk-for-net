@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of databases. </summary>
     internal partial class DatabaseListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         internal DatabaseListResult()
         {
-            Value = new ChangeTrackingList<Database>();
+            Value = new ChangeTrackingList<DatabaseData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DatabaseListResult(IReadOnlyList<Database> value, string nextLink)
+        internal DatabaseListResult(IReadOnlyList<DatabaseData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<Database> Value { get; }
+        public IReadOnlyList<DatabaseData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

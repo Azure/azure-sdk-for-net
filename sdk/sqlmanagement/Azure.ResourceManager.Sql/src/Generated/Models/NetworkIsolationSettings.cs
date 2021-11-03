@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains the ARM resources for which to create private endpoint connection. </summary>
     public partial class NetworkIsolationSettings

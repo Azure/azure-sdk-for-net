@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A security event. </summary>
-    public partial class SecurityEvent : ProxyResource
+    public partial class SecurityEvent : Resource
     {
         /// <summary> Initializes a new instance of SecurityEvent. </summary>
         public SecurityEvent()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of SecurityEvent. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="eventTime"> The time when the security event occurred. </param>
         /// <param name="securityEventType"> The type of the security event. </param>
         /// <param name="subscription"> The subscription name. </param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="applicationName"> The application used to execute the statement. </param>
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
-        internal SecurityEvent(string id, string name, string type, DateTimeOffset? eventTime, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, type)
+        internal SecurityEvent(ResourceIdentifier id, string name, ResourceType type, DateTimeOffset? eventTime, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties) : base(id, name, type)
         {
             EventTime = eventTime;
             SecurityEventType = securityEventType;

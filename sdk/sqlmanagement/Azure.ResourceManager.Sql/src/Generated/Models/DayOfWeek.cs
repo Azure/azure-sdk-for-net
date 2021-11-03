@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Day of maintenance window. </summary>
     public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DayOfWeek"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DayOfWeek(string value)
         {

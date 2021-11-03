@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Interval type (length). </summary>
     public readonly partial struct QueryTimeGrainType : IEquatable<QueryTimeGrainType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="QueryTimeGrainType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryTimeGrainType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryTimeGrainType(string value)
         {

@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of job steps. </summary>
     internal partial class JobStepListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobStepListResult. </summary>
         internal JobStepListResult()
         {
-            Value = new ChangeTrackingList<JobStep>();
+            Value = new ChangeTrackingList<JobStepData>();
         }
 
         /// <summary> Initializes a new instance of JobStepListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal JobStepListResult(IReadOnlyList<JobStep> value, string nextLink)
+        internal JobStepListResult(IReadOnlyList<JobStepData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<JobStep> Value { get; }
+        public IReadOnlyList<JobStepData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

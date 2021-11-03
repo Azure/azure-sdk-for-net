@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Type of the sync group log. </summary>
     public readonly partial struct SyncGroupLogType : IEquatable<SyncGroupLogType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SyncGroupLogType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncGroupLogType(string value)
         {

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class LogicalDatabaseTransparentDataEncryptionListResult
     {
         internal static LogicalDatabaseTransparentDataEncryptionListResult DeserializeLogicalDatabaseTransparentDataEncryptionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LogicalDatabaseTransparentDataEncryption>> value = default;
+            Optional<IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LogicalDatabaseTransparentDataEncryption> array = new List<LogicalDatabaseTransparentDataEncryption>();
+                    List<LogicalDatabaseTransparentDataEncryptionData> array = new List<LogicalDatabaseTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicalDatabaseTransparentDataEncryption.DeserializeLogicalDatabaseTransparentDataEncryption(item));
+                        array.Add(LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(item));
                     }
                     value = array;
                     continue;

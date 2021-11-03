@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Represents the response to a get database service objectives request. </summary>
     internal partial class ServiceObjectiveListResult
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServiceObjectiveListResult. </summary>
         /// <param name="value"> The list of database service objectives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServiceObjectiveListResult(IEnumerable<ServiceObjective> value)
+        internal ServiceObjectiveListResult(IEnumerable<ServiceObjectiveData> value)
         {
             if (value == null)
             {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of ServiceObjectiveListResult. </summary>
         /// <param name="value"> The list of database service objectives. </param>
-        internal ServiceObjectiveListResult(IReadOnlyList<ServiceObjective> value)
+        internal ServiceObjectiveListResult(IReadOnlyList<ServiceObjectiveData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of database service objectives. </summary>
-        public IReadOnlyList<ServiceObjective> Value { get; }
+        public IReadOnlyList<ServiceObjectiveData> Value { get; }
     }
 }

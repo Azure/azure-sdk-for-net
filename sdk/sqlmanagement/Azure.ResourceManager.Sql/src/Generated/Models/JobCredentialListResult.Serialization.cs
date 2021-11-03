@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class JobCredentialListResult
     {
         internal static JobCredentialListResult DeserializeJobCredentialListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobCredential>> value = default;
+            Optional<IReadOnlyList<JobCredentialData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobCredential> array = new List<JobCredential>();
+                    List<JobCredentialData> array = new List<JobCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobCredential.DeserializeJobCredential(item));
+                        array.Add(JobCredentialData.DeserializeJobCredentialData(item));
                     }
                     value = array;
                     continue;

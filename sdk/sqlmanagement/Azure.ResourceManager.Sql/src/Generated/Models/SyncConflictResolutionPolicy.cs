@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Conflict resolution policy of the sync group. </summary>
     public readonly partial struct SyncConflictResolutionPolicy : IEquatable<SyncConflictResolutionPolicy>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SyncConflictResolutionPolicy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncConflictResolutionPolicy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncConflictResolutionPolicy(string value)
         {

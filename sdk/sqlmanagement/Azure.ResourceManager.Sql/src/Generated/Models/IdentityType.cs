@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The identity type. Set this to &apos;SystemAssigned&apos; in order to automatically create and assign an Azure Active Directory principal for the resource. </summary>
     public readonly partial struct IdentityType : IEquatable<IdentityType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="IdentityType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IdentityType(string value)
         {

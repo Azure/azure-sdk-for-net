@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class RecommendedSensitivityLabelUpdate : IUtf8JsonSerializable
     {
@@ -43,9 +44,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static RecommendedSensitivityLabelUpdate DeserializeRecommendedSensitivityLabelUpdate(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<RecommendedSensitivityLabelUpdateKind> op = default;
             Optional<string> schema = default;
             Optional<string> table = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedSensitivityLabelUpdate(id.Value, name.Value, type.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value);
+            return new RecommendedSensitivityLabelUpdate(id, name, type, Optional.ToNullable(op), schema.Value, table.Value, column.Value);
         }
     }
 }

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A server operation. </summary>
-    public partial class ServerOperation : ProxyResource
+    public partial class ServerOperation : Resource
     {
         /// <summary> Initializes a new instance of ServerOperation. </summary>
         public ServerOperation()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ServerOperation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="operation"> The name of operation. </param>
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
         /// <param name="percentComplete"> The percentage of the operation completed. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompletionTime"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ServerOperation(string id, string name, string type, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
+        internal ServerOperation(ResourceIdentifier id, string name, ResourceType type, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
         {
             Operation = operation;
             OperationFriendlyName = operationFriendlyName;

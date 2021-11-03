@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ManagedInstanceLongTermRetentionPolicyName. </summary>
     public readonly partial struct ManagedInstanceLongTermRetentionPolicyName : IEquatable<ManagedInstanceLongTermRetentionPolicyName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstanceLongTermRetentionPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceLongTermRetentionPolicyName(string value)
         {

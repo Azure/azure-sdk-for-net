@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The storage account type used to store backups for this database. </summary>
     public readonly partial struct RestorableDroppedDatabasePropertiesBackupStorageRedundancy : IEquatable<RestorableDroppedDatabasePropertiesBackupStorageRedundancy>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RestorableDroppedDatabasePropertiesBackupStorageRedundancy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabasePropertiesBackupStorageRedundancy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RestorableDroppedDatabasePropertiesBackupStorageRedundancy(string value)
         {

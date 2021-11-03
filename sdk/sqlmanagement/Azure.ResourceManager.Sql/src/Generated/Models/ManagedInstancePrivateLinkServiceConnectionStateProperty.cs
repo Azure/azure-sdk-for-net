@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
     public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty

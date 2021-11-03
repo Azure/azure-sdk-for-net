@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Link type (GEO, NAMED). </summary>
     public readonly partial struct ReplicationLinkType : IEquatable<ReplicationLinkType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationLinkType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationLinkType(string value)
         {

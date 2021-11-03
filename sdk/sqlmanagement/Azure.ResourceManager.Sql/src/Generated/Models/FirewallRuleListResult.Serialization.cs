@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class FirewallRuleListResult
     {
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FirewallRule>> value = default;
+            Optional<IReadOnlyList<FirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FirewallRule> array = new List<FirewallRule>();
+                    List<FirewallRuleData> array = new List<FirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRule.DeserializeFirewallRule(item));
+                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
                     }
                     value = array;
                     continue;

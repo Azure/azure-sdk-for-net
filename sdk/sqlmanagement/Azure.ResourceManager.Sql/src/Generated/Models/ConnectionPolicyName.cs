@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ConnectionPolicyName. </summary>
     public readonly partial struct ConnectionPolicyName : IEquatable<ConnectionPolicyName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConnectionPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionPolicyName(string value)
         {

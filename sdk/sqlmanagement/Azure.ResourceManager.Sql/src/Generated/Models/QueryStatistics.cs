@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The QueryStatistics. </summary>
-    public partial class QueryStatistics : ProxyResource
+    public partial class QueryStatistics : Resource
     {
         /// <summary> Initializes a new instance of QueryStatistics. </summary>
         public QueryStatistics()
@@ -20,15 +22,15 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of QueryStatistics. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
-        internal QueryStatistics(string id, string name, string type, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, type)
+        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType type, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, type)
         {
             DatabaseName = databaseName;
             QueryId = queryId;

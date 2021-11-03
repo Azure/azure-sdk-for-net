@@ -5,10 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> A recoverable managed database resource. </summary>
-    public partial class UpdateManagedInstanceDnsServersOperation : ProxyResource
+    public partial class UpdateManagedInstanceDnsServersOperation : Resource
     {
         /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
         public UpdateManagedInstanceDnsServersOperation()
@@ -16,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="status"> The status of the DNS refresh operation. </param>
-        internal UpdateManagedInstanceDnsServersOperation(string id, string name, string type, DnsRefreshConfigurationPropertiesStatus? status) : base(id, name, type)
+        internal UpdateManagedInstanceDnsServersOperation(ResourceIdentifier id, string name, ResourceType type, DnsRefreshConfigurationPropertiesStatus? status) : base(id, name, type)
         {
             Status = status;
         }

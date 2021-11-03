@@ -9,14 +9,14 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </summary>
     public readonly partial struct DiffBackupIntervalInHours : IEquatable<DiffBackupIntervalInHours>
     {
         private readonly int _value;
 
-        /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffBackupIntervalInHours"/>. </summary>
         public DiffBackupIntervalInHours(int value)
         {
             _value = value;

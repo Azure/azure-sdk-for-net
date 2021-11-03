@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Properties of column in sync group table. </summary>
     public partial class SyncGroupSchemaTableColumn

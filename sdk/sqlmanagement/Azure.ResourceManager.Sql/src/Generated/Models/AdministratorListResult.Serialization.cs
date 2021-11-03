@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class AdministratorListResult
     {
         internal static AdministratorListResult DeserializeAdministratorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerAzureADAdministrator>> value = default;
+            Optional<IReadOnlyList<ServerAzureADAdministratorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerAzureADAdministrator> array = new List<ServerAzureADAdministrator>();
+                    List<ServerAzureADAdministratorData> array = new List<ServerAzureADAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerAzureADAdministrator.DeserializeServerAzureADAdministrator(item));
+                        array.Add(ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(item));
                     }
                     value = array;
                     continue;

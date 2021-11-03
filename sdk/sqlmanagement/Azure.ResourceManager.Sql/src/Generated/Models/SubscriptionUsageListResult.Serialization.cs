@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class SubscriptionUsageListResult
     {
         internal static SubscriptionUsageListResult DeserializeSubscriptionUsageListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SubscriptionUsage>> value = default;
+            Optional<IReadOnlyList<SubscriptionUsageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubscriptionUsage> array = new List<SubscriptionUsage>();
+                    List<SubscriptionUsageData> array = new List<SubscriptionUsageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionUsage.DeserializeSubscriptionUsage(item));
+                        array.Add(SubscriptionUsageData.DeserializeSubscriptionUsageData(item));
                     }
                     value = array;
                     continue;

@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of server trust groups. </summary>
     internal partial class ServerTrustGroupListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>
         internal ServerTrustGroupListResult()
         {
-            Value = new ChangeTrackingList<ServerTrustGroup>();
+            Value = new ChangeTrackingList<ServerTrustGroupData>();
         }
 
         /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ServerTrustGroupListResult(IReadOnlyList<ServerTrustGroup> value, string nextLink)
+        internal ServerTrustGroupListResult(IReadOnlyList<ServerTrustGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ServerTrustGroup> Value { get; }
+        public IReadOnlyList<ServerTrustGroupData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

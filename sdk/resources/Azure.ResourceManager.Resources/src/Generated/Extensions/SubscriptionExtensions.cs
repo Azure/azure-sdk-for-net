@@ -22,27 +22,51 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a DeploymentCollection along with the instance operations that can be performed on it. </summary>
+        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
+        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentCollection" /> object. </returns>
-        public static DeploymentCollection GetDeployments(this Subscription subscription)
+        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
+        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this Subscription subscription)
         {
-            return new DeploymentCollection(subscription);
+            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(subscription);
         }
         #endregion
 
-        #region Application
+        #region SubscriptionDeployment
+        /// <summary> Gets an object representing a SubscriptionDeploymentCollection along with the instance operations that can be performed on it. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="SubscriptionDeploymentCollection" /> object. </returns>
+        public static SubscriptionDeploymentCollection GetSubscriptionDeployments(this Subscription subscription)
+        {
+            return new SubscriptionDeploymentCollection(subscription);
+        }
+        #endregion
+
         private static ApplicationsRestOperations GetApplicationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new ApplicationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static JitRequestsRestOperations GetJitRequestsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new JitRequestsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        private static TemplateSpecsRestOperations GetTemplateSpecsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new TemplateSpecsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Applications for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Application> GetApplicationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Application> GetBySubscriptionApplicationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -50,11 +74,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<Application>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionApplications");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -65,11 +89,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 async Task<Page<Application>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionApplications");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -87,7 +111,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Application> GetApplications(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<Application> GetBySubscriptionApplications(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -95,11 +119,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetApplicationsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<Application> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionApplications");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -110,11 +134,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 Page<Application> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetApplications");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionApplications");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Application(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -155,29 +179,22 @@ namespace Azure.ResourceManager.Resources
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
-
-        #region JitRequestDefinition
-        private static JitRequestsRestOperations GetJitRequestsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new JitRequestsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
 
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetJitRequestDefinitionsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<JitRequestDefinition>>> GetBySubscriptionJitRequestsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionJitRequests");
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(subscription, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+                    var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.ListBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(response.Value.Value.Select(value => new JitRequestDefinition(subscription, value)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -191,18 +208,18 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Retrieves all JIT requests within the subscription. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<IReadOnlyList<JitRequestDefinition>> GetJitRequestDefinitions(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<JitRequestDefinition>> GetBySubscriptionJitRequests(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetJitRequestDefinitions");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionJitRequests");
                 scope.Start();
                 try
                 {
-                    var response = restOperations.GetAllBySubscription(cancellationToken);
-                    return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(subscription, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+                    var restOperations = GetJitRequestsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                    var response = restOperations.ListBySubscription(cancellationToken);
+                    return Response.FromValue(response.Value.Value.Select(value => new JitRequestDefinition(subscription, value)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,19 +257,12 @@ namespace Azure.ResourceManager.Resources
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
-
-        #region DeploymentScript
-        private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new DeploymentScriptsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
 
         /// <summary> Lists the DeploymentScripts for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeploymentScript> GetDeploymentScriptsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeploymentScript> GetBySubscriptionDeploymentScriptsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -260,11 +270,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDeploymentScripts");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -275,11 +285,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDeploymentScripts");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -297,7 +307,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeploymentScript> GetDeploymentScripts(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DeploymentScript> GetBySubscriptionDeploymentScripts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -305,11 +315,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetDeploymentScriptsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDeploymentScripts");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -320,11 +330,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDeploymentScripts");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionDeploymentScripts");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -365,20 +375,13 @@ namespace Azure.ResourceManager.Resources
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
-
-        #region TemplateSpec
-        private static TemplateSpecsRestOperations GetTemplateSpecsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new TemplateSpecsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
-        }
 
         /// <summary> Lists the TemplateSpecs for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TemplateSpec> GetTemplateSpecsAsync(this Subscription subscription, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<TemplateSpec> GetBySubscriptionTemplateSpecsAsync(this Subscription subscription, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -386,11 +389,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<TemplateSpec>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionTemplateSpecs");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -401,11 +404,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 async Task<Page<TemplateSpec>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionTemplateSpecs");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -424,7 +427,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TemplateSpec> GetTemplateSpecs(this Subscription subscription, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<TemplateSpec> GetBySubscriptionTemplateSpecs(this Subscription subscription, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -432,11 +435,11 @@ namespace Azure.ResourceManager.Resources
                 var restOperations = GetTemplateSpecsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<TemplateSpec> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionTemplateSpecs");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscription(expand, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscription(expand, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -447,11 +450,11 @@ namespace Azure.ResourceManager.Resources
                 }
                 Page<TemplateSpec> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetTemplateSpecs");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetBySubscriptionTemplateSpecs");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, expand, cancellationToken: cancellationToken);
+                        var response = restOperations.ListBySubscriptionNextPage(nextLink, expand, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -492,6 +495,5 @@ namespace Azure.ResourceManager.Resources
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
-        #endregion
     }
 }

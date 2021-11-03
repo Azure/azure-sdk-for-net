@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Supported auto pause delay time range. </summary>
     public partial class AutoPauseDelayTimeRange

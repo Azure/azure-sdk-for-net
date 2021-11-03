@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ReplicaType. </summary>
     public readonly partial struct ReplicaType : IEquatable<ReplicaType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReplicaType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicaType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicaType(string value)
         {

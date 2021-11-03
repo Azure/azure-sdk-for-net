@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Type of action being executed by the job step. </summary>
     public readonly partial struct JobStepActionType : IEquatable<JobStepActionType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JobStepActionType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepActionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobStepActionType(string value)
         {

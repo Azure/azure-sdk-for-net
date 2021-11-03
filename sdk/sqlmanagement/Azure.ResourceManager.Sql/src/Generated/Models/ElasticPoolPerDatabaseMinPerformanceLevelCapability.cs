@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The minimum per-database performance level capability. </summary>
     public partial class ElasticPoolPerDatabaseMinPerformanceLevelCapability

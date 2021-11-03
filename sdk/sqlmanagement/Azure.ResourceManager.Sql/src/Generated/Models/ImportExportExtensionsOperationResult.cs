@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> An Extension operation result resource. </summary>
-    public partial class ImportExportExtensionsOperationResult : ProxyResource
+    public partial class ImportExportExtensionsOperationResult : Resource
     {
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
         public ImportExportExtensionsOperationResult()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
         /// <param name="lastModifiedTime"> Last modified time. </param>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
-        internal ImportExportExtensionsOperationResult(string id, string name, string type, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, type)
+        internal ImportExportExtensionsOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string requestType, string lastModifiedTime, string serverName, string databaseName, string status, string errorMessage) : base(id, name, type)
         {
             RequestId = requestId;
             RequestType = requestType;

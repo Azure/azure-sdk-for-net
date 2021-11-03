@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The detailed state of the job execution. </summary>
     public readonly partial struct JobExecutionLifecycle : IEquatable<JobExecutionLifecycle>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JobExecutionLifecycle"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionLifecycle"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobExecutionLifecycle(string value)
         {

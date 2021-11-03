@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class TimeZoneListResult
     {
         internal static TimeZoneListResult DeserializeTimeZoneListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeZone>> value = default;
+            Optional<IReadOnlyList<TimeZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeZone> array = new List<TimeZone>();
+                    List<TimeZoneData> array = new List<TimeZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeZone.DeserializeTimeZone(item));
+                        array.Add(TimeZoneData.DeserializeTimeZoneData(item));
                     }
                     value = array;
                     continue;

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Gets whether the error could be ignored and recommended action could be retried. Possible values are: Yes/No. </summary>
     public enum IsRetryable

@@ -7,14 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class ManagedInstancePrivateEndpointConnectionProperties
     {
         internal static ManagedInstancePrivateEndpointConnectionProperties DeserializeManagedInstancePrivateEndpointConnectionProperties(JsonElement element)
         {
-            Optional<ManagedInstancePrivateEndpointProperty> privateEndpoint = default;
+            Optional<WritableSubResource> privateEndpoint = default;
             Optional<ManagedInstancePrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpoint = ManagedInstancePrivateEndpointProperty.DeserializeManagedInstancePrivateEndpointProperty(property.Value);
+                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"))
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value);
         }
     }
 }

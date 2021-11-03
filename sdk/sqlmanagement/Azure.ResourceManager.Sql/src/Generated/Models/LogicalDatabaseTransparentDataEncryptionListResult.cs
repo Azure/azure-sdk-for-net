@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of transparent data encryptions. </summary>
     internal partial class LogicalDatabaseTransparentDataEncryptionListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>
         internal LogicalDatabaseTransparentDataEncryptionListResult()
         {
-            Value = new ChangeTrackingList<LogicalDatabaseTransparentDataEncryption>();
+            Value = new ChangeTrackingList<LogicalDatabaseTransparentDataEncryptionData>();
         }
 
         /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal LogicalDatabaseTransparentDataEncryptionListResult(IReadOnlyList<LogicalDatabaseTransparentDataEncryption> value, string nextLink)
+        internal LogicalDatabaseTransparentDataEncryptionListResult(IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<LogicalDatabaseTransparentDataEncryption> Value { get; }
+        public IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

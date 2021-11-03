@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of sync groups. </summary>
     internal partial class SyncGroupListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncGroupListResult. </summary>
         internal SyncGroupListResult()
         {
-            Value = new ChangeTrackingList<SyncGroup>();
+            Value = new ChangeTrackingList<SyncGroupData>();
         }
 
         /// <summary> Initializes a new instance of SyncGroupListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SyncGroupListResult(IReadOnlyList<SyncGroup> value, string nextLink)
+        internal SyncGroupListResult(IReadOnlyList<SyncGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<SyncGroup> Value { get; }
+        public IReadOnlyList<SyncGroupData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class OperationsHealth : IUtf8JsonSerializable
     {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static OperationsHealth DeserializeOperationsHealth(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> name0 = default;
             Optional<string> health = default;
             Optional<string> description = default;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new OperationsHealth(id.Value, name.Value, type.Value, name0.Value, health.Value, description.Value);
+            return new OperationsHealth(id, name, type, name0.Value, health.Value, description.Value);
         }
     }
 }

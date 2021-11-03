@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of the managed Server&apos;s security alert policies. </summary>
     internal partial class ManagedServerSecurityAlertPolicyListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyListResult. </summary>
         internal ManagedServerSecurityAlertPolicyListResult()
         {
-            Value = new ChangeTrackingList<ManagedServerSecurityAlertPolicy>();
+            Value = new ChangeTrackingList<ManagedServerSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedServerSecurityAlertPolicyListResult(IReadOnlyList<ManagedServerSecurityAlertPolicy> value, string nextLink)
+        internal ManagedServerSecurityAlertPolicyListResult(IReadOnlyList<ManagedServerSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ManagedServerSecurityAlertPolicy> Value { get; }
+        public IReadOnlyList<ManagedServerSecurityAlertPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

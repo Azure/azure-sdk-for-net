@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class DatabaseExtensions : IUtf8JsonSerializable
     {
@@ -43,9 +44,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseExtensions DeserializeDatabaseExtensions(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<OperationMode> operationMode = default;
             Optional<StorageKeyType> storageKeyType = default;
             Optional<string> storageKey = default;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DatabaseExtensions(id.Value, name.Value, type.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value);
+            return new DatabaseExtensions(id, name, type, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value);
         }
     }
 }

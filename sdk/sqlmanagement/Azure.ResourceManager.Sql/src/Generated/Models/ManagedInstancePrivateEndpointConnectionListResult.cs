@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class ManagedInstancePrivateEndpointConnectionListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionListResult. </summary>
         internal ManagedInstancePrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstancePrivateEndpointConnection>();
+            Value = new ChangeTrackingList<ManagedInstancePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstancePrivateEndpointConnectionListResult(IReadOnlyList<ManagedInstancePrivateEndpointConnection> value, string nextLink)
+        internal ManagedInstancePrivateEndpointConnectionListResult(IReadOnlyList<ManagedInstancePrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ManagedInstancePrivateEndpointConnection> Value { get; }
+        public IReadOnlyList<ManagedInstancePrivateEndpointConnectionData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

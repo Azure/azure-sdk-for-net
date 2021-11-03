@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The output destination type. </summary>
     public readonly partial struct JobStepOutputType : IEquatable<JobStepOutputType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JobStepOutputType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepOutputType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobStepOutputType(string value)
         {

@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
     public readonly partial struct ServerKeyType : IEquatable<ServerKeyType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ServerKeyType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerKeyType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerKeyType(string value)
         {

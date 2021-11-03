@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Properties of an Azure SQL Database sync agent key. </summary>
     public partial class SyncAgentKeyProperties

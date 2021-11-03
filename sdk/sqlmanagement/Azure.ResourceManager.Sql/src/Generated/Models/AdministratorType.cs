@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Type of the sever administrator. </summary>
     public readonly partial struct AdministratorType : IEquatable<AdministratorType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AdministratorType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdministratorType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdministratorType(string value)
         {

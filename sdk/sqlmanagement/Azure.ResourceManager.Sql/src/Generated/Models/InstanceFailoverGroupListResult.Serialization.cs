@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class InstanceFailoverGroupListResult
     {
         internal static InstanceFailoverGroupListResult DeserializeInstanceFailoverGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<InstanceFailoverGroup>> value = default;
+            Optional<IReadOnlyList<InstanceFailoverGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstanceFailoverGroup> array = new List<InstanceFailoverGroup>();
+                    List<InstanceFailoverGroupData> array = new List<InstanceFailoverGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceFailoverGroup.DeserializeInstanceFailoverGroup(item));
+                        array.Add(InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(item));
                     }
                     value = array;
                     continue;

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Automatic tuning properties for individual advisors. </summary>
     public partial class AutomaticTuningOptions

@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The AggregationFunctionType. </summary>
     public readonly partial struct AggregationFunctionType : IEquatable<AggregationFunctionType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AggregationFunctionType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregationFunctionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AggregationFunctionType(string value)
         {

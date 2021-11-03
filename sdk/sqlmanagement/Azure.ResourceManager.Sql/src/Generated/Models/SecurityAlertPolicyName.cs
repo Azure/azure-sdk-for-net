@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The SecurityAlertPolicyName. </summary>
     public readonly partial struct SecurityAlertPolicyName : IEquatable<SecurityAlertPolicyName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SecurityAlertPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertPolicyName(string value)
         {

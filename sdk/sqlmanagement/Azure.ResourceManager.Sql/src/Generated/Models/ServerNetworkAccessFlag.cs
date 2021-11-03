@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
     public readonly partial struct ServerNetworkAccessFlag : IEquatable<ServerNetworkAccessFlag>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerNetworkAccessFlag"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerNetworkAccessFlag(string value)
         {

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class DatabaseColumnListResult
     {
         internal static DatabaseColumnListResult DeserializeDatabaseColumnListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseColumn>> value = default;
+            Optional<IReadOnlyList<DatabaseColumnData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseColumn> array = new List<DatabaseColumn>();
+                    List<DatabaseColumnData> array = new List<DatabaseColumnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseColumn.DeserializeDatabaseColumn(item));
+                        array.Add(DatabaseColumnData.DeserializeDatabaseColumnData(item));
                     }
                     value = array;
                     continue;

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class DataWarehouseUserActivitiesListResult
     {
         internal static DataWarehouseUserActivitiesListResult DeserializeDataWarehouseUserActivitiesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataWarehouseUserActivities>> value = default;
+            Optional<IReadOnlyList<DataWarehouseUserActivitiesData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataWarehouseUserActivities> array = new List<DataWarehouseUserActivities>();
+                    List<DataWarehouseUserActivitiesData> array = new List<DataWarehouseUserActivitiesData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataWarehouseUserActivities.DeserializeDataWarehouseUserActivities(item));
+                        array.Add(DataWarehouseUserActivitiesData.DeserializeDataWarehouseUserActivitiesData(item));
                     }
                     value = array;
                     continue;

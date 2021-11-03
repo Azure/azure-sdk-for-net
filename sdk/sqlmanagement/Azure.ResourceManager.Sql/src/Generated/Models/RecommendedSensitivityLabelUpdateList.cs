@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of recommended sensitivity label update operations. </summary>
     public partial class RecommendedSensitivityLabelUpdateList
@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
             Operations = new ChangeTrackingList<RecommendedSensitivityLabelUpdate>();
         }
 
+        /// <summary> Gets the operations. </summary>
         public IList<RecommendedSensitivityLabelUpdate> Operations { get; }
     }
 }

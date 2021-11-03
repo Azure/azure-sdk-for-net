@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The unit of the metric. </summary>
     public readonly partial struct QueryMetricUnitType : IEquatable<QueryMetricUnitType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricUnitType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryMetricUnitType(string value)
         {

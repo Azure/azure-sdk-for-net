@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </summary>
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAccountType(string value)
         {

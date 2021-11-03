@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The type of identity that created the resource. </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreatedByType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CreatedByType(string value)
         {

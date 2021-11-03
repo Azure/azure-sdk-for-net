@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> State of the private endpoint connection. </summary>
     public readonly partial struct PrivateEndpointProvisioningState : IEquatable<PrivateEndpointProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PrivateEndpointProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateEndpointProvisioningState(string value)
         {

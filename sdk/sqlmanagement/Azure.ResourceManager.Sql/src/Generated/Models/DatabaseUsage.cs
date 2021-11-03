@@ -5,10 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> Usage metric of a database. </summary>
-    public partial class DatabaseUsage : ProxyResource
+    public partial class DatabaseUsage : Resource
     {
         /// <summary> Initializes a new instance of DatabaseUsage. </summary>
         public DatabaseUsage()
@@ -16,14 +19,14 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of DatabaseUsage. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="displayName"> User-readable name of the metric. </param>
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
-        internal DatabaseUsage(string id, string name, string type, string displayName, double? currentValue, double? limit, string unit) : base(id, name, type)
+        internal DatabaseUsage(ResourceIdentifier id, string name, ResourceType type, string displayName, double? currentValue, double? limit, string unit) : base(id, name, type)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;

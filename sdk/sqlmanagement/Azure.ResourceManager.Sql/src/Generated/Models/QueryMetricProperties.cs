@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Properties of a topquery metric in one interval. </summary>
     public partial class QueryMetricProperties

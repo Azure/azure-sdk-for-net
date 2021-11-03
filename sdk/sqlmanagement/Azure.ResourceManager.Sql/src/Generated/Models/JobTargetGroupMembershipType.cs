@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Whether the target is included or excluded from the group. </summary>
     public enum JobTargetGroupMembershipType

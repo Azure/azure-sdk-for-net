@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class UpdateManagedInstanceDnsServersOperation : IUtf8JsonSerializable
     {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static UpdateManagedInstanceDnsServersOperation DeserializeUpdateManagedInstanceDnsServersOperation(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<DnsRefreshConfigurationPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UpdateManagedInstanceDnsServersOperation(id.Value, name.Value, type.Value, Optional.ToNullable(status));
+            return new UpdateManagedInstanceDnsServersOperation(id, name, type, Optional.ToNullable(status));
         }
     }
 }

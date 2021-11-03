@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ManagedServerSecurityAlertPolicyListResult
     {
         internal static ManagedServerSecurityAlertPolicyListResult DeserializeManagedServerSecurityAlertPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedServerSecurityAlertPolicy>> value = default;
+            Optional<IReadOnlyList<ManagedServerSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedServerSecurityAlertPolicy> array = new List<ManagedServerSecurityAlertPolicy>();
+                    List<ManagedServerSecurityAlertPolicyData> array = new List<ManagedServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServerSecurityAlertPolicy.DeserializeManagedServerSecurityAlertPolicy(item));
+                        array.Add(ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(item));
                     }
                     value = array;
                     continue;

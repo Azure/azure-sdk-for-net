@@ -5,33 +5,107 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions
     {
-        #region Deployment
-        /// <summary> Gets an object representing a Deployment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupResourceGroupSubscriptionTenantDeployment
+        /// <summary> Gets an object representing a ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Deployment" /> object. </returns>
-        public static Deployment GetDeployment(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection" /> object. </returns>
+        public static ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection GetManagementGroupResourceGroupSubscriptionTenantDeployments(this Tenant tenant)
         {
-            return new Deployment(tenant, id);
+            return new ManagementGroupResourceGroupSubscriptionTenantDeploymentCollection(tenant);
         }
         #endregion
 
-        #region DeploymentOperation
-        /// <summary> Gets an object representing a DeploymentOperation along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantDeployment
+        /// <summary> Gets an object representing a TenantDeploymentCollection along with the instance operations that can be performed on it. </summary>
         /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentOperation" /> object. </returns>
-        public static DeploymentOperation GetDeploymentOperation(this Tenant tenant, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantDeploymentCollection" /> object. </returns>
+        public static TenantDeploymentCollection GetTenantDeployments(this Tenant tenant)
         {
-            return new DeploymentOperation(tenant, id);
+            return new TenantDeploymentCollection(tenant);
         }
         #endregion
+
+        private static DeploymentsRestOperations GetDeploymentsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new DeploymentsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
+        }
+
+        /// <summary> Calculate the hash of the given template. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public static async Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(this Tenant tenant, object template, CancellationToken cancellationToken = default)
+        {
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
+            return await tenant.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CalculateTemplateHashDeployment");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var response = await restOperations.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            ).ConfigureAwait(false);
+        }
+
+        /// <summary> Calculate the hash of the given template. </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public static Response<TemplateHashResult> CalculateTemplateHashDeployment(this Tenant tenant, object template, CancellationToken cancellationToken = default)
+        {
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
+            return tenant.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                using var scope = clientDiagnostics.CreateScope("TenantExtensions.CalculateTemplateHashDeployment");
+                scope.Start();
+                try
+                {
+                    var restOperations = GetDeploymentsRestOperations(clientDiagnostics, credential, options, pipeline, tenant.Id.SubscriptionId, baseUri);
+                    var response = restOperations.CalculateTemplateHash(template, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
     }
 }

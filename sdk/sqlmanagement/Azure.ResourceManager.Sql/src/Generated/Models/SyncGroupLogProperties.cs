@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Properties of an Azure SQL Database sync group log. </summary>
     public partial class SyncGroupLogProperties
