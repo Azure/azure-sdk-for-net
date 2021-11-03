@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //wait for migration state
             MigrationConfigProperties migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
             int count = 0;
-            while (count < 100 && migrationConfig.Data.MigrationState != "Active" || migrationConfig.Data.PendingReplicationOperationsCount.HasValue && migrationConfig.Data.PendingReplicationOperationsCount != 0)
+            while (count < 100 && (migrationConfig.Data.MigrationState != "Active" || (migrationConfig.Data.PendingReplicationOperationsCount.HasValue && migrationConfig.Data.PendingReplicationOperationsCount != 0)))
             {
                 if (Mode != RecordedTestMode.Playback)
                 {

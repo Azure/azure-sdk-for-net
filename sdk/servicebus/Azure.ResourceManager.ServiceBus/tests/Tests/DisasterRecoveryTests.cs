@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //wait for completion, this may take several minutes in live and record mode
             armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
+            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
