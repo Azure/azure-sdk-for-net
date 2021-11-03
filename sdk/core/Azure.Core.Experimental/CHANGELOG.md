@@ -1,14 +1,6 @@
 # Release History
 
-## 0.1.0-preview.18 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 0.1.0-preview.18 (2021-11-03)
 
 ## 0.1.0-preview.17 (2021-10-01)
 
