@@ -3716,7 +3716,9 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
-        public async Task FindBlobsByTag_ContainerSAS()
+        [TestCase(BlobContainerSasPermissions.Filter)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task FindBlobsByTag_ContainerSAS(BlobContainerSasPermissions containerSasPermissions)
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3744,7 +3746,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = test.Container.Name,
                 ExpiresOn = Recording.UtcNow.AddDays(1)
             };
-            blobSasBuilder.SetPermissions(BlobContainerSasPermissions.All);
+            blobSasBuilder.SetPermissions(containerSasPermissions);
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
             {
                 Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
