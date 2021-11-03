@@ -334,7 +334,7 @@ try {
     $serviceName = if (Split-Path $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
-        $ServiceDirectory
+        $ServiceDirectory.Trim('/')
     }
 
     $ResourceGroupName = if ($ResourceGroupName) {
@@ -600,7 +600,7 @@ try {
             $outputFile = "$($templateFile.originalFilePath).env"
 
             $environmentText = $deploymentOutputs | ConvertTo-Json;
-            $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
             $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 
             Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
