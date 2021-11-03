@@ -271,17 +271,13 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             PetStoreClient client = CreateClient(mockTransport);
 
-            var data = new
-            {
-                name = "snoopy",
-                species = "beagle"
-            };
-            LowLevelFuncOperation<Pet> operation = (LowLevelFuncOperation<BinaryData>)await client.ImportPetAsync(RequestContent.Create(data), new RequestOptions());
+            Pet newPet = new Pet("", "beagle");
+            Operation<Pet> operation = await client.ImportPetAsync(newPet);
 
-            Pet pet = await operation.WaitForCompletionAsync();
+            Pet petResult = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual("snoopy", pet.Name);
-            Assert.AreEqual("beagle", pet.Species);
+            Assert.AreEqual("snoopy", petResult.Name);
+            Assert.AreEqual("beagle", petResult.Species);
         }
 
         #region Helpers

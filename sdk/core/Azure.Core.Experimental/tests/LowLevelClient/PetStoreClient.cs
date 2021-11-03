@@ -182,11 +182,21 @@ namespace Azure.Core.Experimental.Tests
         }
 
 #pragma warning disable AZC0002
-        public virtual Operation<Pet> ImportPet(RequestContent content)
+        public virtual Operation<Pet> ImportPet(Pet inputPet)
 #pragma warning restore AZC0002
         {
-            LowLevelFuncOperation<BinaryData> operation = (LowLevelFuncOperation<BinaryData>)ImportPet(content, default);
-            return new LowLevelFuncOperation<Pet>((OperationInternals)(operation._operation), r => (Pet)(object)r);
+            var content = RequestContent.Create(inputPet);
+            var operation = (LowLevelFuncOperation<BinaryData>)ImportPet(content, default);
+            return new LowLevelFuncOperation<Pet>(operation, r => (Pet)r);
+        }
+
+#pragma warning disable AZC0002
+        public virtual async Task<Operation<Pet>> ImportPetAsync(Pet inputPet)
+#pragma warning restore AZC0002
+        {
+            var content = RequestContent.Create(inputPet);
+            var operation = (LowLevelFuncOperation<BinaryData>)(await ImportPetAsync(content, default));
+            return new LowLevelFuncOperation<Pet>(operation, r => (Pet)r);
         }
 
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
