@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text.Json;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

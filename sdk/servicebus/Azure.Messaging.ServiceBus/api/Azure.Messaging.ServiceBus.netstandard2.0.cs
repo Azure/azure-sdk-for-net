@@ -680,7 +680,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public string ForwardTo { get { throw null; } set { } }
         public System.TimeSpan LockDuration { get { throw null; } set { } }
         public int MaxDeliveryCount { get { throw null; } set { } }
-        public long MaxMessageSizeInKilobytes { get { throw null; } set { } }
+        public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public long MaxSizeInMegabytes { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public bool RequiresDuplicateDetection { get { throw null; } }
@@ -882,7 +882,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public System.TimeSpan DuplicateDetectionHistoryTimeWindow { get { throw null; } set { } }
         public bool EnableBatchedOperations { get { throw null; } set { } }
         public bool EnablePartitioning { get { throw null; } set { } }
-        public long MaxMessageSizeInKilobytes { get { throw null; } set { } }
+        public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public long MaxSizeInMegabytes { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool RequiresDuplicateDetection { get { throw null; } set { } }

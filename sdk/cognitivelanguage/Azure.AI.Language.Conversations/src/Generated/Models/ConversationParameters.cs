@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
     public partial class ConversationParameters : AnalysisParameters
