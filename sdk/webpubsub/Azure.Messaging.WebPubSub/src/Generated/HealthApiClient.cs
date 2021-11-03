@@ -49,9 +49,9 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetServiceStatusAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -59,7 +59,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGetServiceStatusRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, options).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -69,9 +69,9 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="options"> The request options. </param>
+        /// <param name="context"> The request context. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetServiceStatus(RequestOptions options = null)
+        public virtual Response GetServiceStatus(RequestContext context = null)
 #pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -79,7 +79,7 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateGetServiceStatusRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, options);
+                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
             }
             catch (Exception e)
             {

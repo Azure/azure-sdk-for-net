@@ -125,10 +125,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private int _maxConcurrentSessions = 8;
 
         /// <summary>
-        /// Gets or sets an optional exception handler that will be invoked if an exception occurs while attempting to process
+        /// Gets or sets an optional error handler that will be invoked if an exception occurs while attempting to process
         /// a message. This does not apply for functions that receive a batch of messages.
         /// </summary>
-        internal Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
+        public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
@@ -198,11 +198,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return options.ToString(Formatting.Indented);
         }
 
-        internal Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
+        internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            ExceptionHandler?.Invoke(args);
-
-            return Task.CompletedTask;
+            if (ProcessErrorAsync != null)
+            {
+                await ProcessErrorAsync(args).ConfigureAwait(false);
+            }
         }
 
         internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)

@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Conversations.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests

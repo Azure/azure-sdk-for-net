@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
