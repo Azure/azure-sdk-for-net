@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -46,6 +49,21 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
                 return InstrumentClient(new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options)));
+            }
+        }
+
+        internal async Task PollUntilTime(AnalyzeActionsOperation operation)
+        {
+            TimeSpan pollingInterval = TimeSpan.FromSeconds(10);
+            int timeout = (int)TimeSpan.FromMinutes(20).TotalMilliseconds;
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout);
+            try
+            {
+                await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("Test cancelled. Test timed out.");
             }
         }
     }

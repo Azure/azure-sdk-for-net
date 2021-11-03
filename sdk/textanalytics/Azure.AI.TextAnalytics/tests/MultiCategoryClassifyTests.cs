@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,8 +16,6 @@ namespace Azure.AI.TextAnalytics.Tests
             : base(isAsync, serviceVersion)
         {
         }
-
-        private readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(10);
 
         private const string MultiCategoryClassifyDocument1 =
             "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist";
@@ -56,7 +53,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -86,7 +84,8 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -116,7 +115,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -147,7 +147,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions, "en", options);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -173,7 +174,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -204,7 +206,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchDocuments, batchActions, options);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -238,7 +241,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_multiCategoryClassifyBatchConvenienceDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(_pollingInterval);
+            await PollUntilTime(operation);
+            Assert.IsTrue(operation.HasCompleted);
 
             // Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
