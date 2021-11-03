@@ -34,17 +34,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientContext"> The client context to use. </param>
         /// <param name="id"> The id for the subscription that owns this collection. </param>
         internal GenericResourceCollection(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
         {
+            Initialize(clientContext, id);
         }
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
-
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
 
         private ResourcesRestOperations RestClient
         {

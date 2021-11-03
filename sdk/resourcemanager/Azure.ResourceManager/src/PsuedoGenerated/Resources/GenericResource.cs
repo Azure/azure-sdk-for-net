@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operation to get the client properties from. </param>
         /// <param name="id"> The id of the resource. </param>
         internal GenericResource(ArmResource operations, ResourceIdentifier id)
-            : base(operations, id)
         {
+            Initialize(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), id);
+            ValidateResourceType(Id);
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -48,12 +49,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resource"> The data model representing the generic azure resource. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="ArmClientOptions"/> or <see cref="TokenCredential"/> is null. </exception>
         internal GenericResource(ArmResource operations, GenericResourceData resource)
-            : base(operations, resource.Id)
+            : this(operations, resource.Id)
         {
             _data = resource;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <inheritdoc/>
@@ -228,8 +227,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        private static void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier is null)
                 throw new ArgumentNullException(nameof(identifier));

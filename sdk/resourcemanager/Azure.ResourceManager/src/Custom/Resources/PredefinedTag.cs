@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientContext"></param>
         /// <param name="id"> The id of the subscription. </param>
         internal PredefinedTag(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
         {
+            Initialize(clientContext, id);
+            ValidateResourceType(Id);
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -47,12 +48,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="data"> The data model representing the generic azure resource. </param>
         internal PredefinedTag(ArmResource operations, PredefinedTagData data)
-            : base(operations, data.Id)
+            : this(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), data.Id)
         {
+            ValidateResourceType(data.Id);
             _data = data;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -201,8 +201,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        private static void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier is null)
                 throw new ArgumentException("Invalid resource type for TagsOperation", nameof(identifier));

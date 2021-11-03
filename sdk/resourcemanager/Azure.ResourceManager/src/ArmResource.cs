@@ -58,11 +58,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
         {
-            ClientOptions = clientContext.ClientOptions;
-            Id = id;
-            Credential = clientContext.Credential;
-            BaseUri = clientContext.BaseUri;
-            Pipeline = clientContext.Pipeline;
+            Initialize(clientContext, id);
             ValidateResourceType(id);
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource identifier.
         /// </summary>
-        public virtual ResourceIdentifier Id { get; }
+        public virtual ResourceIdentifier Id { get; private set; }
 
         /// <summary>
         /// Gets the Azure Resource Manager client options.
@@ -91,7 +87,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        protected internal virtual HttpPipeline Pipeline { get; }
+        protected internal virtual HttpPipeline Pipeline { get; private set; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
@@ -106,10 +102,24 @@ namespace Azure.ResourceManager.Core
         protected internal TagResource TagResource => _tagResource ??= new TagResource(this, Id);
 
         /// <summary>
+        /// Initialize base properties
+        /// </summary>
+        /// <param name="clientContext"></param>
+        /// <param name="id"></param>
+        internal void Initialize(ClientContext clientContext, ResourceIdentifier id)
+        {
+            ClientOptions = clientContext.ClientOptions;
+            Id = id;
+            Credential = clientContext.Credential;
+            BaseUri = clientContext.BaseUri;
+            Pipeline = clientContext.Pipeline;
+        }
+
+        /// <summary>
         /// Validate the resource identifier against current operations.
         /// </summary>
         /// <param name="identifier"> The resource identifier. </param>
-        protected virtual void ValidateResourceType(ResourceIdentifier identifier)
+        private void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier?.ResourceType != ValidResourceType)
                 throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");

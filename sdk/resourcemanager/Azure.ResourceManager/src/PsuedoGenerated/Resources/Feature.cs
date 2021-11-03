@@ -31,12 +31,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operations to copy the client options from. </param>
         /// <param name="resource"> The FeatureData to use in these operations. </param>
         internal Feature(ArmResource operations, FeatureData resource)
-            : base(operations, resource.Id)
+            : this(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), resource.Id)
         {
             _data = resource;
             HasData = true;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -45,8 +43,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the resource group to use. </param>
         internal Feature(ClientContext options, ResourceIdentifier id)
-            : base(options, id)
         {
+            Initialize(options, id);
+            ValidateResourceType(Id);
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -78,8 +77,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        private void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier.ResourceType != $"{Id.ResourceType.Namespace}/features")
             {
