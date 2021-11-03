@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Test.HttpRecorder", "Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure", "..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj", "{4432CB88-1E91-4F61-8F74-D792A7919898}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure.Authentication", "..\Auth\Az.Auth\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj", "{84E4B6AC-0C58-4A80-B251-3C9BCF18FA9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotCentral", "..\..\iotcentral\Microsoft.Azure.Management.IotCentral\src\Microsoft.Azure.Management.IotCentral.csproj", "{D03DE1AD-10E9-4D51-A507-F30767E83D5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotCentral.Tests", "..\..\iotcentral\Microsoft.Azure.Management.IotCentral\tests\Microsoft.Azure.Management.IotCentral.Tests.csproj", "{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +149,38 @@ Global
 		{84E4B6AC-0C58-4A80-B251-3C9BCF18FA9D}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{84E4B6AC-0C58-4A80-B251-3C9BCF18FA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84E4B6AC-0C58-4A80-B251-3C9BCF18FA9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DE1AD-10E9-4D51-A507-F30767E83D5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CAE6F3-032C-4353-BE24-D292FD06C3F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

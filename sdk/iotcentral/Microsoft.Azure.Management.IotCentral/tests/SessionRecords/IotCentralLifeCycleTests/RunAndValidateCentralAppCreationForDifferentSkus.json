@@ -1,0 +1,159 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourcegroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlZ3JvdXBzL2RvdG5ldHNka3N1YmRvbWFpbnVwZGF0ZTA1MDRmOWViYmMwNzQ0MWU4YzIxNDdjMGZhZWZhMjljP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"EastUS\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4a15a7e2-64dd-4ade-adc6-47a96b338532"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "8cb92ca3-14f0-47e8-8bd4-584642da16be"
+        ],
+        "x-ms-correlation-request-id": [
+          "8cb92ca3-14f0-47e8-8bd4-584642da16be"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211103T165422Z:8cb92ca3-14f0-47e8-8bd4-584642da16be"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 03 Nov 2021 16:54:21 GMT"
+        ],
+        "Content-Length": [
+          "265"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c\",\r\n  \"name\": \"dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c/providers/Microsoft.IoTCentral/iotApps/dotnetsdkapp01ef93e1178048dcb9a276230fe3fca7?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlR3JvdXBzL2RvdG5ldHNka3N1YmRvbWFpbnVwZGF0ZTA1MDRmOWViYmMwNzQ0MWU4YzIxNDdjMGZhZWZhMjljL3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9pb3RBcHBzL2RvdG5ldHNka2FwcDAxZWY5M2UxMTc4MDQ4ZGNiOWEyNzYyMzBmZTNmY2E3P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapp01ef93e1178048dcb9a276230fe3fca7\",\r\n    \"subdomain\": \"dotnetsdksubdomain0b83e6ba4ef44756bc329d66355871b9\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"EastUS\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3d9fd676-ca07-4e47-8ff0-8ffd6e065a48"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "281"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "x-ms-request-id": [
+          "e96605f6-d486-4857-9102-caaced532c3b"
+        ],
+        "x-iot-correlation": [
+          "9g8f58bm.1.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-download-options": [
+          "noopen"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "x-xss-protection": [
+          "1; mode=block"
+        ],
+        "x-cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: DF3057982D654477A19DC62541AE599A Ref B: CO1EDGE1710 Ref C: 2021-11-03T16:54:25Z"
+        ],
+        "X-IoT-Version": [
+          "102821.0001-release"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus02"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "5437fee2-15ad-4c17-9155-4a668b6f71b1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20211103T165436Z:5437fee2-15ad-4c17-9155-4a668b6f71b1"
+        ],
+        "Date": [
+          "Wed, 03 Nov 2021 16:54:35 GMT"
+        ],
+        "Content-Length": [
+          "102"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"400.200.006.026\",\r\n    \"message\": \"The sku S1 is invalid, allowed skus are ST0, ST1, ST2\"\r\n  }\r\n}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b"
+  }
+}
