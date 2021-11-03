@@ -162,16 +162,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 return cachedSchema;
             }
 
-            string schemaContent;
+            string schemaDefinition;
             if (async)
             {
-                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Content;
+                schemaDefinition = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Definition;
             }
             else
             {
-                schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Content;
+                schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
             }
-            var schema = Schema.Parse(schemaContent);
+            var schema = Schema.Parse(schemaDefinition);
             _idToSchemaMap.TryAdd(schemaId, schema);
             _schemaToIdMap.TryAdd(schema, schemaId);
             return schema;
