@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ManagedInstanceKeyListResult
     {
         internal static ManagedInstanceKeyListResult DeserializeManagedInstanceKeyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstanceKey>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstanceKey> array = new List<ManagedInstanceKey>();
+                    List<ManagedInstanceKeyData> array = new List<ManagedInstanceKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceKey.DeserializeManagedInstanceKey(item));
+                        array.Add(ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(item));
                     }
                     value = array;
                     continue;

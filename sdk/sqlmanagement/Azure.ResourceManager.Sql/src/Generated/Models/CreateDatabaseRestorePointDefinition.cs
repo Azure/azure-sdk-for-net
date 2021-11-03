@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains the information necessary to perform a create database restore point operation. </summary>
     public partial class CreateDatabaseRestorePointDefinition

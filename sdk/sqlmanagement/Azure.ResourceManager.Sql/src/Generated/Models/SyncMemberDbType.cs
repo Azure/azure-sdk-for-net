@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Type of the sync agent linked database. </summary>
     public readonly partial struct SyncMemberDbType : IEquatable<SyncMemberDbType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SyncMemberDbType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMemberDbType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncMemberDbType(string value)
         {

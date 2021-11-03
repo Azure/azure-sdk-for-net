@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Connection type used for connecting to the instance. </summary>
     public readonly partial struct ManagedInstanceProxyOverride : IEquatable<ManagedInstanceProxyOverride>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstanceProxyOverride"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceProxyOverride"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceProxyOverride(string value)
         {

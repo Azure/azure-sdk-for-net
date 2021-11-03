@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager.Resources.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class ManagedInstancePrivateEndpointConnectionProperties
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
-        internal ManagedInstancePrivateEndpointConnectionProperties(ManagedInstancePrivateEndpointProperty privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState)
+        internal ManagedInstancePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        public ManagedInstancePrivateEndpointProperty PrivateEndpoint { get; }
+        public WritableSubResource PrivateEndpoint { get; }
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; }
         /// <summary> State of the Private Endpoint Connection. </summary>

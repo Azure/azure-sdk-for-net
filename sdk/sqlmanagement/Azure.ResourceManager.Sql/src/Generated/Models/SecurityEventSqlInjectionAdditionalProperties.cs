@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The properties of a security event sql injection additional properties. </summary>
     public partial class SecurityEventSqlInjectionAdditionalProperties

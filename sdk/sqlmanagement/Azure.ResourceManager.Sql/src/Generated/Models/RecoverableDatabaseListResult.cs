@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The response to a list recoverable databases request. </summary>
     internal partial class RecoverableDatabaseListResult
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabase> value)
+        internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabaseData> value)
         {
             if (value == null)
             {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
-        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabase> value)
+        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of recoverable databases. </summary>
-        public IReadOnlyList<RecoverableDatabase> Value { get; }
+        public IReadOnlyList<RecoverableDatabaseData> Value { get; }
     }
 }

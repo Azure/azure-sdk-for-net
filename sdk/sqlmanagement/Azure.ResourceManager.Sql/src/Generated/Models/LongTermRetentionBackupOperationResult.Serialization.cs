@@ -8,8 +8,9 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class LongTermRetentionBackupOperationResult : IUtf8JsonSerializable
     {
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static LongTermRetentionBackupOperationResult DeserializeLongTermRetentionBackupOperationResult(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<Guid> requestId = default;
             Optional<string> operationType = default;
             Optional<string> fromBackupResourceId = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new LongTermRetentionBackupOperationResult(id.Value, name.Value, type.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
+            return new LongTermRetentionBackupOperationResult(id, name, type, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
         }
     }
 }

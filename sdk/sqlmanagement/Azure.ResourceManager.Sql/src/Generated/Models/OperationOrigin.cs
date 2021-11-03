@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The intended executor of the operation. </summary>
     public readonly partial struct OperationOrigin : IEquatable<OperationOrigin>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="OperationOrigin"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationOrigin"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationOrigin(string value)
         {

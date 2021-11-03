@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> State of the sync agent. </summary>
     public readonly partial struct SyncAgentState : IEquatable<SyncAgentState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SyncAgentState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncAgentState(string value)
         {

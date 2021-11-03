@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The table temporal type. </summary>
     public readonly partial struct TableTemporalType : IEquatable<TableTemporalType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TableTemporalType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableTemporalType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TableTemporalType(string value)
         {

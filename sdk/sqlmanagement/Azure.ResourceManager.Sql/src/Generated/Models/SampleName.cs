@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The name of the sample schema to apply when creating this database. </summary>
     public readonly partial struct SampleName : IEquatable<SampleName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SampleName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SampleName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SampleName(string value)
         {

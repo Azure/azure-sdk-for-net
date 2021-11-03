@@ -8,8 +8,9 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class SecurityEvent : IUtf8JsonSerializable
     {
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SecurityEvent DeserializeSecurityEvent(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<DateTimeOffset> eventTime = default;
             Optional<SecurityEventType> securityEventType = default;
             Optional<string> subscription = default;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEvent(id.Value, name.Value, type.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            return new SecurityEvent(id, name, type, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
         }
     }
 }

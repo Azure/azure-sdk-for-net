@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
     public readonly partial struct SecondaryType : IEquatable<SecondaryType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SecondaryType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecondaryType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecondaryType(string value)
         {

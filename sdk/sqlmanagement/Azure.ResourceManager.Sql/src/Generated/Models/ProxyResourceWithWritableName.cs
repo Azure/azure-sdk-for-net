@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> ARM proxy resource. </summary>
     public partial class ProxyResourceWithWritableName : ResourceWithWritableName

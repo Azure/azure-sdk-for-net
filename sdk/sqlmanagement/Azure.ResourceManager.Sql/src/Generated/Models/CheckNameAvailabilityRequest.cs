@@ -7,13 +7,13 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class CheckNameAvailabilityRequest
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityRequest(string name)
         {
@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
             Type = "Microsoft.Sql/servers";
         }
 
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the type. </summary>
         public string Type { get; }
     }
 }

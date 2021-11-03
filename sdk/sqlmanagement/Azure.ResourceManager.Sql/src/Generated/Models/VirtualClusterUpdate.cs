@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> An update request for an Azure SQL Database virtual cluster. </summary>
     public partial class VirtualClusterUpdate

@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of managed instances. </summary>
     internal partial class ManagedInstanceListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceListResult. </summary>
         internal ManagedInstanceListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstance>();
+            Value = new ChangeTrackingList<ManagedInstanceData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceListResult(IReadOnlyList<ManagedInstance> value, string nextLink)
+        internal ManagedInstanceListResult(IReadOnlyList<ManagedInstanceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ManagedInstance> Value { get; }
+        public IReadOnlyList<ManagedInstanceData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

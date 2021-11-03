@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Specifies the state of the transparent data encryption. </summary>
     public enum TransparentDataEncryptionState

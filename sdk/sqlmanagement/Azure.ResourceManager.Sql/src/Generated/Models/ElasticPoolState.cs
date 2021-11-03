@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The state of the elastic pool. </summary>
     public readonly partial struct ElasticPoolState : IEquatable<ElasticPoolState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ElasticPoolState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticPoolState(string value)
         {

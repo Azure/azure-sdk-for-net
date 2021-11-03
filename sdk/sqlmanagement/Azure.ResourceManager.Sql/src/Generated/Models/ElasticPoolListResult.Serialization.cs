@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ElasticPoolListResult
     {
         internal static ElasticPoolListResult DeserializeElasticPoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ElasticPool>> value = default;
+            Optional<IReadOnlyList<ElasticPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ElasticPool> array = new List<ElasticPool>();
+                    List<ElasticPoolData> array = new List<ElasticPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPool.DeserializeElasticPool(item));
+                        array.Add(ElasticPoolData.DeserializeElasticPoolData(item));
                     }
                     value = array;
                     continue;

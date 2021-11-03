@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The license type to apply for this elastic pool. </summary>
     public readonly partial struct ElasticPoolLicenseType : IEquatable<ElasticPoolLicenseType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticPoolLicenseType(string value)
         {

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class JobTargetGroupListResult
     {
         internal static JobTargetGroupListResult DeserializeJobTargetGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobTargetGroup>> value = default;
+            Optional<IReadOnlyList<JobTargetGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobTargetGroup> array = new List<JobTargetGroup>();
+                    List<JobTargetGroupData> array = new List<JobTargetGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobTargetGroup.DeserializeJobTargetGroup(item));
+                        array.Add(JobTargetGroupData.DeserializeJobTargetGroupData(item));
                     }
                     value = array;
                     continue;

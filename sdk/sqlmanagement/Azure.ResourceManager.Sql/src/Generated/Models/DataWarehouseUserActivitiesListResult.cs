@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> User activities of a data warehouse. </summary>
     internal partial class DataWarehouseUserActivitiesListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
         internal DataWarehouseUserActivitiesListResult()
         {
-            Value = new ChangeTrackingList<DataWarehouseUserActivities>();
+            Value = new ChangeTrackingList<DataWarehouseUserActivitiesData>();
         }
 
         /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DataWarehouseUserActivitiesListResult(IReadOnlyList<DataWarehouseUserActivities> value, string nextLink)
+        internal DataWarehouseUserActivitiesListResult(IReadOnlyList<DataWarehouseUserActivitiesData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DataWarehouseUserActivities> Value { get; }
+        public IReadOnlyList<DataWarehouseUserActivitiesData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

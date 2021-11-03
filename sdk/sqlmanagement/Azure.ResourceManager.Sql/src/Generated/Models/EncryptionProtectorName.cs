@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The EncryptionProtectorName. </summary>
     public readonly partial struct EncryptionProtectorName : IEquatable<EncryptionProtectorName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="EncryptionProtectorName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProtectorName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EncryptionProtectorName(string value)
         {

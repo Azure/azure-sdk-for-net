@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class BackupShortTermRetentionPolicyListResult
     {
         internal static BackupShortTermRetentionPolicyListResult DeserializeBackupShortTermRetentionPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<BackupShortTermRetentionPolicy>> value = default;
+            Optional<IReadOnlyList<BackupShortTermRetentionPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackupShortTermRetentionPolicy> array = new List<BackupShortTermRetentionPolicy>();
+                    List<BackupShortTermRetentionPolicyData> array = new List<BackupShortTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupShortTermRetentionPolicy.DeserializeBackupShortTermRetentionPolicy(item));
+                        array.Add(BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(item));
                     }
                     value = array;
                     continue;

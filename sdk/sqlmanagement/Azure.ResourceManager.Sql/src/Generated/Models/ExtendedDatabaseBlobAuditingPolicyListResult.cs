@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of database extended auditing settings. </summary>
     internal partial class ExtendedDatabaseBlobAuditingPolicyListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyListResult. </summary>
         internal ExtendedDatabaseBlobAuditingPolicyListResult()
         {
-            Value = new ChangeTrackingList<ExtendedDatabaseBlobAuditingPolicy>();
+            Value = new ChangeTrackingList<ExtendedDatabaseBlobAuditingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ExtendedDatabaseBlobAuditingPolicyListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ExtendedDatabaseBlobAuditingPolicyListResult(IReadOnlyList<ExtendedDatabaseBlobAuditingPolicy> value, string nextLink)
+        internal ExtendedDatabaseBlobAuditingPolicyListResult(IReadOnlyList<ExtendedDatabaseBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ExtendedDatabaseBlobAuditingPolicy> Value { get; }
+        public IReadOnlyList<ExtendedDatabaseBlobAuditingPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

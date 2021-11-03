@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class DatabaseUsage : IUtf8JsonSerializable
     {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseUsage DeserializeDatabaseUsage(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> displayName = default;
             Optional<double> currentValue = default;
             Optional<double> limit = default;
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DatabaseUsage(id.Value, name.Value, type.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
+            return new DatabaseUsage(id, name, type, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
         }
     }
 }

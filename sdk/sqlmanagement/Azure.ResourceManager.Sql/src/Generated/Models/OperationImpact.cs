@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The impact of an operation, both in absolute and relative terms. </summary>
     internal partial class OperationImpact

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
     public partial class CopyLongTermRetentionBackupParameters

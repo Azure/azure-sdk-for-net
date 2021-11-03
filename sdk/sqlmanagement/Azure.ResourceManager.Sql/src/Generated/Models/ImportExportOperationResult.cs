@@ -8,11 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> An ImportExport operation result resource. </summary>
-    public partial class ImportExportOperationResult : ProxyResource
+    public partial class ImportExportOperationResult : Resource
     {
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
         public ImportExportOperationResult()
@@ -21,9 +23,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
         /// <param name="queuedTime"> Queued time. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
-        internal ImportExportOperationResult(string id, string name, string type, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, string blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections) : base(id, name, type)
+        internal ImportExportOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, string blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections) : base(id, name, type)
         {
             RequestId = requestId;
             RequestType = requestType;

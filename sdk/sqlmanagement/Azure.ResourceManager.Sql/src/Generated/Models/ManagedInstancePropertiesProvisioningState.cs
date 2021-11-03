@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ManagedInstancePropertiesProvisioningState. </summary>
     public readonly partial struct ManagedInstancePropertiesProvisioningState : IEquatable<ManagedInstancePropertiesProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePropertiesProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstancePropertiesProvisioningState(string value)
         {

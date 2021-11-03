@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class VirtualClusterListResult
     {
         internal static VirtualClusterListResult DeserializeVirtualClusterListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualCluster>> value = default;
+            Optional<IReadOnlyList<VirtualClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualCluster> array = new List<VirtualCluster>();
+                    List<VirtualClusterData> array = new List<VirtualClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualCluster.DeserializeVirtualCluster(item));
+                        array.Add(VirtualClusterData.DeserializeVirtualClusterData(item));
                     }
                     value = array;
                     continue;

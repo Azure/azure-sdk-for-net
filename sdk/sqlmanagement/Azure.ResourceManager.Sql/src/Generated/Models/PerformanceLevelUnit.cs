@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Unit type used to measure performance level. </summary>
     public readonly partial struct PerformanceLevelUnit : IEquatable<PerformanceLevelUnit>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerformanceLevelUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PerformanceLevelUnit(string value)
         {

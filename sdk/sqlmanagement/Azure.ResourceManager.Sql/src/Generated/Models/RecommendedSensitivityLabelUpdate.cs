@@ -5,10 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> A recommended sensitivity label update operation. </summary>
-    public partial class RecommendedSensitivityLabelUpdate : ProxyResource
+    public partial class RecommendedSensitivityLabelUpdate : Resource
     {
         /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
         public RecommendedSensitivityLabelUpdate()
@@ -16,14 +19,14 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of RecommendedSensitivityLabelUpdate. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="op"> . </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="op"></param>
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
-        internal RecommendedSensitivityLabelUpdate(string id, string name, string type, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column) : base(id, name, type)
+        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType type, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column) : base(id, name, type)
         {
             Op = op;
             Schema = schema;
@@ -31,6 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Column = column;
         }
 
+        /// <summary> Gets or sets the op. </summary>
         public RecommendedSensitivityLabelUpdateKind? Op { get; set; }
         /// <summary> Schema name of the column to update. </summary>
         public string Schema { get; set; }

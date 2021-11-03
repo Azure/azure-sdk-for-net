@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The DataWarehouseUserActivityName. </summary>
     public readonly partial struct DataWarehouseUserActivityName : IEquatable<DataWarehouseUserActivityName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DataWarehouseUserActivityName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivityName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataWarehouseUserActivityName(string value)
         {

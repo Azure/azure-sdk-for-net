@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of deleted servers. </summary>
     internal partial class DeletedServerListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DeletedServerListResult. </summary>
         internal DeletedServerListResult()
         {
-            Value = new ChangeTrackingList<DeletedServer>();
+            Value = new ChangeTrackingList<DeletedServerData>();
         }
 
         /// <summary> Initializes a new instance of DeletedServerListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DeletedServerListResult(IReadOnlyList<DeletedServer> value, string nextLink)
+        internal DeletedServerListResult(IReadOnlyList<DeletedServerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DeletedServer> Value { get; }
+        public IReadOnlyList<DeletedServerData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

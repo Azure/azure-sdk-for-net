@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of ledger digest upload settings. </summary>
     internal partial class LedgerDigestUploadsListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
         internal LedgerDigestUploadsListResult()
         {
-            Value = new ChangeTrackingList<LedgerDigestUploads>();
+            Value = new ChangeTrackingList<LedgerDigestUploadsData>();
         }
 
         /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal LedgerDigestUploadsListResult(IReadOnlyList<LedgerDigestUploads> value, string nextLink)
+        internal LedgerDigestUploadsListResult(IReadOnlyList<LedgerDigestUploadsData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<LedgerDigestUploads> Value { get; }
+        public IReadOnlyList<LedgerDigestUploadsData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

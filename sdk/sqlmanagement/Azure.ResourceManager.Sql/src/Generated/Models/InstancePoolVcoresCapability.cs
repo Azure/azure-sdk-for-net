@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The managed instance virtual cores capability. </summary>
     public partial class InstancePoolVcoresCapability

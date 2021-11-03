@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </summary>
     public readonly partial struct DatabaseLicenseType : IEquatable<DatabaseLicenseType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DatabaseLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatabaseLicenseType(string value)
         {

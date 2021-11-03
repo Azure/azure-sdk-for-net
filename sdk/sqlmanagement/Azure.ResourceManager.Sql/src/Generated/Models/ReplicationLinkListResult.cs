@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of replication links. </summary>
     internal partial class ReplicationLinkListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         internal ReplicationLinkListResult()
         {
-            Value = new ChangeTrackingList<ReplicationLink>();
+            Value = new ChangeTrackingList<ReplicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLink> value, string nextLink)
+        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ReplicationLink> Value { get; }
+        public IReadOnlyList<ReplicationLinkData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

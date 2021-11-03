@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The actions required for private link service connection. </summary>
     public readonly partial struct PrivateLinkServiceConnectionStateActionsRequire : IEquatable<PrivateLinkServiceConnectionStateActionsRequire>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PrivateLinkServiceConnectionStateActionsRequire"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionStateActionsRequire"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateLinkServiceConnectionStateActionsRequire(string value)
         {

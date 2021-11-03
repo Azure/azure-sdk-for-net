@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The CapabilityGroup. </summary>
     public readonly partial struct CapabilityGroup : IEquatable<CapabilityGroup>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CapabilityGroup"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityGroup"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapabilityGroup(string value)
         {

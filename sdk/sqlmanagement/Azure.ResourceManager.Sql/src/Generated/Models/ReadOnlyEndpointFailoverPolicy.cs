@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
     public readonly partial struct ReadOnlyEndpointFailoverPolicy : IEquatable<ReadOnlyEndpointFailoverPolicy>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ReadOnlyEndpointFailoverPolicy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadOnlyEndpointFailoverPolicy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReadOnlyEndpointFailoverPolicy(string value)
         {

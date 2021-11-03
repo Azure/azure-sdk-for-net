@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The GeoBackupPolicyName. </summary>
     public readonly partial struct GeoBackupPolicyName : IEquatable<GeoBackupPolicyName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="GeoBackupPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GeoBackupPolicyName(string value)
         {

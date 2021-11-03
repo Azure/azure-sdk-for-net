@@ -5,10 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> An export managed database operation result resource. </summary>
-    public partial class DatabaseExtensions : ProxyResource
+    public partial class DatabaseExtensions : Resource
     {
         /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
         public DatabaseExtensions()
@@ -16,14 +19,14 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="operationMode"> Operation Mode. </param>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        internal DatabaseExtensions(string id, string name, string type, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, string storageUri) : base(id, name, type)
+        internal DatabaseExtensions(ResourceIdentifier id, string name, ResourceType type, OperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, string storageUri) : base(id, name, type)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;

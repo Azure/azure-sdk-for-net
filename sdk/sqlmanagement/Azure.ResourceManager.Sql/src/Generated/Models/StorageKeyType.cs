@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Storage key type. </summary>
     public readonly partial struct StorageKeyType : IEquatable<StorageKeyType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="StorageKeyType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageKeyType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageKeyType(string value)
         {

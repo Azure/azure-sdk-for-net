@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Status of the database. </summary>
     public readonly partial struct ManagedDatabaseStatus : IEquatable<ManagedDatabaseStatus>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedDatabaseStatus(string value)
         {

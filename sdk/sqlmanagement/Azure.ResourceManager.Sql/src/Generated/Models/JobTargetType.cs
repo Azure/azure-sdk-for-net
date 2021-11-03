@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The type of the target. </summary>
     public readonly partial struct JobTargetType : IEquatable<JobTargetType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="JobTargetType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTargetType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobTargetType(string value)
         {

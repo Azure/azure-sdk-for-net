@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class LedgerDigestUploadsListResult
     {
         internal static LedgerDigestUploadsListResult DeserializeLedgerDigestUploadsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LedgerDigestUploads>> value = default;
+            Optional<IReadOnlyList<LedgerDigestUploadsData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LedgerDigestUploads> array = new List<LedgerDigestUploads>();
+                    List<LedgerDigestUploadsData> array = new List<LedgerDigestUploadsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LedgerDigestUploads.DeserializeLedgerDigestUploads(item));
+                        array.Add(LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(item));
                     }
                     value = array;
                     continue;

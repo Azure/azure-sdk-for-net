@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> An update request for an Azure SQL Database managed instance. </summary>
     public partial class ManagedInstanceUpdate
@@ -27,15 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Gets the provisioning state. </summary>
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Specifies the mode of database creation.
         /// 
-        /// 
-        /// 
         /// Default: Regular instance creation.
-        /// 
-        /// 
         /// 
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
@@ -72,15 +69,10 @@ namespace Azure.ResourceManager.Sql.Models
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
         /// Id of the timezone. Allowed values are timezones supported by Windows.
-        /// 
         /// Windows keeps details on supported timezones, including the id, in registry under
-        /// 
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-        /// 
         /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
-        /// 
         /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// 
         /// An example of valid timezone id is &quot;Pacific Standard Time&quot; or &quot;W. Europe Standard Time&quot;.
         /// </summary>
         public string TimezoneId { get; set; }

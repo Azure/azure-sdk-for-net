@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The ARM provisioning state of the job execution. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisioningState(string value)
         {

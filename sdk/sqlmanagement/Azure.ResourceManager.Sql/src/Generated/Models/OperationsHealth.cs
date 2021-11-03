@@ -5,10 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+
+namespace SqlManagementClient.Models
 {
     /// <summary> Operations health status in a location. </summary>
-    public partial class OperationsHealth : ProxyResource
+    public partial class OperationsHealth : Resource
     {
         /// <summary> Initializes a new instance of OperationsHealth. </summary>
         public OperationsHealth()
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of OperationsHealth. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="namePropertiesName"> Operation name for the service. </param>
         /// <param name="health"> Operation health status of the service. </param>
         /// <param name="description"> Health status description. </param>
-        internal OperationsHealth(string id, string name, string type, string namePropertiesName, string health, string description) : base(id, name, type)
+        internal OperationsHealth(ResourceIdentifier id, string name, ResourceType type, string namePropertiesName, string health, string description) : base(id, name, type)
         {
             NamePropertiesName = namePropertiesName;
             Health = health;

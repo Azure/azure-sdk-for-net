@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ManagedInstancePrivateEndpointConnectionListResult
     {
         internal static ManagedInstancePrivateEndpointConnectionListResult DeserializeManagedInstancePrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstancePrivateEndpointConnection>> value = default;
+            Optional<IReadOnlyList<ManagedInstancePrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstancePrivateEndpointConnection> array = new List<ManagedInstancePrivateEndpointConnection>();
+                    List<ManagedInstancePrivateEndpointConnectionData> array = new List<ManagedInstancePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstancePrivateEndpointConnection.DeserializeManagedInstancePrivateEndpointConnection(item));
+                        array.Add(ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

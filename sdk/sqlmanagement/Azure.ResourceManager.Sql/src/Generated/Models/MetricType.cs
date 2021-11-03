@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The MetricType. </summary>
     public readonly partial struct MetricType : IEquatable<MetricType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="MetricType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricType(string value)
         {

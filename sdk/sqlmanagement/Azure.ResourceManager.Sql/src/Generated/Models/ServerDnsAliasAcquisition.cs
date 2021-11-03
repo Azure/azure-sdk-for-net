@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A server dns alias acquisition request. </summary>
     public partial class ServerDnsAliasAcquisition

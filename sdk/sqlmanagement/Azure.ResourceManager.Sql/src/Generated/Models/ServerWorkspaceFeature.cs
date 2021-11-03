@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
     public readonly partial struct ServerWorkspaceFeature : IEquatable<ServerWorkspaceFeature>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ServerWorkspaceFeature"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerWorkspaceFeature"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerWorkspaceFeature(string value)
         {

@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Principal Type of the sever administrator. </summary>
     public readonly partial struct PrincipalType : IEquatable<PrincipalType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PrincipalType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrincipalType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrincipalType(string value)
         {

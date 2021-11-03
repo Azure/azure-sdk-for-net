@@ -8,16 +8,12 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary>
     /// Specifies the mode of database creation.
     /// 
-    /// 
-    /// 
     /// Default: Regular instance creation.
-    /// 
-    /// 
     /// 
     /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
     /// </summary>
@@ -25,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedServerCreateMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerCreateMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServerCreateMode(string value)
         {

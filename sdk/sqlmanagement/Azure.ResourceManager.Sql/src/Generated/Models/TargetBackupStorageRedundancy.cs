@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The storage redundancy type of the copied backup. </summary>
     public readonly partial struct TargetBackupStorageRedundancy : IEquatable<TargetBackupStorageRedundancy>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TargetBackupStorageRedundancy"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetBackupStorageRedundancy"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TargetBackupStorageRedundancy(string value)
         {

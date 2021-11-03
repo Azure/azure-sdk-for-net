@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Unit of time that delay is expressed in. </summary>
     public readonly partial struct PauseDelayTimeUnit : IEquatable<PauseDelayTimeUnit>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PauseDelayTimeUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PauseDelayTimeUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PauseDelayTimeUnit(string value)
         {

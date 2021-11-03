@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class SensitivityLabelListResult
     {
         internal static SensitivityLabelListResult DeserializeSensitivityLabelListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SensitivityLabel>> value = default;
+            Optional<IReadOnlyList<SensitivityLabelData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SensitivityLabel> array = new List<SensitivityLabel>();
+                    List<SensitivityLabelData> array = new List<SensitivityLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabel.DeserializeSensitivityLabel(item));
+                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item));
                     }
                     value = array;
                     continue;

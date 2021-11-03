@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of outbound rules. </summary>
     internal partial class OutboundFirewallRuleListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>
         internal OutboundFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<OutboundFirewallRule>();
+            Value = new ChangeTrackingList<OutboundFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal OutboundFirewallRuleListResult(IReadOnlyList<OutboundFirewallRule> value, string nextLink)
+        internal OutboundFirewallRuleListResult(IReadOnlyList<OutboundFirewallRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<OutboundFirewallRule> Value { get; }
+        public IReadOnlyList<OutboundFirewallRuleData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

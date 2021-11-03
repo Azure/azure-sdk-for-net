@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ServerDevOpsAuditSettingsListResult
     {
         internal static ServerDevOpsAuditSettingsListResult DeserializeServerDevOpsAuditSettingsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerDevOpsAuditingSettings>> value = default;
+            Optional<IReadOnlyList<ServerDevOpsAuditingSettingsData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerDevOpsAuditingSettings> array = new List<ServerDevOpsAuditingSettings>();
+                    List<ServerDevOpsAuditingSettingsData> array = new List<ServerDevOpsAuditingSettingsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerDevOpsAuditingSettings.DeserializeServerDevOpsAuditingSettings(item));
+                        array.Add(ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(item));
                     }
                     value = array;
                     continue;

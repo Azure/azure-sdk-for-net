@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The state of Sql Agent. </summary>
     public readonly partial struct SqlAgentConfigurationPropertiesState : IEquatable<SqlAgentConfigurationPropertiesState>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SqlAgentConfigurationPropertiesState"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAgentConfigurationPropertiesState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlAgentConfigurationPropertiesState(string value)
         {

@@ -8,8 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class QueryStatistics : IUtf8JsonSerializable
     {
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryStatistics DeserializeQueryStatistics(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> databaseName = default;
             Optional<string> queryId = default;
             Optional<string> startTime = default;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryStatistics(id.Value, name.Value, type.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            return new QueryStatistics(id, name, type, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
         }
     }
 }

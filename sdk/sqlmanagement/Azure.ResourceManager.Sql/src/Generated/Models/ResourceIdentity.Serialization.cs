@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class ResourceIdentity : IUtf8JsonSerializable
     {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
-            Optional<IDictionary<string, UserIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             Optional<Guid> principalId = default;
             Optional<IdentityType> type = default;
             Optional<Guid> tenantId = default;
@@ -51,10 +52,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.ToString()));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

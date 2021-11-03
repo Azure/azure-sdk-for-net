@@ -7,8 +7,10 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class SensitivityLabelUpdate : IUtf8JsonSerializable
     {
@@ -48,14 +50,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SensitivityLabelUpdate DeserializeSensitivityLabelUpdate(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<SensitivityLabelUpdateKind> op = default;
             Optional<string> schema = default;
             Optional<string> table = default;
             Optional<string> column = default;
-            Optional<SensitivityLabel> sensitivityLabel = default;
+            Optional<SensitivityLabelData> sensitivityLabel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -114,14 +116,14 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sensitivityLabel = SensitivityLabel.DeserializeSensitivityLabel(property0.Value);
+                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SensitivityLabelUpdate(id.Value, name.Value, type.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value);
+            return new SensitivityLabelUpdate(id, name, type, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value);
         }
     }
 }

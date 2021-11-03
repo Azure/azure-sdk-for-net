@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ReplicationLinkListResult
     {
         internal static ReplicationLinkListResult DeserializeReplicationLinkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReplicationLink>> value = default;
+            Optional<IReadOnlyList<ReplicationLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReplicationLink> array = new List<ReplicationLink>();
+                    List<ReplicationLinkData> array = new List<ReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationLink.DeserializeReplicationLink(item));
+                        array.Add(ReplicationLinkData.DeserializeReplicationLinkData(item));
                     }
                     value = array;
                     continue;

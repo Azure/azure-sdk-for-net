@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     internal partial class ExtendedServerBlobAuditingPolicyListResult
     {
         internal static ExtendedServerBlobAuditingPolicyListResult DeserializeExtendedServerBlobAuditingPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ExtendedServerBlobAuditingPolicy>> value = default;
+            Optional<IReadOnlyList<ExtendedServerBlobAuditingPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtendedServerBlobAuditingPolicy> array = new List<ExtendedServerBlobAuditingPolicy>();
+                    List<ExtendedServerBlobAuditingPolicyData> array = new List<ExtendedServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedServerBlobAuditingPolicy.DeserializeExtendedServerBlobAuditingPolicy(item));
+                        array.Add(ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(item));
                     }
                     value = array;
                     continue;

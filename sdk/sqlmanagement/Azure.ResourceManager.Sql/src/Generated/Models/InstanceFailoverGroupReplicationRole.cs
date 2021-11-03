@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> Local replication role of the failover group instance. </summary>
     public readonly partial struct InstanceFailoverGroupReplicationRole : IEquatable<InstanceFailoverGroupReplicationRole>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReplicationRole"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceFailoverGroupReplicationRole(string value)
         {

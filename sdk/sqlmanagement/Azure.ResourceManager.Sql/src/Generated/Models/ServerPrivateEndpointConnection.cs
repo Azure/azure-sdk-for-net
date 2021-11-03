@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A private endpoint connection under a server. </summary>
     public partial class ServerPrivateEndpointConnection

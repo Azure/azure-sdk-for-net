@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
-    public partial class LongTermRetentionBackupOperationResult : ProxyResource
+    public partial class LongTermRetentionBackupOperationResult : Resource
     {
         /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
         public LongTermRetentionBackupOperationResult()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="operationType"> Operation type. </param>
         /// <param name="fromBackupResourceId"> Source backup resource id. </param>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
-        internal LongTermRetentionBackupOperationResult(string id, string name, string type, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, type)
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType type, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, type)
         {
             RequestId = requestId;
             OperationType = operationType;

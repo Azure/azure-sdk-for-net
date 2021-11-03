@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> The units that the limit is expressed in. </summary>
     public readonly partial struct LogSizeUnit : IEquatable<LogSizeUnit>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LogSizeUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSizeUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogSizeUnit(string value)
         {

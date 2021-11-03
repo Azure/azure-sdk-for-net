@@ -8,8 +8,9 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     public partial class ImportExportExtensionsOperationResult : IUtf8JsonSerializable
     {
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ImportExportExtensionsOperationResult DeserializeImportExportExtensionsOperationResult(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<Guid> requestId = default;
             Optional<string> requestType = default;
             Optional<string> lastModifiedTime = default;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ImportExportExtensionsOperationResult(id.Value, name.Value, type.Value, Optional.ToNullable(requestId), requestType.Value, lastModifiedTime.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value);
+            return new ImportExportExtensionsOperationResult(id, name, type, Optional.ToNullable(requestId), requestType.Value, lastModifiedTime.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value);
         }
     }
 }

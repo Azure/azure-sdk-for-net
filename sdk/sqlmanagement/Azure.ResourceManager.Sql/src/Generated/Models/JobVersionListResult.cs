@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using SqlManagementClient;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace SqlManagementClient.Models
 {
     /// <summary> A list of job versions. </summary>
     internal partial class JobVersionListResult
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         internal JobVersionListResult()
         {
-            Value = new ChangeTrackingList<JobVersion>();
+            Value = new ChangeTrackingList<JobVersionData>();
         }
 
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal JobVersionListResult(IReadOnlyList<JobVersion> value, string nextLink)
+        internal JobVersionListResult(IReadOnlyList<JobVersionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<JobVersion> Value { get; }
+        public IReadOnlyList<JobVersionData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
