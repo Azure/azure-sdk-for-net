@@ -1,6 +1,9 @@
 # Release History
 
-## 1.21.0-beta.1 (Unreleased)
+## 1.21.0 (2021-11-03)
+
+- Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
+- Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
 
 ### Features Added
 
