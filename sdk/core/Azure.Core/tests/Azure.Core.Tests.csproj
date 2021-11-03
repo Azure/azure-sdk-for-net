@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
+    <PackageReference Include="Azure.ResourceManager" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />

@@ -78,7 +78,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await PostLedgerEntry();
 
-            await foreach (var entry in Client.GetLedgerEntriesAsync(options: new RequestOptions()))
+            await foreach (var entry in Client.GetLedgerEntriesAsync())
             {
                 Assert.NotNull(entry);
             }
@@ -91,7 +91,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var tuple = await GetFirstTransactionIdFromGetEntries();
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
-            Response response = await Client.GetLedgerEntryAsync(transactionId, options: new RequestOptions());
+            Response response = await Client.GetLedgerEntryAsync(transactionId);
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -106,7 +106,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
 
-            var result = await Client.GetReceiptAsync(transactionId, new RequestOptions()).ConfigureAwait(false);
+            var result = await Client.GetReceiptAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
@@ -121,7 +121,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string transactionId = tuple.TransactionId;
             string stringResult = tuple.StringResult;
 
-            var result = await Client.GetTransactionStatusAsync(transactionId, new RequestOptions()).ConfigureAwait(false);
+            var result = await Client.GetTransactionStatusAsync(transactionId, new RequestContext()).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));

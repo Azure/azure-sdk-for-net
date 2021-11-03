@@ -65,9 +65,9 @@ namespace Azure.Security.ConfidentialLedger
             var statusResponse = async
                 ? await _client.GetTransactionStatusAsync(
                         Id,
-                        new RequestOptions { CancellationToken = cancellationToken, StatusOption = ResponseStatusOption.NoThrow })
+                        new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
                     .ConfigureAwait(false)
-                : _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken, StatusOption = ResponseStatusOption.NoThrow });
+                : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             _operationInternal.RawResponse = statusResponse;
 

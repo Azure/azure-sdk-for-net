@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="EventPublishPerfTest" />
     ///
-    public sealed class PublishEventsToPartition : EventPublishPerfTest
+    public sealed class PublishEventsToPartition : EventPublishPerfTest<EventHubsPartitionOptions>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="PublishEventsToPartition"/> class.
@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public PublishEventsToPartition(SizeCountOptions options) : base(options)
+        public PublishEventsToPartition(EventHubsPartitionOptions options) : base(options)
         {
         }
 
@@ -38,9 +38,10 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         protected async override Task<SendEventOptions> CreateSendOptions(EventHubProducerClient producer)
         {
-            // Query the available partitions and select the first for use in the batch options.
-
-            var partition = (await producer.GetPartitionIdsAsync().ConfigureAwait(false)).First();
+            // Query the available partitions and select the partition for use in the batch options.
+            var partitions = await producer.GetPartitionIdsAsync().ConfigureAwait(false);
+            var partitionsToPublish = Options.Partitions == -1 ? partitions.Length : Options.Partitions;
+            var partition = partitions[ParallelIndex % partitionsToPublish];
 
             return new SendEventOptions
             {
