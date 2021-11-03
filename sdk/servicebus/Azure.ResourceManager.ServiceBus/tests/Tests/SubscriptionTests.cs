@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("cannot parse SBSubscription id")]
+        [Ignore("cannot parse ServiceBusSubscription id")]
         public async Task CreateGetUpdateDeleteSubscription()
         {
             //create namespace
             ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceCollection namespaceCollection = resourceGroup.GetSBNamespaces();
-            SBNamespace sBNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new SBNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //create a topic
-            SBTopicCollection topicCollection = sBNamespace.GetSBTopics();
+            ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            ServiceBusTopic topic = (await topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
             //create a subscription
-            SBSubscriptionCollection sBSubscriptionCollection = topic.GetSBSubscriptions();
+            ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
             string subscriptionName = Recording.GenerateAssetName("subscription");
-            SBSubscriptionData parameters = new SBSubscriptionData()
+            ServiceBusSubscriptionData parameters = new ServiceBusSubscriptionData()
             {
                 EnableBatchedOperations = true,
                 LockDuration = TimeSpan.Parse("00:03:00"),
@@ -48,51 +48,51 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 AutoDeleteOnIdle = TimeSpan.Parse("00:07:00"),
                 DeadLetteringOnFilterEvaluationExceptions = true
             };
-            SBSubscription sBSubscription = (await sBSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
-            Assert.NotNull(sBSubscription);
-            Assert.AreEqual(sBSubscription.Id.Name, subscriptionName);
+            ServiceBusSubscription serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
+            Assert.NotNull(serviceBusSubscription);
+            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
 
             //get created subscription
-            sBSubscription = await sBSubscriptionCollection.GetAsync(subscriptionName);
-            Assert.NotNull(sBSubscription);
-            Assert.AreEqual(sBSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(sBSubscription.Data.Status, EntityStatus.Active);
+            serviceBusSubscription = await serviceBusSubscriptionCollection.GetAsync(subscriptionName);
+            Assert.NotNull(serviceBusSubscription);
+            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
 
             //get all subscriptions
-            List<SBSubscription> sBSubscriptions = await sBSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(sBSubscriptions.Count, 1);
+            List<ServiceBusSubscription> serviceBusSubscriptions = await serviceBusSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(serviceBusSubscriptions.Count, 1);
 
             //create a topic for autoforward
             string topicName1 = Recording.GenerateAssetName("topic");
-            SBTopic topic1 = (await topicCollection.CreateOrUpdateAsync(topicName1, new SBTopicData() { EnablePartitioning = true})).Value;
+            ServiceBusTopic topic1 = (await topicCollection.CreateOrUpdateAsync(topicName1, new ServiceBusTopicData() { EnablePartitioning = true})).Value;
             Assert.NotNull(topic1);
             Assert.AreEqual(topic1.Id.Name, topicName1);
 
             //update subscription and validate
-            SBSubscriptionData updateParameters = new SBSubscriptionData()
+            ServiceBusSubscriptionData updateParameters = new ServiceBusSubscriptionData()
             {
                 EnableBatchedOperations = true,
                 DeadLetteringOnMessageExpiration = true,
                 ForwardDeadLetteredMessagesTo = topicName1,
                 ForwardTo = topicName1
             };
-            sBSubscription = (await sBSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, updateParameters)).Value;
-            Assert.NotNull(sBSubscription);
-            Assert.AreEqual(sBSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(sBSubscription.Data.Status, EntityStatus.Active);
-            Assert.IsTrue(sBSubscription.Data.EnableBatchedOperations);
-            Assert.AreEqual(sBSubscription.Data.ForwardTo, topicName1);
+            serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, updateParameters)).Value;
+            Assert.NotNull(serviceBusSubscription);
+            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
+            Assert.IsTrue(serviceBusSubscription.Data.EnableBatchedOperations);
+            Assert.AreEqual(serviceBusSubscription.Data.ForwardTo, topicName1);
 
             //delete subscription
-            await sBSubscription.DeleteAsync();
-            Assert.IsFalse(await sBSubscriptionCollection.CheckIfExistsAsync(subscriptionName));
+            await serviceBusSubscription.DeleteAsync();
+            Assert.IsFalse(await serviceBusSubscriptionCollection.CheckIfExistsAsync(subscriptionName));
 
             //delete created topics
             await topic.DeleteAsync();
             await topic1.DeleteAsync();
 
             //delete namespace
-            await sBNamespace.DeleteAsync();
+            await serviceBusNamespace.DeleteAsync();
         }
     }
 }

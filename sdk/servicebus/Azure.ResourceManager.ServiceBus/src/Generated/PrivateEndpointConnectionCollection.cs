@@ -20,7 +20,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over a SBNamespace. </summary>
+    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over a ServiceBusNamespace. </summary>
     public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnection>, IAsyncEnumerable<PrivateEndpointConnection>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SBNamespace.ResourceType;
+        protected override ResourceType ValidResourceType => ServiceBusNamespace.ResourceType;
 
         // Collection level operations.
 

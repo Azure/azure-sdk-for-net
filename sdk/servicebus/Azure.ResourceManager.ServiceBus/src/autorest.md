@@ -20,7 +20,7 @@ operation-group-to-resource:
     PrivateLinkResources: NonResource
     NamespaceName: NonResource
     DisasterRecoveryConfigName: NonResource
-    DisasterRecoveryConfigAuthorizationRules: SBAuthorizationRule
+    DisasterRecoveryConfigAuthorizationRules: ServiceBusAuthorizationRule
 operation-group-to-parent:
     Queues: Microsoft.ServiceBus/namespaces
     Topics: Microsoft.ServiceBus/namespaces
@@ -32,6 +32,54 @@ operation-group-to-parent:
     DisasterRecoveryConfigName: Microsoft.ServiceBus/namespaces
 operation-group-is-extension: NamespaceAuthorizationRules;QueueAuthorizationRules;TopicAuthorizationRules;DisasterRecoveryConfigAuthorizationRules
 directive:
+    - rename-model:
+        from: SBNamespace
+        to: ServiceBusNamespace
+    - rename-model:
+        from: SBTopic
+        to: ServiceBusTopic
+    - rename-model:
+        from: SBQueue
+        to: ServiceBusQueue
+    - rename-model:
+        from: SBQueue
+        to: ServiceBusQueue
+    - rename-model:
+        from: SBSubscription
+        to: ServiceBusSubscription
+    - rename-model:
+        from: SBAuthorizationRule
+        to: ServiceBusAuthorizationRule
+    - rename-model:
+        from: NWRuleSetIpRules
+        to: NetworkRuleSetIpRules
+    - rename-model:
+        from: NWRuleSetVirtualNetworkRules
+        to: NetworkRuleSetVirtualNetworkRules
+    - rename-model:
+        from: SBAuthorizationRuleListResult
+        to: ServiceBusAuthorizationRuleListResult
+    - rename-model:
+        from: SBClientAffineProperties
+        to: ServiceBusClientAffineProperties
+    - rename-model:
+        from: SBNamespaceListResult
+        to: ServiceBusNamespaceListResult
+    - rename-model:
+        from: SBNamespaceUpdateParameters
+        to: ServiceBusNamespaceUpdateParameters
+    - rename-model:
+        from: SBQueueListResult
+        to: ServiceBusQueueListResult
+    - rename-model:
+        from: SBSku
+        to: ServiceBusSku
+    - rename-model:
+        from: SBSubscriptionListResult
+        to: ServiceBusSubscriptionListResult
+    - rename-model:
+        from: SBTopicListResult
+        to: ServiceBusTopicListResult
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"

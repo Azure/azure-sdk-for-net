@@ -16,25 +16,25 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates an authorization rule for a queue. </summary>
-    public partial class QueueAuthorizationRuleCreateOrUpdateOperation : Operation<QueueSBAuthorizationRule>
+    public partial class QueueAuthorizationRuleCreateOrUpdateOperation : Operation<QueueServiceBusAuthorizationRule>
     {
-        private readonly OperationOrResponseInternals<QueueSBAuthorizationRule> _operation;
+        private readonly OperationOrResponseInternals<QueueServiceBusAuthorizationRule> _operation;
 
         /// <summary> Initializes a new instance of QueueAuthorizationRuleCreateOrUpdateOperation for mocking. </summary>
         protected QueueAuthorizationRuleCreateOrUpdateOperation()
         {
         }
 
-        internal QueueAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<SBAuthorizationRuleData> response)
+        internal QueueAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<ServiceBusAuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<QueueSBAuthorizationRule>(Response.FromValue(new QueueSBAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<QueueServiceBusAuthorizationRule>(Response.FromValue(new QueueServiceBusAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override QueueSBAuthorizationRule Value => _operation.Value;
+        public override QueueServiceBusAuthorizationRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<QueueSBAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<QueueServiceBusAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<QueueSBAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<QueueServiceBusAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

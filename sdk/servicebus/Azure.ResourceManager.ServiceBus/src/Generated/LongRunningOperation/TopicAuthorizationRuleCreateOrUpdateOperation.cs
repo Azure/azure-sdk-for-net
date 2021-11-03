@@ -16,25 +16,25 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates an authorization rule for the specified topic. </summary>
-    public partial class TopicAuthorizationRuleCreateOrUpdateOperation : Operation<TopicSBAuthorizationRule>
+    public partial class TopicAuthorizationRuleCreateOrUpdateOperation : Operation<TopicServiceBusAuthorizationRule>
     {
-        private readonly OperationOrResponseInternals<TopicSBAuthorizationRule> _operation;
+        private readonly OperationOrResponseInternals<TopicServiceBusAuthorizationRule> _operation;
 
         /// <summary> Initializes a new instance of TopicAuthorizationRuleCreateOrUpdateOperation for mocking. </summary>
         protected TopicAuthorizationRuleCreateOrUpdateOperation()
         {
         }
 
-        internal TopicAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<SBAuthorizationRuleData> response)
+        internal TopicAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<ServiceBusAuthorizationRuleData> response)
         {
-            _operation = new OperationOrResponseInternals<TopicSBAuthorizationRule>(Response.FromValue(new TopicSBAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<TopicServiceBusAuthorizationRule>(Response.FromValue(new TopicServiceBusAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override TopicSBAuthorizationRule Value => _operation.Value;
+        public override TopicServiceBusAuthorizationRule Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<TopicSBAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<TopicServiceBusAuthorizationRule>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<TopicSBAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<TopicServiceBusAuthorizationRule>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

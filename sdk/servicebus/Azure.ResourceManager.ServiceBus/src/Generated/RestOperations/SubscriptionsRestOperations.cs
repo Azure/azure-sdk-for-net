@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="topicName"/> is null. </exception>
-        public async Task<Response<SBSubscriptionListResult>> GetAllByTopicAsync(string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusSubscriptionListResult>> GetAllByTopicAsync(string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionListResult value = default;
+                        ServiceBusSubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
+                        value = ServiceBusSubscriptionListResult.DeserializeServiceBusSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="topicName"/> is null. </exception>
-        public Response<SBSubscriptionListResult> GetAllByTopic(string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ServiceBusSubscriptionListResult> GetAllByTopic(string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionListResult value = default;
+                        ServiceBusSubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
+                        value = ServiceBusSubscriptionListResult.DeserializeServiceBusSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SBSubscriptionData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, ServiceBusSubscriptionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create a subscription resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<SBSubscriptionData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SBSubscriptionData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusSubscriptionData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionData value = default;
+                        ServiceBusSubscriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBSubscriptionData.DeserializeSBSubscriptionData(document.RootElement);
+                        value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create a subscription resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<SBSubscriptionData> CreateOrUpdate(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SBSubscriptionData parameters, CancellationToken cancellationToken = default)
+        public Response<ServiceBusSubscriptionData> CreateOrUpdate(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, ServiceBusSubscriptionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionData value = default;
+                        ServiceBusSubscriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBSubscriptionData.DeserializeSBSubscriptionData(document.RootElement);
+                        value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, or <paramref name="subscriptionName"/> is null. </exception>
-        public async Task<Response<SBSubscriptionData>> GetAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusSubscriptionData>> GetAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionData value = default;
+                        ServiceBusSubscriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBSubscriptionData.DeserializeSBSubscriptionData(document.RootElement);
+                        value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBSubscriptionData)null, message.Response);
+                    return Response.FromValue((ServiceBusSubscriptionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionName"> The subscription name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="topicName"/>, or <paramref name="subscriptionName"/> is null. </exception>
-        public Response<SBSubscriptionData> Get(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusSubscriptionData> Get(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -475,13 +475,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionData value = default;
+                        ServiceBusSubscriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBSubscriptionData.DeserializeSBSubscriptionData(document.RootElement);
+                        value = ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBSubscriptionData)null, message.Response);
+                    return Response.FromValue((ServiceBusSubscriptionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="topicName"/> is null. </exception>
-        public async Task<Response<SBSubscriptionListResult>> GetAllByTopicNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusSubscriptionListResult>> GetAllByTopicNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -535,9 +535,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionListResult value = default;
+                        ServiceBusSubscriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
+                        value = ServiceBusSubscriptionListResult.DeserializeServiceBusSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="topicName"/> is null. </exception>
-        public Response<SBSubscriptionListResult> GetAllByTopicNextPage(string nextLink, string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ServiceBusSubscriptionListResult> GetAllByTopicNextPage(string nextLink, string resourceGroupName, string namespaceName, string topicName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -579,9 +579,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBSubscriptionListResult value = default;
+                        ServiceBusSubscriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBSubscriptionListResult.DeserializeSBSubscriptionListResult(document.RootElement);
+                        value = ServiceBusSubscriptionListResult.DeserializeServiceBusSubscriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

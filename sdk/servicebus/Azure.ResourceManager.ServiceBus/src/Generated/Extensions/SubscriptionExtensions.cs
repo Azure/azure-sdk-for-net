@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region SBNamespace
+        #region ServiceBusNamespace
         private static NamespacesRestOperations GetNamespacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             return new NamespacesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the SBNamespaces for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SBNamespace> GetSBNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ServiceBusNamespace> GetServiceBusNamespacesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<SBNamespace>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<ServiceBusNamespace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSBNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SBNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.ServiceBus
                         throw;
                     }
                 }
-                async Task<Page<SBNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<ServiceBusNamespace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSBNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
                         var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new SBNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -73,24 +73,24 @@ namespace Azure.ResourceManager.ServiceBus
             );
         }
 
-        /// <summary> Lists the SBNamespaces for this <see cref="Subscription" />. </summary>
+        /// <summary> Lists the ServiceBusNamespaces for this <see cref="Subscription" />. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SBNamespace> GetSBNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<ServiceBusNamespace> GetServiceBusNamespaces(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetNamespacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<SBNamespace> FirstPageFunc(int? pageSizeHint)
+                Page<ServiceBusNamespace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSBNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAll(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SBNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.ServiceBus
                         throw;
                     }
                 }
-                Page<SBNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<ServiceBusNamespace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetSBNamespaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetServiceBusNamespaces");
                     scope.Start();
                     try
                     {
                         var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new SBNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new ServiceBusNamespace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -118,30 +118,30 @@ namespace Azure.ResourceManager.ServiceBus
             );
         }
 
-        /// <summary> Filters the list of SBNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ServiceBusNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResource> GetSBNamespaceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetServiceBusNamespaceByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(SBNamespace.ResourceType);
+            ResourceFilterCollection filters = new(ServiceBusNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of SBNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <summary> Filters the list of ServiceBusNamespaces for a <see cref="Subscription" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResource> GetSBNamespaceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetServiceBusNamespaceByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(SBNamespace.ResourceType);
+            ResourceFilterCollection filters = new(ServiceBusNamespace.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

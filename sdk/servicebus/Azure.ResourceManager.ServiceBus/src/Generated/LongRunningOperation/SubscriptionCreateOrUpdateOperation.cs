@@ -16,25 +16,25 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates a topic subscription. </summary>
-    public partial class SubscriptionCreateOrUpdateOperation : Operation<SBSubscription>
+    public partial class SubscriptionCreateOrUpdateOperation : Operation<ServiceBusSubscription>
     {
-        private readonly OperationOrResponseInternals<SBSubscription> _operation;
+        private readonly OperationOrResponseInternals<ServiceBusSubscription> _operation;
 
         /// <summary> Initializes a new instance of SubscriptionCreateOrUpdateOperation for mocking. </summary>
         protected SubscriptionCreateOrUpdateOperation()
         {
         }
 
-        internal SubscriptionCreateOrUpdateOperation(ArmResource operationsBase, Response<SBSubscriptionData> response)
+        internal SubscriptionCreateOrUpdateOperation(ArmResource operationsBase, Response<ServiceBusSubscriptionData> response)
         {
-            _operation = new OperationOrResponseInternals<SBSubscription>(Response.FromValue(new SBSubscription(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ServiceBusSubscription>(Response.FromValue(new ServiceBusSubscription(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SBSubscription Value => _operation.Value;
+        public override ServiceBusSubscription Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBSubscription>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ServiceBusSubscription>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBSubscription>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ServiceBusSubscription>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

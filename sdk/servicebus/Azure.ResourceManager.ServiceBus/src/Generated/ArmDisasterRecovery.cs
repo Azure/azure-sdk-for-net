@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a list of DisasterRecoveryConfigSBAuthorizationRules in the ArmDisasterRecovery. </summary>
-        /// <returns> An object representing collection of DisasterRecoveryConfigSBAuthorizationRules and their operations over a ArmDisasterRecovery. </returns>
-        public DisasterRecoveryConfigSBAuthorizationRuleCollection GetDisasterRecoveryConfigSBAuthorizationRules()
+        /// <summary> Gets a list of DisasterRecoveryConfigServiceBusAuthorizationRules in the ArmDisasterRecovery. </summary>
+        /// <returns> An object representing collection of DisasterRecoveryConfigServiceBusAuthorizationRules and their operations over a ArmDisasterRecovery. </returns>
+        public DisasterRecoveryConfigServiceBusAuthorizationRuleCollection GetDisasterRecoveryConfigServiceBusAuthorizationRules()
         {
-            return new DisasterRecoveryConfigSBAuthorizationRuleCollection(this);
+            return new DisasterRecoveryConfigServiceBusAuthorizationRuleCollection(this);
         }
     }
 }

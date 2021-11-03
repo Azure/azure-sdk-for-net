@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 
@@ -18,7 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
     public class TopicTests : ServiceBusTestBase
     {
         private ResourceGroup _resourceGroup;
-        private SBTopicCollection _topicCollection;
+        private ServiceBusTopicCollection _topicCollection;
         public TopicTests(bool isAsync): base(isAsync)
         {
         }
@@ -28,16 +25,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
-            SBNamespaceData parameters = new SBNamespaceData(DefaultLocation)
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            ServiceBusNamespaceData parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new SBSku(SkuName.Premium)
+                Sku = new ServiceBusSku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium
                 }
             };
-            SBNamespace sBNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, parameters)).Value;
-            _topicCollection = sBNamespace.GetSBTopics();
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, parameters)).Value;
+            _topicCollection = serviceBusNamespace.GetServiceBusTopics();
         }
 
         [TearDown]
@@ -46,11 +43,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
-                List<SBNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (SBNamespace sBNamespace in namespaceList)
+                ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+                List<ServiceBusNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
+                foreach (ServiceBusNamespace serviceBusNamespace in namespaceList)
                 {
-                    await sBNamespace.DeleteAsync();
+                    await serviceBusNamespace.DeleteAsync();
                 }
                 _resourceGroup = null;
             }
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
@@ -84,27 +81,18 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         [RecordedTest]
         public async Task GetAllTopics()
         {
-            //create two topics
-            string topicName1 = Recording.GenerateAssetName("topic1");
-            string topicName2 = Recording.GenerateAssetName("topic2");
-            _ = (await _topicCollection.CreateOrUpdateAsync(topicName1, new SBTopicData())).Value;
-            _ = (await _topicCollection.CreateOrUpdateAsync(topicName2, new SBTopicData())).Value;
+            //create ten queues
+            for (int i = 0; i < 10; i++)
+            {
+                string topicName = Recording.GenerateAssetName("topic" + i.ToString());
+                _ = await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData());
+            }
 
             //validate
-            int count = 0;
-            SBTopic topic1 = null;
-            SBTopic topic2 = null;
-            await foreach (SBTopic topic in _topicCollection.GetAllAsync())
-            {
-                count++;
-                if (topic.Id.Name == topicName1)
-                    topic1 = topic;
-                if (topic.Id.Name == topicName2)
-                    topic2 = topic;
-            }
-            Assert.AreEqual(count, 2);
-            Assert.NotNull(topic1);
-            Assert.NotNull(topic2);
+            List<ServiceBusTopic> list = await _topicCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(10, list.Count);
+            list = await _topicCollection.GetAllAsync(5, 5).ToEnumerableAsync();
+            Assert.AreEqual(5, list.Count);
         }
 
         [Test]
@@ -113,7 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
@@ -129,16 +117,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
 
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            TopicSBAuthorizationRuleCollection ruleCollection = topic.GetTopicSBAuthorizationRules();
-            SBAuthorizationRuleData parameter = new SBAuthorizationRuleData()
+            TopicServiceBusAuthorizationRuleCollection ruleCollection = topic.GetTopicServiceBusAuthorizationRules();
+            ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            TopicSBAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            TopicServiceBusAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -149,12 +137,12 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<TopicSBAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<TopicServiceBusAuthorizationRule> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
             Assert.True(rules.Count == 1);
             bool isContainAuthorizationRuleName = false;
-            foreach (TopicSBAuthorizationRule rule in rules)
+            foreach (TopicServiceBusAuthorizationRule rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -184,16 +172,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             //create topic
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
-            TopicSBAuthorizationRuleCollection ruleCollection = topic.GetTopicSBAuthorizationRules();
+            ServiceBusTopic topic = (await _topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
+            TopicServiceBusAuthorizationRuleCollection ruleCollection = topic.GetTopicServiceBusAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            SBAuthorizationRuleData parameter = new SBAuthorizationRuleData()
+            ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            TopicSBAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
+            TopicServiceBusAuthorizationRule authorizationRule = (await ruleCollection.CreateOrUpdateAsync(ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 

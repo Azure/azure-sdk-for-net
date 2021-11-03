@@ -16,25 +16,25 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceUpdateOperation : Operation<SBNamespace>
+    public partial class NamespaceUpdateOperation : Operation<ServiceBusNamespace>
     {
-        private readonly OperationOrResponseInternals<SBNamespace> _operation;
+        private readonly OperationOrResponseInternals<ServiceBusNamespace> _operation;
 
         /// <summary> Initializes a new instance of NamespaceUpdateOperation for mocking. </summary>
         protected NamespaceUpdateOperation()
         {
         }
 
-        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<SBNamespaceData> response)
+        internal NamespaceUpdateOperation(ArmResource operationsBase, Response<ServiceBusNamespaceData> response)
         {
-            _operation = new OperationOrResponseInternals<SBNamespace>(Response.FromValue(new SBNamespace(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<ServiceBusNamespace>(Response.FromValue(new ServiceBusNamespace(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SBNamespace Value => _operation.Value;
+        public override ServiceBusNamespace Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ServiceBusNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ServiceBusNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

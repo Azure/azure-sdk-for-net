@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public async Task<Response<SBAuthorizationRuleListResult>> GetAllAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusAuthorizationRuleListResult>> GetAllAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleListResult value = default;
+                        ServiceBusAuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
+                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public Response<SBAuthorizationRuleListResult> GetAll(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<ServiceBusAuthorizationRuleListResult> GetAll(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleListResult value = default;
+                        ServiceBusAuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
+                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
-        public async Task<Response<SBAuthorizationRuleData>> GetAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusAuthorizationRuleData>> GetAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleData value = default;
+                        ServiceBusAuthorizationRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBAuthorizationRuleData.DeserializeSBAuthorizationRuleData(document.RootElement);
+                        value = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBAuthorizationRuleData)null, message.Response);
+                    return Response.FromValue((ServiceBusAuthorizationRuleData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
-        public Response<SBAuthorizationRuleData> Get(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusAuthorizationRuleData> Get(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -241,13 +241,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleData value = default;
+                        ServiceBusAuthorizationRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBAuthorizationRuleData.DeserializeSBAuthorizationRuleData(document.RootElement);
+                        value = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBAuthorizationRuleData)null, message.Response);
+                    return Response.FromValue((ServiceBusAuthorizationRuleData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public async Task<Response<SBAuthorizationRuleListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusAuthorizationRuleListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleListResult value = default;
+                        ServiceBusAuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
+                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public Response<SBAuthorizationRuleListResult> GetAllNextPage(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<ServiceBusAuthorizationRuleListResult> GetAllNextPage(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBAuthorizationRuleListResult value = default;
+                        ServiceBusAuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
+                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

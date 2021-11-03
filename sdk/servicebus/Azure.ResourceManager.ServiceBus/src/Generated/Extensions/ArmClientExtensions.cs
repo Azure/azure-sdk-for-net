@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region SBNamespace
-        /// <summary> Gets an object representing a SBNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceBusNamespace
+        /// <summary> Gets an object representing a ServiceBusNamespace along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBNamespace" /> object. </returns>
-        public static SBNamespace GetSBNamespace(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusNamespace" /> object. </returns>
+        public static ServiceBusNamespace GetServiceBusNamespace(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBNamespace(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusNamespace(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region DisasterRecoveryConfigSBAuthorizationRule
-        /// <summary> Gets an object representing a DisasterRecoveryConfigSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryConfigServiceBusAuthorizationRule
+        /// <summary> Gets an object representing a DisasterRecoveryConfigServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecoveryConfigSBAuthorizationRule" /> object. </returns>
-        public static DisasterRecoveryConfigSBAuthorizationRule GetDisasterRecoveryConfigSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigServiceBusAuthorizationRule" /> object. </returns>
+        public static DisasterRecoveryConfigServiceBusAuthorizationRule GetDisasterRecoveryConfigServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryConfigSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new DisasterRecoveryConfigServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -67,58 +67,58 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region NamespaceSBAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceServiceBusAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceSBAuthorizationRule" /> object. </returns>
-        public static NamespaceSBAuthorizationRule GetNamespaceSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceServiceBusAuthorizationRule" /> object. </returns>
+        public static NamespaceServiceBusAuthorizationRule GetNamespaceServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region QueueSBAuthorizationRule
-        /// <summary> Gets an object representing a QueueSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region QueueServiceBusAuthorizationRule
+        /// <summary> Gets an object representing a QueueServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueueSBAuthorizationRule" /> object. </returns>
-        public static QueueSBAuthorizationRule GetQueueSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QueueServiceBusAuthorizationRule" /> object. </returns>
+        public static QueueServiceBusAuthorizationRule GetQueueServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new QueueSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new QueueServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region TopicSBAuthorizationRule
-        /// <summary> Gets an object representing a TopicSBAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region TopicServiceBusAuthorizationRule
+        /// <summary> Gets an object representing a TopicServiceBusAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopicSBAuthorizationRule" /> object. </returns>
-        public static TopicSBAuthorizationRule GetTopicSBAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopicServiceBusAuthorizationRule" /> object. </returns>
+        public static TopicServiceBusAuthorizationRule GetTopicServiceBusAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TopicSBAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new TopicServiceBusAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SBQueue
-        /// <summary> Gets an object representing a SBQueue along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceBusQueue
+        /// <summary> Gets an object representing a ServiceBusQueue along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBQueue" /> object. </returns>
-        public static SBQueue GetSBQueue(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusQueue" /> object. </returns>
+        public static ServiceBusQueue GetServiceBusQueue(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBQueue(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusQueue(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
-        #region SBTopic
-        /// <summary> Gets an object representing a SBTopic along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceBusTopic
+        /// <summary> Gets an object representing a ServiceBusTopic along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBTopic" /> object. </returns>
-        public static SBTopic GetSBTopic(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusTopic" /> object. </returns>
+        public static ServiceBusTopic GetServiceBusTopic(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBTopic(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusTopic(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region SBSubscription
-        /// <summary> Gets an object representing a SBSubscription along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceBusSubscription
+        /// <summary> Gets an object representing a ServiceBusSubscription along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SBSubscription" /> object. </returns>
-        public static SBSubscription GetSBSubscription(this ArmClient armClient, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusSubscription" /> object. </returns>
+        public static ServiceBusSubscription GetServiceBusSubscription(this ArmClient armClient, ResourceIdentifier id)
         {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new SBSubscription(clientOptions, credential, uri, pipeline, id));
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ServiceBusSubscription(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
     }

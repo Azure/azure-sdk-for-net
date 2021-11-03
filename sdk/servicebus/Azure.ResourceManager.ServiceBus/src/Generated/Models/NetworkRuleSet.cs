@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         public NetworkRuleSet()
         {
-            VirtualNetworkRules = new ChangeTrackingList<NWRuleSetVirtualNetworkRules>();
-            IpRules = new ChangeTrackingList<NWRuleSetIpRules>();
+            VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
+            IpRules = new ChangeTrackingList<NetworkRuleSetIpRules>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NWRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NWRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type)
+        internal NetworkRuleSet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type)
         {
             SystemData = systemData;
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Default Action for Network Rule Set. </summary>
         public DefaultAction? DefaultAction { get; set; }
         /// <summary> List VirtualNetwork Rules. </summary>
-        public IList<NWRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
+        public IList<NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<NWRuleSetIpRules> IpRules { get; }
+        public IList<NetworkRuleSetIpRules> IpRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public PublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }

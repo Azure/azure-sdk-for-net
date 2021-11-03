@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("cannot parse SBSubscription id")]
+        [Ignore("cannot parse ServiceBusSubscription id")]
         public async Task CreateGetUpdateDeleteRule()
         {
             const string strSqlExp = "myproperty=test";
@@ -25,27 +25,27 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create namespace
             ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceCollection namespaceCollection = resourceGroup.GetSBNamespaces();
-            SBNamespace sBNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new SBNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
+            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //create a topic
-            SBTopicCollection topicCollection = sBNamespace.GetSBTopics();
+            ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
-            SBTopic topic = (await topicCollection.CreateOrUpdateAsync(topicName, new SBTopicData())).Value;
+            ServiceBusTopic topic = (await topicCollection.CreateOrUpdateAsync(topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
             //create a subscription
-            SBSubscriptionCollection sBSubscriptionCollection = topic.GetSBSubscriptions();
+            ServiceBusSubscriptionCollection serviceBusSubscriptionCollection = topic.GetServiceBusSubscriptions();
             string subscriptionName = Recording.GenerateAssetName("subscription");
-            SBSubscriptionData parameters = new SBSubscriptionData();
-            SBSubscription sBSubscription = (await sBSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
-            Assert.NotNull(sBSubscription);
-            Assert.AreEqual(sBSubscription.Id.Name, subscriptionName);
+            ServiceBusSubscriptionData parameters = new ServiceBusSubscriptionData();
+            ServiceBusSubscription serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(subscriptionName, parameters)).Value;
+            Assert.NotNull(serviceBusSubscription);
+            Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
 
             //create rule with no filters
             string ruleName1 = Recording.GenerateAssetName("rule");
-            RuleCollection ruleCollection = sBSubscription.GetRules();
+            RuleCollection ruleCollection = serviceBusSubscription.GetRules();
             Rule rule1 = (await ruleCollection.CreateOrUpdateAsync(ruleName1, new RuleData())).Value;
             Assert.NotNull(rule1);
             Assert.AreEqual(rule1.Id.Name, ruleName1);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             await rule1.DeleteAsync();
             await rule2.DeleteAsync();
-            await sBSubscription.DeleteAsync();
-            await sBNamespace.DeleteAsync();
+            await serviceBusSubscription.DeleteAsync();
+            await serviceBusNamespace.DeleteAsync();
         }
     }
 }

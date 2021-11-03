@@ -18,9 +18,9 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Creates or updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
-    public partial class NamespaceCreateOrUpdateOperation : Operation<SBNamespace>, IOperationSource<SBNamespace>
+    public partial class NamespaceCreateOrUpdateOperation : Operation<ServiceBusNamespace>, IOperationSource<ServiceBusNamespace>
     {
-        private readonly OperationInternals<SBNamespace> _operation;
+        private readonly OperationInternals<ServiceBusNamespace> _operation;
 
         private readonly ArmResource _operationBase;
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal NamespaceCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SBNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
+            _operation = new OperationInternals<ServiceBusNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespaceCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override SBNamespace Value => _operation.Value;
+        public override ServiceBusNamespace Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ServiceBusNamespace>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<SBNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ServiceBusNamespace>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SBNamespace IOperationSource<SBNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceBusNamespace IOperationSource<ServiceBusNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new SBNamespace(_operationBase, SBNamespaceData.DeserializeSBNamespaceData(document.RootElement));
+            return new ServiceBusNamespace(_operationBase, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement));
         }
 
-        async ValueTask<SBNamespace> IOperationSource<SBNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceBusNamespace> IOperationSource<ServiceBusNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new SBNamespace(_operationBase, SBNamespaceData.DeserializeSBNamespaceData(document.RootElement));
+            return new ServiceBusNamespace(_operationBase, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement));
         }
     }
 }

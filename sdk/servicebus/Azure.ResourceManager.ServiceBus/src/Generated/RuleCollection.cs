@@ -20,7 +20,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of Rule and their operations over a SBSubscription. </summary>
+    /// <summary> A class representing collection of Rule and their operations over a ServiceBusSubscription. </summary>
     public partial class RuleCollection : ArmCollection, IEnumerable<Rule>, IAsyncEnumerable<Rule>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SBSubscription.ResourceType;
+        protected override ResourceType ValidResourceType => ServiceBusSubscription.ResourceType;
 
         // Collection level operations.
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<SBQueueListResult>> GetAllByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusQueueListResult>> GetAllByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueListResult value = default;
+                        ServiceBusQueueListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBQueueListResult.DeserializeSBQueueListResult(document.RootElement);
+                        value = ServiceBusQueueListResult.DeserializeServiceBusQueueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<SBQueueListResult> GetAllByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ServiceBusQueueListResult> GetAllByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueListResult value = default;
+                        ServiceBusQueueListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBQueueListResult.DeserializeSBQueueListResult(document.RootElement);
+                        value = ServiceBusQueueListResult.DeserializeServiceBusQueueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string queueName, SBQueueData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string queueName, ServiceBusQueueData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="queueName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<SBQueueData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string queueName, SBQueueData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusQueueData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueData value = default;
+                        ServiceBusQueueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBQueueData.DeserializeSBQueueData(document.RootElement);
+                        value = ServiceBusQueueData.DeserializeServiceBusQueueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="queueName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<SBQueueData> CreateOrUpdate(string resourceGroupName, string namespaceName, string queueName, SBQueueData parameters, CancellationToken cancellationToken = default)
+        public Response<ServiceBusQueueData> CreateOrUpdate(string resourceGroupName, string namespaceName, string queueName, ServiceBusQueueData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueData value = default;
+                        ServiceBusQueueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBQueueData.DeserializeSBQueueData(document.RootElement);
+                        value = ServiceBusQueueData.DeserializeServiceBusQueueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public async Task<Response<SBQueueData>> GetAsync(string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusQueueData>> GetAsync(string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -388,13 +388,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueData value = default;
+                        ServiceBusQueueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBQueueData.DeserializeSBQueueData(document.RootElement);
+                        value = ServiceBusQueueData.DeserializeServiceBusQueueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBQueueData)null, message.Response);
+                    return Response.FromValue((ServiceBusQueueData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="queueName"/> is null. </exception>
-        public Response<SBQueueData> Get(string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusQueueData> Get(string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueData value = default;
+                        ServiceBusQueueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBQueueData.DeserializeSBQueueData(document.RootElement);
+                        value = ServiceBusQueueData.DeserializeServiceBusQueueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SBQueueData)null, message.Response);
+                    return Response.FromValue((ServiceBusQueueData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<SBQueueListResult>> GetAllByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusQueueListResult>> GetAllByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueListResult value = default;
+                        ServiceBusQueueListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SBQueueListResult.DeserializeSBQueueListResult(document.RootElement);
+                        value = ServiceBusQueueListResult.DeserializeServiceBusQueueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<SBQueueListResult> GetAllByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ServiceBusQueueListResult> GetAllByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -521,9 +521,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        SBQueueListResult value = default;
+                        ServiceBusQueueListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SBQueueListResult.DeserializeSBQueueListResult(document.RootElement);
+                        value = ServiceBusQueueListResult.DeserializeServiceBusQueueListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

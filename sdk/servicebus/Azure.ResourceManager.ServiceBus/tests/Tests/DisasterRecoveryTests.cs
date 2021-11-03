@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //remove all namespaces under current resource group
             if (_resourceGroup != null)
             {
-                SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
-                List<SBNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (SBNamespace sBNamespace in namespaceList)
+                ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+                List<ServiceBusNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
+                foreach (ServiceBusNamespace serviceBusNamespace in namespaceList)
                 {
-                    await sBNamespace.DeleteAsync();
+                    await serviceBusNamespace.DeleteAsync();
                 }
                 _resourceGroup = null;
             }
@@ -40,36 +40,36 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceCollection namespaceCollection = _resourceGroup.GetSBNamespaces();
-            SBNamespaceData parameters1 = new SBNamespaceData(DefaultLocation)
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            ServiceBusNamespaceData parameters1 = new ServiceBusNamespaceData(DefaultLocation)
             {
-                Sku = new SBSku(SkuName.Premium)
+                Sku = new ServiceBusSku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium,
                     Capacity = 1
                 }
             };
-            SBNamespace sBNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName1, parameters1)).Value;
+            ServiceBusNamespace serviceBusNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName1, parameters1)).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            SBNamespaceData parameters2 = new SBNamespaceData(Location.EastUS)
+            ServiceBusNamespaceData parameters2 = new ServiceBusNamespaceData(Location.EastUS)
             {
-                Sku = new SBSku(SkuName.Premium)
+                Sku = new ServiceBusSku(SkuName.Premium)
                 {
                     Tier = SkuTier.Premium,
                     Capacity = 1
                 }
             };
-            SBNamespace sBNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, parameters2)).Value;
+            ServiceBusNamespace serviceBusNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(namespaceName2, parameters2)).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            SBAuthorizationRuleData ruleParameter = new SBAuthorizationRuleData()
+            ServiceBusAuthorizationRuleData ruleParameter = new ServiceBusAuthorizationRuleData()
             {
                 Rights = { AccessRights.Listen, AccessRights.Send }
             };
-            NamespaceSBAuthorizationRule authorizationRule = (await sBNamespace1.GetNamespaceSBAuthorizationRules().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
+            NamespaceServiceBusAuthorizationRule authorizationRule = (await serviceBusNamespace1.GetNamespaceServiceBusAuthorizationRules().CreateOrUpdateAsync(ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
@@ -77,23 +77,23 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
             ArmDisasterRecoveryData parameter = new ArmDisasterRecoveryData()
             {
-                PartnerNamespace = sBNamespace2.Id
+                PartnerNamespace = serviceBusNamespace2.Id
             };
-            ArmDisasterRecovery armDisasterRecovery = (await sBNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
+            ArmDisasterRecovery armDisasterRecovery = (await serviceBusNamespace1.GetArmDisasterRecoveries().CreateOrUpdateAsync(disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
             Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
-            Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, sBNamespace2.Id.ToString());
+            Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, serviceBusNamespace2.Id.ToString());
 
             //get the disaster recovery - primary
-            armDisasterRecovery = await sBNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
 
             //get the disaster recovery - secondary
-            ArmDisasterRecovery armDisasterRecoverySec = await sBNamespace2.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            ArmDisasterRecovery armDisasterRecoverySec = await serviceBusNamespace2.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
 
             //wait for completion, this may take several minutes in live and record mode
-            armDisasterRecovery = await sBNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
             {
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await sBNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await sBNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
+            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckDisasterRecoveryConfigNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<DisasterRecoveryConfigSBAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryConfigSBAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<DisasterRecoveryConfigServiceBusAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryConfigServiceBusAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            DisasterRecoveryConfigSBAuthorizationRule rule = rules.First();
+            DisasterRecoveryConfigServiceBusAuthorizationRule rule = rules.First();
             AccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
             //break pairing and wait for competion
             await armDisasterRecovery.BreakPairingAsync();
-            armDisasterRecovery = await sBNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
             while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded || i > 100)
             {
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await sBNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //get all disaster recoveries for a name space
-            List<ArmDisasterRecovery> disasterRcoveries = await sBNamespace1.GetArmDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
+            List<ArmDisasterRecovery> disasterRcoveries = await serviceBusNamespace1.GetArmDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;
