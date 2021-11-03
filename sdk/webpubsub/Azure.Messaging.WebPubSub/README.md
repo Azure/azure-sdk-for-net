@@ -2,14 +2,19 @@
 
 [Azure Web PubSub Service](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe pattern. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Azure Web PubSub service. Traditional real-time features that often require polling from server or submitting HTTP requests can also use Azure Web PubSub service.
 
-This library can be used to do the following actions. Details about the terms used here are described in [Key concepts](#key-concepts) section.
+You can use this library in your app server side to manage the WebSocket client connections, as shown in below diagram:
 
+![overflow](https://user-images.githubusercontent.com/668244/140014067-25a00959-04dc-47e8-ac25-6957bd0a71ce.png)
+
+Use this library to:
 - Send messages to hubs and groups. 
 - Send messages to particular users and connections.
 - Organize users and connections into groups.
 - Close connections
 - Grant, revoke, and check permissions for an existing connection
 
+Details about the terms used here are described in [Key concepts](#key-concepts) section.
+ 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src) |
 [Package](https://www.nuget.org/packages/Azure.Messaging.WebPubSub) |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
