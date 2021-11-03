@@ -12,7 +12,10 @@ param(
     [switch]$Login,
 
     [Parameter(ParameterSetName = 'DoLogin')]
-    [string]$Subscription
+    [string]$Subscription,
+
+    # Default to true in Azure Pipelines environments
+    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 $ErrorActionPreference = 'Stop'
@@ -88,7 +91,7 @@ function DeployStressTests(
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
-    $pkgs = FindStressPackages $searchDirectory $filters
+    $pkgs = FindStressPackages $searchDirectory $filters $CI
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
@@ -106,6 +109,8 @@ function DeployStressTests(
         }
         exit 1
     }
+
+    Write-Host "`nStress test telemetry links (dashboard, fileshare, etc.): https://aka.ms/azsdk/stress/dashboard"
 }
 
 function DeployStressPackage(
