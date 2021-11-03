@@ -3236,24 +3236,5 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return client.GetBlockBlobClientCore(blobName);
         }
-
-        /// <summary>
-        /// Create a new <see cref="BlockBlobClient"/> object by
-        /// concatenating <paramref name="blobName"/> to
-        /// the end of the <paramref name="client"/>'s
-        /// <see cref="BlobVirtualDirectoryClient.Uri"/>. The new
-        /// <see cref="BlockBlobClient"/>
-        /// uses the same request policy pipeline as the
-        /// <see cref="BlobVirtualDirectoryClient"/>.
-        /// </summary>
-        /// <param name="client">The <see cref="BlobVirtualDirectoryClient"/>.</param>
-        /// <param name="blobName">The name of the block blob.</param>
-        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        public static BlockBlobClient GetBlockBlobClient(
-            this BlobVirtualDirectoryClient client,
-            string blobName)
-        {
-            return client.GetBlockBlobClientCore(client.DirectoryPath + "/" + blobName);
-        }
     }
 }
