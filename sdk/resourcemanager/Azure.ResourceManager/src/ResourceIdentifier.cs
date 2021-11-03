@@ -102,20 +102,13 @@ namespace Azure.ResourceManager
             _stringValue = parent == null ? RootStringValue : null;
         }
 
-        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent)
+        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
         {
-            string resourceTypeNameLower = resourceTypeName.ToLowerInvariant();
-            if (resourceTypeNameLower == ResourceGroupsLowerKey)
-            {
-                return ResourceGroup.ResourceType;
-            }
+            ResourceGroupsLowerKey => ResourceGroup.ResourceType,
             //Only the front subscriptions' type is Microsoft.Resources/subscriptions.
-            if (resourceTypeNameLower == SubscriptionsKey && string.IsNullOrEmpty(parent.SubscriptionId))
-            {
-                return Subscription.ResourceType;
-            }
-            return new ResourceType(parent.ResourceType, resourceTypeName);
-        }
+            SubscriptionsKey when string.IsNullOrEmpty(parent.SubscriptionId) => Subscription.ResourceType,
+            _ => new ResourceType(parent.ResourceType, resourceTypeName)
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
