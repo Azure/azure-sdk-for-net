@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Description>Microsoft Azure Monitor Library</Description>
     <AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-    <Version>1.0.0</Version>
+    <Version>0.26.0-preview</Version>
     <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
     <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope;datacollectionrules;actiongroups</PackageTags>
     <PackageReleaseNotes>
