@@ -64,7 +64,7 @@ Connections to Web PubSub can belong to one user. A user might have multiple con
 
 ### Message
 
-When the client is connected, it can send messages to the upstream application, or receive messages from the upstream application, through the WebSocket connection.
+When a client is connected, it can send messages to the upstream application, or receive messages from the upstream application, through the WebSocket connection.
 
 ## Examples
 
