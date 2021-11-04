@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Set to &apos;OR&apos; or &apos;AND&apos; for using corresponding logical operation. </summary>
     public readonly partial struct LogicalOperationKind : IEquatable<LogicalOperationKind>

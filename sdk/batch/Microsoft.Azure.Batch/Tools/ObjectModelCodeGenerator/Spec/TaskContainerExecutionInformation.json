@@ -2,7 +2,7 @@
   "Name": "TaskContainerExecutionInformation",
   "ProtocolName": "Models.TaskContainerExecutionInformation",
   "SummaryComment": "Contains information about the container which a task is executing.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

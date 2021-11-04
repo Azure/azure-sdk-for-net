@@ -1,6 +1,16 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.11.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.11.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.
 - Added support for Encryption Scope SAS.
 - Added support for Encryption Scopes with BlobBaseClient.SyncCopyFromUriAsync().

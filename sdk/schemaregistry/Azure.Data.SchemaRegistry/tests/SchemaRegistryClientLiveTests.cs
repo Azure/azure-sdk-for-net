@@ -78,7 +78,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertSchemaProperties(schema.Properties);
             Assert.AreEqual(
                 Regex.Replace(SchemaContent, @"\s+", string.Empty),
-                Regex.Replace(schema.Content, @"\s+", string.Empty));
+                Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 
         private void AssertSchemaProperties(SchemaProperties properties)

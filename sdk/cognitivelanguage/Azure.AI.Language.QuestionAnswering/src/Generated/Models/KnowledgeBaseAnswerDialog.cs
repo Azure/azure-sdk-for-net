@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Models
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Dialog associated with Answer. </summary>
     public partial class KnowledgeBaseAnswerDialog
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
-        /// <param name="prompts"> List of 0 to 20 prompts associated with the answer. </param>
+        /// <param name="prompts"> List of prompts associated with the answer. </param>
         internal KnowledgeBaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts)
         {
             IsContextOnly = isContextOnly;
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </summary>
         public bool? IsContextOnly { get; }
-        /// <summary> List of 0 to 20 prompts associated with the answer. </summary>
+        /// <summary> List of prompts associated with the answer. </summary>
         public IReadOnlyList<KnowledgeBaseAnswerPrompt> Prompts { get; }
     }
 }
