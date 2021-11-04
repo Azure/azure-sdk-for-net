@@ -154,9 +154,9 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Messaging
 {
-    public partial interface IMessageWithContentType
+    public partial interface IMessageWithMetadata
     {
-        string ContentType { get; set; }
         System.BinaryData Data { get; set; }
+        System.Collections.Generic.IDictionary<string, object> Metadata { get; }
     }
 }
