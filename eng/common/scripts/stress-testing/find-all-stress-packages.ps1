@@ -49,7 +49,7 @@ function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartF
     }
 
     return [StressTestPackageInfo]@{
-        Namespace = $namespace
+        Namespace = $namespace.ToLower()
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
     }
