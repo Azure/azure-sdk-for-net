@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetAllByEventHubRequest(string resourceGroupName, string namespaceName, string eventHubName, int? skip, int? top)
+        internal HttpMessage CreateListByEventHubRequest(string resourceGroupName, string namespaceName, string eventHubName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
-        public async Task<Response<ConsumerGroupListResult>> GetAllByEventHubAsync(string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumerGroupListResult>> ListByEventHubAsync(string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(eventHubName));
             }
 
-            using var message = CreateGetAllByEventHubRequest(resourceGroupName, namespaceName, eventHubName, skip, top);
+            using var message = CreateListByEventHubRequest(resourceGroupName, namespaceName, eventHubName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
-        public Response<ConsumerGroupListResult> GetAllByEventHub(string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ConsumerGroupListResult> ListByEventHub(string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(eventHubName));
             }
 
-            using var message = CreateGetAllByEventHubRequest(resourceGroupName, namespaceName, eventHubName, skip, top);
+            using var message = CreateListByEventHubRequest(resourceGroupName, namespaceName, eventHubName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetAllByEventHubNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip, int? top)
+        internal HttpMessage CreateListByEventHubNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
-        public async Task<Response<ConsumerGroupListResult>> GetAllByEventHubNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumerGroupListResult>> ListByEventHubNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(eventHubName));
             }
 
-            using var message = CreateGetAllByEventHubNextPageRequest(nextLink, resourceGroupName, namespaceName, eventHubName, skip, top);
+            using var message = CreateListByEventHubNextPageRequest(nextLink, resourceGroupName, namespaceName, eventHubName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
-        public Response<ConsumerGroupListResult> GetAllByEventHubNextPage(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ConsumerGroupListResult> ListByEventHubNextPage(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(eventHubName));
             }
 
-            using var message = CreateGetAllByEventHubNextPageRequest(nextLink, resourceGroupName, namespaceName, eventHubName, skip, top);
+            using var message = CreateListByEventHubNextPageRequest(nextLink, resourceGroupName, namespaceName, eventHubName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

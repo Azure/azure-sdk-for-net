@@ -20,11 +20,12 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of ConsumerGroup and their operations over a EventHub. </summary>
+    /// <summary> A class representing collection of ConsumerGroup and their operations over its parent. </summary>
     public partial class ConsumerGroupCollection : ArmCollection, IEnumerable<ConsumerGroup>, IAsyncEnumerable<ConsumerGroup>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ConsumerGroupsRestOperations _restClient;
+        private readonly ConsumerGroupsRestOperations _consumerGroupsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ConsumerGroupCollection"/> class for mocking. </summary>
         protected ConsumerGroupCollection()
@@ -36,22 +37,7 @@ namespace Azure.ResourceManager.EventHubs
         internal ConsumerGroupCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ConsumerGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<ConsumerGroup> IEnumerable<ConsumerGroup>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ConsumerGroup> IAsyncEnumerable<ConsumerGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _consumerGroupsRestClient = new ConsumerGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -80,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken);
+                var response = _consumerGroupsRestClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken);
                 var operation = new ConsumerGroupCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
@@ -114,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _consumerGroupsRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ConsumerGroupCreateOrUpdateOperation(Parent, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -127,21 +113,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a description for the specified consumer group. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual Response<ConsumerGroup> Get(string consumerGroupName, CancellationToken cancellationToken = default)
         {
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Get");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken);
+                var response = _consumerGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConsumerGroup(Parent, response.Value), response.GetRawResponse());
@@ -153,21 +140,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets a description for the specified consumer group. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public async virtual Task<Response<ConsumerGroup>> GetAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.Get");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _consumerGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ConsumerGroup(Parent, response.Value), response.GetRawResponse());
@@ -181,19 +169,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual Response<ConsumerGroup> GetIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken);
+                var response = _consumerGroupsRestClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ConsumerGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
@@ -207,19 +196,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public async virtual Task<Response<ConsumerGroup>> GetIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExists");
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _consumerGroupsRestClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ConsumerGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ConsumerGroup(this, response.Value), response.GetRawResponse());
@@ -233,18 +223,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string consumerGroupName, CancellationToken cancellationToken = default)
         {
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
                 var response = GetIfExists(consumerGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -257,18 +248,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExists");
+            if (consumerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(consumerGroupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConsumerGroupCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (consumerGroupName == null)
-                {
-                    throw new ArgumentNullException(nameof(consumerGroupName));
-                }
-
                 var response = await GetIfExistsAsync(consumerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -292,7 +284,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByEventHub(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    var response = _consumerGroupsRestClient.ListByEventHub(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConsumerGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -307,7 +299,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByEventHubNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    var response = _consumerGroupsRestClient.ListByEventHubNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConsumerGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -332,7 +324,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByEventHubAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _consumerGroupsRestClient.ListByEventHubAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConsumerGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -347,7 +339,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByEventHubNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _consumerGroupsRestClient.ListByEventHubNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConsumerGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,7 +351,22 @@ namespace Azure.ResourceManager.EventHubs
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        IEnumerator<ConsumerGroup> IEnumerable<ConsumerGroup>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ConsumerGroup> IAsyncEnumerable<ConsumerGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, ConsumerGroup, ConsumerGroupData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, ConsumerGroup, ConsumerGroupData> Construct() { }
     }
 }

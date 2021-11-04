@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetRegionRequest()
+        internal HttpMessage CreateListRegionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AvailableClustersList>> GetRegionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableClustersList>> ListRegionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRegionRequest();
+            using var message = CreateListRegionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AvailableClustersList> GetRegion(CancellationToken cancellationToken = default)
+        public Response<AvailableClustersList> ListRegion(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRegionRequest();
+            using var message = CreateListRegionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of EventHubNamespace and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of EventHubNamespace and their operations over its parent. </summary>
     public partial class EventHubNamespaceCollection : ArmCollection, IEnumerable<EventHubNamespace>, IAsyncEnumerable<EventHubNamespace>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NamespacesRestOperations _restClient;
+        private readonly NamespacesRestOperations _namespacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubNamespaceCollection"/> class for mocking. </summary>
         protected EventHubNamespaceCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubNamespaceCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<EventHubNamespace> IEnumerable<EventHubNamespace>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<EventHubNamespace> IAsyncEnumerable<EventHubNamespace>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _namespacesRestClient = new NamespacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = _namespacesRestClient.CreateOrUpdate(Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
+                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
+                var response = await _namespacesRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new NamespaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _namespacesRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, namespaceName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the description of the specified namespace. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual Response<EventHubNamespace> Get(string namespaceName, CancellationToken cancellationToken = default)
         {
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Get");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
+                var response = _namespacesRestClient.Get(Id.ResourceGroupName, namespaceName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHubNamespace(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the description of the specified namespace. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public async virtual Task<Response<EventHubNamespace>> GetAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.Get");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _namespacesRestClient.GetAsync(Id.ResourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new EventHubNamespace(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual Response<EventHubNamespace> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
+                var response = _namespacesRestClient.Get(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<EventHubNamespace>(null, response.GetRawResponse())
                     : Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public async virtual Task<Response<EventHubNamespace>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExists");
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _namespacesRestClient.GetAsync(Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<EventHubNamespace>(null, response.GetRawResponse())
                     : Response.FromValue(new EventHubNamespace(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
                 var response = GetIfExists(namespaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.CheckIfExists");
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EventHubNamespaceCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (namespaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(namespaceName));
-                }
-
                 var response = await GetIfExistsAsync(namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _namespacesRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _namespacesRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _namespacesRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _namespacesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        IEnumerator<EventHubNamespace> IEnumerable<EventHubNamespace>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<EventHubNamespace> IAsyncEnumerable<EventHubNamespace>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, EventHubNamespace, EventHubNamespaceData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, EventHubNamespace, EventHubNamespaceData> Construct() { }
     }
 }

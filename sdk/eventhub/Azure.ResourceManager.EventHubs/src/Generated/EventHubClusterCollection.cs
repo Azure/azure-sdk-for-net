@@ -21,11 +21,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of EventHubCluster and their operations over a ResourceGroup. </summary>
+    /// <summary> A class representing collection of EventHubCluster and their operations over its parent. </summary>
     public partial class EventHubClusterCollection : ArmCollection, IEnumerable<EventHubCluster>, IAsyncEnumerable<EventHubCluster>
+
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ClustersRestOperations _restClient;
+        private readonly ClustersRestOperations _clustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EventHubClusterCollection"/> class for mocking. </summary>
         protected EventHubClusterCollection()
@@ -37,22 +38,7 @@ namespace Azure.ResourceManager.EventHubs
         internal EventHubClusterCollection(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
-        }
-
-        IEnumerator<EventHubCluster> IEnumerable<EventHubCluster>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<EventHubCluster> IAsyncEnumerable<EventHubCluster>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _clustersRestClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
@@ -81,8 +67,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, clusterName, parameters, cancellationToken);
-                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var response = _clustersRestClient.CreateOrUpdate(Id.ResourceGroupName, clusterName, parameters, cancellationToken);
+                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
                 if (waitForCompletion)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,8 +101,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
+                var response = await _clustersRestClient.CreateOrUpdateAsync(Id.ResourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ClusterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, clusterName, parameters).Request, response);
                 if (waitForCompletion)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,21 +114,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the resource description of the specified Event Hubs Cluster. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<EventHubCluster> Get(string clusterName, CancellationToken cancellationToken = default)
         {
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Get");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                var response = _clustersRestClient.Get(Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventHubCluster(Parent, response.Value), response.GetRawResponse());
@@ -154,21 +141,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets details for this resource from the service. </summary>
+        /// <summary> Gets the resource description of the specified Event Hubs Cluster. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<EventHubCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.Get");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _clustersRestClient.GetAsync(Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new EventHubCluster(Parent, response.Value), response.GetRawResponse());
@@ -182,19 +170,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<EventHubCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                var response = _clustersRestClient.Get(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<EventHubCluster>(null, response.GetRawResponse())
                     : Response.FromValue(new EventHubCluster(this, response.Value), response.GetRawResponse());
@@ -208,19 +197,20 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<EventHubCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExists");
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _clustersRestClient.GetAsync(Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<EventHubCluster>(null, response.GetRawResponse())
                     : Response.FromValue(new EventHubCluster(this, response.Value), response.GetRawResponse());
@@ -234,18 +224,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> CheckIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExists");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
                 var response = GetIfExists(clusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -258,18 +249,19 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExists");
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("EventHubClusterCollection.CheckIfExistsAsync");
             scope.Start();
             try
             {
-                if (clusterName == null)
-                {
-                    throw new ArgumentNullException(nameof(clusterName));
-                }
-
                 var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -291,7 +283,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _clustersRestClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +298,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _clustersRestClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _clustersRestClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -344,7 +336,7 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _clustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EventHubCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +394,22 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        IEnumerator<EventHubCluster> IEnumerable<EventHubCluster>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<EventHubCluster> IAsyncEnumerable<EventHubCluster>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
         // Builders.
-        // public ArmBuilder<ResourceIdentifier, EventHubCluster, EventHubClusterData> Construct() { }
+        // public ArmBuilder<Azure.ResourceManager.ResourceIdentifier, EventHubCluster, EventHubClusterData> Construct() { }
     }
 }

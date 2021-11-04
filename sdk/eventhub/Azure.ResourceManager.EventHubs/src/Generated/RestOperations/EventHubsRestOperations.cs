@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllByNamespaceRequest(string resourceGroupName, string namespaceName, int? skip, int? top)
+        internal HttpMessage CreateListByNamespaceRequest(string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<EventHubListResult>> GetAllByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHubListResult>> ListByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetAllByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
+            using var message = CreateListByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<EventHubListResult> GetAllByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<EventHubListResult> ListByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetAllByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
+            using var message = CreateListByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetAllByNamespaceNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, int? skip, int? top)
+        internal HttpMessage CreateListByNamespaceNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<EventHubListResult>> GetAllByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EventHubListResult>> ListByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetAllByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
+            using var message = CreateListByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<EventHubListResult> GetAllByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<EventHubListResult> ListByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateGetAllByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
+            using var message = CreateListByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

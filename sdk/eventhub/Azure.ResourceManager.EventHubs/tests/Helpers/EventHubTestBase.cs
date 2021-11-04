@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNamespaceNameAvailabilityAsync(new CheckNameAvailabilityParameter(namespaceName));
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckAvailabilityNamespaceNameAsync(new CheckNameAvailabilityParameter(namespaceName));
                 if (res.NameAvailable==true)
                 {
                     return namespaceName;

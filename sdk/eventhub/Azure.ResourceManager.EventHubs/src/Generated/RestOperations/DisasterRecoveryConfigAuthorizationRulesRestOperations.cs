@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string namespaceName, string @alias)
+        internal HttpMessage CreateListRequest(string resourceGroupName, string namespaceName, string @alias)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public async Task<Response<AuthorizationRuleListResult>> GetAllAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRuleListResult>> ListAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, namespaceName, @alias);
+            using var message = CreateListRequest(resourceGroupName, namespaceName, @alias);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public Response<AuthorizationRuleListResult> GetAll(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<AuthorizationRuleListResult> List(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, namespaceName, @alias);
+            using var message = CreateListRequest(resourceGroupName, namespaceName, @alias);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetKeysRequest(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
+        internal HttpMessage CreateListKeysRequest(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
-        public async Task<Response<AccessKeys>> GetKeysAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessKeys>> ListKeysAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, namespaceName, @alias, authorizationRuleName);
+            using var message = CreateListKeysRequest(resourceGroupName, namespaceName, @alias, authorizationRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
-        public Response<AccessKeys> GetKeys(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public Response<AccessKeys> ListKeys(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(authorizationRuleName));
             }
 
-            using var message = CreateGetKeysRequest(resourceGroupName, namespaceName, @alias, authorizationRuleName);
+            using var message = CreateListKeysRequest(resourceGroupName, namespaceName, @alias, authorizationRuleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, string @alias)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, string @alias)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public async Task<Response<AuthorizationRuleListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, namespaceName, @alias);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, namespaceName, @alias);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="alias"/> is null. </exception>
-        public Response<AuthorizationRuleListResult> GetAllNextPage(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<AuthorizationRuleListResult> ListNextPage(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(@alias));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, namespaceName, @alias);
+            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, namespaceName, @alias);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
