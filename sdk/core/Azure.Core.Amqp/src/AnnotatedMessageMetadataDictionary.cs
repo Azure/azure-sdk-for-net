@@ -11,82 +11,90 @@ namespace Azure.Core.Amqp
     internal class AnnotatedMessageMetadataDictionary : IDictionary<string, object?>
     {
         private readonly AmqpAnnotatedMessage _message;
-        private readonly IDictionary<string, object?> _dictionary;
         internal const string ContentType = "ContentType";
 
         public AnnotatedMessageMetadataDictionary(AmqpAnnotatedMessage message)
         {
             _message = message;
-            _dictionary = new Dictionary<string, object?>();
         }
 
-        public IEnumerator<KeyValuePair<string, object?>> GetEnumerator() => _dictionary.GetEnumerator();
+        public IEnumerator<KeyValuePair<string, object?>> GetEnumerator() => throw new NotSupportedException();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        public void Add(KeyValuePair<string, object?> item) => Add(item.Key, item.Value);
+        public void Add(KeyValuePair<string, object?> item) => throw new NotSupportedException();
 
-        public void Clear()
+        public void Clear() => throw new NotSupportedException();
+
+        public bool Contains(KeyValuePair<string, object?> item)
         {
-            if (_dictionary.ContainsKey(ContentType))
+            if (item.Key == ContentType)
             {
-                _message.Properties.ContentType = null;
+                switch (item.Value)
+                {
+                    case null:
+                        return _message.Properties.ContentType == null;
+                    case string stringVal:
+                        return stringVal == _message.Properties.ContentType;
+                }
             }
-            _dictionary.Clear();
+
+            return false;
         }
 
-        public bool Contains(KeyValuePair<string, object?> item) => _dictionary.Contains(item);
+        public void CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex) => throw new NotSupportedException();
 
-        public void CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex) => _dictionary.CopyTo(array, arrayIndex);
+        public bool Remove(KeyValuePair<string, object?> item) => throw new NotSupportedException();
 
-        public bool Remove(KeyValuePair<string, object?> item) => Remove(item.Key);
+        public int Count => 1;
+        public bool IsReadOnly => false;
 
-        public int Count => _dictionary.Count;
-        public bool IsReadOnly => _dictionary.IsReadOnly;
+        public void Add(string key, object? value) => throw new NotSupportedException();
 
-        public void Add(string key, object? value)
+        public bool ContainsKey(string key) => key == ContentType;
+
+        public bool Remove(string key) => throw new NotSupportedException();
+
+        public bool TryGetValue(string key, out object? value)
         {
             if (key == ContentType)
             {
-                AddContentType(value);
+                value = _message.Properties.ContentType;
+                return true;
             }
 
-            _dictionary.Add(key, value);
+            value = null;
+            return false;
         }
-
-        public bool ContainsKey(string key) => _dictionary.ContainsKey(key);
-
-        public bool Remove(string key)
-        {
-            if (key == ContentType)
-            {
-                _message.Properties.ContentType = null;
-            }
-
-            return _dictionary.Remove(key);
-        }
-
-        public bool TryGetValue(string key, out object? value) => _dictionary.TryGetValue(key, out value);
 
         public object? this[string key]
         {
-            get => _dictionary[key];
+            get
+            {
+                if (key == ContentType)
+                {
+                    return _message.Properties.ContentType;
+                }
+
+                throw new NotSupportedException("The key being looked up is not supported");
+            }
             set
             {
                 if (key == ContentType)
                 {
                     AddContentType(value);
+                    return;
                 }
 
-                _dictionary[key] = value;
+                throw new NotSupportedException("The key being added is not supported");
             }
         }
 
-        public ICollection<string> Keys => _dictionary.Keys;
-        public ICollection<object?> Values => _dictionary.Values;
+        public ICollection<string> Keys => new List<string> { ContentType };
+        public ICollection<object?> Values => new List<object?> { _message.Properties.ContentType };
 
         private void AddContentType(object? value)
         {

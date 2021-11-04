@@ -51,6 +51,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="..\..\..\core\Azure.Core.Amqp\src\AnnotatedMessageMetadataDictionary.cs" LinkBase="SharedSource" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

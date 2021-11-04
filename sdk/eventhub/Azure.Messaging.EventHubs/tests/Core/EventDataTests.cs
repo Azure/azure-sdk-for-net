@@ -52,8 +52,10 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="EventData.ContentType" /> property.
+        /// Verifies functionality of the <see cref="EventData.ContentType" /> property and its integration with
+        /// <see cref="IMessageWithMetadata.Metadata" />.
         /// </summary>
+        ///
         [Test]
         public void ContentTypeIsReflectedInIMessageWithMetadata()
         {
@@ -61,16 +63,17 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ContentType = "foo"
             };
-            Assert.AreEqual("foo", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
-            Assert.AreEqual("foo", eventData.ContentType);
+            var contentTypeKey = AnnotatedMessageMetadataDictionary.ContentType;
+            Assert.That(((IMessageWithMetadata)eventData).Metadata[contentTypeKey], Is.EqualTo("foo"));
+            Assert.That(eventData.ContentType, Is.EqualTo("foo"));
 
-            ((IMessageWithMetadata)eventData).Metadata["ContentType"] = "bar";
-            Assert.AreEqual("bar", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
-            Assert.AreEqual("bar", eventData.ContentType);
+            ((IMessageWithMetadata)eventData).Metadata[contentTypeKey] = "bar";
+            Assert.That(((IMessageWithMetadata)eventData).Metadata[contentTypeKey], Is.EqualTo("bar"));
+            Assert.That(eventData.ContentType, Is.EqualTo("bar"));
 
             eventData.GetRawAmqpMessage().Properties.ContentType = "baz";
-            Assert.AreEqual("baz", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
-            Assert.AreEqual("baz", eventData.ContentType);
+            Assert.That(((IMessageWithMetadata)eventData).Metadata[contentTypeKey], Is.EqualTo("baz"));
+            Assert.That(eventData.ContentType, Is.EqualTo("baz"));
         }
 
         /// <summary>

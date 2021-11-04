@@ -28,6 +28,11 @@ namespace Azure.Messaging.EventHubs
         private IReadOnlyDictionary<string, object> _systemProperties;
 
         /// <summary>
+        /// The backing store for the AMQP metadata dictionary. This is used for Schema Registry integration.
+        /// </summary>
+        private AnnotatedMessageMetadataDictionary _metadata;
+
+        /// <summary>
         ///   The data associated with the event, in <see cref="BinaryData" /> form, providing support
         ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
         /// </summary>
@@ -54,20 +59,7 @@ namespace Azure.Messaging.EventHubs
             set => EventBody = value;
         }
 
-        IDictionary<string, object> IMessageWithMetadata.Metadata
-        {
-            get
-            {
-                _metadata ??= new AnnotatedMessageMetadataDictionary(GetRawAmqpMessage())
-                {
-                    { AnnotatedMessageMetadataDictionary.ContentType, ContentType }
-                };
-
-                return _metadata;
-            }
-        }
-
-        private AnnotatedMessageMetadataDictionary _metadata;
+        IDictionary<string, object> IMessageWithMetadata.Metadata => _metadata ??= new AnnotatedMessageMetadataDictionary(GetRawAmqpMessage());
 
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
@@ -113,7 +105,6 @@ namespace Azure.Messaging.EventHubs
                     _amqpMessage.Properties.ContentType = populated
                         ? value
                         : null;
-                    _metadata[AnnotatedMessageMetadataDictionary.ContentType] = _amqpMessage.Properties.ContentType;
                 }
             }
         }
