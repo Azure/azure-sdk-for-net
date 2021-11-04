@@ -24,7 +24,11 @@ namespace Azure.AI.TextAnalytics.Tests
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
+        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)
+            => GetClient(out _, credential, options, useTokenCredential);
+
         public TextAnalyticsClient GetClient(
+            out TextAnalyticsClient nonInstrumentedClient,
             AzureKeyCredential credential = default,
             TextAnalyticsClientOptions options = default,
             bool useTokenCredential = default)
@@ -34,13 +38,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             if (useTokenCredential)
             {
-                return InstrumentClient(new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                nonInstrumentedClient = new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options));
             }
             else
             {
                 credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-                return InstrumentClient(new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options)));
+                nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
+            return InstrumentClient(nonInstrumentedClient);
         }
     }
 }

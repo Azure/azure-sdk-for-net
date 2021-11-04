@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -798,22 +799,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
 
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
-                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
-                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
-                DisplayName = "AnalyzeOperationBatchWithErrorTest"
-            };
-
-            var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
+            AnalyzeActionsOperation operation = CreateOperation(client);
             await operation.UpdateStatusAsync();
 
             Assert.AreEqual(5, operation.ActionsFailed);
@@ -888,18 +874,8 @@ namespace Azure.AI.TextAnalytics.Tests
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
 
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
+            var operation = CreateOperation(client);
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-                DisplayName = "AnalyzeOperationBatchWithErrorTest"
-            };
-
-            var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InternalServerError", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Some error"));
@@ -935,6 +911,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 Assert.AreEqual(-1, contentString.IndexOf("show-stats"));
             }
+        }
+
+        private AnalyzeActionsOperation CreateOperation(TextAnalyticsClient client)
+        {
+            var inputOrder = new Dictionary<string, int>(1) { { "0", 0 } };
+            var operationdIdInfo = new OperationIdInformation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", inputOrder);
+
+            return new AnalyzeActionsOperation(ClientCommon.EncodeOperationId(JsonSerializer.Serialize(operationdIdInfo)), client);
         }
     }
 }

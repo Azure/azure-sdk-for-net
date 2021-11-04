@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -116,6 +118,11 @@ namespace Azure.AI.TextAnalytics
         private bool? _showStats { get; }
 
         /// <summary>
+        /// Represents the job Id the service assigned to the operation.
+        /// </summary>
+        private string _jobId { get; }
+
+        /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public override bool HasValue => _operationInternal.HasValue;
@@ -127,7 +134,19 @@ namespace Azure.AI.TextAnalytics
         /// <param name="client">The client used to check for completion.</param>
         public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
         {
-            // TODO: Add argument validation here.
+            try
+            {
+                string plainOperationId = ClientCommon.DecodeOperationId(operationId);
+                OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(plainOperationId);
+                _jobId = idInformation.JobId;
+                _showStats = idInformation.ShowStats;
+                _idToIndexMap = idInformation.InputDocumentOrder;
+            }
+            catch
+            {
+                throw new ArgumentException($"Invalid value. Please use the {nameof(Id)} property value.", nameof(operationId));
+            }
+
             Id = operationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
@@ -152,7 +171,10 @@ namespace Azure.AI.TextAnalytics
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            Id = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last();
+
+            string plainId = JsonSerializer.Serialize(new OperationIdInformation(_jobId, idToIndexMap, showStats));
+            Id = ClientCommon.EncodeOperationId(plainId);
         }
 
         /// <summary>
@@ -284,8 +306,8 @@ namespace Azure.AI.TextAnalytics
         async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeJobState> response = async
-                ? await _serviceClient.AnalyzeStatusAsync(Id, _showStats, null, null, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.AnalyzeStatus(Id, _showStats, null, null, cancellationToken);
+                ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, cancellationToken);
 
             // Add lock to avoid race condition?
             _displayName = response.Value.DisplayName;

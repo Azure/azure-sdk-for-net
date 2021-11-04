@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -90,6 +91,11 @@ namespace Azure.AI.TextAnalytics
         private readonly bool? _showStats;
 
         /// <summary>
+        /// Represents the job Id the service assigned to the operation.
+        /// </summary>
+        private string _jobId { get; }
+
+        /// <summary>
         /// Time when the operation will expire.
         /// </summary>
         private DateTimeOffset? _expiresOn;
@@ -116,7 +122,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="client">The client used to check for completion.</param>
         public AnalyzeHealthcareEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
-            // TODO: Add argument validation here.
+            try
+            {
+                string plainOperationId = ClientCommon.DecodeOperationId(operationId);
+                OperationIdInformation idInformation = JsonSerializer.Deserialize<OperationIdInformation>(plainOperationId);
+                _jobId = idInformation.JobId;
+                _showStats = idInformation.ShowStats;
+                _idToIndexMap = idInformation.InputDocumentOrder;
+            }
+            catch
+            {
+                throw new ArgumentException($"Invalid value. Please use the {nameof(Id)} property value.", nameof(operationId));
+            }
 
             Id = operationId;
             _serviceClient = client._serviceRestClient;
@@ -142,7 +159,10 @@ namespace Azure.AI.TextAnalytics
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            Id = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last();
+
+            string plainId = JsonSerializer.Serialize(new OperationIdInformation(_jobId, idToIndexMap, showStats));
+            Id = ClientCommon.EncodeOperationId(plainId);
         }
 
         /// <summary>
@@ -222,7 +242,7 @@ namespace Azure.AI.TextAnalytics
             scope.Start();
             try
             {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(Id), cancellationToken);
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
                 _operationInternal.RawResponse = response.GetRawResponse();
             }
             catch (Exception e)
@@ -244,7 +264,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
                 _operationInternal.RawResponse = response.GetRawResponse();
             }
             catch (Exception e)
@@ -316,8 +336,8 @@ namespace Azure.AI.TextAnalytics
         async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<HealthcareJobState> response = async
-                ? await _serviceClient.HealthStatusAsync(new Guid(Id), null, null, _showStats, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.HealthStatus(new Guid(Id), null, null, _showStats, cancellationToken);
+                ? await _serviceClient.HealthStatusAsync(new Guid(_jobId), null, null, _showStats, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.HealthStatus(new Guid(_jobId), null, null, _showStats, cancellationToken);
 
             // Add lock to avoid race condition?
             _status = response.Value.Status;
