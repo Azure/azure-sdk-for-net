@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Resumes a database. </summary>
     public partial class DatabaseResumeOperation : Operation<DatabaseData>, IOperationSource<DatabaseData>

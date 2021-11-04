@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Azure Active Directory identity configuration for a resource. </summary>
     public partial class ResourceIdentity

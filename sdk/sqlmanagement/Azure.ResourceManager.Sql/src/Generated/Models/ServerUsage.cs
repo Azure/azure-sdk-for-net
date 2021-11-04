@@ -7,7 +7,7 @@
 
 using System;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents server metrics. </summary>
     public partial class ServerUsage

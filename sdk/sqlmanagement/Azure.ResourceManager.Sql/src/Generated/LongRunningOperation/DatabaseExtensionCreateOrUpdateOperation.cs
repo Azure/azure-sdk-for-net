@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Perform a database extension operation, like polybase import. </summary>
     public partial class DatabaseExtensionCreateOrUpdateOperation : Operation<ImportExportExtensionsOperationResult>, IOperationSource<ImportExportExtensionsOperationResult>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The storage redundancy type of the copied backup. </summary>
     public readonly partial struct RequestedBackupStorageRedundancy : IEquatable<RequestedBackupStorageRedundancy>

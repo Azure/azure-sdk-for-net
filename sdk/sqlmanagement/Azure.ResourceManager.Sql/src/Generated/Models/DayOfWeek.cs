@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Day of maintenance window. </summary>
     public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>

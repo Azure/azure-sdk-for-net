@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The license type to apply for this elastic pool. </summary>
     public readonly partial struct ElasticPoolLicenseType : IEquatable<ElasticPoolLicenseType>

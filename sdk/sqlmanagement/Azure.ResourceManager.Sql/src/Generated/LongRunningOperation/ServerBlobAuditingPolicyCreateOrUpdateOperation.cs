@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Creates or updates a server&apos;s blob auditing policy. </summary>
     public partial class ServerBlobAuditingPolicyCreateOrUpdateOperation : Operation<ServerBlobAuditingPolicy>, IOperationSource<ServerBlobAuditingPolicy>

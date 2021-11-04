@@ -7,7 +7,7 @@
 
 using System;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Partner server information for the failover group. </summary>
     public partial class PartnerInfo

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Completes the restore operation on a managed database. </summary>
     public partial class ManagedDatabaseCompleteRestoreOperation : Operation

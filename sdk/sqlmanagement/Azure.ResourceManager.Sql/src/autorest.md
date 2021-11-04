@@ -7,6 +7,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47e46d4eab3ea98d7578d51c404b1ca4405fdb76/specification/sql/resource-manager/readme.md
+namespace: Azure.ResourceManager.Sql
+model-namespace: false
+public-clients: false
+head-as-boolean: false
+clear-output-folder: true
 modelerfour:
   lenient-model-deduplication: true
 skip-csproj: true

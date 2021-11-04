@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The log size capability. </summary>
     public partial class LogSizeCapability

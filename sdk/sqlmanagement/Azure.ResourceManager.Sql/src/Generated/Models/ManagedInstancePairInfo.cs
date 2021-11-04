@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
     public partial class ManagedInstancePairInfo

@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     public partial class TdeCertificate : IUtf8JsonSerializable
     {

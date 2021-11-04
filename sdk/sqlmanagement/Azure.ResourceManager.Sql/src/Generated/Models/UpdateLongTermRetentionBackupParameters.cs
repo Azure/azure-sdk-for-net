@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup update operation. </summary>
     public partial class UpdateLongTermRetentionBackupParameters

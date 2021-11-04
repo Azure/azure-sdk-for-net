@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An export managed database operation result resource. </summary>
     public partial class DatabaseExtensions : Resource

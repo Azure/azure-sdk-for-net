@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Collation of the metadata catalog. </summary>
     public readonly partial struct CatalogCollationType : IEquatable<CatalogCollationType>

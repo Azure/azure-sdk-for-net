@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Disables uploading ledger digests to an Azure Storage account or an Azure Confidential Ledger instance. </summary>
     public partial class LedgerDigestUploadDisableOperation : Operation<LedgerDigestUploadsData>, IOperationSource<LedgerDigestUploadsData>

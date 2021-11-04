@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The detailed state of the job execution. </summary>
     public readonly partial struct JobExecutionLifecycle : IEquatable<JobExecutionLifecycle>

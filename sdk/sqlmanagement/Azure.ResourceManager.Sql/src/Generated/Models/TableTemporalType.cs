@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The table temporal type. </summary>
     public readonly partial struct TableTemporalType : IEquatable<TableTemporalType>

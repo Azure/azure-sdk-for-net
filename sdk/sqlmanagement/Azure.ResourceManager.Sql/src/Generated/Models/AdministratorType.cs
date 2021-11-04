@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Type of the sever administrator. </summary>
     public readonly partial struct AdministratorType : IEquatable<AdministratorType>

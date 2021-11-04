@@ -7,7 +7,7 @@
 
 using System;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The properties that are supported in the $filter operation. </summary>
     internal partial class SecurityEventsFilterParameters

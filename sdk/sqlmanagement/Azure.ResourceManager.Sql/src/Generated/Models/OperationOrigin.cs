@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The intended executor of the operation. </summary>
     public readonly partial struct OperationOrigin : IEquatable<OperationOrigin>

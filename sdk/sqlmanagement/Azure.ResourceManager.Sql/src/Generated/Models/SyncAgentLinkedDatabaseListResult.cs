@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync agent linked databases. </summary>
     internal partial class SyncAgentLinkedDatabaseListResult

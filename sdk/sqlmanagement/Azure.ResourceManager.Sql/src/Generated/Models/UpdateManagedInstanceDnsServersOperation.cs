@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recoverable managed database resource. </summary>
     public partial class UpdateManagedInstanceDnsServersOperation : Resource

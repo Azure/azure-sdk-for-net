@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sync state of the sync group. </summary>
     public readonly partial struct SyncGroupState : IEquatable<SyncGroupState>

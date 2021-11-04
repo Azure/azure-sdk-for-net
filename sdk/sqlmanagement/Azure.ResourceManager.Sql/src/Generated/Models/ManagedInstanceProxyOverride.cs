@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Connection type used for connecting to the instance. </summary>
     public readonly partial struct ManagedInstanceProxyOverride : IEquatable<ManagedInstanceProxyOverride>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The ReplicaType. </summary>
     public readonly partial struct ReplicaType : IEquatable<ReplicaType>

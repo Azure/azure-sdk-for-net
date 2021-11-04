@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Creates a server communication link. </summary>
     public partial class ServerCommunicationLinkCreateOrUpdateOperation : Operation<ServerCommunicationLink>, IOperationSource<ServerCommunicationLink>

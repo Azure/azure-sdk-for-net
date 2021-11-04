@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Gets if approval for applying this recommended action was given by user/system. </summary>
     public enum RecommendedActionInitiatedBy

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sets maintenance windows settings for a database. </summary>
     public partial class MaintenanceWindowCreateOrUpdateOperation : Operation

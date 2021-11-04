@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Fails over from the current primary server to this server. This operation might result in data loss. </summary>
     public partial class FailoverGroupForceFailoverAllowDataLossOperation : Operation<FailoverGroupData>, IOperationSource<FailoverGroupData>

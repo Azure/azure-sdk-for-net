@@ -16,9 +16,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of Database and their operations over its parent. </summary>
     public partial class DatabaseCollection : ArmCollection, IEnumerable<Database>, IAsyncEnumerable<Database>

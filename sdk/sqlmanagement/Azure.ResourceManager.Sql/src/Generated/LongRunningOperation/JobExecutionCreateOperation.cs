@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Starts an elastic job execution. </summary>
     public partial class JobExecutionCreateOperation : Operation<JobExecutionData>, IOperationSource<JobExecutionData>

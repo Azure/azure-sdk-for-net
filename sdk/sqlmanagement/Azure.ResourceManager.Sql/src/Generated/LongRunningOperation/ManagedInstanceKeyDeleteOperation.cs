@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Deletes the managed instance key with the given name. </summary>
     public partial class ManagedInstanceKeyDeleteOperation : Operation

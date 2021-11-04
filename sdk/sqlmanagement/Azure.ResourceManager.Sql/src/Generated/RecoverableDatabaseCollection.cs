@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RecoverableDatabase and their operations over its parent. </summary>
     public partial class RecoverableDatabaseCollection : ArmCollection, IEnumerable<RecoverableDatabase>, IAsyncEnumerable<RecoverableDatabase>

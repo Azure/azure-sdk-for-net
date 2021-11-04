@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </summary>
     public enum CheckNameAvailabilityReason

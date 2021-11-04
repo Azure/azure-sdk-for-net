@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The type of the target. </summary>
     public readonly partial struct JobTargetType : IEquatable<JobTargetType>

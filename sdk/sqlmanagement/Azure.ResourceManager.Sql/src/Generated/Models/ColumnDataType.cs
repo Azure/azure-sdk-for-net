@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The column data type. </summary>
     public readonly partial struct ColumnDataType : IEquatable<ColumnDataType>

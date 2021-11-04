@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Resources.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class ManagedInstancePrivateEndpointConnectionProperties

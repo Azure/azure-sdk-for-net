@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The name of the sample schema to apply when creating this database. </summary>
     public readonly partial struct SampleName : IEquatable<SampleName>

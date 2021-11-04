@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Link type (GEO, NAMED). </summary>
     public readonly partial struct ReplicationLinkType : IEquatable<ReplicationLinkType>

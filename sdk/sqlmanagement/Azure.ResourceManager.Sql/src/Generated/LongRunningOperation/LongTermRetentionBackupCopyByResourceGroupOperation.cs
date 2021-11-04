@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Copy an existing long term retention backup to a different server. </summary>
     public partial class LongTermRetentionBackupCopyByResourceGroupOperation : Operation<LongTermRetentionBackupOperationResult>, IOperationSource<LongTermRetentionBackupOperationResult>

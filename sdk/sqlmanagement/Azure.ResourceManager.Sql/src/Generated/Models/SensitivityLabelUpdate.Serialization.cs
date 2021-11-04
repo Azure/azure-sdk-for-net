@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SensitivityLabelUpdate : IUtf8JsonSerializable
     {

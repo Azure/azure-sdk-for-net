@@ -13,9 +13,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions

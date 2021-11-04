@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RestorableDroppedManagedDatabase and their operations over its parent. </summary>
     public partial class RestorableDroppedManagedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedManagedDatabase>, IAsyncEnumerable<RestorableDroppedManagedDatabase>

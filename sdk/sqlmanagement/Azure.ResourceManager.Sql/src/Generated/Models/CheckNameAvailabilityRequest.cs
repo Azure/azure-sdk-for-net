@@ -7,7 +7,7 @@
 
 using System;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class CheckNameAvailabilityRequest

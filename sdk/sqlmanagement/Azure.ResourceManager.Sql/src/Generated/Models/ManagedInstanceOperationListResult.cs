@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list managed instance operations request. </summary>
     internal partial class ManagedInstanceOperationListResult

@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     internal partial class ServerAutomaticTuningRestOperations
     {

@@ -18,7 +18,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of VirtualCluster and their operations over its parent. </summary>
     public partial class VirtualClusterCollection : ArmCollection, IEnumerable<VirtualCluster>, IAsyncEnumerable<VirtualCluster>

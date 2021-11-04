@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Conflict resolution policy of the sync group. </summary>
     public readonly partial struct SyncConflictResolutionPolicy : IEquatable<SyncConflictResolutionPolicy>

@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the JobVersion data model. </summary>
     public partial class JobVersionData : Resource

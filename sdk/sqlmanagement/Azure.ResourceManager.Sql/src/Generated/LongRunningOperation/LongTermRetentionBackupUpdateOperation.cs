@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Updates an existing long term retention backup. </summary>
     public partial class LongTermRetentionBackupUpdateOperation : Operation<LongTermRetentionBackupOperationResult>, IOperationSource<LongTermRetentionBackupOperationResult>

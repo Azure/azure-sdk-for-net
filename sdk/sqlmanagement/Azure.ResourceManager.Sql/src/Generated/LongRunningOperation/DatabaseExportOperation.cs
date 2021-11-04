@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Exports a database. </summary>
     public partial class DatabaseExportOperation : Operation<ImportExportOperationResult>, IOperationSource<ImportExportOperationResult>

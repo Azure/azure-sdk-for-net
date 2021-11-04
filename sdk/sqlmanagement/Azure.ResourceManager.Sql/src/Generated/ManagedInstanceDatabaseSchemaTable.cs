@@ -16,7 +16,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A Class representing a ManagedInstanceDatabaseSchemaTable along with the instance operations that can be performed on it. </summary>
     public partial class ManagedInstanceDatabaseSchemaTable : ArmResource

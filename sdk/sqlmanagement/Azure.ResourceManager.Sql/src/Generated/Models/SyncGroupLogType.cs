@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Type of the sync group log. </summary>
     public readonly partial struct SyncGroupLogType : IEquatable<SyncGroupLogType>

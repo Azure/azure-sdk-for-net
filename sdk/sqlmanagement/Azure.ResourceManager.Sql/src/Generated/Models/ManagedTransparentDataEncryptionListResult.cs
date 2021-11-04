@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of managed transparent data encryptions. </summary>
     internal partial class ManagedTransparentDataEncryptionListResult

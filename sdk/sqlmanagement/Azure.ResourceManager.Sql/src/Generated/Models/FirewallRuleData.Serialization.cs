@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     public partial class FirewallRuleData : IUtf8JsonSerializable
     {

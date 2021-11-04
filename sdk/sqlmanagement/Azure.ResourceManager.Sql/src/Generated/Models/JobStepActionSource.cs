@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The source of the action to execute. </summary>
     public readonly partial struct JobStepActionSource : IEquatable<JobStepActionSource>

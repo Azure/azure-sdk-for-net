@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Operations health status in a location. </summary>
     public partial class OperationsHealth : Resource

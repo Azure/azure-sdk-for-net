@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions

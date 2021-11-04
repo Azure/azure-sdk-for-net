@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedDatabaseRestoreDetailsResultData : IUtf8JsonSerializable
     {

@@ -12,9 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     internal partial class ManagedInstanceTdeCertificatesRestOperations
     {

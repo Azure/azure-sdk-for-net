@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Read-only endpoint of the failover group instance. </summary>
     public partial class FailoverGroupReadOnlyEndpoint

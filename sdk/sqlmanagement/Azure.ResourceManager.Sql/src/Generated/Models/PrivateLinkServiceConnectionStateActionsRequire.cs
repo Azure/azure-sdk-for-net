@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The actions required for private link service connection. </summary>
     public readonly partial struct PrivateLinkServiceConnectionStateActionsRequire : IEquatable<PrivateLinkServiceConnectionStateActionsRequire>

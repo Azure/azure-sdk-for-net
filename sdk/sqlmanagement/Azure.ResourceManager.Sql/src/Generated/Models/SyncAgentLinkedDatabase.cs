@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL Database sync agent linked database. </summary>
     public partial class SyncAgentLinkedDatabase : Resource

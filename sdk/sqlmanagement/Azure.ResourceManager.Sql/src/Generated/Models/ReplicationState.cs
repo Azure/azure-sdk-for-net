@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
     public readonly partial struct ReplicationState : IEquatable<ReplicationState>

@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Updates an existing encryption protector. </summary>
     public partial class EncryptionProtectorCreateOrUpdateOperation : Operation<EncryptionProtector>, IOperationSource<EncryptionProtector>

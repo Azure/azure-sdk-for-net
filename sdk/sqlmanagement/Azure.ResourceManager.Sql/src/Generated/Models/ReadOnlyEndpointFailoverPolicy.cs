@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
     public readonly partial struct ReadOnlyEndpointFailoverPolicy : IEquatable<ReadOnlyEndpointFailoverPolicy>

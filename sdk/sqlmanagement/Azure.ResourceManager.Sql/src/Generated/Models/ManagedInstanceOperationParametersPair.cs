@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The parameters of a managed instance operation. </summary>
     public partial class ManagedInstanceOperationParametersPair
