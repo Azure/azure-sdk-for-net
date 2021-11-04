@@ -1740,6 +1740,7 @@ namespace Azure.Storage.Sas
         Move = 256,
         Execute = 512,
         SetImmutabilityPolicy = 1024,
+        Filter = 2048,
     }
     public partial class BlobSasBuilder
     {
