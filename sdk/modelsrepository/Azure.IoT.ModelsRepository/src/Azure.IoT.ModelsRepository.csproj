@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyTitle>Azure IoT Models Repository SDK</AssemblyTitle>
@@ -11,7 +11,7 @@
   <PropertyGroup>
     <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure IoT Models Repository</Description>
-    <Version>1.0.0-preview.5</Version>
+    <Version>1.0.0-preview.6</Version>
   </PropertyGroup>
 
 
