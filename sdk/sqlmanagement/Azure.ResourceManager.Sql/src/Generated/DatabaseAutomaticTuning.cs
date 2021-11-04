@@ -37,6 +37,7 @@ namespace SqlManagementClient
         {
             HasData = true;
             _data = resource;
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -46,6 +47,7 @@ namespace SqlManagementClient
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAutomaticTuning(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
+            Parent = options;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _databaseAutomaticTuningRestClient = new DatabaseAutomaticTuningRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
@@ -82,6 +84,9 @@ namespace SqlManagementClient
                 return _data;
             }
         }
+
+        /// <summary> Gets the parent resource of this resource. </summary>
+        public ArmResource Parent { get; }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current
         /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current

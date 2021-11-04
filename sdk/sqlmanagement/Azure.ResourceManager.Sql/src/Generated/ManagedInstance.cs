@@ -934,11 +934,11 @@ namespace SqlManagementClient
 
         #region SqlAgentConfiguration
 
-        /// <summary> Gets a collection of SqlAgentConfigurations in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of SqlAgentConfigurations and their operations over a ManagedInstance. </returns>
-        public SqlAgentConfigurationCollection GetSqlAgentConfigurations()
+        /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it in the ManagedInstance. </summary>
+        /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
+        public SqlAgentConfiguration GetSqlAgentConfiguration()
         {
-            return new SqlAgentConfigurationCollection(this);
+            return new SqlAgentConfiguration(this, Id + "/sqlAgent/current");
         }
         #endregion
 

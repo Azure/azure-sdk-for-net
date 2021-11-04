@@ -781,7 +781,7 @@ namespace SqlManagementClient
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response> RenameAsync(Models.ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response> RenameAsync(ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -809,7 +809,7 @@ namespace SqlManagementClient
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response Rename(Models.ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual Response Rename(ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1828,11 +1828,11 @@ namespace SqlManagementClient
 
         #region DatabaseAutomaticTuning
 
-        /// <summary> Gets a collection of DatabaseAutomaticTunings in the Database. </summary>
-        /// <returns> An object representing collection of DatabaseAutomaticTunings and their operations over a Database. </returns>
-        public DatabaseAutomaticTuningCollection GetDatabaseAutomaticTunings()
+        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it in the Database. </summary>
+        /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
+        public DatabaseAutomaticTuning GetDatabaseAutomaticTuning()
         {
-            return new DatabaseAutomaticTuningCollection(this);
+            return new DatabaseAutomaticTuning(this, Id + "/automaticTuning/current");
         }
         #endregion
 
@@ -1888,21 +1888,21 @@ namespace SqlManagementClient
 
         #region MaintenanceWindowOptions
 
-        /// <summary> Gets a collection of MaintenanceWindowOptions in the Database. </summary>
-        /// <returns> An object representing collection of MaintenanceWindowOptions and their operations over a Database. </returns>
-        public MaintenanceWindowOptionsCollection GetMaintenanceWindowOptions()
+        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it in the Database. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
+        public MaintenanceWindowOptions GetMaintenanceWindowOptions()
         {
-            return new MaintenanceWindowOptionsCollection(this);
+            return new MaintenanceWindowOptions(this, Id + "/maintenanceWindowOptions/current");
         }
         #endregion
 
         #region MaintenanceWindows
 
-        /// <summary> Gets a collection of MaintenanceWindows in the Database. </summary>
-        /// <returns> An object representing collection of MaintenanceWindows and their operations over a Database. </returns>
-        public MaintenanceWindowsCollection GetMaintenanceWindows()
+        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it in the Database. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
+        public MaintenanceWindows GetMaintenanceWindows()
         {
-            return new MaintenanceWindowsCollection(this);
+            return new MaintenanceWindows(this, Id + "/maintenanceWindows/current");
         }
         #endregion
 

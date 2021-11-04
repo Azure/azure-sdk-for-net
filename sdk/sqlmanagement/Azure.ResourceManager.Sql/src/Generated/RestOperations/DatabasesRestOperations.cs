@@ -1274,7 +1274,7 @@ namespace SqlManagementClient
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string resourceGroupName, string serverName, string databaseName, Models.ResourceMoveDefinition parameters)
+        internal HttpMessage CreateRenameRequest(string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1307,7 +1307,7 @@ namespace SqlManagementClient
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> RenameAsync(string resourceGroupName, string serverName, string databaseName, Models.ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RenameAsync(string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1344,7 +1344,7 @@ namespace SqlManagementClient
         /// <param name="parameters"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response Rename(string resourceGroupName, string serverName, string databaseName, Models.ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
+        public Response Rename(string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

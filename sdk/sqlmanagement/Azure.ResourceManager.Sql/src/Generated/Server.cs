@@ -1032,11 +1032,11 @@ namespace SqlManagementClient
 
         #region ServerAutomaticTuning
 
-        /// <summary> Gets a collection of ServerAutomaticTunings in the Server. </summary>
-        /// <returns> An object representing collection of ServerAutomaticTunings and their operations over a Server. </returns>
-        public ServerAutomaticTuningCollection GetServerAutomaticTunings()
+        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the Server. </summary>
+        /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
+        public ServerAutomaticTuning GetServerAutomaticTuning()
         {
-            return new ServerAutomaticTuningCollection(this);
+            return new ServerAutomaticTuning(this, Id + "/automaticTuning/current");
         }
         #endregion
 
