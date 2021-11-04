@@ -16,6 +16,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [CodeGenMember("Type")]
         public DocumentFieldType ValueType { get; }
 
+        /// <summary>
+        /// The words that make up this field.
+        /// </summary>
+        public IReadOnlyList<DocumentWord> Words => ClientCommon.GetWords(Pages, Spans);
+
+        /// <summary>
+        /// The complete list of pages returned in the Analyze Result, including pages
+        /// unrelated to this element. Used only for the convenience <see cref="Words"/>
+        /// property.
+        /// </summary>
+        internal IReadOnlyList<DocumentPage> Pages { get; set; }
+
         private string ValueString { get; }
 
         private DateTimeOffset? ValueDate { get; }

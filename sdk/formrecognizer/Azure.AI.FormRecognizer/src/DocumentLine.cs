@@ -17,6 +17,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public BoundingBox BoundingBox { get; private set; }
 
+        /// <summary>
+        /// The words that make up this line.
+        /// </summary>
+        public IReadOnlyList<DocumentWord> Words => ClientCommon.GetWords(Page, Spans);
+
+        /// <summary>
+        /// The page in which this element is located. Used only for the convenience
+        /// <see cref="Words"/> property.
+        /// </summary>
+        internal DocumentPage Page { get; set; }
+
         [CodeGenMember("BoundingBox")]
         private IReadOnlyList<float> BoundingBoxPrivate
         {

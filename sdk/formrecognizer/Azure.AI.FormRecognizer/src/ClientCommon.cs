@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -88,5 +89,35 @@ namespace Azure.AI.FormRecognizer
             }
             return new RecognizedFormCollection(forms);
         }
+
+        public static IReadOnlyList<DocumentWord> GetWords(IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentSpan> spans)
+        {
+            var selectedWords = new List<DocumentWord>();
+
+            // Very inefficient implementation for now.
+
+            foreach (DocumentPage page in pages)
+            {
+                foreach (DocumentWord word in page.Words)
+                {
+                    foreach (DocumentSpan span in spans)
+                    {
+                        // Check if word.StartPos >= span.StartPos && word.EndPos <= span.StartPos (word contained in span)
+                        // Is it possible for a word to be across multiple spans?
+                        if (word.Span.Offset >= span.Offset
+                            && word.Span.Offset + word.Span.Length <= span.Offset + span.Length)
+                        {
+                            selectedWords.Add(word);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return selectedWords;
+        }
+
+        public static IReadOnlyList<DocumentWord> GetWords(DocumentPage page, IReadOnlyList<DocumentSpan> spans) =>
+            GetWords(new List<DocumentPage>() { page }, spans);
     }
 }

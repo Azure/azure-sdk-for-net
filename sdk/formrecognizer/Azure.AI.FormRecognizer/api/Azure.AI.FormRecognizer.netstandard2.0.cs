@@ -240,6 +240,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string DocType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> Fields { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     public partial class AnalyzeDocumentOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzeResult>
     {
@@ -368,6 +369,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Content { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
         public string SubCategory { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     public partial class DocumentField
     {
@@ -377,6 +379,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Content { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType ValueType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
         public string AsCountryRegion() { throw null; }
         public System.DateTime AsDate() { throw null; }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField> AsDictionary() { throw null; }
@@ -418,6 +421,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> BoundingRegions { get { throw null; } }
         public string Content { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     public partial class DocumentKeyValuePair
     {
@@ -432,6 +436,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Azure.AI.FormRecognizer.DocumentAnalysis.BoundingBox BoundingBox { get { throw null; } }
         public string Content { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     public partial class DocumentModel : Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelInfo
     {
@@ -560,6 +565,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int ColumnCount { get { throw null; } }
         public int RowCount { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     public partial class DocumentTableCell
     {
@@ -572,6 +578,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int RowIndex { get { throw null; } }
         public int? RowSpan { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> Spans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DocumentTableCellKind : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTableCellKind>

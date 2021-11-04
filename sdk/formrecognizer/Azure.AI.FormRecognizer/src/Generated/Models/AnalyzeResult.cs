@@ -48,31 +48,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Styles = new ChangeTrackingList<DocumentStyle>();
             Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
-
-        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Model ID used to produce this result. </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
-        /// <param name="pages"> Analyzed pages. </param>
-        /// <param name="tables"> Extracted tables. </param>
-        /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="entities"> Extracted entities. </param>
-        /// <param name="styles"> Extracted font styles. </param>
-        /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<AnalyzedDocument> documents)
-        {
-            ApiVersion = apiVersion;
-            ModelId = modelId;
-            StringIndexType = stringIndexType;
-            Content = content;
-            Pages = pages;
-            Tables = tables;
-            KeyValuePairs = keyValuePairs;
-            Entities = entities;
-            Styles = styles;
-            Documents = documents;
-        }
         /// <summary> Model ID used to produce this result. </summary>
         public string ModelId { get; }
         /// <summary> Concatenate string representation of all textual and visual elements in reading order. </summary>
