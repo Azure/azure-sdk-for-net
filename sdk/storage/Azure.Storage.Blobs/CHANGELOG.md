@@ -3,6 +3,7 @@
 ## 12.11.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added support for updating the key encryption key on a client-side encrypted blob.
 
 ### Breaking Changes
 
