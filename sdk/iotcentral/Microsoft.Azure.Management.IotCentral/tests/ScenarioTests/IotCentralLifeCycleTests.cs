@@ -23,6 +23,8 @@ namespace IotCentral.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+				// Note: Set IotCentralTestBase.isTestRecorderRun to true when building and running tests locally (before recording for PR).
+
                 Initialize(context);
 
                 // Create Resource Group
