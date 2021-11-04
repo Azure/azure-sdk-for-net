@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging
 {
     /// <summary>
-    /// An interface for a message containing a content type along with its data.
+    /// An interface for a message containing metadata along with its data.
     /// </summary>
-    public interface IMessageWithContentType
+    public interface IMessageWithMetadata
     {
         /// <summary>
         /// Gets or sets the message data.
@@ -16,8 +17,8 @@ namespace Azure.Messaging
         BinaryData Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the message content type.
+        /// Gets the message metadata.
         /// </summary>
-        string ContentType { get; set; }
+        IDictionary<string, object> Metadata { get; }
     }
 }

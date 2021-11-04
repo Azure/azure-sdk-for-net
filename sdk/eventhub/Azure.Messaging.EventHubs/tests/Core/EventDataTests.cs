@@ -52,6 +52,28 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        /// Verifies functionality of the <see cref="EventData.ContentType" /> property.
+        /// </summary>
+        [Test]
+        public void ContentTypeIsReflectedInIMessageWithMetadata()
+        {
+            var eventData = new EventData
+            {
+                ContentType = "foo"
+            };
+            Assert.AreEqual("foo", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
+            Assert.AreEqual("foo", eventData.ContentType);
+
+            ((IMessageWithMetadata)eventData).Metadata["ContentType"] = "bar";
+            Assert.AreEqual("bar", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
+            Assert.AreEqual("bar", eventData.ContentType);
+
+            eventData.GetRawAmqpMessage().Properties.ContentType = "baz";
+            Assert.AreEqual("baz", ((IMessageWithMetadata)eventData).Metadata["ContentType"]);
+            Assert.AreEqual("baz", eventData.ContentType);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventData.Properties "/>
         ///   property.
         /// </summary>

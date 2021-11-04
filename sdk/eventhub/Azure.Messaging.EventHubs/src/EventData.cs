@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : IMessageWithContentType
+    public class EventData : IMessageWithMetadata
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -48,11 +48,26 @@ namespace Azure.Messaging.EventHubs
             set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
         }
 
-        BinaryData IMessageWithContentType.Data
+        BinaryData IMessageWithMetadata.Data
         {
             get => EventBody;
             set => EventBody = value;
         }
+
+        IDictionary<string, object> IMessageWithMetadata.Metadata
+        {
+            get
+            {
+                _metadata ??= new AnnotatedMessageMetadataDictionary(GetRawAmqpMessage())
+                {
+                    { AnnotatedMessageMetadataDictionary.ContentType, ContentType }
+                };
+
+                return _metadata;
+            }
+        }
+
+        private AnnotatedMessageMetadataDictionary _metadata;
 
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
@@ -98,6 +113,7 @@ namespace Azure.Messaging.EventHubs
                     _amqpMessage.Properties.ContentType = populated
                         ? value
                         : null;
+                    _metadata[AnnotatedMessageMetadataDictionary.ContentType] = _amqpMessage.Properties.ContentType;
                 }
             }
         }
