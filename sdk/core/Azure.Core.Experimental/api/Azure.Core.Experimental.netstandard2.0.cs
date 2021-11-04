@@ -1,22 +1,3 @@
-namespace Azure
-{
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        public RequestOptions(Azure.ResponseStatusOption statusOption) { }
-        public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
-        public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
-        public static void Apply(Azure.RequestOptions requestOptions, Azure.Core.HttpMessage message) { }
-        public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
-    }
-    public enum ResponseStatusOption
-    {
-        Default = 0,
-        NoThrow = 1,
-    }
-}
 namespace Azure.Core
 {
     public partial class ClassifiedResponse : Azure.Response
