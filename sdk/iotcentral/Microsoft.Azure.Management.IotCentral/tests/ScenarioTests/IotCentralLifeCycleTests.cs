@@ -163,8 +163,8 @@ namespace IotCentral.Tests.ScenarioTests
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 // Update App
-                var newSubDomain = "test-updated-sub-domain" + Guid.NewGuid().ToString("n");
-                var newDisplayName = "test-updated-display-name" + Guid.NewGuid().ToString("n");
+                var newSubDomain = "test-updated-sub-domain";
+                var newDisplayName = "test-updated-display-name";
 
                 // Add and Get Tags
                 IDictionary<string, string> tags = new Dictionary<string, string>

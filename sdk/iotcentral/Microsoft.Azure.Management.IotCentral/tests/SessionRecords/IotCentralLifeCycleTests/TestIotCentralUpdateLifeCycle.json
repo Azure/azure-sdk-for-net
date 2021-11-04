@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"location\": \"EastUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "55770911-d08e-4a73-936f-92d392b11875"
+          "23c9f383-78a8-4c86-be63-6b87bba7391a"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "cba7dab9-85c3-426d-8e04-0122c99fdd9b"
+          "58861a3f-7f56-4a6c-8add-d7e676d8fc8e"
         ],
         "x-ms-correlation-request-id": [
-          "cba7dab9-85c3-426d-8e04-0122c99fdd9b"
+          "58861a3f-7f56-4a6c-8add-d7e676d8fc8e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133917Z:cba7dab9-85c3-426d-8e04-0122c99fdd9b"
+          "WESTUS2:20211104T163030Z:58861a3f-7f56-4a6c-8add-d7e676d8fc8e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:16 GMT"
+          "Thu, 04 Nov 2021 16:30:30 GMT"
         ],
         "Content-Length": [
           "207"
@@ -73,7 +73,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkappupdate\",\r\n    \"subdomain\": \"dotnetsdksubdomainupdate\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"location\": \"EastUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "02827f3d-0acf-4f9c-97e4-8f67670291ad"
+          "446e710c-98fd-48bf-952a-263628fb2896"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,13 +96,13 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "ETag": [
-          "\"09027f6a-0000-0100-0000-6183e28a0000\""
+          "\"b6021df7-0000-0100-0000-61840aab0000\""
         ],
         "x-ms-request-id": [
-          "b78f4f57-27ce-4360-a632-2beb753d4c71"
+          "2efbe28f-bb36-4e01-ab60-fc49f15b35e4"
         ],
         "x-iot-correlation": [
-          "3sfwhhlw.1.0"
+          "bn5baua2.1.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -121,7 +121,7 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 7822E13F33324760B1CF8104A8645266 Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:20Z"
+          "Ref A: 96CC7C993A2B4C63A0594D6B7580480E Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:30:33Z"
         ],
         "X-IoT-Version": [
           "110221.0001-release"
@@ -136,13 +136,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "14c04a2b-10fa-4aed-87c5-4180b6cbf323"
+          "11e6ccfd-c44a-4a01-aada-c1e1f8c20285"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133924Z:14c04a2b-10fa-4aed-87c5-4180b6cbf323"
+          "WESTUS2:20211104T163037Z:11e6ccfd-c44a-4a01-aada-c1e1f8c20285"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:24 GMT"
+          "Thu, 04 Nov 2021 16:30:37 GMT"
         ],
         "Content-Length": [
           "503"
@@ -151,7 +151,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"applicationId\": \"fcf44964-6d34-40e6-be71-831118014668\",\r\n    \"displayName\": \"dotnetsdkappupdate\",\r\n    \"subdomain\": \"dotnetsdksubdomainupdate\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"applicationId\": \"4e1e7757-ff8f-4b06-8d43-604bb31f1ac0\",\r\n    \"displayName\": \"dotnetsdkappupdate\",\r\n    \"subdomain\": \"dotnetsdksubdomainupdate\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -172,7 +172,7 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "ETag": [
-          "W/\"09027f6a-0000-0100-0000-6183e28a0000\""
+          "W/\"b6021df7-0000-0100-0000-61840aab0000\""
         ],
         "Vary": [
           "Accept-Encoding"
@@ -181,10 +181,10 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "160095a3-40a7-4eb2-aa92-e7087736dc68"
+          "6e4a988e-9186-466e-8214-e136c599f90d"
         ],
         "x-iot-correlation": [
-          "bygty6w2.0"
+          "7mhuunmq.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -211,16 +211,16 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 64EB47FBB98143FD84F21D24DD9920A7 Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:54Z"
+          "Ref A: E73027CC6AB24D938514C4BD29373323 Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:31:07Z"
         ],
         "x-ms-correlation-request-id": [
-          "bcd3209c-afcc-4500-afa2-38aaaf5dc3e1"
+          "f44b9cc1-52d4-4915-b244-140a1853bba6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133954Z:bcd3209c-afcc-4500-afa2-38aaaf5dc3e1"
+          "WESTUS2:20211104T163107Z:f44b9cc1-52d4-4915-b244-140a1853bba6"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:54 GMT"
+          "Thu, 04 Nov 2021 16:31:06 GMT"
         ],
         "Content-Length": [
           "503"
@@ -229,7 +229,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"applicationId\": \"fcf44964-6d34-40e6-be71-831118014668\",\r\n    \"displayName\": \"dotnetsdkappupdate\",\r\n    \"subdomain\": \"dotnetsdksubdomainupdate\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"applicationId\": \"4e1e7757-ff8f-4b06-8d43-604bb31f1ac0\",\r\n    \"displayName\": \"dotnetsdkappupdate\",\r\n    \"subdomain\": \"dotnetsdksubdomainupdate\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -239,7 +239,7 @@
       "RequestBody": "{\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"IoTApps\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8056dfd6-cb89-4235-8d17-03be861e0a5e"
+          "e4f9d73f-1490-4a6b-8f13-ddb226190e01"
         ],
         "Accept-Language": [
           "en-US"
@@ -262,10 +262,10 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "x-ms-request-id": [
-          "fa1a0974-b86b-475a-9d8b-333a60edcaa6"
+          "72a7cb33-7587-400f-a1d0-c24c997d7cd9"
         ],
         "x-iot-correlation": [
-          "br58ykdc.0"
+          "4u4x6kca.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -292,19 +292,19 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 17CD863553A3407B9C73AE256D5BF699 Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:54Z"
+          "Ref A: 578D521CEB724CCDB9434EF75711968E Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:31:07Z"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "0d883019-dfcc-4f4f-be9d-8b4595348583"
+          "8c6402c5-fa15-4025-9844-799b25dbb847"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133954Z:0d883019-dfcc-4f4f-be9d-8b4595348583"
+          "WESTUS2:20211104T163107Z:8c6402c5-fa15-4025-9844-799b25dbb847"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:54 GMT"
+          "Thu, 04 Nov 2021 16:31:06 GMT"
         ],
         "Content-Length": [
           "107"
@@ -323,7 +323,7 @@
       "RequestBody": "{\r\n  \"name\": \"dotnetsdksubdomainupdate\",\r\n  \"type\": \"IoTApps\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c16aa3dd-9af4-4645-89c0-7a8f176b635f"
+          "413dc2ec-c09a-4eb8-a9f5-f79391014a81"
         ],
         "Accept-Language": [
           "en-US"
@@ -346,10 +346,10 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "x-ms-request-id": [
-          "741a7714-e856-4421-8019-53d9c738710b"
+          "a84c9ddc-622e-48a2-ae51-51a58d379e83"
         ],
         "x-iot-correlation": [
-          "61jv4w.0"
+          "9o8kjss5.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -376,19 +376,19 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 2FA4E41A2A83422688F85F193A756B88 Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:54Z"
+          "Ref A: C00805C9F6564E30966FB7DA50CE3EFF Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:31:07Z"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "7b722a0a-eceb-4242-9f19-fac2661403fb"
+          "fb5682f7-5507-4439-b3f8-e04d9d60a8f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133955Z:7b722a0a-eceb-4242-9f19-fac2661403fb"
+          "WESTUS2:20211104T163107Z:fb5682f7-5507-4439-b3f8-e04d9d60a8f2"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:54 GMT"
+          "Thu, 04 Nov 2021 16:31:06 GMT"
         ],
         "Content-Length": [
           "103"
@@ -404,10 +404,10 @@
       "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate?api-version=2021-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSR1VwZGF0ZS9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvaW90QXBwcy9kb3RuZXRzZGthcHB1cGRhdGU/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"test-updated-display-namee179d26bf33b4ea8bef25be20bc54494\",\r\n    \"subdomain\": \"test-updated-sub-domaine573fba534da48ccae8d830403ad13ce\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5f861a7d-4dd8-4cae-a44a-dd0cee313359"
+          "bfcd5753-2c82-46e6-98e4-48ae522d7ef6"
         ],
         "Accept-Language": [
           "en-US"
@@ -422,7 +422,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "286"
+          "222"
         ]
       },
       "ResponseHeaders": {
@@ -430,7 +430,7 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "ETag": [
-          "W/\"0902cb6c-0000-0100-0000-6183e2ac0000\""
+          "W/\"b602b5fd-0000-0100-0000-61840acd0000\""
         ],
         "Vary": [
           "Accept-Encoding"
@@ -439,10 +439,10 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "38cfbdfb-72d0-42a3-8183-da9b33aad042"
+          "6a248244-0904-47a5-816d-14406adfa567"
         ],
         "x-iot-correlation": [
-          "5t3ssroe.1.0"
+          "3vrlg1uq.1.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -461,7 +461,7 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 65DA3B423232499A92EC0F62CDBB715F Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:55Z"
+          "Ref A: 4A54D08BABCE4C9891440BF6966C1521 Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:31:07Z"
         ],
         "X-IoT-Version": [
           "110221.0001-release"
@@ -473,22 +473,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-correlation-request-id": [
-          "2eaa20da-fd08-4051-9c86-2bab37d14bb2"
+          "2bcec3bc-d4e8-460e-b67c-adf11a901728"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133956Z:2eaa20da-fd08-4051-9c86-2bab37d14bb2"
+          "WESTUS2:20211104T163110Z:2bcec3bc-d4e8-460e-b67c-adf11a901728"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:56 GMT"
+          "Thu, 04 Nov 2021 16:31:10 GMT"
         ],
         "Content-Length": [
-          "604"
+          "540"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"applicationId\": \"fcf44964-6d34-40e6-be71-831118014668\",\r\n    \"displayName\": \"test-updated-display-namee179d26bf33b4ea8bef25be20bc54494\",\r\n    \"subdomain\": \"test-updated-sub-domaine573fba534da48ccae8d830403ad13ce\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n  \"name\": \"dotnetsdkappupdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"applicationId\": \"4e1e7757-ff8f-4b06-8d43-604bb31f1ac0\",\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\",\r\n    \"template\": \"iotc-pnp-preview@1.0.0\",\r\n    \"state\": \"created\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"ST2\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -498,7 +498,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ee7ac707-f481-49c8-82d6-45cdf68c8fe3"
+          "3f8e3b08-0cb5-4b02-8c93-629069d3e81c"
         ],
         "Accept-Language": [
           "en-US"
@@ -521,10 +521,10 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "ec1a588a-29bc-4f8d-9297-deaa1c7e9e3d"
+          "cd3e8bb9-6ebe-4171-b2a7-baeddf063f22"
         ],
         "x-iot-correlation": [
-          "7bpbffjr.0"
+          "bem1tv9t.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -551,25 +551,25 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 2988B7A09DB54271866C0CA7B09D8411 Ref B: CO1EDGE2019 Ref C: 2021-11-04T13:39:56Z"
+          "Ref A: F9DADE10C9F44BB4A225CA85698BE11A Ref B: CO1EDGE1515 Ref C: 2021-11-04T16:31:10Z"
         ],
         "x-ms-correlation-request-id": [
-          "90c21900-92fc-4aab-9ce9-783df19d3771"
+          "5e74ad1e-f725-4e75-b976-da7317ab7ed1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211104T133957Z:90c21900-92fc-4aab-9ce9-783df19d3771"
+          "WESTUS2:20211104T163110Z:5e74ad1e-f725-4e75-b976-da7317ab7ed1"
         ],
         "Date": [
-          "Thu, 04 Nov 2021 13:39:56 GMT"
+          "Thu, 04 Nov 2021 16:31:10 GMT"
         ],
         "Content-Length": [
-          "616"
+          "552"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n      \"name\": \"dotnetsdkappupdate\",\r\n      \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"properties\": {\r\n        \"applicationId\": \"fcf44964-6d34-40e6-be71-831118014668\",\r\n        \"displayName\": \"test-updated-display-namee179d26bf33b4ea8bef25be20bc54494\",\r\n        \"subdomain\": \"test-updated-sub-domaine573fba534da48ccae8d830403ad13ce\",\r\n        \"template\": \"iotc-pnp-preview@1.0.0\",\r\n        \"state\": \"created\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"ST2\"\r\n      },\r\n      \"identity\": {\r\n        \"type\": \"None\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRGUpdate/providers/Microsoft.IoTCentral/iotApps/dotnetsdkappupdate\",\r\n      \"name\": \"dotnetsdkappupdate\",\r\n      \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"properties\": {\r\n        \"applicationId\": \"4e1e7757-ff8f-4b06-8d43-604bb31f1ac0\",\r\n        \"displayName\": \"test-updated-display-name\",\r\n        \"subdomain\": \"test-updated-sub-domain\",\r\n        \"template\": \"iotc-pnp-preview@1.0.0\",\r\n        \"state\": \"created\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"ST2\"\r\n      },\r\n      \"identity\": {\r\n        \"type\": \"None\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
