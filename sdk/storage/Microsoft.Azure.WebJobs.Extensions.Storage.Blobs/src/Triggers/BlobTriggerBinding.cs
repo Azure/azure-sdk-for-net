@@ -207,7 +207,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
                 AccountName = _accountName,
                 ContainerName = _path.ContainerNamePattern,
                 BlobName = _path.BlobNamePattern,
-                Access = FileAccess.Read
+                Access = FileAccess.Read,
+                BlobTriggerSource = _blobTriggerSource
             };
         }
     }

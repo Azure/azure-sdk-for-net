@@ -71,7 +71,15 @@ namespace Azure.AI.FormRecognizer
                 : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
         }
 
-        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(AnalyzeResult analyzeResult)
+        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response,ResponseError error)
+        {
+            var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
+            return async
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, additionalInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, error.Message, error.Code, additionalInfo);
+        }
+
+        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)

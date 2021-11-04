@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
             }
 
             // Int64 / long / enum should be serialized as string.
-            if (value is long or Enum)
+            if (value is long or ulong or Enum)
             {
                 destination[memberInfo.Name] = value.ToString();
             }
@@ -36,6 +36,7 @@ namespace Azure.Data.Tables
                     destination[memberInfo.Name.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                     break;
                 case long:
+                case ulong:
                     destination[memberInfo.Name.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                     break;
                 case double:
@@ -90,13 +91,21 @@ namespace Azure.Data.Tables
             {
                 value = (T)(object) long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
+            else if (typeof(T) == typeof(ulong))
+            {
+                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+            }
+            else if (typeof(T) == typeof(ulong?))
+            {
+                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+            }
             else if (typeof(T) == typeof(double))
             {
                 value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(double?))
             {
-                value = (T)(object) (double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);;
+                value = (T)(object) (double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(bool))
             {

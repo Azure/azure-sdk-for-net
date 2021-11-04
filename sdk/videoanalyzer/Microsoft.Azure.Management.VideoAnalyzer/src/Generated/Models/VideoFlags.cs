@@ -36,16 +36,16 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// <param name="hasData">Value indicating whether or not there has
         /// ever been data recorded or uploaded into the video. Newly created
         /// videos have this value set to false.</param>
-        /// <param name="isRecording">Value indicating whether or not the video
-        /// is currently being referenced be an active live pipeline. The fact
-        /// that is being referenced, doesn't necessarily indicate that data is
-        /// being received. For example, video recording may be gated on events
-        /// or camera may not be accessible at the time.</param>
-        public VideoFlags(bool canStream, bool hasData, bool isRecording)
+        /// <param name="isInUse">Value indicating whether or not the video is
+        /// currently being referenced be an active pipeline. The fact that is
+        /// being referenced, doesn't necessarily indicate that data is being
+        /// received. For example, video recording may be gated on events or
+        /// camera may not be accessible at the time.</param>
+        public VideoFlags(bool canStream, bool hasData, bool isInUse)
         {
             CanStream = canStream;
             HasData = hasData;
-            IsRecording = isRecording;
+            IsInUse = isInUse;
             CustomInit();
         }
 
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
 
         /// <summary>
         /// Gets or sets value indicating whether or not the video is currently
-        /// being referenced be an active live pipeline. The fact that is being
+        /// being referenced be an active pipeline. The fact that is being
         /// referenced, doesn't necessarily indicate that data is being
         /// received. For example, video recording may be gated on events or
         /// camera may not be accessible at the time.
         /// </summary>
-        [JsonProperty(PropertyName = "isRecording")]
-        public bool IsRecording { get; set; }
+        [JsonProperty(PropertyName = "isInUse")]
+        public bool IsInUse { get; set; }
 
         /// <summary>
         /// Validate the object.

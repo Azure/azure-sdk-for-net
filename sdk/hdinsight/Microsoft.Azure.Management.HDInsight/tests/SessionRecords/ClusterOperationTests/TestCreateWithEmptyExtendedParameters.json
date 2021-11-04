@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e84c57ba-ca1d-4559-8944-78ab65ea3ccc/resourceGroups/hdicsharprg2916/providers/Microsoft.HDInsight/clusters/hdisdk-cluster5564?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/019807a4-68f3-4d88-948e-d5bd52cf8086/resourceGroups/hdicsharprg2718/providers/Microsoft.HDInsight/clusters/hdisdk-cluster1875?api-version=2021-06-01",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9d79f22d-7c3d-4066-984f-810d7a663e7d"
+          "71f79a02-69bb-4127-888e-563d0ccaa9dc"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26628.05",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -35,13 +35,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "d5aa8daa-99e8-4361-a8c5-d753d28ded5a"
+          "587d74e0-2760-4fa1-ab29-76a7c0ba75cf"
         ],
         "x-ms-correlation-request-id": [
-          "d5aa8daa-99e8-4361-a8c5-d753d28ded5a"
+          "587d74e0-2760-4fa1-ab29-76a7c0ba75cf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190124T180654Z:d5aa8daa-99e8-4361-a8c5-d753d28ded5a"
+          "JAPANEAST:20210914T122856Z:587d74e0-2760-4fa1-ab29-76a7c0ba75cf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,7 +50,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 24 Jan 2019 18:06:54 GMT"
+          "Tue, 14 Sep 2021 12:28:56 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -68,25 +68,27 @@
   ],
   "Names": {
     ".ctor": [
-      "admin7171",
-      "Password16277",
-      "sshuser6199",
-      "Password17277",
-      "fc292138-115c-47c3-a8f9-57a36e10a637",
-      "hdicsharprg2916",
-      "hdicsharpstorage1863",
-      "hdicsharpmsi2022",
-      "hdicsharpvault434",
-      "hdicsharpadls6196",
-      "default2443",
-      "storageaccountkey3911",
-      "e84c57ba-ca1d-4559-8944-78ab65ea3ccc"
+      "admin5638",
+      "Password1!9072",
+      "sshuser3565",
+      "Password1!9749",
+      "7287d309-b312-4d7d-9fed-3eaa3e9f097a",
+      "hdicsharprg2718",
+      "hdicsharpstorage3918",
+      "hdicsharpmsi9894",
+      "hdicsharpvault8972",
+      "hdicsharpadls6749",
+      "default9123",
+      "storageaccountkey6255"
+    ],
+    "TestInitialize": [
+      "019807a4-68f3-4d88-948e-d5bd52cf8086"
     ],
     "TestCreateWithEmptyExtendedParameters": [
-      "hdisdk-cluster5564"
+      "hdisdk-cluster1875"
     ]
   },
   "Variables": {
-    "SubscriptionId": "e84c57ba-ca1d-4559-8944-78ab65ea3ccc"
+    "SubscriptionId": "019807a4-68f3-4d88-948e-d5bd52cf8086"
   }
 }

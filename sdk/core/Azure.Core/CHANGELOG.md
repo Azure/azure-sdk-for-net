@@ -1,16 +1,21 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
+## 1.21.0 (2021-11-03)
+
+- Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
+- Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
+
+## 1.20.0 (2021-10-01)
 
 ### Features Added
 
-- Added `TokenCredential.Create` static method, which returns an instance of `TokenCredential` that uses the supplied delgates to produce an `AccessToken`. This would most typically be used when an token has previously been obtained from some other source and that token needs to be returned by a `TokenCredential` instance.
-
-### Breaking Changes
+- Added the static `DelegatedTokenCredential` type with a `Create` method, which returns an instance of `TokenCredential` that uses the supplied delgates to produce an `AccessToken`. This would most typically be used when an token has previously been obtained from some other source and that token needs to be returned by a `TokenCredential` instance.
+- Added `ResponseError` type to represent an Azure error type.
+- Added an experimental `ActivitySource` support.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an exception during EventSource creation on Xamarin.
 
 ## 1.19.0 (2021-09-07)
 

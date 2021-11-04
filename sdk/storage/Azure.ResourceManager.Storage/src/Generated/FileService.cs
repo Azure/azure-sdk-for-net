@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets a list of FileShares in the FileService. </summary>
         /// <returns> An object representing collection of FileShares and their operations over a FileService. </returns>
-        public FileShareContainer GetFileShares()
+        public FileShareCollection GetFileShares()
         {
-            return new FileShareContainer(this);
+            return new FileShareCollection(this);
         }
     }
 }

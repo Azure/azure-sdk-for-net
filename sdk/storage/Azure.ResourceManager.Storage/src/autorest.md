@@ -12,6 +12,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
     lenient-model-deduplication: true
+    seal-single-value-enum-by-default: true
 operation-group-to-resource-type:
     Skus: Microsoft.Storage/skus
     DeletedAccounts: Microsoft.Storage/deletedAccounts
@@ -29,6 +30,8 @@ operation-group-to-parent:
     Queue: Microsoft.Storage/storageAccounts/queueServices
     Table: Microsoft.Storage/storageAccounts/tableServices
     StorageAccountName: subscriptions
+operation-group-to-singleton-resource:
+  ManagementPolicies: managementPolicies/default
 directive:
   - rename-model:
       from: BlobServiceProperties

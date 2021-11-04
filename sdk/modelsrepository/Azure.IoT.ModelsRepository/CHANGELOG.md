@@ -4,11 +4,14 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Adds the `ModelsRepositoryClientMetadataOptions` class and plumbing with `ModelsRepositoryClientOptions` to configure
+  client interactions with repository metadata.
+- When repository metadata fetching is enabled (the default), service operations that can make use of metadata such as GetModels,
+  will first attempt to fetch and store repository metadata state. The operation then continues as normal.
+  This will happen one time per instance lifetime.
+- Renames client method GetModels[Async] to GetModel[Async]
+- Removes the multiple dtmis overload of the GetModel[Async] methods.
+- Adds the `ModelResult` type, returned from the GetModel[Async] methods. `ModelResult` encompasses requested model content.
 
 ## 1.0.0-preview.4 (2021-07-22)
 

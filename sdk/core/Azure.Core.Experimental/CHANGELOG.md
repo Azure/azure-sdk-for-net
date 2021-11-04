@@ -1,14 +1,16 @@
 # Release History
 
-## 0.1.0-preview.17 (Unreleased)
+## 0.1.0-preview.18 (2021-11-03)
 
-### Features Added
+## 0.1.0-preview.17 (2021-10-01)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- The following types were removed:
+    - `DynamicContent`
+    - `DynamicRequest`
+    - `DynamicResponse`
+    - `ProtocolClientOptions`
 
 ## 0.1.0-preview.16 (2021-09-07)
 

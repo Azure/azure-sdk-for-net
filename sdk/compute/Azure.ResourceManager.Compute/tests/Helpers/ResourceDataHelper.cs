@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                                     new VirtualMachineScaleSetIPConfiguration("internal")
                                     {
                                         Primary = true,
-                                        Subnet = new ApiEntityReference()
+                                        Subnet = new WritableSubResource()
                                         {
                                             Id = subnetId
                                         }

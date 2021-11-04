@@ -40,11 +40,14 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="charset">The charset of the database.</param>
         /// <param name="collation">The collation of the database.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Charset = charset;
             Collation = collation;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

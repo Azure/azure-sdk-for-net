@@ -21,7 +21,7 @@ The Azure Tables client library can seamlessly target either Azure Table storage
 Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Data.Tables --prerelease
+dotnet add package Azure.Data.Tables
 ```
 
 ### Prerequisites
