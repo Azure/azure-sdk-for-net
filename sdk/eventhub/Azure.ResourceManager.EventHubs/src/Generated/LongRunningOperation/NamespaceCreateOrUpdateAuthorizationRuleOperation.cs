@@ -16,16 +16,16 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Creates or updates an AuthorizationRule for a Namespace. </summary>
-    public partial class NamespaceAuthorizationRuleCreateOrUpdateOperation : Operation<NamespaceAuthorizationRule>
+    public partial class NamespaceCreateOrUpdateAuthorizationRuleOperation : Operation<NamespaceAuthorizationRule>
     {
         private readonly OperationOrResponseInternals<NamespaceAuthorizationRule> _operation;
 
-        /// <summary> Initializes a new instance of NamespaceAuthorizationRuleCreateOrUpdateOperation for mocking. </summary>
-        protected NamespaceAuthorizationRuleCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of NamespaceCreateOrUpdateAuthorizationRuleOperation for mocking. </summary>
+        protected NamespaceCreateOrUpdateAuthorizationRuleOperation()
         {
         }
 
-        internal NamespaceAuthorizationRuleCreateOrUpdateOperation(ArmResource operationsBase, Response<AuthorizationRuleData> response)
+        internal NamespaceCreateOrUpdateAuthorizationRuleOperation(ArmResource operationsBase, Response<AuthorizationRuleData> response)
         {
             _operation = new OperationOrResponseInternals<NamespaceAuthorizationRule>(Response.FromValue(new NamespaceAuthorizationRule(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -45,6 +45,39 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
+        #region NamespaceAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
+        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NamespaceEventhubAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceEventhubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceEventhubAuthorizationRule" /> object. </returns>
+        public static NamespaceEventhubAuthorizationRule GetNamespaceEventhubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceEventhubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
+        #region NamespaceDisasterRecoveryConfigAuthorizationRule
+        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
+        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
+        {
+            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
+        }
+        #endregion
+
         #region PrivateEndpointConnection
         /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,39 +108,6 @@ namespace Azure.ResourceManager.EventHubs
         public static ArmDisasterRecovery GetArmDisasterRecovery(this ArmClient armClient, ResourceIdentifier id)
         {
             return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new ArmDisasterRecovery(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region NamespaceAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
-        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceAuthorizationRule(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region NamespaceDisasterRecoveryConfigAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceDisasterRecoveryConfigAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryConfigAuthorizationRule" /> object. </returns>
-        public static NamespaceDisasterRecoveryConfigAuthorizationRule GetNamespaceDisasterRecoveryConfigAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceDisasterRecoveryConfigAuthorizationRule(clientOptions, credential, uri, pipeline, id));
-        }
-        #endregion
-
-        #region NamespaceEventhubAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceEventhubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceEventhubAuthorizationRule" /> object. </returns>
-        public static NamespaceEventhubAuthorizationRule GetNamespaceEventhubAuthorizationRule(this ArmClient armClient, ResourceIdentifier id)
-        {
-            return armClient.UseClientContext((uri, credential, clientOptions, pipeline) => new NamespaceEventhubAuthorizationRule(clientOptions, credential, uri, pipeline, id));
         }
         #endregion
 
