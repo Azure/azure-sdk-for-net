@@ -6,6 +6,18 @@ steps:
         $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
     displayName: 'Language Specific Certificate Trust'
 
+  # windows has a startup bug where the service is unavailable. See Azure/azure-sdk-tools#2122
+  - pwsh: |
+        try {
+          docker info
+        }
+        catch {
+          Write-Host "Unable to access docker service, dumping error and restarting."
+          Write-Host $_
+          Get-Service docker | Restart-Service
+        }
+    condition: and(succeededOrFailed(), eq(variables['Agent.OS'],'Windows_NT'))
+
   - pwsh: |
       $(Build.SourcesDirectory)/eng/common/testproxy/docker-start-proxy.ps1 -Mode start -TargetFolder "${{ parameters.rootFolder }}"
     displayName: 'Run the docker container'
