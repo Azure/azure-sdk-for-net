@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private Mock<MessagingProvider> _mockProvider;
         private Mock<ServiceBusClientFactory> _mockClientFactory;
         private Mock<MessageProcessor> _mockMessageProcessor;
+        private Mock<ServiceBusReceiver> _mockMessageReceiver;
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private string _functionId = "test-functionid";
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _client = new ServiceBusClient(_testConnection);
             ServiceBusProcessorOptions processorOptions = new ServiceBusProcessorOptions();
             ServiceBusProcessor messageProcessor = _client.CreateProcessor(_entityPath);
-            ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
+
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
             var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
 
@@ -59,6 +61,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 new AzureEventSourceLogForwarder(new NullLoggerFactory()),
                 new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
 
+            _mockMessageReceiver = new Mock<ServiceBusReceiver>();
+
             _mockProvider
                 .Setup(p => p.CreateMessageProcessor(_client, _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
                 .Returns(_mockMessageProcessor.Object);
@@ -66,6 +70,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockProvider
                 .Setup(p => p.CreateClient(_testConnection, It.IsAny<ServiceBusClientOptions>()))
                 .Returns(_client);
+
+            _mockProvider
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
+                .Returns(_mockMessageReceiver.Object);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
@@ -134,6 +142,26 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 0, 0, 16, false);
 
             Assert.AreEqual(16, metrics.PartitionCount);
+            Assert.AreEqual(0, metrics.MessageCount);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+        }
+
+        [Test]
+        public async Task GetMetrics_IgnoresScheduledMessages()
+        {
+            var scheduledMessage =
+                ServiceBusModelFactory.ServiceBusReceivedMessage(
+                    scheduledEnqueueTime: DateTimeOffset.UtcNow.AddSeconds(30));
+
+            _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(scheduledMessage);
+
+            ServiceBusListener listener = CreateListener();
+
+            var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.PartitionCount);
             Assert.AreEqual(0, metrics.MessageCount);
             Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
