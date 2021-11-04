@@ -1,0 +1,15 @@
+Installing AutoRest version: v2
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/frank-pang-msft/azure-rest-api-specs/blob/dev/frankpang/addRepairActionToAutoRepairsFeature/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\repos\azure-sdk-for-net\sdk\
+Autorest CSharp Version: 2.3.91
+2021-11-04 00:32:11 UTC
+Azure-rest-api-specs repository information
+GitHub fork: frank-pang-msft
+Branch:      dev/frankpang/addRepairActionToAutoRepairsFeature
+Commit:      8cd7e88ca0b2a3c318334b2d018497a38871883b
+AutoRest information
+Requested version: v2
+Bootstrapper version:    autorest@3.4.2
