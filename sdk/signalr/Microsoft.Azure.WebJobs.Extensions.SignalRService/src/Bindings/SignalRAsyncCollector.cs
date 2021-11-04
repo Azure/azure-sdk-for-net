@@ -12,13 +12,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     /// </summary>
     public class SignalRAsyncCollector<T> : IAsyncCollector<T>
     {
-        private readonly IAzureSignalRSender client;
-        private readonly SignalROutputConverter converter;
+        private readonly IAzureSignalRSender _client;
+        private readonly SignalROutputConverter _converter;
 
         internal SignalRAsyncCollector(IAzureSignalRSender client)
         {
-            this.client = client;
-            converter = new SignalROutputConverter();
+            _client = client;
+            _converter = new();
         }
 
         public async Task AddAsync(T item, CancellationToken cancellationToken = default(CancellationToken))
@@ -28,11 +28,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 throw new ArgumentNullException(nameof(item));
             }
 
-            var convertItem = converter.ConvertToSignalROutput(item);
+            var convertItem = _converter.ConvertToSignalROutput(item);
 
             if (convertItem.GetType() == typeof(SignalRMessage))
             {
-                SignalRMessage message = convertItem as SignalRMessage;
+                var message = convertItem as SignalRMessage;
                 var data = new SignalRData
                 {
                     Target = message.Target,
@@ -42,35 +42,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
                 if (!string.IsNullOrEmpty(message.ConnectionId))
                 {
-                    await client.SendToConnection(message.ConnectionId, data).ConfigureAwait(false);
+                    await _client.SendToConnection(message.ConnectionId, data).ConfigureAwait(false);
                 }
                 else if (!string.IsNullOrEmpty(message.UserId))
                 {
-                    await client.SendToUser(message.UserId, data).ConfigureAwait(false);
+                    await _client.SendToUser(message.UserId, data).ConfigureAwait(false);
                 }
                 else if (!string.IsNullOrEmpty(message.GroupName))
                 {
-                    await client.SendToGroup(message.GroupName, data).ConfigureAwait(false);
+                    await _client.SendToGroup(message.GroupName, data).ConfigureAwait(false);
                 }
                 else
                 {
-                    await client.SendToAll(data).ConfigureAwait(false);
+                    await _client.SendToAll(data).ConfigureAwait(false);
                 }
             }
             else if (convertItem.GetType() == typeof(SignalRGroupAction))
             {
-                SignalRGroupAction groupAction = convertItem as SignalRGroupAction;
+                var groupAction = convertItem as SignalRGroupAction;
 
                 if (!string.IsNullOrEmpty(groupAction.ConnectionId))
                 {
                     switch (groupAction.Action)
                     {
                         case GroupAction.Add:
-                            await client.AddConnectionToGroup(groupAction).ConfigureAwait(false);
+                            await _client.AddConnectionToGroup(groupAction).ConfigureAwait(false);
                             break;
 
                         case GroupAction.Remove:
-                            await client.RemoveConnectionFromGroup(groupAction).ConfigureAwait(false);
+                            await _client.RemoveConnectionFromGroup(groupAction).ConfigureAwait(false);
                             break;
                     }
                 }
@@ -79,15 +79,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     switch (groupAction.Action)
                     {
                         case GroupAction.Add:
-                            await client.AddUserToGroup(groupAction).ConfigureAwait(false);
+                            await _client.AddUserToGroup(groupAction).ConfigureAwait(false);
                             break;
 
                         case GroupAction.Remove:
-                            await client.RemoveUserFromGroup(groupAction).ConfigureAwait(false);
+                            await _client.RemoveUserFromGroup(groupAction).ConfigureAwait(false);
                             break;
 
                         case GroupAction.RemoveAll:
-                            await client.RemoveUserFromAllGroups(groupAction).ConfigureAwait(false);
+                            await _client.RemoveUserFromAllGroups(groupAction).ConfigureAwait(false);
                             break;
                     }
                 }

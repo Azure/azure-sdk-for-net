@@ -16,7 +16,12 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        internal string endpoint => url;
+        internal string endpoint
+        {
+            get { return url; }
+            set { url = value; }
+        }
+
         internal string clientVersion => version;
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)

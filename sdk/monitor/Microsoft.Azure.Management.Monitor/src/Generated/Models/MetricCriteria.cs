@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
         /// 'Total'</param>
         /// <param name="operatorProperty">the criteria operator. Possible
-        /// values include: 'Equals', 'NotEquals', 'GreaterThan',
-        /// 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'</param>
+        /// values include: 'Equals', 'GreaterThan', 'GreaterThanOrEqual',
+        /// 'LessThan', 'LessThanOrEqual'</param>
         /// <param name="threshold">the criteria threshold value that activates
         /// the alert.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the criteria operator. Possible values include:
-        /// 'Equals', 'NotEquals', 'GreaterThan', 'GreaterThanOrEqual',
-        /// 'LessThan', 'LessThanOrEqual'
+        /// 'Equals', 'GreaterThan', 'GreaterThanOrEqual', 'LessThan',
+        /// 'LessThanOrEqual'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }

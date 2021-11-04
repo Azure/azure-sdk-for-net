@@ -96,7 +96,7 @@ namespace SignalRServiceExtension.Tests
         public void ResolveAttributeParameterConflictTest()
         {
             var bindingProvider = CreateBindingProvider();
-            var attribute = new SignalRTriggerAttribute(string.Empty, string.Empty, String.Empty, new string[] { "arg0" });
+            var attribute = new SignalRTriggerAttribute(string.Empty, string.Empty, string.Empty, new string[] { "arg0" });
             var parameter = typeof(TestServerlessHub).GetMethod(nameof(TestServerlessHub.TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             Assert.ThrowsAny<Exception>(() => bindingProvider.GetParameterResolvedAttribute(attribute, parameter));
         }

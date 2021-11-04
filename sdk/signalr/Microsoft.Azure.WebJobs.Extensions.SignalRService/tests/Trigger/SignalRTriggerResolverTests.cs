@@ -28,16 +28,16 @@ namespace SignalRServiceExtension.Tests.Trigger
                 "sha256=d4aefb65547a00a9881fa8ac8bd03d0faf77af9da5205d45c6e57cbda4377760"
             };
 
-            var req = TestHelpers.CreateHttpRequestMessage(String.Empty, String.Empty, String.Empty, connectionId,
+            var req = TestHelpers.CreateHttpRequestMessage(string.Empty, string.Empty, string.Empty, connectionId,
                 signatures: signatures);
             yield return new object[] { req, accessKeys, true };
             yield return new object[] { req, accessKeys, true };
             yield return new object[] { req, wrongAccessKeys, false };
 
-            req = TestHelpers.CreateHttpRequestMessage(String.Empty, String.Empty, String.Empty, connectionId);
+            req = TestHelpers.CreateHttpRequestMessage(string.Empty, string.Empty, string.Empty, connectionId);
             yield return new object[] { req, accessKeys, false };
 
-            req = TestHelpers.CreateHttpRequestMessage(String.Empty, String.Empty, String.Empty, connectionId, signatures: new string[0]);
+            req = TestHelpers.CreateHttpRequestMessage(string.Empty, string.Empty, string.Empty, connectionId, signatures: new string[0]);
             yield return new object[] { req, accessKeys, false };
         }
 

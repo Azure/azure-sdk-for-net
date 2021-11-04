@@ -1,6 +1,16 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.9.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.
 - Added support for SDK-calculated transactional hash checksums on data transfer.
 - Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.7.0.

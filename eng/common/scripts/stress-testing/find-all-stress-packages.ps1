@@ -9,7 +9,7 @@ class StressTestPackageInfo {
     [string]$ReleaseName
 }
 
-function FindStressPackages([string]$directory, [hashtable]$filters = @{}) {
+function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [boolean]$CI = $false) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
 
@@ -18,7 +18,7 @@ function FindStressPackages([string]$directory, [hashtable]$filters = @{}) {
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $packages += NewStressTestPackageInfo $chart $chartFile
+            $packages += NewStressTestPackageInfo $chart $chartFile $CI
         }
     }
 
@@ -39,9 +39,17 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
-function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile) {
+function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile, [boolean]$CI) {
+    $namespace = if ($CI) {
+        $chart.annotations.namespace
+    } else {
+        $namespace = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+        # Remove spaces, etc. that may be in $namespace
+        $namespace -replace '\W'
+    }
+
     return [StressTestPackageInfo]@{
-        Namespace = $chart.annotations.namespace
+        Namespace = $namespace
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
     }

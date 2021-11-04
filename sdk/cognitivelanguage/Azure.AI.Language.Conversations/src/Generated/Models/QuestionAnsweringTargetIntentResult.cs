@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.AI.Language.Conversations
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
     public partial class QuestionAnsweringTargetIntentResult : TargetIntentResult
