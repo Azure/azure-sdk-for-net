@@ -2,6 +2,10 @@
 
 ## 0.1.0-preview.18 (2021-11-03)
 
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
+
 ## 0.1.0-preview.17 (2021-10-01)
 
 ### Breaking Changes
