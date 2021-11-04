@@ -144,7 +144,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             long totalNewMessageCount = 0;
             TimeSpan queueTime = TimeSpan.Zero;
 
-            if (message != null)
+            if (message != null && message.ScheduledEnqueueTime == DateTimeOffset.MinValue)
             {
                 queueTime = DateTimeOffset.UtcNow.Subtract(message.EnqueuedTime);
                 totalNewMessageCount = 1; // There's at least one if message != null. Default for connection string with no manage claim
