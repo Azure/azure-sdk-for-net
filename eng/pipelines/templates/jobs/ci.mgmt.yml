@@ -38,7 +38,7 @@ jobs:
         condition: ne(variables['System.TeamProject'], 'public')
 
   - job: Test
-
+    timeoutInMinutes: 100
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
