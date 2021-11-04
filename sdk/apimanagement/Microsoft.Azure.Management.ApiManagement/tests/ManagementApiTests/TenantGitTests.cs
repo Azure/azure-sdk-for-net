@@ -35,7 +35,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName);
 
                 Assert.NotNull(getSyncState);
-                Assert.NotNull(getSyncState);
+                Assert.NotNull(getSyncState.LastOperationId);
                 Assert.True(getSyncState.IsGitEnabled);
 
                 // save changes in current database to configuration database
@@ -90,6 +90,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(getSyncStateResponse);
                 Assert.NotNull(getSyncStateResponse.Body.CommitId);
+                Assert.NotNull(getSyncStateResponse.Body.LastOperationId);
                 Assert.True(getSyncStateResponse.Body.IsGitEnabled);
                 Assert.True(getSyncStateResponse.Body.IsSynced);
                 Assert.False(getSyncStateResponse.Body.IsExport);

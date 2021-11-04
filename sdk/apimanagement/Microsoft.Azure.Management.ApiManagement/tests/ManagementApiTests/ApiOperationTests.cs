@@ -116,6 +116,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Value = "default"
                         }
                     };
+                    string newOperationRequestRepresentationTypeName = "not null";
 
                     string newOperationResponseDescription = TestUtilities.GenerateName("newOperationResponseDescription");
                     int newOperationResponseStatusCode = 1980785443;
@@ -149,7 +150,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 Required = newOperationRequestHeaderParamIsRequired,
                                 DefaultValue = newOperationRequestHeaderParamDefaultValue,
                                 Type = newOperationRequestHeaderParamType,
-                                Values = new[] {newOperationRequestHeaderParamDefaultValue, "1", "2", "3"}
+                                Values = new[] {newOperationRequestHeaderParamDefaultValue, "1", "2", "3"},
+                                TypeName = newOperationRequestRepresentationTypeName
                             }
                         },
                             QueryParameters = new[]
@@ -161,7 +163,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 Required = newOperationRequestParamIsRequired,
                                 DefaultValue = newOperationRequestParamDefaultValue,
                                 Type = newOperationRequestParamType,
-                                Values = new[] {newOperationRequestParamDefaultValue, "1", "2", "3"}
+                                Values = new[] {newOperationRequestParamDefaultValue, "1", "2", "3"},
+                                TypeName = newOperationRequestRepresentationTypeName
                             }
                         },
                             Representations = new[]
@@ -229,6 +232,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiOperationResponse.Request.Headers[0].Values);
                     Assert.Equal(4, apiOperationResponse.Request.Headers[0].Values.Count);
                     Assert.True(newOperation.Request.Headers[0].Values.All(value => apiOperationResponse.Request.Headers[0].Values.Contains(value)));
+                    Assert.Equal(newOperationRequestRepresentationTypeName, apiOperationResponse.Request.Headers[0].TypeName);
 
                     Assert.NotNull(apiOperationResponse.Request.QueryParameters);
                     Assert.Equal(1, apiOperationResponse.Request.QueryParameters.Count);

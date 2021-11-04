@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "304f9cf0-b541-414d-9dc4-ff0a7233fe85"
+          "b5e96136-ff20-4f6e-9751-d17997a1487d"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:19 GMT"
+          "Thu, 04 Nov 2021 01:26:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,17 +45,17 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bb187366-22f6-40d0-9be2-dd652806e002",
-          "37cfda44-fabf-461b-b4a6-446e9e628991"
+          "e70f74cd-5495-4a27-9d60-7d554062edf7",
+          "74320302-bc39-4dd5-b01d-74066abad8a0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "d8b58afd-71d4-4756-a43f-d1b7f8685d81"
+          "250706b4-8156-4550-be8f-5cb07f41ec8a"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234120Z:d8b58afd-71d4-4756-a43f-d1b7f8685d81"
+          "WESTUS:20211104T012634Z:250706b4-8156-4550-be8f-5cb07f41ec8a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -80,7 +80,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "94bdebaf-c104-461a-9ef0-9268e1db3bff"
+          "51e66563-9e29-41aa-9831-42549089ea4c"
         ],
         "accept-language": [
           "en-US"
@@ -97,7 +97,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:19 GMT"
+          "Thu, 04 Nov 2021 01:26:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -112,16 +112,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "84a0bdad-d7d0-4cd7-847e-56ef41faef14"
+          "df031031-607f-41f3-8cf5-14c356039a74"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "f7500bd4-3ca8-48d2-96ed-f1077a2abcea"
+          "3c8b3776-ae57-4595-a764-791a13a17e16"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234120Z:f7500bd4-3ca8-48d2-96ed-f1077a2abcea"
+          "WESTUS:20211104T012634Z:3c8b3776-ae57-4595-a764-791a13a17e16"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -146,7 +146,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0af06f15-79ff-4ca1-bd1d-8bd3375d51bd"
+          "67e8f18e-ef3b-4c03-b1e0-d6f52748f031"
         ],
         "accept-language": [
           "en-US"
@@ -163,7 +163,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:20 GMT"
+          "Thu, 04 Nov 2021 01:26:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -178,16 +178,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "faa827da-7a00-4627-af9b-7d72a7ff4501"
+          "62525a62-b4e7-4aff-91e8-669ffe984b30"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "f1357fcb-cd9a-4b5c-af2c-5af3b5431590"
+          "22929eea-0c74-4d86-8e02-47a21080f2dc"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234121Z:f1357fcb-cd9a-4b5c-af2c-5af3b5431590"
+          "WESTUS:20211104T012634Z:22929eea-0c74-4d86-8e02-47a21080f2dc"
         ],
         "Content-Length": [
           "730"
@@ -209,7 +209,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d8899206-749a-423f-899c-ad7180754cdc"
+          "071a1e35-c729-4702-bc6a-9ade6b19f0d9"
         ],
         "accept-language": [
           "en-US"
@@ -226,7 +226,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:20 GMT"
+          "Thu, 04 Nov 2021 01:26:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -241,16 +241,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "f96d27f0-ac10-4caa-879c-330a0d0e3175"
+          "c6a73dcf-da2d-4872-9371-69fdc6b10436"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "0636a1f4-6833-4483-85d0-1ab898343b4a"
+          "dde73796-af0b-49bd-bc2c-a6bebd41f043"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234121Z:0636a1f4-6833-4483-85d0-1ab898343b4a"
+          "WESTUS:20211104T012634Z:dde73796-af0b-49bd-bc2c-a6bebd41f043"
         ],
         "Content-Length": [
           "8954"
@@ -272,7 +272,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dbb04c23-f768-4c9b-a099-062b528500bf"
+          "e6f14dba-5a67-4ba0-8d53-a92b72558a43"
         ],
         "accept-language": [
           "en-US"
@@ -289,7 +289,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:20 GMT"
+          "Thu, 04 Nov 2021 01:26:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -304,16 +304,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ff2a1f68-5bad-44b5-9be0-d2435f3c6af2"
+          "14075ca9-c94c-42f5-8374-7a1546b1c0eb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "78038047-fd43-473c-94e6-a77705f365de"
+          "a544806a-8a40-4843-97ce-188e1c07aca8"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234121Z:78038047-fd43-473c-94e6-a77705f365de"
+          "WESTUS:20211104T012634Z:a544806a-8a40-4843-97ce-188e1c07aca8"
         ],
         "Content-Length": [
           "5812"
@@ -335,7 +335,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ccb14493-bb26-4c23-a263-c17b1a4376c7"
+          "51b9da25-2006-403f-baff-e551fe389105"
         ],
         "accept-language": [
           "en-US"
@@ -352,7 +352,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:20 GMT"
+          "Thu, 04 Nov 2021 01:26:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -367,16 +367,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "6a5c669d-aa6b-4eca-aa57-fbf85f49daf5"
+          "154ae076-9977-4e5f-b6bc-3f9092a40c67"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "1246c73c-99ae-4be3-8351-52979ca3383a"
+          "edfa485f-0a9d-431c-8246-35779bff3f83"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234121Z:1246c73c-99ae-4be3-8351-52979ca3383a"
+          "WESTUS:20211104T012635Z:edfa485f-0a9d-431c-8246-35779bff3f83"
         ],
         "Content-Length": [
           "3442"
@@ -398,7 +398,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cbc75c84-eba0-409a-a866-ab1130a474e6"
+          "c505aec0-ae4e-41c8-88ee-ce35ed2ebd2e"
         ],
         "accept-language": [
           "en-US"
@@ -415,7 +415,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:21 GMT"
+          "Thu, 04 Nov 2021 01:26:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -433,16 +433,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "65e82d91-81d4-4196-915e-07ffbde5ac46"
+          "27a0535c-9334-42a8-9a80-4317d7a18efd"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "9bcfaab2-6d6f-4b27-be23-65e0cb97ba32"
+          "f5f3407f-6ff4-4537-81d1-a63ad56af7f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234121Z:9bcfaab2-6d6f-4b27-be23-65e0cb97ba32"
+          "WESTUS:20211104T012635Z:f5f3407f-6ff4-4537-81d1-a63ad56af7f2"
         ],
         "Content-Length": [
           "903"
@@ -458,13 +458,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"operationDescription2537\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription7913\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3145\",\r\n          \"description\": \"newOperationRequestParamDescr5960\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue541\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue541\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4455\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr3831\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4760\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4760\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1878\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription5186\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType4212\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operationName8362\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"operationDescription3165\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription4526\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3519\",\r\n          \"description\": \"newOperationRequestParamDescr1615\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue7234\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue7234\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4945\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr1516\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4608\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4608\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1642\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription8982\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType1223\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operationName7976\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "11c97bf2-86f7-4a62-a703-16e2f6e45dec"
+          "f25ddadf-c0fc-431e-943e-74dba35df9ef"
         ],
         "accept-language": [
           "en-US"
@@ -479,7 +479,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "2168"
+          "2240"
         ]
       },
       "ResponseHeaders": {
@@ -487,13 +487,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:21 GMT"
+          "Thu, 04 Nov 2021 01:26:34 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqIo=\""
+          "\"AAAAAAAAqRU=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -505,19 +505,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "feed461e-3d00-4100-b781-dc3fd7323be0"
+          "8da06ee6-764f-4acd-ae2a-a38c9683b74b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "b06ab265-2ca7-4421-b5b1-2e4ebf045a73"
+          "6bdd1c09-675b-4040-89ee-55f58286e3f0"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234122Z:b06ab265-2ca7-4421-b5b1-2e4ebf045a73"
+          "WESTUS:20211104T012635Z:6bdd1c09-675b-4040-89ee-55f58286e3f0"
         ],
         "Content-Length": [
-          "2537"
+          "2609"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -526,17 +526,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5126\",\r\n  \"properties\": {\r\n    \"displayName\": \"operationName8362\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"operationDescription2537\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription7913\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3145\",\r\n          \"description\": \"newOperationRequestParamDescr5960\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue541\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue541\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4455\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr3831\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4760\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4760\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1878\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription5186\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType4212\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5073\",\r\n  \"properties\": {\r\n    \"displayName\": \"operationName7976\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"operationDescription3165\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription4526\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3519\",\r\n          \"description\": \"newOperationRequestParamDescr1615\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue7234\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue7234\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4945\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr1516\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4608\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4608\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1642\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription8982\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType1223\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e343ea57-c59e-42a8-b36b-995d479ee39f"
+          "23d4c590-39b6-46b7-81a3-720bac74ecb8"
         ],
         "accept-language": [
           "en-US"
@@ -553,13 +553,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:21 GMT"
+          "Thu, 04 Nov 2021 01:26:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqIo=\""
+          "\"AAAAAAAAqRU=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -571,19 +571,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "dec55d10-de9a-475f-a648-0a8a69abde06"
+          "ae6aa97c-9134-4110-9f47-961f0e6ab44f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11993"
         ],
         "x-ms-correlation-request-id": [
-          "e2ba6b10-1c19-4441-b6bb-c2601f2dddab"
+          "6eeeee35-16cb-4931-a7be-538413b30200"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234122Z:e2ba6b10-1c19-4441-b6bb-c2601f2dddab"
+          "WESTUS:20211104T012635Z:6eeeee35-16cb-4931-a7be-538413b30200"
         ],
         "Content-Length": [
-          "2537"
+          "2609"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -592,17 +592,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5126\",\r\n  \"properties\": {\r\n    \"displayName\": \"operationName8362\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"operationDescription2537\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription7913\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3145\",\r\n          \"description\": \"newOperationRequestParamDescr5960\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue541\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue541\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4455\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr3831\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4760\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4760\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1878\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription5186\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType4212\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5073\",\r\n  \"properties\": {\r\n    \"displayName\": \"operationName7976\",\r\n    \"method\": \"PATCH\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"operationDescription3165\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription4526\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3519\",\r\n          \"description\": \"newOperationRequestParamDescr1615\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue7234\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue7234\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4945\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr1516\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4608\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4608\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1642\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription8982\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType1223\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "86451915-28af-47d8-9a18-e9d74da152f1"
+          "3e39077c-5406-41df-99e4-9b1e3b8d764b"
         ],
         "accept-language": [
           "en-US"
@@ -619,13 +619,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:22 GMT"
+          "Thu, 04 Nov 2021 01:26:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqI0=\""
+          "\"AAAAAAAAqRg=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -637,19 +637,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "8fc3803b-639d-4cf4-b348-9e46c325ba4d"
+          "9a4aced4-ec1d-4a0a-ac08-4ab8c448ed77"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11991"
         ],
         "x-ms-correlation-request-id": [
-          "43b3ab05-296a-48f4-b11e-096112ba8037"
+          "12598e69-5e7f-4497-929e-e6df7762bc01"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234123Z:43b3ab05-296a-48f4-b11e-096112ba8037"
+          "WESTUS:20211104T012636Z:12598e69-5e7f-4497-929e-e6df7762bc01"
         ],
         "Content-Length": [
-          "2531"
+          "2604"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -658,17 +658,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5126\",\r\n  \"properties\": {\r\n    \"displayName\": \"patchedName6735\",\r\n    \"method\": \"HEAD\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"patchedDescription983\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription7913\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3145\",\r\n          \"description\": \"newOperationRequestParamDescr5960\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue541\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue541\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4455\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr3831\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4760\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4760\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1878\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription5186\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType4212\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5073\",\r\n  \"properties\": {\r\n    \"displayName\": \"patchedName8812\",\r\n    \"method\": \"HEAD\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"patchedDescription2079\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription4526\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3519\",\r\n          \"description\": \"newOperationRequestParamDescr1615\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue7234\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue7234\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4945\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr1516\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4608\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4608\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1642\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription8982\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType1223\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e1846402-3003-4c0d-8896-e35e89564419"
+          "525776be-a8c9-4a45-ad23-57873e28526b"
         ],
         "accept-language": [
           "en-US"
@@ -685,7 +685,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:23 GMT"
+          "Thu, 04 Nov 2021 01:26:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -700,16 +700,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "b6bcc443-e680-44d5-a94d-8d94ecd56505"
+          "359278c0-bf9a-4235-97bd-916d477c7611"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11989"
         ],
         "x-ms-correlation-request-id": [
-          "b30904d3-6fb6-4757-87da-90433200fe5c"
+          "2a7e2468-90ab-4b2c-90e1-0d3c24f65371"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234124Z:b30904d3-6fb6-4757-87da-90433200fe5c"
+          "WESTUS:20211104T012637Z:2a7e2468-90ab-4b2c-90e1-0d3c24f65371"
         ],
         "Content-Length": [
           "85"
@@ -725,13 +725,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b8d39fc-72f2-4ce7-91a4-2edfd2e6fa07"
+          "17d6e345-61d3-4745-87f3-8c8c765879f8"
         ],
         "accept-language": [
           "en-US"
@@ -748,13 +748,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:21 GMT"
+          "Thu, 04 Nov 2021 01:26:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqIo=\""
+          "\"AAAAAAAAqRU=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -766,16 +766,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "af4c4a8a-c78f-4d62-a954-2f8c1fafca7d"
+          "ee1b2e0a-547e-4772-806a-d2d20b0d053d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11992"
         ],
         "x-ms-correlation-request-id": [
-          "8c85471d-a179-482d-be58-5bb125899a48"
+          "248f2249-b6b1-4ebc-908d-c1f6427c3273"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234122Z:8c85471d-a179-482d-be58-5bb125899a48"
+          "WESTUS:20211104T012635Z:248f2249-b6b1-4ebc-908d-c1f6427c3273"
         ],
         "Content-Length": [
           "0"
@@ -788,13 +788,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "58285fd2-2e31-454b-a211-194499effa92"
+          "75af8f75-4abe-4553-b12b-6c378279514f"
         ],
         "accept-language": [
           "en-US"
@@ -811,13 +811,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:22 GMT"
+          "Thu, 04 Nov 2021 01:26:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqI0=\""
+          "\"AAAAAAAAqRg=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -829,16 +829,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "7115b3e8-7a3d-493f-a72e-b9699671303e"
+          "10d92129-ccb4-4926-b3c3-853495dc0829"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11990"
         ],
         "x-ms-correlation-request-id": [
-          "26b265a8-1fce-4dbc-b098-f75388b4b6b0"
+          "07f34363-6d3d-4712-88ef-2bae64277dbf"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234123Z:26b265a8-1fce-4dbc-b098-f75388b4b6b0"
+          "WESTUS:20211104T012636Z:07f34363-6d3d-4712-88ef-2bae64277dbf"
         ],
         "Content-Length": [
           "0"
@@ -851,16 +851,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"patchedDescription983\",\r\n    \"displayName\": \"patchedName6735\",\r\n    \"method\": \"HEAD\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"patchedDescription2079\",\r\n    \"displayName\": \"patchedName8812\",\r\n    \"method\": \"HEAD\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7c81ee5b-3566-4091-a00d-62718d20f77a"
+          "161fb9a9-e68c-43a5-98d0-ca0335b1c98d"
         ],
         "If-Match": [
-          "\"AAAAAAAAqIo=\""
+          "\"AAAAAAAAqRU=\""
         ],
         "accept-language": [
           "en-US"
@@ -875,7 +875,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "134"
+          "135"
         ]
       },
       "ResponseHeaders": {
@@ -883,13 +883,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:22 GMT"
+          "Thu, 04 Nov 2021 01:26:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAqI0=\""
+          "\"AAAAAAAAqRg=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -901,19 +901,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ed3db393-efcc-48d2-bd9e-2e306f4df1b4"
+          "d26a25d4-b019-456b-9f4a-07318ba0fa05"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "dc69f09f-9d0b-4936-b314-3b0514718432"
+          "75733cc0-a622-4604-bbd2-2916502c1197"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234123Z:dc69f09f-9d0b-4936-b314-3b0514718432"
+          "WESTUS:20211104T012636Z:75733cc0-a622-4604-bbd2-2916502c1197"
         ],
         "Content-Length": [
-          "2531"
+          "2604"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -922,20 +922,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5126\",\r\n  \"properties\": {\r\n    \"displayName\": \"patchedName6735\",\r\n    \"method\": \"HEAD\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"patchedDescription983\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription7913\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3145\",\r\n          \"description\": \"newOperationRequestParamDescr5960\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue541\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue541\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4455\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr3831\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4760\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4760\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1878\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription5186\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType4212\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"operationid5073\",\r\n  \"properties\": {\r\n    \"displayName\": \"patchedName8812\",\r\n    \"method\": \"HEAD\",\r\n    \"urlTemplate\": \"/newresource\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"patchedDescription2079\",\r\n    \"request\": {\r\n      \"description\": \"operationRequestDescription4526\",\r\n      \"queryParameters\": [\r\n        {\r\n          \"name\": \"newOperationRequestParmName3519\",\r\n          \"description\": \"newOperationRequestParamDescr1615\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestParamDefaultValue7234\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestParamDefaultValue7234\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"newOperationRequestHeaderParmName4945\",\r\n          \"description\": \"newOperationRequestHeaderParamDescr1516\",\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue4608\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"newOperationRequestHeaderParamDefaultValue4608\",\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ],\r\n          \"typeName\": \"not null\"\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationRequestRepresentationContentType1642\",\r\n          \"examples\": {\r\n            \"default\": {\r\n              \"summary\": \"Just an example\",\r\n              \"description\": \"My default request example\",\r\n              \"value\": \"default\",\r\n              \"externalValue\": \"https://contoso.com\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 1980785443,\r\n        \"description\": \"newOperationResponseDescription8982\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"newOperationResponseRepresentationContentType1223\",\r\n            \"examples\": {\r\n              \"default\": {\r\n                \"summary\": \"Just an example\",\r\n                \"description\": \"My default request example\",\r\n                \"value\": \"default\",\r\n                \"externalValue\": \"https://contoso.com\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d1e4bec-5abe-4789-a9e3-037b150334ef"
+          "8269e379-f95d-4b33-858b-da5db646ab55"
         ],
         "If-Match": [
-          "\"AAAAAAAAqI0=\""
+          "\"AAAAAAAAqRg=\""
         ],
         "accept-language": [
           "en-US"
@@ -952,7 +952,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:23 GMT"
+          "Thu, 04 Nov 2021 01:26:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -967,16 +967,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d3d413a3-91ac-40bb-a642-15c35fcc681d"
+          "0fd4902d-a191-43ac-abc2-00c886329694"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "916c762d-9f7b-4902-95f4-464c8beb5595"
+          "aa9d01a2-2a82-48b5-86fe-5dc7c530afce"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234124Z:916c762d-9f7b-4902-95f4-464c8beb5595"
+          "WESTUS:20211104T012636Z:aa9d01a2-2a82-48b5-86fe-5dc7c530afce"
         ],
         "Content-Length": [
           "0"
@@ -989,13 +989,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5126?api-version=2021-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MTI2P2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/echo-api/operations/operationid5073?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2VjaG8tYXBpL29wZXJhdGlvbnMvb3BlcmF0aW9uaWQ1MDczP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "565bcde6-a1b8-4a85-ba9a-d7ad09833a4d"
+          "c04b2af0-a094-4fcb-a159-b77d9a34f674"
         ],
         "If-Match": [
           "*"
@@ -1015,7 +1015,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 23:41:23 GMT"
+          "Thu, 04 Nov 2021 01:26:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1030,16 +1030,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "fac23e6f-25ec-498c-85ff-b1f15522afd5"
+          "16d59c5d-e6c4-4db6-851c-0a12a8d5f0a8"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "3f8b87e9-bbc8-4cf2-8390-f4a36674a622"
+          "5bcd95b4-fe62-46af-a861-c62615e2f428"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20211101T234124Z:3f8b87e9-bbc8-4cf2-8390-f4a36674a622"
+          "WESTUS:20211104T012637Z:5bcd95b4-fe62-46af-a861-c62615e2f428"
         ],
         "Expires": [
           "-1"
@@ -1051,21 +1051,21 @@
   ],
   "Names": {
     "CreateListUpdateDelete": [
-      "operationid5126",
-      "operationName8362",
-      "operationDescription2537",
-      "operationRequestDescription7913",
-      "newOperationRequestHeaderParmName4455",
-      "newOperationRequestHeaderParamDescr3831",
-      "newOperationRequestHeaderParamDefaultValue4760",
-      "newOperationRequestParmName3145",
-      "newOperationRequestParamDescr5960",
-      "newOperationRequestParamDefaultValue541",
-      "newOperationRequestRepresentationContentType1878",
-      "newOperationResponseDescription5186",
-      "newOperationResponseRepresentationContentType4212",
-      "patchedName6735",
-      "patchedDescription983"
+      "operationid5073",
+      "operationName7976",
+      "operationDescription3165",
+      "operationRequestDescription4526",
+      "newOperationRequestHeaderParmName4945",
+      "newOperationRequestHeaderParamDescr1516",
+      "newOperationRequestHeaderParamDefaultValue4608",
+      "newOperationRequestParmName3519",
+      "newOperationRequestParamDescr1615",
+      "newOperationRequestParamDefaultValue7234",
+      "newOperationRequestRepresentationContentType1642",
+      "newOperationResponseDescription8982",
+      "newOperationResponseRepresentationContentType1223",
+      "patchedName8812",
+      "patchedDescription2079"
     ]
   },
   "Variables": {
