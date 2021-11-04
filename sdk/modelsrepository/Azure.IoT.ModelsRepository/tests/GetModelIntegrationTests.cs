@@ -25,7 +25,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             string expectedExMsg =
                 string.Format(StandardStrings.GenericGetModelsError, "dtmi:com:example:thermostat;1") +
                 " " +
-                string.Format(StandardStrings.IncorrectDtmiCasing, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
+                string.Format(StandardStrings.IncorrectDtmi, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
 
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
             act.Should().Throw<RequestFailedException>().WithMessage(expectedExMsg);
