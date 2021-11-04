@@ -1,16 +1,10 @@
 # Release History
 
-## 11.4.0-beta.5 (Unreleased)
-
-### Features Added
+## 11.4.0-beta.5 (2021-11-09)
 
 ### Breaking Changes
 - Renamed `IndexerStateHighWaterMark` to `IndexerChangeTrackingState`.
 - Renamed the property `HighWaterMark` to `ChangeTrackingState` in `IndexerState`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 11.4.0-beta.4 (2021-10-05)
 
