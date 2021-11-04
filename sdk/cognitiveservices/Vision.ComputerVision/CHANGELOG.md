@@ -1,10 +1,11 @@
 # Release History
 
-## 7.1.0
+## 7.1.0 (2021-11-03)
 
 Correction patch to support v3.2 Cognitive Services Computer Vision API endpoints.
-This patch include fixes to the Read Operation, allowing users to leverage the 'modelVersion' and 'readingOrder' parameters.
 
+### Changed
+* This patch include fixes to the Read Operation, allowing users to leverage the 'modelVersion' and 'readingOrder' parameters.
 
 ## 7.0.0 (2021-04-12)
 
