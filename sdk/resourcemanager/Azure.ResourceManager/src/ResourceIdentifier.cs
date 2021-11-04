@@ -105,7 +105,7 @@ namespace Azure.ResourceManager
         private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
         {
             ResourceGroupsLowerKey => ResourceGroup.ResourceType,
-            //subscriptions' type is Microsoft.Resources/subscriptions only when it's parent is Tenant
+            //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
             SubscriptionsKey when parent.ResourceType==Tenant.ResourceType => Subscription.ResourceType,
             _ => new ResourceType(parent.ResourceType, resourceTypeName)
         };
