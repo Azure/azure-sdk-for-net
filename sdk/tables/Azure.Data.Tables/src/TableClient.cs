@@ -651,9 +651,8 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
-            var disableSingleQuoteEscape = TablesCompatSwitches.DisableEscapeSingleQuotesOnGetEntity;
 
-            if (!disableSingleQuoteEscape)
+            if (!TablesCompatSwitches.DisableEscapeSingleQuotesOnGetEntity)
             {
                 // Escape the values
                 if (partitionKey.Contains("'"))

@@ -8,6 +8,13 @@
 
 ### Bugs Fixed
 - Table entities now support UInt64 (ulong) properties. ([#24750](https://github.com/Azure/azure-sdk-for-net/issues/24750))
+- Fixed an issue where PartitionKey and RoKey values containing single quote characters are not properly escaped on `GetEntity` calls. If this fixed behavior causes a breaking change for deployed applications that work around this behavior, it can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" to true or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
+
+```xml  
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity" Value="true" />
+</ItemGroup> 
+  ```
 
 ### Other Changes
 
