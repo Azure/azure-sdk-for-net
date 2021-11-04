@@ -220,7 +220,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         throw new ServiceBusException(true, Resources.SessionFilterMissing);
                     }
 
-                    if (string.IsNullOrWhiteSpace(tempSessionId))
+                    if (tempSessionId == null)
                     {
                         link.Session.SafeClose();
                         throw new ServiceBusException(true, Resources.AmqpFieldSessionId);

@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of VirtualRouterPeerings in the VirtualRouter. </summary>
         /// <returns> An object representing collection of VirtualRouterPeerings and their operations over a VirtualRouter. </returns>
-        public VirtualRouterPeeringContainer GetVirtualRouterPeerings()
+        public VirtualRouterPeeringCollection GetVirtualRouterPeerings()
         {
-            return new VirtualRouterPeeringContainer(this);
+            return new VirtualRouterPeeringCollection(this);
         }
     }
 }

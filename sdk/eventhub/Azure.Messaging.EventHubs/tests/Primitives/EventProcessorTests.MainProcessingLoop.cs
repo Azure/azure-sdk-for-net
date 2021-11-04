@@ -1871,10 +1871,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(ownedPartitions.Contains(firstPartiton), Is.True, "The first partition should be owned.");
             Assert.That(ownedPartitions.Contains(secondPartition), Is.True, "The second partition should be owned.");
 
-            // Due to non-determinism, the exact number of cycle is not known; allow for a small range.
+            // Due to non-determinism, the exact number of cycle is not known.
 
             mockLoadBalancer
-                .Verify(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()), Times.Between(3, 6, Moq.Range.Inclusive), "The load balancer did not run the correct number of cycles.");
+                .Verify(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()), Times.AtLeast(3), "The load balancer did not run the correct number of cycles.");
         }
 
         /// <summary>

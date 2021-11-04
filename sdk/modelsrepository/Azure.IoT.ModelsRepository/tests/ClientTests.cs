@@ -49,10 +49,13 @@ namespace Azure.IoT.ModelsRepository.Tests
         public void ClientOptions()
         {
             var defaultOptions = new ModelsRepositoryClientOptions();
-            defaultOptions.MetadataExpiry.Should().Be(ModelsRepositoryClientOptions.DefaultMetadataExpiry);
             defaultOptions.Version.Should().Be(ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11);
 
-            new ModelsRepositoryClientOptions(metadataExpiry: TimeSpan.Zero).MetadataExpiry.Should().Be(TimeSpan.Zero);
+            // Default MetadataOptions values
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled.Should().BeTrue();
+
+            // Ensure MetadataOptions properties are settable
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
         }
     }
 }

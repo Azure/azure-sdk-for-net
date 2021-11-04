@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueSignature = property.Value.GetString().ToDocumentSignatureType();
+                    valueSignature = new DocumentSignatureType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("valueCountryRegion"))

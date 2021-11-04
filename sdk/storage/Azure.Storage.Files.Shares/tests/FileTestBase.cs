@@ -26,10 +26,11 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2020_08_04,
         ShareClientOptions.ServiceVersion.V2020_10_02,
         ShareClientOptions.ServiceVersion.V2020_12_06,
+        ShareClientOptions.ServiceVersion.V2021_02_12,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, })]
     public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         /// <summary>
@@ -45,14 +46,7 @@ namespace Azure.Storage.Files.Shares.Tests
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            SharesClientBuilder = new ClientBuilder<ShareServiceClient, ShareClientOptions>(
-                ServiceEndpoint.File,
-                Tenants,
-                (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
-                (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
-                default, // file shares don't suppot oauth
-                (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
-                () => new ShareClientOptions(_serviceVersion));
+            SharesClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, _serviceVersion);
         }
 
         public string GetNewShareName() => SharesClientBuilder.GetNewShareName();

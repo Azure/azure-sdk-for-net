@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData
+    public class EventData : IMessageWithContentType
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -42,7 +42,17 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="BinaryData" />
         /// <seealso cref="EventData.Properties" />
         ///
-        public BinaryData EventBody => _amqpMessage.GetEventBody();
+        public BinaryData EventBody
+        {
+            get => _amqpMessage.GetEventBody();
+            set => _amqpMessage.Body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegment(value.ToMemory()));
+        }
+
+        BinaryData IMessageWithContentType.Data
+        {
+            get => EventBody;
+            set => EventBody = value;
+        }
 
         /// <summary>
         ///   A MIME type describing the data contained in the <see cref="EventBody" />,
@@ -423,6 +433,14 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
         ///
         public EventData(BinaryData eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        public EventData() : this(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: null)
         {
         }
 

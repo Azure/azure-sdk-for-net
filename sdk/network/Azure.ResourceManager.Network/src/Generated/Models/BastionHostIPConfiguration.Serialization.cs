@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,19 +21,22 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress");
-                writer.WriteObjectValue(PublicIPAddress);
+                JsonSerializer.Serialize(writer, PublicIPAddress);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -49,9 +52,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceIdentifier id = default;
-            Optional<SubResource> subnet = default;
-            Optional<SubResource> publicIPAddress = default;
+            Optional<string> id = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<WritableSubResource> publicIPAddress = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = SubResource.DeserializeSubResource(property0.Value);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"))
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = SubResource.DeserializeSubResource(property0.Value);
+                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BastionHostIPConfiguration(id, name.Value, etag.Value, type.Value, subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
+            return new BastionHostIPConfiguration(id.Value, name.Value, etag.Value, type.Value, subnet, publicIPAddress, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
         }
     }
 }

@@ -220,5 +220,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.Less(stop - start, duration.Add(duration));
             }
         }
+
+        [Test]
+        public async Task CanAcceptBlankSession()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = CreateClient();
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
+                Assert.AreEqual("", receiver.SessionId);
+            }
+        }
     }
 }

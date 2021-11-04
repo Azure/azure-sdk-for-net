@@ -1,14 +1,10 @@
 # Release History
 
-## 0.1.0-preview.18 (Unreleased)
+## 0.1.0-preview.18 (2021-11-03)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
 
 ## 0.1.0-preview.17 (2021-10-01)
 

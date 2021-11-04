@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
@@ -10,42 +8,38 @@ namespace Azure.IoT.ModelsRepository
     /// </summary>
     internal class MetadataScheduler
     {
-        private DateTime _lastFetched;
-        private readonly TimeSpan _desiredElapsedTimeSpan;
-        private bool _initialFetch;
+        private bool _isInitialFetch;
+        private readonly bool _isEnabled;
 
-        /// <param name="desiredElapsedTimeSpan">A desired <c>TimeSpan</c> that is used to calculate elapsed time periods.</param>
-        public MetadataScheduler(TimeSpan desiredElapsedTimeSpan)
+        /// <param name="metadataOptions">The desired configuration for metadata processing.</param>
+        public MetadataScheduler(ModelsRepositoryClientMetadataOptions metadataOptions)
         {
-            _lastFetched = DateTime.MinValue;
-            _desiredElapsedTimeSpan = desiredElapsedTimeSpan;
-            _initialFetch = true;
+            _isInitialFetch = true;
+            _isEnabled = metadataOptions.IsMetadataProcessingEnabled;
         }
 
         /// <summary>
-        /// Updates the last fetched DateTime attribute of the scheduler to <c>DateTime.Now</c>.
+        /// To be invoked by caller indicating repository metadata has been fetched.
         /// </summary>
-        public void Reset()
+        public void MarkAsFetched()
         {
-            if (_initialFetch)
+            if (_isInitialFetch)
             {
-                _initialFetch = false;
+                _isInitialFetch = false;
             }
-
-            _lastFetched = DateTime.UtcNow;
         }
 
         /// <summary>
-        /// Determines whether the desired time span has elapsed with respect to the last fetched DateTime attribute.
+        /// Indicates whether the caller should fetch metadata.
         /// </summary>
-        public bool HasElapsed()
+        public bool ShouldFetchMetadata()
         {
-            if (_initialFetch)
+            if (_isEnabled && _isInitialFetch)
             {
                 return true;
             }
 
-            return (DateTime.UtcNow - _lastFetched) >= _desiredElapsedTimeSpan;
+            return false;
         }
     }
 }

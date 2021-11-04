@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //remove all storage accounts under current resource group
             if (_resourceGroup != null)
             {
-                StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
-                List<StorageAccount> storageAccountList = await storageAccountContainer.GetAllAsync().ToEnumerableAsync();
+                StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+                List<StorageAccount> storageAccountList = await storageAccountCollection.GetAllAsync().ToEnumerableAsync();
                 foreach (StorageAccount account in storageAccountList)
                 {
                     await account.DeleteAsync();
@@ -43,27 +43,27 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, true);
             AssertStorageAccountEqual(account1, await account1.GetAsync());
 
             //validate if created successfully
-            StorageAccount account2 = await storageAccountContainer.GetAsync(accountName);
+            StorageAccount account2 = await storageAccountCollection.GetAsync(accountName);
             VerifyAccountProperties(account2, true);
             AssertStorageAccountEqual(account1, account2);
-            StorageAccount account3 = await storageAccountContainer.GetIfExistsAsync(accountName + "1");
+            StorageAccount account3 = await storageAccountCollection.GetIfExistsAsync(accountName + "1");
             Assert.IsNull(account3);
-            Assert.IsTrue(await storageAccountContainer.CheckIfExistsAsync(accountName));
-            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName + "1"));
+            Assert.IsTrue(await storageAccountCollection.CheckIfExistsAsync(accountName));
+            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName + "1"));
 
             //delete storage account
             await account1.DeleteAsync();
 
             //validate if deleted successfully
-            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
-            StorageAccount account4 = await storageAccountContainer.GetIfExistsAsync(accountName);
+            Assert.IsFalse(await storageAccountCollection.CheckIfExistsAsync(accountName));
+            StorageAccount account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
 
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, GetDefaultStorageAccountParameters())).Value;
-            StorageAccount account2 = (await storageAccountContainer.CreateOrUpdateAsync(accountName2, GetDefaultStorageAccountParameters())).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, GetDefaultStorageAccountParameters())).Value;
+            StorageAccount account2 = (await storageAccountCollection.CreateOrUpdateAsync(accountName2, GetDefaultStorageAccountParameters())).Value;
 
             //validate two storage accounts
             int count = 0;
             StorageAccount account3 = null;
             StorageAccount account4 = null;
-            await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
+            await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
             {
                 count++;
                 if (account.Id.Name == accountName1)
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
             //update sku
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(account1.Data.Sku.Name, SkuName.StandardLRS);
 
             // validate
-            StorageAccount account2 = await storageAccountContainer.GetAsync(accountName);
+            StorageAccount account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.Sku.Name, SkuName.StandardLRS);
 
             //update tags
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(account1.Data.Tags.Count, parameters.Tags.Count);
 
             //validate
-            account2 = await storageAccountContainer.GetAsync(accountName);
+            account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.Tags.Count, parameters.Tags.Count);
 
             //update encryption
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(account1.Data.Encryption);
 
             //validate
-            account2 = await storageAccountContainer.GetAsync(accountName);
+            account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.NotNull(account2.Data.Encryption);
             Assert.NotNull(account2.Data.Encryption.Services.Blob);
             Assert.True(account2.Data.Encryption.Services.Blob.Enabled);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             };
             account1 = await account1.UpdateAsync(parameters);
             Assert.AreEqual(account1.Data.EnableHttpsTrafficOnly, false);
-            account2 = await storageAccountContainer.GetAsync(accountName);
+            account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.EnableHttpsTrafficOnly, false);
             parameters = new StorageAccountUpdateParameters()
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             };
             account1 = await account1.UpdateAsync(parameters);
             Assert.AreEqual(account1.Data.EnableHttpsTrafficOnly, true);
-            account2 = await storageAccountContainer.GetAsync(accountName);
+            account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.AreEqual(account2.Data.EnableHttpsTrafficOnly, true);
         }
 
@@ -175,20 +175,20 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account and enable large share
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             Sku sku = new Sku(SkuName.StandardLRS);
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku, kind: Kind.StorageV2);
             parameters.LargeFileSharesState = LargeFileSharesState.Enabled;
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
 
             //create file share with share quota 5200, which is allowed in large file shares
             string fileShareName = Recording.GenerateAssetName("testfileshare");
             FileService fileService = await account1.GetFileServices().GetAsync("default");
-            FileShareContainer shareContainer = fileService.GetFileShares();
+            FileShareCollection shareCollection = fileService.GetFileShares();
             FileShareData shareData = new FileShareData();
             shareData.ShareQuota = 5200;
-            FileShareCreateOperation fileShareCreateOperation = await shareContainer.CreateOrUpdateAsync(fileShareName, shareData);
+            FileShareCreateOperation fileShareCreateOperation = await shareCollection.CreateOrUpdateAsync(fileShareName, shareData);
             FileShare share = await fileShareCreateOperation.WaitForCompletionAsync();
             Assert.AreEqual(share.Data.ShareQuota, shareData.ShareQuota);
         }
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account and get keys
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
             StorageAccountListKeysResult keys = await account1.GetKeysAsync();
             Assert.NotNull(keys);
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account with network rule
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
             parameters.NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
             {
                 Bypass = @"Logging, AzureServices",
                 IpRules = { new IPRule(iPAddressOrRange: "23.45.67.89") }
             };
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
 
             //verify network rule
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account with block blob storage
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             Sku sku = new Sku(SkuName.PremiumLRS);
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku, kind: Kind.BlockBlobStorage);
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account1, false);
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account with file storage
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             Sku sku = new Sku(SkuName.PremiumLRS);
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku, kind: Kind.FileStorage);
-            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account1 = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account1, false);
@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account with encryption settings
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
             parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
             {
                 Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
             };
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
             VerifyAccountProperties(account, true);
 
             //verify encryption settings
@@ -388,10 +388,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account with accesstier hot
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.BlobStorage);
             parameters.AccessTier = AccessTier.Hot;
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account, false);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             parameters.AccessTier = AccessTier.Cool;
-            account = (await storageAccountContainer.CreateOrUpdateAsync(accountName2, parameters)).Value;
+            account = (await storageAccountCollection.CreateOrUpdateAsync(accountName2, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account, false);
@@ -417,10 +417,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             Sku sku = new Sku(SkuName.StandardRagrs);
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku, kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters)).Value;
             Assert.AreEqual(SkuName.StandardRagrs, account.Data.Sku.Name);
             Assert.Null(account.Data.GeoReplicationStats);
 
@@ -439,9 +439,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //revoke user delegation keys
             await account.RevokeUserDelegationKeysAsync();
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get available locations
             IEnumerable<Location> locationList = await account.GetAvailableLocationsAsync();
@@ -470,9 +470,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
             AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1));
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1))
             {
@@ -520,9 +520,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
             ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
@@ -545,9 +545,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
             ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
@@ -576,9 +576,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //add tag to this storage account
             account = await account.AddTagAsync("key", "value");
@@ -600,10 +600,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
             parameters.EnableNfsV3 = false;
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account, false);
@@ -628,18 +628,18 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create resource group and storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
-            BlobInventoryPolicyContainer blobInventoryPolicyContainer = account.GetBlobInventoryPolicies();
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
+            BlobInventoryPolicyCollection blobInventoryPolicyCollection = account.GetBlobInventoryPolicies();
 
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobServiceContainer blobServiceContainer = account.GetBlobServices();
-            BlobService blobService = await blobServiceContainer.GetAsync("default");
-            BlobContainerContainer blobContainerContainer = blobService.GetBlobContainers();
-            BlobContainer container = (await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData())).Value;
+            BlobServiceCollection blobServiceCollection = account.GetBlobServices();
+            BlobService blobService = await blobServiceCollection.GetAsync("default");
+            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+            BlobContainer container = (await blobContainerCollection.CreateOrUpdateAsync(containerName, new BlobContainerData())).Value;
 
             //prepare schema fields
             string[] BlobSchemaField = new string[] {"Name", "Creation-Time", "Last-Modified", "Content-Length", "Content-MD5", "BlobType", "AccessTier", "AccessTierChangeTime",
@@ -689,8 +689,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             };
 
             //create and get policy, the name of blob inventory policy should always be default
-            BlobInventoryPolicy blobInventoryPolicy = (await blobInventoryPolicyContainer.CreateOrUpdateAsync("default", parameter)).Value;
-            blobInventoryPolicy = await blobInventoryPolicyContainer.GetAsync("default");
+            BlobInventoryPolicy blobInventoryPolicy = (await blobInventoryPolicyCollection.CreateOrUpdateAsync("default", parameter)).Value;
+            blobInventoryPolicy = await blobInventoryPolicyCollection.GetAsync("default");
             Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 2);
 
             //update policy
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 Policy = policy2
             };
-            blobInventoryPolicy = (await blobInventoryPolicyContainer.CreateOrUpdateAsync("default", parameter2)).Value;
+            blobInventoryPolicy = (await blobInventoryPolicyCollection.CreateOrUpdateAsync("default", parameter2)).Value;
             Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 3);
 
             //delete policy
@@ -714,14 +714,13 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create resource group and storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
-            ManagementPolicyContainer managementPolicyContainer = account.GetManagementPolicies();
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //Enable LAT
-            BlobServiceContainer blobServiceContainer = account.GetBlobServices();
-            BlobService blobService = await blobServiceContainer.GetAsync("Default");
+            BlobServiceCollection blobServiceCollection = account.GetBlobServices();
+            BlobService blobService = await blobServiceCollection.GetAsync("Default");
             blobService.Data.LastAccessTimeTrackingPolicy = new LastAccessTimeTrackingPolicy(true);
             _ = await blobService.SetServicePropertiesAsync(blobService.Data);
 
@@ -761,7 +760,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             };
 
             //set management policy, the policy name should always be default
-            ManagementPolicy managementPolicy = (await managementPolicyContainer.CreateOrUpdateAsync("default", parameter)).Value;
+            ManagementPolicy managementPolicy = (await account.GetManagementPolicy().CreateOrUpdateAsync(parameter)).Value;
             Assert.NotNull(managementPolicy);
             Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
 
@@ -776,10 +775,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create resource group and storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
-            EncryptionScopeContainer encryptionScopeContainer = account.GetEncryptionScopes();
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
+            EncryptionScopeCollection encryptionScopeCollection = account.GetEncryptionScopes();
 
             //create encryption scope
             EncryptionScopeData parameter = new EncryptionScopeData()
@@ -788,7 +787,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 State = EncryptionScopeState.Enabled,
                 RequireInfrastructureEncryption = false
             };
-            EncryptionScope encryptionScope = (await encryptionScopeContainer.CreateOrUpdateAsync("scope", parameter)).Value;
+            EncryptionScope encryptionScope = (await encryptionScopeCollection.CreateOrUpdateAsync("scope", parameter)).Value;
             Assert.AreEqual("scope", encryptionScope.Id.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScope.Data.State);
             Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
@@ -799,7 +798,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(encryptionScope.Data.State, EncryptionScopeState.Disabled);
 
             //get all encryption scopes
-            List<EncryptionScope> encryptionScopes = await encryptionScopeContainer.GetAllAsync().ToEnumerableAsync();
+            List<EncryptionScope> encryptionScopes = await encryptionScopeCollection.GetAllAsync().ToEnumerableAsync();
             encryptionScope = encryptionScopes.First();
             Assert.AreEqual("scope", encryptionScope.Id.Name);
             Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScope.Data.State);
@@ -813,13 +812,13 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create resource group and storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
-            PrivateEndpointConnectionContainer privateEndpointConnectionContainer = account.GetPrivateEndpointConnections();
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
+            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = account.GetPrivateEndpointConnections();
 
             //get all private endpoint connections
-            List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionContainer.GetAllAsync().ToEnumerableAsync();
+            List<PrivateEndpointConnection> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(privateEndpointConnections);
         }
 
@@ -830,9 +829,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create resource group and storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = _resourceGroup.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: new Sku(SkuName.StandardLRS), kind: Kind.StorageV2);
-            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(accountName, parameters)).Value;
 
             //get all private link resources
             Response<IReadOnlyList<PrivateLinkResource>> privateLinkResources = await account.GetPrivateLinkResourcesAsync();
@@ -846,14 +845,14 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create 2 resource groups and 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroup resourceGroup1 = await CreateResourceGroupAsync();
-            StorageAccountContainer storageAccountContainer = resourceGroup1.GetStorageAccounts();
+            StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
-            await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters);
+            await storageAccountCollection.CreateOrUpdateAsync(accountName1, parameters);
 
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroup resourceGroup2 = await CreateResourceGroupAsync();
-            storageAccountContainer = resourceGroup2.GetStorageAccounts();
-            await storageAccountContainer.CreateOrUpdateAsync(accountName2, parameters);
+            storageAccountCollection = resourceGroup2.GetStorageAccounts();
+            await storageAccountCollection.CreateOrUpdateAsync(accountName2, parameters);
 
             //validate two storage accounts
             StorageAccount account1 = null;

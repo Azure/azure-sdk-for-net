@@ -836,16 +836,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of BackendAddressPools in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public BackendAddressPoolContainer GetBackendAddressPools()
+        public BackendAddressPoolCollection GetBackendAddressPools()
         {
-            return new BackendAddressPoolContainer(this);
+            return new BackendAddressPoolCollection(this);
         }
 
         /// <summary> Gets a list of InboundNatRules in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public InboundNatRuleContainer GetInboundNatRules()
+        public InboundNatRuleCollection GetInboundNatRules()
         {
-            return new InboundNatRuleContainer(this);
+            return new InboundNatRuleCollection(this);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Synapse
   internal static partial class SdkInfo
   {
       public static IEnumerable<Tuple<string, string, string>> ApiInfo_SynapseManagementClient
-        {
+      {
           get
           {
               return new Tuple<string, string, string>[]
@@ -35,6 +35,15 @@ namespace Microsoft.Azure.Management.Synapse
                 new Tuple<string, string, string>("Synapse", "IntegrationRuntimes", "2021-06-01-preview"),
                 new Tuple<string, string, string>("Synapse", "IpFirewallRules", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "Keys", "2021-06-01"),
+                new Tuple<string, string, string>("Synapse", "KustoOperations", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPool", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolAttachedDatabaseConfigurations", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolChildResource", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolDataConnections", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolDatabasePrincipalAssignments", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolDatabases", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPoolPrincipalAssignments", "2021-06-01-preview"),
+                new Tuple<string, string, string>("Synapse", "KustoPools", "2021-06-01-preview"),
                 new Tuple<string, string, string>("Synapse", "Libraries", "2021-06-01-preview"),
                 new Tuple<string, string, string>("Synapse", "Library", "2021-06-01-preview"),
                 new Tuple<string, string, string>("Synapse", "Operations", "2021-06-01"),
@@ -83,16 +92,17 @@ namespace Microsoft.Azure.Management.Synapse
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerVulnerabilityAssessments", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceSqlAadAdmins", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "Workspaces", "2021-06-01"),
+                new Tuple<string, string, string>("Synapse", "kustoPools", "2021-06-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\ZeshiLuo\\azure-sdk-for-net-1\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "5d09c12c024fa7efbaca6a95b9741a46a886fe6f";
+      public static readonly String GithubCommidId = "1b64fac98b004c439dfffff4cbe93e413ff86709";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

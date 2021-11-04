@@ -28,6 +28,7 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_08_04,
         BlobClientOptions.ServiceVersion.V2020_10_02,
         BlobClientOptions.ServiceVersion.V2020_12_06,
+        BlobClientOptions.ServiceVersion.V2021_02_12,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
@@ -54,14 +55,7 @@ namespace Azure.Storage.Test.Shared
             : base(async, mode)
         {
             _serviceVersion = serviceVersion;
-            BlobsClientBuilder = new ClientBuilder<BlobServiceClient, BlobClientOptions>(
-                ServiceEndpoint.Blob,
-                Tenants,
-                (uri, clientOptions) => new BlobServiceClient(uri, clientOptions),
-                (uri, sharedKeyCredential, clientOptions) => new BlobServiceClient(uri, sharedKeyCredential, clientOptions),
-                (uri, tokenCredential, clientOptions) => new BlobServiceClient(uri, tokenCredential, clientOptions),
-                (uri, azureSasCredential, clientOptions) => new BlobServiceClient(uri, azureSasCredential, clientOptions),
-                () => new BlobClientOptions(_serviceVersion));
+            BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
@@ -462,7 +456,7 @@ namespace Azure.Storage.Test.Shared
             if (match == ReceivedETag)
             {
                 Response<BlobProperties> headers = await blob.GetPropertiesAsync();
-                return headers.Value.ETag.ToString();
+                return headers.GetRawResponse().Headers.ETag.ToString();
             }
             else
             {

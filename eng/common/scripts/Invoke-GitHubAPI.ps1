@@ -157,6 +157,36 @@ function New-GitHubPullRequest {
           -MaximumRetryCount 3
 }
 
+function New-GitHubIssue {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $Title,
+    [Parameter(Mandatory = $true)]
+    $Description,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues"
+
+  $parameters = @{
+    title = $Title
+    body = $Description
+  }
+
+  return Invoke-RestMethod `
+    -Method POST `
+    -Body ($parameters | ConvertTo-Json) `
+    -Uri $uri `
+    -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+    -MaximumRetryCount 3
+}
+
 function Add-GitHubIssueComment {
   param (
     [Parameter(Mandatory = $true)]

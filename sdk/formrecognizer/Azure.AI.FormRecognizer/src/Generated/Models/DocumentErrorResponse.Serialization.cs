@@ -14,12 +14,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentErrorResponse DeserializeDocumentErrorResponse(JsonElement element)
         {
-            DocumentAnalysisError error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    error = DocumentAnalysisError.DeserializeDocumentAnalysisError(property.Value);
+                    error = Error.DeserializeError(property.Value);
                     continue;
                 }
             }

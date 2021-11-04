@@ -1322,6 +1322,70 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             }
         }
 
+        [Test]
+        public async Task NullableAmqpPropertiesRoundTripCorrectly()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                var message = new ServiceBusMessage
+                {
+                    ReplyTo = null,
+                    To = null,
+                    CorrelationId = null
+                };
+
+                Assert.IsNull(message.ReplyTo);
+                Assert.IsNull(message.To);
+                Assert.IsNull(message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                await using var receiver = client.CreateReceiver(scope.QueueName);
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.IsNull(receivedMessage.ReplyTo);
+                Assert.IsNull(receivedMessage.To);
+                Assert.IsNull(receivedMessage.CorrelationId);
+
+                // verify default null behavior
+
+                message = new ServiceBusMessage();
+
+                Assert.IsNull(message.ReplyTo);
+                Assert.IsNull(message.To);
+                Assert.IsNull(message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.IsNull(receivedMessage.ReplyTo);
+                Assert.IsNull(receivedMessage.To);
+                Assert.IsNull(receivedMessage.CorrelationId);
+
+                // verify empty string respected
+
+                message = new ServiceBusMessage
+                {
+                    ReplyTo = "",
+                    To = "",
+                    CorrelationId = ""
+                };
+
+                Assert.AreEqual("", message.ReplyTo);
+                Assert.AreEqual("", message.To);
+                Assert.AreEqual("", message.CorrelationId);
+
+                await sender.SendMessageAsync(message);
+
+                receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual("", receivedMessage.ReplyTo);
+                Assert.AreEqual("", receivedMessage.To);
+                Assert.AreEqual("", receivedMessage.CorrelationId);
+            }
+        }
+
         private static async Task<List<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int messageCount,
             ServiceBusReceiver receiver,

@@ -11,7 +11,7 @@ namespace Sql.Tests
 {
     public class InstancePoolCrudScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Due long running setup")]
         public void TestCreateUpdateGetDropInstancePool()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -114,11 +114,11 @@ namespace Sql.Tests
 
                 // Create instance 1 in pool
                 var instance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroupName, "netsdk-instance-in-pool-1-cc", parameters: instanceParams);
-                SqlManagementTestUtilities.ValidateManagedInstance(instance1, "netsdk-instance-in-pool-1-cc", "cloudsa", tags1, location, instancePool.Id);
+                SqlManagementTestUtilities.ValidateManagedInstance(instance1, tags: tags1, instancePoolId: instancePool.Id);
 
                 // Create instance 2 in pool
                 var instance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroupName, "netsdk-instance-in-pool-2-cc", parameters: instanceParams);
-                SqlManagementTestUtilities.ValidateManagedInstance(instance2, "netsdk-instance-in-pool-2-cc", "cloudsa", tags1, location, instancePool.Id);
+                SqlManagementTestUtilities.ValidateManagedInstance(instance2, tags: tags1, instancePoolId: instancePool.Id);
 
                 // Gets instances in an instance pool
                 var instances = sqlClient.ManagedInstances.ListByInstancePool(resourceGroupName, instancePoolName);

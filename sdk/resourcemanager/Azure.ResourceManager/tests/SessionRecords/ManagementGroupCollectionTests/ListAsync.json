@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Cache-Control": "no-cache",
+        "traceparent": "00-36f0b3cd2e96dd4280d1a3a0fb8ea71b-5aa5178283d5f34c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager/1.0.0-alpha.20211014.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "f5d237b6dd65d862fcda95c83a33bc15",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "5ea29ede-6933-4909-bb7d-3d1f2f2d73ce",
+        "Content-Length": "271",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Oct 2021 02:32:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "5ea29ede-6933-4909-bb7d-3d1f2f2d73ce",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "x-ba-restapi": "1.0.3.1640",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5ea29ede-6933-4909-bb7d-3d1f2f2d73ce",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "southeastasia:5ea29ede-6933-4909-bb7d-3d1f2f2d73ce",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20211014T023233Z:5ea29ede-6933-4909-bb7d-3d1f2f2d73ce"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/providers/Microsoft.Management/managementGroups/mgmt-group-5005",
+            "type": "Microsoft.Management/managementGroups",
+            "name": "mgmt-group-5005",
+            "properties": {
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "displayName": "mgmt-group-5005"
+            }
+          }
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "124337645",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
