@@ -214,13 +214,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
-
-<!--Update once nuget is released-->
-[conversationanalysis_nuget_package]: https://nuget.org/packages
-
-<!--Will be updated once service documentation is public-->
-[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
+[conversationanalysis_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations/1.0.0-beta.1
+[conversationanalysis_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
-[conversationanalysis_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
-[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
+[conversationanalysis_docs_features]: https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/conversational-language-understanding/overview#features
+[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.Conversations/
 [conversationanalysis_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
