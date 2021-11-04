@@ -7,9 +7,9 @@
 
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A sensitivity label update operation. </summary>
     public partial class SensitivityLabelUpdate : Resource

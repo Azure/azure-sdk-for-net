@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Acquires server DNS alias from another server. </summary>
     public partial class ServerDnsAliasAcquireOperation : Operation<ServerDnsAliasData>, IOperationSource<ServerDnsAliasData>

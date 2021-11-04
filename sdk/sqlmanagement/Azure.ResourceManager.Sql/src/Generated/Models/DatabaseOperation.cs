@@ -9,7 +9,7 @@ using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database operation. </summary>
     public partial class DatabaseOperation : Resource

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Per database settings of an elastic pool. </summary>
     public partial class ElasticPoolPerDatabaseSettings

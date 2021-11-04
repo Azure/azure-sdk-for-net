@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sync direction of the sync member. </summary>
     public readonly partial struct SyncDirection : IEquatable<SyncDirection>

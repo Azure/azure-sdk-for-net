@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Automatic tuning option actual state. </summary>
     public enum AutomaticTuningOptionModeActual

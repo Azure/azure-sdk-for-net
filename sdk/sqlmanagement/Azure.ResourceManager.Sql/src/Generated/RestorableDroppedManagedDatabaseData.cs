@@ -11,7 +11,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RestorableDroppedManagedDatabase data model. </summary>
     public partial class RestorableDroppedManagedDatabaseData : TrackedResource

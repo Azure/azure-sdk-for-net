@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The serviceLevelObjective for SLO usage metric. </summary>
     internal readonly partial struct ServiceObjectiveName : IEquatable<ServiceObjectiveName>

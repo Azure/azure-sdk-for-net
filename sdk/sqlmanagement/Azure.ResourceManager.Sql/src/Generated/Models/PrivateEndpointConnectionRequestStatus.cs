@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the private endpoint connection requests status. </summary>
     public partial class PrivateEndpointConnectionRequestStatus

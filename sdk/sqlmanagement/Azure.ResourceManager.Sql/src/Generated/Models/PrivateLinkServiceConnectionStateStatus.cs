@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The private link service connection status. </summary>
     public readonly partial struct PrivateLinkServiceConnectionStateStatus : IEquatable<PrivateLinkServiceConnectionStateStatus>

@@ -8,9 +8,9 @@
 using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SyncGroup data model. </summary>
     public partial class SyncGroupData : Resource

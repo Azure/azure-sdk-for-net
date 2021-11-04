@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     public partial class NetworkIsolationSettings : IUtf8JsonSerializable
     {

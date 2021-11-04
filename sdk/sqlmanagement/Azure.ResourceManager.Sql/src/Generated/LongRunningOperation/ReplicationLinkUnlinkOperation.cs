@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Deletes a database replication link in forced or friendly way. </summary>
     public partial class ReplicationLinkUnlinkOperation : Operation

@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property. </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation : Operation<ManagedInstanceAzureADOnlyAuthentication>, IOperationSource<ManagedInstanceAzureADOnlyAuthentication>

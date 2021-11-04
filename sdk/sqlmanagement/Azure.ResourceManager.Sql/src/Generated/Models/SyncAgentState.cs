@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> State of the sync agent. </summary>
     public readonly partial struct SyncAgentState : IEquatable<SyncAgentState>

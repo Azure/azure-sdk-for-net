@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The LongTermRetentionPolicyName. </summary>
     public readonly partial struct LongTermRetentionPolicyName : IEquatable<LongTermRetentionPolicyName>

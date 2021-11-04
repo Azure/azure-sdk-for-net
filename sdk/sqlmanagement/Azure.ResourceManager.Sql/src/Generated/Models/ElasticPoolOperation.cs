@@ -9,7 +9,7 @@ using System;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A elastic pool operation. </summary>
     public partial class ElasticPoolOperation : Resource

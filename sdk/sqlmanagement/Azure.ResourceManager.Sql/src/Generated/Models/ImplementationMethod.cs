@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </summary>
     public enum ImplementationMethod

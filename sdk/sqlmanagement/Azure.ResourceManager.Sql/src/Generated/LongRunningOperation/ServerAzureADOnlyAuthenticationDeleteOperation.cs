@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Deletes an existing server Active Directory only authentication property. </summary>
     public partial class ServerAzureADOnlyAuthenticationDeleteOperation : Operation

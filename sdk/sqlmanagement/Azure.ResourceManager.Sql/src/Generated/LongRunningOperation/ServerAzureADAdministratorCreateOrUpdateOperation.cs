@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Creates or updates an existing Azure Active Directory administrator. </summary>
     public partial class ServerAzureADAdministratorCreateOrUpdateOperation : Operation<ServerAzureADAdministrator>, IOperationSource<ServerAzureADAdministrator>

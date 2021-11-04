@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> State of the private endpoint connection. </summary>
     public readonly partial struct PrivateEndpointProvisioningState : IEquatable<PrivateEndpointProvisioningState>

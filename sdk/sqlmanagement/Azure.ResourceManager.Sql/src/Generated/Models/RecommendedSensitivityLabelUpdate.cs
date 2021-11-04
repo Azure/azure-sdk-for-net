@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recommended sensitivity label update operation. </summary>
     public partial class RecommendedSensitivityLabelUpdate : Resource

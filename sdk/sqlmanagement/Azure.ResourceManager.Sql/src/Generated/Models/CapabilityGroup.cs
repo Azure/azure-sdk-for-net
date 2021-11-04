@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The CapabilityGroup. </summary>
     public readonly partial struct CapabilityGroup : IEquatable<CapabilityGroup>

@@ -8,7 +8,7 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecoverableManagedDatabase data model. </summary>
     public partial class RecoverableManagedDatabaseData : Resource

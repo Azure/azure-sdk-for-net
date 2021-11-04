@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class to add extension methods to Tenant. </summary>
     public static partial class TenantExtensions

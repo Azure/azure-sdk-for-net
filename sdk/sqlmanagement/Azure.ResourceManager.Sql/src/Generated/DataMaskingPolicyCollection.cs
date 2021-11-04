@@ -12,9 +12,9 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of DataMaskingPolicy and their operations over its parent. </summary>
     public partial class DataMaskingPolicyCollection : ArmCollection

@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     public partial class RestorableDroppedManagedDatabaseData : IUtf8JsonSerializable
     {

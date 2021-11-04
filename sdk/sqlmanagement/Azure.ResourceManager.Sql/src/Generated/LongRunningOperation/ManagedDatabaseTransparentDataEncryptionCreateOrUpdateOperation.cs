@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Updates a database&apos;s transparent data encryption configuration. </summary>
     public partial class ManagedDatabaseTransparentDataEncryptionCreateOrUpdateOperation : Operation<ManagedTransparentDataEncryption>

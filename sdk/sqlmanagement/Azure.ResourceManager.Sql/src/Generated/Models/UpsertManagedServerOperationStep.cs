@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The UpsertManagedServerOperationStep. </summary>
     public partial class UpsertManagedServerOperationStep

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a active directory administrator. </summary>
     public partial class ManagedInstanceExternalAdministrator

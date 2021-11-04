@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Status of the database. </summary>
     public readonly partial struct ManagedDatabaseStatus : IEquatable<ManagedDatabaseStatus>

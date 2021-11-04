@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
     public readonly partial struct PrimaryAggregationType : IEquatable<PrimaryAggregationType>

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Refreshes a hub database schema. </summary>
     public partial class SyncGroupRefreshHubSchemaOperation : Operation

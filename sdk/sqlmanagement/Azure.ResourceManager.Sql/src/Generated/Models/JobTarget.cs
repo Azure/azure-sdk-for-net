@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A job target, for example a specific database or a container of databases that is evaluated during job execution. </summary>
     public partial class JobTarget

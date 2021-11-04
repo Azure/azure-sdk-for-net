@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseBlobAuditingPolicy data model. </summary>
     public partial class DatabaseBlobAuditingPolicyData : Resource

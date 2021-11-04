@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A private endpoint connection under a managed instance. </summary>
     public partial class ManagedInstancePecProperty

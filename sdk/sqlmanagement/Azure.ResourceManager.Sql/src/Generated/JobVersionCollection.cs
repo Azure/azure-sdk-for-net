@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of JobVersion and their operations over its parent. </summary>
     public partial class JobVersionCollection : ArmCollection, IEnumerable<JobVersion>, IAsyncEnumerable<JobVersion>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The units that the limit is expressed in. </summary>
     public readonly partial struct LogSizeUnit : IEquatable<LogSizeUnit>

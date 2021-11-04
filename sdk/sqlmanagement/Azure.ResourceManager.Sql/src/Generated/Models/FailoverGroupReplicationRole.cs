@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Local replication role of the failover group instance. </summary>
     public readonly partial struct FailoverGroupReplicationRole : IEquatable<FailoverGroupReplicationRole>

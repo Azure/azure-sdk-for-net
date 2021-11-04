@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The LedgerDigestUploadsName. </summary>
     public readonly partial struct LedgerDigestUploadsName : IEquatable<LedgerDigestUploadsName>

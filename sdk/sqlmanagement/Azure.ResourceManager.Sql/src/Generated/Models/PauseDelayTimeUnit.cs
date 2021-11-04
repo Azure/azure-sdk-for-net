@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Unit of time that delay is expressed in. </summary>
     public readonly partial struct PauseDelayTimeUnit : IEquatable<PauseDelayTimeUnit>

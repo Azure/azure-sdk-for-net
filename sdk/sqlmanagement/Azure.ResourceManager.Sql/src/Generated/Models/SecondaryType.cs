@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
     public readonly partial struct SecondaryType : IEquatable<SecondaryType>

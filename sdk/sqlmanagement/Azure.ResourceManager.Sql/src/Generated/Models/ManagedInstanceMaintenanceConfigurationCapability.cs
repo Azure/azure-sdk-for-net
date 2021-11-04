@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The maintenance configuration capability. </summary>
     public partial class ManagedInstanceMaintenanceConfigurationCapability

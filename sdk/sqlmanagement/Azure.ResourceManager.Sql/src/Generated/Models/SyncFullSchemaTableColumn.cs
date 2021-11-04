@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of the column in the table of database full schema. </summary>
     public partial class SyncFullSchemaTableColumn

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The state of the job agent. </summary>
     public readonly partial struct JobAgentState : IEquatable<JobAgentState>

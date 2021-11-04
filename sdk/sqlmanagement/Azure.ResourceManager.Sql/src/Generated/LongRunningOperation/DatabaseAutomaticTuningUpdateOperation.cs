@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Update automatic tuning properties for target database. </summary>
     public partial class DatabaseAutomaticTuningUpdateOperation : Operation<DatabaseAutomaticTuning>

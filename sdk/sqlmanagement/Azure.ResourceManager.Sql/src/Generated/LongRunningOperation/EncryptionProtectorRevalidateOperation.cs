@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Revalidates an existing encryption protector. </summary>
     public partial class EncryptionProtectorRevalidateOperation : Operation

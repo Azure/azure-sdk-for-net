@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The Enum5. </summary>
     public readonly partial struct Enum5 : IEquatable<Enum5>

@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
-using SqlManagementClient.Models;
+using Azure.ResourceManager.Sql.Models;
 
-namespace SqlManagementClient
+namespace Azure.ResourceManager.Sql
 {
     public partial class LogicalDatabaseTransparentDataEncryptionData : IUtf8JsonSerializable
     {

@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Recovers a deleted server. </summary>
     public partial class DeletedServerRecoverOperation : Operation<DeletedServerData>, IOperationSource<DeletedServerData>

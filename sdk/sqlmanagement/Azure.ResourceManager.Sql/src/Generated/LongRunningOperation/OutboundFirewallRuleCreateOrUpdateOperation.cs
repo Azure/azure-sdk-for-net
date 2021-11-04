@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Create a outbound firewall rule with a given name. </summary>
     public partial class OutboundFirewallRuleCreateOrUpdateOperation : Operation<OutboundFirewallRule>, IOperationSource<OutboundFirewallRule>

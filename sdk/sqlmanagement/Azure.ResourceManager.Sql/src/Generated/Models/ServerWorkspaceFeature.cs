@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
     public readonly partial struct ServerWorkspaceFeature : IEquatable<ServerWorkspaceFeature>

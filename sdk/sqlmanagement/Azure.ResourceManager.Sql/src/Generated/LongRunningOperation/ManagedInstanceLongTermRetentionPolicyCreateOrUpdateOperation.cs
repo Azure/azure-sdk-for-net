@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Sets a managed database&apos;s long term retention policy. </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation : Operation<ManagedInstanceLongTermRetentionPolicy>, IOperationSource<ManagedInstanceLongTermRetentionPolicy>

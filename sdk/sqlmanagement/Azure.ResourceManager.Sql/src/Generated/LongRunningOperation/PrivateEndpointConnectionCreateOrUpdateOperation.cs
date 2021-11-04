@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using SqlManagementClient;
+using Azure.ResourceManager.Sql;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
     public partial class PrivateEndpointConnectionCreateOrUpdateOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>

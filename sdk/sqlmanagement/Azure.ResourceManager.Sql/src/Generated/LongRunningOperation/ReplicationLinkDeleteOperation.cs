@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace SqlManagementClient.Models
+namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Deletes a database replication link. Cannot be done during failover. </summary>
     public partial class ReplicationLinkDeleteOperation : Operation
