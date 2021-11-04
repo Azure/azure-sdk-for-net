@@ -218,5 +218,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
 [conversationanalysis_docs_features]: https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/conversational-language-understanding/overview#features
-[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.Conversations/
+[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
 [conversationanalysis_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
