@@ -187,6 +187,11 @@ namespace Microsoft.Azure.Management.Compute
         ILogAnalyticsOperations LogAnalytics { get; }
 
         /// <summary>
+        /// Gets the IDedicatedHostOperations.
+        /// </summary>
+        IDedicatedHostOperations DedicatedHost { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }

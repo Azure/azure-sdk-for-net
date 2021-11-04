@@ -192,6 +192,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ILogAnalyticsOperations LogAnalytics { get; private set; }
 
         /// <summary>
+        /// Gets the IDedicatedHostOperations.
+        /// </summary>
+        public virtual IDedicatedHostOperations DedicatedHost { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
@@ -581,6 +586,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
+            DedicatedHost = new DedicatedHostOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);

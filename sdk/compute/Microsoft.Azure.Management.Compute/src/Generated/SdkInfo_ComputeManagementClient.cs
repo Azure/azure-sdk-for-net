@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "CommunityGalleries", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "CommunityGalleryImageVersions", "2021-07-01"),
                 new Tuple<string, string, string>("Compute", "CommunityGalleryImages", "2021-07-01"),
+                new Tuple<string, string, string>("Compute", "DedicatedHost", "2021-11-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHostGroups", "2021-11-01"),
                 new Tuple<string, string, string>("Compute", "DedicatedHosts", "2021-11-01"),
                 new Tuple<string, string, string>("Compute", "DiskAccesses", "2021-04-01"),
