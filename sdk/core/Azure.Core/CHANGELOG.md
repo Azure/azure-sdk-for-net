@@ -1,5 +1,15 @@
 # Release History
 
+## 1.22.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.21.0 (2021-11-03)
 
 - Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
