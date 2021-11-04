@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourcegroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlZ3JvdXBzL2RvdG5ldHNka3N1YmRvbWFpbnVwZGF0ZTA1MDRmOWViYmMwNzQ0MWU4YzIxNDdjMGZhZWZhMjljP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourcegroups/DotNetSdkIotCentralRG?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlZ3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"EastUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4a15a7e2-64dd-4ade-adc6-47a96b338532"
+          "1c95560f-f85e-4081-ad81-50a18c459e15"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "8cb92ca3-14f0-47e8-8bd4-584642da16be"
+          "44b2c27f-eb7a-492f-bb0d-1f6c07e239ff"
         ],
         "x-ms-correlation-request-id": [
-          "8cb92ca3-14f0-47e8-8bd4-584642da16be"
+          "44b2c27f-eb7a-492f-bb0d-1f6c07e239ff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211103T165422Z:8cb92ca3-14f0-47e8-8bd4-584642da16be"
+          "WESTUS2:20211104T131431Z:44b2c27f-eb7a-492f-bb0d-1f6c07e239ff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 03 Nov 2021 16:54:21 GMT"
+          "Thu, 04 Nov 2021 13:14:31 GMT"
         ],
         "Content-Length": [
-          "265"
+          "195"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c\",\r\n  \"name\": \"dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRG\",\r\n  \"name\": \"DotNetSdkIotCentralRG\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/dotnetsdksubdomainupdate0504f9ebbc07441e8c2147c0faefa29c/providers/Microsoft.IoTCentral/iotApps/dotnetsdkapp01ef93e1178048dcb9a276230fe3fca7?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlR3JvdXBzL2RvdG5ldHNka3N1YmRvbWFpbnVwZGF0ZTA1MDRmOWViYmMwNzQ0MWU4YzIxNDdjMGZhZWZhMjljL3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9pb3RBcHBzL2RvdG5ldHNka2FwcDAxZWY5M2UxMTc4MDQ4ZGNiOWEyNzYyMzBmZTNmY2E3P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/bab3b17e-3f3b-40e0-acc4-ef8c9bbdf32b/resourceGroups/DotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/iotApps/dotnetsdkapp?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiM2IxN2UtM2YzYi00MGUwLWFjYzQtZWY4YzliYmRmMzJiL3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvaW90QXBwcy9kb3RuZXRzZGthcHA/YXBpLXZlcnNpb249MjAyMS0wNi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapp01ef93e1178048dcb9a276230fe3fca7\",\r\n    \"subdomain\": \"dotnetsdksubdomain0b83e6ba4ef44756bc329d66355871b9\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"EastUS\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapp\",\r\n    \"subdomain\": \"dotnetsdksubdomain\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"EastUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d9fd676-ca07-4e47-8ff0-8ffd6e065a48"
+          "a38b963d-8e49-42db-ba32-6794e0f2dd0b"
         ],
         "Accept-Language": [
           "en-US"
@@ -88,7 +88,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "281"
+          "217"
         ]
       },
       "ResponseHeaders": {
@@ -96,10 +96,10 @@
           "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
         ],
         "x-ms-request-id": [
-          "e96605f6-d486-4857-9102-caaced532c3b"
+          "ba69b0ae-771f-4806-adec-cd4295363599"
         ],
         "x-iot-correlation": [
-          "9g8f58bm.1.0"
+          "a4lro7vp.1.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -118,10 +118,10 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: DF3057982D654477A19DC62541AE599A Ref B: CO1EDGE1710 Ref C: 2021-11-03T16:54:25Z"
+          "Ref A: 3A53C4629D644311883661917160C159 Ref B: CO1EDGE1619 Ref C: 2021-11-04T13:14:35Z"
         ],
         "X-IoT-Version": [
-          "102821.0001-release"
+          "110221.0001-release"
         ],
         "X-IoT-Cluster": [
           "iotcprodwestus02"
@@ -133,13 +133,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "5437fee2-15ad-4c17-9155-4a668b6f71b1"
+          "e1136d8d-5aed-4641-84b6-279e3edd4ee2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211103T165436Z:5437fee2-15ad-4c17-9155-4a668b6f71b1"
+          "WESTUS2:20211104T131445Z:e1136d8d-5aed-4641-84b6-279e3edd4ee2"
         ],
         "Date": [
-          "Wed, 03 Nov 2021 16:54:35 GMT"
+          "Thu, 04 Nov 2021 13:14:44 GMT"
         ],
         "Content-Length": [
           "102"

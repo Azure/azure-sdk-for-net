@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ca050377-3dea-4cae-ac5b-77f7913953a4"
+          "13c5d164-78fc-434e-b7fc-bc4284230d1c"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,10 +30,10 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "e1784829-5aad-400e-996c-e9f8833d6a33"
+          "ded17d9b-f908-488e-b379-6428e989a3df"
         ],
         "x-iot-correlation": [
-          "9vhquh3k.0"
+          "cncqwum2.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -48,7 +48,7 @@
           "1; mode=block"
         ],
         "X-IoT-Version": [
-          "102821.0001-release"
+          "110221.0001-release"
         ],
         "X-IoT-Cluster": [
           "iotcprodwestus02"
@@ -60,16 +60,16 @@
           "CONFIG_NOCACHE"
         ],
         "X-MSEdge-Ref": [
-          "Ref A: 4B2E197C27F8455B851A222CA2FFE6B8 Ref B: CO1EDGE1219 Ref C: 2021-11-03T16:54:38Z"
+          "Ref A: 21686D129C5740DC9D56BA93322B2601 Ref B: BY3EDGE0511 Ref C: 2021-11-04T13:15:15Z"
         ],
         "x-ms-correlation-request-id": [
-          "1a0adafb-8a9b-4f5a-a0b8-4cd088c7350d"
+          "75feff33-2424-4f6a-be7e-a6b07a455cbe"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211103T165438Z:1a0adafb-8a9b-4f5a-a0b8-4cd088c7350d"
+          "WESTUS:20211104T131515Z:75feff33-2424-4f6a-be7e-a6b07a455cbe"
         ],
         "Date": [
-          "Wed, 03 Nov 2021 16:54:38 GMT"
+          "Thu, 04 Nov 2021 13:15:15 GMT"
         ],
         "Content-Length": [
           "12804"
