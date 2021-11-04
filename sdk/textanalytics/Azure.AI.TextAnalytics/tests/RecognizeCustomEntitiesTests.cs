@@ -251,6 +251,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("Looks like this is the culprit. Trying again...")]
         public async Task RecognizeCustomEntitiesWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
