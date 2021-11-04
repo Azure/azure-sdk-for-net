@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (2021-11-09)
+## 1.0.1 (2021-11-09)
 
 ### Bugs Fixed
 - NaN, +inf, and -inf double values can now be retrieved from `LogsQueryResult`
