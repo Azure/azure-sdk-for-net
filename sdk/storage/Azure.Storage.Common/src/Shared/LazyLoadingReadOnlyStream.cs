@@ -72,6 +72,15 @@ namespace Azure.Storage
         private readonly int _bufferSize;
 
         /// <summary>
+        /// Whether to ignore internal stream buffer limitations when
+        /// filling a large, caller-provided buffer on read requests.
+        /// Instead, the limitations on filling that buffer are only
+        /// the caller-provided <c>count</c> parameter or hitting
+        /// end of resource content.
+        /// </summary>
+        private readonly bool _fillReadBuffer;
+
+        /// <summary>
         /// The backing buffer.
         /// </summary>
         private byte[] _buffer;
@@ -118,12 +127,14 @@ namespace Azure.Storage
             bool allowModifications,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default)
+            int? bufferSize = default,
+            bool fillReadBuffer = false)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
+            _fillReadBuffer = fillReadBuffer;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
             _allowBlobModifications = allowModifications;
             _bufferPosition = 0;
@@ -186,27 +197,32 @@ namespace Azure.Storage
                 }
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
+            int bytesRead = 0;
+            do
             {
-                int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
-                if (lastDownloadedBytes == 0)
+                if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
                 {
-                    return 0;
+                    int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
+                    if (lastDownloadedBytes == 0)
+                    {
+                        return bytesRead;
+                    }
+                    _bufferInvalidated = false;
                 }
-                _bufferInvalidated = false;
-            }
 
-            int remainingBytesInBuffer = _bufferLength - _bufferPosition;
+                int remainingBytesInBuffer = _bufferLength - _bufferPosition;
 
-            // We will return the minimum of remainingBytesInBuffer and the count provided by the user
-            int bytesToWrite = Math.Min(remainingBytesInBuffer, count);
+                // write from internal buffer to caller-provided buffer until count is reached or fully consumed internal buffer
+                int bytesToWrite = Math.Min(remainingBytesInBuffer, count - bytesRead);
 
-            Array.Copy(_buffer, _bufferPosition, buffer, offset, bytesToWrite);
+                Array.Copy(_buffer, _bufferPosition, buffer, offset + bytesRead, bytesToWrite);
 
-            _position += bytesToWrite;
-            _bufferPosition += bytesToWrite;
+                _position += bytesToWrite;
+                _bufferPosition += bytesToWrite;
+                bytesRead += bytesToWrite;
+            } while (bytesRead < count);
 
-            return bytesToWrite;
+            return bytesRead;
         }
 
         private async Task<int> DownloadInternal(bool async, CancellationToken cancellationToken)
