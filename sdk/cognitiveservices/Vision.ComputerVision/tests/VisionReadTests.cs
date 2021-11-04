@@ -34,11 +34,11 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact]
-        public void ReadTestLatestNatural()
+        public void ReadLatestNaturalTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "ReadTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadLatestNaturalTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
@@ -75,11 +75,11 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact]
-        public void ReadTestAprilModelBasic()
+        public void ReadAprilModelBasicTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "ReadTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadAprilModelBasicTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
@@ -126,6 +126,45 @@ namespace ComputerVisionSDK.Tests
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
                 {
                     ReadInStreamHeaders headers = client.ReadInStreamWithHttpMessagesAsync(stream).Result.Headers;
+
+                    Assert.NotNull(headers.OperationLocation);
+
+                    ReadOperationResult readOperationResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
+
+                    Assert.NotNull(readOperationResult);
+                    Assert.Equal(OperationStatusCodes.Succeeded, readOperationResult.Status);
+
+                    Assert.NotNull(readOperationResult.AnalyzeResult);
+                    Assert.Equal(1, readOperationResult.AnalyzeResult.ReadResults.Count);
+
+                    var recognitionResult = readOperationResult.AnalyzeResult.ReadResults[0];
+
+                    Assert.Equal(1, recognitionResult.Page);
+                    Assert.Equal(1000, recognitionResult.Width);
+                    Assert.Equal(664, recognitionResult.Height);
+                    Assert.Equal(TextRecognitionResultDimensionUnit.Pixel, recognitionResult.Unit);
+
+                    Assert.Equal(
+                        new string[] { "you must be the change", "you want to see in the world!" }.OrderBy(t => t),
+                        recognitionResult.Lines.Select(line => line.Text).OrderBy(t => t));
+                    Assert.Equal(2, recognitionResult.Lines.Count);
+                    Assert.Equal(5, recognitionResult.Lines[0].Words.Count);
+                    Assert.Equal(7, recognitionResult.Lines[1].Words.Count);
+                }
+            }
+        }
+
+        [Fact]
+        public void ReadFileInStreamAprilModelBasicTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "ReadFileInStreamAprilModelBasicTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
+                {
+                    ReadInStreamHeaders headers = client.ReadInStreamWithHttpMessagesAsync(stream, modelVersion: "2021-04-12", readingOrder: "basic").Result.Headers;
 
                     Assert.NotNull(headers.OperationLocation);
 
