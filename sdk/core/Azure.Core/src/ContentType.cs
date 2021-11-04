@@ -8,22 +8,22 @@ namespace Azure.Core
     /// <summary>
     /// Represents content type.
     /// </summary>
-    internal readonly struct ContentType : IEquatable<ContentType>, IEquatable<string>
+    public readonly struct ContentType : IEquatable<ContentType>, IEquatable<string>
     {
         private readonly string _contentType;
 
         /// <summary>
-        /// application/json.
+        /// application/json
         /// </summary>
         public static ContentType ApplicationJson { get; } = new ContentType("application/json");
 
         /// <summary>
-        /// application/json.
+        /// application/json
         /// </summary>
         public static ContentType ApplicationOctetStream { get; } = new ContentType("application/octet-stream");
 
         /// <summary>
-        /// application/json.
+        /// application/json
         /// </summary>
         public static ContentType TextPlain { get; } = new ContentType("text/plain");
 
@@ -51,7 +51,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
-        public bool Equals(string other)
+        public bool Equals(string? other)
             => string.Equals(_contentType, _contentType, StringComparison.Ordinal);
 
         /// <inheritdoc />
