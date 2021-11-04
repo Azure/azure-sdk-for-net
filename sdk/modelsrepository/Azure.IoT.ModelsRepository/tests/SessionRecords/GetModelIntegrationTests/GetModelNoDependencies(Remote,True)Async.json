@@ -4,12 +4,12 @@
       "RequestUri": "https://devicemodels.azure.com/metadata.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-e5b592e6ef0ea34f8a694417c3b2da9d-46cd1ae9db1fc642-00",
+        "traceparent": "00-e4a6eb17e6e590419ba960e85512a77f-68a01927aaeaa743-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211103.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "c3d6e9f079104d6a806ce2e28928b2c7",
+        "x-ms-client-request-id": "9eb0319f97c4609288b7e76f32b45f28",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,21 +19,22 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "11",
+        "Age": "8",
         "Cache-Control": "max-age=600",
         "Content-Length": "253",
         "Content-MD5": "/UQmDZsQJzeHPV71jiPiVQ==",
         "Content-Type": "application/json",
-        "Date": "Wed, 03 Nov 2021 23:47:07 GMT",
+        "Date": "Thu, 04 Nov 2021 00:17:03 GMT",
         "ETag": "\u00220x8D99F209C28D31F\u0022",
-        "Expires": "Wed, 03 Nov 2021 23:57:07 GMT",
+        "Expires": "Thu, 04 Nov 2021 00:27:03 GMT",
         "Last-Modified": "Wed, 03 Nov 2021 23:21:05 GMT",
         "Server": [
           "ECAcc",
           "(sed/E12A)"
         ],
         "X-Cache": "HIT",
-        "x-ms-request-id": "49c4c455-f01e-0061-1a0d-d1f1ab000000",
+        "x-ms-error-code": "ConditionNotMet",
+        "x-ms-request-id": "781aff15-e01e-00a8-5511-d106fc000000",
         "x-ms-version": "2018-03-28"
       },
       "ResponseBody": [
@@ -53,12 +54,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/com/example/thermostat-1.expanded.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-e5b592e6ef0ea34f8a694417c3b2da9d-9471f29205196f48-00",
+        "traceparent": "00-e4a6eb17e6e590419ba960e85512a77f-35c4a87baba83241-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211103.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "e657f7e77eac22dfa19bae2d3c4dccee",
+        "x-ms-client-request-id": "bbf686fbc22d216603ee236e47953f61",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -68,11 +69,11 @@
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Expose-Headers": "*",
-        "Age": "537643",
+        "Age": "539439",
         "Content-Length": "2651",
         "Content-MD5": "pH51cS5\u002Bu5tWh2Krmys7qA==",
         "Content-Type": "application/json",
-        "Date": "Wed, 03 Nov 2021 23:47:07 GMT",
+        "Date": "Thu, 04 Nov 2021 00:17:03 GMT",
         "ETag": "\u00220x8D8FED94ECA13B6\u0022",
         "Last-Modified": "Wed, 14 Apr 2021 00:07:35 GMT",
         "Server": [
@@ -182,12 +183,12 @@
       "RequestUri": "https://devicemodels.azure.com/dtmi/azure/devicemanagement/deviceinformation-1.expanded.json",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-748789154ac2ce4da20039c37de0e403-be415688706fe547-00",
+        "traceparent": "00-8344e368fa9eec4c899934f8b556b0b0-03bc31f862bef04d-00",
         "User-Agent": [
           "azsdk-net-IoT.ModelsRepository/1.0.0-alpha.20211103.1",
           "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "c45a4344b8fc87e436b13fca82c48697",
+        "x-ms-client-request-id": "ebc2d15b3a6f64fb8356179dfe174286",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -198,11 +199,11 @@
         "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "*",
-        "Age": "100250",
+        "Age": "102047",
         "Content-Length": "2218",
         "Content-MD5": "Vw1WdSQoTBOhmiB9XXUwsw==",
         "Content-Type": "application/json",
-        "Date": "Wed, 03 Nov 2021 23:47:07 GMT",
+        "Date": "Thu, 04 Nov 2021 00:17:04 GMT",
         "ETag": "\u00220x8D8FED95F570217\u0022",
         "Last-Modified": "Wed, 14 Apr 2021 00:08:03 GMT",
         "Server": [
@@ -285,6 +286,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1371432912"
+    "RandomSeed": "834254417"
   }
 }

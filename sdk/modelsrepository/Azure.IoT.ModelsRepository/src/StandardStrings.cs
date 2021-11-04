@@ -15,6 +15,6 @@ namespace Azure.IoT.ModelsRepository
         public const string ErrorFetchingModelContent = "Model file \"{0}\" not found or not accessible in target repository.";
         public const string FailureProcessingRepositoryMetadata = "Unable to fetch or process repository metadata file.";
         public const string IncorrectDtmi =
-            "Fetched model has an incorrect DTMI . Expected \"{0}\", parsed \"{1}\".";
+            "Fetched model has an incorrect DTMI. Expected \"{0}\", parsed \"{1}\".";
     }
 }
