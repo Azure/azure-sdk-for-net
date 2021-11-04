@@ -102,7 +102,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public void GetMetrics_ReturnsExpectedResult()
         {
-            // Unable to test QueueTime because of restrictions on creating Message objects
+            var utcNow = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(10));
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(enqueuedTime: utcNow);
 
             // Test base case
             var metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 0, 0, 0, false);
@@ -113,19 +115,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Test messages on main queue
-            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 10, 0, 0, false);
+            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(message, 10, 0, 0, false);
 
             Assert.AreEqual(0, metrics.PartitionCount);
             Assert.AreEqual(10, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Test listening on dead letter queue
-            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(null, 10, 100, 0, true);
+            metrics = ServiceBusScaleMonitor.CreateTriggerMetrics(message, 10, 100, 0, true);
 
             Assert.AreEqual(0, metrics.PartitionCount);
             Assert.AreEqual(100, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
+            Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(10)));
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Test partitions
