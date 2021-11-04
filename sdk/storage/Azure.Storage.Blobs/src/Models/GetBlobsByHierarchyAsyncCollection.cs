@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -67,7 +68,8 @@ namespace Azure.Storage.Blobs.Models
             }
 
             List<BlobHierarchyItem> items = new List<BlobHierarchyItem>();
-            items.AddRange(response.Value.Segment.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
+
+            items.AddRange(response.Value.Segment.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name.ToBlobNameString(), null)));
             items.AddRange(response.Value.Segment.BlobItems.Select(b => new BlobHierarchyItem(null, b.ToBlobItem())));
             return Page<BlobHierarchyItem>.FromValues(
                 items.ToArray(),
