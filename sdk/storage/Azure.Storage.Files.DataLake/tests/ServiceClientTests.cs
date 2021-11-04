@@ -321,7 +321,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync(states: FileSystemStates.System).ToListAsync();
-            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "$logs").FirstOrDefault();
+            FileSystemItem webFileSystemItem = fileSystems.Where(r => r.Name == "web").FirstOrDefault();
 
             // Assert
             Assert.IsTrue(fileSystems.Count > 0);
