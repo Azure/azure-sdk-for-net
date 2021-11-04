@@ -8,14 +8,24 @@ steps:
 
   # windows has a startup bug where the service is unavailable. See Azure/azure-sdk-tools#2122
   - pwsh: |
-        try {
-          docker info
-        }
-        catch {
-          Write-Host "Unable to access docker service, dumping error and restarting."
-          Write-Host $_
-          Get-Service docker | Restart-Service
-        }
+      docker info
+
+      # if info failed, we need to restart the service and start docker desktop
+      if($LASTEXITCODE -ne 0)
+      {
+        # Ensure the service is running
+        Get-Service com.docker.service | Restart-Service
+
+        # Start docker desktop
+        $dockerExeLocation = (Get-Command docker).Source
+
+        # on windows, docker.exe is shipped here:
+        # C:\Program Files\Docker\Docker\resources\bin\docker.exe
+        # Docker desktop lives in the same base path, just up a couple levels:
+        # C:\Program Files\Docker\Docker\Docker Desktop.exe
+        $dockerDesktopLocation = Resolve-Path (Join-Path -Path $dockerExeLocation -ChildPath "../../../Docker Desktop.exe")
+        &$dockerDesktopLocation
+      }
     condition: and(succeededOrFailed(), eq(variables['Agent.OS'],'Windows_NT'))
 
   - pwsh: |
