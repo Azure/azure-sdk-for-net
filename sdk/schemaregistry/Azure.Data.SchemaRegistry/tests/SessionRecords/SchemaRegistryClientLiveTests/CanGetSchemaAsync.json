@@ -7,8 +7,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
-        "Content-Type": "application/json; serialization=avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "Content-Type": "application/json; serialization=Avro",
+        "User-Agent": [
+          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211105.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
+        ],
         "x-ms-client-request-id": "23519c599ecca90a5a65530717191100",
         "x-ms-return-client-request-id": "true"
       },
@@ -16,8 +19,8 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 05 Nov 2021 21:18:46 GMT",
-        "Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test1/versions/1?api-version=2021-10",
+        "Date": "Fri, 05 Nov 2021 22:52:40 GMT",
+        "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test1/versions/1?api-version=2021-10",
         "Schema-Group-Name": "azsdk_net_test_group",
         "Schema-Id": "f325f86032d44c81bd2916c1a60fb95f",
         "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/f325f86032d44c81bd2916c1a60fb95f?api-version=2021-10",
@@ -33,18 +36,21 @@
       "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/$schemas/f325f86032d44c81bd2916c1a60fb95f?api-version=2021-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json; serialization=avro",
+        "Accept": "application/json; serialization=Avro",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211105.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": [
+          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20211105.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
+        ],
         "x-ms-client-request-id": "fa78deb88eafe71485ee6b337d7d6b2d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application/json;serialization=Avro",
-        "Date": "Fri, 05 Nov 2021 21:18:46 GMT",
-        "Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test1/versions/1?api-version=2021-10",
+        "Content-Type": "application/json; serialization=Avro",
+        "Date": "Fri, 05 Nov 2021 22:52:40 GMT",
+        "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test1/versions/1?api-version=2021-10",
         "Schema-Group-Name": "azsdk_net_test_group",
         "Schema-Id": "f325f86032d44c81bd2916c1a60fb95f",
         "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/f325f86032d44c81bd2916c1a60fb95f?api-version=2021-10",

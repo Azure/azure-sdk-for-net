@@ -50,7 +50,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=avro");
+            request.Headers.Add("Accept", "application/json; serialization=Avro");
             return message;
         }
 
@@ -205,7 +205,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json; serialization=avro");
+            request.Headers.Add("Content-Type", "application/json; serialization=Avro");
             request.Content = RequestContent.Create(schemaContent);
             return message;
         }
@@ -293,7 +293,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json; serialization=avro");
+            request.Headers.Add("Content-Type", "application/json; serialization=Avro");
             request.Content = RequestContent.Create(schemaContent);
             return message;
         }
