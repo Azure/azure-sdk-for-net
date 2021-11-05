@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </param>
         /// <param name="port"> The TCP port that the HBase instance uses to listen for client connections. The default value is 9090. </param>
         /// <param name="httpPath"> The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version). </param>

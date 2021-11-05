@@ -11,6 +11,11 @@ namespace Azure.Storage.Sas
     /// </summary>
     internal class SasQueryParametersInternals : SasQueryParameters
     {
+        /// <summary>
+        /// Settable internal property to allow different versions in test.
+        /// </summary>
+        internal static string DefaultSasVersionInternal { get; set; } = DefaultSasVersion;
+
         internal static new SasQueryParameters Create(IDictionary<string, string> values) =>
             SasQueryParameters.Create(values);
 
@@ -34,7 +39,8 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            int? directoryDepth = default) =>
+            int? directoryDepth = default,
+            string encryptionScope = default) =>
             SasQueryParameters.Create(
                 version: version,
                 services: services,
@@ -55,6 +61,7 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: authorizedAadObjectId,
                 unauthorizedAadObjectId: unauthorizedAadObjectId,
                 correlationId: correlationId,
-                directoryDepth: directoryDepth);
+                directoryDepth: directoryDepth,
+                encryptionScope: encryptionScope);
     }
 }

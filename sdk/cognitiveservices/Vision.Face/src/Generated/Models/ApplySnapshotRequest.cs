@@ -78,6 +78,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ObjectId");
             }
+            if (ObjectId != null)
+            {
+                if (ObjectId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ObjectId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(ObjectId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "ObjectId", "^[a-z0-9-_]+$");
+                }
+            }
         }
     }
 }

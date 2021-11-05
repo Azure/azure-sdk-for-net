@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The response to a list percentile metrics request. </summary>
-    public partial class PercentileMetricListResult
+    internal partial class PercentileMetricListResult
     {
         /// <summary> Initializes a new instance of PercentileMetricListResult. </summary>
         internal PercentileMetricListResult()

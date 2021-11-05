@@ -74,8 +74,8 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
-                EncryptionData = result.encryptionData
+                EncryptedMessageText = Convert.ToBase64String(result.Ciphertext),
+                EncryptionData = result.EncryptionData
             };
 
             var serializedMessage = EncryptedMessageSerializer.Serialize(encryptedMessage);
@@ -96,8 +96,8 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
-                EncryptionData = result.encryptionData
+                EncryptedMessageText = Convert.ToBase64String(result.Ciphertext),
+                EncryptionData = result.EncryptionData
             };
             var serializedMessage = EncryptedMessageSerializer.Serialize(encryptedMessage);
 
@@ -119,8 +119,8 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
-                EncryptionData = result.encryptionData
+                EncryptedMessageText = Convert.ToBase64String(result.Ciphertext),
+                EncryptionData = result.EncryptionData
             };
             var serializedMessage = EncryptedMessageSerializer.Serialize(encryptedMessage);
 

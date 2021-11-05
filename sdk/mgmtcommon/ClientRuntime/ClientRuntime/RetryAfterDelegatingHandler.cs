@@ -43,6 +43,11 @@ namespace Microsoft.Rest
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of retry attempts before giving up.
+        /// </summary>
+        public int MaxRetries { get; set; } = int.MaxValue;
+
+        /// <summary>
         /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
         /// operation. Retries request if a 429 is returned and there is a retry-after header.
         /// </summary>
@@ -53,16 +58,20 @@ namespace Microsoft.Rest
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            int attempts = 0;
             HttpResponseMessage previousResponseMessage = null;
             do {
                 HttpResponseMessage response = null;
 
                 try
                 {
+                    attempts++;
                     response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
                     // if they send back a 429 and there is a retry-after header
-                    if (response.StatusCode == (HttpStatusCode)429 && response.Headers.Contains("Retry-After"))
+                    if (attempts < MaxRetries &&
+                        response.StatusCode == (HttpStatusCode)429 &&
+                        response.Headers.Contains("Retry-After"))
                     {
                         try
                         {

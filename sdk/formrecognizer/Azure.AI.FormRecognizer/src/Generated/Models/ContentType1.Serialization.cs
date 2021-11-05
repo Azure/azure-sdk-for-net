@@ -7,12 +7,13 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     internal static partial class ContentType1Extensions
     {
         public static string ToSerialString(this ContentType1 value) => value switch
         {
+            ContentType1.ApplicationOctetStream => "application/octet-stream",
             ContentType1.ApplicationPdf => "application/pdf",
             ContentType1.ImageBmp => "image/bmp",
             ContentType1.ImageJpeg => "image/jpeg",
@@ -23,6 +24,7 @@ namespace Azure.AI.FormRecognizer
 
         public static ContentType1 ToContentType1(this string value)
         {
+            if (string.Equals(value, "application/octet-stream", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationOctetStream;
             if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ApplicationPdf;
             if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageBmp;
             if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType1.ImageJpeg;

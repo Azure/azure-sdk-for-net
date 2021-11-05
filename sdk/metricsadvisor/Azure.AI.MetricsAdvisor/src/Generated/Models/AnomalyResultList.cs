@@ -15,34 +15,30 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AnomalyResultList
     {
         /// <summary> Initializes a new instance of AnomalyResultList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        internal AnomalyResultList(string nextLink, IEnumerable<DataPointAnomaly> value)
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AnomalyResultList(IEnumerable<DataPointAnomaly> value)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            NextLink = nextLink;
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of AnomalyResultList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal AnomalyResultList(string nextLink, IReadOnlyList<DataPointAnomaly> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<DataPointAnomaly> Value { get; }
     }
 }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class VirtualClustersUpdateOperation : Operation<VirtualCluster>, IOperationSource<VirtualCluster>
     {
         private readonly ArmOperationHelpers<VirtualCluster> _operation;
+
+        /// <summary> Initializes a new instance of VirtualClustersUpdateOperation for mocking. </summary>
+        protected VirtualClustersUpdateOperation()
+        {
+        }
+
         internal VirtualClustersUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualCluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualClustersUpdateOperation");

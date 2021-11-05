@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(IntegrationRuntimeListResponseConverter))]
     public partial class IntegrationRuntimeListResponse
     {
         internal static IntegrationRuntimeListResponse DeserializeIntegrationRuntimeListResponse(JsonElement element)
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new IntegrationRuntimeListResponse(value, nextLink.Value);
+        }
+
+        internal partial class IntegrationRuntimeListResponseConverter : JsonConverter<IntegrationRuntimeListResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, IntegrationRuntimeListResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override IntegrationRuntimeListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIntegrationRuntimeListResponse(document.RootElement);
+            }
         }
     }
 }

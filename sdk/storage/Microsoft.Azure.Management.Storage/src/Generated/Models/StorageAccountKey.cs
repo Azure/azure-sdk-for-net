@@ -33,11 +33,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="value">Base 64-encoded value of the key.</param>
         /// <param name="permissions">Permissions for the key -- read-only or
         /// full permissions. Possible values include: 'Read', 'Full'</param>
-        public StorageAccountKey(string keyName = default(string), string value = default(string), KeyPermission? permissions = default(KeyPermission?))
+        /// <param name="creationTime">Creation time of the key, in round trip
+        /// date format.</param>
+        public StorageAccountKey(string keyName = default(string), string value = default(string), KeyPermission? permissions = default(KeyPermission?), System.DateTime? creationTime = default(System.DateTime?))
         {
             KeyName = keyName;
             Value = value;
             Permissions = permissions;
+            CreationTime = creationTime;
             CustomInit();
         }
 
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
         public KeyPermission? Permissions { get; private set; }
+
+        /// <summary>
+        /// Gets creation time of the key, in round trip date format.
+        /// </summary>
+        [JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
     }
 }

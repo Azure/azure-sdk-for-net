@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-54b3b29f-8352-185a-e33f-890199e4ae83?restype=container",
@@ -15,14 +15,14 @@
         "x-ms-client-request-id": "a584e05d-2fc3-5ff9-ff9a-3094ff39d51a",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 19:00:53 GMT",
-        "ETag": "\u00220x8D8D3765A0EC9DC\u0022",
+        "ETag": "\"0x8D8D3765A0EC9DC\"",
         "Last-Modified": "Wed, 17 Feb 2021 19:00:54 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "a584e05d-2fc3-5ff9-ff9a-3094ff39d51a",
         "x-ms-request-id": "63a1489f-101e-004a-295f-05794d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
@@ -52,14 +52,14 @@
         "x-ms-client-request-id": "a7ae8b90-a8f8-9300-1dae-618cc80d813e",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 19:00:53 GMT",
-        "ETag": "\u00220x8D8D3765A1A0C03\u0022",
+        "ETag": "\"0x8D8D3765A1A0C03\"",
         "Last-Modified": "Wed, 17 Feb 2021 19:00:54 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -68,7 +68,7 @@
         "x-ms-client-request-id": "a7ae8b90-a8f8-9300-1dae-618cc80d813e",
         "x-ms-request-id": "63a148a3-101e-004a-2b5f-05794d000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-06-12",
+        "x-ms-version": "2021-02-12",
         "x-ms-version-id": "2021-02-17T19:00:54.4183299Z"
       },
       "ResponseBody": []
@@ -88,7 +88,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 19:00:54 GMT",
         "x-ms-range": "bytes=5120-9215",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 416,
@@ -103,12 +103,12 @@
         "x-ms-client-request-id": "525bb2bb-9412-a5c5-5110-9ab0a6330e47",
         "x-ms-error-code": "InvalidRange",
         "x-ms-request-id": "63a148a7-101e-004a-2e5f-05794d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidRange\u003C/Code\u003E\u003CMessage\u003EThe range specified is invalid for the current size of the resource.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidRange</Code><Message>The range specified is invalid for the current size of the resource.\n",
         "RequestId:63a148a7-101e-004a-2e5f-05794d000000\n",
-        "Time:2021-02-17T19:00:54.4776406Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T19:00:54.4776406Z</Message></Error>"
       ]
     },
     {
@@ -125,7 +125,7 @@
         "x-ms-client-request-id": "15d0f871-2fb2-ca2b-ada1-5b83820a3a42",
         "x-ms-date": "Wed, 17 Feb 2021 19:00:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,13 +138,13 @@
         ],
         "x-ms-client-request-id": "15d0f871-2fb2-ca2b-ada1-5b83820a3a42",
         "x-ms-request-id": "63a148ad-101e-004a-335f-05794d000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1011050882",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

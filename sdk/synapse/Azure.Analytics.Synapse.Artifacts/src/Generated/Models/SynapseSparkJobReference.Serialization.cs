@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SynapseSparkJobReferenceConverter))]
     public partial class SynapseSparkJobReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SynapseSparkJobReference(type, referenceName);
+        }
+
+        internal partial class SynapseSparkJobReferenceConverter : JsonConverter<SynapseSparkJobReference>
+        {
+            public override void Write(Utf8JsonWriter writer, SynapseSparkJobReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SynapseSparkJobReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSynapseSparkJobReference(document.RootElement);
+            }
         }
     }
 }

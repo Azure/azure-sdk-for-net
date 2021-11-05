@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         {
             BlobPath path = BlobPath.ParseAndValidate(input);
             var container = _client.GetBlobContainerClient(path.ContainerName);
-            return (await container.GetBlobReferenceFromServerAsync(path.BlobName, cancellationToken).ConfigureAwait(false)).Item1;
+            return (await container.GetBlobReferenceFromServerAsync(path.BlobName, cancellationToken).ConfigureAwait(false)).Client;
         }
     }
 }

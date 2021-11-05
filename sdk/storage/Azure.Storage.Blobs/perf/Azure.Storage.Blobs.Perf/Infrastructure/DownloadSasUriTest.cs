@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Perf.Infrastructure
             await base.GlobalSetupAsync();
 
             using var stream = RandomStream.Create(Options.Size);
-            await _blobClient.UploadAsync(stream);
+            await _blobClient.UploadAsync(stream, overwrite: true);
         }
     }
 }

@@ -6,35 +6,31 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionPiiTasksItem. </summary>
     internal partial class EntityRecognitionPiiTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (resultsInternal == null)
-            {
-                throw new ArgumentNullException(nameof(resultsInternal));
-            }
-
-            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
-            ResultsInternal = resultsInternal;
+            Results = results;
         }
+
+        /// <summary> Gets the results. </summary>
+        public PiiEntitiesResult Results { get; }
     }
 }

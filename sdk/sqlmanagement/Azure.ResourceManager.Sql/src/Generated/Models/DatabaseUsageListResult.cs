@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list database metrics request. </summary>
-    public partial class DatabaseUsageListResult
+    internal partial class DatabaseUsageListResult
     {
         /// <summary> Initializes a new instance of DatabaseUsageListResult. </summary>
         /// <param name="value"> The list of database usages for the database. </param>

@@ -10,7 +10,7 @@ See the this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid
 
 ## Create and Authenticate `EventGridPublisherClient`
 
-If you have not created an `EventGridPublisherClient`, refer to the sample [Publish Events To Topic](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples/Sample1_PublishEventsToTopic.md) for more information on creating and authenticating the client. An example is shown below:
+If you have not created an `EventGridPublisherClient`, refer to the sample [Publish Events To Topic](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/samples/Sample1_PublishEventsToTopic.md) for more information on creating and authenticating the client. An example is shown below:
 ```C# Snippet:CreateDomainClient
 // Create the publisher client using an AzureKeyCredential
 // Domain should be configured to accept events of the Event Grid schema
@@ -44,4 +44,4 @@ await client.SendEventsAsync(eventsList);
 ## Source
 
 To view the full example source, see:
-- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)
+- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

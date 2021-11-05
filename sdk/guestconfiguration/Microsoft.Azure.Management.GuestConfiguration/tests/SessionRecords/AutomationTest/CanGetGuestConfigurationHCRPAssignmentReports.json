@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2020-06-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb21wdXRlL21hY2hpbmVzL1dJTi05REZVSVE3TlAxQi9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sP2FwaS12ZXJzaW9uPTIwMjAtMDYtMjU=",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2021-01-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlaHVhbi1hcmMwMDEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9JYW1QcmV0ZW5kaW5nVG8vcHJvdmlkZXJzL01pY3Jvc29mdC5HdWVzdENvbmZpZ3VyYXRpb24vZ3Vlc3RDb25maWd1cmF0aW9uQXNzaWdubWVudHMvQXVkaXRTZWN1cmVQcm90b2NvbD9hcGktdmVyc2lvbj0yMDIxLTAxLTI1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c82af35-d860-4e70-9bf0-e1b5e2bc1521"
+          "ab7859f3-ddd5-4870-8ba1-43162ccfd50f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.3.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -39,22 +39,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "5e53ec3d-a3d5-4c35-a892-1ee3ca2a79e6"
+          "61218e1f-628e-4943-add0-01aee1149abd"
         ],
         "x-ms-correlation-request-id": [
-          "5e53ec3d-a3d5-4c35-a892-1ee3ca2a79e6"
+          "61218e1f-628e-4943-add0-01aee1149abd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200713T164504Z:5e53ec3d-a3d5-4c35-a892-1ee3ca2a79e6"
+          "WESTUS:20210625T012111Z:61218e1f-628e-4943-add0-01aee1149abd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 13 Jul 2020 16:45:03 GMT"
+          "Fri, 25 Jun 2021 01:21:11 GMT"
         ],
         "Content-Length": [
-          "1044"
+          "1232"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Compliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"parameterHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/451457c6-16ff-4361-8a44-ce5ed193835e\",\r\n    \"lastComplianceStatusChecked\": \"2020-06-05T00:36:29Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"assignmentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationProtectedParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Compliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"parameterHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n    \"lastComplianceStatusChecked\": \"2021-06-25T01:17:25Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"assignmentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationProtectedParameter\": [],\r\n      \"configurationSetting\": {\r\n        \"configurationMode\": \"MonitorOnly\",\r\n        \"allowModuleOverwrite\": false,\r\n        \"actionAfterReboot\": \"\",\r\n        \"refreshFrequencyMins\": 5,\r\n        \"rebootIfNeeded\": true,\r\n        \"configurationModeFrequencyMins\": 15\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceType\": null,\r\n    \"vmssVMList\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports?api-version=2020-06-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb21wdXRlL21hY2hpbmVzL1dJTi05REZVSVE3TlAxQi9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sL3JlcG9ydHM/YXBpLXZlcnNpb249MjAyMC0wNi0yNQ==",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports?api-version=2021-01-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlaHVhbi1hcmMwMDEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9tYWNoaW5lcy9JYW1QcmV0ZW5kaW5nVG8vcHJvdmlkZXJzL01pY3Jvc29mdC5HdWVzdENvbmZpZ3VyYXRpb24vZ3Vlc3RDb25maWd1cmF0aW9uQXNzaWdubWVudHMvQXVkaXRTZWN1cmVQcm90b2NvbC9yZXBvcnRzP2FwaS12ZXJzaW9uPTIwMjEtMDEtMjU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "69930fb4-2a90-482b-8cea-4d56a4c58e23"
+          "24587f96-9be7-47a3-a85a-ca4f323297a8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.3.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -105,22 +105,22 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "0271d1b0-3be2-4e13-9e79-78b428afa323"
+          "55de71fa-3db7-4ddf-9c9e-00fed40163da"
         ],
         "x-ms-correlation-request-id": [
-          "0271d1b0-3be2-4e13-9e79-78b428afa323"
+          "55de71fa-3db7-4ddf-9c9e-00fed40163da"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200713T164504Z:0271d1b0-3be2-4e13-9e79-78b428afa323"
+          "WESTUS:20210625T012112Z:55de71fa-3db7-4ddf-9c9e-00fed40163da"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 13 Jul 2020 16:45:03 GMT"
+          "Fri, 25 Jun 2021 01:21:12 GMT"
         ],
         "Content-Length": [
-          "12"
+          "854"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -129,7 +129,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n      \"name\": \"2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignment\": {\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"configuration\": {\r\n            \"name\": \"AuditSecureProtocol\",\r\n            \"version\": \"1.0.0.3\"\r\n          }\r\n        },\r\n        \"reportId\": \"2edf57af-ddb7-4154-9e3e-9dff80dddbe3\",\r\n        \"vm\": {\r\n          \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/gehuan-arc0010/providers/Microsoft.HybridCompute/machines/IamPretendingTo\",\r\n          \"uuid\": \"e5c6272f-72ae-44c8-8b3a-1ab65469a39e\"\r\n        },\r\n        \"details\": null,\r\n        \"startTime\": \"2021-06-25T01:17:02Z\",\r\n        \"endTime\": \"2021-06-25T01:17:25Z\",\r\n        \"VMSSResourceId\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

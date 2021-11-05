@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of workload groups. </summary>
-    public partial class WorkloadGroupListResult
+    internal partial class WorkloadGroupListResult
     {
         /// <summary> Initializes a new instance of WorkloadGroupListResult. </summary>
         internal WorkloadGroupListResult()

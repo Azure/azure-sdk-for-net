@@ -20,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of DatasetDeflateCompression. </summary>
         /// <param name="type"> Type of dataset compression. </param>
-        /// <param name="additionalProperties"> . </param>
-        /// <param name="level"> The Deflate compression level. </param>
-        internal DatasetDeflateCompression(string type, IDictionary<string, object> additionalProperties, DatasetCompressionLevel? level) : base(type, additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="level"> The Deflate compression level. Type: string (or Expression with resultType string). </param>
+        internal DatasetDeflateCompression(string type, IDictionary<string, object> additionalProperties, object level) : base(type, additionalProperties)
         {
             Level = level;
             Type = type ?? "Deflate";
         }
 
-        /// <summary> The Deflate compression level. </summary>
-        public DatasetCompressionLevel? Level { get; set; }
+        /// <summary> The Deflate compression level. Type: string (or Expression with resultType string). </summary>
+        public object Level { get; set; }
     }
 }

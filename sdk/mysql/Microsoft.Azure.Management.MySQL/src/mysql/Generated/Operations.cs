@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.MySQL
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DBForMySQL/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DBforMySQL/operations").ToString();
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

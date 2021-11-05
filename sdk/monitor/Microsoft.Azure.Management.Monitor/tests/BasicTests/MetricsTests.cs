@@ -73,7 +73,7 @@ namespace Monitor.Tests.BasicTests
                         Id = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/Microsoft.Insights/metrics/CpuTime",
                         Type = "Microsoft.Insights/metrics",
                         Name = new LocalizableString {LocalizedValue = "CPU Time", Value = "CpuTime"},
-                        Unit = Unit.Seconds,
+                        Unit = "Seconds",
                         Timeseries = new List<TimeSeriesElement>
                         {
                             new TimeSeriesElement
@@ -296,7 +296,7 @@ namespace Monitor.Tests.BasicTests
                 Name = new LocalizableString() { LocalizedValue = "CPU Percentage", Value = "CpuPercentage" },
                 PrimaryAggregationType = AggregationType.Average,
                 ResourceId = resourceUri,
-                Unit = Unit.Bytes
+                Unit = "Bytes"
             };
             return metricDefinitions;
         }

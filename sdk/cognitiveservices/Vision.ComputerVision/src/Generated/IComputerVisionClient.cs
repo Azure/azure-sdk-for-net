@@ -106,13 +106,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a description of an image in human
@@ -145,13 +149,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Performs object detection on the specified image.
@@ -164,13 +172,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='url'>
         /// Publicly reachable URL of an image.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DetectResult>> DetectObjectsWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DetectResult>> DetectObjectsWithHttpMessagesAsync(string url, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation returns the list of domain-specific models that are
@@ -214,13 +226,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
         /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Optical Character Recognition (OCR) detects text in an image and
@@ -248,13 +264,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// 'el', 'hu', 'it', 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv',
         /// 'tr', 'ar', 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -281,13 +301,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
         /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a thumbnail image with the user-specified
@@ -318,13 +342,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='smartCropping'>
         /// Boolean flag for enabling smart cropping.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation returns a bounding box around the most important
@@ -340,13 +368,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='url'>
         /// Publicly reachable URL of an image.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation extracts a rich set of visual features based on the
@@ -397,13 +429,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation returns a bounding box around the most important
@@ -419,13 +455,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestInStreamWithHttpMessagesAsync(Stream image, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a description of an image in human
@@ -458,13 +498,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Performs object detection on the specified image.
@@ -477,13 +521,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DetectResult>> DetectObjectsInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DetectResult>> DetectObjectsInStreamWithHttpMessagesAsync(Stream image, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a thumbnail image with the user-specified
@@ -514,13 +562,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='smartCropping'>
         /// Boolean flag for enabling smart cropping.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation recognizes content within an image by applying a
@@ -547,13 +599,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
         /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Optical Character Recognition (OCR) detects text in an image and
@@ -581,13 +637,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// 'el', 'hu', 'it', 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv',
         /// 'tr', 'ar', 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -614,13 +674,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
         /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the AI model. Accepted
+        /// values are: "latest", "2021-04-01". Defaults to "latest".
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Use this interface to get the result of a Read operation, employing
@@ -635,13 +699,29 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text in the document. Currently,
-        /// only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’),
-        /// Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported.
-        /// Read supports auto language identification and multi-language
-        /// documents, so only provide a language code if you would like to
-        /// force the documented to be processed as that specific language.
-        /// Possible values include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'
+        /// The BCP-47 language code of the text in the document. Read supports
+        /// auto language identification and multi-language documents, so only
+        /// provide a language code if you would like to force the document to
+        /// be processed in that specific language. See
+        /// https://aka.ms/ocr-languages for list of supported languages.
+        /// Possible values include: 'af', 'ast', 'bi', 'br', 'ca', 'ceb',
+        /// 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et', 'eu',
+        /// 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl',
+        /// 'gv', 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv',
+        /// 'kaa', 'kac', 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms',
+        /// 'mww', 'nap', 'nl', 'no', 'oc', 'pl', 'pt', 'quc', 'rm', 'sco',
+        /// 'sl', 'sq', 'sv', 'sw', 'tet', 'tr', 'tt', 'uz', 'vo', 'wae',
+        /// 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
+        /// </param>
+        /// <param name='pages'>
+        /// Custom page numbers for multi-page documents(PDF/TIFF), input the
+        /// number of the pages you want to get OCR result. For a range of
+        /// pages, use a hyphen. Separate each page or range with a comma.
+        /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the OCR model used for
+        /// text extraction. Accepted values are: "latest", "latest-preview",
+        /// "2021-04-12". Defaults to "latest".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -649,7 +729,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This interface is used for getting OCR results of Read operation.
@@ -681,13 +761,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// An image stream.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text in the document. Currently,
-        /// only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’),
-        /// Italian (‘it’), Portuguese (‘pt), and Spanish ('es') are supported.
-        /// Read supports auto language identification and multi-language
-        /// documents, so only provide a language code if you would like to
-        /// force the documented to be processed as that specific language.
-        /// Possible values include: 'en', 'es', 'fr', 'de', 'it', 'nl', 'pt'
+        /// The BCP-47 language code of the text in the document. Read supports
+        /// auto language identification and multi-language documents, so only
+        /// provide a language code if you would like to force the document to
+        /// be processed in that specific language. See
+        /// https://aka.ms/ocr-languages for list of supported languages.
+        /// Possible values include: 'af', 'ast', 'bi', 'br', 'ca', 'ceb',
+        /// 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et', 'eu',
+        /// 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl',
+        /// 'gv', 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv',
+        /// 'kaa', 'kac', 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms',
+        /// 'mww', 'nap', 'nl', 'no', 'oc', 'pl', 'pt', 'quc', 'rm', 'sco',
+        /// 'sl', 'sq', 'sv', 'sw', 'tet', 'tr', 'tt', 'uz', 'vo', 'wae',
+        /// 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
+        /// </param>
+        /// <param name='pages'>
+        /// Custom page numbers for multi-page documents(PDF/TIFF), input the
+        /// number of the pages you want to get OCR result. For a range of
+        /// pages, use a hyphen. Separate each page or range with a comma.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -695,7 +786,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

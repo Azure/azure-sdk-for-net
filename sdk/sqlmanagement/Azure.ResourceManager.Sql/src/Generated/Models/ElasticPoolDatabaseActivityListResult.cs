@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a list elastic pool database activity request. </summary>
-    public partial class ElasticPoolDatabaseActivityListResult
+    internal partial class ElasticPoolDatabaseActivityListResult
     {
         /// <summary> Initializes a new instance of ElasticPoolDatabaseActivityListResult. </summary>
         /// <param name="value"> The list of elastic pool database activities. </param>

@@ -33,6 +33,35 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   The set of test cases for exceptions that should be considered the scenario
+        ///   of a partition being stolen from a consumer.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConsumerPartitionStolenExceptionCases()
+        {
+            yield return new[] { new EventHubsException("fake", "Some message", EventHubsException.FailureReason.ConsumerDisconnected) };
+            yield return new[] { new AmqpException(new Error { Condition = AmqpErrorCode.Stolen }) };
+        }
+
+        /// <summary>
+        ///   The set of test cases for exceptions that should be NOT considered the scenario
+        ///   of a partition being stolen from a consumer.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> NotConsumerPartitionStolenExceptionCases()
+        {
+            foreach (var generalException in GeneralExceptionCases())
+            {
+                yield return generalException;
+            }
+
+            yield return new[] { new EventHubsException("fake", "Some message", EventHubsException.FailureReason.ClientClosed) };
+            yield return new[] { new EventHubsException(true, "fake", "Some message", EventHubsException.FailureReason.GeneralError) };
+            yield return new[] { new AmqpException(new Error { Condition = AmqpErrorCode.NotFound }) };
+            yield return new[] { new AmqpException(new Error { Condition = AmqpError.ProducerStolenError }) };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="ExceptionExtensions.TranslateServiceException" />
         ///   method.
         /// </summary>
@@ -218,6 +247,41 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(exception.IsTransient, Is.False, "The translation exception should not allow retries.");
             Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The translated exception should have the correct failure reason.");
             Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.IsConsumerPartitionStolenException" />
+        ///   method.
+        /// </summary
+        ///
+        [Test]
+        [TestCaseSource(nameof(ConsumerPartitionStolenExceptionCases))]
+        public void IsConsumerPartitionStolenExceptionDetectsStolenExceptions(Exception stolenException)
+        {
+            Assert.That(stolenException.IsConsumerPartitionStolenException(), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.IsConsumerPartitionStolenException" />
+        ///   method.
+        /// </summary
+        ///
+        [Test]
+        [TestCaseSource(nameof(NotConsumerPartitionStolenExceptionCases))]
+        public void IsConsumerPartitionStolenExceptionIgnoresGeneralExceptions(Exception generalException)
+        {
+            Assert.That(generalException.IsConsumerPartitionStolenException(), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.IsConsumerPartitionStolenException" />
+        ///   method.
+        /// </summary
+        ///
+        [Test]
+        public void IsConsumerPartitionStolenExceptionIgnoresNullInstances()
+        {
+            Assert.That(((Exception)null).IsConsumerPartitionStolenException(), Is.False);
         }
     }
 }

@@ -159,7 +159,7 @@ namespace Azure.Core.Tests
                             { "Request-Id", new[] { "Non-Random value"}},
                             { "Date", new[] { "Fri, 05 Nov 2020 02:42:26 GMT"} },
                             { "x-ms-date", new[] { "Fri, 05 Nov 2020 02:42:26 GMT"} },
-                            { "x-ms-client-request-id", new[] {"non random requestid"} },
+                            { "x-ms-client-request-id", new[] {"non random request id"} },
                             { "User-Agent", new[] {"non random sdk"} },
                             { "traceparent", new[] { "non random traceparent" } }
                         }
@@ -179,7 +179,7 @@ namespace Azure.Core.Tests
                             { "Request-Id", new[] { "Some Random value"}},
                             { "Date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
                             { "x-ms-date", new[] { "Fri, 06 Nov 2020 02:42:26 GMT"} },
-                            { "x-ms-client-request-id", new[] {"some random requestid"} },
+                            { "x-ms-client-request-id", new[] {"some random request id"} },
                             { "User-Agent", new[] {"some random sdk"} },
                             { "traceparent", new[] {"some random traceparent"} }
                         }
@@ -262,7 +262,7 @@ namespace Azure.Core.Tests
                     {
                         Headers =
                         {
-                            { "x-ms-client-request-id", new[] {"some random requestid"} },
+                            { "x-ms-client-request-id", new[] {"some random request id"} },
                             { "User-Agent", new[] {"some random sdk"} },
                             { "traceparent", new[] {"some random traceparent"} }
                         }
@@ -278,7 +278,7 @@ namespace Azure.Core.Tests
                 "    <Date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
                 "    <x-ms-date> is absent in record, value <Fri, 06 Nov 2020 02:42:26 GMT>" + Environment.NewLine +
                 "    <User-Agent> is absent in request, value <some random sdk>" + Environment.NewLine +
-                "    <x-ms-client-request-id> is absent in request, value <some random requestid>" + Environment.NewLine +
+                "    <x-ms-client-request-id> is absent in request, value <some random request id>" + Environment.NewLine +
                 "Body differences:" + Environment.NewLine,
                 exception.Message);
         }
@@ -376,7 +376,7 @@ namespace Azure.Core.Tests
         public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
         {
             var sanitizer = new RecordedTestSanitizer();
-            sanitizer.JsonPathSanitizers.Add(jsonPath);
+            sanitizer.AddJsonPathSanitizer(jsonPath);
 
             string response = sanitizer.SanitizeTextBody(default, body);
 
@@ -387,8 +387,8 @@ namespace Azure.Core.Tests
         public void RecordingSessionSanitizeTextBodyMultipleValues()
         {
             var sanitizer = new RecordedTestSanitizer();
-            sanitizer.JsonPathSanitizers.Add("$..secret");
-            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+            sanitizer.AddJsonPathSanitizer("$..secret");
+            sanitizer.AddJsonPathSanitizer("$..topSecret");
 
             var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
             var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";

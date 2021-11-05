@@ -44,11 +44,11 @@ namespace Azure.Data.AppConfiguration
         private string _description;
         private string _displayName;
         private bool _isEnabled;
-        private ObservableCollection<FeatureFlagFilter> _clientFilters;
+        private IList<FeatureFlagFilter> _clientFilters;
 
         internal FeatureFlagConfigurationSetting()
         {
-            SetClientFilters();
+            _clientFilters = new List<FeatureFlagFilter>();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null)
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this()
         {
             _isValidValue = true;
             Key = KeyPrefix + featureId;
@@ -66,7 +66,6 @@ namespace Azure.Data.AppConfiguration
             IsEnabled = isEnabled;
             ContentType = FeatureFlagContentType;
             FeatureId = featureId;
-            SetClientFilters();
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace Azure.Data.AppConfiguration
 
         internal override string GetValue()
         {
-            return _originalValue ??= FormatValue();
+            return _isValidValue ? FormatValue() : _originalValue;
         }
 
         private string FormatValue()
@@ -256,7 +255,7 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
 
-                SetClientFilters(newFilters);
+                _clientFilters = newFilters;
             }
             catch (Exception)
             {
@@ -302,7 +301,7 @@ namespace Azure.Data.AppConfiguration
                     {
                         list.Add(ReadParameterValue(item));
                     }
-                    return list.ToArray();
+                    return list;
                 default:
                     throw new NotSupportedException("Not supported value kind " + element.ValueKind);
             }
@@ -368,17 +367,6 @@ namespace Azure.Data.AppConfiguration
             {
                 throw new InvalidOperationException($"The content of the {nameof(Value)} property do not represent a valid feature flag object.");
             }
-        }
-
-        private void SetClientFilters(ObservableCollection<FeatureFlagFilter> newCollection = null)
-        {
-            if (_clientFilters != null)
-            {
-                _clientFilters.CollectionChanged -= OnFiltersCollectionChange;
-            }
-
-            _clientFilters = newCollection ?? new ObservableCollection<FeatureFlagFilter>();
-            _clientFilters.CollectionChanged += OnFiltersCollectionChange;
         }
 
         private void OnFiltersCollectionChange(object sender, NotifyCollectionChangedEventArgs e)

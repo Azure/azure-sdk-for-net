@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
-            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessageBody amqpBody = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(body));
             AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
@@ -63,12 +63,25 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+
+            AmqpMessageBody body = null;
+            if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetValue(out object valueBody))
+            {
+                body = AmqpMessageBody.FromValue(valueBody);
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequenceBody))
+            {
+                body = AmqpMessageBody.FromSequence(sequenceBody);
+            }
+            else
             {
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(dataBody);
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -140,7 +153,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(value));
             }
         }
 
@@ -288,13 +301,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get
-            {
-                return AmqpMessage.Properties.CorrelationId.ToString();
-            }
+            get => AmqpMessage.Properties.CorrelationId?.ToString();
             set
             {
-                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
+                AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
 
@@ -326,13 +336,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get
-            {
-                return AmqpMessage.Properties.To.ToString();
-            }
+            get => AmqpMessage.Properties.To?.ToString();
             set
             {
-                AmqpMessage.Properties.To = new AmqpAddress(value);
+                AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
 
@@ -364,13 +371,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get
-            {
-                return AmqpMessage.Properties.ReplyTo.ToString();
-            }
+            get => AmqpMessage.Properties.ReplyTo?.ToString();
             set
             {
-                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
+                AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
 

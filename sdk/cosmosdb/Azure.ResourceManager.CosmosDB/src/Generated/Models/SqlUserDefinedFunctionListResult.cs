@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the userDefinedFunctions and their properties. </summary>
-    public partial class SqlUserDefinedFunctionListResult
+    internal partial class SqlUserDefinedFunctionListResult
     {
         /// <summary> Initializes a new instance of SqlUserDefinedFunctionListResult. </summary>
         internal SqlUserDefinedFunctionListResult()

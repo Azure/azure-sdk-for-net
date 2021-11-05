@@ -9,14 +9,16 @@ namespace Azure.Communication.Sms.Tests
     {
         public SmsClientRecordedTestSanitizer()
         {
-            JsonPathSanitizers.Add("$..from");
-            JsonPathSanitizers.Add("$..to");
+            AddJsonPathSanitizer("$..from");
+            AddJsonPathSanitizer("$..to");
+            AddJsonPathSanitizer("$..repeatabilityRequestId");
+            AddJsonPathSanitizer("$..repeatabilityFirstSent");
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
             => variableName switch
             {
-                SmsClientTestEnvironment.PhoneNumberEnvironmentVariableName => "+18005555555",
+                SmsClientTestEnvironment.AzurePhoneNumber => "+14255550123",
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
     }

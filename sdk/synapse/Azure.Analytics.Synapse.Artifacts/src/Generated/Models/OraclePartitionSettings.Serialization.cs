@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(OraclePartitionSettingsConverter))]
     public partial class OraclePartitionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -88,6 +91,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new OraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+        }
+
+        internal partial class OraclePartitionSettingsConverter : JsonConverter<OraclePartitionSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, OraclePartitionSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override OraclePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeOraclePartitionSettings(document.RootElement);
+            }
         }
     }
 }

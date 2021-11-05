@@ -14,6 +14,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -193,7 +194,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -252,7 +253,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -308,7 +309,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(), options)
+            : this(blobContainerUri, credential.AsPolicy(options), options)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
         }
@@ -340,7 +341,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: null,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -409,24 +410,19 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
+                    clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     encryptionScope: null),
                 clientSideEncryption: null);
         }
 
-        private ContainerRestClient BuildContainerRestClient(Uri uri)
+        private ContainerRestClient BuildContainerRestClient(Uri containerUri)
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(uri);
-            string containerName = uriBuilder.BlobContainerName;
-            uriBuilder.BlobContainerName = null;
-
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToString(),
-                containerName: containerName,
+                url: containerUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctor
@@ -1462,6 +1458,14 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Delete)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlobContainerClient.Delete),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1738,6 +1742,16 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetProperties)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.GetProperties),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -1900,15 +1914,14 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfUnmodifiedSince != default ||
-                        conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(
-                            nameof(RequestConditions.IfUnmodifiedSince),
-                            nameof(RequestConditions.IfMatch),
-                            nameof(RequestConditions.IfNoneMatch));
-                    }
+                    conditions.ValidateConditionsNotPresent(
+                        invalidConditions:
+                            BlobRequestConditionProperty.TagConditions
+                            | BlobRequestConditionProperty.IfMatch
+                            | BlobRequestConditionProperty.IfNoneMatch
+                            | BlobRequestConditionProperty.IfUnmodifiedSince,
+                        operationName: nameof(BlobContainerClient.SetMetadata),
+                        parameterName: nameof(conditions));
 
                     ResponseWithHeaders<ContainerSetMetadataHeaders> response;
 
@@ -2060,6 +2073,16 @@ namespace Azure.Storage.Blobs
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.GetAccessPolicy),
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -2271,6 +2294,14 @@ namespace Azure.Storage.Blobs
                     $"{nameof(accessType)}: {accessType}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}");
+
+                conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.TagConditions
+                    | BlobRequestConditionProperty.IfMatch
+                    | BlobRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(BlobContainerClient.SetAccessPolicy),
+                parameterName: nameof(conditions));
 
                 try
                 {
@@ -2530,7 +2561,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
@@ -2806,7 +2838,8 @@ namespace Azure.Storage.Blobs
                             r.Properties,
                             metadata: null,
                             r.BlobTags,
-                            r.ObjectReplicationMetadata))
+                            r.HasVersionsOnly,
+                            r.OrMetadata))
                             .ToList();
                     }
 
@@ -2831,7 +2864,7 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// The <see cref="UploadBlob(string, Stream, CancellationToken)"/> operation creates a new block
         /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -2873,7 +2906,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
+        /// The <see cref="UploadBlobAsync(string, Stream, CancellationToken)"/> operation creates a new block
         /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -2908,6 +2941,91 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             Stream content,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .UploadAsync(
+                    content,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadBlob(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<BlobContentInfo> UploadBlob(
+            string blobName,
+            BinaryData content,
+            CancellationToken cancellationToken = default) =>
+            GetBlobClient(blobName)
+                .Upload(
+                    content,
+                    cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadBlobAsync(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+            string blobName,
+            BinaryData content,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName)
                 .UploadAsync(
@@ -3204,6 +3322,16 @@ namespace Azure.Storage.Blobs
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(Rename)}");
 
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince,
+                    operationName: nameof(BlobContainerClient.Rename),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -3311,6 +3439,13 @@ namespace Azure.Storage.Blobs
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ContainerName if it is null.
+            builder.BlobContainerName ??= Name;
+
             if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -3327,7 +3462,7 @@ namespace Azure.Storage.Blobs
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

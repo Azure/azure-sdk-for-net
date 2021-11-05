@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.SignalR
         public SignalRManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// List resource usage quotas by location.
         /// </summary>
         /// <param name='location'>
         /// the location like "eastus"
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// List resource usage quotas by location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

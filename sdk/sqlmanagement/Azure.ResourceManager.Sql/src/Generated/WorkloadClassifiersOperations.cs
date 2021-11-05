@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal WorkloadClassifiersRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of WorkloadClassifiersOperations for mocking. </summary>
         protected WorkloadClassifiersOperations()
         {
         }
+
         /// <summary> Initializes a new instance of WorkloadClassifiersOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

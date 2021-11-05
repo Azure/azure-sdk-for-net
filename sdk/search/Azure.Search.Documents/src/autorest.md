@@ -13,8 +13,10 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4e3ae66b8b25c53be84bb0c35c3d6d43291f7a40/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
 ## Release hacks
@@ -31,6 +33,13 @@ These should eventually be fixed in the code generator.
 
 ## Swagger hacks
 These should eventually be fixed in the swagger files.
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.LexicalNormalizer
+  transform: >
+    $["discriminator"] = "@odata.type";
+```
 
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
@@ -44,7 +53,7 @@ directive:
     }
 ```
 
-### Make Loookup Document behave a little friendlier
+### Make Lookup Document behave a little friendlier
 It's currently an empty object and adding Additional Properties will generate
 a more useful model.
 ``` yaml
@@ -191,6 +200,7 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+    $.properties.statusDetail["x-nullable"] = true;
 ```
 
 ``` yaml

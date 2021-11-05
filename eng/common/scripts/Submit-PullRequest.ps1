@@ -21,6 +21,19 @@ The title of the pull request.
 The body message for the pull request. 
 .PARAMETER PRLabels
 The labels added to the PRs. Multple labels seperated by comma, e.g "bug, service"
+.PARAMETER UserReviewers
+User reviewers to request after opening the PR. Users should be a comma-
+separated list with no preceeding `@` symbol (e.g. "user1,usertwo,user3")
+.PARAMETER TeamReviewers
+List of github teams to add as reviewers
+.PARAMETER Assignees
+Users to assign to the PR after opening. Users should be a comma-separated list
+with no preceeding `@` symbol (e.g. "user1,usertwo,user3")
+.PARAMETER CloseAfterOpenForTesting
+Close the PR after opening to save on CI resources and prevent alerts to code
+owners, assignees, requested reviewers, or others.
+.PARAMETER OpenAsDraft
+Opens the PR as a draft
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -56,7 +69,9 @@ param(
 
   [string]$Assignees,
 
-  [boolean]$CloseAfterOpenForTesting=$false
+  [boolean]$CloseAfterOpenForTesting=$false,
+
+  [boolean]$OpenAsDraft=$false
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -79,19 +94,33 @@ if ($resp.Count -gt 0) {
 }
 else {
   try {
-    $resp = New-GitHubPullRequest -RepoOwner $RepoOwner -RepoName $RepoName -Title $PRTitle `
-    -Head "${PROwner}:${PRBranch}" -Base $BaseBranch -Body $PRBody -Maintainer_Can_Modify $true `
-    -AuthToken $AuthToken
+    $resp = New-GitHubPullRequest `
+      -RepoOwner $RepoOwner `
+      -RepoName $RepoName `
+      -Title $PRTitle `
+      -Head "${PROwner}:${PRBranch}" `
+      -Base $BaseBranch `
+      -Body $PRBody `
+      -Maintainer_Can_Modify $true `
+      -Draft:$OpenAsDraft `
+      -AuthToken $AuthToken
 
     $resp | Write-Verbose
     LogDebug "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
   
+    $prOwnerUser = $resp.user.login
+
     # setting variable to reference the pull request by number
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 
-    if ($UserReviewers -or $TeamReviewers) {
+    # ensure that the user that was used to create the PR is not attempted to add as a reviewer
+    # we cast to an array to ensure that length-1 arrays actually stay as array values
+    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+    $cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+
+    if ($cleanedUsers -or $cleanedTeamReviewers) {
       Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
-      -Users $UserReviewers -Teams $TeamReviewers -AuthToken $AuthToken
+      -Users $cleanedUsers -Teams $cleanedTeamReviewers -AuthToken $AuthToken
     }
 
     if ($CloseAfterOpenForTesting) {

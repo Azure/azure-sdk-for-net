@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SsisChildPackageConverter))]
     public partial class SsisChildPackage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -62,6 +65,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value);
+        }
+
+        internal partial class SsisChildPackageConverter : JsonConverter<SsisChildPackage>
+        {
+            public override void Write(Utf8JsonWriter writer, SsisChildPackage model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SsisChildPackage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSsisChildPackage(document.RootElement);
+            }
         }
     }
 }

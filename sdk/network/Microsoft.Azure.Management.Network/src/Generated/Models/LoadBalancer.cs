@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// balancer. Inbound NAT rules are created automatically for each NIC
         /// associated with the Load Balancer using an external port from this
         /// range. Defining an Inbound NAT pool on your Load Balancer is
-        /// mutually exclusive with defining inbound Nat rules. Inbound NAT
+        /// mutually exclusive with defining inbound NAT rules. Inbound NAT
         /// pools are referenced from virtual machine scale sets. NICs that are
         /// associated with individual virtual machines cannot reference an
         /// inbound NAT pool. They have to reference individual inbound NAT
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Inbound NAT rules are created automatically for each NIC associated
         /// with the Load Balancer using an external port from this range.
         /// Defining an Inbound NAT pool on your Load Balancer is mutually
-        /// exclusive with defining inbound Nat rules. Inbound NAT pools are
+        /// exclusive with defining inbound NAT rules. Inbound NAT pools are
         /// referenced from virtual machine scale sets. NICs that are
         /// associated with individual virtual machines cannot reference an
         /// inbound NAT pool. They have to reference individual inbound NAT
@@ -190,78 +190,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
-            if (FrontendIPConfigurations != null)
-            {
-                foreach (var element in FrontendIPConfigurations)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (LoadBalancingRules != null)
-            {
-                foreach (var element1 in LoadBalancingRules)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (Probes != null)
-            {
-                foreach (var element2 in Probes)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (InboundNatRules != null)
-            {
-                foreach (var element3 in InboundNatRules)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-            if (InboundNatPools != null)
-            {
-                foreach (var element4 in InboundNatPools)
-                {
-                    if (element4 != null)
-                    {
-                        element4.Validate();
-                    }
-                }
-            }
-            if (OutboundRules != null)
-            {
-                foreach (var element5 in OutboundRules)
-                {
-                    if (element5 != null)
-                    {
-                        element5.Validate();
-                    }
-                }
-            }
-        }
     }
 }

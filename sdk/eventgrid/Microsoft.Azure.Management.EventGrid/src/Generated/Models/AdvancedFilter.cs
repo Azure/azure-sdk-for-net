@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// StringEqualsAdvancedFilter etc. depending on the type of the key based
     /// on which you want to filter.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AdvancedFilter")]
     public partial class AdvancedFilter
     {
         /// <summary>

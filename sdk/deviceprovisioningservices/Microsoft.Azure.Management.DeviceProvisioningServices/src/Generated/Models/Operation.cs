@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// IoT Hub REST API operation.
+    /// Provisioning Service REST API operation.
     /// </summary>
     public partial class Operation
     {

@@ -93,17 +93,37 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Registers a subscription with a resource provider.
+            /// Get the provider permissions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// The namespace of the resource provider to register.
+            /// The namespace of the resource provider.
             /// </param>
-            public static Provider Register(this IProvidersOperations operations, string resourceProviderNamespace)
+            public static ProviderPermissionListResult ProviderPermissions(this IProvidersOperations operations, string resourceProviderNamespace)
             {
-                return operations.RegisterAsync(resourceProviderNamespace).GetAwaiter().GetResult();
+                return operations.ProviderPermissionsAsync(resourceProviderNamespace).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the provider permissions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProviderPermissionListResult> ProviderPermissionsAsync(this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ProviderPermissionsWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -115,12 +135,32 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider to register.
             /// </param>
+            /// <param name='properties'>
+            /// The third party consent for S2S.
+            /// </param>
+            public static Provider Register(this IProvidersOperations operations, string resourceProviderNamespace, ProviderRegistrationRequest properties = default(ProviderRegistrationRequest))
+            {
+                return operations.RegisterAsync(resourceProviderNamespace, properties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Registers a subscription with a resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider to register.
+            /// </param>
+            /// <param name='properties'>
+            /// The third party consent for S2S.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Provider> RegisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Provider> RegisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, ProviderRegistrationRequest properties = default(ProviderRegistrationRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

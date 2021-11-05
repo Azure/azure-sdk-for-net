@@ -4,11 +4,11 @@ Azure Event Hubs is a highly scalable publish-subscribe service that can ingest 
 
 ## Design Overview
 
-This design is focused on the second preview of the track two Event Hubs client library, and limits the scope of discussion to those areas with active development for the second preview. For wider context and more general discussion of the design goals for the track two Event Hubs client, please see the [.NET Event Hubs Client: Track Two Proposal (First Preview)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
+This design is focused on the second preview of the track two Event Hubs client library, and limits the scope of discussion to those areas with active development for the second preview. For wider context and more general discussion of the design goals for the track two Event Hubs client, please see the [.NET Event Hubs Client: Track Two Proposal (First Preview)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
 
 ## Goals for the Second Preview
 
-- Adhere to, and advance, the goals outline in the the [.NET Event Hubs Client: Track Two Proposal (First  Preview)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
+- Adhere to, and advance, the goals outline in the the [.NET Event Hubs Client: Track Two Proposal (First  Preview)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hubs-first-preview.md). 
 
 - Continue to align the public API surface area to the guidance outlined in the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html).
 

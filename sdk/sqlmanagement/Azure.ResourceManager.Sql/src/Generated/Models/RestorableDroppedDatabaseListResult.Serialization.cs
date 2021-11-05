@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RestorableDroppedDatabaseListResult
+    internal partial class RestorableDroppedDatabaseListResult
     {
         internal static RestorableDroppedDatabaseListResult DeserializeRestorableDroppedDatabaseListResult(JsonElement element)
         {

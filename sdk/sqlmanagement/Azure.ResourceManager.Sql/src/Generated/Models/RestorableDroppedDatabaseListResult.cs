@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list restorable dropped databases request. </summary>
-    public partial class RestorableDroppedDatabaseListResult
+    internal partial class RestorableDroppedDatabaseListResult
     {
         /// <summary> Initializes a new instance of RestorableDroppedDatabaseListResult. </summary>
         /// <param name="value"> A list of restorable dropped databases. </param>

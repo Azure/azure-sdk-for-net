@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server encryption protectors. </summary>
-    public partial class EncryptionProtectorListResult
+    internal partial class EncryptionProtectorListResult
     {
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
         internal EncryptionProtectorListResult()

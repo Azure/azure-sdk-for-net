@@ -19,9 +19,9 @@ namespace Azure.DigitalTwins.Core.Tests
 
         // Relationships list operation default max item count is 10. We create 31 to make sure we will get over 3 pages of response.
         // Ideally, service team would let us set max items per page when listing, but that isn't a feature yet
-        private const int bulkRelationshipCount = 31;
+        private const int BulkRelationshipCount = 31;
 
-        private const int defaultRelationshipPageSize = 10;
+        private const int DefaultRelationshipPageSize = 10;
 
         public DigitalTwinRelationshipTests(bool isAsync)
            : base(isAsync)
@@ -140,7 +140,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 AsyncPageable<BasicRelationship> floorRelationships = client.GetRelationshipsAsync<BasicRelationship>(floorTwinId);
 
                 int numberOfFloorRelationships = 0;
-                await foreach (var relationship in floorRelationships)
+                await foreach (BasicRelationship relationship in floorRelationships)
                 {
                     ++numberOfFloorRelationships;
                 }
@@ -154,7 +154,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 containsRelationshipId.Value.Id.Should().Be(floorContainsRoomRelationshipId);
 
                 int numberOfRelationships = 0;
-                await foreach (var relationship in roomTwinRelationships)
+                await foreach (BasicRelationship relationship in roomTwinRelationships)
                 {
                     ++numberOfRelationships;
                 }
@@ -289,7 +289,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string randomPostfix = "-" + GetRandom();
                 string floorToRoomRelationshipPrefix = "FloorToRoomRelationship-";
                 string roomToFloorRelationshipPrefix = "RoomToFloorRelationship-";
-                for (int i = 0; i < bulkRelationshipCount; i++)
+                for (int i = 0; i < BulkRelationshipCount; i++)
                 {
                     var floorContainsRoomRelationshipId = $"{floorToRoomRelationshipPrefix}{i}{randomPostfix}";
 
@@ -303,7 +303,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 }
 
                 // For the sake of test simplicity, we'll just add multiple relationships from the same room to the same floor.
-                for (int i = 0; i < bulkRelationshipCount; i++)
+                for (int i = 0; i < BulkRelationshipCount; i++)
                 {
                     var roomContainedInFloorRelationshipId = $"{roomToFloorRelationshipPrefix}{i}{randomPostfix}";
 
@@ -325,7 +325,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     incomingRelationshipPageCount++;
                     if (incomingRelationshipPage.ContinuationToken != null)
                     {
-                        incomingRelationshipPage.Values.Count.Should().Be(defaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
+                        incomingRelationshipPage.Values.Count.Should().Be(DefaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
                     }
                 }
 
@@ -340,13 +340,13 @@ namespace Azure.DigitalTwins.Core.Tests
                     outgoingRelationshipPageCount++;
                     if (outgoingRelationshipPage.ContinuationToken != null)
                     {
-                        outgoingRelationshipPage.Values.Count.Should().Be(defaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
+                        outgoingRelationshipPage.Values.Count.Should().Be(DefaultRelationshipPageSize, "Unexpected page size for a non-terminal page");
                     }
                 }
 
                 outgoingRelationshipPageCount.Should().BeGreaterThan(1, "Expected more than one page of outgoing relationships");
 
-                for (int i = 0; i < bulkRelationshipCount; i++)
+                for (int i = 0; i < BulkRelationshipCount; i++)
                 {
                     await client.DeleteRelationshipAsync(floorTwinId, $"{floorToRoomRelationshipPrefix}{i}{randomPostfix}").ConfigureAwait(false);
                     await client.DeleteRelationshipAsync(roomTwinId, $"{roomToFloorRelationshipPrefix}{i}{randomPostfix}").ConfigureAwait(false);

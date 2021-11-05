@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 
@@ -20,8 +19,8 @@ namespace Azure.Communication.Chat.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of
@@ -36,7 +35,7 @@ namespace Azure.Communication.Chat.Tests
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
+            return InstrumentClient(new ChatClient(TestEnvironment.LiveTestDynamicEndpoint, communicationTokenCredential,
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 

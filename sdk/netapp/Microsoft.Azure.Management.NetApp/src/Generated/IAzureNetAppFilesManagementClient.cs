@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.NetApp
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Microsoft NetApp Azure Resource Provider specification
+    /// Microsoft NetApp Files Azure Resource Provider specification
     /// </summary>
     public partial interface IAzureNetAppFilesManagementClient : System.IDisposable
     {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.NetApp
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.NetApp
         INetAppResourceOperations NetAppResource { get; }
 
         /// <summary>
+        /// Gets the INetAppResourceQuotaLimitsOperations.
+        /// </summary>
+        INetAppResourceQuotaLimitsOperations NetAppResourceQuotaLimits { get; }
+
+        /// <summary>
         /// Gets the IAccountsOperations.
         /// </summary>
         IAccountsOperations Accounts { get; }
@@ -107,14 +112,14 @@ namespace Microsoft.Azure.Management.NetApp
         ISnapshotPoliciesOperations SnapshotPolicies { get; }
 
         /// <summary>
-        /// Gets the IAccountBackupsOperations.
-        /// </summary>
-        IAccountBackupsOperations AccountBackups { get; }
-
-        /// <summary>
         /// Gets the IBackupsOperations.
         /// </summary>
         IBackupsOperations Backups { get; }
+
+        /// <summary>
+        /// Gets the IAccountBackupsOperations.
+        /// </summary>
+        IAccountBackupsOperations AccountBackups { get; }
 
         /// <summary>
         /// Gets the IBackupPoliciesOperations.

@@ -23,11 +23,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public void CanCreateRulePropertiesFromOptions()
+        public void CanCreateRulePropertiesWithSqlFilterFromOptions()
         {
             var options = new CreateRuleOptions("rule")
             {
                 Filter = new SqlRuleFilter("PROPERTY(@propertyName) = @stringPropertyValue"),
+                Action = new SqlRuleAction("SET a='b'")
+            };
+            var properties = new RuleProperties(options);
+
+            Assert.AreEqual(options, new CreateRuleOptions(properties));
+        }
+
+        [Test]
+        public void CanCreateRulePropertiesWithCorrelationFilterFromOptions()
+        {
+            var options = new CreateRuleOptions("rule")
+            {
+                Filter = new CorrelationRuleFilter
+                {
+                    ApplicationProperties =
+                    {
+                        {"propertyName", "value"}
+                    }
+                },
                 Action = new SqlRuleAction("SET a='b'")
             };
             var properties = new RuleProperties(options);

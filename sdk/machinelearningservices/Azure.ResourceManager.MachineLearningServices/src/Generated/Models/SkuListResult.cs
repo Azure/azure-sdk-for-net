@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> List of skus with features. </summary>
-    public partial class SkuListResult
+    internal partial class SkuListResult
     {
         /// <summary> Initializes a new instance of SkuListResult. </summary>
         internal SkuListResult()

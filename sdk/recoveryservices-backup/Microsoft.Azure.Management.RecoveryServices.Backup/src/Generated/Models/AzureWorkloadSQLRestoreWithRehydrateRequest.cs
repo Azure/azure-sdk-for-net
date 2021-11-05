@@ -44,6 +44,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryMode">Defines whether the current recovery
         /// mode is file restore or database restore. Possible values include:
         /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
+        /// <param name="targetVirtualMachineId">This is the complete ARM Id of
+        /// the target VM
+        /// For e.g.
+        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}</param>
         /// <param name="shouldUseAlternateTargetLocation">Default option set
         /// to true. If this is set to false, alternate data directory must be
         /// provided</param>
@@ -53,8 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// details</param>
         /// <param name="recoveryPointRehydrationInfo">RP Rehydration
         /// Info</param>
-        public AzureWorkloadSQLRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        public AzureWorkloadSQLRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), string targetVirtualMachineId = default(string), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             CustomInit();

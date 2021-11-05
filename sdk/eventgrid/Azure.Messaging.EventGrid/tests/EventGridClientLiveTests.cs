@@ -33,6 +33,90 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [RecordedTest]
+        public void CannotPublishEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
+        public void CannotPublishCloudEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
+        public void CannotPublishCustomEventMissingApiEventsPathFromUri()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            Uri host = new UriBuilder("https", new Uri(TestEnvironment.TopicHost).Host).Uri;
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    host,
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.SendEventAsync(new BinaryData(jsonSerializable: "data")));
+        }
+
+        [RecordedTest]
+        public async Task CanPublishSingleEvent()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+            await client.SendEventAsync(
+                new EventGridEvent(
+                        "Subject",
+                        "Microsoft.MockPublisher.TestEvent",
+                        "1.0",
+                        "hello")
+                {
+                    Id = Recording.Random.NewGuid().ToString(),
+                    EventTime = Recording.Now
+                });
+        }
+
+        [RecordedTest]
+        public async Task CanPublishSingleEventAAD()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    TestEnvironment.Credential,
+                    options));
+            await client.SendEventAsync(
+                new EventGridEvent(
+                    "Subject",
+                    "Microsoft.MockPublisher.TestEvent",
+                    "1.0",
+                    "hello")
+                {
+                    Id = Recording.Random.NewGuid().ToString(),
+                    EventTime = Recording.Now
+                });
+        }
+
+        [RecordedTest]
         public async Task CanPublishEventWithCustomObjectPayload()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -126,6 +210,37 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [RecordedTest]
+        public async Task CanPublishEventToDomainAAD()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.DomainHost),
+                    TestEnvironment.Credential,
+                    options));
+
+            List<EventGridEvent> eventsList = new List<EventGridEvent>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                EventGridEvent newEGEvent = new EventGridEvent(
+                    $"Subject-{i}",
+                    "Microsoft.MockPublisher.TestEvent",
+                    "1.0",
+                    "hello")
+                {
+                    Id = Recording.Random.NewGuid().ToString(),
+                    EventTime = Recording.Now
+                };
+                newEGEvent.Topic = $"Topic-{i}";
+
+                eventsList.Add(newEGEvent);
+            }
+
+            await client.SendEventsAsync(eventsList);
+        }
+
+        [RecordedTest]
         public async Task CanPublishCloudEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -152,6 +267,57 @@ namespace Azure.Messaging.EventGrid.Tests
             }
 
             await client.SendEventsAsync(eventsList);
+        }
+
+        [RecordedTest]
+        public async Task CanPublishCloudEventAAD()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CloudEventTopicHost),
+                    TestEnvironment.Credential,
+                    options));
+
+            List<CloudEvent> eventsList = new List<CloudEvent>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                eventsList.Add(
+                    new CloudEvent(
+                        "record",
+                        "Microsoft.MockPublisher.TestEvent",
+                        null)
+                    {
+                        Id = Recording.Random.NewGuid().ToString(),
+                        Subject = $"Subject-{i}",
+                        Time = Recording.Now
+                    });
+            }
+
+            await client.SendEventsAsync(eventsList);
+        }
+
+        [RecordedTest]
+        public async Task CanPublishSingleCloudEvent()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CloudEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CloudEventTopicKey),
+                    options));
+
+            await client.SendEventAsync(
+                new CloudEvent(
+                        "record",
+                        "Microsoft.MockPublisher.TestEvent",
+                        null)
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Subject = "Subject",
+                Time = Recording.Now
+            });
         }
 
         [RecordedTest]
@@ -365,6 +531,27 @@ namespace Azure.Messaging.EventGrid.Tests
                     new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
                     options));
             await client.SendEventsAsync(GetCustomEventsList());
+        }
+
+        [RecordedTest]
+        public async Task CanPublishSingleCustomEvent()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CustomEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CustomEventTopicKey),
+                    options));
+            await client.SendEventAsync(
+                new BinaryData(new TestEvent()
+            {
+                DataVersion = "1.0",
+                EventTime = Recording.Now,
+                EventType = "Microsoft.MockPublisher.TestEvent",
+                Id = Recording.Random.NewGuid().ToString(),
+                Subject = "Subject",
+                Topic = "Topic"
+            }));
         }
 
         [RecordedTest]

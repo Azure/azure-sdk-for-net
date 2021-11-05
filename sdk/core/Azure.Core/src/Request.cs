@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -15,10 +16,23 @@ namespace Azure.Core
     public abstract class Request : IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private RequestUriBuilder? _uri;
+
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public virtual RequestUriBuilder Uri { get; set; } = new RequestUriBuilder();
+        public virtual RequestUriBuilder Uri
+        {
+            get
+            {
+                return _uri ??= new RequestUriBuilder();
+            }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+                _uri = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the request HTTP method.
@@ -70,6 +84,7 @@ namespace Azure.Core
             RemoveHeader(name);
             AddHeader(name, value);
         }
+
         /// <summary>
         /// Removes the header from the collection.
         /// </summary>
@@ -90,7 +105,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the response HTTP headers.
         /// </summary>
-        public RequestHeaders Headers => new RequestHeaders(this);
+        public RequestHeaders Headers => new(this);
 
         /// <summary>
         /// Frees resources held by this <see cref="Response"/> instance.

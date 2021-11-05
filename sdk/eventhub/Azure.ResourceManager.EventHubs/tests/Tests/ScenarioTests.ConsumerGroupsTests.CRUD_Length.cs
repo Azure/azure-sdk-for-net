@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
 
@@ -16,14 +17,15 @@ namespace Azure.Management.EventHub.Tests
         [Test]
         public async Task ConsumerGroupsCreateGetUpdateDelete_Length()
         {
-            var location = GetLocation();
-            var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location.Result, resourceGroup);
+            var location = await GetLocation();
+            var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            await sub.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
-            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
+            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,
                 new EHNamespace()
                 {
-                    Location = location.Result,
+                    Location = location,
                     Sku = new Sku(SkuName.Standard)
                     {
                         Tier = SkuTier.Standard
@@ -41,57 +43,57 @@ namespace Azure.Management.EventHub.Tests
             DelayInTest(5);
             // Create Eventhub
             var eventhubName = Helper.EventHubPrefix + "thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit";
-            var createEventhubResponse = await EventHubsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName,
+            var createEventhubResponse = await EventHubsOperations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventhubName,
             new Eventhub() { MessageRetentionInDays = 5 });
             Assert.NotNull(createEventhubResponse);
             Assert.AreEqual(createEventhubResponse.Value.Name, eventhubName);
             //Get the created EventHub
-            var geteventhubResponse = await EventHubsOperations.GetAsync(resourceGroup, namespaceName, eventhubName);
+            var geteventhubResponse = await EventHubsOperations.GetAsync(resourceGroupName, namespaceName, eventhubName);
             Assert.NotNull(geteventhubResponse);
             Assert.AreEqual(EntityStatus.Active, geteventhubResponse.Value.Status);
             Assert.AreEqual(geteventhubResponse.Value.Name, eventhubName);
             // Create ConsumerGroup.
             var consumergroupName = "thisisthenamewithmorethan53charschecktoverifqwert";
             string UserMetadata = "Newly Created";
-            var createConsumergroupResponse =await ConsumerGroupsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroup { UserMetadata = UserMetadata });
+            var createConsumergroupResponse =await ConsumerGroupsOperations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventhubName, consumergroupName, new ConsumerGroup { UserMetadata = UserMetadata });
             Assert.NotNull(createConsumergroupResponse);
             Assert.AreEqual(createConsumergroupResponse.Value.Name, consumergroupName);
             // Get Created ConsumerGroup
-            var getConsumergroupGetResponse = ConsumerGroupsOperations.GetAsync(resourceGroup, namespaceName, eventhubName, consumergroupName);
+            var getConsumergroupGetResponse = ConsumerGroupsOperations.GetAsync(resourceGroupName, namespaceName, eventhubName, consumergroupName);
             Assert.NotNull(getConsumergroupGetResponse);
             Assert.AreEqual(getConsumergroupGetResponse.Result.Value.Name, consumergroupName);
             // Get all ConsumerGroup
-            var getSubscriptionsListAllResponse = ConsumerGroupsOperations.ListByEventHubAsync(resourceGroup, namespaceName, eventhubName);
+            var getSubscriptionsListAllResponse = ConsumerGroupsOperations.ListByEventHubAsync(resourceGroupName, namespaceName, eventhubName);
             Assert.NotNull(getSubscriptionsListAllResponse);
             bool isContainresourceGroup = false;
             var list = await getSubscriptionsListAllResponse.ToEnumerableAsync();
             foreach (var detail in list)
             {
-                if (detail.Id.Contains(resourceGroup))
+                if (detail.Id.Contains(resourceGroupName))
                 {
                     isContainresourceGroup = true;
                     break;
                 }
             }
             Assert.True(isContainresourceGroup);
-            //Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
+            //Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroupName)));
             //Update the Created consumergroup
             createConsumergroupResponse.Value.UserMetadata = "Updated the user meta data";
-            var updateconsumergroupResponse =await ConsumerGroupsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName, consumergroupName, createConsumergroupResponse);
+            var updateconsumergroupResponse =await ConsumerGroupsOperations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventhubName, consumergroupName, createConsumergroupResponse);
             Assert.NotNull(updateconsumergroupResponse);
             Assert.AreEqual(updateconsumergroupResponse.Value.Name, createConsumergroupResponse.Value.Name);
             Assert.AreEqual("Updated the user meta data", updateconsumergroupResponse.Value.UserMetadata);
             // Get Created ConsumerGroup
-            var getConsumergroupResponse =await ConsumerGroupsOperations.GetAsync(resourceGroup, namespaceName, eventhubName, consumergroupName);
+            var getConsumergroupResponse =await ConsumerGroupsOperations.GetAsync(resourceGroupName, namespaceName, eventhubName, consumergroupName);
             Assert.NotNull(getConsumergroupResponse);
             Assert.AreEqual(getConsumergroupResponse.Value.Name, consumergroupName);
             Assert.AreEqual(getConsumergroupResponse.Value.UserMetadata, updateconsumergroupResponse.Value.UserMetadata);
             // Delete Created ConsumerGroup and check for the NotFound exception
-            await ConsumerGroupsOperations.DeleteAsync(resourceGroup, namespaceName, eventhubName, consumergroupName);
+            await ConsumerGroupsOperations.DeleteAsync(resourceGroupName, namespaceName, eventhubName, consumergroupName);
             // Delete Created EventHub  and check for the NotFound exception
-            await EventHubsOperations.DeleteAsync(resourceGroup, namespaceName, eventhubName);
+            await EventHubsOperations.DeleteAsync(resourceGroupName, namespaceName, eventhubName);
             // Delete namespace
-            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
+            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroupName, namespaceName));
             //Subscription end
         }
     }

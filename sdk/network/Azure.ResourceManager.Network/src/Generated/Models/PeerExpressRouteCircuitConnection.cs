@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionName"> The name of the express route circuit connection resource. </param>
         /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
         /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
-        internal PeerExpressRouteCircuitConnection(string id, string name, string etag, string type, SubResource expressRouteCircuitPeering, SubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
+        internal PeerExpressRouteCircuitConnection(string id, string name, string etag, string type, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -48,9 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
-        public SubResource ExpressRouteCircuitPeering { get; set; }
+        public WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
-        public SubResource PeerExpressRouteCircuitPeering { get; set; }
+        public WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Express Route Circuit connection state. </summary>

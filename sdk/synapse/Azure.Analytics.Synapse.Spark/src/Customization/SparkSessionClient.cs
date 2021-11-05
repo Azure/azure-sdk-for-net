@@ -16,26 +16,6 @@ namespace Azure.Analytics.Synapse.Spark
     [CodeGenSuppress("CreateSparkStatement", typeof(int), typeof(SparkStatementOptions), typeof(CancellationToken))]
     public partial class SparkSessionClient
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkSessionClient"/>.
-        /// </summary>
-        public SparkSessionClient(Uri endpoint, string sparkPoolName, TokenCredential credential)
-            : this(endpoint, sparkPoolName, credential, SparkClientOptions.Default)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkSessionClient"/>.
-        /// </summary>
-        public SparkSessionClient(Uri endpoint, string sparkPoolName, TokenCredential credential, SparkClientOptions options)
-            : this(new ClientDiagnostics(options),
-                  SynapseClientPipeline.Build(options, credential),
-                  endpoint.ToString(),
-                  sparkPoolName,
-                  options.VersionString)
-        {
-        }
-
         public virtual async Task<SparkSessionOperation> StartCreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
             => await StartCreateSparkSessionInternal(true, sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
 

@@ -48,7 +48,7 @@ Properly supporting recorded tests does require a few extra considerations. All 
 
 The easiest way to run the tests is via Visual Studio's unit test runner.
 
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp2.1` or `dotnet test -f net461`.
+You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp3.1` or `dotnet test -f net461`.
 
 The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - appconfiguration - tests` in the PR.
 
@@ -58,21 +58,21 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 
 ## Development history
 
-For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure App Configuration .NET repository](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration).
+For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure App Configuration .NET repository](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/appconfiguration).
 
 <!-- LINKS -->
 [azconfig_root]: ../../sdk/appconfiguration
-[azconfig_api]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/api/Azure.Data.AppConfiguration.netstandard2.0.cs
-[azconfig_export_api]: https://github.com/Azure/azure-sdk-for-net/blob/master/eng/scripts/Export-API.ps1
+[azconfig_api]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/api/Azure.Data.AppConfiguration.netstandard2.0.cs
+[azconfig_export_api]: https://github.com/Azure/azure-sdk-for-net/blob/main/eng/scripts/Export-API.ps1
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AAzConfig
 [sdk_readme]: https://github.com/Azure/azure-sdk
-[sdk_contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/CONTRIBUTING.md
+[sdk_contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/CONTRIBUTING.md
 [sdk_design_guidelines]: https://azure.github.io/azure-sdk/general_introduction.html
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
-[sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md
+[sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md
 [email_opencode]: mailto:opencode@microsoft.com

@@ -1,15 +1,32 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+### Features Added
 
-## 1.0.0-preview.1
+### Breaking Changes
 
-This package follows the new Azure SDK guidelines which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Bugs Fixed
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+### Other Changes
+
+## 1.0.0-beta.3 (2021-10-28)
+
+### Breaking Changes
+
+- Renamed [Resource]Container to [Resource]Collection and added the IEnumerable<T> and IAsyncEnumerable<T> interfaces to them making it easier to iterate over the list in the simple case.
+
+## 1.0.0-beta.2 (2021-09-14)
+
+### Features Added
+
+- Added ArmClient extension methods to support [start from the middle scenario](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#managing-existing-resources-by-id).
+
+## 1.0.0-beta.1 (2021-08-31)
+
+### Breaking Changes
+
+Guidance to migrate from previous version of Azure Management SDK
 
 ### General New Features
 
@@ -21,8 +38,6 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
-### Migration from Previous Version of Azure Management SDK
-
 #### Package Name
 The package name has been changed from `Microsoft.Azure.Management.KeyVault` to `Azure.ResourceManager.KeyVault`
 
@@ -31,7 +46,7 @@ The package name has been changed from `Microsoft.Azure.Management.KeyVault` to 
 Example: Create a Key Vault Instance:
 
 Before upgrade:
-```csharp
+```C#
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Rest;
@@ -47,24 +62,22 @@ var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
 ```
 
 After upgrade:
-```csharp
+```C# Snippet:Changelog_NewCode
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using System;
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
-var keyVaultManagementClient = new KeyVaultManagementClient(
-            subscriptionId,
-            new DefaultAzureCredential(),
-            new KeyVaultManagementClientOptions());
-var vaultsOperations = keyVaultManagementClient.Vaults;
+VaultCollection vaultCollection = resourceGroup.GetVaults();
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
 
-var vault = await vaultsOperations.StartCreateOrUpdateAsync(
-            resourceGroupName,
-            vaultName,
-            parameters
-            );
-var vaultValue = (await vault.WaitForCompletionAsync()).Value;
-
+VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
+Vault vault = lro.Value;
 ```
 
 #### Object Model Changes
@@ -72,23 +85,13 @@ var vaultValue = (await vault.WaitForCompletionAsync()).Value;
 Example: Create a Permissions Model
 
 Before upgrade:
-```csharp
-var permissions = new Permissions
-                {
-                    Keys = new string[] { "all" },
-                    Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" },
-                    Storage = new string[] { "all" },
-                }
+```C#
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```
 
 After upgrade:
-```csharp
-var permissions = new Permissions
-            {
-                Keys = new [] { new KeyPermissions("all") },
-                Secrets = new [] { new SecretPermissions("all") },
-                Certificates = new [] { new CertificatePermissions("all") },
-                Storage = new [] { new StoragePermissions("all") },
-            };
+```C# Snippet:Changelog_CreateModel
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
+VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```

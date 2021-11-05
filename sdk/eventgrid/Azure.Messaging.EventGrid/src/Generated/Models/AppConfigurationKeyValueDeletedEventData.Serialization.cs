@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AppConfigurationKeyValueDeletedEventDataConverter))]
     public partial class AppConfigurationKeyValueDeletedEventData
     {
         internal static AppConfigurationKeyValueDeletedEventData DeserializeAppConfigurationKeyValueDeletedEventData(JsonElement element)
@@ -17,6 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> key = default;
             Optional<string> label = default;
             Optional<string> etag = default;
+            Optional<string> syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -34,8 +38,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("syncToken"))
+                {
+                    syncToken = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AppConfigurationKeyValueDeletedEventData(key.Value, label.Value, etag.Value);
+            return new AppConfigurationKeyValueDeletedEventData(key.Value, label.Value, etag.Value, syncToken.Value);
+        }
+
+        internal partial class AppConfigurationKeyValueDeletedEventDataConverter : JsonConverter<AppConfigurationKeyValueDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueDeletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override AppConfigurationKeyValueDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAppConfigurationKeyValueDeletedEventData(document.RootElement);
+            }
         }
     }
 }

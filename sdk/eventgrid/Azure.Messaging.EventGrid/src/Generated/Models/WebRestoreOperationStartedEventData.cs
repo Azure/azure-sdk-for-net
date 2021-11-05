@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.RestoreOperationStarted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.RestoreOperationStarted event. </summary>
     public partial class WebRestoreOperationStartedEventData
     {
         /// <summary> Initializes a new instance of WebRestoreOperationStartedEventData. </summary>

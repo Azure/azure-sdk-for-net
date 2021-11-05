@@ -1,6 +1,56 @@
 # Release History
 
-## 0.1.0-preview.10 (Unreleased)
+## 0.1.0-preview.18 (2021-11-03)
+
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
+
+## 0.1.0-preview.17 (2021-10-01)
+
+### Breaking Changes
+
+- The following types were removed:
+    - `DynamicContent`
+    - `DynamicRequest`
+    - `DynamicResponse`
+    - `ProtocolClientOptions`
+
+## 0.1.0-preview.16 (2021-09-07)
+
+### Other Changes
+
+- Update `Azure.Core` version.
+
+## 0.1.0-preview.15 (2021-08-18)
+
+### Features Added
+
+- Added support for per call response classification.
+
+## 0.1.0-preview.14 (2021-06-30)
+
+### New Features
+- Added `ResponseError` type to represent the standard Azure error response.
+
+
+## 0.1.0-preview.13 (2021-06-08)
+
+### New Features
+- Added `DateTimeRange` type to represent ISO 8601 time interval.
+
+## 0.1.0-preview.12 (2021-05-11)
+
+### New Features
+- Added `RequestOptions`.
+
+## 0.1.0-preview.11 (2021-03-22)
+
+### New Features
+- Improved debugging experience for `JsonData`.
+- `JsonData` can be used with `JsonSerializer`
+
+## 0.1.0-preview.10 (2021-03-09)
 
 
 ## 0.1.0-preview.9 (2021-02-09)

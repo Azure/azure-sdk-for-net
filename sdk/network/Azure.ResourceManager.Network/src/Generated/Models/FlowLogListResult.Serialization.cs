@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogListResult
+    internal partial class FlowLogListResult
     {
         internal static FlowLogListResult DeserializeFlowLogListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FlowLog>> value = default;
+            Optional<IReadOnlyList<FlowLogData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FlowLog> array = new List<FlowLog>();
+                    List<FlowLogData> array = new List<FlowLogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowLog.DeserializeFlowLog(item));
+                        array.Add(FlowLogData.DeserializeFlowLogData(item));
                     }
                     value = array;
                     continue;

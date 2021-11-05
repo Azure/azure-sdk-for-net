@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job canceled event data. </summary>
+    /// <summary> Job canceled event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobCanceled event. </summary>
     public partial class MediaJobCanceledEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobCanceledEventData. </summary>

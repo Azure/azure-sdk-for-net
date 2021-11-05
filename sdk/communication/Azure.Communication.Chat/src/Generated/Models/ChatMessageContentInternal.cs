@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -23,13 +24,13 @@ namespace Azure.Communication.Chat
         /// <param name="message"> Chat message content for messages of types text or html. </param>
         /// <param name="topic"> Chat message content for messages of type topicUpdated. </param>
         /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>
-        /// <param name="initiator"> Chat message content for messages of types participantAdded or participantRemoved. </param>
-        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, string initiator)
+        /// <param name="initiatorCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, CommunicationIdentifierModel initiatorCommunicationIdentifier)
         {
             Message = message;
             Topic = topic;
             Participants = participants;
-            Initiator = initiator;
+            InitiatorCommunicationIdentifier = initiatorCommunicationIdentifier;
         }
 
         /// <summary> Chat message content for messages of types text or html. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
         public IReadOnlyList<ChatParticipantInternal> Participants { get; }
-        /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
-        public string Initiator { get; }
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifierModel InitiatorCommunicationIdentifier { get; }
     }
 }

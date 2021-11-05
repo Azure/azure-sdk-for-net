@@ -32,9 +32,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         /// <param name="name">The Sku name. Possible values include:
         /// 'Standard', 'RS0'</param>
-        public Sku(string name)
+        /// <param name="tier">The Sku tier.</param>
+        /// <param name="family">The sku family</param>
+        /// <param name="size">The sku size</param>
+        /// <param name="capacity">The sku capacity</param>
+        public Sku(string name, string tier = default(string), string family = default(string), string size = default(string), string capacity = default(string))
         {
             Name = name;
+            Tier = tier;
+            Family = family;
+            Size = size;
+            Capacity = capacity;
             CustomInit();
         }
 
@@ -49,6 +57,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "tier")]
+        public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku family
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public string Family { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku size
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku capacity
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public string Capacity { get; set; }
 
         /// <summary>
         /// Validate the object.

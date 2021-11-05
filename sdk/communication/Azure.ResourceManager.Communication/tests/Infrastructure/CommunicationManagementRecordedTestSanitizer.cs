@@ -13,13 +13,8 @@ namespace Azure.ResourceManager.Communication.Tests
         public CommunicationManagementRecordedTestSanitizer(): base()
         {
             // Lazy sanitize fields in the request and response bodies
-            JsonPathSanitizers.Add("$..token");
-            JsonPathSanitizers.Add("$..identity");
-            JsonPathSanitizers.Add("$..primaryKey");
-            JsonPathSanitizers.Add("$..secondaryKey");
-            JsonPathSanitizers.Add("$..primaryConnectionString");
-            JsonPathSanitizers.Add("$..secondaryConnectionString");
-            JsonPathSanitizers.Add("$..connectionString");
+            AddJsonPathSanitizer("$..token");
+            AddJsonPathSanitizer("$..identity");
         }
 
         /// <summary>Fetch the value to replace with the Subscription ID. This value is not in the same format, but could easierly be change to be.</summary>

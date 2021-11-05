@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
@@ -102,11 +101,13 @@ namespace Azure.Core.Tests
 
         private static readonly (string, string)[] s_staticValues = new (string, string)[]
         {
+            //cSpell:disable
             ("foo", "Zm9v"),
             ("<foo!>", "PGZvbyE-"),
             ("<foo!?", "PGZvbyE_"),
             ("<foo!?><<foo?>>", "PGZvbyE_Pjw8Zm9vPz4-"),
             ("<foo!?><<foo?>>foo", "PGZvbyE_Pjw8Zm9vPz4-Zm9v")
+            //cSpell:enable
         };
 
         [Test]

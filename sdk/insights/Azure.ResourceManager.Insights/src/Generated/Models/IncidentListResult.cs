@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> The List incidents operation response. </summary>
-    public partial class IncidentListResult
+    internal partial class IncidentListResult
     {
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
         internal IncidentListResult()

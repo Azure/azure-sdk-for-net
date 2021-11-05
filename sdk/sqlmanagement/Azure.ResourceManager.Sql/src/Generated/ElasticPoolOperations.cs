@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ElasticPoolRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ElasticPoolOperations for mocking. </summary>
         protected ElasticPoolOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ElasticPoolOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

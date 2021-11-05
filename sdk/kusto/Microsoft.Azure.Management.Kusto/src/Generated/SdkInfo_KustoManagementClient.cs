@@ -19,15 +19,31 @@ namespace Microsoft.Azure.Management.Kusto
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "Clusters", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "DataConnections", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "Databases", "2020-09-18"),
-                new Tuple<string, string, string>("Kusto", "Operations", "2020-09-18"),
+                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "Clusters", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "DataConnections", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "Databases", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "ManagedPrivateEndpoints", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "Operations", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "OperationsResults", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "PrivateEndpointConnections", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "PrivateLinkResources", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "Scripts", "2021-08-27"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/azure-kusto/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\dev\\sdks\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "2ecc4a457776feff5cf647d28c045ea9acffadb3";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

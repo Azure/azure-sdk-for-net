@@ -334,5 +334,73 @@ namespace Compute.Tests
                 }
             }
         }
+        
+        [Fact]
+        public void TestVirtualMachineNicConfiguration()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Hard code the location to "eastus2euap".
+                // This is because NRP is still deploying to other regions and is not available worldwide.
+                // Before changing the default location, we have to save it to be reset it at the end of the test.
+                // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                //string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM;
+                try
+                {
+                    // Create the resource Group, it might have been already created during StorageAccount creation.
+                    var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
+                        rgName,
+                        new ResourceGroup
+                        {
+                            Location = m_location,
+                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
+                        });
+
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    Subnet subnetResponse = CreateVNET(rgName);
+
+                    VirtualMachineNetworkInterfaceConfiguration vmNicConfig = CreateNICConfig(subnetResponse);
+
+                    //string asetId = CreateAvailabilitySet(rgName, asName);
+
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId: null, vmNicConfig: vmNicConfig, networkApiVersion: NetworkApiVersion.TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne);
+
+                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+
+                    var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(
+                         rgName, inputVM.Name, inputVM);
+
+                    Assert.NotNull(createOrUpdateResponse);
+
+                    var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
+
+                    ValidateVM(inputVM, getVMResponse, expectedVMReferenceId, hasUserDefinedAS: false);
+
+                    var getNicResponse = m_NrpClient.NetworkInterfaces.List(rgName);
+                    // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
+                    Assert.NotNull(getNicResponse.FirstOrDefault().MacAddress);
+                    Assert.NotNull(getNicResponse.FirstOrDefault().Primary);
+                    Assert.True(getNicResponse.FirstOrDefault().Primary != null && getNicResponse.FirstOrDefault().Primary.Value);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+        
     }
 }

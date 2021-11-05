@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteListResult
+    internal partial class RouteListResult
     {
         internal static RouteListResult DeserializeRouteListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Route>> value = default;
+            Optional<IReadOnlyList<RouteData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Route> array = new List<Route>();
+                    List<RouteData> array = new List<RouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Route.DeserializeRoute(item));
+                        array.Add(RouteData.DeserializeRouteData(item));
                     }
                     value = array;
                     continue;

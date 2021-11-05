@@ -22,6 +22,7 @@
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
+        /// </param>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders)
         {
             return await DeleteWithHttpMessagesAsync(resourceGroupName, vmName, false, customHeaders, default(CancellationToken));
@@ -58,6 +59,7 @@
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
+        /// </param>
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
@@ -106,6 +108,25 @@
         public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             return await BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, false, customHeaders, cancellationToken);
+        }
+
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        {
+            return await DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, cancellationToken);
+        }
+
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders)
+        {
+            return await DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, default(CancellationToken));
+        }
+
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        {
+            return await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, cancellationToken);
+        }
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders)
+        {
+            return await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, customHeaders, default(CancellationToken));
         }
     }
 }

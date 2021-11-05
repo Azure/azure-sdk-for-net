@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// 'SecurityInsightsSecurityEventCollectionConfiguration',
         /// 'ImportComputerGroup', 'NetworkMonitoring', 'Itsm', 'DnsAnalytics',
         /// 'ApplicationInsights', 'SqlDataClassification'</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="eTag">The ETag of the data source.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="etag">The ETag of the data source.</param>
         /// <param name="tags">Resource tags.</param>
-        public DataSource(object properties, string kind, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DataSource(object properties, string kind, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             Properties = properties;
-            ETag = eTag;
+            Etag = etag;
             Kind = kind;
             Tags = tags;
             CustomInit();
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Gets or sets the ETag of the data source.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'WindowsEvent',

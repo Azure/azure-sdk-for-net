@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.Confluent
         /// </exception>
         Task<AzureOperationResponse<IPage<ConfluentAgreementResource>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Accept marketplace terms.
+        /// Create Confluent Marketplace agreement in the subscription.
         /// </summary>
         /// <param name='body'>
-        /// Confluent Agreement resource
+        /// Confluent Marketplace Agreement resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

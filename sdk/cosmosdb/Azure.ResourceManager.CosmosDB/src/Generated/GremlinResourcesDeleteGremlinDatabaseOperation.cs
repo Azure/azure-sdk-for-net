@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class GremlinResourcesDeleteGremlinDatabaseOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of GremlinResourcesDeleteGremlinDatabaseOperation for mocking. </summary>
+        protected GremlinResourcesDeleteGremlinDatabaseOperation()
+        {
+        }
+
         internal GremlinResourcesDeleteGremlinDatabaseOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GremlinResourcesDeleteGremlinDatabaseOperation");

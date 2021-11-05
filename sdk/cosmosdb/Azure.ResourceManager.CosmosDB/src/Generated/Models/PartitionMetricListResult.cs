@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The response to a list partition metrics request. </summary>
-    public partial class PartitionMetricListResult
+    internal partial class PartitionMetricListResult
     {
         /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
         internal PartitionMetricListResult()

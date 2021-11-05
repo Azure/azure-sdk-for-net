@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.Tests
     /// </summary>
     public class TestObjectSerializer : ObjectSerializer
     {
-        private static JsonObjectSerializer _serializer = new JsonObjectSerializer();
+        private static readonly JsonObjectSerializer s_serializer = new JsonObjectSerializer();
 
         // This field is used by the tests to confirm the function was called.
         public bool WasDeserializeCalled { get; set; }
@@ -28,25 +28,25 @@ namespace Azure.DigitalTwins.Core.Tests
         public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             WasDeserializeCalled = true;
-            return _serializer.Deserialize(stream, returnType, cancellationToken);
+            return s_serializer.Deserialize(stream, returnType, cancellationToken);
         }
 
-        public async override ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             WasDeserializeCalled = true;
-            return await _serializer.DeserializeAsync(stream, returnType, cancellationToken);
+            return await s_serializer.DeserializeAsync(stream, returnType, cancellationToken);
         }
 
         public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
             WasSerializeCalled = true;
-            _serializer.Serialize(stream, value, inputType, cancellationToken);
+            s_serializer.Serialize(stream, value, inputType, cancellationToken);
         }
 
-        public async override ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
+        public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
             WasSerializeCalled = true;
-            await _serializer.SerializeAsync(stream, value, inputType, cancellationToken);
+            await s_serializer.SerializeAsync(stream, value, inputType, cancellationToken);
         }
     }
 }

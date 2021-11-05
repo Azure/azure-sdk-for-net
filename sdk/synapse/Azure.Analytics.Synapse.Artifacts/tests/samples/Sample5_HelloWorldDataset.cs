@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteDataset
             DatasetDeleteDatasetOperation deleteDatasetOperation = client.StartDeleteDataset(dataSetName);
-            await deleteDatasetOperation.WaitForCompletionAsync();
+            await deleteDatasetOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             TemplateSpecs = new TemplateSpecsOperations(this);
             TemplateSpecVersions = new TemplateSpecVersionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01-preview";
+            ApiVersion = "2021-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -359,8 +359,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TemplateSpecArtifact>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TemplateSpecArtifact>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

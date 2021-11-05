@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Queues;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 
@@ -32,6 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         private readonly FunctionDescriptor _descriptor;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly QueueCausalityManager _queueCausalityManager;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public QueueListenerFactory(
             QueueServiceClient queueServiceClient,
@@ -43,7 +45,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             ITriggeredFunctionExecutor executor,
             IQueueProcessorFactory queueProcessorFactory,
             QueueCausalityManager queueCausalityManager,
-            FunctionDescriptor descriptor
+            FunctionDescriptor descriptor,
+            ConcurrencyManager concurrencyManager
             )
         {
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
@@ -52,6 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
             _executor = executor ?? throw new ArgumentNullException(nameof(executor));
             _descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
+            _concurrencyManager = concurrencyManager ?? throw new ArgumentNullException(nameof(concurrencyManager));
             _queueCausalityManager = queueCausalityManager ?? throw new ArgumentNullException(nameof(queueCausalityManager));
 
             _poisonQueue = CreatePoisonQueueReference(queueServiceClient, queue.Name);
@@ -66,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
 
             var queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, _loggerFactory, _queueProcessorFactory, _queueOptions, _messageEnqueuedWatcherSetter);
             IListener listener = new QueueListener(_queue, _poisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _messageEnqueuedWatcherSetter, _queueOptions, queueProcessor, _descriptor);
+                _messageEnqueuedWatcherSetter, _queueOptions, queueProcessor, _descriptor, _concurrencyManager);
 
             return Task.FromResult(listener);
         }

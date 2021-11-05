@@ -1,0 +1,38 @@
+@page
+@model IndexModel
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center p-3">
+    <p class="text-left">
+        The key-value pairs shown below are enumerated from <a href="https://docs.microsoft.com/azure/azure-app-configuration/overview">Azure App Configuration</a>.
+        You can store non-secret values e.g., endpoint host names and application IDs directly in App Configuration
+        and secrets e.g., application secrets in <a href="https://docs.microsoft.com/azure/key-vault/general/overview">Azure Key Vault</a> with a reference to those secrets
+        in App Configuration. The <a href="https://nuget.org/packages/Microsoft.Extensions.Configuration.AzureAppConfiguration">Microsoft.Extensions.Configuration.AzureAppConfiguration</a>
+        configuration provider will automatically retrieve secret values when retrieving key-values containing these special references.
+    </p>
+    <table class="table text-left">
+        <thead>
+            <tr>
+                <th scope="col">Key</th>
+                <th scope="col">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">APPCONFIG_VALUE</td>
+                <td>@Configuration["APPCONFIG_VALUE"]</td>
+            </tr>
+            <tr>
+                <td scope="row">KEYVAULT_SECRET</td>
+                <td>@Configuration["KEYVAULT_SECRET"]</td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>

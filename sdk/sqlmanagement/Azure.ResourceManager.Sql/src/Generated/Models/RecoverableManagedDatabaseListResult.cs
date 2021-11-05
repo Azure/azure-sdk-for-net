@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of recoverable managed databases. </summary>
-    public partial class RecoverableManagedDatabaseListResult
+    internal partial class RecoverableManagedDatabaseListResult
     {
         /// <summary> Initializes a new instance of RecoverableManagedDatabaseListResult. </summary>
         internal RecoverableManagedDatabaseListResult()

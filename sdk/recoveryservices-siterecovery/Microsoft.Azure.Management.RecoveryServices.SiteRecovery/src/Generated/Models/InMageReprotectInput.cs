@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// MT.</param>
         /// <param name="profileId">The Policy Id.</param>
         /// <param name="runAsAccountId">The CS account Id.</param>
-        /// <param name="datastoreName">The target data store name.</param>
+        /// <param name="datastoreName">The target datastore name.</param>
         /// <param name="diskExclusionInput">The enable disk exclusion
         /// input.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RunAsAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the target data store name.
+        /// Gets or sets the target datastore name.
         /// </summary>
         [JsonProperty(PropertyName = "datastoreName")]
         public string DatastoreName { get; set; }

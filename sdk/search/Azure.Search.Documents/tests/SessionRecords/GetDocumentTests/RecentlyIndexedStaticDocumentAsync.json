@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jywngfoh\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "962",
+        "Content-Length": "1048",
         "Content-Type": "application/json",
-        "traceparent": "00-4a8874fe2f655641ac550ba0fdbb2f03-bd0d29fa358e7f42-00",
+        "traceparent": "00-6b0f08601fe9db4ba748003212748e29-0a863be2f87e4f4d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "aa5f713be58bf17803b0715e17f2aff2",
         "x-ms-return-client-request-id": "true"
@@ -35,6 +35,13 @@
             "smokingAllowed": false,
             "lastRenovationDate": "2010-06-27T00:00:00.0000000\u002B00:00",
             "rating": 5,
+            "geoLocation": {
+              "type": "Point",
+              "coordinates": [
+                -122.13157699999999,
+                47.678581000000001
+              ]
+            },
             "location": {
               "type": "Point",
               "coordinates": [
@@ -53,8 +60,8 @@
         "client-request-id": "aa5f713b-e58b-f178-03b0-715e17f2aff2",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 26 Jun 2020 06:04:37 GMT",
-        "elapsed-time": "84",
+        "Date": "Sat, 27 Mar 2021 18:23:34 GMT",
+        "elapsed-time": "150",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -75,15 +82,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jywngfoh\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-290d6f961ff5564e872a586e4621bb0e-d0ce4a8a1b175641-00",
+        "traceparent": "00-9d305d3749a73344a93faf0862589757-0b3c316ca200424f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "93de715e8cce15b225b9af5b7103eb25",
         "x-ms-return-client-request-id": "true"
@@ -93,10 +100,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "93de715e-8cce-15b2-25b9-af5b7103eb25",
-        "Content-Length": "940",
+        "Content-Length": "1065",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 26 Jun 2020 06:04:39 GMT",
-        "elapsed-time": "9",
+        "Date": "Sat, 27 Mar 2021 18:23:36 GMT",
+        "elapsed-time": "11",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -105,18 +112,18 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "93de715e-8cce-15b2-25b9-af5b7103eb25"
       },
-      "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
+      "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022geoLocation\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jywngfoh\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-2b4fd0ec9e402b49b9f136c4a7e849b2-129b1290b8d67c4b-00",
+        "traceparent": "00-43761f53c23a2a418076500d8871a7a6-2c949c4adb6ff443-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "3c0735ca040bd9897a3c734084c58a72",
         "x-ms-return-client-request-id": "true"
@@ -126,8 +133,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
-        "Date": "Fri, 26 Jun 2020 06:04:39 GMT",
-        "elapsed-time": "219",
+        "Date": "Sat, 27 Mar 2021 18:23:36 GMT",
+        "elapsed-time": "186",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
@@ -139,9 +146,10 @@
   ],
   "Variables": {
     "RandomSeed": "1353165967",
-    "SearchIndexName": "despnwor",
+    "SearchIndexName": "jywngfoh",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

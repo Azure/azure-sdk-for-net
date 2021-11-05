@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of DatastoreProperties entities. </summary>
-    public partial class DatastorePropertiesResourceArmPaginatedResult
+    internal partial class DatastorePropertiesResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
         internal DatastorePropertiesResourceArmPaginatedResult()

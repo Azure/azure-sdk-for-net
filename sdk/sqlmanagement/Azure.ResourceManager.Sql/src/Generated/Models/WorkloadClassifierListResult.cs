@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of workload classifiers for a workload group. </summary>
-    public partial class WorkloadClassifierListResult
+    internal partial class WorkloadClassifierListResult
     {
         /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
         internal WorkloadClassifierListResult()

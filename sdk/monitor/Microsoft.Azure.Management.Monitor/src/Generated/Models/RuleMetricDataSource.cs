@@ -34,10 +34,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="resourceUri">the resource identifier of the resource
         /// the rule monitors. **NOTE**: this property cannot be updated for an
         /// existing rule.</param>
+        /// <param name="legacyResourceId">the legacy resource identifier of
+        /// the resource the rule monitors. **NOTE**: this property cannot be
+        /// updated for an existing rule.</param>
+        /// <param name="resourceLocation">the location of the
+        /// resource.</param>
+        /// <param name="metricNamespace">the namespace of the metric.</param>
         /// <param name="metricName">the name of the metric that defines what
         /// the rule monitors.</param>
-        public RuleMetricDataSource(string resourceUri = default(string), string metricName = default(string))
-            : base(resourceUri)
+        public RuleMetricDataSource(string resourceUri = default(string), string legacyResourceId = default(string), string resourceLocation = default(string), string metricNamespace = default(string), string metricName = default(string))
+            : base(resourceUri, legacyResourceId, resourceLocation, metricNamespace)
         {
             MetricName = metricName;
             CustomInit();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
+        public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, TableRetentionPolicy retentionPolicy)
         {
             if (version == null)
             {
@@ -46,6 +47,6 @@ namespace Azure.Data.Tables.Models
         /// <summary> Indicates whether all write requests should be logged. </summary>
         public bool Write { get; set; }
         /// <summary> The retention policy. </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public TableRetentionPolicy RetentionPolicy { get; set; }
     }
 }

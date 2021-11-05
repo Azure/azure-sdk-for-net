@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,30 +32,34 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the FactoryIdentity class.
         /// </summary>
+        /// <param name="type">The identity type. Possible values include:
+        /// 'SystemAssigned', 'UserAssigned',
+        /// 'SystemAssigned,UserAssigned'</param>
         /// <param name="principalId">The principal id of the identity.</param>
         /// <param name="tenantId">The client tenant id of the
         /// identity.</param>
         /// <param name="userAssignedIdentities">List of user assigned
         /// identities for the factory.</param>
-        public FactoryIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, object> userAssignedIdentities = default(IDictionary<string, object>))
+        public FactoryIdentity(string type, System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, object> userAssignedIdentities = default(IDictionary<string, object>))
         {
+            Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for FactoryIdentity class.
-        /// </summary>
-        static FactoryIdentity()
-        {
-            Type = "SystemAssigned";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the identity type. Possible values include:
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets the principal id of the identity.
@@ -75,10 +80,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, object> UserAssignedIdentities { get; set; }
 
         /// <summary>
-        /// The identity type.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

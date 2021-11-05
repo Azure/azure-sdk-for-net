@@ -21,9 +21,9 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string ResourceGroup = "ndicola-azsposh";
-        private static string WorkspaceName = "azsposh";
-        
+        private static string ResourceGroup = "ndicola-pfsense";
+        private static string WorkspaceName = "ndicola-pfsense";
+
         public static TestEnvironment TestEnvironment { get; private set; }
 
         private static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
@@ -52,8 +52,20 @@ namespace SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = GetSecurityInsightsClient(context);
+
+                var IncidentId = Guid.NewGuid().ToString();
+                var IncidentBody = new Incident()
+                {
+                    Title = "SDKCreateIncidentTest",
+                    Status = "Active",
+                    Severity = "Low"
+                };
+
+                SecurityInsightsClient.Incidents.CreateOrUpdate(ResourceGroup, WorkspaceName, IncidentId, IncidentBody);
+                
                 var Incidents = SecurityInsightsClient.Incidents.List(ResourceGroup, WorkspaceName);
                 ValidateIncidents(Incidents);
+                SecurityInsightsClient.Incidents.Delete(ResourceGroup, WorkspaceName, IncidentId);
             }
         }
 

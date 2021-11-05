@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CustomActivityConverter))]
     public partial class CustomActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -90,6 +93,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("retentionTimeInDays");
                 writer.WriteObjectValue(RetentionTimeInDays);
             }
+            if (Optional.IsDefined(AutoUserSpecification))
+            {
+                writer.WritePropertyName("autoUserSpecification");
+                writer.WriteObjectValue(AutoUserSpecification);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -114,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<CustomActivityReferenceObject> referenceObjects = default;
             Optional<IDictionary<string, object>> extendedProperties = default;
             Optional<object> retentionTimeInDays = default;
+            Optional<object> autoUserSpecification = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -252,13 +261,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             retentionTimeInDays = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("autoUserSpecification"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoUserSpecification = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value);
+            return new CustomActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
+        }
+
+        internal partial class CustomActivityConverter : JsonConverter<CustomActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, CustomActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CustomActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCustomActivity(document.RootElement);
+            }
         }
     }
 }

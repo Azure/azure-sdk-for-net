@@ -8,23 +8,24 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageList
+    internal partial class GalleryImageList
     {
         internal static GalleryImageList DeserializeGalleryImageList(JsonElement element)
         {
-            IReadOnlyList<GalleryImage> value = default;
+            IReadOnlyList<GalleryImageData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<GalleryImage> array = new List<GalleryImage>();
+                    List<GalleryImageData> array = new List<GalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImage.DeserializeGalleryImage(item));
+                        array.Add(GalleryImageData.DeserializeGalleryImageData(item));
                     }
                     value = array;
                     continue;

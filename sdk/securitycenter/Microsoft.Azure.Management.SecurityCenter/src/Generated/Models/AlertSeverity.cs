@@ -16,9 +16,21 @@ namespace Microsoft.Azure.Management.Security.Models
     /// </summary>
     public static class AlertSeverity
     {
+        /// <summary>
+        /// Informational
+        /// </summary>
         public const string Informational = "Informational";
+        /// <summary>
+        /// Low
+        /// </summary>
         public const string Low = "Low";
+        /// <summary>
+        /// Medium
+        /// </summary>
         public const string Medium = "Medium";
+        /// <summary>
+        /// High
+        /// </summary>
         public const string High = "High";
     }
 }

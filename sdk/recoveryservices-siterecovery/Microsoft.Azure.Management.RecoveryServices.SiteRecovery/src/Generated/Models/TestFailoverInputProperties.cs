@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Input definition for planned failover input properties.
+    /// Input definition for test failover input properties.
     /// </summary>
     public partial class TestFailoverInputProperties
     {
@@ -31,21 +31,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the TestFailoverInputProperties
         /// class.
         /// </summary>
-        /// <param name="failoverDirection">Failover direction.</param>
+        /// <param name="failoverDirection">Test failover direction.</param>
         /// <param name="networkType">Network type to be used for test
         /// failover.</param>
         /// <param name="networkId">The id of the network to be used for test
-        /// failover</param>
-        /// <param name="skipTestFailoverCleanup">A value indicating whether
-        /// the test failover cleanup is to be skipped.</param>
+        /// failover.</param>
         /// <param name="providerSpecificDetails">Provider specific
-        /// settings</param>
-        public TestFailoverInputProperties(string failoverDirection = default(string), string networkType = default(string), string networkId = default(string), string skipTestFailoverCleanup = default(string), ProviderSpecificFailoverInput providerSpecificDetails = default(ProviderSpecificFailoverInput))
+        /// settings.</param>
+        public TestFailoverInputProperties(string failoverDirection = default(string), string networkType = default(string), string networkId = default(string), TestFailoverProviderSpecificInput providerSpecificDetails = default(TestFailoverProviderSpecificInput))
         {
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
             NetworkId = networkId;
-            SkipTestFailoverCleanup = skipTestFailoverCleanup;
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
         }
@@ -56,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets failover direction.
+        /// Gets or sets test failover direction.
         /// </summary>
         [JsonProperty(PropertyName = "failoverDirection")]
         public string FailoverDirection { get; set; }
@@ -68,23 +65,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string NetworkType { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the network to be used for test failover
+        /// Gets or sets the id of the network to be used for test failover.
         /// </summary>
         [JsonProperty(PropertyName = "networkId")]
         public string NetworkId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the test failover cleanup
-        /// is to be skipped.
-        /// </summary>
-        [JsonProperty(PropertyName = "skipTestFailoverCleanup")]
-        public string SkipTestFailoverCleanup { get; set; }
-
-        /// <summary>
-        /// Gets or sets provider specific settings
+        /// Gets or sets provider specific settings.
         /// </summary>
         [JsonProperty(PropertyName = "providerSpecificDetails")]
-        public ProviderSpecificFailoverInput ProviderSpecificDetails { get; set; }
+        public TestFailoverProviderSpecificInput ProviderSpecificDetails { get; set; }
 
     }
 }

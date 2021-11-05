@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the JobInputHttp class.
         /// </summary>
         /// <param name="files">List of files. Required for JobInputHttp.
-        /// Maximum of 4000 characters each.</param>
+        /// Maximum of 4000 characters each. Query strings will not be returned
+        /// in service responses to prevent sensitive data exposure.</param>
         /// <param name="start">Defines a point on the timeline of the input
         /// media at which processing will start. Defaults to the beginning of
         /// the input media.</param>
@@ -53,7 +54,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="baseUri">Base URI for HTTPS job input. It will be
         /// concatenated with provided file names. If no base uri is given,
         /// then the provided file list is assumed to be fully qualified uris.
-        /// Maximum length of 4000 characters.</param>
+        /// Maximum length of 4000 characters. The query strings will not be
+        /// returned in service responses to prevent sensitive data
+        /// exposure.</param>
         public JobInputHttp(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), IList<InputDefinition> inputDefinitions = default(IList<InputDefinition>), string baseUri = default(string))
             : base(files, start, end, label, inputDefinitions)
         {
@@ -70,7 +73,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets base URI for HTTPS job input. It will be concatenated
         /// with provided file names. If no base uri is given, then the
         /// provided file list is assumed to be fully qualified uris. Maximum
-        /// length of 4000 characters.
+        /// length of 4000 characters. The query strings will not be returned
+        /// in service responses to prevent sensitive data exposure.
         /// </summary>
         [JsonProperty(PropertyName = "baseUri")]
         public string BaseUri { get; set; }

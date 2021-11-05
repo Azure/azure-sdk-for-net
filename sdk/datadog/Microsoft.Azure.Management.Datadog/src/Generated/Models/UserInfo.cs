@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// User info
+    /// </summary>
     public partial class UserInfo
     {
         /// <summary>

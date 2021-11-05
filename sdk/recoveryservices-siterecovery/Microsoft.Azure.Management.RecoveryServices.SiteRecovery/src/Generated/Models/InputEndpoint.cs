@@ -13,9 +13,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Azure VM input endpoint details.
-    /// </summary>
     public partial class InputEndpoint
     {
         /// <summary>
@@ -29,10 +26,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the InputEndpoint class.
         /// </summary>
-        /// <param name="endpointName">The input endpoint name.</param>
-        /// <param name="privatePort">The input endpoint private port.</param>
-        /// <param name="publicPort">The input endpoint public port.</param>
-        /// <param name="protocol">The input endpoint protocol.</param>
         public InputEndpoint(string endpointName = default(string), int? privatePort = default(int?), int? publicPort = default(int?), string protocol = default(string))
         {
             EndpointName = endpointName;
@@ -48,25 +41,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the input endpoint name.
         /// </summary>
         [JsonProperty(PropertyName = "endpointName")]
         public string EndpointName { get; set; }
 
         /// <summary>
-        /// Gets or sets the input endpoint private port.
         /// </summary>
         [JsonProperty(PropertyName = "privatePort")]
         public int? PrivatePort { get; set; }
 
         /// <summary>
-        /// Gets or sets the input endpoint public port.
         /// </summary>
         [JsonProperty(PropertyName = "publicPort")]
         public int? PublicPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the input endpoint protocol.
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }

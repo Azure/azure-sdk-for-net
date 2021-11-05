@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an CertificateNearExpiry event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateNearExpiry event. </summary>
     public partial class KeyVaultCertificateNearExpiryEventData
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateNearExpiryEventData. </summary>

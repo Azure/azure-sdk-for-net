@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.Synapse.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -20,7 +19,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// Workspace active directory administrator
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class WorkspaceAadAdminInfo : IResource
+    public partial class WorkspaceAadAdminInfo : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the WorkspaceAadAdminInfo class.
@@ -33,6 +32,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the WorkspaceAadAdminInfo class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tenantId">Tenant ID of the workspace active directory
         /// administrator</param>
         /// <param name="login">Login of the workspace active directory
@@ -41,7 +46,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// administrator type</param>
         /// <param name="sid">Object ID of the workspace active directory
         /// administrator</param>
-        public WorkspaceAadAdminInfo(string tenantId = default(string), string login = default(string), string administratorType = default(string), string sid = default(string))
+        public WorkspaceAadAdminInfo(string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string login = default(string), string administratorType = default(string), string sid = default(string))
+            : base(id, name, type)
         {
             TenantId = tenantId;
             Login = login;

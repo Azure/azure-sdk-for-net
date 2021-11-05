@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SapCloudForCustomerSourceConverter))]
     public partial class SapCloudForCustomerSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -21,10 +24,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("query");
                 writer.WriteObjectValue(Query);
             }
+            if (Optional.IsDefined(HttpRequestTimeout))
+            {
+                writer.WritePropertyName("httpRequestTimeout");
+                writer.WriteObjectValue(HttpRequestTimeout);
+            }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout");
                 writer.WriteObjectValue(QueryTimeout);
+            }
+            if (Optional.IsDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -54,7 +67,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SapCloudForCustomerSource DeserializeSapCloudForCustomerSource(JsonElement element)
         {
             Optional<object> query = default;
+            Optional<object> httpRequestTimeout = default;
             Optional<object> queryTimeout = default;
+            Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -73,6 +88,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     query = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("httpRequestTimeout"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    httpRequestTimeout = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("queryTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -81,6 +106,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    additionalColumns = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -121,7 +156,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapCloudForCustomerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, query.Value);
+            return new SapCloudForCustomerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, httpRequestTimeout.Value);
+        }
+
+        internal partial class SapCloudForCustomerSourceConverter : JsonConverter<SapCloudForCustomerSource>
+        {
+            public override void Write(Utf8JsonWriter writer, SapCloudForCustomerSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SapCloudForCustomerSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSapCloudForCustomerSource(document.RootElement);
+            }
         }
     }
 }

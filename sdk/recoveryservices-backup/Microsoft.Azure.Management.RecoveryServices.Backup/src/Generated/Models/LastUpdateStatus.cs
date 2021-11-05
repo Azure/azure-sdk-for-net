@@ -22,5 +22,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string PartiallyFailed = "PartiallyFailed";
         public const string Failed = "Failed";
         public const string Succeeded = "Succeeded";
+        public const string Initialized = "Initialized";
+        public const string FirstInitialization = "FirstInitialization";
     }
 }

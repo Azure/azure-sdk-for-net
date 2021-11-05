@@ -40,16 +40,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover.</param>
         /// <param name="networkId">The Id of the network to be used for test
         /// failover.</param>
-        /// <param name="skipTestFailoverCleanup">A value indicating whether
-        /// the test failover cleanup is to be skipped.</param>
         /// <param name="providerSpecificDetails">The provider specific
         /// properties.</param>
-        public RecoveryPlanTestFailoverInputProperties(string failoverDirection, string networkType, string networkId = default(string), string skipTestFailoverCleanup = default(string), IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
+        public RecoveryPlanTestFailoverInputProperties(string failoverDirection, string networkType, string networkId = default(string), IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
         {
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
             NetworkId = networkId;
-            SkipTestFailoverCleanup = skipTestFailoverCleanup;
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
         }
@@ -77,13 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkId")]
         public string NetworkId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the test failover cleanup
-        /// is to be skipped.
-        /// </summary>
-        [JsonProperty(PropertyName = "skipTestFailoverCleanup")]
-        public string SkipTestFailoverCleanup { get; set; }
 
         /// <summary>
         /// Gets or sets the provider specific properties.

@@ -6,7 +6,7 @@ namespace Azure.Core.TestFramework
     public enum EntryRecordModel
     {
         Record,
-        DontRecord,
+        DoNotRecord,
         RecordWithoutRequestBody
     }
 }

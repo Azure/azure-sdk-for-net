@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list elastic pool operations request. </summary>
-    public partial class ElasticPoolOperationListResult
+    internal partial class ElasticPoolOperationListResult
     {
         /// <summary> Initializes a new instance of ElasticPoolOperationListResult. </summary>
         internal ElasticPoolOperationListResult()

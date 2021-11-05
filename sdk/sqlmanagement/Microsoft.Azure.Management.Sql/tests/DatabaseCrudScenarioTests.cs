@@ -21,7 +21,7 @@ namespace Sql.Tests
 {
     public class DatabaseCrudScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Manual test due to maintenance configuration unavailable in stage.")]
         public void TestCreateDropDatabase()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -55,7 +55,7 @@ namespace Sql.Tests
                     Tags = tags,
                     CreateMode = "Default",
                     SampleName = SampleName.AdventureWorksLT,
-                    StorageAccountType = "GRS",
+                    RequestedBackupStorageRedundancy = "Geo",
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
@@ -117,7 +117,7 @@ namespace Sql.Tests
                 var db8Input = new Database()
                 {
                     Location = server.Location,
-                    StorageAccountType = "GRS",
+                    RequestedBackupStorageRedundancy = "Geo",
                 };
                 var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db8Input);
                 Assert.NotNull(db8);
@@ -397,7 +397,7 @@ namespace Sql.Tests
                 }
             }
         }
-
+        
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
@@ -418,7 +418,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -468,16 +467,15 @@ namespace Sql.Tests
                 // Get TDE config
                 // Recently changed to be enabled by default
                 var config = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Enabled, config.State);
 
                 // Update TDE config
-                config.Status = TransparentDataEncryptionStatus.Disabled;
+                config.State = TransparentDataEncryptionState.Disabled;
 
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
-
                 SqlManagementTestUtilities.ExecuteWithRetry(() =>
                 {
-                    config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+                    sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
                 },
                 TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
                 (CloudException e) =>
@@ -485,7 +483,7 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
             }
         }
     }

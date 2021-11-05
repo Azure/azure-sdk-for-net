@@ -51,9 +51,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// updated</param>
         /// <param name="updatedBy">Describes a user that updated the
         /// bookmark</param>
+        /// <param name="eventTime">The bookmark event time</param>
+        /// <param name="queryStartTime">The start time for the query</param>
+        /// <param name="queryEndTime">The end time for the query</param>
         /// <param name="incidentInfo">Describes an incident that relates to
         /// bookmark</param>
-        public Bookmark(string displayName, string query, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? created = default(System.DateTime?), UserInfo createdBy = default(UserInfo), IList<string> labels = default(IList<string>), string notes = default(string), string queryResult = default(string), System.DateTime? updated = default(System.DateTime?), UserInfo updatedBy = default(UserInfo), IncidentInfo incidentInfo = default(IncidentInfo))
+        public Bookmark(string displayName, string query, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? created = default(System.DateTime?), UserInfo createdBy = default(UserInfo), IList<string> labels = default(IList<string>), string notes = default(string), string queryResult = default(string), System.DateTime? updated = default(System.DateTime?), UserInfo updatedBy = default(UserInfo), System.DateTime? eventTime = default(System.DateTime?), System.DateTime? queryStartTime = default(System.DateTime?), System.DateTime? queryEndTime = default(System.DateTime?), IncidentInfo incidentInfo = default(IncidentInfo))
             : base(id, name, type, etag)
         {
             Created = created;
@@ -65,6 +68,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             QueryResult = queryResult;
             Updated = updated;
             UpdatedBy = updatedBy;
+            EventTime = eventTime;
+            QueryStartTime = queryStartTime;
+            QueryEndTime = queryEndTime;
             IncidentInfo = incidentInfo;
             CustomInit();
         }
@@ -129,6 +135,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public UserInfo UpdatedBy { get; set; }
 
         /// <summary>
+        /// Gets or sets the bookmark event time
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventTime")]
+        public System.DateTime? EventTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start time for the query
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queryStartTime")]
+        public System.DateTime? QueryStartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end time for the query
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queryEndTime")]
+        public System.DateTime? QueryEndTime { get; set; }
+
+        /// <summary>
         /// Gets or sets describes an incident that relates to bookmark
         /// </summary>
         [JsonProperty(PropertyName = "properties.incidentInfo")]
@@ -157,10 +181,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             if (UpdatedBy != null)
             {
                 UpdatedBy.Validate();
-            }
-            if (IncidentInfo != null)
-            {
-                IncidentInfo.Validate();
             }
         }
     }

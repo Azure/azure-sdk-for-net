@@ -16,20 +16,23 @@ namespace Azure.Core.Tests
         private readonly AsyncLocal<bool> _collectThisStack;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
+        private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
-        public ClientDiagnosticListener(string name, bool asyncLocal = false): this(n => n == name, asyncLocal)
+        public ClientDiagnosticListener(string name, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
+            : this(n => n == name, asyncLocal, scopeStartCallback)
         {
         }
 
-        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false)
+        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
         {
             if (asyncLocal)
             {
                 _collectThisStack = new AsyncLocal<bool> { Value = true };
             }
             _sourceNameFilter = filter;
+            _scopeStartCallback = scopeStartCallback;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
 
@@ -69,6 +72,7 @@ namespace Azure.Core.Tests
                     };
 
                     Scopes.Add(scope);
+                    _scopeStartCallback?.Invoke(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
@@ -137,6 +141,21 @@ namespace Azure.Core.Tests
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
+                var activity = producedDiagnosticScope.Activity;
+                var operationName = activity.OperationName;
+                // traverse the activities and check for duplicates among ancestors
+                while (activity != null)
+                {
+                    if (operationName == activity.Parent?.OperationName)
+                    {
+                        // Throw this exception lazily on Dispose, rather than when the scope is started, so that we don't trigger a bunch of other
+                        // erroneous exceptions relating to scopes not being completed/started that hide the actual issue
+                        throw new InvalidOperationException($"A scope has already started for event '{producedDiagnosticScope.Name}'");
+                    }
+
+                    activity = activity.Parent;
+                }
+
                 if (!producedDiagnosticScope.IsCompleted)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
@@ -144,7 +163,10 @@ namespace Azure.Core.Tests
             }
         }
 
-        public ProducedDiagnosticScope AssertScopeStarted(string name, params KeyValuePair<string, string>[] expectedAttributes)
+        public ProducedDiagnosticScope AssertScopeStarted(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
+            AssertScopeStartedInternal(name, false, expectedAttributes);
+
+        private ProducedDiagnosticScope AssertScopeStartedInternal(string name, bool remove, params KeyValuePair<string, string>[] expectedAttributes)
         {
             lock (Scopes)
             {
@@ -160,6 +182,11 @@ namespace Azure.Core.Tests
                             }
                         }
 
+                        if (remove)
+                        {
+                            Scopes.Remove(producedDiagnosticScope);
+                        }
+
                         return producedDiagnosticScope;
                     }
                 }
@@ -167,9 +194,16 @@ namespace Azure.Core.Tests
             }
         }
 
-        public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes)
+        public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
+            AssertScopeInternal(name, false, expectedAttributes);
+
+        public ProducedDiagnosticScope AssertAndRemoveScope(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
+            AssertScopeInternal(name, true, expectedAttributes);
+
+        private ProducedDiagnosticScope AssertScopeInternal(string name, bool remove,
+            params KeyValuePair<string, string>[] expectedAttributes)
         {
-            ProducedDiagnosticScope scope = AssertScopeStarted(name, expectedAttributes);
+            ProducedDiagnosticScope scope = AssertScopeStartedInternal(name, remove, expectedAttributes);
             if (!scope.IsCompleted)
             {
                 throw new InvalidOperationException($"'{name}' is not completed");

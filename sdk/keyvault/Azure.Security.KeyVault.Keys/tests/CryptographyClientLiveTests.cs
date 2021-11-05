@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -365,6 +366,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
+        [Test]
+        public async Task EncryptDecryptFromKeyClient()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
+            RegisterForCleanup(key.Name);
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+
+            // Make sure the same (instrumented) pipeline is used from the KeyClient.
+            CryptographyClient cryptoClient = Client.GetCryptographyClient(key.Name, key.Properties.Version);
+            EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+
+            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+        }
+
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
@@ -415,7 +432,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key)
+        private (CryptographyClient ClientProxy, ICryptographyProvider RemoteClientProxy) GetCryptoClient(KeyVaultKey key)
         {
             CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(key, TestEnvironment.Credential, options);

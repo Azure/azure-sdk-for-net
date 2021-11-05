@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// Initializes a new instance of the IotHubDefinitionDescription
         /// class.
         /// </summary>
-        /// <param name="connectionString">Connection string og the IoT
+        /// <param name="connectionString">Connection string of the IoT
         /// hub.</param>
         /// <param name="location">ARM region of the IoT hub.</param>
         /// <param name="applyAllocationPolicy">flag for applying
@@ -75,7 +74,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets connection string og the IoT hub.
+        /// Gets or sets connection string of the IoT hub.
         /// </summary>
         [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }
@@ -86,22 +85,5 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ConnectionString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

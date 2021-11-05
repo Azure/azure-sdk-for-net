@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents collection of events. </summary>
-    public partial class EventDataCollection
+    internal partial class EventDataCollection
     {
         /// <summary> Initializes a new instance of EventDataCollection. </summary>
         /// <param name="value"> this list that includes the Azure audit logs. </param>

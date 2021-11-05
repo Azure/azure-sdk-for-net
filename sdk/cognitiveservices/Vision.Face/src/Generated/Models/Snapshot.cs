@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// 2018-12-25T11:51:27.8705696Z.</param>
         /// <param name="userData">User specified data about the snapshot for
         /// any purpose. Length should not exceed 16KB.</param>
-        public Snapshot(System.Guid id, string account, SnapshotObjectType type, IList<System.Guid?> applyScope, System.DateTime createdTime, System.DateTime lastUpdateTime, string userData = default(string))
+        public Snapshot(System.Guid id, string account, SnapshotObjectType type, IList<System.Guid> applyScope, System.DateTime createdTime, System.DateTime lastUpdateTime, string userData = default(string))
         {
             Id = id;
             Account = account;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// included in the applyScope of Snapshot - Take can apply it.
         /// </summary>
         [JsonProperty(PropertyName = "applyScope")]
-        public IList<System.Guid?> ApplyScope { get; set; }
+        public IList<System.Guid> ApplyScope { get; set; }
 
         /// <summary>
         /// Gets or sets user specified data about the snapshot for any
@@ -140,6 +140,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             if (ApplyScope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ApplyScope");
+            }
+            if (UserData != null)
+            {
+                if (UserData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
+                }
             }
         }
     }

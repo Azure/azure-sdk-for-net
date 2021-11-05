@@ -4,7 +4,7 @@ $RepoRoot = Resolve-Path $PSScriptRoot\..\..\..
 $ObjDirectory = "$RepoRoot\artifacts\obj";
 dotnet restore $RepoRoot\eng\service.proj
 
-pushd $PSScriptRoot
+Push-Location $PSScriptRoot
 
 try
 {
@@ -35,9 +35,11 @@ try
         }
     }
 
-    dotnet sln $slnName add $projects
+    $len = $projects.Length
+    dotnet sln $slnName add $projects[0..($len/2)]
+    dotnet sln $slnName add $projects[($len/2 + 1)..($len-1)]
 }
 finally
 {
-    popd
+    Pop-Location
 }

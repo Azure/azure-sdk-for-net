@@ -5,27 +5,84 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Determines the list of actions to be passed as arguments for AnalyzeBatchActionsOperation class. </summary>
+    /// <summary> Determines the set of actions that will get executed on the input documents.</summary>
     public class TextAnalyticsActions
     {
         /// <summary>
-        /// DisplayName
+        /// Initializes a new instance of the <see cref="TextAnalyticsActions"/>
+        /// class which determines the set of actions that will get executed on the input documents.
+        /// For example, execute extract key phrases, recognize entities, and more.
+        /// </summary>
+        public TextAnalyticsActions()
+        {
+        }
+
+        /// <summary>
+        /// Optional display name for the operation.
         /// </summary>
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// ExtractKeyPhrasesOptions
+        /// The set of <see cref="ExtractKeyPhrasesAction"/> that will get executed on the input documents.
         /// </summary>
-        public IReadOnlyCollection<ExtractKeyPhrasesOptions> ExtractKeyPhrasesOptions { get; set; }
+        public IReadOnlyCollection<ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get; set; }
 
         /// <summary>
-        /// RecognizeEntitiesOptions
+        /// The set of <see cref="RecognizeEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
-        public IReadOnlyCollection<RecognizeEntitiesOptions> RecognizeEntitiesOptions { get; set; }
+        public IReadOnlyCollection<RecognizeEntitiesAction> RecognizeEntitiesActions { get; set; }
 
         /// <summary>
-        /// RecognizePiiEntityOptions
+        /// The set of <see cref="RecognizePiiEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
-        public IReadOnlyCollection<RecognizePiiEntitiesOptions> RecognizePiiEntitiesOptions { get; set; }
+        public IReadOnlyCollection<RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="RecognizeLinkedEntitiesAction"/> that will get executed on the input documents.
+        /// </summary>
+        public IReadOnlyCollection<RecognizeLinkedEntitiesAction> RecognizeLinkedEntitiesActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="AnalyzeSentimentAction"/> that will get executed on the input documents.
+        /// </summary>
+        public IReadOnlyCollection<AnalyzeSentimentAction> AnalyzeSentimentActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="ExtractSummaryAction"/> that will get executed on the input documents.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
+        /// </remarks>
+        public IReadOnlyCollection<ExtractSummaryAction> ExtractSummaryActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="RecognizeCustomEntitiesAction"/> that will get executed on the input documents.
+        /// To train a model to recognize your custom entities, see the
+        /// <see href="https://aka.ms/azsdk/textanalytics/customentityrecognition">documentation</see>.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
+        /// </remarks>
+        public IReadOnlyCollection<RecognizeCustomEntitiesAction> RecognizeCustomEntitiesActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="SingleCategoryClassifyAction"/> that will get executed on the input documents.
+        /// To train a model to classify your documents, see the
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
+        /// </remarks>
+        public IReadOnlyCollection<SingleCategoryClassifyAction> SingleCategoryClassifyActions { get; set; }
+
+        /// <summary>
+        /// The set of <see cref="MultiCategoryClassifyAction"/> that will get executed on the input documents.
+        /// To train a model to classify your documents, see the
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2"/> and up.
+        /// </remarks>
+        public IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions { get; set; }
     }
 }

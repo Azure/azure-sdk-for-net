@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of active directory administrators. </summary>
-    public partial class AdministratorListResult
+    internal partial class AdministratorListResult
     {
         /// <summary> Initializes a new instance of AdministratorListResult. </summary>
         internal AdministratorListResult()

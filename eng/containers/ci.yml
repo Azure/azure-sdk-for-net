@@ -3,14 +3,13 @@ pr: none
 trigger:
   branches:
     include:
-    - master
     - main
   paths:
     include:
     - eng/containers/
 
 pool:
-  vmImage: 'ubuntu-18.04'
+  vmImage: 'ubuntu-20.04'
 
 variables:
   dockerfile: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile

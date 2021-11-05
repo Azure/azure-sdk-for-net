@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 }
 
                 IValueProvider provider = new NonNullConverterValueBinder<string>(value,
-                    new StringToBrokeredMessageConverter(), context.FunctionInstanceId);
+                    new StringToMessageConverter(), context.FunctionInstanceId);
 
                 return Task.FromResult(provider);
             }

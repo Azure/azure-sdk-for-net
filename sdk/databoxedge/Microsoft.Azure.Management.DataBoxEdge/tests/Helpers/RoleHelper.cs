@@ -27,7 +27,7 @@ namespace DataBoxEdge.Tests
             return ioTRole;
 
         }
-        
+
         /// <summary>
         /// Gets roles in the device
         /// </summary>
@@ -47,6 +47,31 @@ namespace DataBoxEdge.Tests
             continuationToken = roles.NextPageLink;
             return roles;
         }
+
+        #region K8 Roles
+
+        /// <summary>
+        /// Returns Kubernetes Role Object
+        /// </summary>
+        public static KubernetesRole GetK8RoleObject(string roleName)
+        {
+            var name = roleName;
+            var role = new KubernetesRole(
+               roleStatus: "Enabled",
+               hostPlatform: "Linux",
+               kubernetesClusterInfo: new KubernetesClusterInfo(
+                   version: "v1.17.3"),
+               kubernetesRoleResources: new KubernetesRoleResources(
+                   compute: new KubernetesRoleCompute(
+                       vmProfile: "DS1_v2")),
+               id: $@"/subscriptions/{TestConstants.SubscriptionId}/resourceGroups/{TestConstants.DefaultResourceGroupName}/providers/{TestConstants.ProviderNameSpace}/dataBoxEdgeDevices/{TestConstants.EdgeResourceName}/roles/{name}",
+               name: name
+           );
+
+            return role;
+        }
+
+        #endregion
 
     }
 }

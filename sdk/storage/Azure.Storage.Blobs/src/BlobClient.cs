@@ -258,6 +258,48 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlobClient"/>.
+        /// </remarks>
+        public new BlobClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlobClient"/>.
+        /// </remarks>
+        public new BlobClient WithEncryptionScope(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same
         /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
         /// </summary>
@@ -273,12 +315,11 @@ namespace Azure.Storage.Blobs
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="Upload(Stream)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -301,12 +342,38 @@ namespace Azure.Storage.Blobs
             Upload(content, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="Upload(string)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="Upload(BinaryData)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(BinaryData content) =>
+            Upload(content, CancellationToken.None);
+
+        /// <summary>
+        /// The <see cref="Upload(string)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -334,7 +401,7 @@ namespace Azure.Storage.Blobs
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -357,12 +424,39 @@ namespace Azure.Storage.Blobs
             await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadAsync(string)"/> operation creates a new block blob
+        /// The <see cref="UploadAsync(BinaryData)"/> operation creates a new block blob
         /// or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(BinaryData content) =>
+            await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -386,12 +480,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -423,13 +515,47 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="Upload(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// The <see cref="Upload(BinaryData, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            BinaryData content,
+            CancellationToken cancellationToken) =>
+            Upload(
+                content,
+                overwrite: false,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="Upload(string, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -462,12 +588,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -499,13 +623,47 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// The <see cref="UploadAsync(BinaryData, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
+            BinaryData content,
+            CancellationToken cancellationToken) =>
+            UploadAsync(
+                content,
+                overwrite: false,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -539,12 +697,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// creates a new block blob or throws if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -581,13 +737,55 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="Upload(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// The <see cref="Upload(BinaryData, bool, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            BinaryData content,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            Upload(
+                content,
+                options: overwrite ? null : new BlobUploadOptions() { Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="Upload(string, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -624,13 +822,14 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -667,13 +866,58 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
-        /// creates a new block blob or updates the content of an existing
-        /// block blob.  Updating an existing block blob overwrites any
-        /// existing metadata on the blob.
+        /// The <see cref="UploadAsync(BinaryData, bool, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
+            BinaryData content,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            UploadAsync(
+                content,
+                options: overwrite ? null : new BlobUploadOptions(){ Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) }},
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
+        /// creates a new block blob or throws if the blob already exists.
+        /// Setting <paramref name="overwrite"/> to true allows updating the
+        /// content of an existing block blob.  Updating an existing block blob
+        /// overwrites any existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -712,12 +956,16 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -755,13 +1003,65 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// The <see cref="Upload(BinaryData, BlobUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            BinaryData content,
+            BlobUploadOptions options,
+            CancellationToken cancellationToken = default) =>
+            StagedUploadInternal(
+                content.ToStream(),
+                options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -834,12 +1134,16 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -883,12 +1187,16 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="Upload(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -965,13 +1273,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1009,13 +1321,65 @@ namespace Azure.Storage.Blobs
             .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// The <see cref="UploadAsync(BinaryData, BlobUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+            BinaryData content,
+            BlobUploadOptions options,
+            CancellationToken cancellationToken = default) =>
+            await StagedUploadInternal(
+                content.ToStream(),
+                options,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1088,12 +1452,16 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1137,12 +1505,16 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
-        /// operation creates a new block blob or updates the content of an
-        /// existing block blob.  Updating an existing block blob overwrites
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
         ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
+        ///
         /// For partial block blob updates and other advanced features, please
-        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// see <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient"/>.  To create or modify page or
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
@@ -1252,21 +1624,25 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
+                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
+                {
+                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
+                }
+
                 // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
                 (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
-            var client = new BlockBlobClient(Uri, ClientConfiguration);
-
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
                 content,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1338,11 +1714,25 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        private BlockBlobClient _blockBlobClient;
+
+        private BlockBlobClient BlockBlobClient
+        {
+            get
+            {
+                if (_blockBlobClient == null)
+                {
+                    _blockBlobClient = new BlockBlobClient(Uri, ClientConfiguration);
+                }
+                return _blockBlobClient;
+            }
+        }
+
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new BlockBlobClient(Uri, ClientConfiguration)
-                .GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
     }
 }

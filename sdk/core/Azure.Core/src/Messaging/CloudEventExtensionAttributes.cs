@@ -125,7 +125,7 @@ namespace Azure.Messaging
                     return;
                 default:
                     throw new ArgumentException($"Values of type {value.GetType()} are not supported. " +
-                        "Attribute values must be of type bool, byte, int, Uri, DateTime, or DateTimeOffset.");
+                        "Attribute values must be of type string, bool, byte, int, Uri, DateTime, or DateTimeOffset.");
             }
         }
     }

@@ -345,6 +345,64 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Patch a backup policy
+            /// </summary>
+            /// <remarks>
+            /// Patch a backup policy for Netapp Account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='backupPolicyName'>
+            /// Backup policy Name which uniquely identify backup policy.
+            /// </param>
+            /// <param name='body'>
+            /// Backup policy object supplied in the body of the operation.
+            /// </param>
+            public static BackupPolicy BeginUpdate(this IBackupPoliciesOperations operations, string resourceGroupName, string accountName, string backupPolicyName, BackupPolicyPatch body)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, backupPolicyName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patch a backup policy
+            /// </summary>
+            /// <remarks>
+            /// Patch a backup policy for Netapp Account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='backupPolicyName'>
+            /// Backup policy Name which uniquely identify backup policy.
+            /// </param>
+            /// <param name='body'>
+            /// Backup policy object supplied in the body of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupPolicy> BeginUpdateAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string accountName, string backupPolicyName, BackupPolicyPatch body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, backupPolicyName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete a backup policy
             /// </summary>
             /// <remarks>

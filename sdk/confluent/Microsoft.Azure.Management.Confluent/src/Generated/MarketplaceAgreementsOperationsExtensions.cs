@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Confluent
             }
 
             /// <summary>
-            /// Accept marketplace terms.
+            /// Create Confluent Marketplace agreement in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
-            /// Confluent Agreement resource
+            /// Confluent Marketplace Agreement resource
             /// </param>
             public static ConfluentAgreementResource Create(this IMarketplaceAgreementsOperations operations, ConfluentAgreementResource body = default(ConfluentAgreementResource))
             {
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.Management.Confluent
             }
 
             /// <summary>
-            /// Accept marketplace terms.
+            /// Create Confluent Marketplace agreement in the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
-            /// Confluent Agreement resource
+            /// Confluent Marketplace Agreement resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

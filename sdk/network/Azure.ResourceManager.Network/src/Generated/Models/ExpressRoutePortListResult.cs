@@ -7,29 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRoutePorts API service call. </summary>
-    public partial class ExpressRoutePortListResult
+    internal partial class ExpressRoutePortListResult
     {
         /// <summary> Initializes a new instance of ExpressRoutePortListResult. </summary>
         internal ExpressRoutePortListResult()
         {
-            Value = new ChangeTrackingList<ExpressRoutePort>();
+            Value = new ChangeTrackingList<ExpressRoutePortData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortListResult. </summary>
         /// <param name="value"> A list of ExpressRoutePort resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRoutePortListResult(IReadOnlyList<ExpressRoutePort> value, string nextLink)
+        internal ExpressRoutePortListResult(IReadOnlyList<ExpressRoutePortData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of ExpressRoutePort resources. </summary>
-        public IReadOnlyList<ExpressRoutePort> Value { get; }
+        public IReadOnlyList<ExpressRoutePortData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

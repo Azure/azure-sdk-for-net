@@ -7,6 +7,8 @@
 namespace Microsoft.Azure.Management.StorageCache.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -25,10 +27,11 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the CacheSecuritySettings class.
         /// </summary>
-        /// <param name="rootSquash">root squash of cache property.</param>
-        public CacheSecuritySettings(bool? rootSquash = default(bool?))
+        /// <param name="accessPolicies">NFS access policies defined for this
+        /// cache.</param>
+        public CacheSecuritySettings(IList<NfsAccessPolicy> accessPolicies = default(IList<NfsAccessPolicy>))
         {
-            RootSquash = rootSquash;
+            AccessPolicies = accessPolicies;
             CustomInit();
         }
 
@@ -38,10 +41,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets root squash of cache property.
+        /// Gets or sets NFS access policies defined for this cache.
         /// </summary>
-        [JsonProperty(PropertyName = "rootSquash")]
-        public bool? RootSquash { get; set; }
+        [JsonProperty(PropertyName = "accessPolicies")]
+        public IList<NfsAccessPolicy> AccessPolicies { get; set; }
 
     }
 }

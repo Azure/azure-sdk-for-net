@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Type of the resource. </param>
         /// <param name="subnet"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        internal ApplicationGatewayIPConfiguration(string id, string name, string etag, string type, SubResource subnet, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayIPConfiguration(string id, string name, string etag, string type, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> Reference to the subnet resource. A subnet from where application gateway gets its private address. </summary>
-        public SubResource Subnet { get; set; }
+        public WritableSubResource Subnet { get; set; }
         /// <summary> The provisioning state of the application gateway IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -5,8 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -18,18 +17,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
     internal class QueueServiceClientProvider : StorageClientProvider<QueueServiceClient, QueueClientOptions>
     {
         private readonly QueuesOptions _queuesOptions;
-        private readonly ILogger<QueueServiceClientProvider> _logger;
+        private readonly ILogger<QueueServiceClient> _logger;
 
         public QueueServiceClientProvider(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
             AzureEventSourceLogForwarder logForwarder,
             IOptions<QueuesOptions> queueOptions,
-            ILogger<QueueServiceClientProvider> logger)
-            : base(configuration, componentFactory, logForwarder)
+            ILogger<QueueServiceClient> logger)
+            : base(configuration, componentFactory, logForwarder, logger)
         {
             _queuesOptions = queueOptions?.Value;
             _logger = logger;
+        }
+
+        /// <inheritdoc/>
+        protected override string ServiceUriSubDomain
+        {
+            get
+            {
+                return "queue";
+            }
         }
 
         protected override QueueClientOptions CreateClientOptions(IConfiguration configuration)
@@ -38,16 +46,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             options.MessageEncoding = _queuesOptions.MessageEncoding;
             options.MessageDecodingFailed += HandleMessageDecodingFailed;
             return options;
-        }
-
-        protected override QueueServiceClient CreateClientFromConnectionString(string connectionString, QueueClientOptions options)
-        {
-            return new QueueServiceClient(connectionString, options);
-        }
-
-        protected override QueueServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, QueueClientOptions options)
-        {
-            return new QueueServiceClient(endpointUri, tokenCredential, options);
         }
 
         private async Task HandleMessageDecodingFailed(QueueMessageDecodingFailedEventArgs args)

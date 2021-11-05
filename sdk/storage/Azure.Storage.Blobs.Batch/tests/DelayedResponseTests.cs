@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Specialized;
@@ -18,10 +19,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void CompletedDelayedResponseToStringCallsBase()
+        public async Task CompletedDelayedResponseToStringCallsBase()
         {
             DelayedResponse delayedResponse = new DelayedResponse(new HttpMessage(new MockRequest(), new ResponseClassifier()));
-            delayedResponse.SetLiveResponse(new MockResponse(200, "Yay"), false);
+            await delayedResponse.SetLiveResponse(new MockResponse(200, "Yay"), false);
             Assert.AreEqual("Status: 200, ReasonPhrase: Yay", delayedResponse.ToString());
         }
     }

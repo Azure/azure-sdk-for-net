@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// <param name="monitoringStatus">Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="marketplaceSubscriptionStatus">Possible values
-        /// include: 'Active', 'Suspended'</param>
+        /// include: 'Provisioning', 'Active', 'Suspended',
+        /// 'Unsubscribed'</param>
         /// <param name="liftrResourceCategory">Possible values include:
         /// 'Unknown', 'MonitorLogs'</param>
         /// <param name="liftrResourcePreference">The priority of the
@@ -72,7 +73,8 @@ namespace Microsoft.Azure.Management.Datadog.Models
         public string MonitoringStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Suspended'
+        /// Gets or sets possible values include: 'Provisioning', 'Active',
+        /// 'Suspended', 'Unsubscribed'
         /// </summary>
         [JsonProperty(PropertyName = "marketplaceSubscriptionStatus")]
         public string MarketplaceSubscriptionStatus { get; set; }

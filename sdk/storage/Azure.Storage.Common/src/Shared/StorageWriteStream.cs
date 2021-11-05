@@ -16,6 +16,7 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
+        protected readonly UploadTransactionalHashingOptions _hashingOptions;
         private bool _disposed;
         private bool _shouldDisposeBuffer;
 
@@ -23,6 +24,7 @@ namespace Azure.Storage.Shared
             long position,
             long bufferSize,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             PooledMemoryStream buffer = null)
         {
             _position = position;
@@ -31,6 +33,13 @@ namespace Azure.Storage.Shared
             if (progressHandler != null)
             {
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
+            }
+
+            _hashingOptions = hashingOptions;
+            // write streams don't support pre-calculated hashes
+            if (_hashingOptions?.PrecalculatedHash != default)
+            {
+                throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
 
             if (buffer != null)
@@ -183,27 +192,27 @@ namespace Azure.Storage.Shared
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException($"{nameof(buffer)}", $"{nameof(buffer)} cannot be null.");
+                throw new ArgumentNullException(nameof(buffer), $"{nameof(buffer)} cannot be null.");
             }
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be less than 0.");
             }
 
             if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be greater than {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be greater than {nameof(buffer)} length.");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} cannot be less than 0.");
             }
 
             if (offset + count > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException($"{nameof(offset)} and {nameof(count)}", $"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
         }
 

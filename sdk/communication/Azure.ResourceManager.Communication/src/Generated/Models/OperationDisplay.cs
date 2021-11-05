@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> The object that describes a operation. </summary>
+    /// <summary> Localized display information for this particular operation. </summary>
     public partial class OperationDisplay
     {
         /// <summary> Initializes a new instance of OperationDisplay. </summary>
@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of OperationDisplay. </summary>
-        /// <param name="provider"> Friendly name of the resource provider. </param>
-        /// <param name="resource"> Resource type on which the operation is performed. </param>
-        /// <param name="operation"> The localized friendly name for the operation. </param>
-        /// <param name="description"> The localized friendly description for the operation. </param>
+        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute&quot;. </param>
+        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. &quot;Virtual Machines&quot; or &quot;Job Schedule Collections&quot;. </param>
+        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. &quot;Create or Update Virtual Machine&quot;, &quot;Restart Virtual Machine&quot;. </param>
+        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
         internal OperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Communication.Models
             Description = description;
         }
 
-        /// <summary> Friendly name of the resource provider. </summary>
+        /// <summary> The localized friendly form of the resource provider name, e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute&quot;. </summary>
         public string Provider { get; }
-        /// <summary> Resource type on which the operation is performed. </summary>
+        /// <summary> The localized friendly name of the resource type related to this operation. E.g. &quot;Virtual Machines&quot; or &quot;Job Schedule Collections&quot;. </summary>
         public string Resource { get; }
-        /// <summary> The localized friendly name for the operation. </summary>
+        /// <summary> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. &quot;Create or Update Virtual Machine&quot;, &quot;Restart Virtual Machine&quot;. </summary>
         public string Operation { get; }
-        /// <summary> The localized friendly description for the operation. </summary>
+        /// <summary> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </summary>
         public string Description { get; }
     }
 }

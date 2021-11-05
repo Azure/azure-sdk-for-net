@@ -33,18 +33,23 @@ namespace Microsoft.Azure.Management.Quantum.Models
         /// </summary>
         /// <param name="id">Unique sku id.</param>
         /// <param name="name">Display name of this sku.</param>
+        /// <param name="version">Display name of this sku.</param>
         /// <param name="description">Description about this sku.</param>
+        /// <param name="restrictedAccessUri">Uri to subscribe to the
+        /// restricted access sku.</param>
         /// <param name="targets">The list of targets available for this
         /// sku.</param>
         /// <param name="quotaDimensions">The list of quota dimensions for this
         /// sku.</param>
         /// <param name="pricingDetails">The list of pricing details for the
         /// sku.</param>
-        public SkuDescription(string id = default(string), string name = default(string), string description = default(string), IList<string> targets = default(IList<string>), IList<QuotaDimension> quotaDimensions = default(IList<QuotaDimension>), IList<PricingDetail> pricingDetails = default(IList<PricingDetail>))
+        public SkuDescription(string id = default(string), string name = default(string), string version = default(string), string description = default(string), string restrictedAccessUri = default(string), IList<string> targets = default(IList<string>), IList<QuotaDimension> quotaDimensions = default(IList<QuotaDimension>), IList<PricingDetail> pricingDetails = default(IList<PricingDetail>))
         {
             Id = id;
             Name = name;
+            Version = version;
             Description = description;
+            RestrictedAccessUri = restrictedAccessUri;
             Targets = targets;
             QuotaDimensions = quotaDimensions;
             PricingDetails = pricingDetails;
@@ -69,10 +74,22 @@ namespace Microsoft.Azure.Management.Quantum.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets display name of this sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; set; }
+
+        /// <summary>
         /// Gets or sets description about this sku.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets uri to subscribe to the restricted access sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "restrictedAccessUri")]
+        public string RestrictedAccessUri { get; set; }
 
         /// <summary>
         /// Gets or sets the list of targets available for this sku.

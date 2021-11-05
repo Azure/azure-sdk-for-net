@@ -11,21 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> List of vault resources. </summary>
-    public partial class ResourceListResult
+    internal partial class ResourceListResult
     {
         /// <summary> Initializes a new instance of ResourceListResult. </summary>
         internal ResourceListResult()
         {
             Value = new ChangeTrackingList<Resource>();
-        }
-
-        /// <summary> Initializes a new instance of ResourceListResult. </summary>
-        /// <param name="value"> The list of vault resources. </param>
-        /// <param name="nextLink"> The URL to get the next set of vault resources. </param>
-        internal ResourceListResult(IReadOnlyList<Resource> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> The list of vault resources. </summary>

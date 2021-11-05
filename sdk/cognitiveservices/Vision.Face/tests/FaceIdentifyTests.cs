@@ -44,7 +44,7 @@ namespace FaceSDK.Tests
                         Assert.NotNull(faceId1);
                     }
 
-                    IList<IdentifyResult> identificationResults = client.Face.IdentifyAsync(new List<Guid?> { faceId1.Value }, personGroupId).Result;
+                    IList<IdentifyResult> identificationResults = client.Face.IdentifyAsync(new List<Guid> { faceId1.Value }, personGroupId).Result;
                     Assert.Equal(1, identificationResults.Count);
                     Assert.Equal(satyaPerson.PersonId, identificationResults[0].Candidates[0].PersonId);
                     Assert.True(identificationResults[0].Candidates[0].Confidence > 0.5);
@@ -84,7 +84,7 @@ namespace FaceSDK.Tests
                         Assert.NotNull(faceId1);
                     }
 
-                    IList<IdentifyResult> identificationResults = client.Face.IdentifyAsync(new List<Guid?> { faceId1.Value }, largePersonGroupId: largePersonGroupId).Result;
+                    IList<IdentifyResult> identificationResults = client.Face.IdentifyAsync(new List<Guid> { faceId1.Value }, largePersonGroupId: largePersonGroupId).Result;
                     Assert.Equal(1, identificationResults.Count);
                     Assert.Equal(satyaPerson.PersonId, identificationResults[0].Candidates[0].PersonId);
                     Assert.True(identificationResults[0].Candidates[0].Confidence > 0.5);
@@ -108,7 +108,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    client.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId, personId, stream, null, new List<int?>{
+                    client.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId, personId, stream, null, new List<int>{
                         face.FaceRectangle.Left,
                         face.FaceRectangle.Top,
                         face.FaceRectangle.Width,
@@ -130,7 +130,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    client.LargePersonGroupPerson.AddFaceFromStreamAsync(largePersonGroupId, personId, stream, null, new List<int?>{
+                    client.LargePersonGroupPerson.AddFaceFromStreamAsync(largePersonGroupId, personId, stream, null, new List<int>{
                         face.FaceRectangle.Left,
                         face.FaceRectangle.Top,
                         face.FaceRectangle.Width,

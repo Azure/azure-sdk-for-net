@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics.Models
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceAspect>> aspects = default;
-            Optional<IReadOnlyList<SentenceOpinion>> opinions = default;
+            Optional<IReadOnlyList<SentenceTarget>> targets = default;
+            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -50,38 +50,38 @@ namespace Azure.AI.TextAnalytics.Models
                     length = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("aspects"))
+                if (property.NameEquals("targets"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SentenceAspect> array = new List<SentenceAspect>();
+                    List<SentenceTarget> array = new List<SentenceTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceAspect.DeserializeSentenceAspect(item));
+                        array.Add(SentenceTarget.DeserializeSentenceTarget(item));
                     }
-                    aspects = array;
+                    targets = array;
                     continue;
                 }
-                if (property.NameEquals("opinions"))
+                if (property.NameEquals("assessments"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SentenceOpinion> array = new List<SentenceOpinion>();
+                    List<SentenceAssessment> array = new List<SentenceAssessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceOpinion.DeserializeSentenceOpinion(item));
+                        array.Add(SentenceAssessment.DeserializeSentenceAssessment(item));
                     }
-                    opinions = array;
+                    assessments = array;
                     continue;
                 }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(aspects), Optional.ToList(opinions));
+            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
         }
     }
 }

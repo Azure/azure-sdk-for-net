@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-12-06";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -104,6 +104,9 @@ namespace Azure.Storage
 
         public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
+        public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
+        public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -169,6 +172,8 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
@@ -176,6 +181,8 @@ namespace Azure.Storage
             public const string InternalError = "InternalError";
             public const string OperationTimedOut = "OperationTimedOut";
             public const string ServerBusy = "ServerBusy";
+            public const string ContainerAlreadyExists = "ContainerAlreadyExists";
+            public const string BlobAlreadyExists = "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -186,6 +193,8 @@ namespace Azure.Storage
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
+            public const string MetadataHeaderPrefix = "x-ms-meta-";
+            public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
 
             internal static class Append
             {
@@ -290,9 +299,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.
@@ -315,6 +334,7 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
             public const string FilesystemNotFound = "FilesystemNotFound";
             public const string PathNotFound = "PathNotFound";
+            public const string PathAlreadyExists = "PathAlreadyExists";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -337,6 +357,10 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
@@ -459,8 +483,10 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
@@ -517,6 +543,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource
@@ -611,6 +639,12 @@ namespace Azure.Storage
         {
             internal const int NotFound = 404;
             internal const int NotModified = 304;
+        }
+
+        internal static class ServerTimeout
+        {
+            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
+            internal const string QueryParameterKey = "timeout";
         }
     }
 }

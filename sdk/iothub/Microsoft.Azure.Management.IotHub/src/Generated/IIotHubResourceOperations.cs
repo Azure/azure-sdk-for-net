@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to
         /// modify a property is to retrieve the IoT hub metadata and security
         /// metadata, and then combine them with the modified values in a new
-        /// body to update the IoT hub.
+        /// body to update the IoT hub. If certain properties are missing in
+        /// the JSON, updating IoT Hub may cause these values to fallback to
+        /// default, which may lead to unexpected behavior.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.
@@ -341,6 +343,8 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='name'>
         /// The name of the consumer group to add.
         /// </param>
+        /// <param name='properties'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -356,7 +360,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConsumerGroupInfo>> CreateEventHubConsumerGroupWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupName properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a consumer group from an Event Hub-compatible endpoint in an
         /// IoT hub
@@ -742,7 +746,9 @@ namespace Microsoft.Azure.Management.IotHub
         /// Create or update the metadata of an Iot hub. The usual pattern to
         /// modify a property is to retrieve the IoT hub metadata and security
         /// metadata, and then combine them with the modified values in a new
-        /// body to update the IoT hub.
+        /// body to update the IoT hub. If certain properties are missing in
+        /// the JSON, updating IoT Hub may cause these values to fallback to
+        /// default, which may lead to unexpected behavior.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the IoT hub.

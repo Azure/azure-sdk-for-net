@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <summary>
         /// Initializes a new instance of the Configuration class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="value">Value of the configuration.</param>
         /// <param name="description">Description of the configuration.</param>
         /// <param name="defaultValue">Default value of the
@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="dataType">Data type of the configuration.</param>
         /// <param name="allowedValues">Allowed values of the
         /// configuration.</param>
-        /// <param name="source">Source of the configuration.</param>
+        /// <param name="source">Source of the configuration. Possible values
+        /// include: 'system-default', 'user-override'</param>
         /// <param name="isReadOnly">If is the configuration read only.
         /// Possible values include: 'True', 'False'</param>
         /// <param name="isConfigPendingRestart">If is the configuration
@@ -53,7 +54,9 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// 'False'</param>
         /// <param name="isDynamicConfig">If is the configuration dynamic.
         /// Possible values include: 'True', 'False'</param>
-        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string), string isReadOnly = default(string), string isConfigPendingRestart = default(string), string isDynamicConfig = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string), string isReadOnly = default(string), string isConfigPendingRestart = default(string), string isDynamicConfig = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Value = value;
@@ -65,6 +68,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
             IsReadOnly = isReadOnly;
             IsConfigPendingRestart = isConfigPendingRestart;
             IsDynamicConfig = isDynamicConfig;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -104,7 +108,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public string AllowedValues { get; private set; }
 
         /// <summary>
-        /// Gets or sets source of the configuration.
+        /// Gets or sets source of the configuration. Possible values include:
+        /// 'system-default', 'user-override'
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
         public string Source { get; set; }
@@ -129,6 +134,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isDynamicConfig")]
         public string IsDynamicConfig { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

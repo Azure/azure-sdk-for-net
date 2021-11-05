@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class LinkedServiceListResponse
+    [JsonConverter(typeof(LinkedServiceListResponseConverter))]
+    internal partial class LinkedServiceListResponse
     {
         internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
         {
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LinkedServiceListResponse(value, nextLink.Value);
+        }
+
+        internal partial class LinkedServiceListResponseConverter : JsonConverter<LinkedServiceListResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, LinkedServiceListResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override LinkedServiceListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLinkedServiceListResponse(document.RootElement);
+            }
         }
     }
 }

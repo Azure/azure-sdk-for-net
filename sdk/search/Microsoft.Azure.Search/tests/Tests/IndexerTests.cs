@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class IndexerTests : SearchTestBase<IndexerFixture>
     {
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateIndexerReturnsCorrectDefinition()
         {
             Run(() =>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateIndexerFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void GetIndexerThrowsOnNotFound()
         {
             Run(() =>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanUpdateIndexer()
         {
             Run(() =>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateCreatesWhenIndexerDoesNotExist()
         {
             Run(() =>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateCreatesWhenIndexerWithSkillsetDoesNotExist()
         {
             Run(() =>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateIndexerIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CreateOrUpdateIndexerIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateIndexerIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateIndexerIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateIndexerIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void UpdateIndexerIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteIndexerIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteIndexerIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void DeleteIndexerIsIdempotent()
         {
             Run(() =>
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanCreateAndListIndexers()
         {
             Run(() =>
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanRunIndexerAndGetIndexerStatus()
         {
             Run(() =>
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanResetIndexerAndGetIndexerStatus()
         {
             Run(() =>
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void ExistsReturnsTrueForExistingIndexer()
         {
             Run(() =>
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void ExistsReturnsFalseForNonExistingIndexer()
         {
             Run(() =>
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanCreateBlobIndexerWithConfigurationParameters()
         {
             Run(() =>
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "Needs AzureSqlReadOnlyConnectionString to be set")]
         public void CanRoundtripIndexerWithFieldMappingFunctions() =>
             Run(() =>
             {

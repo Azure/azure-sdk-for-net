@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync agents. </summary>
-    public partial class SyncAgentListResult
+    internal partial class SyncAgentListResult
     {
         /// <summary> Initializes a new instance of SyncAgentListResult. </summary>
         internal SyncAgentListResult()

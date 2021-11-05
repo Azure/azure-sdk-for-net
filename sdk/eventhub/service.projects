@@ -7,33 +7,23 @@
   the set of projects to to match what type of SDK we are interested in building.
 
   SDKType values
-   - empty or "client" will build the new track 2 client/data libraries
+   - "all" will build all projects
+   - "client" will build the new track 2 client/data libraries
    - "mgmtclient" will build the track 2 mgmt libraries
    - "data" will build the track 1 data plane libraries
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == '' or '$(SDKType)' == 'client'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs*\**\*.csproj" />
   </ItemGroup>
-
-  <!-- Remove all projects under this directory but the included projects based on sdk type -->
-  <ItemGroup>
-    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
-    <ProjectReference Remove="@(ProjectsToRemove)" />
-  </ItemGroup>
-
-  <Target Name="EventHubsOutput" BeforeTargets="Build">
-    <Message Text="Final Build References:" Importance="high"/>
-    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
-  </Target>
 </Project>

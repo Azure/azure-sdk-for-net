@@ -109,7 +109,7 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
+            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: "rg1");
             Utilities.AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 
@@ -149,7 +149,7 @@ namespace Monitor.Tests.BasicTests
                 lastUpdatedTime: resource.LastUpdatedTime
             );
 
-            var actualResponse = monitorManagementClient.AlertRules.Update(resourceGroupName: " rg1", ruleName: resource.Name, alertRulesResource: pathResource);
+            var actualResponse = monitorManagementClient.AlertRules.Update(resourceGroupName: "rg1", ruleName: resource.Name, alertRulesResource: pathResource);
             Utilities.AreEqual(resource, actualResponse);
         }
 

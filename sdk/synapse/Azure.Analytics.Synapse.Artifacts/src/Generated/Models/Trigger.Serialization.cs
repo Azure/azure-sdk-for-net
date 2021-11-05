@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TriggerConverter))]
     public partial class Trigger : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -50,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
                     case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
                     case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element);
+                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
                     case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element);
                     case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element);
                     case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);
@@ -103,6 +107,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Trigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
+        }
+
+        internal partial class TriggerConverter : JsonConverter<Trigger>
+        {
+            public override void Write(Utf8JsonWriter writer, Trigger model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Trigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTrigger(document.RootElement);
+            }
         }
     }
 }

@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -53,20 +52,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// The list of plugins for the client.
+        /// Gets or sets a flag that indicates whether or not transactions may span multiple
+        /// Service Bus entities.
         /// </summary>
-        internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
-
-        /// <summary>
-        /// Register a plugin to be used to alter
-        /// incoming/outgoing messages.
-        /// </summary>
-        /// <param name="plugin">The plugin instance to register.</param>
-        internal void AddPlugin(ServiceBusPlugin plugin)
-        {
-            Argument.AssertNotNull(plugin, nameof(plugin));
-            Plugins.Add(plugin);
-        }
+        ///<value>
+        /// <c>true</c>, when cross-entity transactions are enabled; <c>false</c> when
+        /// transactions are not being used or should be limited to a single entity.
+        ///</value>
+        public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -109,7 +102,7 @@ namespace Azure.Messaging.ServiceBus
                 TransportType = TransportType,
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
-                Plugins = new List<ServiceBusPlugin>(Plugins)
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions,
             };
     }
 }

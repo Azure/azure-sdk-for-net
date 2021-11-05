@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> field of an arrow schema. </summary>
+    /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
         /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>
-        /// <param name="type"> . </param>
+        /// <param name="type"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public ArrowFieldInternal(string type)
         {
@@ -25,9 +25,13 @@ namespace Azure.Storage.Blobs.Models
             Type = type;
         }
 
+        /// <summary> Gets the type. </summary>
         public string Type { get; }
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
+        /// <summary> Gets or sets the precision. </summary>
         public int? Precision { get; set; }
+        /// <summary> Gets or sets the scale. </summary>
         public int? Scale { get; set; }
     }
 }

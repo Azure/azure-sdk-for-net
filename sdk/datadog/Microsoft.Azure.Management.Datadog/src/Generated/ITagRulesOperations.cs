@@ -27,8 +27,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// List the tag rules for a given monitor resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the Datadog resource
-        /// belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -53,13 +52,13 @@ namespace Microsoft.Azure.Management.Datadog
         /// Create or update a tag rule set for a given monitor resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the Datadog resource
-        /// belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
         /// </param>
         /// <param name='ruleSetName'>
+        /// Rule set name
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -69,7 +68,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -83,13 +82,13 @@ namespace Microsoft.Azure.Management.Datadog
         /// Get a tag rule set for a given monitor resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the Datadog resource
-        /// belongs.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
         /// </param>
         /// <param name='ruleSetName'>
+        /// Rule set name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,7 +96,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -119,7 +118,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

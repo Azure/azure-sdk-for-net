@@ -50,7 +50,7 @@ namespace Microsoft.Extensions.Azure
                 throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
             }
 
-            return registration.GetClient(_monitor.Get(name), _clientsOptions.Get(name).CredentialFactory(_serviceProvider));
+            return registration.GetClient(_serviceProvider, _monitor.Get(name), _clientsOptions.Get(name).CredentialFactory(_serviceProvider));
         }
     }
 }

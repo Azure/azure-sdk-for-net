@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "331",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-229795000b230149a6c4a981d4edc064-7f3c8321cfae8745-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-a446c72404565d4a8ef76cd5b90ea838-6a06fe1f582f884f-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "e218864f9605e01c86941869a0be6841",
         "x-ms-return-client-request-id": "true"
       },
@@ -34,31 +40,38 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b181dcbf-7558-4a61-9e06-06b9c65c282e",
+        "apim-request-id": "a4e37a26-99ec-4da5-8572-4327e65cb94a",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 08 Feb 2021 16:53:41 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Mon, 25 Oct 2021 21:22:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "102"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31"
       },
       "ResponseBody": {
         "documents": [
           {
-            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs.",
+            "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs.",
             "id": "0",
             "entities": [
               {
+                "text": "developer",
+                "category": "PersonType",
+                "offset": 2,
+                "length": 9,
+                "confidenceScore": 0.97
+              },
+              {
                 "text": "859-98-0987",
-                "category": "U.S. Social Security Number (SSN)",
+                "category": "USSocialSecurityNumber",
                 "offset": 21,
                 "length": 11,
                 "confidenceScore": 0.65
               },
               {
                 "text": "800-102-1100",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 55,
                 "length": 12,
                 "confidenceScore": 0.8
@@ -72,21 +85,21 @@
             "entities": [
               {
                 "text": "111000025",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.8
               },
               {
                 "text": "111000025",
-                "category": "ABA Routing Number",
+                "category": "ABARoutingNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.75
               },
               {
                 "text": "111000025",
-                "category": "New Zealand Social Welfare Number",
+                "category": "NZSocialWelfareNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.65
@@ -108,13 +121,13 @@
             }
           }
         ],
-        "modelVersion": "2020-07-01"
+        "modelVersion": "2021-01-15"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1607409987",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

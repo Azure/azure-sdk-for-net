@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of JobBase entities. </summary>
-    public partial class JobBaseResourceArmPaginatedResult
+    internal partial class JobBaseResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
         internal JobBaseResourceArmPaginatedResult()

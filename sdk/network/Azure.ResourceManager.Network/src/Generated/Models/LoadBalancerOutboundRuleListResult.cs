@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListOutboundRule API service call. </summary>
-    public partial class LoadBalancerOutboundRuleListResult
+    internal partial class LoadBalancerOutboundRuleListResult
     {
         /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
         internal LoadBalancerOutboundRuleListResult()

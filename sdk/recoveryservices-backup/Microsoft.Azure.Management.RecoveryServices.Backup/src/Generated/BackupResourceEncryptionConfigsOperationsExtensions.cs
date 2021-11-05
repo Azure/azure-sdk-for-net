@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// The name of the resource group where the recovery services vault is
             /// present.
             /// </param>
-            public static BackupResourceEncryptionConfigResource Get(this IBackupResourceEncryptionConfigsOperations operations, string vaultName, string resourceGroupName)
+            public static BackupResourceEncryptionConfigExtendedResource Get(this IBackupResourceEncryptionConfigsOperations operations, string vaultName, string resourceGroupName)
             {
                 return operations.GetAsync(vaultName, resourceGroupName).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupResourceEncryptionConfigResource> GetAsync(this IBackupResourceEncryptionConfigsOperations operations, string vaultName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupResourceEncryptionConfigExtendedResource> GetAsync(this IBackupResourceEncryptionConfigsOperations operations, string vaultName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DataFlowDebugResourceConverter))]
     public partial class DataFlowDebugResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -23,6 +26,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataFlowDebugResource DeserializeDataFlowDebugResource(JsonElement element)
+        {
+            DataFlow properties = default;
+            Optional<string> name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"))
+                {
+                    properties = DataFlow.DeserializeDataFlow(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new DataFlowDebugResource(name.Value, properties);
+        }
+
+        internal partial class DataFlowDebugResourceConverter : JsonConverter<DataFlowDebugResource>
+        {
+            public override void Write(Utf8JsonWriter writer, DataFlowDebugResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DataFlowDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugResource(document.RootElement);
+            }
         }
     }
 }

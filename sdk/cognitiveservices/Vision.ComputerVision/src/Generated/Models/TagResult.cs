@@ -34,11 +34,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="tags">A list of tags with confidence level.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public TagResult(IList<ImageTag> tags = default(IList<ImageTag>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public TagResult(IList<ImageTag> tags = default(IList<ImageTag>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
         {
             Tags = tags;
             RequestId = requestId;
             Metadata = metadata;
+            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -63,6 +64,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "modelVersion")]
+        public string ModelVersion { get; set; }
 
     }
 }

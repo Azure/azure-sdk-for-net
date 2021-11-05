@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Alert rule template.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AlertRuleTemplate")]
     public partial class AlertRuleTemplate : Resource
     {
         /// <summary>

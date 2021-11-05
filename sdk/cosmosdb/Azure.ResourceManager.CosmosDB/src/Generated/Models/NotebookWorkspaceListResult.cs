@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A list of notebook workspace resources. </summary>
-    public partial class NotebookWorkspaceListResult
+    internal partial class NotebookWorkspaceListResult
     {
         /// <summary> Initializes a new instance of NotebookWorkspaceListResult. </summary>
         internal NotebookWorkspaceListResult()

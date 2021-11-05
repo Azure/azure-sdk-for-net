@@ -15,16 +15,16 @@ namespace Azure.Storage.Blobs.Models
         internal static BlobBlock DeserializeBlobBlock(XElement element)
         {
             string name = default;
-            int size = default;
+            long sizeLong = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = (string)nameElement;
             }
             if (element.Element("Size") is XElement sizeElement)
             {
-                size = (int)sizeElement;
+                sizeLong = (long)sizeElement;
             }
-            return new BlobBlock(name, size);
+            return new BlobBlock(name, sizeLong);
         }
     }
 }

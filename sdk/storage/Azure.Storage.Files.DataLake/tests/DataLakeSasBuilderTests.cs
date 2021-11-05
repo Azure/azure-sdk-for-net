@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private readonly DataLakeSasPermissions _sasPermissions = DataLakeSasPermissions.All;
 
-        [Test]
+        [RecordedTest]
         public void EnsureStateTests()
         {
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder();
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new InvalidOperationException("SAS is missing required parameter: ExpiresOn"));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("TLXDWCAR")]
         [TestCase("racwdxlt")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             accountSasBuilder.SetPermissions(permissionsString);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             Uri uri = new Uri($"{test.FileSystem.Uri}?{accountSasBuilder.ToSasQueryParameters(sharedKeyCredential)}");
 
@@ -70,7 +70,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasFileSystemClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase(DataLakeFileSystemSasPermissions.List)]
         [TestCase(DataLakeFileSystemSasPermissions.Read | DataLakeFileSystemSasPermissions.List)]
@@ -109,7 +109,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             dataLakeSasBuilder.SetPermissions(permissions);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
@@ -125,7 +125,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("LDWCMEAOPR")]
         [TestCase("racwdlmeop")]
@@ -145,7 +145,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 rawPermissions: permissionsString,
                 normalize: true);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task FileSystemPermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -182,7 +182,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("LDWCAMEROP")]
         [TestCase("racwdlmeop")]
@@ -229,7 +229,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryRawPermissions_Exists()
         {
@@ -269,7 +269,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasDirectoryClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryRawPermissions_List()
         {
@@ -312,7 +312,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_PreauthorizedAgentObjectId()
         {
@@ -355,7 +355,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_AgentObjectId()
         {
@@ -405,7 +405,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await sasDirectoryClient.CreateFileAsync(GetNewFileName());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_AgentObjectId_Error()
         {
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.IsNotNull(e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_BothObjectId_Error()
         {
@@ -482,7 +482,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new InvalidOperationException("SAS cannot have the following parameters specified in conjunction: PreauthorizedAgentObjectId, AgentObjectId"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_CorrelationId()
         {
@@ -525,7 +525,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryDepth_SharedKey()
         {
@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
 
-            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subdirectory3.Uri)
             {
@@ -565,7 +565,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasDirectoryClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryDepth_Exists()
         {
@@ -607,7 +607,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasDirectoryClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("/")] // Root Directory
         [TestCase("d1")]
         [TestCase("d1/d2/d3/d4/d5")]

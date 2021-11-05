@@ -15,14 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            else
-            {
-                writer.WriteNull("connectionString");
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
             }
             if (Container != null)
             {
@@ -47,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureBlobParameter DeserializeAzureBlobParameter(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             string container = default;
             string blobTemplate = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +86,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureBlobParameter(connectionString, container, blobTemplate);
+            return new AzureBlobParameter(connectionString.Value, container, blobTemplate);
         }
     }
 }

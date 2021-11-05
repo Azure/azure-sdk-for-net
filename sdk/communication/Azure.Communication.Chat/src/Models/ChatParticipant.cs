@@ -11,15 +11,15 @@ namespace Azure.Communication.Chat
         /// <summary>
         ///  A member of the chat thread.
         /// </summary>
-        /// <param name="communicationIdentifier">Instance of <see cref="CommunicationIdentifier"/>.</param>
-        public ChatParticipant(CommunicationIdentifier communicationIdentifier)
+        /// <param name="identifier">Instance of <see cref="CommunicationIdentifier"/>.</param>
+        public ChatParticipant(CommunicationIdentifier identifier)
         {
-            User = communicationIdentifier;
+            User = identifier;
         }
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
         {
-            User = new CommunicationUserIdentifier(chatParticipantInternal.Id);
+            User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
         }
@@ -27,13 +27,13 @@ namespace Azure.Communication.Chat
         ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
         public CommunicationIdentifier User { get; set; }
         /// <summary> Display name for the chat thread member. </summary>
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(((CommunicationUserIdentifier)User).Id, DisplayName, ShareHistoryTime);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedInfo"> Linked integration runtime type from data factory. </param>
         internal SelfHostedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(type, description, additionalProperties)
         {

@@ -4,7 +4,7 @@ This sample illustrates how to update a setting in the configuration store only 
 
 In a hypothetical scenario, we release several virtual machines from our application's resource pool, and update the `available_vms` configuration setting to reflect this. In this scenario, if another client were to have modified `available_vms` since we last retrieved it, and we updated it unconditionally, our update would overwrite their changes and the resulting value of `available_vms` would be incorrect. We show in the sample how to implement optimistic concurrency to apply the update in a way that doesn't overwrite other clients' changes.
 
-To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
+To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
 
 ## Define method `ReleaseVMs`
 
@@ -47,7 +47,7 @@ private static int UpdateAvailableVms(ConfigurationClient client, int releasedVM
 
 ## Create a ConfigurationClient
 
-To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
+To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
  
 For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 

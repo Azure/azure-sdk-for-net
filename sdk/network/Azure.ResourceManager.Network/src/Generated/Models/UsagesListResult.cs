@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The list usages operation response. </summary>
-    public partial class UsagesListResult
+    internal partial class UsagesListResult
     {
         /// <summary> Initializes a new instance of UsagesListResult. </summary>
         internal UsagesListResult()

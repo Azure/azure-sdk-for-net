@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoresUpdateOperation : Operation<ConfigurationStore>, IOperationSource<ConfigurationStore>
     {
         private readonly ArmOperationHelpers<ConfigurationStore> _operation;
+
+        /// <summary> Initializes a new instance of ConfigurationStoresUpdateOperation for mocking. </summary>
+        protected ConfigurationStoresUpdateOperation()
+        {
+        }
+
         internal ConfigurationStoresUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConfigurationStore>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConfigurationStoresUpdateOperation");

@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
-    /// </summary>
     public partial class CosmosDBManagementClient : ServiceClient<CosmosDBManagementClient>, ICosmosDBManagementClient, IAzureClient
     {
         /// <summary>
@@ -47,14 +44,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -165,9 +162,19 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
 
         /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -175,9 +182,49 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// Gets the IRestorableDatabaseAccountsOperations.
         /// </summary>
-        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+        public virtual IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableSqlDatabasesOperations RestorableSqlDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlContainersOperations.
+        /// </summary>
+        public virtual IRestorableSqlContainersOperations RestorableSqlContainers { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableSqlResourcesOperations.
+        /// </summary>
+        public virtual IRestorableSqlResourcesOperations RestorableSqlResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableMongodbDatabasesOperations RestorableMongodbDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbCollectionsOperations.
+        /// </summary>
+        public virtual IRestorableMongodbCollectionsOperations RestorableMongodbCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableMongodbResourcesOperations.
+        /// </summary>
+        public virtual IRestorableMongodbResourcesOperations RestorableMongodbResources { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        public virtual ICassandraClustersOperations CassandraClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CosmosDBManagementClient class.
@@ -438,11 +485,21 @@ namespace Microsoft.Azure.Management.CosmosDB
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
+            Locations = new LocationsOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
-            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            RestorableDatabaseAccounts = new RestorableDatabaseAccountsOperations(this);
+            RestorableSqlDatabases = new RestorableSqlDatabasesOperations(this);
+            RestorableSqlContainers = new RestorableSqlContainersOperations(this);
+            RestorableSqlResources = new RestorableSqlResourcesOperations(this);
+            RestorableMongodbDatabases = new RestorableMongodbDatabasesOperations(this);
+            RestorableMongodbCollections = new RestorableMongodbCollectionsOperations(this);
+            RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
+            CassandraClusters = new CassandraClustersOperations(this);
+            CassandraDataCenters = new CassandraDataCentersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-15";
+            ApiVersion = "2021-10-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

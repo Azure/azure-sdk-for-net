@@ -7,29 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListBackendAddressPool API service call. </summary>
-    public partial class LoadBalancerBackendAddressPoolListResult
+    internal partial class LoadBalancerBackendAddressPoolListResult
     {
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolListResult. </summary>
         internal LoadBalancerBackendAddressPoolListResult()
         {
-            Value = new ChangeTrackingList<BackendAddressPool>();
+            Value = new ChangeTrackingList<BackendAddressPoolData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolListResult. </summary>
         /// <param name="value"> A list of backend address pools in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerBackendAddressPoolListResult(IReadOnlyList<BackendAddressPool> value, string nextLink)
+        internal LoadBalancerBackendAddressPoolListResult(IReadOnlyList<BackendAddressPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of backend address pools in a load balancer. </summary>
-        public IReadOnlyList<BackendAddressPool> Value { get; }
+        public IReadOnlyList<BackendAddressPoolData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

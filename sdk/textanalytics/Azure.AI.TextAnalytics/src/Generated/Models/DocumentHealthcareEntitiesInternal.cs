@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DocumentHealthcareEntities. </summary>
     internal partial class DocumentHealthcareEntitiesInternal
@@ -60,5 +60,16 @@ namespace Azure.AI.TextAnalytics
             Warnings = warnings;
             Statistics = statistics;
         }
+
+        /// <summary> Unique, non-empty document identifier. </summary>
+        public string Id { get; }
+        /// <summary> Healthcare entities. </summary>
+        public IReadOnlyList<HealthcareEntityInternal> Entities { get; }
+        /// <summary> Healthcare entity relations. </summary>
+        public IReadOnlyList<HealthcareRelationInternal> Relations { get; }
+        /// <summary> Warnings encountered while processing document. </summary>
+        public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
+        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        public TextDocumentStatistics? Statistics { get; }
     }
 }

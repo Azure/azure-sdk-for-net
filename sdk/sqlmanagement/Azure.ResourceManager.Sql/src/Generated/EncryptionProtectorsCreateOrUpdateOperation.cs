@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class EncryptionProtectorsCreateOrUpdateOperation : Operation<EncryptionProtector>, IOperationSource<EncryptionProtector>
     {
         private readonly ArmOperationHelpers<EncryptionProtector> _operation;
+
+        /// <summary> Initializes a new instance of EncryptionProtectorsCreateOrUpdateOperation for mocking. </summary>
+        protected EncryptionProtectorsCreateOrUpdateOperation()
+        {
+        }
+
         internal EncryptionProtectorsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<EncryptionProtector>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "EncryptionProtectorsCreateOrUpdateOperation");

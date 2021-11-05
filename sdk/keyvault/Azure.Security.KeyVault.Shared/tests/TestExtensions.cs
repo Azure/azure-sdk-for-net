@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
@@ -54,6 +55,18 @@ namespace Azure.Security.KeyVault.Tests
 
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
+        }
+
+        public static MockResponse WithContent(this MockResponse response, string content)
+        {
+            response.SetContent(content);
+            return response;
+        }
+
+        public static MockResponse WithHeader(this MockResponse response, string name, string value)
+        {
+            response.AddHeader(new HttpHeader(name, value));
+            return response;
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class MetricDataQueryOptions
     {
         /// <summary> Initializes a new instance of MetricDataQueryOptions. </summary>
-        /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. </param>
-        /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. </param>
-        /// <param name="series"> query specific series. </param>
+        /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> query specific series. The maximum number of series is 100. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<IDictionary<string, string>> series)
         {
@@ -31,11 +31,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Series = series.ToList();
         }
 
-        /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. </summary>
+        /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </summary>
         public DateTimeOffset StartTime { get; }
-        /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. </summary>
+        /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </summary>
         public DateTimeOffset EndTime { get; }
-        /// <summary> query specific series. </summary>
+        /// <summary> query specific series. The maximum number of series is 100. </summary>
         public IList<IDictionary<string, string>> Series { get; }
     }
 }

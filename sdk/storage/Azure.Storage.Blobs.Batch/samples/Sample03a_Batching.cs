@@ -43,9 +43,9 @@ namespace Azure.Storage.Blobs.Samples
             BlobClient foo = container.GetBlobClient("foo");
             BlobClient bar = container.GetBlobClient("bar");
             BlobClient baz = container.GetBlobClient("baz");
-            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+            foo.Upload(BinaryData.FromString("Foo!"));
+            bar.Upload(BinaryData.FromString("Bar!"));
+            baz.Upload(BinaryData.FromString("Baz!"));
 
             // Delete all three blobs at once
             BlobBatchClient batch = service.GetBlobBatchClient();
@@ -79,9 +79,9 @@ namespace Azure.Storage.Blobs.Samples
             BlobClient foo = container.GetBlobClient("foo");
             BlobClient bar = container.GetBlobClient("bar");
             BlobClient baz = container.GetBlobClient("baz");
-            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+            foo.Upload(BinaryData.FromString("Foo!"));
+            bar.Upload(BinaryData.FromString("Bar!"));
+            baz.Upload(BinaryData.FromString("Baz!"));
 
             // Set the access tier for all three blobs at once
             BlobBatchClient batch = service.GetBlobBatchClient();
@@ -119,11 +119,11 @@ namespace Azure.Storage.Blobs.Samples
             BlobClient foo = container.GetBlobClient("foo");
             BlobClient bar = container.GetBlobClient("bar");
             BlobClient baz = container.GetBlobClient("baz");
-            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+            foo.Upload(BinaryData.FromString("Foo!"));
             foo.CreateSnapshot();
-            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+            bar.Upload(BinaryData.FromString("Bar!"));
             bar.CreateSnapshot();
-            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+            baz.Upload(BinaryData.FromString("Baz!"));
 
             // Create a batch with three deletes
             BlobBatchClient batchClient = service.GetBlobBatchClient();
@@ -164,7 +164,7 @@ namespace Azure.Storage.Blobs.Samples
 
             // Create a blob named "valid"
             BlobClient valid = container.GetBlobClient("valid");
-            valid.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
+            valid.Upload(BinaryData.FromString("Valid!"));
 
             // Get a reference to a blob named "invalid", but never create it
             BlobClient invalid = container.GetBlobClient("invalid");

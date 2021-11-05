@@ -28,17 +28,17 @@ namespace Azure.MixedReality.Authentication.Tests
         [Test]
         public void CreateWithInvalidParameters()
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(() => new MixedRealityAccountKeyCredential(Guid.Empty, s_testAccountKey));
-            Assert.AreEqual("accountId", ex.ParamName);
+            ArgumentException? ex = Assert.Throws<ArgumentException>(() => new MixedRealityAccountKeyCredential(Guid.Empty, s_testAccountKey));
+            Assert.AreEqual("accountId", ex!.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, (string)null!));
-            Assert.AreEqual("key", ex.ParamName);
+            Assert.AreEqual("key", ex!.ParamName);
 
             ex = Assert.Throws<ArgumentException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, ""));
-            Assert.AreEqual("key", ex.ParamName);
+            Assert.AreEqual("key", ex!.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => new MixedRealityAccountKeyCredential(s_testAccountId, (AzureKeyCredential)null!));
-            Assert.AreEqual("keyCredential", ex.ParamName);
+            Assert.AreEqual("keyCredential", ex!.ParamName);
         }
 
         [Test]

@@ -62,9 +62,9 @@ namespace DataShare.Tests.ScenarioTests
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
         }
 
-        internal static DataSetMapping GetDataSetMapping()
+        internal static DataSetMapping GetDataSetMapping(string containerName, string dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            return new BlobDataSetMapping();
+            return new BlobDataSetMapping( containerName, dataSetId, filePath,  resourceGroup,  storageAccountName,  subscriptionId);
         }
     }
 }

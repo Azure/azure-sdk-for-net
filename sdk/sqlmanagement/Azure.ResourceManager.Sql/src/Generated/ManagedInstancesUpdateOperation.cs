@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstancesUpdateOperation : Operation<ManagedInstance>, IOperationSource<ManagedInstance>
     {
         private readonly ArmOperationHelpers<ManagedInstance> _operation;
+
+        /// <summary> Initializes a new instance of ManagedInstancesUpdateOperation for mocking. </summary>
+        protected ManagedInstancesUpdateOperation()
+        {
+        }
+
         internal ManagedInstancesUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedInstance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstancesUpdateOperation");

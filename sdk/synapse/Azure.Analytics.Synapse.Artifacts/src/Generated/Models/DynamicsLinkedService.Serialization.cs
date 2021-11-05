@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DynamicsLinkedServiceConverter))]
     public partial class DynamicsLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -52,29 +55,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType");
-            writer.WriteStringValue(DeploymentType.ToString());
+            writer.WriteObjectValue(DeploymentType);
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
-                writer.WriteStringValue(HostName);
+                writer.WriteObjectValue(HostName);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
-                writer.WriteStringValue(Port);
+                writer.WriteObjectValue(Port);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteObjectValue(ServiceUri);
             }
             if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName");
-                writer.WriteStringValue(OrganizationName);
+                writer.WriteObjectValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType");
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteObjectValue(AuthenticationType);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
@@ -93,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType");
-                writer.WriteStringValue(ServicePrincipalCredentialType.Value.ToString());
+                writer.WriteObjectValue(ServicePrincipalCredentialType);
             }
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
@@ -121,16 +124,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
-            DynamicsDeploymentType deploymentType = default;
-            Optional<string> hostName = default;
-            Optional<string> port = default;
-            Optional<string> serviceUri = default;
-            Optional<string> organizationName = default;
-            DynamicsAuthenticationType authenticationType = default;
+            object deploymentType = default;
+            Optional<object> hostName = default;
+            Optional<object> port = default;
+            Optional<object> serviceUri = default;
+            Optional<object> organizationName = default;
+            object authenticationType = default;
             Optional<object> username = default;
             Optional<SecretBase> password = default;
             Optional<object> servicePrincipalId = default;
-            Optional<DynamicsServicePrincipalCredentialType> servicePrincipalCredentialType = default;
+            Optional<object> servicePrincipalCredentialType = default;
             Optional<SecretBase> servicePrincipalCredential = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -198,32 +201,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("deploymentType"))
                         {
-                            deploymentType = new DynamicsDeploymentType(property0.Value.GetString());
+                            deploymentType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            hostName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            hostName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
-                            port = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("serviceUri"))
                         {
-                            serviceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serviceUri = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("organizationName"))
                         {
-                            organizationName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            organizationName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
                         {
-                            authenticationType = new DynamicsAuthenticationType(property0.Value.GetString());
+                            authenticationType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("username"))
@@ -263,7 +286,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalCredentialType = new DynamicsServicePrincipalCredentialType(property0.Value.GetString());
+                            servicePrincipalCredentialType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredential"))
@@ -292,7 +315,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, Optional.ToNullable(servicePrincipalCredentialType), servicePrincipalCredential.Value, encryptedCredential.Value);
+            return new DynamicsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
+        }
+
+        internal partial class DynamicsLinkedServiceConverter : JsonConverter<DynamicsLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, DynamicsLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DynamicsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDynamicsLinkedService(document.RootElement);
+            }
         }
     }
 }

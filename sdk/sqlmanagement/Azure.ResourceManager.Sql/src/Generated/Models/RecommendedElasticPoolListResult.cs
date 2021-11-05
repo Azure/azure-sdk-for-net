@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a list recommended elastic pool request. </summary>
-    public partial class RecommendedElasticPoolListResult
+    internal partial class RecommendedElasticPoolListResult
     {
         /// <summary> Initializes a new instance of RecommendedElasticPoolListResult. </summary>
         /// <param name="value"> The list of recommended elastic pools hosted in the server. </param>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class LabelingJobResourceArmPaginatedResult
+    internal partial class LabelingJobResourceArmPaginatedResult
     {
         internal static LabelingJobResourceArmPaginatedResult DeserializeLabelingJobResourceArmPaginatedResult(JsonElement element)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,21 +15,26 @@ namespace Azure.Communication.Chat
     {
         internal static AddChatParticipantsResult DeserializeAddChatParticipantsResult(JsonElement element)
         {
-            Optional<AddChatParticipantsErrors> errors = default;
+            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("invalidParticipants"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errors = AddChatParticipantsErrors.DeserializeAddChatParticipantsErrors(property.Value);
+                    List<ChatError> array = new List<ChatError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatError.DeserializeChatError(item));
+                    }
+                    invalidParticipants = array;
                     continue;
                 }
             }
-            return new AddChatParticipantsResult(errors.Value);
+            return new AddChatParticipantsResult(Optional.ToList(invalidParticipants));
         }
     }
 }

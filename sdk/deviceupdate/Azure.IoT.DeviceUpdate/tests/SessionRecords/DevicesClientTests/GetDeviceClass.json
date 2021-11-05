@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/management/deviceclasses/b83e3c87fbf98063c20c3269f1c9e58d255906dd",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "024e987ce061b642d2d8f204c4853ced",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "260",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Mar 2021 20:28:27 GMT",
+        "traceparent": "00-1760f2bf222ae1429dc127b4e73db8b0-9da7df0ebb2cee4c-00"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022deviceClassId\u0022: \u0022b83e3c87fbf98063c20c3269f1c9e58d255906dd\u0022,\r\n",
+        "  \u0022manufacturer\u0022: \u0022Contoso\u0022,\r\n",
+        "  \u0022model\u0022: \u0022Virtual-Machine\u0022,\r\n",
+        "  \u0022bestCompatibleUpdateId\u0022: {\r\n",
+        "    \u0022provider\u0022: \u0022Contoso\u0022,\r\n",
+        "    \u0022name\u0022: \u0022Virtual-Machine\u0022,\r\n",
+        "    \u0022version\u0022: \u00222021.302.1202.48\u0022\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "RandomSeed": "1131599422"
+  }
+}

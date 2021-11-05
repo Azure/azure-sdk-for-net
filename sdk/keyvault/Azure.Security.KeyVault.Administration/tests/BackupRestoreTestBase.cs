@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using Azure.Storage;
 using Azure.Storage.Sas;
 using NUnit.Framework;
@@ -19,8 +20,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal string BlobContainerName = "backup";
         internal string BlobContainerNameMultiPart = "backup/some/folder/name";
 
-        public BackupRestoreTestBase(bool isAsync, RecordedTestMode? mode)
-            : base(isAsync, mode)
+        public BackupRestoreTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         {
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
@@ -52,8 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         // The service polls every second, so wait a bit to make sure the operation appears completed.
-        protected async Task WaitForOperationAsync() =>
-            await DelayAsync(TimeSpan.FromSeconds(2));
+        protected async Task WaitForOperationAsync() => await DelayAsync();
 
         private string GenerateSasToken()
         {

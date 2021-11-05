@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.Tables.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.Tables.Performance", "tests\perf\Azure.Data.Tables.Performance.csproj", "{3EA53995-C462-43F2-9413-72E29BE04DD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.Tables.Performance", "tests\perf\Azure.Data.Tables.Perf.csproj", "{3EA53995-C462-43F2-9413-72E29BE04DD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

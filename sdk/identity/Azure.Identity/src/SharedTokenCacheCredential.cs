@@ -23,7 +23,6 @@ namespace Azure.Identity
         internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
         internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
         internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
-
         private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
@@ -70,17 +69,17 @@ namespace Azure.Identity
         internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _tenantId = tenantId;
-
             _username = username;
-
             _skipTenantValidation = (options as SharedTokenCacheCredentialOptions)?.EnableGuestTenantAuthentication ?? false;
-
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
-
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
-            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
-
+            Client = client ?? new MsalPublicClient(
+                _pipeline,
+                tenantId,
+                (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId,
+                null,
+                (options as ITokenCacheOptions) ?? s_DefaultCacheOptions,
+                options?.IsLoggingPIIEnabled ?? false);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 
@@ -112,13 +111,17 @@ namespace Azure.Identity
 
             try
             {
-                IAccount account = await GetAccountAsync(async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, async, cancellationToken).ConfigureAwait(false);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
-            catch (MsalUiRequiredException)
+            catch (MsalUiRequiredException ex)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
+                throw scope.FailWrapAndThrow(
+                    new CredentialUnavailableException(
+                        $"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.",
+                        ex));
             }
             catch (Exception e)
             {
@@ -126,7 +129,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<IAccount> GetAccountAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool async, CancellationToken cancellationToken)
         {
             using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
@@ -144,32 +147,40 @@ namespace Azure.Identity
 
             List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
 
+            if (accounts.Count == 0)
+            {
+                throw new CredentialUnavailableException(NoAccountsInCacheMessage);
+            }
+
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
-                // if _username is specified it must match the account
-                ((string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0))
-                &&
-                // if _skipTenantValidation is false and _tenantId is specified it must match the account
-                (_skipTenantValidation || (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0))
-            ).ToList();
+                    // if _username is specified it must match the account
+                    (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                    &&
+                    // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                    (_skipTenantValidation || string.IsNullOrEmpty(tenantId) || string.Compare(a.HomeAccountId?.TenantId, tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                )
+                .ToList();
+
+            if (_skipTenantValidation && filteredAccounts.Count > 1)
+            {
+                filteredAccounts = filteredAccounts
+                    .Where(a => string.IsNullOrEmpty(tenantId) || string.Compare(a.HomeAccountId?.TenantId, tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                    .ToList();
+            }
 
             if (filteredAccounts.Count != 1)
             {
-                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts));
+                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(filteredAccounts));
             }
 
-            account = filteredAccounts.First();
+            account = filteredAccounts[0];
             asyncLock.SetValue(account);
             return account;
         }
 
-        private string GetCredentialUnavailableMessage(List<IAccount> accounts, List<IAccount> filteredAccounts)
+        private string GetCredentialUnavailableMessage(List<IAccount> filteredAccounts)
         {
-            if (accounts.Count == 0)
-            {
-                return NoAccountsInCacheMessage;
-            }
-
             if (string.IsNullOrEmpty(_username) && string.IsNullOrEmpty(_tenantId))
             {
                 return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage);

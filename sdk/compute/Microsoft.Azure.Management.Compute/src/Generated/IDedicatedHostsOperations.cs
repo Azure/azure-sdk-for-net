@@ -123,8 +123,10 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the dedicated host.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values
-        /// include: 'instanceView'
+        /// The expand expression to apply on the operation. 'InstanceView'
+        /// will retrieve the list of instance views of the dedicated host.
+        /// 'UserData' is not supported for dedicated host. Possible values
+        /// include: 'instanceView', 'userData'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

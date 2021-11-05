@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayListResult
+    internal partial class ApplicationGatewayListResult
     {
         internal static ApplicationGatewayListResult DeserializeApplicationGatewayListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationGateway>> value = default;
+            Optional<IReadOnlyList<ApplicationGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationGateway> array = new List<ApplicationGateway>();
+                    List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGateway.DeserializeApplicationGateway(item));
+                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item));
                     }
                     value = array;
                     continue;

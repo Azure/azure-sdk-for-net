@@ -80,11 +80,11 @@ namespace Azure.Core.Tests
         }
 
         [Theory]
-        [TestCase("lalala")]
-        [TestCase("\"lalala")]
-        [TestCase("lalala\"")]
-        [TestCase("W/\"lalala")]
-        [TestCase("W/lalala\"")]
+        [TestCase("hello")]
+        [TestCase("\"hello")]
+        [TestCase("hello\"")]
+        [TestCase("W/\"hello")]
+        [TestCase("W/hello\"")]
         public void ThrowsForEtagsWithoutQuotes(string value)
         {
             Assert.Throws<ArgumentException>(() => ETag.Parse(value));
@@ -120,8 +120,18 @@ namespace Azure.Core.Tests
         [TestCase("h")]
         public void InvalidFormatThrows(string format)
         {
-            ETag tag  = new ETag("foo");
+            ETag tag = new ETag("foo");
             Assert.Throws<ArgumentException>(() => tag.ToString(format));
+        }
+
+        [Theory]
+        [TestCase(null)]
+        [TestCase(default)]
+        public void NullValueHasNoStringValue(string value)
+        {
+            ETag tag = new ETag(value);
+
+            Assert.That(tag.ToString(), Is.Empty);
         }
     }
 }

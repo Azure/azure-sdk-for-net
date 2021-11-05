@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class MongoDBResourcesCreateUpdateMongoDBDatabaseOperation : Operation<MongoDBDatabaseGetResults>, IOperationSource<MongoDBDatabaseGetResults>
     {
         private readonly ArmOperationHelpers<MongoDBDatabaseGetResults> _operation;
+
+        /// <summary> Initializes a new instance of MongoDBResourcesCreateUpdateMongoDBDatabaseOperation for mocking. </summary>
+        protected MongoDBResourcesCreateUpdateMongoDBDatabaseOperation()
+        {
+        }
+
         internal MongoDBResourcesCreateUpdateMongoDBDatabaseOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<MongoDBDatabaseGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MongoDBResourcesCreateUpdateMongoDBDatabaseOperation");

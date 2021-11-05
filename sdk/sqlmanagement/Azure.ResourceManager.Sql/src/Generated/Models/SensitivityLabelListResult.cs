@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sensitivity labels. </summary>
-    public partial class SensitivityLabelListResult
+    internal partial class SensitivityLabelListResult
     {
         /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
         internal SensitivityLabelListResult()

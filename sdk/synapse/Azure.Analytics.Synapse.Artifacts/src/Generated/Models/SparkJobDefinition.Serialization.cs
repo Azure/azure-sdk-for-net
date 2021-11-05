@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkJobDefinitionConverter))]
     public partial class SparkJobDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -35,6 +38,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("jobProperties");
             writer.WriteObjectValue(JobProperties);
+            if (Optional.IsDefined(Folder))
+            {
+                if (Folder != null)
+                {
+                    writer.WritePropertyName("folder");
+                    writer.WriteObjectValue(Folder);
+                }
+                else
+                {
+                    writer.WriteNull("folder");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -50,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> requiredSparkVersion = default;
             Optional<string> language = default;
             SparkJobProperties jobProperties = default;
+            Optional<SparkJobDefinitionFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -79,10 +95,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jobProperties = SparkJobProperties.DeserializeSparkJobProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        folder = null;
+                        continue;
+                    }
+                    folder = SparkJobDefinitionFolder.DeserializeSparkJobDefinitionFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, additionalProperties);
+            return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
+        }
+
+        internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkJobDefinition model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SparkJobDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkJobDefinition(document.RootElement);
+            }
         }
     }
 }

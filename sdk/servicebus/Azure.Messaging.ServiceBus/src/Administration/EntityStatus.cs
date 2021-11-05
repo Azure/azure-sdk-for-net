@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public static EntityStatus Active { get; } = new EntityStatus(ActiveValue);
 
         /// <summary>
-        /// The status of the messaging entity is active.
+        /// The status of the messaging entity is disabled.
         /// </summary>
         public static EntityStatus Disabled { get; } = new EntityStatus(DisabledValue);
 

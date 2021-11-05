@@ -45,18 +45,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployed from the latest version of the Image Definition won't use
         /// this Image Version.</param>
         /// <param name="publishedDate">The timestamp for when the gallery
-        /// Image Version is published.</param>
+        /// image version is published.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// Image Version. This property can be used for decommissioning
+        /// image version. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
         /// 'Premium_LRS'</param>
+        /// <param name="replicationMode">Optional parameter which specifies
+        /// the mode to be used for replication. This property is not
+        /// updatable. Possible values include: 'Full', 'Shallow'</param>
         /// <param name="enableHealthCheck">Optional. Whether or not this
         /// application reports health.</param>
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), UserArtifactManage manageActions = default(UserArtifactManage), bool? enableHealthCheck = default(bool?))
-            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), UserArtifactManage manageActions = default(UserArtifactManage), bool? enableHealthCheck = default(bool?))
+            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode)
         {
             Source = source;
             ManageActions = manageActions;

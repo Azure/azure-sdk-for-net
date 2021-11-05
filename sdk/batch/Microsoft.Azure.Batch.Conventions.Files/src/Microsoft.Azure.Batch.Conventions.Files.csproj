@@ -12,13 +12,13 @@
     <PackageReleaseNotes>
       Improve usability of GetOutputStoragePath.
     </PackageReleaseNotes>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="Microsoft.Azure.Batch" />
     <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>

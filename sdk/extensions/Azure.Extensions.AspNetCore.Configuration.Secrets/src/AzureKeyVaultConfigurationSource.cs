@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Extensions.AspNetCore.Configuration.Secrets
@@ -11,16 +12,18 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     internal class AzureKeyVaultConfigurationSource : IConfigurationSource
     {
         private readonly AzureKeyVaultConfigurationOptions _options;
+        private readonly SecretClient _client;
 
-        public AzureKeyVaultConfigurationSource(AzureKeyVaultConfigurationOptions options)
+        public AzureKeyVaultConfigurationSource(SecretClient client, AzureKeyVaultConfigurationOptions options)
         {
             _options = options;
+            _client = client;
         }
 
         /// <inheritdoc />
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new AzureKeyVaultConfigurationProvider(_options.Client, _options.Manager, _options.ReloadInterval);
+            return new AzureKeyVaultConfigurationProvider(_client, _options);
         }
     }
 }

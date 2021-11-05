@@ -9,6 +9,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -83,6 +85,57 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString, producerOptions))
                 {
                     EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ProducerWithCustomBufferSizesCanSend(EventHubsTransportType transportType)
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var producerOptions = new EventHubProducerClientOptions
+                {
+                    ConnectionOptions = new EventHubConnectionOptions
+                    {
+                       ReceiveBufferSizeInBytes = 4096,
+                       SendBufferSizeInBytes = 12288
+                    }
+                };
+
+                await using (var producer = new EventHubProducerClient(connectionString, producerOptions))
+                {
+                    EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerWithIdentifierCanSend()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var producer = new EventHubProducerClient(connectionString, new EventHubProducerClientOptions { Identifier = "CustomIdentif13r!" }))
+                {
+                    var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
@@ -293,9 +346,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     EventData[] events = new[]
                     {
-                        new EventData(Array.Empty<byte>()),
-                        new EventData(Array.Empty<byte>()),
-                        new EventData(Array.Empty<byte>())
+                        new EventData(new BinaryData(Array.Empty<byte>())),
+                        new EventData(new BinaryData(Array.Empty<byte>())),
+                        new EventData(new BinaryData(Array.Empty<byte>()))
                     };
 
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
@@ -394,9 +447,40 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 
                 await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    using EventDataBatch batch = await producer.CreateBatchAsync();
+
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is a message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is another message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Event more messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Will it ever stop?")));
+
+                    Assert.That(batch.Count, Is.EqualTo(5), "The batch should contain all 5 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendAnEventBatchUsingTheSasCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var options = new EventHubProducerClientOptions();
+                var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(options.ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+                var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureSasCredential(signature.Value);
+
+                await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, options))
                 {
                     using EventDataBatch batch = await producer.CreateBatchAsync();
 
@@ -427,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     using EventDataBatch batch = await producer.CreateBatchAsync();
-                    batch.TryAdd(new EventData(Array.Empty<byte>()));
+                    batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>())));
 
                     Assert.That(batch.Count, Is.EqualTo(1), "The batch should contain a single event.");
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
@@ -589,6 +673,30 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
 
                     await producer.CloseAsync();
+                    Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendWhenSharedConnectionIsClosed()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var connection = new EventHubConnection(connectionString))
+                await using (var producer = new EventHubProducerClient(connection))
+                {
+                    EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("Dummy event")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+
+                    await connection.CloseAsync();
                     Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }
@@ -1011,6 +1119,112 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     Assert.That(async () => await invalidProxyProducer.SendAsync(new[] { new EventData(new byte[1]) }), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                 }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendEventsWithAFullyPopulatedAmqpMessage()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 } }));
+                var eventData = new EventData(message);
+
+                // Header
+
+                message.Header.DeliveryCount = 123;
+                message.Header.Durable = true;
+                message.Header.FirstAcquirer = true;
+                message.Header.Priority = 1;
+                message.Header.TimeToLive = TimeSpan.FromDays(2);
+
+                // Properties
+
+                message.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0 ,0 ,0, TimeSpan.Zero);
+                message.Properties.ContentEncoding = "utf-8";
+                message.Properties.ContentType = "test/unit";
+                message.Properties.CorrelationId = new AmqpMessageId("OU812");
+                message.Properties.CreationTime = new DateTimeOffset(2012, 3, 4, 8, 0, 0, 0, TimeSpan.Zero);
+                message.Properties.GroupId = "Red Squad";
+                message.Properties.GroupSequence = 76;
+                message.Properties.MessageId = new AmqpMessageId("Bob");
+                message.Properties.ReplyTo = new AmqpAddress("1407 Graymalkin Lane");
+                message.Properties.ReplyToGroupId = "Home";
+                message.Properties.Subject = "You'll never believe this weight loss secret!";
+                message.Properties.To = new AmqpAddress("http://some.server.com");
+                message.Properties.UserId = new byte[] { 0x11, 0x22 };
+
+                // Application Properties
+
+                message.ApplicationProperties.Add("One", TimeSpan.FromMinutes(5));
+                message.ApplicationProperties.Add("Two", 2);
+
+                // Delivery Annotations
+
+                message.DeliveryAnnotations.Add("Three", 3);
+                message.DeliveryAnnotations.Add("Four", new DateTimeOffset(2015, 10, 27, 0, 0, 0, TimeSpan.Zero));
+
+                // Message Annotations
+
+                message.MessageAnnotations.Add("Five", 5);
+                message.MessageAnnotations.Add("Six", 6.0f);
+
+                // Footer
+
+                message.Footer.Add("Seven", 7);
+                message.Footer.Add("Eight", "8");
+
+                // Attempt to send and validate the operation was not rejected.
+
+                await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName));
+                Assert.That(async () => await producer.SendAsync(new[] { eventData }), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendEventsWithValueBodies()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var value = new Dictionary<string, string> { { "key", "value" } };
+                var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(value));
+                var eventData = new EventData(message);
+
+                // Attempt to send and validate the operation was not rejected.
+
+                await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName));
+                Assert.That(async () => await producer.SendAsync(new[] { eventData }), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendEventsWithSequenceBodies()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var sequence = new[] { new List<object> { "1", 2 } };
+                var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromSequence(sequence));
+                var eventData = new EventData(message);
+
+                // Attempt to send and validate the operation was not rejected.
+
+                await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName));
+                Assert.That(async () => await producer.SendAsync(new[] { eventData }), Throws.Nothing);
             }
         }
 

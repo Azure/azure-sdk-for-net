@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="synchronizationTime">Synchronization time</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the trigger was
         /// created.</param>
@@ -51,8 +52,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// 'SourceSynchronizationSettingDeleted'</param>
         /// <param name="userName">Name of the user who created the
         /// trigger.</param>
-        public ScheduledTrigger(string recurrenceInterval, System.DateTime synchronizationTime, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string synchronizationMode = default(string), string triggerStatus = default(string), string userName = default(string))
-            : base(id, name, type)
+        public ScheduledTrigger(string recurrenceInterval, System.DateTime synchronizationTime, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string synchronizationMode = default(string), string triggerStatus = default(string), string userName = default(string))
+            : base(id, name, systemData, type)
         {
             CreatedAt = createdAt;
             ProvisioningState = provisioningState;

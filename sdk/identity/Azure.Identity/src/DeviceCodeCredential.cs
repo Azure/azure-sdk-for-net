@@ -17,7 +17,8 @@ namespace Azure.Identity
     /// </summary>
     public class DeviceCodeCredential : TokenCredential
     {
-        internal MsalPublicClient Client { get; }
+        private readonly string _tenantId;
+        internal MsalPublicClient Client { get; set; }
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
@@ -76,17 +77,22 @@ namespace Azure.Identity
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(deviceCodeCallback, nameof(deviceCodeCallback));
 
-            DeviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
-
+            _tenantId = tenantId;
+            ClientId = clientId;
+            DeviceCodeCallback = deviceCodeCallback;
             DisableAutomaticAuthentication = (options as DeviceCodeCredentialOptions)?.DisableAutomaticAuthentication ?? false;
-
             Record = (options as DeviceCodeCredentialOptions)?.AuthenticationRecord;
-
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
-            Client = client ?? new MsalPublicClient(Pipeline, tenantId, ClientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).ToString(), options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(
+                Pipeline,
+                tenantId,
+                ClientId,
+                AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).AbsoluteUri,
+                options as ITokenCacheOptions,
+                options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
@@ -106,7 +112,7 @@ namespace Azure.Identity
         /// Interactively authenticates a user via the default browser.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same <see cref="DeviceCodeCredentialOptions.TokenCache"/>.</returns>
+        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same persisted token cache.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
@@ -196,7 +202,10 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, async, cancellationToken).ConfigureAwait(false);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                        AuthenticationResult result = await Client
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
+                            .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -210,7 +219,6 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
-
                 return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -221,7 +229,9 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await Client.AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client
+                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken)
+                .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
 

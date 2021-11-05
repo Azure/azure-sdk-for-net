@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Producer;

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MapsGeofenceResultEventDataConverter))]
     public partial class MapsGeofenceResultEventData
     {
         internal static MapsGeofenceResultEventData DeserializeMapsGeofenceResultEventData(JsonElement element)
@@ -78,6 +81,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MapsGeofenceResultEventData(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished));
+        }
+
+        internal partial class MapsGeofenceResultEventDataConverter : JsonConverter<MapsGeofenceResultEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MapsGeofenceResultEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MapsGeofenceResultEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMapsGeofenceResultEventData(document.RootElement);
+            }
         }
     }
 }

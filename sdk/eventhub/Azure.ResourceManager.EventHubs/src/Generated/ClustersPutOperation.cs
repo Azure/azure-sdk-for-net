@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.EventHubs
     public partial class ClustersPutOperation : Operation<Cluster>, IOperationSource<Cluster>
     {
         private readonly ArmOperationHelpers<Cluster> _operation;
+
+        /// <summary> Initializes a new instance of ClustersPutOperation for mocking. </summary>
+        protected ClustersPutOperation()
+        {
+        }
+
         internal ClustersPutOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Cluster>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClustersPutOperation");

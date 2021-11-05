@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class ApplicationListResult
+    internal partial class ApplicationListResult
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {

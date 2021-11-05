@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -10,6 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// Collection of <see cref="AnalyzeHealthcareEntitiesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
+    [DebuggerTypeProxy(typeof(AnalyzeHealthcareEntitiesResultCollectionDebugView))]
     public class AnalyzeHealthcareEntitiesResultCollection : ReadOnlyCollection<AnalyzeHealthcareEntitiesResult>
     {
         /// <summary>
@@ -35,5 +38,43 @@ namespace Azure.AI.TextAnalytics
         /// on this batch of documents.
         /// </summary>
         public string ModelVersion { get; }
+
+        /// <summary>
+        /// Debugger Proxy class for <see cref="AnalyzeHealthcareEntitiesResultCollection"/>.
+        /// </summary>
+        internal class AnalyzeHealthcareEntitiesResultCollectionDebugView
+        {
+            private AnalyzeHealthcareEntitiesResultCollection BaseCollection { get; }
+
+            public AnalyzeHealthcareEntitiesResultCollectionDebugView(AnalyzeHealthcareEntitiesResultCollection collection)
+            {
+                BaseCollection = collection;
+            }
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public List<AnalyzeHealthcareEntitiesResult> Items
+            {
+                get
+                {
+                    return BaseCollection.ToList();
+                }
+            }
+
+            public TextDocumentBatchStatistics Statistics
+            {
+                get
+                {
+                    return BaseCollection.Statistics;
+                }
+            }
+
+            public string ModelVersion
+            {
+                get
+                {
+                    return BaseCollection.ModelVersion;
+                }
+            }
+        }
     }
 }

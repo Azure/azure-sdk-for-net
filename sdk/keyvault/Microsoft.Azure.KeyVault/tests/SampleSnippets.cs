@@ -32,10 +32,13 @@ namespace Microsoft.Azure.KeyVault.Tests
             #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())
             {
-                //@@AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                /*@@*/ provider = new AzureServiceTokenProvider();
-                //@@KeyVaultClient client = new KeyVaultClient(
-                /*@@*/ client = new KeyVaultClient(
+#if SNIPPET
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+#else
+                provider = new AzureServiceTokenProvider();
+                client = new KeyVaultClient(
+#endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
                     httpClient);
             }
@@ -147,9 +150,11 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
 
             #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
-            //@@CertificatePolicy policy = new CertificatePolicy
-            /*@@*/
+#if SNIPPET
+            CertificatePolicy policy = new CertificatePolicy
+#else
             policy = new CertificatePolicy
+#endif
             {
                 IssuerParameters = new IssuerParameters("Self"),
                 X509CertificateProperties = new X509CertificateProperties("CN=DefaultPolicy")
@@ -224,10 +229,13 @@ namespace Microsoft.Azure.KeyVault.Tests
             #region Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())
             {
-                //@@AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                /*@@*/ provider = new AzureServiceTokenProvider();
-                //@@KeyVaultClient client = new KeyVaultClient(
-                /*@@*/ client = new KeyVaultClient(
+#if SNIPPET
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+#else
+                provider = new AzureServiceTokenProvider();
+                client = new KeyVaultClient(
+#endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
                     httpClient);
             }
@@ -363,10 +371,13 @@ namespace Microsoft.Azure.KeyVault.Tests
             #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())
             {
-                //@@AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                /*@@*/ provider = new AzureServiceTokenProvider();
-                //@@KeyVaultClient client = new KeyVaultClient(
-                /*@@*/ client = new KeyVaultClient(
+#if SNIPPET
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+#else
+                provider = new AzureServiceTokenProvider();
+                client = new KeyVaultClient(
+#endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
                     httpClient);
             }

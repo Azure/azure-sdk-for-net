@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IDenyAssignmentsOperations DenyAssignments { get; private set; }
 
         /// <summary>
+        /// Gets the IRoleAssignmentMetricsOperations.
+        /// </summary>
+        public virtual IRoleAssignmentMetricsOperations RoleAssignmentMetrics { get; private set; }
+
+        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
@@ -348,6 +353,7 @@ namespace Microsoft.Azure.Management.Authorization
             Permissions = new PermissionsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
             DenyAssignments = new DenyAssignmentsOperations(this);
+            RoleAssignmentMetrics = new RoleAssignmentMetricsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

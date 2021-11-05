@@ -76,18 +76,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "healthProbeLog")]
         public string HealthProbeLog { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IpConfiguration != null)
-            {
-                IpConfiguration.Validate();
-            }
-        }
     }
 }

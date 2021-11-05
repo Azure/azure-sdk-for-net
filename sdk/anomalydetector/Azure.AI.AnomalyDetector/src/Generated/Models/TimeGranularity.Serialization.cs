@@ -20,6 +20,8 @@ namespace Azure.AI.AnomalyDetector.Models
             TimeGranularity.Hourly => "hourly",
             TimeGranularity.PerMinute => "minutely",
             TimeGranularity.PerSecond => "secondly",
+            TimeGranularity.Microsecond => "microsecond",
+            TimeGranularity.None => "none",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TimeGranularity value.")
         };
 
@@ -32,6 +34,8 @@ namespace Azure.AI.AnomalyDetector.Models
             if (string.Equals(value, "hourly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Hourly;
             if (string.Equals(value, "minutely", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.PerMinute;
             if (string.Equals(value, "secondly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.PerSecond;
+            if (string.Equals(value, "microsecond", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Microsecond;
+            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TimeGranularity value.");
         }
     }

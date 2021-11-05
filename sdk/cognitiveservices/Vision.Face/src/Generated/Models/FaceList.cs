@@ -39,7 +39,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
-        /// 'recognition_01', 'recognition_02', 'recognition_03'</param>
+        /// 'recognition_01', 'recognition_02', 'recognition_03',
+        /// 'recognition_04'</param>
         /// <param name="persistedFaces">Persisted faces within the face
         /// list.</param>
         public FaceList(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
@@ -73,11 +74,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (FaceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceListId");
+            }
+            if (FaceListId != null)
+            {
+                if (FaceListId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "FaceListId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(FaceListId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "FaceListId", "^[a-z0-9-_]+$");
+                }
             }
             if (PersistedFaces != null)
             {

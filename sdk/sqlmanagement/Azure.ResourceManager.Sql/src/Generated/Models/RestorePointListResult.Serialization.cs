@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RestorePointListResult
+    internal partial class RestorePointListResult
     {
         internal static RestorePointListResult DeserializeRestorePointListResult(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The result of a request to list machine learning workspaces. </summary>
-    public partial class WorkspaceListResult
+    internal partial class WorkspaceListResult
     {
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         internal WorkspaceListResult()

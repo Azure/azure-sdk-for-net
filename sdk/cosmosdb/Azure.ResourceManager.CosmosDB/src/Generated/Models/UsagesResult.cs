@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The response to a list usage request. </summary>
-    public partial class UsagesResult
+    internal partial class UsagesResult
     {
         /// <summary> Initializes a new instance of UsagesResult. </summary>
         internal UsagesResult()

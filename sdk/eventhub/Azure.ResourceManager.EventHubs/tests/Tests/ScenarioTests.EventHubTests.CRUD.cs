@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
 using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.Management.EventHub.Tests
@@ -38,9 +40,10 @@ namespace Azure.Management.EventHub.Tests
         [Test]
         public async Task EventCreateGetUpdateDelete()
         {
-            var location = GetLocation();
-            var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location.Result, resourceGroup);
+            var location = await GetLocation();
+            var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroup resourceGroup =(await sub.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location))).Value;
 
             // Prepare Storage Account
             var accountName = Recording.GenerateAssetName("sdktestaccount");
@@ -52,14 +55,14 @@ namespace Azure.Management.EventHub.Tests
             {
                 AccessTier = AccessTier.Hot
             };
-            await WaitForCompletionAsync(await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroup, accountName, storageAccountCreateParameters));
-
+            StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+            await storageAccountCollection.CreateOrUpdateAsync(accountName, storageAccountCreateParameters);
             // Create NameSpace
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
-            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
+            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,
                 new EHNamespace()
                 {
-                    Location = location.Result
+                    Location = location
                 }
                 );
             var np = (await WaitForCompletionAsync(createNamespaceResponse)).Value;
@@ -68,7 +71,7 @@ namespace Azure.Management.EventHub.Tests
             DelayInTest(5);
             // Create Eventhub
             var eventhubName = Recording.GenerateAssetName(Helper.EventHubPrefix);
-            var createEventhubResponse = await EventHubsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName,
+            var createEventhubResponse = await EventHubsOperations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventhubName,
                 new Eventhub()
                 {
                     MessageRetentionInDays = 4,
@@ -85,7 +88,7 @@ namespace Azure.Management.EventHub.Tests
                             Name = "EventHubArchive.AzureBlockBlob",
                             BlobContainer = "container",
                             ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                            StorageAccountResourceId = "/subscriptions/" + SubscriptionId + "/resourcegroups/" + resourceGroup + "/providers/Microsoft.Storage/storageAccounts/" + accountName
+                            StorageAccountResourceId = "/subscriptions/" + SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Storage/storageAccounts/" + accountName
                         },
                         SkipEmptyArchives = true
                     }
@@ -94,12 +97,12 @@ namespace Azure.Management.EventHub.Tests
             Assert.AreEqual(createEventhubResponse.Value.Name, eventhubName);
             Assert.True(createEventhubResponse.Value.CaptureDescription.SkipEmptyArchives);
             //Get the created EventHub
-            var getEventHubResponse = await EventHubsOperations.GetAsync(resourceGroup, namespaceName, eventhubName);
+            var getEventHubResponse = await EventHubsOperations.GetAsync(resourceGroupName, namespaceName, eventhubName);
             Assert.NotNull(getEventHubResponse.Value);
             Assert.AreEqual(EntityStatus.Active, getEventHubResponse.Value.Status);
             Assert.AreEqual(getEventHubResponse.Value.Name, eventhubName);
             //Get all Event Hubs for a given NameSpace
-            var getListEventHubResponse = EventHubsOperations.ListByNamespaceAsync(resourceGroup, namespaceName);
+            var getListEventHubResponse = EventHubsOperations.ListByNamespaceAsync(resourceGroupName, namespaceName);
             var list = await getListEventHubResponse.ToEnumerableAsync();
             Assert.NotNull(getListEventHubResponse);
             Assert.True(list.Count() >= 1);
@@ -108,17 +111,17 @@ namespace Azure.Management.EventHub.Tests
             getEventHubResponse.Value.CaptureDescription.SizeLimitInBytes = 10485900;
             getEventHubResponse.Value.MessageRetentionInDays = 5;
             //TODO time exception
-            var UpdateEventHubResponse = (await EventHubsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName, getEventHubResponse.Value)).Value;
+            var UpdateEventHubResponse = (await EventHubsOperations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventhubName, getEventHubResponse.Value)).Value;
             Assert.NotNull(UpdateEventHubResponse);
             // Get the updated EventHub and verify the properties
-            var getEventResponse = await EventHubsOperations.GetAsync(resourceGroup, namespaceName, eventhubName);
+            var getEventResponse = await EventHubsOperations.GetAsync(resourceGroupName, namespaceName, eventhubName);
             Assert.NotNull(getEventResponse);
             Assert.AreEqual(EntityStatus.Active, getEventResponse.Value.Status);
             Assert.AreEqual(5, getEventResponse.Value.MessageRetentionInDays);
             // Delete the Evnet Hub
-            var deleteEventResponse = await EventHubsOperations.DeleteAsync(resourceGroup, namespaceName, eventhubName);
+            var deleteEventResponse = await EventHubsOperations.DeleteAsync(resourceGroupName, namespaceName, eventhubName);
             // Delete namespace and check for the NotFound exception
-            var deleteNamespaceResponse = await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
+            var deleteNamespaceResponse = await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroupName, namespaceName));
         }
     }
 }

@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityPartnerProviderListResult
+    internal partial class SecurityPartnerProviderListResult
     {
         internal static SecurityPartnerProviderListResult DeserializeSecurityPartnerProviderListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SecurityPartnerProvider>> value = default;
+            Optional<IReadOnlyList<SecurityPartnerProviderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityPartnerProvider> array = new List<SecurityPartnerProvider>();
+                    List<SecurityPartnerProviderData> array = new List<SecurityPartnerProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPartnerProvider.DeserializeSecurityPartnerProvider(item));
+                        array.Add(SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(item));
                     }
                     value = array;
                     continue;

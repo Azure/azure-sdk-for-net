@@ -1,4 +1,5 @@
 # Wrapper Script for ChangeLog Verification
+[CmdletBinding()]
 param (
   [String]$ChangeLogLocation,
   [String]$VersionString,
@@ -6,11 +7,12 @@ param (
   [string]$ServiceDirectory,
   [boolean]$ForRelease = $False
 )
+Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
 $validChangeLog = $false
-if ($ChangeLogLocation -and $VersionString) 
+if ($ChangeLogLocation -and $VersionString)
 {
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $ChangeLogLocation -VersionString $VersionString -ForRelease $ForRelease
 }

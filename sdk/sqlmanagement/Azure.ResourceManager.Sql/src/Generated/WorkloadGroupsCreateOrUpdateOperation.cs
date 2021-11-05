@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class WorkloadGroupsCreateOrUpdateOperation : Operation<WorkloadGroup>, IOperationSource<WorkloadGroup>
     {
         private readonly ArmOperationHelpers<WorkloadGroup> _operation;
+
+        /// <summary> Initializes a new instance of WorkloadGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected WorkloadGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal WorkloadGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<WorkloadGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkloadGroupsCreateOrUpdateOperation");

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +35,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'Informational'</param>
         /// <param name="title">The title of the incident</param>
         /// <param name="relationName">Relation Name</param>
-        public IncidentInfo(string incidentId, string severity, string title, string relationName)
+        public IncidentInfo(string incidentId = default(string), string severity = default(string), string title = default(string), string relationName = default(string))
         {
             IncidentId = incidentId;
             Severity = severity;
@@ -75,30 +74,5 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "relationName")]
         public string RelationName { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IncidentId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IncidentId");
-            }
-            if (Severity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
-            }
-            if (Title == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Title");
-            }
-            if (RelationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RelationName");
-            }
-        }
     }
 }

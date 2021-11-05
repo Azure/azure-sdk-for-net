@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of Azure SQL instance pools. </summary>
-    public partial class InstancePoolListResult
+    internal partial class InstancePoolListResult
     {
         /// <summary> Initializes a new instance of InstancePoolListResult. </summary>
         internal InstancePoolListResult()

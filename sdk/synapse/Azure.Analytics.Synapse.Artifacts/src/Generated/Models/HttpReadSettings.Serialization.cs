@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(HttpReadSettingsConverter))]
     public partial class HttpReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -36,6 +39,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("requestTimeout");
                 writer.WriteObjectValue(RequestTimeout);
             }
+            if (Optional.IsDefined(EnablePartitionDiscovery))
+            {
+                writer.WritePropertyName("enablePartitionDiscovery");
+                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+            }
+            if (Optional.IsDefined(PartitionRootPath))
+            {
+                writer.WritePropertyName("partitionRootPath");
+                writer.WriteObjectValue(PartitionRootPath);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
@@ -57,6 +70,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> requestBody = default;
             Optional<object> additionalHeaders = default;
             Optional<object> requestTimeout = default;
+            Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> partitionRootPath = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
@@ -103,6 +118,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     requestTimeout = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("enablePartitionDiscovery"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("partitionRootPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionRootPath = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -121,7 +156,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value);
+            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value);
+        }
+
+        internal partial class HttpReadSettingsConverter : JsonConverter<HttpReadSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, HttpReadSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override HttpReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHttpReadSettings(document.RootElement);
+            }
         }
     }
 }

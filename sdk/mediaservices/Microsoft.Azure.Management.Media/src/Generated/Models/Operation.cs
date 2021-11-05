@@ -34,12 +34,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="display">The operation display name.</param>
         /// <param name="origin">Origin of the operation.</param>
         /// <param name="properties">Operation properties format.</param>
-        public Operation(string name, OperationDisplay display = default(OperationDisplay), string origin = default(string), Properties properties = default(Properties))
+        /// <param name="isDataAction">Whether the operation applies to
+        /// data-plane.</param>
+        /// <param name="actionType">Indicates the action type. Possible values
+        /// include: 'Internal'</param>
+        public Operation(string name, OperationDisplay display = default(OperationDisplay), string origin = default(string), Properties properties = default(Properties), bool? isDataAction = default(bool?), ActionType? actionType = default(ActionType?))
         {
             Name = name;
             Display = display;
             Origin = origin;
             Properties = properties;
+            IsDataAction = isDataAction;
+            ActionType = actionType;
             CustomInit();
         }
 
@@ -71,6 +77,19 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public Properties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the operation applies to data-plane.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the action type. Possible values include:
+        /// 'Internal'
+        /// </summary>
+        [JsonProperty(PropertyName = "actionType")]
+        public ActionType? ActionType { get; set; }
 
         /// <summary>
         /// Validate the object.

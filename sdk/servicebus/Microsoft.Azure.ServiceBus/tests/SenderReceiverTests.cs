@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
+                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount, TimeSpan.FromMinutes(2));
                 }
                 finally
                 {

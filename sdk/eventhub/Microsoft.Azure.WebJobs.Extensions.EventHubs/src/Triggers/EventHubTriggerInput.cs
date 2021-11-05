@@ -4,7 +4,9 @@
 using Azure.Messaging.EventHubs;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal EventData[] Events { get; set; }
 
-        internal EventProcessorPartition PartitionContext { get; set; }
+        internal EventProcessorHostPartition ProcessorPartition { get; set; }
 
         public bool IsSingleDispatch
         {
@@ -31,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             return new EventHubTriggerInput
             {
-                PartitionContext = null,
+                ProcessorPartition = null,
                 Events = new EventData[]
                 {
                       eventData
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return new EventHubTriggerInput
             {
                 Events = this.Events,
-                PartitionContext = this.PartitionContext,
+                ProcessorPartition = this.ProcessorPartition,
                 _selector = idx
             };
         }

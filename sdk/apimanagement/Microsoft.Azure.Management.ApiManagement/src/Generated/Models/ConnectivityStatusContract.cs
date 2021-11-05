@@ -49,15 +49,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// vice-versa. The date conforms to the following format:
         /// `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// </param>
+        /// <param name="resourceType">Resource Type.</param>
+        /// <param name="isOptional">Whether this is optional.</param>
         /// <param name="error">Error details of the connectivity to the
         /// resource.</param>
-        public ConnectivityStatusContract(string name, string status, System.DateTime lastUpdated, System.DateTime lastStatusChange, string error = default(string))
+        public ConnectivityStatusContract(string name, string status, System.DateTime lastUpdated, System.DateTime lastStatusChange, string resourceType, bool isOptional, string error = default(string))
         {
             Name = name;
             Status = status;
             Error = error;
             LastUpdated = lastUpdated;
             LastStatusChange = lastStatusChange;
+            ResourceType = resourceType;
+            IsOptional = isOptional;
             CustomInit();
         }
 
@@ -110,6 +114,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime LastStatusChange { get; set; }
 
         /// <summary>
+        /// Gets or sets resource Type.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceType")]
+        public string ResourceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this is optional.
+        /// </summary>
+        [JsonProperty(PropertyName = "isOptional")]
+        public bool IsOptional { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -124,6 +140,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Status == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+            }
+            if (ResourceType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ResourceType");
+            }
+            if (Name != null)
+            {
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
             }
         }
     }

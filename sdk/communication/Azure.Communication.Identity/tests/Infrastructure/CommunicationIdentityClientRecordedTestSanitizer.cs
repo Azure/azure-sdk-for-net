@@ -6,6 +6,6 @@ namespace Azure.Communication.Pipeline
     public class CommunicationIdentityClientRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
         public CommunicationIdentityClientRecordedTestSanitizer()
-            => JsonPathSanitizers.Add("$..token");
+            => AddJsonPathSanitizer("$..token");
     }
 }

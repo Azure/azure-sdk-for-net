@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             PropertyChangeType.Delete => "Delete",
             PropertyChangeType.Modify => "Modify",
             PropertyChangeType.Array => "Array",
+            PropertyChangeType.NoEffect => "NoEffect",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PropertyChangeType value.")
         };
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return PropertyChangeType.Delete;
             if (string.Equals(value, "Modify", StringComparison.InvariantCultureIgnoreCase)) return PropertyChangeType.Modify;
             if (string.Equals(value, "Array", StringComparison.InvariantCultureIgnoreCase)) return PropertyChangeType.Array;
+            if (string.Equals(value, "NoEffect", StringComparison.InvariantCultureIgnoreCase)) return PropertyChangeType.NoEffect;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PropertyChangeType value.");
         }
     }

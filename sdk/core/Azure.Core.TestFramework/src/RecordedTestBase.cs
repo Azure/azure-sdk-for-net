@@ -6,14 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
-    [Category("Recorded")]
     public abstract class RecordedTestBase : ClientTestBase
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
@@ -47,7 +45,7 @@ namespace Azure.Core.TestFramework
             get => _saveDebugRecordingsOnFailure;
             set
             {
-                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
+                if (value && TestEnvironment.GlobalIsRunningInCI)
                 {
                     throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
                 }
@@ -58,20 +56,17 @@ namespace Azure.Core.TestFramework
         private bool _saveDebugRecordingsOnFailure;
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
-        {
-        }
-
-        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
-            Mode = mode;
+            Mode = mode ?? TestEnvironment.GlobalTestMode;
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            recording ??= Recording;
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
@@ -81,7 +76,7 @@ namespace Azure.Core.TestFramework
             return clientOptions;
         }
 
-        private string GetSessionFilePath()
+        protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -105,7 +100,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
+        /// Add a static <see cref="Diagnostics.AzureEventSourceListener"/> which will redirect SDK logging
         /// to Console.Out for easy debugging.
         /// </summary>
         private static TestLogger Logger { get; set; }
@@ -140,10 +135,17 @@ namespace Azure.Core.TestFramework
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
-                test.Properties.ContainsKey("SkipRecordings"))
+                test.Properties.ContainsKey("_SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string) test.Properties.Get("_SkipRecordings"));
             }
+
+            if (Mode == RecordedTestMode.Live &&
+                test.Properties.ContainsKey("_SkipLive"))
+            {
+                throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
+            }
+
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
         }
@@ -170,5 +172,33 @@ namespace Azure.Core.TestFramework
             ValidateClientInstrumentation = false;
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
+
+        protected internal T InstrumentOperation<T>(T operation) where T: Operation
+        {
+            return (T) InstrumentOperation(typeof(T), operation);
+        }
+
+        protected internal override object InstrumentOperation(Type operationType, object operation)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                managementInterceptor,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
     }
 }

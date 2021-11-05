@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstanceFailoverGroupListResult
+    internal partial class InstanceFailoverGroupListResult
     {
         internal static InstanceFailoverGroupListResult DeserializeInstanceFailoverGroupListResult(JsonElement element)
         {

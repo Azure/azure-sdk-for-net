@@ -67,7 +67,9 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Create a connection to our storage blob container using the credential.
                 string dataSourceConnectionName = "hotels-data-source";
-                /*@@*/ dataSourceConnectionName = Recording.Random.GetName();
+#if !SNIPPET
+                dataSourceConnectionName = Recording.Random.GetName();
+#endif
                 SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSourceConnection(
                     dataSourceConnectionName,
                     SearchIndexerDataSourceType.AzureBlob,
@@ -84,9 +86,11 @@ namespace Azure.Search.Documents.Tests.Samples
                 // You can optionally configure a skillset to use cognitive services when processing documents.
                 // Set the SearchIndexerSkillset.EncryptionKey to the same credential if you use a skillset.
                 string indexName = "hotels";
-                /*@@*/ indexName = resources.IndexName;
                 string indexerName = "hotels-indexer";
-                /*@@*/ indexerName = Recording.Random.GetName();
+#if !SNIPPET
+                indexName = resources.IndexName;
+                indexerName = Recording.Random.GetName();
+#endif
                 SearchIndexer indexer = new SearchIndexer(
                     indexerName,
                     dataSourceConnectionName,
@@ -120,11 +124,17 @@ namespace Azure.Search.Documents.Tests.Samples
                     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
                 SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
-                /*@@*/ indexerClient = resources.GetIndexerClient();
+#if !SNIPPET
+                indexerClient = resources.GetIndexerClient();
+#endif
                 indexerClient.CreateDataSourceConnection(dataSourceConnection);
-                /*@@*/ cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
+#if !SNIPPET
+                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
+#endif
                 indexerClient.CreateIndexer(indexer);
-                /*@@*/ cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
+#if !SNIPPET
+                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
+#endif
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Index
 
                 await WaitForIndexingAsync(indexerClient, indexerName);
@@ -132,13 +142,17 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
                 // Create a SearchClient and search for luxury hotels. In production, be sure to use the query key.
                 SearchClient searchClient = new SearchClient(endpoint, "hotels", credential);
-                /*@@*/ searchClient = resources.GetSearchClient();
-                /*@@*/ bool found = false;
+#if !SNIPPET
+                searchClient = resources.GetSearchClient();
+                bool found = false;
+#endif
                 Response<SearchResults<Hotel>> results = searchClient.Search<Hotel>("luxury hotels");
                 foreach (SearchResult<Hotel> result in results.Value.GetResults())
                 {
                     Hotel hotel = result.Document;
-                    /*@@*/ found = true;
+#if !SNIPPET
+                    found = true;
+#endif
 
                     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
                     Console.WriteLine($"  Description: {hotel.Description}");

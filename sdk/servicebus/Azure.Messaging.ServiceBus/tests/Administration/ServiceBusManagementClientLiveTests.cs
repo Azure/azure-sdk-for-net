@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -16,36 +17,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 {
     [AsyncOnly]
     [NonParallelizable]
+    [ClientTestFixture(ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)]
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
-        public ServiceBusManagementClientLiveTests(bool isAsync) :
+        private readonly ServiceBusAdministrationClientOptions.ServiceVersion _serviceVersion;
+
+        public ServiceBusManagementClientLiveTests(bool isAsync, ServiceBusAdministrationClientOptions.ServiceVersion serviceVersion) :
             base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
+            _serviceVersion = serviceVersion;
         }
 
-        private string GetConnectionString() =>
-            Mode == RecordedTestMode.Live ?
-                TestEnvironment.ServiceBusConnectionString :
-                TestEnvironment.OverrideServiceBusConnectionString;
+        private string GetConnectionString(bool premium = false) => premium ? TestEnvironment.ServiceBusPremiumNamespaceConnectionString : TestEnvironment.ServiceBusConnectionString;
 
-        private ServiceBusAdministrationClient CreateClient() =>
+        private ServiceBusAdministrationClientOptions CreateOptions() =>
+            InstrumentClientOptions(new ServiceBusAdministrationClientOptions(_serviceVersion));
+
+        private ServiceBusAdministrationClient CreateClient(bool premium = false) =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
-                    GetConnectionString(),
-                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    GetConnectionString(premium),
+                    CreateOptions()));
 
         private ServiceBusAdministrationClient CreateAADClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     GetTokenCredential(),
-                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    CreateOptions()));
 
         private ServiceBusAdministrationClient CreateSharedKeyTokenClient()
         {
             var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
-            var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+            var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+
+            return InstrumentClient(
+                new ServiceBusAdministrationClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    credential,
+                    CreateOptions()));
+        }
+
+        private ServiceBusAdministrationClient CreateSasTokenClient()
+        {
+            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var resource = ServiceBusAdministrationClient.BuildAudienceResource(TestEnvironment.FullyQualifiedNamespace);
+            var signature = new SharedAccessSignature(resource, properties.SharedAccessKeyName, properties.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
 
             return InstrumentClient(
                 new ServiceBusAdministrationClient(
@@ -55,10 +74,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task BasicQueueCrudOperations()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task BasicQueueCrudOperations(bool premium)
         {
             var queueName = nameof(BasicQueueCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = CreateClient();
+            var client = CreateClient(premium);
 
             var queueOptions = new CreateQueueOptions(queueName)
             {
@@ -79,6 +100,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Status = EntityStatus.Disabled
             };
 
+            if (CanSetMaxMessageSize(premium))
+            {
+                queueOptions.MaxMessageSizeInKilobytes = 100000;
+            }
+
             queueOptions.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
                 "allClaims",
                 new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
@@ -91,16 +117,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             QueueProperties createdQueue = createdQueueResponse.Value;
 
-            if (Mode == RecordedTestMode.Playback)
+            if (CanSetMaxMessageSize(premium))
             {
-                Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone() });
-                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules });
+                Assert.AreEqual(100000, createdQueue.MaxMessageSizeInKilobytes);
+            }
+            else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            {
+                // standard namespaces either use 256KB or 1024KB when in Canary
+                Assert.LessOrEqual(createdQueue.MaxMessageSizeInKilobytes, 1024);
             }
             else
             {
-                Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
-                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions));
+                Assert.IsNull(createdQueue.MaxMessageSizeInKilobytes);
             }
+
+            AssertQueueOptions(queueOptions, createdQueue);
+
             Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
             rawResponse = createdQueueResponse.GetRawResponse();
             Assert.NotNull(rawResponse.ClientRequestId);
@@ -120,6 +152,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getQueue.Status = EntityStatus.Disabled;
             getQueue.AutoDeleteOnIdle = TimeSpan.FromMinutes(6);
             getQueue.MaxSizeInMegabytes = 1024;
+            if (CanSetMaxMessageSize(premium))
+            {
+                getQueue.MaxMessageSizeInKilobytes = 10000;
+            }
+
             QueueProperties updatedQueue = await client.UpdateQueueAsync(getQueue);
 
             if (Mode == RecordedTestMode.Playback)
@@ -166,10 +203,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task BasicTopicCrudOperations()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task BasicTopicCrudOperations(bool premium)
         {
             var topicName = nameof(BasicTopicCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
-            var client = CreateClient();
+            var client = CreateClient(premium);
 
             var options = new CreateTopicOptions(topicName)
             {
@@ -180,8 +219,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 EnablePartitioning = false,
                 MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
-                UserMetadata = nameof(BasicTopicCrudOperations)
+                UserMetadata = nameof(BasicTopicCrudOperations),
             };
+
+            if (CanSetMaxMessageSize(premium))
+            {
+                options.MaxMessageSizeInKilobytes = 100000;
+            }
 
             options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
                "allClaims",
@@ -195,19 +239,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             TopicProperties createdTopic = createdTopicResponse.Value;
 
-            if (Mode == RecordedTestMode.Playback)
+            if (CanSetMaxMessageSize(premium))
             {
-                // Auth rules use a randomly generated key, but we don't want to store
-                // these in our test recordings, so we skip the auth rule comparison
-                // when in playback mode.
-                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
-                Assert.AreEqual(createdTopic, new TopicProperties(options) { AuthorizationRules = createdTopic.AuthorizationRules.Clone() });
+                Assert.AreEqual(100000, createdTopic.MaxMessageSizeInKilobytes);
+            }
+            else if (_serviceVersion == ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05)
+            {
+                // standard namespaces either use 256KB or 1024KB when in Canary
+                Assert.LessOrEqual(createdTopic.MaxMessageSizeInKilobytes, 1024);
             }
             else
             {
-                Assert.AreEqual(options, new CreateTopicOptions(createdTopic));
-                Assert.AreEqual(createdTopic, new TopicProperties(options));
+                Assert.IsNull(createdTopic.MaxMessageSizeInKilobytes);
             }
+
+            AssertTopicOptions(options, createdTopic);
 
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
 
@@ -225,6 +271,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getTopic.DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(2);
             getTopic.EnableBatchedOperations = false;
             getTopic.MaxSizeInMegabytes = 1024;
+            if (CanSetMaxMessageSize(premium))
+            {
+                getTopic.MaxMessageSizeInKilobytes = 10000;
+            }
 
             Response<TopicProperties> updatedTopicResponse = await client.UpdateTopicAsync(getTopic);
             rawResponse = updatedTopicResponse.GetRawResponse();
@@ -259,6 +309,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             exists = await client.TopicExistsAsync(topicName);
             Assert.False(exists);
+        }
+
+        private bool CanSetMaxMessageSize(bool premium)
+        {
+            return premium && _serviceVersion >= ServiceBusAdministrationClientOptions.ServiceVersion.V2021_05;
         }
 
         [Test]
@@ -445,7 +500,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(queueName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<QueueRuntimeProperties> runtimeInfoList = new List<QueueRuntimeProperties>();
             await foreach (QueueRuntimeProperties queueRuntimeInfo in mgmtClient.GetQueuesRuntimePropertiesAsync())
@@ -513,7 +568,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(topicName, subscriptionName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<SubscriptionRuntimeProperties> runtimeInfoList = new List<SubscriptionRuntimeProperties>();
             await foreach (SubscriptionRuntimeProperties subscriptionRuntimeInfo in client.GetSubscriptionsRuntimePropertiesAsync(topicName))
@@ -760,13 +815,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
             msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.CompleteMessageAsync(msg.LockToken);
+            await receiver.CompleteMessageAsync(msg);
 
             await mgmtClient.DeleteQueueAsync(queueName);
             await mgmtClient.DeleteQueueAsync(destinationName);
@@ -856,12 +911,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
 
-            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+            AssertQueueOptions(queueOptions, createdQueue);
 
             var topicOptions = new CreateTopicOptions(topicName);
             TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
-            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+            AssertTopicOptions(topicOptions, createdTopic);
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);
@@ -877,15 +932,74 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
 
-            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+            AssertQueueOptions(queueOptions, createdQueue);
 
             var topicOptions = new CreateTopicOptions(topicName);
             TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
-            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+            AssertTopicOptions(topicOptions, createdTopic);
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteTopicAsync(topicName);
+        }
+
+        [Test]
+        public async Task AuthenticateWithSasCredential()
+        {
+            var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var client = CreateSharedKeyTokenClient();
+
+            var queueOptions = new CreateQueueOptions(queueName);
+            QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
+
+            AssertQueueOptions(queueOptions, createdQueue);
+
+            var topicOptions = new CreateTopicOptions(topicName);
+            TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
+
+            AssertTopicOptions(topicOptions, createdTopic);
+
+            await client.DeleteQueueAsync(queueName);
+            await client.DeleteTopicAsync(topicName);
+        }
+
+        private void AssertQueueOptions(CreateQueueOptions queueOptions, QueueProperties createdQueue)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(queueOptions,
+                    new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes });
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules, MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes });
+            }
+            else
+            {
+                Assert.AreEqual(queueOptions,
+                    new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = queueOptions.MaxMessageSizeInKilobytes });
+                Assert.AreEqual(createdQueue,
+                    new QueueProperties(queueOptions) { MaxMessageSizeInKilobytes = createdQueue.MaxMessageSizeInKilobytes });
+            }
+        }
+
+        private void AssertTopicOptions(CreateTopicOptions options, TopicProperties createdTopic)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Auth rules use a randomly generated key, but we don't want to store
+                // these in our test recordings, so we skip the auth rule comparison
+                // when in playback mode.
+                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone(), MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
+                Assert.AreEqual(createdTopic, new TopicProperties(options)
+                {
+                    AuthorizationRules = createdTopic.AuthorizationRules.Clone(),
+                    MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes
+                });
+            }
+            else
+            {
+                Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes });
+                Assert.AreEqual(createdTopic, new TopicProperties(options) { MaxMessageSizeInKilobytes = createdTopic.MaxMessageSizeInKilobytes });
+            }
         }
 
         private TokenCredential GetTokenCredential() =>

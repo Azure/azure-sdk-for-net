@@ -1,6 +1,71 @@
 # Release History
 
-## 4.2.0-beta.5 (Unreleased)
+## 4.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.3.0-beta.2 (2021-10-14)
+
+### Features Added
+
+- Added `JsonWebKeyConverter` to support serializing and deserializing a `JsonWebKey` to a RFC 7517 JWK. ([#16155](https://github.com/Azure/azure-sdk-for-net/issues/16155))
+- Added `KeyClient.GetCryptographyClient` to get a `CryptographyClient` that uses the same options, policies, and pipeline as the `KeyClient` that created it. ([#23786](https://github.com/Azure/azure-sdk-for-net/issues/23786))
+- Added `KeyRotationPolicy` class and new methods including `KeyClient.GetKeyRotationPolicy`, `KeyClient.RotateKey`, and `KeyClient.UpdateKeyRotationPolicy`.
+- Added `KeyVaultKeyIdentifier.TryCreate` to parse key URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+- Support multi-tenant authentication against Key Vault and Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
+### Bugs Fixed
+
+- Added key version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+
+## 4.3.0-beta.1 (2021-08-10)
+
+### Features Added
+
+- Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+- Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
+- Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
+
+### Fixed
+
+- The default service version is now "7.3-preview".
+
+## 4.2.0 (2021-06-15)
+
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultKeyIdentifier` to parse certificate URIs.
+- Added local-only support for `CryptographyClient` using only a `JsonWebKey` using `LocalCryptographyClientOptions`.
+- Added `CreateEcKeyOptions` class and associated `KeyClient.CreateEcKey` and `CreateEcKeyAsync` methods.
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations to support Managed HSM.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+
+### Breaking Changes since 4.2.0-beta.6
+
+- Renamed `additionalAuthenticationData` factory method parameters to `additionalAuthenticatedData` to match properties and constructor parameters.
+- Renamed `parameters` parameter to `decryptParameters` for `CryptographyClient.Decrypt` and `DecryptAsync`.
+- Renamed `parameters` parameter to `encryptParameters` for `CryptographyClient.Encrypt` and `EncryptAsync`.
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.2.0-beta.5 (2021-03-09)
 
 ### Added
 
@@ -105,7 +170,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 
@@ -163,9 +228,9 @@ https://aka.ms/azure-sdk-preview1-net.
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
 using that library would require code changes to use `Azure.Security.KeyVault.Keys`.
 This package's
-[documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
+[documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
 and
-[samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples)
+[samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples)
 demonstrate the new API.
 
 ### Major changes from `Microsoft.Azure.KeyVault`
@@ -178,9 +243,9 @@ only).
 - Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Keys` package.
 - Authentication using `Azure.Identity` credentials
   - see this package's
-  [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
+  [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
   , and the
-  [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
+  [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity)
   for more information
 
 ### `Microsoft.Azure.KeyVault` features not implemented in this release:

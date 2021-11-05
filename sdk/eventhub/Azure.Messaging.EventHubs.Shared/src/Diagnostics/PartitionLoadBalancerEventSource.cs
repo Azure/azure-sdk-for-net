@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
-    internal class PartitionLoadBalancerEventSource : EventSource
+    internal class PartitionLoadBalancerEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer";
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   outside the scope of this library.
         /// </summary>
         ///
-        internal PartitionLoadBalancerEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected PartitionLoadBalancerEventSource() : base(EventSourceName)
         {
         }
 

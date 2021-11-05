@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class GremlinResourcesCreateUpdateGremlinGraphOperation : Operation<GremlinGraphGetResults>, IOperationSource<GremlinGraphGetResults>
     {
         private readonly ArmOperationHelpers<GremlinGraphGetResults> _operation;
+
+        /// <summary> Initializes a new instance of GremlinResourcesCreateUpdateGremlinGraphOperation for mocking. </summary>
+        protected GremlinResourcesCreateUpdateGremlinGraphOperation()
+        {
+        }
+
         internal GremlinResourcesCreateUpdateGremlinGraphOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GremlinGraphGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GremlinResourcesCreateUpdateGremlinGraphOperation");

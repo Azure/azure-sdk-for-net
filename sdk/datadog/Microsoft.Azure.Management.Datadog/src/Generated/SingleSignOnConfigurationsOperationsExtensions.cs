@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -68,12 +68,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -89,12 +90,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -116,12 +118,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             public static DatadogSingleSignOnResource Get(this ISingleSignOnConfigurationsOperations operations, string resourceGroupName, string monitorName, string configurationName)
             {
@@ -135,12 +138,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,12 +164,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -181,12 +186,13 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the Datadog resource belongs.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>

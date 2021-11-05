@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seanmcccanary3.queue.core.windows.net/test-queue-52c86e26-8a79-ea2a-2546-dbfa6fc43615",
@@ -48,7 +48,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": "\uFEFF\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Ecnwmfacqmgqgdiglfkcj\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2021-01-26T17:51:14.0338815Z\u003C/Start\u003E\u003CExpiry\u003E2021-01-26T19:51:14.0338815Z\u003C/Expiry\u003E\u003CPermission\u003Ea\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
+      "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>cnwmfacqmgqgdiglfkcj</Id><AccessPolicy><Start>2021-01-26T17:51:14.0338815Z</Start><Expiry>2021-01-26T19:51:14.0338815Z</Expiry><Permission>a</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -63,7 +63,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.queue.core.windows.net/test-queue-52c86e26-8a79-ea2a-2546-dbfa6fc43615/messages?sv=2020-06-12\u0026si=cnwmfacqmgqgdiglfkcj\u0026sig=Sanitized\u0026visibilitytimeout=1\u0026messagettl=3600",
+      "RequestUri": "https://seanmcccanary3.queue.core.windows.net/test-queue-52c86e26-8a79-ea2a-2546-dbfa6fc43615/messages?sv=2021-02-12&si=cnwmfacqmgqgdiglfkcj&sig=Sanitized&visibilitytimeout=1&messagettl=3600",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -78,7 +78,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": "\uFEFF\u003CQueueMessage\u003E\u003CMessageText\u003Ehbfatdfeyynnourytsos\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "RequestBody": "﻿<QueueMessage><MessageText>hbfatdfeyynnourytsos</MessageText></QueueMessage>",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
@@ -91,7 +91,7 @@
         "x-ms-request-id": "489dd440-e003-0095-7614-f43277000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003Ea23cf600-9cc4-4fd9-9076-40fec9aba9a6\u003C/MessageId\u003E\u003CInsertionTime\u003ETue, 26 Jan 2021 18:51:14 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003ETue, 26 Jan 2021 19:51:14 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAA/aaMORT01gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003ETue, 26 Jan 2021 18:51:15 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>a23cf600-9cc4-4fd9-9076-40fec9aba9a6</MessageId><InsertionTime>Tue, 26 Jan 2021 18:51:14 GMT</InsertionTime><ExpirationTime>Tue, 26 Jan 2021 19:51:14 GMT</ExpirationTime><PopReceipt>AgAAAAMAAAAAAAAA/aaMORT01gE=</PopReceipt><TimeNextVisible>Tue, 26 Jan 2021 18:51:15 GMT</TimeNextVisible></QueueMessage></QueueMessagesList>"
     },
     {
       "RequestUri": "https://seanmcccanary3.queue.core.windows.net/test-queue-52c86e26-8a79-ea2a-2546-dbfa6fc43615",
@@ -127,6 +127,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-01-26T12:51:14.0338815-06:00",
     "RandomSeed": "840409558",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

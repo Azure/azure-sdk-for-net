@@ -37,7 +37,9 @@ namespace Azure.MixedReality.Authentication
             /// Version 2019-02-28-preview of the Mixed Reality STS service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V2019_02_28_preview = 1,
+#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

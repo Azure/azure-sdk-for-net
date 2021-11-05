@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// <param name="id">ARM id of the monitor resource.</param>
         /// <param name="name">Name of the monitor resource.</param>
         /// <param name="type">The type of the monitor resource.</param>
-        public DatadogMonitorResource(string location, string id = default(string), string name = default(string), string type = default(string), ResourceSku sku = default(ResourceSku), MonitorProperties properties = default(MonitorProperties), IdentityProperties identity = default(IdentityProperties), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DatadogMonitorResource(string location, string id = default(string), string name = default(string), string type = default(string), ResourceSku sku = default(ResourceSku), MonitorProperties properties = default(MonitorProperties), IdentityProperties identity = default(IdentityProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Datadog.Models
             Identity = identity;
             Tags = tags;
             Location = location;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -93,6 +94,11 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -29,10 +29,12 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags) : base(
+            IDictionary<string, string> tags,
+            UploadTransactionalHashingOptions hashingOptions) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                hashingOptions)
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
@@ -49,14 +51,27 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                string blockId = StorageExtensions.GenerateBlockId(_position + _buffer.Length);
+                string blockId = Shared.StorageExtensions.GenerateBlockId(_position);
+
+                // Stage Block only supports LeaseId.
+                BlobRequestConditions conditions = null;
+                if (_conditions != null)
+                {
+                    conditions = new BlobRequestConditions
+                    {
+                        LeaseId = _conditions.LeaseId
+                    };
+                }
 
                 await _blockBlobClient.StageBlockInternal(
                     base64BlockId: blockId,
                     content: _buffer,
-                    transactionalContentHash: default,
-                    conditions: _conditions,
-                    progressHandler: _progressHandler,
+                    new BlockBlobStageBlockOptions()
+                    {
+                        TransactionalHashingOptions = _hashingOptions,
+                        Conditions = conditions,
+                        ProgressHandler = _progressHandler
+                    },
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -77,6 +92,8 @@ namespace Azure.Storage.Blobs
                 tags: _tags,
                 conditions: _conditions,
                 accessTier: default,
+                immutabilityPolicy: default,
+                legalHold: default,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

@@ -16,7 +16,7 @@ namespace Azure.Core.Buffers
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
-#if NET5_0
+#if NETCOREAPP
             await stream.WriteAsync(buffer, cancellation).ConfigureAwait(false);
 #else
 
@@ -58,7 +58,7 @@ namespace Azure.Core.Buffers
             {
                 foreach (ReadOnlyMemory<byte> segment in buffer)
                 {
-#if NET5_0
+#if NETCOREAPP
                     await stream.WriteAsync(segment, cancellation).ConfigureAwait(false);
 #else
                     if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))

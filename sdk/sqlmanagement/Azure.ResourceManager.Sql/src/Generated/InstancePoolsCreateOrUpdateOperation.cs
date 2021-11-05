@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class InstancePoolsCreateOrUpdateOperation : Operation<InstancePool>, IOperationSource<InstancePool>
     {
         private readonly ArmOperationHelpers<InstancePool> _operation;
+
+        /// <summary> Initializes a new instance of InstancePoolsCreateOrUpdateOperation for mocking. </summary>
+        protected InstancePoolsCreateOrUpdateOperation()
+        {
+        }
+
         internal InstancePoolsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<InstancePool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "InstancePoolsCreateOrUpdateOperation");

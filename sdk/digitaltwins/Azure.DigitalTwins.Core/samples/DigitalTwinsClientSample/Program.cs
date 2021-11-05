@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.DigitalTwins.Samples;
 using Azure.Identity;
 using CommandLine;
@@ -69,7 +70,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
             // It attempts to use multiple credential types in an order until it finds a working credential.
-            var tokenCredential = new DefaultAzureCredential();
+            TokenCredential tokenCredential = new DefaultAzureCredential();
 
             var client = new DigitalTwinsClient(
                 new Uri(adtEndpoint),

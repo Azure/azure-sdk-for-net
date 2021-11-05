@@ -3,22 +3,22 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
   paths:
     include:
     - sdk/eventhub/ci.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
+    - sdk/eventhub/Azure.Messaging.EventHubs.Experimental
     - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -26,9 +26,11 @@ pr:
   paths:
     include:
     - sdk/eventhub/ci.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
+    - sdk/eventhub/Azure.Messaging.EventHubs.Experimental
     - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 extends:
@@ -42,5 +44,7 @@ extends:
       safeName: AzureMessagingEventHubs
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
+    - name: Azure.Messaging.EventHubs.Experimental
+      safeName: AzureMessagingEventHubsExperimental
     - name: Microsoft.Azure.WebJobs.Extensions.EventHubs
       safeName: MicrosoftAzureWebJobsExtensionsEventHubs

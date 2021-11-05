@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// The roll-up method performs an aggregation (for example SUM, MAX, MIN) on each dimension during ingestion. Used to
     /// build a hierarchy which will be used in root case analysis and other diagnostic features.
     /// </summary>
-    [CodeGenModel("DataFeedDetailRollUpMethod")]
+    [CodeGenModel("RollUpMethod")]
     public readonly partial struct DataFeedAutoRollupMethod
     {
         /// <summary>

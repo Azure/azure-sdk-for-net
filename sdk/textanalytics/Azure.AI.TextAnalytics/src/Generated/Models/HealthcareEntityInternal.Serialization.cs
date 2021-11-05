@@ -7,27 +7,39 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class HealthcareEntityInternal
     {
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
-            bool isNegated = default;
+            Optional<HealthcareEntityAssertion> assertion = default;
+            Optional<string> name = default;
             Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
-            string category = default;
+            HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isNegated"))
+                if (property.NameEquals("assertion"))
                 {
-                    isNegated = property.Value.GetBoolean();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("links"))
@@ -52,7 +64,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("category"))
                 {
-                    category = property.Value.GetString();
+                    category = new HealthcareEntityCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subcategory"))
@@ -76,7 +88,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, isNegated, Optional.ToList(links));
+            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
         }
     }
 }

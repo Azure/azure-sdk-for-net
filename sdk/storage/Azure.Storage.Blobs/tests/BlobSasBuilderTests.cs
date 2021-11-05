@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -40,11 +41,12 @@ namespace Azure.Storage.Blobs.Test
                 Value = constants.Sas.KeyValue
             };
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
@@ -54,7 +56,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -68,11 +70,12 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
@@ -82,7 +85,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -102,11 +105,12 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
@@ -116,7 +120,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -130,11 +134,12 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
@@ -144,7 +149,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -164,11 +169,12 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -178,7 +184,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -192,11 +198,12 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -206,7 +213,7 @@ namespace Azure.Storage.Blobs.Test
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(constants.Sas.Protocol, sasQueryParameters.Protocol);
@@ -226,11 +233,11 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -239,11 +246,11 @@ namespace Azure.Storage.Blobs.Test
             Assert.Throws<ArgumentNullException>(() => blobSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string containerName = GetNewContainerName();
             string resource = "c";
             BlobSasBuilder sasBuilder = new BlobSasBuilder()
@@ -252,7 +259,6 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Protocol = SasProtocol.Https,
                 Resource = resource,
-                Version = constants.Sas.Version
             };
 
             // Act
@@ -264,7 +270,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(resource, sasQueryParameters.Resource);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
@@ -293,7 +299,7 @@ namespace Azure.Storage.Blobs.Test
             await sasContainerClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -313,7 +319,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("TLXDWMECAR")]
         [TestCase("racwdxltme")]
@@ -349,7 +355,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ContainerPermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -370,7 +376,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase(BlobSasPermissions.Read)]
         [TestCase(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.List)]
@@ -403,7 +409,7 @@ namespace Azure.Storage.Blobs.Test
             await sasBlobClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase(BlobContainerSasPermissions.List)]
         [TestCase(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List)]
@@ -456,18 +462,19 @@ namespace Azure.Storage.Blobs.Test
                 ContentDisposition = constants.Sas.ContentDisposition,
                 ContentEncoding = constants.Sas.ContentEncoding,
                 ContentLanguage = constants.Sas.ContentLanguage,
-                ContentType = constants.Sas.ContentType
+                ContentType = constants.Sas.ContentType,
+                EncryptionScope = constants.Sas.EncryptionScope
             };
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
 
@@ -500,12 +507,12 @@ namespace Azure.Storage.Blobs.Test
             await blobClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BlobSasBuilder_CorrelationId()
         {
             // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
@@ -563,9 +570,10 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
-                SasQueryParameters.DefaultSasVersion,
+                SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
@@ -607,9 +615,10 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
-                SasQueryParameters.DefaultSasVersion,
+                SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,

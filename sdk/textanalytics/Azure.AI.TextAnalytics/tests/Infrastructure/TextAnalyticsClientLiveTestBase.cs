@@ -6,12 +6,22 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(
+    TextAnalyticsClientOptions.ServiceVersion.V3_0,
+    TextAnalyticsClientOptions.ServiceVersion.V3_1,
+    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
+        /// <summary>
+        /// The version of the REST API to test against.  This will be passed
+        /// to the .ctor via ClientTestFixture's values.
+        /// </summary>
+        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
 
-        public TextAnalyticsClientLiveTestBase(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
@@ -21,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Tests
             bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new TextAnalyticsClientOptions();
+            options ??= new TextAnalyticsClientOptions(_serviceVersion);
 
             if (useTokenCredential)
             {

@@ -26,11 +26,12 @@ namespace Azure.Communication.Pipeline
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
             => variableName switch
             {
-                CommunicationTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationTestEnvironment.LiveTestDynamicConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationTestEnvironment.LiveTestStaticConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 
-        private static string SanitizeConnectionString(string connectionString)
+        protected static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
             const string someBase64String = "Kg==";

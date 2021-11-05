@@ -10,12 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> All available compression levels. </summary>
-    public readonly partial struct DatasetCompressionLevel : IEquatable<DatasetCompressionLevel>
+    /// <summary> The DatasetCompressionLevel. </summary>
+    internal readonly partial struct DatasetCompressionLevel : IEquatable<DatasetCompressionLevel>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DatasetCompressionLevel"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetCompressionLevel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatasetCompressionLevel(string value)
         {

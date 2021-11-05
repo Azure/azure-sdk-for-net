@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The deleted storage account list result. </summary>
-    public partial class DeletedStorageListResult
+    internal partial class DeletedStorageListResult
     {
         /// <summary> Initializes a new instance of DeletedStorageListResult. </summary>
         internal DeletedStorageListResult()

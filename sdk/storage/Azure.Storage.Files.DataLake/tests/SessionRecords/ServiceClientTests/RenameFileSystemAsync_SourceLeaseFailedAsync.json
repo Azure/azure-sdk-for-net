@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-a86d477b-6b79-4f4a-719a-404d3b6dcbab?restype=container",
@@ -13,13 +13,13 @@
         "x-ms-client-request-id": "fcbe9cec-372a-affa-0b3b-1f8eb26e754b",
         "x-ms-date": "Mon, 23 Nov 2020 22:18:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Mon, 23 Nov 2020 22:18:12 GMT",
-        "ETag": "\u00220x8D88FFDAB0AB649\u0022",
+        "ETag": "\"0x8D88FFDAB0AB649\"",
         "Last-Modified": "Mon, 23 Nov 2020 22:18:13 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -28,12 +28,12 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "fcbe9cec-372a-affa-0b3b-1f8eb26e754b",
         "x-ms-request-id": "84907b5a-701e-0008-09e6-c1fa3a000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-8ca00a0e-ccf6-323c-88ea-b8dbda268bf6?restype=container\u0026comp=rename",
+      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-8ca00a0e-ccf6-323c-88ea-b8dbda268bf6?restype=container&comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -47,7 +47,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-source-container-name": "test-filesystem-a86d477b-6b79-4f4a-719a-404d3b6dcbab",
         "x-ms-source-lease-id": "da96490f-fdf0-8db4-637a-0af9ec4c7ee3",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -62,13 +62,13 @@
         "x-ms-client-request-id": "6ae19487-720e-eef7-e831-98b02c01c3be",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "84907b5f-701e-0008-0be6-c1fa3a000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
-        "\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the container.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
+        "<Error><Code>LeaseNotPresentWithContainerOperation</Code><Message>There is currently no lease on the container.\n",
         "RequestId:84907b5f-701e-0008-0be6-c1fa3a000000\n",
-        "Time:2020-11-23T22:18:13.2869594Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-11-23T22:18:13.2869594Z</Message></Error>"
       ]
     },
     {
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "5771f706-146b-2bd4-d800-5537f61b5365",
         "x-ms-date": "Mon, 23 Nov 2020 22:18:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,13 +97,13 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "5771f706-146b-2bd4-d800-5537f61b5365",
         "x-ms-request-id": "84907b60-701e-0008-0ce6-c1fa3a000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1591788588",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n631xscnapsn4prde17h\nU2FuaXRpemVk\nhttps://631xscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.table.preprod.core.windows.net\n\n\n\n\nhttps://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://631xscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://631xscnapsn4prde17h.queue.preprod.core.windows.net/;FileEndpoint=https://631xscnapsn4prde17h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net/;AccountName=631xscnapsn4prde17h;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n631xscnapsn4prde17h\nU2FuaXRpemVk\nhttps://631xscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.table.preprod.core.windows.net\n\n\n\n\nhttps://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://631xscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://631xscnapsn4prde17h.queue.preprod.core.windows.net/;FileEndpoint=https://631xscnapsn4prde17h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net/;AccountName=631xscnapsn4prde17h;AccountKey=Sanitized\n\n\n"
   }
 }

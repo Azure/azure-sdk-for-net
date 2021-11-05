@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Diagnostics
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureCoreEventSource : EventSource
+    internal sealed class AzureCoreEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Core";
 
@@ -15,6 +14,9 @@ namespace Azure.Core.Diagnostics
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
+        private const int RequestRedirectEvent = 20;
+        private const int RequestRedirectBlockedEvent = 21;
+        private const int RequestRedirectCountExceededEvent = 22;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseDelayEvent = 7;
@@ -29,7 +31,7 @@ namespace Azure.Core.Diagnostics
         private const int RequestRetryingEvent = 10;
         private const int ExceptionResponseEvent = 18;
 
-        private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private AzureCoreEventSource() : base(EventSourceName) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
@@ -133,6 +135,24 @@ namespace Azure.Core.Diagnostics
         public void ExceptionResponse(string requestId, string exception)
         {
             WriteEvent(ExceptionResponseEvent, requestId, exception);
+        }
+
+        [Event(RequestRedirectEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Redirecting from {1} to {2} in response to status code {3}")]
+        public void RequestRedirect(string requestId, string from, string to, int status)
+        {
+            WriteEvent(RequestRedirectEvent, requestId, from, to, status);
+        }
+
+        [Event(RequestRedirectBlockedEvent, Level = EventLevel.Warning, Message = "Request [{0}] Insecure HTTPS to HTTP redirect from {1} to {2} was blocked.")]
+        public void RequestRedirectBlocked(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectBlockedEvent, requestId, from, to);
+        }
+
+        [Event(RequestRedirectCountExceededEvent, Level = EventLevel.Warning, Message = "Request [{0}] Exceeded max number of redirects. Redirect from {1} to {2} blocked.")]
+        public void RequestRedirectCountExceeded(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
         }
     }
 }

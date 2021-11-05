@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
         {
-            string name = default;
+            BlobName name = default;
             bool deleted = default;
             string snapshot = default;
             string versionId = default;
@@ -23,10 +23,11 @@ namespace Azure.Storage.Blobs.Models
             BlobPropertiesInternal properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
             BlobTags blobTags = default;
-            IReadOnlyDictionary<string, string> objectReplicationMetadata = default;
+            bool? hasVersionsOnly = default;
+            IReadOnlyDictionary<string, string> orMetadata = default;
             if (element.Element("Name") is XElement nameElement)
             {
-                name = (string)nameElement;
+                name = BlobName.DeserializeBlobName(nameElement);
             }
             if (element.Element("Deleted") is XElement deletedElement)
             {
@@ -61,16 +62,20 @@ namespace Azure.Storage.Blobs.Models
             {
                 blobTags = BlobTags.DeserializeBlobTags(tagsElement);
             }
-            if (element.Element("ObjectReplicationMetadata") is XElement objectReplicationMetadataElement)
+            if (element.Element("HasVersionsOnly") is XElement hasVersionsOnlyElement)
+            {
+                hasVersionsOnly = (bool?)hasVersionsOnlyElement;
+            }
+            if (element.Element("OrMetadata") is XElement orMetadataElement)
             {
                 var dictionary = new Dictionary<string, string>();
-                foreach (var e in objectReplicationMetadataElement.Elements())
+                foreach (var e in orMetadataElement.Elements())
                 {
                     dictionary.Add(e.Name.LocalName, (string)e);
                 }
-                objectReplicationMetadata = dictionary;
+                orMetadata = dictionary;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, objectReplicationMetadata);
+            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, hasVersionsOnly, orMetadata);
         }
     }
 }

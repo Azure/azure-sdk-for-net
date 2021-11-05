@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using CloudNative.CloudEvents;
+using CloudNative.CloudEvents.SystemTextJson;
 using NUnit.Framework;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
@@ -46,63 +49,66 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             var activity = new Activity($"{nameof(EventGridPublisherClient)}.{nameof(EventGridPublisherClient.SendEvents)}");
             activity.SetW3CFormat();
             activity.Start();
-            List<CloudEvent> eventsList = new List<CloudEvent>();
+            List<CloudEvent> inputEvents = new List<CloudEvent>();
             for (int i = 0; i < 10; i++)
             {
                 var cloudEvent =
-                    new CloudEvent(
-                        "record",
-                        new Uri("http://localHost"),
-                        Guid.NewGuid().ToString(),
-                        DateTime.Now);
+                    new CloudEvent
+                    {
+                        Subject = "record",
+                        Source = new Uri("http://localHost"),
+                        Id = Guid.NewGuid().ToString(),
+                        Time = DateTime.Now,
+                        Type = "test"
+                    };
 
                 if (inclTraceparent && inclTracestate && i % 2 == 0)
                 {
-                    cloudEvent.GetAttributes().Add("traceparent", "traceparentValue");
+                    cloudEvent.SetAttributeFromString("traceparent", "traceparentValue");
                 }
                 if (inclTracestate && i % 2 == 0)
                 {
-                    cloudEvent.GetAttributes().Add("tracestate", "param:value");
+                    cloudEvent.SetAttributeFromString("tracestate", "param:value");
                 }
-                eventsList.Add(cloudEvent);
+                inputEvents.Add(cloudEvent);
             }
-            await client.SendCloudEventsAsync(eventsList);
+            await client.SendCloudNativeCloudEventsAsync(inputEvents);
 
             activity.Stop();
-            List<CloudEvent> cloudEvents = DeserializeRequest(mockTransport.SingleRequest);
-            IEnumerator<CloudEvent> cloudEnum = eventsList.GetEnumerator();
-            foreach (CloudEvent cloudEvent in cloudEvents)
+            List<CloudEvent> endEvents = DeserializeRequest(mockTransport.SingleRequest);
+            IEnumerator<CloudEvent> inputEnum = inputEvents.GetEnumerator();
+            foreach (CloudEvent cloudEvent in endEvents)
             {
-                cloudEnum.MoveNext();
-                IDictionary<string, object> cloudEventAttr = cloudEnum.Current.GetAttributes();
-                if (cloudEventAttr.ContainsKey(TraceParentHeaderName) &&
-                    cloudEventAttr.ContainsKey(TraceStateHeaderName))
+                inputEnum.MoveNext();
+                var inputAttributes = inputEnum.Current.GetPopulatedAttributes().Select(pair => pair.Key.Name).ToList();
+                if (inputAttributes.Contains(TraceParentHeaderName) &&
+                    inputAttributes.Contains(TraceStateHeaderName))
                 {
                     Assert.AreEqual(
-                        cloudEventAttr[TraceParentHeaderName],
-                        cloudEvent.GetAttributes()[TraceParentHeaderName]);
+                        inputEnum.Current[TraceParentHeaderName],
+                        cloudEvent[TraceParentHeaderName]);
 
                     Assert.AreEqual(
-                        cloudEventAttr[TraceStateHeaderName],
-                        cloudEvent.GetAttributes()[TraceStateHeaderName]);
+                        inputEnum.Current[TraceStateHeaderName],
+                        cloudEvent[TraceStateHeaderName]);
                 }
-                else if (cloudEventAttr.ContainsKey(TraceParentHeaderName))
+                else if (inputAttributes.Contains(TraceParentHeaderName))
                 {
                     Assert.AreEqual(
-                        cloudEventAttr[TraceParentHeaderName],
-                        cloudEvent.GetAttributes()[TraceParentHeaderName]);
+                        inputEnum.Current[TraceParentHeaderName],
+                        cloudEvent[TraceParentHeaderName]);
                 }
-                else if (cloudEventAttr.ContainsKey(TraceStateHeaderName))
+                else if (inputAttributes.Contains(TraceStateHeaderName))
                 {
                     Assert.AreEqual(
-                       cloudEventAttr[TraceStateHeaderName],
-                       cloudEvent.GetAttributes()[TraceStateHeaderName]);
+                        inputEnum.Current[TraceStateHeaderName],
+                       cloudEvent[TraceStateHeaderName]);
                 }
                 else
                 {
                     Assert.AreEqual(
                        activity.Id,
-                       cloudEvent.GetAttributes()[TraceParentHeaderName]);
+                       cloudEvent[TraceParentHeaderName]);
                 }
             }
         }
@@ -119,7 +125,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             foreach (JsonElement property in requestDocument.RootElement.EnumerateArray())
             {
                 var bytes = JsonSerializer.SerializeToUtf8Bytes(property, typeof(JsonElement));
-                cloudEvents.Add(s_eventFormatter.DecodeStructuredEvent(bytes));
+                cloudEvents.Add(s_eventFormatter.DecodeStructuredModeMessage(bytes, new System.Net.Mime.ContentType("application/json"), null));
             }
 
             return cloudEvents;

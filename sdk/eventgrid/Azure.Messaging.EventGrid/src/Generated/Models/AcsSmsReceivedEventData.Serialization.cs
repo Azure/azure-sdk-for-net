@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsSmsReceivedEventDataConverter))]
     public partial class AcsSmsReceivedEventData
     {
         internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element)
@@ -54,6 +56,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Optional.ToNullable(receivedTimestamp));
+        }
+
+        internal partial class AcsSmsReceivedEventDataConverter : JsonConverter<AcsSmsReceivedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsSmsReceivedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override AcsSmsReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsSmsReceivedEventData(document.RootElement);
+            }
         }
     }
 }

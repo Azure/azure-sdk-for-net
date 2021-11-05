@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// to.</param>
         /// <param name="useCommonAlertSchema">Indicates whether to use common
         /// alert schema.</param>
-        public LogicAppReceiver(string name, string resourceId, string callbackUrl, bool useCommonAlertSchema)
+        public LogicAppReceiver(string name, string resourceId, string callbackUrl, bool? useCommonAlertSchema = default(bool?))
         {
             Name = name;
             ResourceId = resourceId;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

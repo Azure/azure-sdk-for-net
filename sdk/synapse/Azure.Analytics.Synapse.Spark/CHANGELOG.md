@@ -1,7 +1,30 @@
 # Release History
 
-## 1.0.0-preview.6 (Unreleased)
+## 1.0.0-preview.9 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-preview.8 (2021-10-05)
+
+### Features Added
+- Enhance Long Running Operation (LRO) logic for `SparkBatchClient` to support both scenarios of job submission and job execution.
+- Update `LivyState` to be an extensible enum.
+
+
+## 1.0.0-preview.7 (2021-08-10)
+
+### Changed
+- Updated to use service API version `2020-12-01`
+
+## 1.0.0-preview.6 (2021-05-11)
+### Key Bug Fixes
+- Updated dependency versions.
 
 ## 1.0.0-preview.5 (2021-02-11)
 ### Changed

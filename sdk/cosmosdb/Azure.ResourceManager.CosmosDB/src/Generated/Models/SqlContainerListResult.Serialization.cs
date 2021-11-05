@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SqlContainerListResult
+    internal partial class SqlContainerListResult
     {
         internal static SqlContainerListResult DeserializeSqlContainerListResult(JsonElement element)
         {

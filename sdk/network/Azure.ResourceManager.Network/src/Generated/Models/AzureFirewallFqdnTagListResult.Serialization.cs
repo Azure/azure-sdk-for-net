@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallFqdnTagListResult
+    internal partial class AzureFirewallFqdnTagListResult
     {
         internal static AzureFirewallFqdnTagListResult DeserializeAzureFirewallFqdnTagListResult(JsonElement element)
         {

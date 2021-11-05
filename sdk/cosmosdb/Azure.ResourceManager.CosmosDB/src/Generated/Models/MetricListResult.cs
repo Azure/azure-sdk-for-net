@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The response to a list metrics request. </summary>
-    public partial class MetricListResult
+    internal partial class MetricListResult
     {
         /// <summary> Initializes a new instance of MetricListResult. </summary>
         internal MetricListResult()

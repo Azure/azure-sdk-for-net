@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="timeAggregation">the criteria time aggregation
-        /// types.</param>
+        /// <param name="timeAggregation">the criteria time aggregation types.
+        /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
+        /// 'Total'</param>
         /// <param name="operatorProperty">The operator used to compare the
         /// metric value against the threshold. Possible values include:
         /// 'GreaterThan', 'LessThan', 'GreaterOrLessThan'</param>
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="ignoreDataBefore">Use this option to set the date from
         /// which to start learning the metric historical data and calculate
         /// the dynamic thresholds (in ISO8601 format)</param>
-        public DynamicMetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, string alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?), System.DateTime? ignoreDataBefore = default(System.DateTime?))
+        public DynamicMetricCriteria(string name, string metricName, string timeAggregation, string operatorProperty, string alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?), System.DateTime? ignoreDataBefore = default(System.DateTime?))
             : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions, skipMetricValidation)
         {
             OperatorProperty = operatorProperty;

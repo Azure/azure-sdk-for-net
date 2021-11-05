@@ -39,7 +39,7 @@ namespace Azure.Communication.Identity.Models
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innerError"> The Communication Services error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
         internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
         {
             Code = code;
@@ -57,7 +57,7 @@ namespace Azure.Communication.Identity.Models
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>
         public IReadOnlyList<CommunicationError> Details { get; }
-        /// <summary> The Communication Services error. </summary>
+        /// <summary> The inner error if any. </summary>
         public CommunicationError InnerError { get; }
     }
 }

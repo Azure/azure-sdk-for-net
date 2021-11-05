@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -15,31 +14,17 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class ChangePointDetectResponse
     {
         /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>
-        /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
-        /// <param name="isChangePoint"> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </param>
-        /// <param name="confidenceScores"> the change point confidence of each point. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isChangePoint"/> or <paramref name="confidenceScores"/> is null. </exception>
-        internal ChangePointDetectResponse(int period, IEnumerable<bool> isChangePoint, IEnumerable<float> confidenceScores)
+        internal ChangePointDetectResponse()
         {
-            if (isChangePoint == null)
-            {
-                throw new ArgumentNullException(nameof(isChangePoint));
-            }
-            if (confidenceScores == null)
-            {
-                throw new ArgumentNullException(nameof(confidenceScores));
-            }
-
-            Period = period;
-            IsChangePoint = isChangePoint.ToList();
-            ConfidenceScores = confidenceScores.ToList();
+            IsChangePoint = new ChangeTrackingList<bool>();
+            ConfidenceScores = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="isChangePoint"> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </param>
         /// <param name="confidenceScores"> the change point confidence of each point. </param>
-        internal ChangePointDetectResponse(int period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
+        internal ChangePointDetectResponse(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
         {
             Period = period;
             IsChangePoint = isChangePoint;
@@ -47,7 +32,7 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Frequency extracted from the series, zero means no recurrent pattern has been found. </summary>
-        public int Period { get; }
+        public int? Period { get; }
         /// <summary> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </summary>
         public IReadOnlyList<bool> IsChangePoint { get; }
         /// <summary> the change point confidence of each point. </summary>

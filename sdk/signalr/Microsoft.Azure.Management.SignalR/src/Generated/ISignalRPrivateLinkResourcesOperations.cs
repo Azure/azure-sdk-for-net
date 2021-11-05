@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SignalR
     {
         /// <summary>
         /// Get the private link resources that need to be created for a
-        /// SignalR resource.
+        /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// portal.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of the SignalR resource.
+        /// The name of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.SignalR
         Task<AzureOperationResponse<IPage<PrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the private link resources that need to be created for a
-        /// SignalR resource.
+        /// resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

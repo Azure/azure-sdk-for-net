@@ -55,6 +55,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="publicIPPrefix">The reference to the Public IP Prefix
         /// resource.</param>
+        /// <param name="gatewayLoadBalancer">The reference to gateway load
+        /// balancer frontend IP.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// frontend IP configuration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -66,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Type of the resource.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), SubResource publicIPPrefix = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IList<string> zones = default(IList<string>))
+        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), SubResource publicIPPrefix = default(SubResource), SubResource gatewayLoadBalancer = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IList<string> zones = default(IList<string>))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             PublicIPPrefix = publicIPPrefix;
+            GatewayLoadBalancer = gatewayLoadBalancer;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -159,6 +162,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPPrefix { get; set; }
 
         /// <summary>
+        /// Gets or sets the reference to gateway load balancer frontend IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayLoadBalancer")]
+        public SubResource GatewayLoadBalancer { get; set; }
+
+        /// <summary>
         /// Gets the provisioning state of the frontend IP configuration
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
@@ -194,18 +203,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (PublicIPAddress != null)
-            {
-                PublicIPAddress.Validate();
-            }
-        }
     }
 }

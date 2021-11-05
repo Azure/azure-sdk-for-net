@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,23 +31,29 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
+        /// <param name="sku"> Describes the public IP Sku. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
         /// <param name="ipTags"> The list of IP tags associated with the public IP address. </param>
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIpTag> ipTags, SubResource publicIPPrefix, IPVersion? publicIPAddressVersion)
+        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIpTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOptions? deleteOption)
         {
             Name = name;
+            Sku = sku;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
             IpTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
+            DeleteOption = deleteOption;
         }
 
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
+        /// <summary> Describes the public IP Sku. </summary>
+        public PublicIPAddressSku Sku { get; set; }
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
@@ -54,8 +61,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The list of IP tags associated with the public IP address. </summary>
         public IList<VirtualMachineScaleSetIpTag> IpTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        public SubResource PublicIPPrefix { get; set; }
+        public WritableSubResource PublicIPPrefix { get; set; }
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
+        /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
+        public DeleteOptions? DeleteOption { get; set; }
     }
 }

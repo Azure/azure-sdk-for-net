@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "197",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f2ee024536894c4fa456c3a410acae85-6ce86ed2af3c7142-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-e30e3ee559537e4a80d35f89d31cb6cc-2f33e4aa3158564a-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
+          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "d0c9faccbe22f6229408f2811c507283",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "11d84843-3e29-4666-9815-636b1d98f2f3",
+        "apim-request-id": "03955672-2385-4564-a4e9-d60596c69855",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 06 Feb 2021 03:48:22 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Mon, 25 Oct 2021 21:13:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "101"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "115"
       },
       "ResponseBody": {
         "documents": [
@@ -59,7 +65,7 @@
                 "offset": 0,
                 "length": 30,
                 "text": "The park was clean and pretty.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -71,17 +77,17 @@
                     "text": "park",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/0"
                       },
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/1"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/1"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -116,7 +122,7 @@
                 "offset": 31,
                 "length": 44,
                 "text": "The bathrooms and restaurant were not clean.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -128,8 +134,8 @@
                     "text": "bathrooms",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   },
@@ -144,13 +150,13 @@
                     "text": "restaurant",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -186,7 +192,7 @@
                 "offset": 0,
                 "length": 33,
                 "text": "The food and service is not good.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -198,8 +204,8 @@
                     "text": "food",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/1/sentences/0/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/1/sentences/0/assessments/0"
                       }
                     ]
                   },
@@ -214,13 +220,13 @@
                     "text": "service",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/1/sentences/0/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/1/sentences/0/assessments/0"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -246,6 +252,6 @@
   "Variables": {
     "RandomSeed": "1558892529",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
   }
 }

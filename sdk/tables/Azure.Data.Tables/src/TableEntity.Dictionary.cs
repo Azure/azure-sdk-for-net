@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using Azure.Core;
 
 namespace Azure.Data.Tables
 {
@@ -61,10 +58,14 @@ namespace Azure.Data.Tables
         /// <inheritdoc cref="ICollection{T}.Remove(T)" />
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
 
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _properties.GetEnumerator();
+        /// <summary>
+        /// Gets the enumerator for the <see cref="TableEntity"/> properties.
+        /// </summary>
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => _properties.GetEnumerator();
 
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        /// <summary>
+        /// Gets the enumerator for the <see cref="TableEntity"/> properties.
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator() => _properties.GetEnumerator();
     }
 }

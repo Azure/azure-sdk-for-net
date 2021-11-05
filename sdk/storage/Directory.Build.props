@@ -47,6 +47,13 @@
     <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
     -->
   </PropertyGroup>
+  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true'">
+    <!-- Verify that latest service version is used only when we ship release. -->
+    <NoWarn>
+      $(NoWarn);
+      AZC0010;
+    </NoWarn>
+  </PropertyGroup>
 
 
   <!-- DEBUG specific settings -->
@@ -78,6 +85,7 @@
   <!--Add shared storage properties-->
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
+    <AzureStorageSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\tests\Shared\</AzureStorageSharedTestSources>
     <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
     <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
     <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>

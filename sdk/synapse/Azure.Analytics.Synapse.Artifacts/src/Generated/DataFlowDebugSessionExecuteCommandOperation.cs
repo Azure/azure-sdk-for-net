@@ -19,11 +19,18 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Execute a data flow debug command. </summary>
     public partial class DataFlowDebugSessionExecuteCommandOperation : Operation<DataFlowDebugCommandResponse>, IOperationSource<DataFlowDebugCommandResponse>
     {
-        private readonly ArmOperationHelpers<DataFlowDebugCommandResponse> _operation;
+        private readonly OperationInternals<DataFlowDebugCommandResponse> _operation;
+
+        /// <summary> Initializes a new instance of DataFlowDebugSessionExecuteCommandOperation for mocking. </summary>
+        protected DataFlowDebugSessionExecuteCommandOperation()
+        {
+        }
+
         internal DataFlowDebugSessionExecuteCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DataFlowDebugCommandResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDebugSessionExecuteCommandOperation");
+            _operation = new OperationInternals<DataFlowDebugCommandResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDebugSessionExecuteCommandOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

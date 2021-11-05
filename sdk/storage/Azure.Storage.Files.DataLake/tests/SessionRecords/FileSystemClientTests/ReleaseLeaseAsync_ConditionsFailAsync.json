@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-402ac088-b363-7d60-ef2d-493d9d5ddcde?restype=container",
@@ -14,14 +14,14 @@
         "x-ms-client-request-id": "1b21fa40-a869-687a-ee8f-4e15f48accde",
         "x-ms-date": "Wed, 17 Feb 2021 22:23:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 22:23:07 GMT",
-        "ETag": "\u00220x8D8D3929A7316F3\u0022",
+        "ETag": "\"0x8D8D3929A7316F3\"",
         "Last-Modified": "Wed, 17 Feb 2021 22:23:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -29,12 +29,12 @@
         ],
         "x-ms-client-request-id": "1b21fa40-a869-687a-ee8f-4e15f48accde",
         "x-ms-request-id": "b5169440-101e-0039-567b-058443000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-402ac088-b363-7d60-ef2d-493d9d5ddcde?comp=lease\u0026restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-402ac088-b363-7d60-ef2d-493d9d5ddcde?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -50,14 +50,14 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "4f44bc93-4d79-203e-3577-35b44f304ca1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 22:23:07 GMT",
-        "ETag": "\u00220x8D8D3929A7316F3\u0022",
+        "ETag": "\"0x8D8D3929A7316F3\"",
         "Last-Modified": "Wed, 17 Feb 2021 22:23:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -66,12 +66,12 @@
         "x-ms-client-request-id": "749b86e1-c709-f353-bc00-e5f172c619bd",
         "x-ms-lease-id": "4f44bc93-4d79-203e-3577-35b44f304ca1",
         "x-ms-request-id": "b51694a3-101e-0039-2d7b-058443000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-402ac088-b363-7d60-ef2d-493d9d5ddcde?comp=lease\u0026restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-402ac088-b363-7d60-ef2d-493d9d5ddcde?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -87,7 +87,7 @@
         "x-ms-lease-action": "release",
         "x-ms-lease-id": "4f44bc93-4d79-203e-3577-35b44f304ca1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -102,12 +102,12 @@
         "x-ms-client-request-id": "c9d2b5b9-d894-4e98-2909-e63cdb84c9ea",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "b51694f6-101e-0039-797b-058443000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:b51694f6-101e-0039-797b-058443000000\n",
-        "Time:2021-02-17T22:23:08.4956401Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T22:23:08.4956401Z</Message></Error>"
       ]
     },
     {
@@ -125,7 +125,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 22:23:08 GMT",
         "x-ms-lease-id": "4f44bc93-4d79-203e-3577-35b44f304ca1",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "bc3826fa-4ff3-6b29-13b0-4e844465f7c2",
         "x-ms-request-id": "b5169537-101e-0039-327b-058443000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
@@ -156,14 +156,14 @@
         "x-ms-client-request-id": "74c26bd2-13d9-6282-dfc5-f9d86b5dc07c",
         "x-ms-date": "Wed, 17 Feb 2021 22:23:08 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 22:23:08 GMT",
-        "ETag": "\u00220x8D8D3929AD8799E\u0022",
+        "ETag": "\"0x8D8D3929AD8799E\"",
         "Last-Modified": "Wed, 17 Feb 2021 22:23:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -171,12 +171,12 @@
         ],
         "x-ms-client-request-id": "74c26bd2-13d9-6282-dfc5-f9d86b5dc07c",
         "x-ms-request-id": "93edc3ca-c01e-0058-547b-05a700000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-1031b43e-9728-7247-c31b-e4cbaa97251e?comp=lease\u0026restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-1031b43e-9728-7247-c31b-e4cbaa97251e?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -192,14 +192,14 @@
         "x-ms-lease-duration": "15",
         "x-ms-proposed-lease-id": "099e308a-4224-3176-bd69-79a93d807954",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Wed, 17 Feb 2021 22:23:08 GMT",
-        "ETag": "\u00220x8D8D3929AD8799E\u0022",
+        "ETag": "\"0x8D8D3929AD8799E\"",
         "Last-Modified": "Wed, 17 Feb 2021 22:23:08 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -208,12 +208,12 @@
         "x-ms-client-request-id": "c83cddbd-69d0-8f5b-f490-b6709ad9255e",
         "x-ms-lease-id": "099e308a-4224-3176-bd69-79a93d807954",
         "x-ms-request-id": "93edc3e3-c01e-0058-647b-05a700000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-1031b43e-9728-7247-c31b-e4cbaa97251e?comp=lease\u0026restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-1031b43e-9728-7247-c31b-e4cbaa97251e?comp=lease&restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -229,7 +229,7 @@
         "x-ms-lease-action": "release",
         "x-ms-lease-id": "099e308a-4224-3176-bd69-79a93d807954",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -244,12 +244,12 @@
         "x-ms-client-request-id": "5feb410d-b143-3f84-0868-4a44fad438df",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "93edc405-c01e-0058-7b7b-05a700000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ConditionNotMet</Code><Message>The condition specified using HTTP conditional header(s) is not met.\n",
         "RequestId:93edc405-c01e-0058-7b7b-05a700000000\n",
-        "Time:2021-02-17T22:23:09.1480753Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-02-17T22:23:09.1480753Z</Message></Error>"
       ]
     },
     {
@@ -267,7 +267,7 @@
         "x-ms-date": "Wed, 17 Feb 2021 22:23:09 GMT",
         "x-ms-lease-id": "099e308a-4224-3176-bd69-79a93d807954",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -280,7 +280,7 @@
         ],
         "x-ms-client-request-id": "58621772-c5ed-9a1b-1ff0-fefc3662de17",
         "x-ms-request-id": "93edc412-c01e-0058-067b-05a700000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2021-02-12"
       },
       "ResponseBody": []
     }
@@ -288,6 +288,6 @@
   "Variables": {
     "DateTimeOffsetNow": "2021-02-17T16:23:08.0730733-06:00",
     "RandomSeed": "376402032",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n\n\n"
   }
 }

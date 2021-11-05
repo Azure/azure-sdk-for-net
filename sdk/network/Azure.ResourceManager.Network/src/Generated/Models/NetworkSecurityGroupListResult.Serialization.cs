@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkSecurityGroupListResult
+    internal partial class NetworkSecurityGroupListResult
     {
         internal static NetworkSecurityGroupListResult DeserializeNetworkSecurityGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkSecurityGroup>> value = default;
+            Optional<IReadOnlyList<NetworkSecurityGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkSecurityGroup> array = new List<NetworkSecurityGroup>();
+                    List<NetworkSecurityGroupData> array = new List<NetworkSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroup.DeserializeNetworkSecurityGroup(item));
+                        array.Add(NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(item));
                     }
                     value = array;
                     continue;

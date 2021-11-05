@@ -738,7 +738,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -768,7 +768,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)

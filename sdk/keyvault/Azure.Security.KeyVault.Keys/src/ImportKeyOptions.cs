@@ -14,11 +14,9 @@ namespace Azure.Security.KeyVault.Keys
     public class ImportKeyOptions : IJsonSerializable
     {
         private const string KeyPropertyName = "key";
-        private const string TagsPropertyName = "tags";
         private const string HsmPropertyName = "hsm";
 
         private static readonly JsonEncodedText s_keyPropertyNameBytes = JsonEncodedText.Encode(KeyPropertyName);
-        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
         private static readonly JsonEncodedText s_hsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
 
         /// <summary>
@@ -71,18 +69,8 @@ namespace Azure.Security.KeyVault.Keys
             }
 
             Properties.WriteAttributes(json);
-
-            if (Properties._tags != null && Properties._tags.Count > 0)
-            {
-                json.WriteStartObject(s_tagsPropertyNameBytes);
-
-                foreach (KeyValuePair<string, string> kvp in Properties._tags)
-                {
-                    json.WriteString(kvp.Key, kvp.Value);
-                }
-
-                json.WriteEndObject();
-            }
+            Properties.WriteReleasePolicy(json);
+            Properties.WriteTags(json);
 
             if (HardwareProtected.HasValue)
             {

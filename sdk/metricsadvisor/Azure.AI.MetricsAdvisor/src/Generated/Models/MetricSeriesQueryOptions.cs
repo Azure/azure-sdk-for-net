@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </summary>
         public DateTimeOffset ActiveSince { get; }
-        /// <summary> filter specfic dimension name and values. </summary>
+        /// <summary> filter specific dimension name and values. </summary>
         public IDictionary<string, IList<string>> DimensionFilter { get; }
     }
 }

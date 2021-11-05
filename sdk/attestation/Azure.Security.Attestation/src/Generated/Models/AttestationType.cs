@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> The AttestationType. </summary>
     public readonly partial struct AttestationType : IEquatable<AttestationType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AttestationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestationType(string value)
         {

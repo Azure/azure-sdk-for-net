@@ -12,9 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -25,12 +23,12 @@ namespace Azure.Search.Documents
     internal static class JsonSerialization
     {
         /// <summary>
-        /// We serialize dates with the roundtrip format.
+        /// We serialize dates with the round-trip format.
         /// </summary>
         private const string DateTimeOutputFormat = "o";
 
         /// <summary>
-        /// We parse dates using variations of the roundtrip format with
+        /// We parse dates using variations of the round-trip format with
         /// different sub-second precision.
         /// </summary>
         private const string DateTimeInputFormatPrefix = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
@@ -72,9 +70,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeOffsetConverter.Shared);
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
-#if EXPERIMENTAL_SPATIAL
-            options.Converters.Add(new GeoJsonConverter());
-#endif
+
             return options;
         }
 
@@ -186,7 +182,6 @@ namespace Azure.Search.Documents
                     {
                         dictionary.Add(jsonProperty.Name, jsonProperty.Value.GetSearchObject());
                     }
-#if EXPERIMENTAL_SPATIAL
                     // Check if we've got a Point instead of a complex type
                     if (dictionary.TryGetValue("type", out object type) &&
                         type is string typeName &&
@@ -201,7 +196,6 @@ namespace Azure.Search.Documents
                         // TODO: Should we also pull in other PointGeography properties?
                         return new GeoPoint(new GeoPosition(longitude, latitude, altitude));
                     }
-#endif
                     return dictionary;
                 case JsonValueKind.Array:
                     var list = new List<object>();
@@ -284,14 +278,12 @@ namespace Azure.Search.Documents
                     case JsonTokenType.Null:
                         return null;
                     case JsonTokenType.StartObject:
-#if EXPERIMENTAL_SPATIAL
                         // Clone the reader so we can check if the object is a
                         // GeoJsonPoint without advancing tokens if not
                         Utf8JsonReader clone = reader;
                         try
                         {
-                            GeoJsonConverter converter = new GeoJsonConverter();
-                            GeoPoint point = converter.Read(ref clone, typeof(GeoPoint), options) as GeoPoint;
+                            GeoPoint point = JsonSerializer.Deserialize<GeoPoint>(ref clone);
                             if (point != null)
                             {
                                 reader = clone;
@@ -301,7 +293,6 @@ namespace Azure.Search.Documents
                         catch
                         {
                         }
-#endif
 
                         // Return a complex object
                         return ReadSearchDocument(ref reader, typeof(SearchDocument), options, depth - 1);

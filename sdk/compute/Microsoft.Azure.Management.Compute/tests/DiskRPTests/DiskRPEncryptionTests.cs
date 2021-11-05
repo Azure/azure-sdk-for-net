@@ -30,10 +30,10 @@ namespace Compute.Tests.DiskRPTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
-                string testVaultId = @"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/testingkvsdk";
+                string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.KeyVault/vaults/swaggerKeyVault5";
 
-                string encryptionKeyUri = @"https://testingkvsdk.vault.azure.net/keys/kvfortestingsdk/0a8eaae773844019b4ecd2dfa4f941c5";
-                string secretUri = @"https://testingkvsdk.vault.azure.net/secrets/secretforsdk/1661cd98b86d447cab87801052eb87c1";
+                string encryptionKeyUri = @"https://swaggerkeyvault5.vault.azure.net/keys/swaggerKey/52317b056a2c49d0b8673a67d072655e";
+                string secretUri = @"https://swaggerkeyvault5.vault.azure.net/secrets/swaggerSecret/0e01a1ab339e40ff9f01ea98ae8ee6b5";
 
                 string encryptionSettingsVersion = "1.0";
 
@@ -41,7 +41,7 @@ namespace Compute.Tests.DiskRPTests
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri, secretUri, encryptionSettingsVersion: encryptionSettingsVersion);
-                disk.Location = "eastus2";
+                disk.Location = "centraluseuap";
 
                 try
                 {

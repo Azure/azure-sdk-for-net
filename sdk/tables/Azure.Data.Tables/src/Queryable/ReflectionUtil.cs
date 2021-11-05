@@ -11,6 +11,7 @@ namespace Azure.Data.Tables.Queryable
         private static MethodInfo DictionaryGetItemMethodInfo { get; }
         private static MethodInfo DynamicDictionaryGetItemMethodInfo { get; }
         private static MethodInfo DynamicDictionaryGetBinaryMethodInfo { get; }
+        private static MethodInfo DynamicDictionaryGetBinaryDataMethodInfo { get; }
         private static MethodInfo DynamicDictionaryGetBooleanMethodInfo { get; }
         private static MethodInfo DynamicDictionaryGetDateTimeMethodInfo { get; }
         private static MethodInfo DynamicDictionaryGetDoubleMethodInfo { get; }
@@ -26,6 +27,7 @@ namespace Azure.Data.Tables.Queryable
             DictionaryGetItemMethodInfo = typeof(IDictionary<string, object>).GetMethod("get_Item");
             DynamicDictionaryGetItemMethodInfo = typeof(TableEntity).GetMethod("get_Item");
             DynamicDictionaryGetBinaryMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetBinary));
+            DynamicDictionaryGetBinaryDataMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetBinaryData));
             DynamicDictionaryGetBooleanMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetBoolean));
             DynamicDictionaryGetDateTimeMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetDateTime));
             DynamicDictionaryGetDoubleMethodInfo = typeof(TableEntity).GetMethod(nameof(TableEntity.GetDouble));
@@ -37,6 +39,7 @@ namespace Azure.Data.Tables.Queryable
             s_dictionaryMethodInfosHash.Add(DictionaryGetItemMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetItemMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetBinaryMethodInfo);
+            s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetBinaryDataMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetBooleanMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetDateTimeMethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetDoubleMethodInfo);

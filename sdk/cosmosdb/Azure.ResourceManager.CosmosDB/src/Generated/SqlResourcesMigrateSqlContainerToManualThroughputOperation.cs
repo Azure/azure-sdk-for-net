@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesMigrateSqlContainerToManualThroughputOperation : Operation<ThroughputSettingsGetResults>, IOperationSource<ThroughputSettingsGetResults>
     {
         private readonly ArmOperationHelpers<ThroughputSettingsGetResults> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesMigrateSqlContainerToManualThroughputOperation for mocking. </summary>
+        protected SqlResourcesMigrateSqlContainerToManualThroughputOperation()
+        {
+        }
+
         internal SqlResourcesMigrateSqlContainerToManualThroughputOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ThroughputSettingsGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesMigrateSqlContainerToManualThroughputOperation");

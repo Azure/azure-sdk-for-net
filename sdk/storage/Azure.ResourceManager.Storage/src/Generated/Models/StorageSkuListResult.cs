@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The response from the List Storage SKUs operation. </summary>
-    public partial class StorageSkuListResult
+    internal partial class StorageSkuListResult
     {
         /// <summary> Initializes a new instance of StorageSkuListResult. </summary>
         internal StorageSkuListResult()

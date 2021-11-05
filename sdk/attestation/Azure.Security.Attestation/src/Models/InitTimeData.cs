@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [CodeGenModel("InitTimeData")]
     internal partial class InitTimeData
     {
         /// <summary>
@@ -16,7 +18,7 @@ namespace Azure.Security.Attestation.Models
         /// <param name="binaryData">binary data with which to initialize the <see cref="InitTimeData"/> object.</param>
         public InitTimeData(byte[] binaryData)
         {
-            DataType = Models.DataType.Binary;
+            DataType = Azure.Security.Attestation.DataType.Binary;
             Data = binaryData;
         }
 
@@ -26,7 +28,7 @@ namespace Azure.Security.Attestation.Models
         /// <param name="serializableObject">object to serialize.</param>
         public InitTimeData(object serializableObject)
         {
-            DataType = Models.DataType.Json;
+            DataType = Azure.Security.Attestation.DataType.Json;
 
             Data = JsonSerializer.SerializeToUtf8Bytes(serializableObject);
         }

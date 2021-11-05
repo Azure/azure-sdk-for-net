@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RedshiftUnloadSettingsConverter))]
     public partial class RedshiftUnloadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new RedshiftUnloadSettings(s3LinkedServiceName, bucketName);
+        }
+
+        internal partial class RedshiftUnloadSettingsConverter : JsonConverter<RedshiftUnloadSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, RedshiftUnloadSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RedshiftUnloadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRedshiftUnloadSettings(document.RootElement);
+            }
         }
     }
 }

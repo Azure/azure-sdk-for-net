@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ElasticPoolsCreateOrUpdateOperation : Operation<ElasticPool>, IOperationSource<ElasticPool>
     {
         private readonly ArmOperationHelpers<ElasticPool> _operation;
+
+        /// <summary> Initializes a new instance of ElasticPoolsCreateOrUpdateOperation for mocking. </summary>
+        protected ElasticPoolsCreateOrUpdateOperation()
+        {
+        }
+
         internal ElasticPoolsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ElasticPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ElasticPoolsCreateOrUpdateOperation");

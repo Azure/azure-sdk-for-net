@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ConfigurationStoreListResult
+    internal partial class ConfigurationStoreListResult
     {
         internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element)
         {

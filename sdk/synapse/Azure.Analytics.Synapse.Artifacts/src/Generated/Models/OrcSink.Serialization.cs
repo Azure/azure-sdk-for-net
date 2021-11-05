@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(OrcSinkConverter))]
     public partial class OrcSink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -20,6 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("storeSettings");
                 writer.WriteObjectValue(StoreSettings);
+            }
+            if (Optional.IsDefined(FormatSettings))
+            {
+                writer.WritePropertyName("formatSettings");
+                writer.WriteObjectValue(FormatSettings);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -59,6 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static OrcSink DeserializeOrcSink(JsonElement element)
         {
             Optional<StoreWriteSettings> storeSettings = default;
+            Optional<OrcWriteSettings> formatSettings = default;
             string type = default;
             Optional<object> writeBatchSize = default;
             Optional<object> writeBatchTimeout = default;
@@ -77,6 +86,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     storeSettings = StoreWriteSettings.DeserializeStoreWriteSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("formatSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    formatSettings = OrcWriteSettings.DeserializeOrcWriteSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -137,7 +156,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OrcSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value);
+            return new OrcSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, formatSettings.Value);
+        }
+
+        internal partial class OrcSinkConverter : JsonConverter<OrcSink>
+        {
+            public override void Write(Utf8JsonWriter writer, OrcSink model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override OrcSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeOrcSink(document.RootElement);
+            }
         }
     }
 }

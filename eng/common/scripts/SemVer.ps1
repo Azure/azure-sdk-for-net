@@ -13,7 +13,7 @@ Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber.BuildNumber
 Note: A builtin Powershell version of SemVer exists in 'System.Management.Automation'. At this time, it does not parsing of PrereleaseNumber. It's name is also type accelerated to 'SemVer'.
 #>
 
-class AzureEngSemanticVersion {
+class AzureEngSemanticVersion : IComparable {
   [int] $Major
   [int] $Minor
   [int] $Patch
@@ -76,14 +76,19 @@ class AzureEngSemanticVersion {
         $this.SetupDefaultConventions()
       }
 
-      if ($null -eq $matches['prelabel']) 
+      if ($null -eq $matches['prelabel'])
       {
         # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
         $this.PrereleaseLabel = "zzz"
         $this.PrereleaseNumber = 99999999
         $this.IsPrerelease = $false
         $this.VersionType = "GA"
-        if ($this.Patch -ne 0) {
+        if ($this.Major -eq 0) {
+           # Treat initial 0 versions as a prerelease beta's
+          $this.VersionType = "Beta"
+          $this.IsPrerelease = $true
+        }
+        elseif ($this.Patch -ne 0) {
           $this.VersionType = "Patch"
         }
       }
@@ -131,7 +136,7 @@ class AzureEngSemanticVersion {
   {
     $versionString = "{0}.{1}.{2}" -F $this.Major, $this.Minor, $this.Patch
 
-    if ($this.IsPrerelease)
+    if ($this.IsPrerelease -and $this.PrereleaseLabel -ne "zzz")
     {
       $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
                         $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
@@ -160,7 +165,7 @@ class AzureEngSemanticVersion {
     }
   }
 
-  [void] SetupPythonConventions() 
+  [void] SetupPythonConventions()
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
     $this.PrereleaseLabelSeparator = $this.PrereleaseNumberSeparator = $this.BuildNumberSeparator = ""
@@ -168,7 +173,7 @@ class AzureEngSemanticVersion {
     $this.DefaultAlphaReleaseLabel = "a"
   }
 
-  [void] SetupDefaultConventions() 
+  [void] SetupDefaultConventions()
   {
     # Use the default common conventions
     $this.PrereleaseLabelSeparator = "-"
@@ -176,6 +181,31 @@ class AzureEngSemanticVersion {
     $this.BuildNumberSeparator = "."
     $this.DefaultPrereleaseLabel = "beta"
     $this.DefaultAlphaReleaseLabel = "alpha"
+  }
+
+  [int] CompareTo($other)
+  {
+    if ($other -isnot [AzureEngSemanticVersion]) {
+      throw "Cannot compare $other with $this"
+    }
+
+    $ret = $this.Major.CompareTo($other.Major)
+    if ($ret) { return $ret }
+
+    $ret = $this.Minor.CompareTo($other.Minor)
+    if ($ret) { return $ret }
+
+    $ret = $this.Patch.CompareTo($other.Patch)
+    if ($ret) { return $ret }
+
+    # Mimic PowerShell that uses case-insensitive comparisons by default.
+    $ret = [string]::Compare($this.PrereleaseLabel, $other.PrereleaseLabel, $true)
+    if ($ret) { return $ret }
+
+    $ret = $this.PrereleaseNumber.CompareTo($other.PrereleaseNumber)
+    if ($ret) { return $ret }
+
+    return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
   }
 
   static [string[]] SortVersionStrings([string[]] $versionStrings)
@@ -187,30 +217,27 @@ class AzureEngSemanticVersion {
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
   {
-    return ($versions | `
-            Sort-Object -Descending -Property `
-              Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, `
-              @{ Expression = { [int]$_.BuildNumber }; Descending = $true })
+    return $versions | Sort-Object -Descending
   }
 
   static [void] QuickTests()
   {
     $global:Language = ""
     $versions = @(
-      "1.0.1", 
-      "2.0.0", 
+      "1.0.1",
+      "2.0.0",
       "2.0.0-alpha.20200920",
       "2.0.0-alpha.20200920.1",
-      "2.0.0-beta.2", 
-      "1.0.10", 
+      "2.0.0-beta.2",
+      "1.0.10",
       "2.0.0-alpha.20201221.03",
       "2.0.0-alpha.20201221.1",
       "2.0.0-alpha.20201221.5",
       "2.0.0-alpha.20201221.2",
       "2.0.0-alpha.20201221.10",
-      "2.0.0-beta.1", 
-      "2.0.0-beta.10", 
-      "1.0.0", 
+      "2.0.0-beta.1",
+      "2.0.0-beta.10",
+      "1.0.0",
       "1.0.0b2",
       "1.0.2")
 
@@ -236,7 +263,7 @@ class AzureEngSemanticVersion {
 
     for ($i = 0; $i -lt $expectedSort.Count; $i++)
     {
-      if ($sort[$i] -ne $expectedSort[$i]) { 
+      if ($sort[$i] -ne $expectedSort[$i]) {
         Write-Host "Error: Incorrect version sort:"
         Write-Host "Expected: "
         Write-Host $expectedSort

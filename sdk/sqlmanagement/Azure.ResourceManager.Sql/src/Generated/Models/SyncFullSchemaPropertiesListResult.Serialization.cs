@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncFullSchemaPropertiesListResult
+    internal partial class SyncFullSchemaPropertiesListResult
     {
         internal static SyncFullSchemaPropertiesListResult DeserializeSyncFullSchemaPropertiesListResult(JsonElement element)
         {

@@ -70,14 +70,24 @@ namespace Microsoft.Azure.Management.AzureStackHCI
 
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IArcSettingsOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IArcSettingsOperations ArcSettings { get; }
 
         /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
+
+        /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        IExtensionsOperations Extensions { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
     }
 }
