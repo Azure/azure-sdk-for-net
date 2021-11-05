@@ -211,6 +211,37 @@ namespace Azure.Core.Tests
             });
         }
 
+        [Test]
+        public void CanAddPerCallPolicy()
+        {
+        }
+
+        [Test]
+        public async Task CanAddPerRetryPolicy()
+        {
+            var mockResponse = new MockResponse(200);
+
+            Pet pet = new("snoopy", "beagle");
+            mockResponse.SetContent(SerializationHelpers.Serialize(pet, SerializePet));
+
+            var mockTransport = new MockTransport(mockResponse);
+            PetStoreClient client = CreateClient(mockTransport);
+
+            var context = new RequestContext();
+            context.AddPolicy(new AddHeaderPolicy("MyHeader", "MyValue"), HttpPipelinePosition.PerRetry);
+
+            Response response = await client.GetPetAsync("snoopy", new RequestContext());
+
+            Request request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Headers.TryGetValue("MyHeader", out string headerValue));
+            Assert.AreEqual("MyValue", headerValue);
+        }
+
+        [Test]
+        public void CanAddBeforeTransportPolicy()
+        {
+        }
+
         #region Helpers
         private void SerializePet(ref Utf8JsonWriter writer, Pet pet)
         {
@@ -223,6 +254,30 @@ namespace Azure.Core.Tests
             writer.WriteStringValue(pet.Species);
 
             writer.WriteEndObject();
+        }
+
+        public class AddHeaderPolicy : HttpPipelinePolicy
+        {
+            private string _headerName;
+            private string _headerVaue;
+
+            public AddHeaderPolicy(string headerName, string headerValue) : base()
+            {
+                _headerName = headerName;
+                _headerVaue = headerValue;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Headers.Add(_headerName, _headerVaue);
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Headers.Add(_headerName, _headerVaue);
+                return ProcessNextAsync(message, pipeline);
+            }
         }
         #endregion
     }

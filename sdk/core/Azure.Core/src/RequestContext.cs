@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -13,6 +14,10 @@ namespace Azure
     /// </summary>
     public class RequestContext
     {
+        private readonly List<HttpPipelinePolicy> _perRetryPolicies = new();
+        private readonly List<HttpPipelinePolicy> _perCallPolicies = new();
+        private readonly List<HttpPipelinePolicy> _beforeTrasportPolicies = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// </summary>
@@ -35,5 +40,27 @@ namespace Azure
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
         public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <param name="position"></param>
+        public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
+        {
+            switch (position)
+            {
+                case HttpPipelinePosition.PerCall:
+                    _perCallPolicies.Add(policy);
+                    break;
+                case HttpPipelinePosition.PerRetry:
+                    _perRetryPolicies.Add(policy);
+                    break;
+                case HttpPipelinePosition.BeforeTransport:
+                    _beforeTrasportPolicies.Add(policy);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
