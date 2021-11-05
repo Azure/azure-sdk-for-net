@@ -35,8 +35,7 @@ namespace Media.Tests.ScenarioTests
                     string liveOutputDescription = "A test liveOutput";
 
                     // Try to get the live output, which should not exist
-                    LiveOutput liveOutput = MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName);
-                    Assert.Null(liveOutput);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName)).Response.StatusCode);
 
                     // Create an Asset for the LiveOutput to use
                     string assetName = TestUtilities.GenerateName("asset");
@@ -54,7 +53,7 @@ namespace Media.Tests.ScenarioTests
                     ValidateLiveOutput(liveOutputs.First(), liveOutputName, liveOutputDescription, manifestName, LiveOutputResourceState.Running);
 
                     // Get the newly created liveOutput
-                    liveOutput = MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName);
+                    LiveOutput liveOutput = MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName);
                     Assert.NotNull(liveOutput);
                     ValidateLiveOutput(liveOutput, liveOutputName, liveOutputDescription, manifestName, LiveOutputResourceState.Running);
 
@@ -66,8 +65,7 @@ namespace Media.Tests.ScenarioTests
                     Assert.Empty(liveOutputs);
 
                     // Get the liveOutput, which should not exist
-                    liveOutput = MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName);
-                    Assert.Null(liveOutput);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName)).Response.StatusCode);
 
                     // Stop the LiveEvent
                     MediaClient.LiveEvents.Stop(ResourceGroup, AccountName, eventName);

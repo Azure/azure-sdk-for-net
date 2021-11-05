@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostListResult
+    internal partial class BastionHostListResult
     {
         internal static BastionHostListResult DeserializeBastionHostListResult(JsonElement element)
         {
-            IReadOnlyList<BastionHost> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BastionHostData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BastionHost> array = new List<BastionHost>();
+                    List<BastionHostData> array = new List<BastionHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BastionHost.DeserializeBastionHost(item));
-                        }
+                        array.Add(BastionHostData.DeserializeBastionHostData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionHostListResult(value, nextLink);
+            return new BastionHostListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

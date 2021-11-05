@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.GuestConfiguration.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -50,7 +52,10 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'Created'</param>
-        public GuestConfigurationAssignmentProperties(string targetResourceId = default(string), GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), AssignmentReport latestAssignmentReport = default(AssignmentReport), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string))
+        /// <param name="resourceType">Type of the resource - VMSS / VM</param>
+        /// <param name="vmssVMList">The list of VM Compliance data for
+        /// VMSS</param>
+        public GuestConfigurationAssignmentProperties(string targetResourceId = default(string), GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), AssignmentReport latestAssignmentReport = default(AssignmentReport), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string), string resourceType = default(string), IList<VMSSVMInfo> vmssVMList = default(IList<VMSSVMInfo>))
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
@@ -61,6 +66,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
             Context = context;
             AssignmentHash = assignmentHash;
             ProvisioningState = provisioningState;
+            ResourceType = resourceType;
+            VmssVMList = vmssVMList;
             CustomInit();
         }
 
@@ -128,6 +135,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource - VMSS / VM
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceType")]
+        public string ResourceType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of VM Compliance data for VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "vmssVMList")]
+        public IList<VMSSVMInfo> VmssVMList { get; set; }
 
     }
 }

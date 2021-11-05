@@ -30,7 +30,11 @@ namespace Azure.Storage
 
         public override bool CanWrite => _innerStream.CanWrite;
 
-        protected override void Dispose(bool disposing) => _innerStream.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _innerStream.Dispose();
+        }
 
         public override async Task FlushAsync(CancellationToken cancellationToken)
         {

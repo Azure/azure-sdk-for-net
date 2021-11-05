@@ -25,17 +25,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packagePassword"> Password of the package. </param>
         /// <param name="accessCredential"> The package access credential. </param>
         /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
+        /// <param name="configurationAccessCredential"> The configuration file access credential. </param>
         /// <param name="packageName"> The package name. </param>
         /// <param name="packageContent"> The embedded package content. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
-        internal SsisPackageLocation(object packagePath, SsisPackageLocationType? type, SecretBase packagePassword, SsisAccessCredential accessCredential, object configurationPath, string packageName, object packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
+        internal SsisPackageLocation(object packagePath, SsisPackageLocationType? type, SecretBase packagePassword, SsisAccessCredential accessCredential, object configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, object packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
         {
             PackagePath = packagePath;
             Type = type;
             PackagePassword = packagePassword;
             AccessCredential = accessCredential;
             ConfigurationPath = configurationPath;
+            ConfigurationAccessCredential = configurationAccessCredential;
             PackageName = packageName;
             PackageContent = packageContent;
             PackageLastModifiedDate = packageLastModifiedDate;
@@ -52,6 +54,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>
         public object ConfigurationPath { get; set; }
+        /// <summary> The configuration file access credential. </summary>
+        public SsisAccessCredential ConfigurationAccessCredential { get; set; }
         /// <summary> The package name. </summary>
         public string PackageName { get; set; }
         /// <summary> The embedded package content. Type: string (or Expression with resultType string). </summary>

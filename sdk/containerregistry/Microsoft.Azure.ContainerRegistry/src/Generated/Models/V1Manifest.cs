@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="fsLayers">List of layer information</param>
         /// <param name="history">Image history</param>
         /// <param name="signatures">Image signature</param>
-        public V1Manifest(int? schemaVersion = default(int?), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
+        public V1Manifest(int? schemaVersion = default(int?), string mediaType = default(string), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
             : base(schemaVersion)
         {
             Architecture = architecture;
@@ -47,6 +47,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
             FsLayers = fsLayers;
             History = history;
             Signatures = signatures;
+            MediaType = mediaType;
             CustomInit();
         }
 
@@ -90,6 +91,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "signatures")]
         public IList<ImageSignature> Signatures { get; set; }
+
+        /// <summary>
+        /// Gets or sets media type for this Manifest
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
 
     }
 }

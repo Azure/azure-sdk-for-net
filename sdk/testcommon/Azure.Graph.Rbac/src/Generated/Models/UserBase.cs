@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,24 +17,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of UserBase. </summary>
         public UserBase()
         {
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of UserBase. </summary>
-        /// <param name="immutableId"> This must be specified if you are using a federated domain for the user&apos;s userPrincipalName (UPN) property when creating a new user account. It is used to associate an on-premises Active Directory user account with their Azure AD user object. </param>
-        /// <param name="usageLocation"> A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. Examples include: &quot;US&quot;, &quot;JP&quot;, and &quot;GB&quot;. </param>
-        /// <param name="givenName"> The given name for the user. </param>
-        /// <param name="surname"> The user&apos;s surname (family name or last name). </param>
-        /// <param name="userType"> A string value that can be used to classify user types in your directory, such as &apos;Member&apos; and &apos;Guest&apos;. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal UserBase(string immutableId, string usageLocation, string givenName, string surname, UserType? userType, IDictionary<string, object> additionalProperties)
-        {
-            ImmutableId = immutableId;
-            UsageLocation = usageLocation;
-            GivenName = givenName;
-            Surname = surname;
-            UserType = userType;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> This must be specified if you are using a federated domain for the user&apos;s userPrincipalName (UPN) property when creating a new user account. It is used to associate an on-premises Active Directory user account with their Azure AD user object. </summary>
@@ -59,23 +43,23 @@ namespace Azure.Graph.Rbac.Models
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add"/>
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
         void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]

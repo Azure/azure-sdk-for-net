@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,6 @@
     using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.FileStaging;
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
-    using Microsoft.Rest;
     using TestResources;
     using IntegrationTestUtilities;
     using Microsoft.Rest.Azure;
@@ -64,180 +63,183 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestOMJobSpecAndRelease()
         {
-            Action test = () =>
+            void test()
             {
                 StagingStorageAccount stagingCreds = TestUtilities.GetStorageCredentialsFromEnvironment();
-                using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jsId = "JobPrepAndRelease-" + /* "OM-static-c" */ "dynamic-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
+
+                try
                 {
-                    string jsId = "JobPrepAndRelease-" + /* "OM-static-c" */ "dynamic-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
-
-                    try
-                    {
-                        // increase request timeout interceptor
-                        Protocol.RequestInterceptor increaseTimeoutInterceptor =
-                            new Protocol.RequestInterceptor((x) =>
-                            {
-                                this.testOutputHelper.WriteLine("TestOMJobSpecAndRelease: setting request timeout.  Request type: " + x.GetType().ToString() + ", ClientRequestID: " + x.Options.ClientRequestId);
-                                var timeoutOptions = x.Options as Protocol.Models.ITimeoutOptions;
-                                timeoutOptions.Timeout = 5 * 60;
-                            });
-
-                        // lets use a timer too
-                        CallTimerViaInterceptors timerInterceptor = new CallTimerViaInterceptors();
-
-                        // seeing client side timeouts... so increase the durations on every call
-                        client.CustomBehaviors.Add(increaseTimeoutInterceptor);
-                        // add a call timer spammer/logger
-                        client.CustomBehaviors.Add(timerInterceptor.ReqInterceptor);
-
-                        // get some resource files to play with
-                        IList<ResourceFile> resFiles = UploadFilesMakeResFiles(stagingCreds);
-
-                        // create job schedule with prep/release
+                    // increase request timeout interceptor
+                    Protocol.RequestInterceptor increaseTimeoutInterceptor =
+                        new Protocol.RequestInterceptor((x) =>
                         {
-                            CloudJobSchedule unboundJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
-                            unboundJobSchedule.JobSpecification = new JobSpecification(new PoolInformation());
-                            unboundJobSchedule.JobSpecification.PoolInformation.PoolId = this.poolFixture.PoolId;
-                            unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(3) };
+                            testOutputHelper.WriteLine("TestOMJobSpecAndRelease: setting request timeout.  Request type: " + x.GetType().ToString() + ", ClientRequestID: " + x.Options.ClientRequestId);
+                            var timeoutOptions = x.Options as Protocol.Models.ITimeoutOptions;
+                            timeoutOptions.Timeout = 5 * 60;
+                        });
 
-                            // add the jobPrep task to the job schedule
+                    // lets use a timer too
+                    CallTimerViaInterceptors timerInterceptor = new CallTimerViaInterceptors();
+
+                    // seeing client side timeouts... so increase the durations on every call
+                    client.CustomBehaviors.Add(increaseTimeoutInterceptor);
+                    // add a call timer spammer/logger
+                    client.CustomBehaviors.Add(timerInterceptor.ReqInterceptor);
+
+                    // get some resource files to play with
+                    IList<ResourceFile> resFiles = UploadFilesMakeResFiles(stagingCreds);
+
+                    // create job schedule with prep/release
+                    {
+                        CloudJobSchedule unboundJobSchedule = client.JobScheduleOperations.CreateJobSchedule(jsId, null, null);
+                        unboundJobSchedule.JobSpecification = new JobSpecification(new PoolInformation());
+                        unboundJobSchedule.JobSpecification.PoolInformation.PoolId = poolFixture.PoolId;
+                        unboundJobSchedule.Schedule = new Schedule() { RecurrenceInterval = TimeSpan.FromMinutes(3) };
+
+                        // add the jobPrep task to the job schedule
+                        {
+                            JobPreparationTask prep = new JobPreparationTask(JobPrepCommandLine);
+                            unboundJobSchedule.JobSpecification.JobPreparationTask = prep;
+
+                            List<EnvironmentSetting> prepEnvSettings = new List<EnvironmentSetting>
                             {
-                                JobPreparationTask prep = new JobPreparationTask(JobPrepCommandLine);
-                                unboundJobSchedule.JobSpecification.JobPreparationTask = prep;
+                                JobPrepEnvSettingOM
+                            };
+                            prep.EnvironmentSettings = prepEnvSettings;
 
-                                List<EnvironmentSetting> prepEnvSettings = new List<EnvironmentSetting>();
-                                prepEnvSettings.Add(JobPrepEnvSettingOM);
-                                prep.EnvironmentSettings = prepEnvSettings;
+                            prep.Id = JobPrepId;
+                            prep.RerunOnComputeNodeRebootAfterSuccess = JobPrepRerunOnComputeNodeRebootAfterSuccess;
 
-                                prep.Id = JobPrepId;
-                                prep.RerunOnComputeNodeRebootAfterSuccess = JobPrepRerunOnComputeNodeRebootAfterSuccess;
+                            prep.ResourceFiles = resFiles; // bug: incorrect type this should be IList<>
 
-                                prep.ResourceFiles = resFiles; // bug: incorrect type this should be IList<>
+                            /*
+                                prep.ResourceFiles = new List<ResourceFile>();  // this is actually read into our concurrent iList thing
 
-                                /*
-                                    prep.ResourceFiles = new List<ResourceFile>();  // this is actually read into our concurrent iList thing
-
-                                    // why not, merge them in.  exersize the concurent  IList thing
-                                    foreach (ResourceFile curRF in resFiles)
-                                    {
-                                        prep.ResourceFiles.Add(curRF);
-                                    }
-                                    */
-
-                                prep.UserIdentity = new UserIdentity(JobPrepUserSpec);
-                                prep.Constraints = JobPrepTaskConstraintsOM;
-                                prep.WaitForSuccess = JobPrepWaitForSuccessCreate;
-                            }
-
-                            // add a jobRelease task to the job schedule
-                            {
-                                JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
-                                unboundJobSchedule.JobSpecification.JobReleaseTask = relTask;
-                                
-                                List<EnvironmentSetting> relEnvSettings = new List<EnvironmentSetting>();
-                                relEnvSettings.Add(JobRelEnvSettingOM);
-                                relTask.EnvironmentSettings = relEnvSettings;
-
-                                relTask.MaxWallClockTime = JobRelMaxWallClockTime;
-
-                                relTask.Id = JobRelId;
-
-                                relTask.ResourceFiles = null;
-
-                                relTask.ResourceFiles = new List<ResourceFile>();
-
-                                // why not, merge them in.  work the concurrent  IList thing
+                                // why not, merge them in.  exersize the concurent  IList thing
                                 foreach (ResourceFile curRF in resFiles)
                                 {
-                                    relTask.ResourceFiles.Add(curRF);
+                                    prep.ResourceFiles.Add(curRF);
                                 }
+                                */
 
-                                relTask.RetentionTime = JobRelRetentionTime;
-                                relTask.UserIdentity = new UserIdentity(JobRelUserSpec);
-                            }
+                            prep.UserIdentity = new UserIdentity(JobPrepUserSpec);
+                            prep.Constraints = JobPrepTaskConstraintsOM;
+                            prep.WaitForSuccess = JobPrepWaitForSuccessCreate;
+                        }
 
-                            // set JobCommonEnvSettings
+                        // add a jobRelease task to the job schedule
+                        {
+                            JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
+                            unboundJobSchedule.JobSpecification.JobReleaseTask = relTask;
+
+                            List<EnvironmentSetting> relEnvSettings = new List<EnvironmentSetting>
                             {
-                                List<EnvironmentSetting> jobCommonES = new List<EnvironmentSetting>();
+                                JobRelEnvSettingOM
+                            };
+                            relTask.EnvironmentSettings = relEnvSettings;
 
-                                jobCommonES.Add(JobCommonEnvSettingOM);
+                            relTask.MaxWallClockTime = JobRelMaxWallClockTime;
 
-                                unboundJobSchedule.JobSpecification.CommonEnvironmentSettings = jobCommonES;
+                            relTask.Id = JobRelId;
+
+                            relTask.ResourceFiles = null;
+
+                            relTask.ResourceFiles = new List<ResourceFile>();
+
+                            // why not, merge them in.  work the concurrent  IList thing
+                            foreach (ResourceFile curRF in resFiles)
+                            {
+                                relTask.ResourceFiles.Add(curRF);
                             }
 
-                            // add the job schedule to the service
-                            unboundJobSchedule.Commit();
+                            relTask.RetentionTime = JobRelRetentionTime;
+                            relTask.UserIdentity = new UserIdentity(JobRelUserSpec);
                         }
 
-                        // now we have a jobschedule with jobprep/release...now test the values on the jobschedule
+                        // set JobCommonEnvSettings
                         {
-                            CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(jsId);
+                            List<EnvironmentSetting> jobCommonES = new List<EnvironmentSetting>
+                            {
+                                JobCommonEnvSettingOM
+                            };
 
-                            Assert.NotNull(boundJobSchedule);
-                            Assert.NotNull(boundJobSchedule.JobSpecification);
-                            Assert.NotNull(boundJobSchedule.JobSpecification.JobPreparationTask);
-                            Assert.NotNull(boundJobSchedule.JobSpecification.JobReleaseTask);
-                            Assert.NotNull(boundJobSchedule.JobSpecification.CommonEnvironmentSettings);
-
-                            AssertGoodCommonEnvSettingsOM(boundJobSchedule.JobSpecification.CommonEnvironmentSettings);
-                            AssertGoodJobPrepTaskOM(boundJobSchedule.JobSpecification.JobPreparationTask);
-                            AssertGoodJobReleaseTaskOM(boundJobSchedule.JobSpecification.JobReleaseTask);
-                            AssertGoodResourceFiles(resFiles, boundJobSchedule.JobSpecification.JobPreparationTask.ResourceFiles);
-                            AssertGoodResourceFiles(resFiles, boundJobSchedule.JobSpecification.JobReleaseTask.ResourceFiles);
-
-                            //todo: test mutability
+                            unboundJobSchedule.JobSpecification.CommonEnvironmentSettings = jobCommonES;
                         }
 
-                        CloudJobSchedule boundJobScheduleWithJob; // set on job test
-
-                        // test the values on the job
-                        {
-                            boundJobScheduleWithJob = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jsId);
-                            CloudJob bndJob = client.JobOperations.GetJob(boundJobScheduleWithJob.ExecutionInformation.RecentJob.Id);
-
-                            Assert.NotNull(bndJob);
-                            Assert.NotNull(bndJob.CommonEnvironmentSettings);
-                            Assert.NotNull(bndJob.JobPreparationTask);
-                            Assert.NotNull(bndJob.JobReleaseTask);
-
-                            AssertGoodCommonEnvSettingsOM(bndJob.CommonEnvironmentSettings as IList<EnvironmentSetting>
-                                /* we know it is our internal IList */);
-                            AssertGoodJobPrepTaskOM(bndJob.JobPreparationTask);
-                            AssertGoodJobReleaseTaskOM(bndJob.JobReleaseTask);
-                            AssertGoodResourceFiles(resFiles, bndJob.JobPreparationTask.ResourceFiles);
-                            AssertGoodResourceFiles(resFiles, bndJob.JobReleaseTask.ResourceFiles);
-
-                            //TODO: test immutability
-                        }
-
-                        // used for on get-status test
-                        CloudJobSchedule updatedJobSchedule;
-
-                        // test update on the WI jobprep/jobrelease
-                        {
-                            // change props
-                            boundJobScheduleWithJob.JobSpecification.JobPreparationTask.WaitForSuccess = JobPrepWaitForSuccessUpdate;
-
-                            // commit changes
-                            boundJobScheduleWithJob.Commit();
-
-                            // get new values
-                            updatedJobSchedule = client.JobScheduleOperations.GetJobSchedule(jsId);
-
-                            // confirm values changed
-                            Assert.Equal(JobPrepWaitForSuccessUpdate, updatedJobSchedule.JobSpecification.JobPreparationTask.WaitForSuccess);
-                        }
-
-                        TestGetPrepReleaseStatusCalls(client, updatedJobSchedule, this.poolFixture.PoolId, resFiles);
+                        // add the job schedule to the service
+                        unboundJobSchedule.Commit();
                     }
-                    finally
+
+                    // now we have a jobschedule with jobprep/release...now test the values on the jobschedule
                     {
-                        // cleanup
-                        TestUtilities.DeleteJobScheduleIfExistsAsync(client, jsId).Wait();
+                        CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(jsId);
+
+                        Assert.NotNull(boundJobSchedule);
+                        Assert.NotNull(boundJobSchedule.JobSpecification);
+                        Assert.NotNull(boundJobSchedule.JobSpecification.JobPreparationTask);
+                        Assert.NotNull(boundJobSchedule.JobSpecification.JobReleaseTask);
+                        Assert.NotNull(boundJobSchedule.JobSpecification.CommonEnvironmentSettings);
+
+                        AssertGoodCommonEnvSettingsOM(boundJobSchedule.JobSpecification.CommonEnvironmentSettings);
+                        AssertGoodJobPrepTaskOM(boundJobSchedule.JobSpecification.JobPreparationTask);
+                        AssertGoodJobReleaseTaskOM(boundJobSchedule.JobSpecification.JobReleaseTask);
+                        AssertGoodResourceFiles(resFiles, boundJobSchedule.JobSpecification.JobPreparationTask.ResourceFiles);
+                        AssertGoodResourceFiles(resFiles, boundJobSchedule.JobSpecification.JobReleaseTask.ResourceFiles);
+
+                        //todo: test mutability
                     }
+
+                    CloudJobSchedule boundJobScheduleWithJob; // set on job test
+
+                    // test the values on the job
+                    {
+                        boundJobScheduleWithJob = TestUtilities.WaitForJobOnJobSchedule(client.JobScheduleOperations, jsId);
+                        CloudJob bndJob = client.JobOperations.GetJob(boundJobScheduleWithJob.ExecutionInformation.RecentJob.Id);
+
+                        Assert.NotNull(bndJob);
+                        Assert.NotNull(bndJob.CommonEnvironmentSettings);
+                        Assert.NotNull(bndJob.JobPreparationTask);
+                        Assert.NotNull(bndJob.JobReleaseTask);
+
+                        AssertGoodCommonEnvSettingsOM(bndJob.CommonEnvironmentSettings as IList<EnvironmentSetting>
+                            /* we know it is our internal IList */);
+                        AssertGoodJobPrepTaskOM(bndJob.JobPreparationTask);
+                        AssertGoodJobReleaseTaskOM(bndJob.JobReleaseTask);
+                        AssertGoodResourceFiles(resFiles, bndJob.JobPreparationTask.ResourceFiles);
+                        AssertGoodResourceFiles(resFiles, bndJob.JobReleaseTask.ResourceFiles);
+
+                        //TODO: test immutability
+                    }
+
+                    // used for on get-status test
+                    CloudJobSchedule updatedJobSchedule;
+
+                    // test update on the WI jobprep/jobrelease
+                    {
+                        // change props
+                        boundJobScheduleWithJob.JobSpecification.JobPreparationTask.WaitForSuccess = JobPrepWaitForSuccessUpdate;
+
+                        // commit changes
+                        boundJobScheduleWithJob.Commit();
+
+                        // get new values
+                        updatedJobSchedule = client.JobScheduleOperations.GetJobSchedule(jsId);
+
+                        // confirm values changed
+                        Assert.Equal(JobPrepWaitForSuccessUpdate, updatedJobSchedule.JobSpecification.JobPreparationTask.WaitForSuccess);
+                    }
+
+                    TestGetPrepReleaseStatusCalls(client, updatedJobSchedule, poolFixture.PoolId, resFiles);
+                }
+                finally
+                {
+                    // cleanup
+                    TestUtilities.DeleteJobScheduleIfExistsAsync(client, jsId).Wait();
                 }
 
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -251,58 +253,56 @@
         public void TestOMJobPrepReleaseRunOnNaiveComputeNode()
         {
             string jobId = "TestOMJobPrepReleaseRunOnNaiveComputeNode-" + TestUtilities.GetMyName();
-            Action test = () =>
+            void test()
             {
-                using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                try
                 {
-                    try
+                    // create job with prep/release
                     {
-                        // create job with prep/release
+                        CloudJob unboundJob = client.JobOperations.CreateJob(jobId, null);
+                        unboundJob.PoolInformation = new PoolInformation();
+                        unboundJob.PoolInformation.PoolId = poolFixture.PoolId;
+
+                        // add the jobPrep task to the job
                         {
-                            CloudJob unboundJob = client.JobOperations.CreateJob(jobId, null);
-                            unboundJob.PoolInformation = new PoolInformation();
-                            unboundJob.PoolInformation.PoolId = this.poolFixture.PoolId;
+                            JobPreparationTask prep = new JobPreparationTask("cmd /c echo JobPrep!!");
+                            unboundJob.JobPreparationTask = prep;
 
-                            // add the jobPrep task to the job
-                            {
-                                JobPreparationTask prep = new JobPreparationTask("cmd /c echo JobPrep!!");
-                                unboundJob.JobPreparationTask = prep;
-
-                                prep.WaitForSuccess = true; // be explicit even though this is the default.  need JP/JP to not run
-                            }
-
-
-                            // add a jobRelease task to the job
-                            {
-                                JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
-                                unboundJob.JobReleaseTask = relTask;
-                            }
-
-                            // add the job to the service
-                            unboundJob.Commit();
+                            prep.WaitForSuccess = true; // be explicit even though this is the default.  need JP/JP to not run
                         }
 
-                        // the victim nodes.  pool should have size 1.
-                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
 
-                        Assert.Single(computeNodes);
-                        // now we have a job with zero tasks... lets call get-status methods
+                        // add a jobRelease task to the job
+                        {
+                            JobReleaseTask relTask = new JobReleaseTask(JobReleaseTaskCommandLine);
+                            unboundJob.JobReleaseTask = relTask;
+                        }
 
-                        // call it
-                        List<JobPreparationAndReleaseTaskExecutionInformation> jrStatusList =
-                            client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
-
-                        JobPreparationAndReleaseTaskExecutionInformation prepAndReleaseStatus = jrStatusList.FirstOrDefault();
-
-                        Assert.Null(prepAndReleaseStatus);
+                        // add the job to the service
+                        unboundJob.Commit();
                     }
-                    finally
-                    {
-                        // cleanup
-                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
-                    }
+
+                    // the victim nodes.  pool should have size 1.
+                    List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
+
+                    Assert.Single(computeNodes);
+                    // now we have a job with zero tasks... lets call get-status methods
+
+                    // call it
+                    List<JobPreparationAndReleaseTaskExecutionInformation> jrStatusList =
+                        client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
+
+                    JobPreparationAndReleaseTaskExecutionInformation prepAndReleaseStatus = jrStatusList.FirstOrDefault();
+
+                    Assert.Null(prepAndReleaseStatus);
                 }
-            };
+                finally
+                {
+                    // cleanup
+                    TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -314,80 +314,78 @@
         {
             string jobId = "TestOMJobPrepSchedulingError-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
 
-            Action test = () =>
+            void test()
             {
-                using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                try
                 {
-                    try
+                    // create job with prep that triggers prep scheduling error
                     {
-                        // create job with prep that triggers prep scheduling error
+                        CloudJob unboundJob = client.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
+                        // add the jobPrep task to the job
                         {
-                            CloudJob unboundJob = client.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId});
-                            // add the jobPrep task to the job
-                            {
-                                JobPreparationTask prep = new JobPreparationTask("cmd /c JobPrep Task");
-                                unboundJob.JobPreparationTask = prep;
+                            JobPreparationTask prep = new JobPreparationTask("cmd /c JobPrep Task");
+                            unboundJob.JobPreparationTask = prep;
 
-                                ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://not.a.domain.invalid/file", "bob.txt")};
+                            ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://not.a.domain.invalid/file", "bob.txt") };
 
-                                prep.ResourceFiles = badResFiles;
+                            prep.ResourceFiles = badResFiles;
 
-                                prep.WaitForSuccess = true; // be explicit even though this is the default.  need JP/ to not run
-                            }
-
-                            // add the job to the service
-                            unboundJob.Commit();
+                            prep.WaitForSuccess = true; // be explicit even though this is the default.  need JP/ to not run
                         }
 
-                        CloudJob boundJob = client.JobOperations.GetJob(jobId);
-
-                        // add a trivial task to force the JP
-                        client.JobOperations.AddTask(boundJob.Id, new CloudTask("ForceJobPrep", "cmd /c echo TestOMJobPrepSchedulingError"));
-
-                        // the victim compute node.  pool should have size 1.
-                        List<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
-
-                        Assert.Single(nodes);
-
-                        // now we have a job that should be trying to run the JP
-                        // poll for the JP to have been run, and it must have a scheduling error
-                        bool prepNotCompleted = true;
-
-                        // gotta poll to find out when the jp has been run
-                        while (prepNotCompleted)
-                        {
-                            List<JobPreparationAndReleaseTaskExecutionInformation> jpStatsList =
-                                client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
-                            JobPreparationAndReleaseTaskExecutionInformation jpStatus = jpStatsList.FirstOrDefault();
-
-                            if (jpStatus == null)
-                            {
-                                Thread.Sleep(2000);
-                            }
-                            else
-                            {
-                                if (JobPreparationTaskState.Completed == jpStatus.JobPreparationTaskExecutionInformation.State)
-                                {
-                                    prepNotCompleted = false; // we see a JP has completed
-
-                                    Assert.NotNull(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
-                                    Assert.Equal(TaskExecutionResult.Failure, jpStatus.JobPreparationTaskExecutionInformation.Result);
-
-                                    // spew the failure
-                                    this.OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
-                                }
-
-                                this.testOutputHelper.WriteLine("Job Prep is running (waiting for blob dl to timeout)");
-                            }
-                        }
+                        // add the job to the service
+                        unboundJob.Commit();
                     }
-                    finally
+
+                    CloudJob boundJob = client.JobOperations.GetJob(jobId);
+
+                    // add a trivial task to force the JP
+                    client.JobOperations.AddTask(boundJob.Id, new CloudTask("ForceJobPrep", "cmd /c echo TestOMJobPrepSchedulingError"));
+
+                    // the victim compute node.  pool should have size 1.
+                    List<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
+
+                    Assert.Single(nodes);
+
+                    // now we have a job that should be trying to run the JP
+                    // poll for the JP to have been run, and it must have a scheduling error
+                    bool prepNotCompleted = true;
+
+                    // gotta poll to find out when the jp has been run
+                    while (prepNotCompleted)
                     {
-                        // cleanup
-                        client.JobOperations.DeleteJob(jobId);
+                        List<JobPreparationAndReleaseTaskExecutionInformation> jpStatsList =
+                            client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
+                        JobPreparationAndReleaseTaskExecutionInformation jpStatus = jpStatsList.FirstOrDefault();
+
+                        if (jpStatus == null)
+                        {
+                            Thread.Sleep(2000);
+                        }
+                        else
+                        {
+                            if (JobPreparationTaskState.Completed == jpStatus.JobPreparationTaskExecutionInformation.State)
+                            {
+                                prepNotCompleted = false; // we see a JP has completed
+
+                                Assert.NotNull(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
+                                Assert.Equal(TaskExecutionResult.Failure, jpStatus.JobPreparationTaskExecutionInformation.Result);
+
+                                // spew the failure
+                                OutputFailureInfo(jpStatus.JobPreparationTaskExecutionInformation.FailureInformation);
+                            }
+
+                            testOutputHelper.WriteLine("Job Prep is running (waiting for blob dl to timeout)");
+                        }
                     }
                 }
-            };
+                finally
+                {
+                    // cleanup
+                    client.JobOperations.DeleteJob(jobId);
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -398,119 +396,117 @@
         public void TestOMJobReleaseSchedulingError()
         {
             string jobId = "TestOMJobReleaseSchedulingError-" + CraftTimeString() + "-" + TestUtilities.GetMyName();
-            Action test = () =>
+            void test()
             {
-                using (BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                using BatchClient client = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                try
                 {
-                    try
+                    // create job schedule with prep that succeeds and release the triggers scheduling error
                     {
-                        // create job schedule with prep that succeeds and release the triggers scheduling error
+                        PoolInformation poolInfo = new PoolInformation() { PoolId = poolFixture.PoolId };
+                        CloudJob unboundJob = client.JobOperations.CreateJob(jobId, poolInfo);
+
+                        // add the jobPrep task to the job
                         {
-                            PoolInformation poolInfo = new PoolInformation() {PoolId = this.poolFixture.PoolId};
-                            CloudJob unboundJob = client.JobOperations.CreateJob(jobId, poolInfo);
+                            JobPreparationTask prep = new JobPreparationTask("cmd /c echo the quick job prep jumped over the...");
+                            unboundJob.JobPreparationTask = prep;
 
-                            // add the jobPrep task to the job
-                            {
-                                JobPreparationTask prep = new JobPreparationTask("cmd /c echo the quick job prep jumped over the...");
-                                unboundJob.JobPreparationTask = prep;
-
-                                prep.WaitForSuccess = false; // we don't really care but why not set this
-                            }
-
-                            // add a jobRelease task to the job
-                            {
-                                JobReleaseTask relTask = new JobReleaseTask("cmd /c echo Job Release Task");
-                                unboundJob.JobReleaseTask = relTask;
-
-                                ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://not.a.domain.invalid/file", "bob.txt")};
-
-                                relTask.ResourceFiles = badResFiles;
-
-                                relTask.Id = "jobRelease";
-                            }
-
-                            // add the job to the service
-                            unboundJob.Commit();
+                            prep.WaitForSuccess = false; // we don't really care but why not set this
                         }
 
-                        // add a trivial task to force the JP
-                        client.JobOperations.AddTask(jobId, new CloudTask("ForceJobPrep", "cmd /c echo TestOMJobReleaseSchedulingError"));
+                        // add a jobRelease task to the job
+                        {
+                            JobReleaseTask relTask = new JobReleaseTask("cmd /c echo Job Release Task");
+                            unboundJob.JobReleaseTask = relTask;
 
-                        // wait for the task to complete
+                            ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://not.a.domain.invalid/file", "bob.txt") };
 
-                        TaskStateMonitor tsm = client.Utilities.CreateTaskStateMonitor();
+                            relTask.ResourceFiles = badResFiles;
 
-                        tsm.WaitAll(
-                            client.JobOperations.ListTasks(jobId),
-                            TaskState.Completed,
-                            TimeSpan.FromMinutes(10),
-                            additionalBehaviors:
-                                new[]
-                                {
+                            relTask.Id = "jobRelease";
+                        }
+
+                        // add the job to the service
+                        unboundJob.Commit();
+                    }
+
+                    // add a trivial task to force the JP
+                    client.JobOperations.AddTask(jobId, new CloudTask("ForceJobPrep", "cmd /c echo TestOMJobReleaseSchedulingError"));
+
+                    // wait for the task to complete
+
+                    TaskStateMonitor tsm = client.Utilities.CreateTaskStateMonitor();
+
+                    tsm.WaitAll(
+                        client.JobOperations.ListTasks(jobId),
+                        TaskState.Completed,
+                        TimeSpan.FromMinutes(10),
+                        additionalBehaviors:
+                            new[]
+                            {
                                     // spam/logging interceptor
                                     new Protocol.RequestInterceptor((x) =>
                                         {
-                                            this.testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
+                                            testOutputHelper.WriteLine("Issuing request type: " + x.GetType().ToString());
 
                                             // print out the compute node states... we are actually waiting on the compute nodes
-                                            List<ComputeNode> allComputeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
+                                            List<ComputeNode> allComputeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
 
-                                            this.testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
+                                            testOutputHelper.WriteLine("    #compute nodes: " + allComputeNodes.Count);
 
                                             allComputeNodes.ForEach((icn) =>
                                                 {
-                                                    this.testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
+                                                    testOutputHelper.WriteLine("  computeNode.id: " + icn.Id + ", state: " + icn.State);
                                                 });
-                                            this.testOutputHelper.WriteLine("");
+                                            testOutputHelper.WriteLine("");
                                         })
-                                }
-                            );
-
-                        // ok terminate job to trigger job release
-                        client.JobOperations.TerminateJob(jobId, "BUG: Server will throw 500 if I don't provide reason");
-
-                        // the victim compute node.  pool should have size 1.
-                        List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
-
-                        Assert.Single(computeNodes);
-
-                        // now we have a job that should be trying to run the JP
-                        // poll for the JP to have been run, and it must have a scheduling error
-                        bool releaseNotCompleted = true;
-
-                        // gotta poll to find out when the jp has been run
-                        while (releaseNotCompleted)
-                        {
-                            List<JobPreparationAndReleaseTaskExecutionInformation> jrStatusList =
-                                client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
-
-                            JobPreparationAndReleaseTaskExecutionInformation prepAndReleaseStatus = jrStatusList.FirstOrDefault();
-
-                            if (prepAndReleaseStatus != null && null != prepAndReleaseStatus.JobReleaseTaskExecutionInformation)
-                            {
-                                if (JobReleaseTaskState.Completed == prepAndReleaseStatus.JobReleaseTaskExecutionInformation.State)
-                                {
-                                    releaseNotCompleted = false; // we see a JP has been run
-
-                                    // now assert the failure info
-                                    Assert.NotNull(prepAndReleaseStatus);
-                                    Assert.NotNull(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
-                                    Assert.Equal(TaskExecutionResult.Failure, prepAndReleaseStatus.JobReleaseTaskExecutionInformation.Result);
-
-                                    // spew the failure info
-                                    this.OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
-                                }
                             }
-                            Thread.Sleep(2000);
-                            this.testOutputHelper.WriteLine("Job Release tasks still running (waiting for blob dl to timeout).");
-                        }
-                    }
-                    finally
+                        );
+
+                    // ok terminate job to trigger job release
+                    client.JobOperations.TerminateJob(jobId, "BUG: Server will throw 500 if I don't provide reason");
+
+                    // the victim compute node.  pool should have size 1.
+                    List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
+
+                    Assert.Single(computeNodes);
+
+                    // now we have a job that should be trying to run the JP
+                    // poll for the JP to have been run, and it must have a scheduling error
+                    bool releaseNotCompleted = true;
+
+                    // gotta poll to find out when the jp has been run
+                    while (releaseNotCompleted)
                     {
-                        client.JobOperations.DeleteJob(jobId);
+                        List<JobPreparationAndReleaseTaskExecutionInformation> jrStatusList =
+                            client.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId).ToList();
+
+                        JobPreparationAndReleaseTaskExecutionInformation prepAndReleaseStatus = jrStatusList.FirstOrDefault();
+
+                        if (prepAndReleaseStatus != null && null != prepAndReleaseStatus.JobReleaseTaskExecutionInformation)
+                        {
+                            if (JobReleaseTaskState.Completed == prepAndReleaseStatus.JobReleaseTaskExecutionInformation.State)
+                            {
+                                releaseNotCompleted = false; // we see a JP has been run
+
+                                // now assert the failure info
+                                Assert.NotNull(prepAndReleaseStatus);
+                                Assert.NotNull(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
+                                Assert.Equal(TaskExecutionResult.Failure, prepAndReleaseStatus.JobReleaseTaskExecutionInformation.Result);
+
+                                // spew the failure info
+                                OutputFailureInfo(prepAndReleaseStatus.JobReleaseTaskExecutionInformation.FailureInformation);
+                            }
+                        }
+                        Thread.Sleep(2000);
+                        testOutputHelper.WriteLine("Job Release tasks still running (waiting for blob dl to timeout).");
                     }
                 }
-            };
+                finally
+                {
+                    client.JobOperations.DeleteJob(jobId);
+                }
+            }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
@@ -550,7 +546,7 @@
 
                 while (keepLooking)
                 {
-                    this.testOutputHelper.WriteLine("Waiting for task to be scheduled.");
+                    testOutputHelper.WriteLine("Waiting for task to be scheduled.");
 
                     foreach (CloudTask curTask in batchCli.JobOperations.GetJob(jobId).ListTasks())
                     {
@@ -581,8 +577,8 @@
                     Assert.True(beforeJobPrepRuns < jptei.JobPreparationTaskExecutionInformation.StartTime + TimeSpan.FromSeconds(10));  // test that the start time is rational -- 10s of wiggle room
                     Assert.Null(jptei.JobPreparationTaskExecutionInformation.FailureInformation);
 
-                    this.testOutputHelper.WriteLine("");
-                    this.testOutputHelper.WriteLine("listing files for compute node: " + victimComputeNodeRunningPrepAndRelease.Id);
+                    testOutputHelper.WriteLine("");
+                    testOutputHelper.WriteLine("listing files for compute node: " + victimComputeNodeRunningPrepAndRelease.Id);
 
                     // fiter the list so reduce noise
                     List<NodeFile> filteredListJobPrep = new List<NodeFile>();
@@ -592,7 +588,7 @@
                         // filter on the jsId since we only run one job per job in this test.
                         if (curTF.Path.IndexOf(boundJobSchedule.Id, StringComparison.InvariantCultureIgnoreCase) >= 0)
                         {
-                            this.testOutputHelper.WriteLine("    name:" + curTF.Path + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
+                            testOutputHelper.WriteLine("    name:" + curTF.Path + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
 
                             filteredListJobPrep.Add(curTF);
                         }
@@ -614,7 +610,7 @@
                     // poll for completion
                     while (JobPreparationTaskState.Completed != jptei.JobPreparationTaskExecutionInformation.State)
                     {
-                        this.testOutputHelper.WriteLine("waiting for jopPrep to complete");
+                        testOutputHelper.WriteLine("waiting for jopPrep to complete");
                         Thread.Sleep(2000);
 
                         // refresh the state info
@@ -646,8 +642,8 @@
                         //Swallow any exceptions here since stderr may not exist
                     }
 
-                    this.testOutputHelper.WriteLine(stdOut);
-                    this.testOutputHelper.WriteLine(stdErr);
+                    testOutputHelper.WriteLine(stdOut);
+                    testOutputHelper.WriteLine(stdErr);
 
                     Assert.True(!string.IsNullOrWhiteSpace(stdOut));
                     Assert.Contains("jobpreparation", stdOut.ToLower());
@@ -661,16 +657,16 @@
                 Protocol.RequestInterceptor consoleSpammer =
                                                 new Protocol.RequestInterceptor((x) =>
                                                 {
-                                                    this.testOutputHelper.WriteLine("TestGetPrepReleaseStatusCalls: waiting for JobPrep and task to complete");
+                                                    testOutputHelper.WriteLine("TestGetPrepReleaseStatusCalls: waiting for JobPrep and task to complete");
 
                                                     ODATADetailLevel detailLevel = new ODATADetailLevel() { FilterClause = string.Format("nodeId eq '{0}'", victimComputeNodeRunningPrepAndRelease.Id) };
                                                     jobPrepStatusList = batchCli.JobOperations.ListJobPreparationAndReleaseTaskStatus(jobId, detailLevel: detailLevel).ToList();
                                                     JobPreparationAndReleaseTaskExecutionInformation jpteiInterceptor =
                                                         jobPrepStatusList.First();
 
-                                                    this.testOutputHelper.WriteLine("    JobPrep.State: " + jpteiInterceptor.JobPreparationTaskExecutionInformation.State);
+                                                    testOutputHelper.WriteLine("    JobPrep.State: " + jpteiInterceptor.JobPreparationTaskExecutionInformation.State);
 
-                                                    this.testOutputHelper.WriteLine("");
+                                                    testOutputHelper.WriteLine("");
                                                 });
 
                 // waiting for the task to complete means so JobRelease is run.
@@ -699,13 +695,13 @@
                         Assert.NotNull(jrtei);
                         if (jrtei.JobReleaseTaskExecutionInformation.State != JobReleaseTaskState.Completed)
                         {
-                            this.testOutputHelper.WriteLine("JobReleaseTask state is: " + jrtei.JobReleaseTaskExecutionInformation.State);
+                            testOutputHelper.WriteLine("JobReleaseTask state is: " + jrtei.JobReleaseTaskExecutionInformation.State);
 
                             Thread.Sleep(5000);
                         }
                         else
                         {
-                            this.testOutputHelper.WriteLine("JobRelease commpleted!");
+                            testOutputHelper.WriteLine("JobRelease commpleted!");
 
                             // we are done
                             break;
@@ -798,21 +794,21 @@
 
             private void RequestInterceptHandler(Protocol.IBatchRequest request)
             {
-                this.stopwatch.Reset();
-                this.stopwatch.Start();
+                stopwatch.Reset();
+                stopwatch.Start();
             }
 
             private Task<IAzureOperationResponse> ResponseInterceptHandler(IAzureOperationResponse response, Protocol.IBatchRequest request)
             {
-                this.stopwatch.Stop();
+                stopwatch.Stop();
 
                 return Task.FromResult(response);
             }
 
             internal CallTimerViaInterceptors()
             {
-                this.ReqInterceptor = new Protocol.RequestInterceptor(this.RequestInterceptHandler);
-                this.ResInterceptor = new Protocol.ResponseInterceptor(this.ResponseInterceptHandler);
+                ReqInterceptor = new Protocol.RequestInterceptor(RequestInterceptHandler);
+                ResInterceptor = new Protocol.ResponseInterceptor(ResponseInterceptHandler);
             }
         }
 
@@ -825,8 +821,10 @@
             FileToStage wordsDotText = new FileToStage(Resources.LocalWordsDotText, stagingCreds);                // use "default" mapping to base name of local file
 
             // add in the files to stage
-            myTask.FilesToStage = new List<IFileStagingProvider>();
-            myTask.FilesToStage.Add(wordsDotText);
+            myTask.FilesToStage = new List<IFileStagingProvider>
+            {
+                wordsDotText
+            };
 
             // trigger file staging
             myTask.StageFiles();
@@ -837,20 +835,20 @@
 
         private void OutputFailureInfo(TaskFailureInformation failureInfo)
         {
-            this.testOutputHelper.WriteLine("JP Failure Info:");
-            this.testOutputHelper.WriteLine("    category: " + failureInfo.Category);
-            this.testOutputHelper.WriteLine("    code: " + failureInfo.Code);
-            this.testOutputHelper.WriteLine("    details:" + (null == failureInfo.Details ? " <null>" : string.Empty));
+            testOutputHelper.WriteLine("JP Failure Info:");
+            testOutputHelper.WriteLine("    category: " + failureInfo.Category);
+            testOutputHelper.WriteLine("    code: " + failureInfo.Code);
+            testOutputHelper.WriteLine("    details:" + (null == failureInfo.Details ? " <null>" : string.Empty));
 
             if (null != failureInfo.Details)
             {
                 foreach (NameValuePair curDetail in failureInfo.Details)
                 {
-                    this.testOutputHelper.WriteLine("        name: " + curDetail.Name + ", value: " + curDetail.Value);
+                    testOutputHelper.WriteLine("        name: " + curDetail.Name + ", value: " + curDetail.Value);
                 }
             }
 
-            this.testOutputHelper.WriteLine("    message: " + failureInfo.Message);
+            testOutputHelper.WriteLine("    message: " + failureInfo.Message);
         }
 
         #endregion

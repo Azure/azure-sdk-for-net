@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void ParseFileWithOneProvider()
         {
-            var visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioSingleTokenProvider.json")));
+            var visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Load(Path.Combine(Constants.TestFilesPath, "VisualStudioSingleTokenProvider.json"));
 
             Assert.NotNull(visualStudioTokenProviderFile);
             Assert.NotNull(visualStudioTokenProviderFile.TokenProviders);
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void ParseFileWithMultipleProviders()
         {
-            var visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioMultiTokenProvider.json")));
+            var visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Load(Path.Combine(Constants.TestFilesPath, "VisualStudioMultiTokenProvider.json"));
 
             Assert.NotNull(visualStudioTokenProviderFile);
             Assert.NotNull(visualStudioTokenProviderFile.TokenProviders);
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void ParseFileError()
         {
-            Exception exception = Assert.Throws<FormatException>(() => VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioTokenProviderMissingPreference.json"))));
+            Exception exception = Assert.Throws<FormatException>(() => VisualStudioTokenProviderFile.Load(Path.Combine(Constants.TestFilesPath, "VisualStudioTokenProviderMissingPreference.json")));
 
-            Assert.Contains(Constants.TokenProviderFileFormatExceptionMessage, exception.Message);
+            Assert.Contains(VisualStudioTokenProviderFile.FormatExceptionMessage, exception.Message);
             Assert.Contains(Constants.PreferenceNotFound, exception.Message);
         }
     }

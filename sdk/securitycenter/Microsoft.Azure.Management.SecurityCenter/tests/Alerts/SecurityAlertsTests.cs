@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -42,6 +43,15 @@ namespace SecurityCenter.Tests
             return securityCenterClient;
         }
 
+        private static SecurityCenterClient GetSecurityCenterClientWithLocation(MockContext context, string location)
+        {
+            var client = GetSecurityCenterClient(context);
+
+            client.AscLocation = location;
+
+            return client;
+        }
+
         #endregion
 
         #region Alerts
@@ -66,9 +76,16 @@ namespace SecurityCenter.Tests
 
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
+                
+                var firstAlert = alerts.First();
+				var alertLocation = GetAlertLocation(firstAlert.Id);
+				var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
+                var alertName = firstAlert.Name;
+                var resourceGroupName = Regex.Match(firstAlert.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value;
 
-                var alert = securityCenterClient.Alerts.GetResourceGroupLevelAlerts(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
-                ValidateAlert(alert);
+                //var foundAlert = await clientWithLocation.Alerts.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName);
+                var foundAlert = await clientWithLocation.Alerts.GetResourceGroupLevelAsync(alertName, resourceGroupName);
+                ValidateAlert(foundAlert);
             }
         }
 
@@ -82,10 +99,19 @@ namespace SecurityCenter.Tests
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
 
-                var alert = securityCenterClient.Alerts.GetSubscriptionLevelAlert(alerts.First().Name);
+                var firstAlert = alerts.First();
+                var alertLocation = GetAlertLocation(firstAlert.Id);
+                var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
+                //var alert = clientWithLocation.Alerts.GetSubscriptionLevelAlert(firstAlert.Name);
+                var alert = clientWithLocation.Alerts.GetSubscriptionLevel(firstAlert.Name);
 
                 ValidateAlert(alert);
             }
+        }
+
+        private string GetAlertLocation(string id)
+        {
+            return Regex.Match(id, @"(?<=locations/)[^/]+?(?=/)").Value;
         }
 
         [Fact]
@@ -115,7 +141,8 @@ namespace SecurityCenter.Tests
                 while (!enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
 
                 securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
-                var rgAlerts = securityCenterClient.Alerts.ListResourceGroupLevelAlertsByRegion(Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                //var rgAlerts = securityCenterClient.Alerts.ListResourceGroupLevelAlertsByRegion(Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                var rgAlerts = securityCenterClient.Alerts.ListResourceGroupLevelByRegion(Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
                 ValidateAlerts(rgAlerts);
             }
         }
@@ -131,7 +158,8 @@ namespace SecurityCenter.Tests
 
                 securityCenterClient.AscLocation = Regex.Match(alerts.First().Id, @"(?<=locations/)[^/]+?(?=/)").Value;
 
-                var regionAlerts = securityCenterClient.Alerts.ListSubscriptionLevelAlertsByRegion();
+                //var regionAlerts = securityCenterClient.Alerts.ListSubscriptionLevelAlertsByRegion();
+                var regionAlerts = securityCenterClient.Alerts.ListSubscriptionLevelByRegion();
                 ValidateAlerts(regionAlerts);
             }
         }
@@ -147,7 +175,8 @@ namespace SecurityCenter.Tests
 
                 securityCenterClient.AscLocation = Regex.Match(alerts.First().Id, @"(?<=locations/)[^/]+?(?=/)").Value;
 
-                securityCenterClient.Alerts.UpdateResourceGroupLevelAlertStateToDismiss(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                //securityCenterClient.Alerts.UpdateResourceGroupLevelAlertStateToDismiss(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                securityCenterClient.Alerts.UpdateResourceGroupLevelStateToDismiss(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
             }
         }
 
@@ -162,7 +191,8 @@ namespace SecurityCenter.Tests
 
                 securityCenterClient.AscLocation = Regex.Match(alerts.First().Id, @"(?<=locations/)[^/]+?(?=/)").Value;
 
-                securityCenterClient.Alerts.UpdateSubscriptionLevelAlertStateToDismiss(alerts.First().Name);
+                //securityCenterClient.Alerts.UpdateSubscriptionLevelAlertStateToDismiss(alerts.First().Name);
+                securityCenterClient.Alerts.UpdateSubscriptionLevelStateToDismiss(alerts.First().Name);
             }
         }
 

@@ -15,17 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SizeInGB != null)
-            {
-                writer.WritePropertyName("sizeInGB");
-                writer.WriteNumberValue(SizeInGB.Value);
-            }
-            if (HostCaching != null)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching");
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteObjectValue(Source);
@@ -35,15 +30,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryOSDiskImage DeserializeGalleryOSDiskImage(JsonElement element)
         {
-            int? sizeInGB = default;
-            HostCaching? hostCaching = default;
-            GalleryArtifactVersionSource source = default;
+            Optional<int> sizeInGB = default;
+            Optional<HostCaching> hostCaching = default;
+            Optional<GalleryArtifactVersionSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeInGB = property.Value.GetInt32();
@@ -53,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostCaching = property.Value.GetString().ToHostCaching();
@@ -62,13 +59,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
                     continue;
                 }
             }
-            return new GalleryOSDiskImage(sizeInGB, hostCaching, source);
+            return new GalleryOSDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value);
         }
     }
 }

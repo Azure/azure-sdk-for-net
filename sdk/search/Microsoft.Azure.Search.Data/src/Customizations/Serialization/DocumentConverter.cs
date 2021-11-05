@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Search.Serialization
     /// Deserializes JSON objects and arrays to .NET types instead of JObject and JArray.
     /// </summary>
     /// <remarks>
-    /// This JSON converter supports reading only. When deserializing JSON to an instance of type <c cref="Document">Document</c>, it will
-    /// recursively deserialize JSON objects to <c cref="Document">Document</c> instances as well. This includes object properties as well
+    /// This JSON converter supports reading only. When deserializing JSON to an instance of type <see cref="Document" />, it will
+    /// recursively deserialize JSON objects to <see cref="Document" /> instances as well. This includes object properties as well
     /// as arrays of objects. It also makes a best-effort attempt to deserialize JSON arrays to a specific .NET array type. Heterogenous
-    /// arrays are deserialized to arrays of <c cref="System.Object">System.Object</c>.
+    /// arrays are deserialized to arrays of <see cref="System.Object" />.
     /// </remarks>
     internal class DocumentConverter : JsonConverter
     {

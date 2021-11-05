@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListLoadBalancingRule API service call. </summary>
-    public partial class LoadBalancerLoadBalancingRuleListResult
+    internal partial class LoadBalancerLoadBalancingRuleListResult
     {
         /// <summary> Initializes a new instance of LoadBalancerLoadBalancingRuleListResult. </summary>
         internal LoadBalancerLoadBalancingRuleListResult()
         {
+            Value = new ChangeTrackingList<LoadBalancingRule>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerLoadBalancingRuleListResult. </summary>

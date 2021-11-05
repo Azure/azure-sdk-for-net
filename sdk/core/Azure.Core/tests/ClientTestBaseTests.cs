@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -158,100 +160,45 @@ namespace Azure.Core.Tests
         {
             TestClient client = InstrumentClient(new TestClient());
 
-            Operations subClient = client.SubProperty;
+            TestClientOperations subClient = client.SubProperty;
             var result = await subClient.MethodAsync(123);
 
             Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
         }
 
-        public class TestClient
+        [Test]
+        public void CanGetUninstrumentedClient()
         {
-            public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
-            {
-                return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
-            }
+            var testClient = new TestClient();
+            TestClient client = InstrumentClient(testClient);
 
-            public virtual Task<string> MethodGenericAsync<T>(T i, CancellationToken cancellationToken = default)
-            {
-                return Task.FromResult($"Async {i} {cancellationToken.CanBeCanceled}");
-            }
-
-            public virtual string MethodGeneric<T>(T i, CancellationToken cancellationToken = default)
-            {
-                return $"Sync {i} {cancellationToken.CanBeCanceled}";
-            }
-
-            public virtual Task<string> NoAlternativeAsync(int i, CancellationToken cancellationToken = default)
-            {
-                return Task.FromResult("I don't have sync alternative");
-            }
-
-            public virtual string Method(int i, CancellationToken cancellationToken = default)
-            {
-                return "Sync " + i + " " + cancellationToken.CanBeCanceled;
-            }
-
-            public virtual string Method2()
-            {
-                return "Hello";
-            }
-
-            // These four follow the new pattern for custom users schemas
-            public virtual Task<Response<T>> GetDataAsync<T>() =>
-                Task.FromResult(Response.FromValue(default(T), new MockResponse(200, "async - static")));
-            public virtual Response<T> GetData<T>(T arg) =>
-                Response.FromValue(default(T), new MockResponse(200, $"sync - static {arg}"));
-            public virtual Task<Response<T>> GetDataAsync<T>(T arg) =>
-                Task.FromResult(Response.FromValue(default(T), new MockResponse(200, $"async - static {arg}")));
-            public virtual Response<T> GetData<T>() =>
-                Response.FromValue(default(T), new MockResponse(200, "sync - static"));
-            public virtual Task<Response<object>> GetDataAsync() =>
-                Task.FromResult(Response.FromValue((object)null, new MockResponse(200, "async - dynamic")));
-            public virtual Response<object> GetData() =>
-                Response.FromValue((object)null, new MockResponse(200, "sync - dynamic"));
-
-            // These four follow the new pattern for custom users schemas and
-            // throw exceptions
-            public virtual Task<Response<T>> GetFailureAsync<T>() =>
-                throw new InvalidOperationException("async - static");
-            public virtual Response<T> GetFailure<T>() =>
-                throw new InvalidOperationException("sync - static");
-            public virtual Task<Response<object>> GetFailureAsync() =>
-                throw new InvalidOperationException("async - dynamic");
-            public virtual Response<object> GetFailure() =>
-                throw new InvalidOperationException("sync - dynamic");
-
-            public virtual TestClient GetAnotherTestClient()
-            {
-                return new TestClient();
-            }
-            public virtual Operations SubProperty => new Operations();
+            Assert.AreSame(GetOriginal(client), testClient);
         }
 
-        public class Operations
+        [Test]
+        [NonParallelizable]
+        public async Task TasksValidateOwnScopes()
         {
-            public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
-            {
-                return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
-            }
+            TestDiagnostics = true;
 
-            public virtual string Method(int i, CancellationToken cancellationToken = default)
-            {
-                return "Sync " + i + " " + cancellationToken.CanBeCanceled;
-            }
-        }
+            TestClient client = InstrumentClient(new TestClient());
 
-        public class InvalidTestClient
-        {
-            public Task<string> MethodAsync(int i)
+            var t1 = Task.Run(async () =>
             {
-                return Task.FromResult("Async " + i);
-            }
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodAAsync();
+                }
+            });
 
-            public virtual string Method(int i)
+            var t2 = Task.Run(async () =>
             {
-                return "Sync " + i;
-            }
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodBAsync();
+                }
+            });
+            await Task.WhenAll(t1, t2);
         }
     }
 }

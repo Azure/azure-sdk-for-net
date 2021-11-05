@@ -107,5 +107,51 @@ namespace Microsoft.Azure.Management.DataFactory
                 }
             }
 
+            /// <summary>
+            /// Get list of exposure control features for specific factory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='exposureControlBatchRequest'>
+            /// The exposure control request for list of features.
+            /// </param>
+            public static ExposureControlBatchResponse QueryFeatureValuesByFactory(this IExposureControlOperations operations, string resourceGroupName, string factoryName, ExposureControlBatchRequest exposureControlBatchRequest)
+            {
+                return operations.QueryFeatureValuesByFactoryAsync(resourceGroupName, factoryName, exposureControlBatchRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get list of exposure control features for specific factory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='exposureControlBatchRequest'>
+            /// The exposure control request for list of features.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ExposureControlBatchResponse> QueryFeatureValuesByFactoryAsync(this IExposureControlOperations operations, string resourceGroupName, string factoryName, ExposureControlBatchRequest exposureControlBatchRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryFeatureValuesByFactoryWithHttpMessagesAsync(resourceGroupName, factoryName, exposureControlBatchRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

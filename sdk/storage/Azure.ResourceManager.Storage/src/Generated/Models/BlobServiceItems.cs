@@ -6,25 +6,28 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The BlobServiceItems. </summary>
-    public partial class BlobServiceItems
+    internal partial class BlobServiceItems
     {
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>
         internal BlobServiceItems()
         {
+            Value = new ChangeTrackingList<BlobServiceData>();
         }
 
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>
         /// <param name="value"> List of blob services returned. </param>
-        internal BlobServiceItems(IReadOnlyList<BlobServiceProperties> value)
+        internal BlobServiceItems(IReadOnlyList<BlobServiceData> value)
         {
             Value = value;
         }
 
         /// <summary> List of blob services returned. </summary>
-        public IReadOnlyList<BlobServiceProperties> Value { get; }
+        public IReadOnlyList<BlobServiceData> Value { get; }
     }
 }

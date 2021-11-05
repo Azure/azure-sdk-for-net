@@ -17,17 +17,17 @@ namespace Azure.Graph.Rbac.Models
             writer.WriteStartObject();
             writer.WritePropertyName("appId");
             writer.WriteStringValue(AppId);
-            if (AccountEnabled != null)
+            if (Optional.IsDefined(AccountEnabled))
             {
                 writer.WritePropertyName("accountEnabled");
                 writer.WriteBooleanValue(AccountEnabled.Value);
             }
-            if (AppRoleAssignmentRequired != null)
+            if (Optional.IsDefined(AppRoleAssignmentRequired))
             {
                 writer.WritePropertyName("appRoleAssignmentRequired");
                 writer.WriteBooleanValue(AppRoleAssignmentRequired.Value);
             }
-            if (KeyCredentials != null)
+            if (Optional.IsCollectionDefined(KeyCredentials))
             {
                 writer.WritePropertyName("keyCredentials");
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PasswordCredentials != null)
+            if (Optional.IsCollectionDefined(PasswordCredentials))
             {
                 writer.WritePropertyName("passwordCredentials");
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.Graph.Rbac.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServicePrincipalType != null)
+            if (Optional.IsDefined(ServicePrincipalType))
             {
                 writer.WritePropertyName("servicePrincipalType");
                 writer.WriteStringValue(ServicePrincipalType);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartArray();

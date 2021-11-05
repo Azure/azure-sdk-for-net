@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ProcessSessionMessageEventArgs"/> contain event args that are specific
-    /// to the <see cref="ServiceBusReceivedMessage"/> and session that is being processed.
+    /// The <see cref="ProcessSessionMessageEventArgs"/> contain event args that
+    /// are specific to the <see cref="ServiceBusReceivedMessage"/> and session that
+    /// is being processed.
     /// </summary>
     public class ProcessSessionMessageEventArgs : EventArgs
     {
         /// <summary>
-        /// The <see cref="ServiceBusReceivedMessage"/> to be processed.
+        /// Gets the <see cref="ServiceBusReceivedMessage"/> to be processed.
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
-        /// The processor's <see cref="System.Threading.CancellationToken"/> instance which will be
-        /// cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// Gets the <see cref="System.Threading.CancellationToken"/> instance which
+        /// will be cancelled when <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>
+        /// is called, or when the session lock has been lost, or if <see cref="ReleaseSession"/> is called.
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
@@ -30,8 +32,10 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
+        private readonly SessionReceiverManager _receiverManager;
+
         /// <summary>
-        /// The Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
+        /// Gets the Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         public string SessionId => _sessionReceiver.SessionId;
 
@@ -49,7 +53,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
-        internal ProcessSessionMessageEventArgs(
+        public ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
             CancellationToken cancellationToken)
@@ -59,48 +63,28 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken = cancellationToken;
         }
 
-        /// <summary>
-        /// Gets the session state.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The session state as byte array.</returns>
-        public virtual async Task<byte[]> GetSessionStateAsync(
+        internal ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            ServiceBusSessionReceiver receiver,
+            SessionReceiverManager receiverManager,
+            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+        {
+            _receiverManager = receiverManager;
+        }
+
+        /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
+        public virtual async Task<BinaryData> GetSessionStateAsync(
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.GetSessionStateAsync(cancellationToken).ConfigureAwait(false);
 
-        /// <summary>
-        /// Set a custom state on the session which can be later retrieved using <see cref="GetSessionStateAsync"/>
-        /// </summary>
-        ///
-        /// <param name="sessionState">A byte array of session state</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <inheritdoc cref="ServiceBusSessionReceiver.SetSessionStateAsync(BinaryData, CancellationToken)"/>
         public virtual async Task SetSessionStateAsync(
-            byte[] sessionState,
+            BinaryData sessionState,
             CancellationToken cancellationToken = default) =>
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 
-        /// <summary>
-        /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for immediate processing as the lock on the message held by the processor will be released.
-        /// </summary>
-        ///
-        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// Abandoning a message will increase the delivery count on the message.
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task AbandonMessageAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -110,19 +94,8 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        /// <summary>
-        /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
-        /// </summary>
-        /// <param name="message">The message to complete.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// This operation can only be performed on a message that was received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task CompleteMessageAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -133,23 +106,8 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        ///
-        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// In order to receive a message from the deadletter queue, you can call
-        /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
-        /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to create a receiver for the queue or subscription.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        public async Task DeadLetterMessageAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
@@ -164,22 +122,8 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        ///
-        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// In order to receive a message from the deadletter queue, you can call
-        /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
-        /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to create a receiver for the queue or subscription.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// </remarks>
-        public async Task DeadLetterMessageAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -192,23 +136,8 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
-        /// <summary> Defers the processing for a message.</summary>
-        ///
-        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to defer.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
-        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessagesAsync(IEnumerable{long}, CancellationToken)"/>.
-        /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task DeferMessageAsync(
+        /// <inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
@@ -220,5 +149,16 @@ namespace Azure.Messaging.ServiceBus
             .ConfigureAwait(false);
             message.IsSettled = true;
         }
+
+        /// <summary>
+        /// Releases the session that is being processed. No new receives will be initiated for the session before the
+        /// session is closed. Any already received messages will still be delivered to the user message handler, and in-flight message handlers
+        /// will be allowed to complete. Messages will still be completed automatically if <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>
+        /// is <c>true</c>.
+        /// The session may end up being reopened for processing immediately after closing if there are messages remaining in the session (
+        /// This depends on what other session messages may be in the queue or subscription).
+        /// </summary>
+        public virtual void ReleaseSession() =>
+            _receiverManager.ReleaseSession();
     }
 }

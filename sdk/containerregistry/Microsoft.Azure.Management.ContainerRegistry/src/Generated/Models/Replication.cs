@@ -46,11 +46,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// 'Canceled'</param>
         /// <param name="status">The status of the replication at the time the
         /// operation was called.</param>
-        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status status = default(Status))
+        /// <param name="regionEndpointEnabled">Specifies whether the
+        /// replication's regional endpoint is enabled. Requests will not be
+        /// routed to a replication whose regional endpoint is disabled,
+        /// however its data will continue to be synced with other
+        /// replications.</param>
+        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status status = default(Status), bool? regionEndpointEnabled = default(bool?))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Status = status;
+            RegionEndpointEnabled = regionEndpointEnabled;
             CustomInit();
         }
 
@@ -73,6 +79,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public Status Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the replication's regional endpoint
+        /// is enabled. Requests will not be routed to a replication whose
+        /// regional endpoint is disabled, however its data will continue to be
+        /// synced with other replications.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.regionEndpointEnabled")]
+        public bool? RegionEndpointEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

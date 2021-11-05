@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudClipboard", "CloudClipboard\CloudClipboard.csproj", "{43268878-A169-4D14-9DCC-546D679E076C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarbageCollector", "GarbageCollector\GarbageCollector.csproj", "{AC88EE75-96B7-4BD6-A1FE-D63F57945361}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43268878-A169-4D14-9DCC-546D679E076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43268878-A169-4D14-9DCC-546D679E076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43268878-A169-4D14-9DCC-546D679E076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43268878-A169-4D14-9DCC-546D679E076C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC88EE75-96B7-4BD6-A1FE-D63F57945361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC88EE75-96B7-4BD6-A1FE-D63F57945361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC88EE75-96B7-4BD6-A1FE-D63F57945361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC88EE75-96B7-4BD6-A1FE-D63F57945361}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D219698-7783-4E42-9221-E391CDC2B827}
+	EndGlobalSection
+EndGlobal

@@ -22,101 +22,105 @@ namespace Microsoft.Azure.Management.IotHub
     public static partial class IotHubOperationsExtensions
     {
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
-            /// </param>
-            /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
-            public static void ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
+            /// <param name='failoverRegion'>
+            /// Region the hub will be failed over to
+            /// </param>
+            public static void ManualFailover(this IIotHubOperations operations, string iotHubName, string resourceGroupName, string failoverRegion)
             {
-                operations.ManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
+                operations.ManualFailoverAsync(iotHubName, resourceGroupName, failoverRegion).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
-            /// </param>
-            /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
+            /// </param>
+            /// <param name='failoverRegion'>
+            /// Region the hub will be failed over to
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ManualFailoverAsync(this IIotHubOperations operations, string iotHubName, string resourceGroupName, string failoverRegion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ManualFailoverWithHttpMessagesAsync(iotHubName, resourceGroupName, failoverRegion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
-            /// </param>
-            /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
-            public static void BeginManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
+            /// <param name='failoverRegion'>
+            /// Region the hub will be failed over to
+            /// </param>
+            public static void BeginManualFailover(this IIotHubOperations operations, string iotHubName, string resourceGroupName, string failoverRegion)
             {
-                operations.BeginManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
+                operations.BeginManualFailoverAsync(iotHubName, resourceGroupName, failoverRegion).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
-            /// </param>
-            /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
+            /// </param>
+            /// <param name='failoverRegion'>
+            /// Region the hub will be failed over to
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginManualFailoverAsync(this IIotHubOperations operations, string iotHubName, string resourceGroupName, string failoverRegion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginManualFailoverWithHttpMessagesAsync(iotHubName, resourceGroupName, failoverRegion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

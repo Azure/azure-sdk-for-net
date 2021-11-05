@@ -6,25 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Post request for all the Bastion Shareable Link endpoints. </summary>
-    public partial class BastionShareableLinkListRequest
+    internal partial class BastionShareableLinkListRequest
     {
         /// <summary> Initializes a new instance of BastionShareableLinkListRequest. </summary>
-        public BastionShareableLinkListRequest()
+        internal BastionShareableLinkListRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionShareableLinkListRequest. </summary>
-        /// <param name="vms"> List of VM references. </param>
-        internal BastionShareableLinkListRequest(IList<BastionShareableLink> vms)
-        {
-            Vms = vms;
+            Vms = new ChangeTrackingList<BastionShareableLink>();
         }
 
         /// <summary> List of VM references. </summary>
-        public IList<BastionShareableLink> Vms { get; set; }
+        public IReadOnlyList<BastionShareableLink> Vms { get; }
     }
 }

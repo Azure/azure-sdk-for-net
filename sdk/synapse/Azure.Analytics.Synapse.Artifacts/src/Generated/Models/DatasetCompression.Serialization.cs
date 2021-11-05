@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetCompressionConverter))]
     public partial class DatasetCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -35,12 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "BZip2": return DatasetBZip2Compression.DeserializeDatasetBZip2Compression(element);
                     case "Deflate": return DatasetDeflateCompression.DeserializeDatasetDeflateCompression(element);
                     case "GZip": return DatasetGZipCompression.DeserializeDatasetGZipCompression(element);
+                    case "Tar": return DatasetTarCompression.DeserializeDatasetTarCompression(element);
+                    case "TarGZip": return DatasetTarGZipCompression.DeserializeDatasetTarGZipCompression(element);
                     case "ZipDeflate": return DatasetZipDeflateCompression.DeserializeDatasetZipDeflateCompression(element);
                 }
             }
             string type = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -48,11 +53,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetCompression(type, additionalProperties);
+        }
+
+        internal partial class DatasetCompressionConverter : JsonConverter<DatasetCompression>
+        {
+            public override void Write(Utf8JsonWriter writer, DatasetCompression model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatasetCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetCompression(document.RootElement);
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ImpalaLinkedService. </summary>
         /// <param name="host"> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ImpalaLinkedService(object host, ImpalaAuthenticationType authenticationType)
         {
             if (host == null)
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </param>
         /// <param name="port"> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </param>
         /// <param name="authenticationType"> The authentication type to use. </param>

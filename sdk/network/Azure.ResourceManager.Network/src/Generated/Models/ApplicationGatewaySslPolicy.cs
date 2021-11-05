@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
         public ApplicationGatewaySslPolicy()
         {
+            DisabledSslProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
+            CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
@@ -33,13 +36,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Ssl protocols to be disabled on application gateway. </summary>
-        public IList<ApplicationGatewaySslProtocol> DisabledSslProtocols { get; set; }
+        public IList<ApplicationGatewaySslProtocol> DisabledSslProtocols { get; }
         /// <summary> Type of Ssl Policy. </summary>
         public ApplicationGatewaySslPolicyType? PolicyType { get; set; }
         /// <summary> Name of Ssl predefined policy. </summary>
         public ApplicationGatewaySslPolicyName? PolicyName { get; set; }
         /// <summary> Ssl cipher suites to be enabled in the specified order to application gateway. </summary>
-        public IList<ApplicationGatewaySslCipherSuite> CipherSuites { get; set; }
+        public IList<ApplicationGatewaySslCipherSuite> CipherSuites { get; }
         /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>
         public ApplicationGatewaySslProtocol? MinProtocolVersion { get; set; }
     }

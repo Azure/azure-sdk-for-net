@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRoutePortsLocations API service call. </summary>
-    public partial class ExpressRoutePortsLocationListResult
+    internal partial class ExpressRoutePortsLocationListResult
     {
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>
         internal ExpressRoutePortsLocationListResult()
         {
+            Value = new ChangeTrackingList<ExpressRoutePortsLocation>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>

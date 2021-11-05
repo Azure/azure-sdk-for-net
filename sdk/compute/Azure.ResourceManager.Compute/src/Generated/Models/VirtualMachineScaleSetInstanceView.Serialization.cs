@@ -15,16 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetInstanceView DeserializeVirtualMachineScaleSetInstanceView(JsonElement element)
         {
-            VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default;
-            IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default;
-            IReadOnlyList<InstanceViewStatus> statuses = default;
-            IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
+            Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
+            Optional<IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary>> extensions = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value);
@@ -34,19 +35,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetVMExtensionsSummary> array = new List<VirtualMachineScaleSetVMExtensionsSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetVMExtensionsSummary.DeserializeVirtualMachineScaleSetVMExtensionsSummary(item));
-                        }
+                        array.Add(VirtualMachineScaleSetVMExtensionsSummary.DeserializeVirtualMachineScaleSetVMExtensionsSummary(item));
                     }
                     extensions = array;
                     continue;
@@ -55,19 +50,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
-                        }
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
                     }
                     statuses = array;
                     continue;
@@ -76,25 +65,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OrchestrationServiceSummary> array = new List<OrchestrationServiceSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item));
-                        }
+                        array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item));
                     }
                     orchestrationServices = array;
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions, statuses, orchestrationServices);
+            return new VirtualMachineScaleSetInstanceView(virtualMachine.Value, Optional.ToList(extensions), Optional.ToList(statuses), Optional.ToList(orchestrationServices));
         }
     }
 }

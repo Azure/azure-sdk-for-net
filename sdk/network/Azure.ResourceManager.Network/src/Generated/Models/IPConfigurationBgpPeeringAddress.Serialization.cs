@@ -16,36 +16,16 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpconfigurationId != null)
+            if (Optional.IsDefined(IpconfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId");
                 writer.WriteStringValue(IpconfigurationId);
             }
-            if (DefaultBgpIpAddresses != null)
-            {
-                writer.WritePropertyName("defaultBgpIpAddresses");
-                writer.WriteStartArray();
-                foreach (var item in DefaultBgpIpAddresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (CustomBgpIpAddresses != null)
+            if (Optional.IsCollectionDefined(CustomBgpIpAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses");
                 writer.WriteStartArray();
                 foreach (var item in CustomBgpIpAddresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (TunnelIpAddresses != null)
-            {
-                writer.WritePropertyName("tunnelIpAddresses");
-                writer.WriteStartArray();
-                foreach (var item in TunnelIpAddresses)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -56,18 +36,14 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPConfigurationBgpPeeringAddress DeserializeIPConfigurationBgpPeeringAddress(JsonElement element)
         {
-            string ipconfigurationId = default;
-            IList<string> defaultBgpIpAddresses = default;
-            IList<string> customBgpIpAddresses = default;
-            IList<string> tunnelIpAddresses = default;
+            Optional<string> ipconfigurationId = default;
+            Optional<IReadOnlyList<string>> defaultBgpIpAddresses = default;
+            Optional<IList<string>> customBgpIpAddresses = default;
+            Optional<IReadOnlyList<string>> tunnelIpAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipconfigurationId = property.Value.GetString();
                     continue;
                 }
@@ -75,19 +51,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     defaultBgpIpAddresses = array;
                     continue;
@@ -96,19 +66,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     customBgpIpAddresses = array;
                     continue;
@@ -117,25 +81,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     tunnelIpAddresses = array;
                     continue;
                 }
             }
-            return new IPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIpAddresses, customBgpIpAddresses, tunnelIpAddresses);
+            return new IPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIpAddresses), Optional.ToList(customBgpIpAddresses), Optional.ToList(tunnelIpAddresses));
         }
     }
 }

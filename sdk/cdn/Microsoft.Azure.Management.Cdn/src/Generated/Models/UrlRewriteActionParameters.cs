@@ -31,15 +31,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the UrlRewriteActionParameters class.
         /// </summary>
         /// <param name="sourcePattern">define a request URI pattern that
-        /// identifies the type of requests that may be rewritten. Currently,
-        /// source pattern uses a prefix-based match. To match all URL paths,
-        /// use "/" as the source pattern value. To match only the root
-        /// directory and re-write this path, use the origin path field</param>
-        /// <param name="destination">Define the destination path for be used
-        /// in the rewrite. This will overwrite the source pattern </param>
-        /// <param name="preserveUnmatchedPath">If True, the remaining path
-        /// after the source pattern will be appended to the new destination
-        /// path.  </param>
+        /// identifies the type of requests that may be rewritten. If value is
+        /// blank, all strings are matched.</param>
+        /// <param name="destination">Define the relative URL to which the
+        /// above requests will be rewritten by.</param>
+        /// <param name="preserveUnmatchedPath">Whether to preserve unmatched
+        /// path. Default value is true.</param>
         public UrlRewriteActionParameters(string sourcePattern, string destination, bool? preserveUnmatchedPath = default(bool?))
         {
             SourcePattern = sourcePattern;
@@ -62,24 +59,22 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets define a request URI pattern that identifies the type
-        /// of requests that may be rewritten. Currently, source pattern uses a
-        /// prefix-based match. To match all URL paths, use "/" as the source
-        /// pattern value. To match only the root directory and re-write this
-        /// path, use the origin path field
+        /// of requests that may be rewritten. If value is blank, all strings
+        /// are matched.
         /// </summary>
         [JsonProperty(PropertyName = "sourcePattern")]
         public string SourcePattern { get; set; }
 
         /// <summary>
-        /// Gets or sets define the destination path for be used in the
-        /// rewrite. This will overwrite the source pattern
+        /// Gets or sets define the relative URL to which the above requests
+        /// will be rewritten by.
         /// </summary>
         [JsonProperty(PropertyName = "destination")]
         public string Destination { get; set; }
 
         /// <summary>
-        /// Gets or sets if True, the remaining path after the source pattern
-        /// will be appended to the new destination path.
+        /// Gets or sets whether to preserve unmatched path. Default value is
+        /// true.
         /// </summary>
         [JsonProperty(PropertyName = "preserveUnmatchedPath")]
         public bool? PreserveUnmatchedPath { get; set; }

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,40 +18,37 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentPropertiesExtended DeserializeDeploymentPropertiesExtended(JsonElement element)
         {
-            string provisioningState = default;
-            string correlationId = default;
-            DateTimeOffset? timestamp = default;
-            string duration = default;
-            object outputs = default;
-            IReadOnlyList<Provider> providers = default;
-            IReadOnlyList<Dependency> dependencies = default;
-            TemplateLink templateLink = default;
-            object parameters = default;
-            ParametersLink parametersLink = default;
-            DeploymentMode? mode = default;
-            DebugSetting debugSetting = default;
-            OnErrorDeploymentExtended onErrorDeployment = default;
-            string templateHash = default;
-            IReadOnlyList<ResourceReference> outputResources = default;
-            IReadOnlyList<ResourceReference> validatedResources = default;
-            ErrorResponse error = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> correlationId = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> duration = default;
+            Optional<object> outputs = default;
+            Optional<IReadOnlyList<ProviderData>> providers = default;
+            Optional<IReadOnlyList<Dependency>> dependencies = default;
+            Optional<TemplateLink> templateLink = default;
+            Optional<object> parameters = default;
+            Optional<ParametersLink> parametersLink = default;
+            Optional<DeploymentMode> mode = default;
+            Optional<DebugSetting> debugSetting = default;
+            Optional<OnErrorDeploymentExtended> onErrorDeployment = default;
+            Optional<string> templateHash = default;
+            Optional<IReadOnlyList<SubResource>> outputResources = default;
+            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = property.Value.GetString();
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("correlationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     correlationId = property.Value.GetString();
                     continue;
                 }
@@ -57,6 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
@@ -64,10 +64,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     duration = property.Value.GetString();
                     continue;
                 }
@@ -75,6 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputs = property.Value.GetObject();
@@ -84,19 +81,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Provider> array = new List<Provider>();
+                    List<ProviderData> array = new List<ProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Provider.DeserializeProvider(item));
-                        }
+                        array.Add(JsonSerializer.Deserialize<ProviderData>(item.ToString()));
                     }
                     providers = array;
                     continue;
@@ -105,19 +96,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Dependency> array = new List<Dependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Dependency.DeserializeDependency(item));
-                        }
+                        array.Add(Dependency.DeserializeDependency(item));
                     }
                     dependencies = array;
                     continue;
@@ -126,6 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     templateLink = TemplateLink.DeserializeTemplateLink(property.Value);
@@ -135,6 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = property.Value.GetObject();
@@ -144,6 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parametersLink = ParametersLink.DeserializeParametersLink(property.Value);
@@ -153,15 +141,17 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToDeploymentMode();
+                    mode = new DeploymentMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("debugSetting"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
@@ -171,6 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     onErrorDeployment = OnErrorDeploymentExtended.DeserializeOnErrorDeploymentExtended(property.Value);
@@ -178,10 +169,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("templateHash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     templateHash = property.Value.GetString();
                     continue;
                 }
@@ -189,19 +176,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceReference.DeserializeResourceReference(item));
-                        }
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     outputResources = array;
                     continue;
@@ -210,19 +191,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ResourceReference.DeserializeResourceReference(item));
-                        }
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     validatedResources = array;
                     continue;
@@ -231,13 +206,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
                     continue;
                 }
             }
-            return new DeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers, dependencies, templateLink, parameters, parametersLink, mode, debugSetting, onErrorDeployment, templateHash, outputResources, validatedResources, error);
+            return new DeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), duration.Value, outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error);
         }
     }
 }

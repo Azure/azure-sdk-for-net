@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Type of Actions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matchConditions"/> is null. </exception>
         public WebApplicationFirewallCustomRule(int priority, WebApplicationFirewallRuleType ruleType, IEnumerable<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             if (matchConditions == null)
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             Etag = etag;
             Priority = priority;
             RuleType = ruleType;
-            MatchConditions = matchConditions ?? new List<MatchCondition>();
+            MatchConditions = matchConditions;
             Action = action;
         }
 

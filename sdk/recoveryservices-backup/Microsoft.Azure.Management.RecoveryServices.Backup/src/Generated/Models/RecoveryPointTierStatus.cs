@@ -28,7 +28,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         [EnumMember(Value = "Disabled")]
         Disabled,
         [EnumMember(Value = "Deleted")]
-        Deleted
+        Deleted,
+        [EnumMember(Value = "Rehydrated")]
+        Rehydrated
     }
     internal static class RecoveryPointTierStatusEnumExtension
     {
@@ -49,6 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
                     return "Disabled";
                 case RecoveryPointTierStatus.Deleted:
                     return "Deleted";
+                case RecoveryPointTierStatus.Rehydrated:
+                    return "Rehydrated";
             }
             return null;
         }
@@ -65,6 +69,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
                     return RecoveryPointTierStatus.Disabled;
                 case "Deleted":
                     return RecoveryPointTierStatus.Deleted;
+                case "Rehydrated":
+                    return RecoveryPointTierStatus.Rehydrated;
             }
             return null;
         }

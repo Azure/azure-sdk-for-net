@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Extensions != null)
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions");
                 writer.WriteStartArray();
@@ -26,37 +27,42 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ExtensionsTimeBudget))
+            {
+                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WriteStringValue(ExtensionsTimeBudget);
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetExtensionProfile DeserializeVirtualMachineScaleSetExtensionProfile(JsonElement element)
         {
-            IList<VirtualMachineScaleSetExtension> extensions = default;
+            Optional<IList<VirtualMachineScaleSetExtensionData>> extensions = default;
+            Optional<string> extensionsTimeBudget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineScaleSetExtension> array = new List<VirtualMachineScaleSetExtension>();
+                    List<VirtualMachineScaleSetExtensionData> array = new List<VirtualMachineScaleSetExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetExtension.DeserializeVirtualMachineScaleSetExtension(item));
-                        }
+                        array.Add(VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(item));
                     }
                     extensions = array;
                     continue;
                 }
+                if (property.NameEquals("extensionsTimeBudget"))
+                {
+                    extensionsTimeBudget = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetExtensionProfile(extensions);
+            return new VirtualMachineScaleSetExtensionProfile(Optional.ToList(extensions), extensionsTimeBudget.Value);
         }
     }
 }

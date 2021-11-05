@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="path">The path of an alias.</param>
         /// <param name="apiVersions">The API versions.</param>
         /// <param name="pattern">The pattern for an alias path.</param>
-        public AliasPath(string path = default(string), IList<string> apiVersions = default(IList<string>), AliasPattern pattern = default(AliasPattern))
+        /// <param name="metadata">The metadata of the alias path. If missing,
+        /// fall back to the default metadata of the alias.</param>
+        public AliasPath(string path = default(string), IList<string> apiVersions = default(IList<string>), AliasPattern pattern = default(AliasPattern), AliasPathMetadata metadata = default(AliasPathMetadata))
         {
             Path = path;
             ApiVersions = apiVersions;
             Pattern = pattern;
+            Metadata = metadata;
             CustomInit();
         }
 
@@ -64,6 +67,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
         public AliasPattern Pattern { get; set; }
+
+        /// <summary>
+        /// Gets the metadata of the alias path. If missing, fall back to the
+        /// default metadata of the alias.
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata")]
+        public AliasPathMetadata Metadata { get; private set; }
 
     }
 }

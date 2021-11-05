@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/quotaConfiguration/default", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -95,14 +97,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -117,6 +112,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ClusterQuotaConfigurationProperties> Patch(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -141,14 +137,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
@@ -174,6 +163,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/quotaConfiguration/default", false);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -181,6 +171,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public async Task<Response<ClusterQuotaConfigurationProperties>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -200,14 +191,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -219,6 +203,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         public Response<ClusterQuotaConfigurationProperties> Get(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -238,14 +223,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         ClusterQuotaConfigurationProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
-                        }
+                        value = ClusterQuotaConfigurationProperties.DeserializeClusterQuotaConfigurationProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

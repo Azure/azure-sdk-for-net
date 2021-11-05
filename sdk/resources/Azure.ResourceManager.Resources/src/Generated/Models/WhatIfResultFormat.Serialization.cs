@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class WhatIfResultFormatExtensions
+    internal static partial class WhatIfResultFormatExtensions
     {
         public static string ToSerialString(this WhatIfResultFormat value) => value switch
         {

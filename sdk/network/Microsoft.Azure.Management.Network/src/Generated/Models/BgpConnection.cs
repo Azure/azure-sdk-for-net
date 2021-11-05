@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="peerAsn">Peer ASN.</param>
         /// <param name="peerIp">Peer IP.</param>
+        /// <param name="hubVirtualNetworkConnection">The reference to the
+        /// HubVirtualNetworkConnection resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -45,11 +47,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Connection type.</param>
-        public BgpConnection(string id = default(string), long? peerAsn = default(long?), string peerIp = default(string), string provisioningState = default(string), string connectionState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public BgpConnection(string id = default(string), long? peerAsn = default(long?), string peerIp = default(string), SubResource hubVirtualNetworkConnection = default(SubResource), string provisioningState = default(string), string connectionState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             PeerAsn = peerAsn;
             PeerIp = peerIp;
+            HubVirtualNetworkConnection = hubVirtualNetworkConnection;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
             Name = name;
@@ -74,6 +77,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.peerIp")]
         public string PeerIp { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the HubVirtualNetworkConnection
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hubVirtualNetworkConnection")]
+        public SubResource HubVirtualNetworkConnection { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the resource. Possible values

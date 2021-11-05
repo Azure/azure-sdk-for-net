@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-
 namespace Azure.Identity
 {
     /// <summary>
@@ -30,6 +29,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
+        private readonly bool _logPII;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -40,10 +40,13 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
-
-        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
         {
+        }
+
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
+        {
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -64,11 +67,16 @@ namespace Azure.Identity
 
             try
             {
+                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                {
+                    throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
+                }
+
                 var tokenProviderPath = GetTokenProviderPath();
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
-                var processStartInfos = GetProcessStartInfos(tokenProviders, resource, cancellationToken);
+                var processStartInfos = GetProcessStartInfos(tokenProviders, resource, requestContext, cancellationToken);
 
                 if (processStartInfos.Count == 0)
                 {
@@ -102,7 +110,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -120,9 +128,9 @@ namespace Azure.Identity
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
-                catch (Exception exception)
+                catch (Exception exception) when (!(exception is OperationCanceledException))
                 {
-                    exceptions.Add(exception);
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
                 }
             }
 
@@ -137,10 +145,10 @@ namespace Azure.Identity
             }
         }
 
-        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, CancellationToken cancellationToken)
+        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            List<ProcessStartInfo> processStartInfos = new List<ProcessStartInfo>();
-            StringBuilder arguments = new StringBuilder();
+            List<ProcessStartInfo> processStartInfos = new();
+            StringBuilder arguments = new();
 
             foreach (VisualStudioTokenProvider tokenProvider in visualStudioTokenProviders)
             {
@@ -155,9 +163,10 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                if (_tenantId != default)
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                if (tenantId != default)
                 {
-                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(_tenantId);
+                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
                 }
 
                 // Add the arguments set in the token provider file.
@@ -187,24 +196,35 @@ namespace Azure.Identity
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
-            using JsonDocument document = JsonDocument.Parse(content);
-
-            JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
-
-            var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
-            for (int i = 0; i < providers.Length; i++)
+            try
             {
-                JsonElement providerElement = providersElement[i];
+                using JsonDocument document = JsonDocument.Parse(content);
 
-                var path = providerElement.GetProperty("Path").GetString();
-                var preference = providerElement.GetProperty("Preference").GetInt32();
-                var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
+                JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
 
-                providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
+                var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
+                for (int i = 0; i < providers.Length; i++)
+                {
+                    JsonElement providerElement = providersElement[i];
+
+                    var path = providerElement.GetProperty("Path").GetString();
+                    var preference = providerElement.GetProperty("Preference").GetInt32();
+                    var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
+
+                    providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
+                }
+
+                Array.Sort(providers);
+                return providers;
             }
-
-            Array.Sort(providers);
-            return providers;
+            catch (JsonException exception)
+            {
+                throw new CredentialUnavailableException($"File found at \"{tokenProviderPath}\" isn't a valid JSON file", exception);
+            }
+            catch (Exception exception)
+            {
+                throw new CredentialUnavailableException($"JSON file found at \"{tokenProviderPath}\" has invalid schema.", exception);
+            }
         }
 
         private string GetTokenProviderContent(string tokenProviderPath)

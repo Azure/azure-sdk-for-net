@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An array of available service aliases. </summary>
-    public partial class AvailableServiceAliasesResult
+    internal partial class AvailableServiceAliasesResult
     {
         /// <summary> Initializes a new instance of AvailableServiceAliasesResult. </summary>
         internal AvailableServiceAliasesResult()
         {
+            Value = new ChangeTrackingList<AvailableServiceAlias>();
         }
 
         /// <summary> Initializes a new instance of AvailableServiceAliasesResult. </summary>

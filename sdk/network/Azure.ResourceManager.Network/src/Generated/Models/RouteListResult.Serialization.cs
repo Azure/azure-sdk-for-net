@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteListResult
+    internal partial class RouteListResult
     {
         internal static RouteListResult DeserializeRouteListResult(JsonElement element)
         {
-            IReadOnlyList<Route> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<RouteData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Route> array = new List<Route>();
+                    List<RouteData> array = new List<RouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Route.DeserializeRoute(item));
-                        }
+                        array.Add(RouteData.DeserializeRouteData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new RouteListResult(value, nextLink);
+            return new RouteListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

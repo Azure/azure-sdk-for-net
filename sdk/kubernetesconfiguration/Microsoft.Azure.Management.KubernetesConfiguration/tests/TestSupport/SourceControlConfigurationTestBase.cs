@@ -45,7 +45,6 @@ namespace KubernetesConfiguration.Tests.TestSupport
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
                 sourceControlConfigurationName: SourceControlConfiguration.Name,
-                apiVersion: ApiVersion,
                 sourceControlConfiguration: SourceControlConfiguration);
         }
 
@@ -60,8 +59,8 @@ namespace KubernetesConfiguration.Tests.TestSupport
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                sourceControlConfigurationName: SourceControlConfiguration.Name,
-                apiVersion: ApiVersion);
+                sourceControlConfigurationName: SourceControlConfiguration.Name
+            );
         }
 
         /// <summary>
@@ -74,8 +73,8 @@ namespace KubernetesConfiguration.Tests.TestSupport
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                sourceControlConfigurationName: SourceControlConfiguration.Name,
-                apiVersion: ApiVersion);
+                sourceControlConfigurationName: SourceControlConfiguration.Name
+            );
         }
 
         /// <summary>
@@ -88,8 +87,8 @@ namespace KubernetesConfiguration.Tests.TestSupport
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
-                clusterName: Cluster.Name,
-                apiVersion: ApiVersion);
+                clusterName: Cluster.Name
+            );
         }
 
         #region Common Methods

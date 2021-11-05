@@ -15,27 +15,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Delimiter != null)
+            if (Optional.IsDefined(Delimiter))
             {
                 writer.WritePropertyName("delimiter");
                 writer.WriteStringValue(Delimiter.Value);
             }
-            if (Replacement != null)
+            if (Optional.IsDefined(Replacement))
             {
                 writer.WritePropertyName("replacement");
                 writer.WriteStringValue(Replacement.Value);
             }
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (ReverseTokenOrder != null)
+            if (Optional.IsDefined(ReverseTokenOrder))
             {
                 writer.WritePropertyName("reverse");
                 writer.WriteBooleanValue(ReverseTokenOrder.Value);
             }
-            if (NumberOfTokensToSkip != null)
+            if (Optional.IsDefined(NumberOfTokensToSkip))
             {
                 writer.WritePropertyName("skip");
                 writer.WriteNumberValue(NumberOfTokensToSkip.Value);
@@ -49,11 +49,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PathHierarchyTokenizer DeserializePathHierarchyTokenizer(JsonElement element)
         {
-            char? delimiter = default;
-            char? replacement = default;
-            int? maxTokenLength = default;
-            bool? reverse = default;
-            int? skip = default;
+            Optional<char> delimiter = default;
+            Optional<char> replacement = default;
+            Optional<int> maxTokenLength = default;
+            Optional<bool> reverse = default;
+            Optional<int> skip = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -62,6 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delimiter = property.Value.GetChar();
@@ -71,6 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replacement = property.Value.GetChar();
@@ -80,6 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenLength = property.Value.GetInt32();
@@ -89,6 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reverse = property.Value.GetBoolean();
@@ -98,6 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skip = property.Value.GetInt32();
@@ -114,7 +119,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizer(odataType, name, delimiter, replacement, maxTokenLength, reverse, skip);
+            return new PathHierarchyTokenizer(odataType, name, Optional.ToNullable(delimiter), Optional.ToNullable(replacement), Optional.ToNullable(maxTokenLength), Optional.ToNullable(reverse), Optional.ToNullable(skip));
         }
     }
 }

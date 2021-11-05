@@ -97,6 +97,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             if (offset + count > self.Length)
                 throw new ArgumentException("offset + count cannot be > self.Length", nameof(count));
 
+            // Return the same array if we want the same elements.
+            if (offset == 0 && count == self.Length)
+            {
+                return self;
+            }
+
             var result = new byte[count];
 
             Array.Copy(self, offset, result, 0, count);

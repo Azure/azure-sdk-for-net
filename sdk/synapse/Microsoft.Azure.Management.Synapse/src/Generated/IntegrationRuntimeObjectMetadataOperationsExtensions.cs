@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='getMetadataRequest'>
             /// The parameters for getting a SSIS object metadata.
             /// </param>
-            public static SsisObjectMetadataListResponse Get(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest))
+            public static SsisObjectMetadataListResponse List(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest))
             {
-                return operations.GetAsync(resourceGroupName, workspaceName, integrationRuntimeName, getMetadataRequest).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, integrationRuntimeName, getMetadataRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -71,9 +71,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SsisObjectMetadataListResponse> GetAsync(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SsisObjectMetadataListResponse> ListAsync(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataRequest getMetadataRequest = default(GetSsisObjectMetadataRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, getMetadataRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, getMetadataRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// The name of the workspace
+            /// The name of the workspace.
             /// </param>
             /// <param name='integrationRuntimeName'>
             /// Integration runtime name
@@ -126,6 +126,58 @@ namespace Microsoft.Azure.Management.Synapse
             public static async Task<SsisObjectMetadataStatusResponse> RefreshAsync(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RefreshWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Refresh integration runtime object metadata
+            /// </summary>
+            /// <remarks>
+            /// Refresh the object metadata in an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static SsisObjectMetadataStatusResponse BeginRefresh(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                return operations.BeginRefreshAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Refresh integration runtime object metadata
+            /// </summary>
+            /// <remarks>
+            /// Refresh the object metadata in an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SsisObjectMetadataStatusResponse> BeginRefreshAsync(this IIntegrationRuntimeObjectMetadataOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRefreshWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

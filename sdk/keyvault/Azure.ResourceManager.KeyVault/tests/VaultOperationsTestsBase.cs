@@ -3,13 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -17,6 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
     [ClientTestFixture]
     public abstract class VaultOperationsTestsBase : ManagementRecordedTestBase<KeyVaultManagementTestEnvironment>
     {
+        protected ArmClient Client { get; private set; }
+
         private const string ObjectIdKey = "ObjectId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
+        public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
-
-        public VaultsOperations VaultsClient { get; set; }
-        public ResourcesOperations ResourcesClient { get; set; }
-        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
-        public ProvidersOperations ResourceProvidersClient { get; set; }
+        public VaultCollection VaultCollection { get; set; }
+        public DeletedVaultCollection DeletedVaultCollection { get; set; }
+        public ManagedHsmCollection ManagedHsmCollection { get; set; }
+        public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -44,13 +45,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = resourceManagementClient.Resources;
-            ResourceGroupsClient = resourceManagementClient.ResourceGroups;
-            ResourceProvidersClient = resourceManagementClient.Providers;
-
-            var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = keyVaultManagementClient.Vaults;
+            Client = GetArmClient();
+            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            DeletedVaultCollection = subscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -59,29 +56,22 @@ namespace Azure.ResourceManager.KeyVault.Tests
             else if (Mode == RecordedTestMode.Record)
             {
                 var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
-                await foreach (var servicePrincipal in servicePrincipalList)
+                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
+                foreach (var servicePrincipal in servicePrincipalList)
                 {
                     this.ObjectId = servicePrincipal.ObjectId;
                     Recording.GetVariable(ObjectIdKey, this.ObjectId);
                     break;
                 }
             }
-            var provider = (await ResourceProvidersClient.GetAsync("Microsoft.KeyVault")).Value;
-            this.Location = provider.ResourceTypes.Where(
-                (resType) =>
-                {
-                    if (resType.ResourceType == "vaults")
-                        return true;
-                    else
-                        return false;
-                }
-                ).First().Locations.FirstOrDefault();
+            Location = "North Central US";
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Management.Resources.Models.ResourceGroup(Location));
-            VaultName = Recording.GenerateAssetName("sdktestvault");
+            var rgResponse = await subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ResourceGroup = rgResponse.Value;
 
+            VaultCollection = ResourceGroup.GetVaults();
+            VaultName = Recording.GenerateAssetName("sdktestvault");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
@@ -111,13 +101,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
-        }
 
-        internal KeyVaultManagementClient GetKeyVaultManagementClient()
-        {
-            return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+            ManagedHsmCollection = ResourceGroup.GetManagedHsms();
+            ManagedHsmProperties = new ManagedHsmProperties();
+            ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
+            ManagedHsmProperties.CreateMode = CreateMode.Default;
+            ManagedHsmProperties.EnablePurgeProtection = false;
+            ManagedHsmProperties.EnableSoftDelete = true;
+            ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
+            {
+                Bypass = "AzureServices",
+                DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
+            };
+            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
+            ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
+            ManagedHsmProperties.TenantId = TenantIdGuid;
         }
     }
 }

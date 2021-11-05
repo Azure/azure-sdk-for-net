@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageAccountType">Specifies the storage account type
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS',
-        /// 'UltraSSD_LRS'</param>
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS',
+        /// 'Premium_ZRS', 'StandardSSD_ZRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed image disk.</param>
         public ImageOSDisk(OperatingSystemTypes osType, OperatingSystemStateTypes osState, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))

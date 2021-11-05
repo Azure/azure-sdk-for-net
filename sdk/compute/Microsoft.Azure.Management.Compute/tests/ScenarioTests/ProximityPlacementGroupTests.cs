@@ -274,7 +274,7 @@ namespace Compute.Tests
             ValidateProximityPlacementGroup(expectedProximityPlacementGroup, outProximityPlacementGroup, ppgName);
 
             VirtualMachine inputVM;
-            VirtualMachine outVM = CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A0",
+            VirtualMachine outVM = CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A1_v2",
                 osDiskStorageAccountType: "Standard_LRS", dataDiskStorageAccountType: "Standard_LRS", writeAcceleratorEnabled: false, zones: null, ppgName: ppgName, diskEncryptionSetId: null);
 
             // Get and expect success.

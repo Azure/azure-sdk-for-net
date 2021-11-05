@@ -20,12 +20,12 @@ namespace Microsoft.Azure.EventHubs.Tests
             Task namespaceDeleteTask = null;
             Task storageDeleteTask = null;
 
-            if (TestUtility.WasEventHubsNamespaceCreated)
+            if (TestUtility.ShouldRemoveNamespaceAfterTestRunCompletion)
             {
                 namespaceDeleteTask = EventHubScope.DeleteNamespaceAsync(TestUtility.EventHubsNamespace);
             }
 
-            if (TestUtility.WasStorageAccountCreated)
+            if (TestUtility.ShouldRemoveStorageAfterTestRunCompletion)
             {
                 storageDeleteTask = EventHubScope.DeleteStorageAsync(TestUtility.StorageAccountName);
             }

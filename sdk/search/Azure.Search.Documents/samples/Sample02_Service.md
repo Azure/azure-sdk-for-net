@@ -66,7 +66,7 @@ string synonymMapPath = "countries.txt";
 SynonymMap synonyms;
 using (StreamReader file = File.OpenText(synonymMapPath))
 {
-synonyms = new SynonymMap(synonymMapName, file);
+    synonyms = new SynonymMap(synonymMapName, file);
 }
 
 await indexClient.CreateSynonymMapAsync(synonyms);
@@ -131,6 +131,28 @@ SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSo
 await indexerClient.CreateDataSourceConnectionAsync(dataSourceConnection);
 ```
 
+#### Create SearchClientOptions
+
+To control specific request behaviors such as timeouts and retries, you can create a client with options.
+
+```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_SearchClientOptions
+// Create SearchIndexerClient options
+SearchClientOptions options = new SearchClientOptions()
+{
+    Transport = new HttpClientTransport(new HttpClient()
+    {
+        // Increase timeout for each request to 5 minutes
+        Timeout = TimeSpan.FromMinutes(5)
+    });
+};
+
+// Increase retry attempts to 6
+options.Retry.MaxRetries = 6;
+
+// Create a new SearchIndexerClient with options
+indexerClient = new SearchIndexerClient(endpoint, credential, options);
+```
+
 ### Create a Skillset
 
 To provide French translations of descriptions, we'll define a [translation skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation) to translate from English.
@@ -183,7 +205,10 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
 {
     CognitiveServicesAccount =  new CognitiveServicesAccountKey(
-        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY"))
+        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
+    KnowledgeStore = new KnowledgeStore(
+        Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
+        new List<KnowledgeStoreProjection>()),
 };
 
 await indexerClient.CreateSkillsetAsync(skillset);
@@ -218,10 +243,9 @@ SearchIndexer indexer = new SearchIndexer(
     Parameters = new IndexingParameters
     {
         // Tell the indexer to parse each blob as a separate JSON document.
-        // See https://docs.microsoft.com/azure/search/search-howto-index-json-blobs for details.
-        Configuration =
+        IndexingParametersConfiguration = new IndexingParametersConfiguration
         {
-            ["parsingMode"] = "json"
+            ParsingMode = BlobIndexerParsingMode.Json
         }
     },
     SkillsetName = skillsetName
@@ -242,7 +266,6 @@ SearchClient searchClient = indexClient.GetSearchClient(indexName);
 
 // Query for hotels with an ocean view.
 SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>("ocean view");
-bool found = false;
 await foreach (SearchResult<Hotel> result in results.GetResultsAsync())
 {
     Hotel hotel = result.Document;

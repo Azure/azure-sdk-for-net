@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Option != null)
+            if (Optional.IsDefined(Option))
             {
                 writer.WritePropertyName("option");
-                writer.WriteStringValue(Option);
+                writer.WriteStringValue(Option.Value.ToString());
             }
-            if (Placement != null)
+            if (Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement");
                 writer.WriteStringValue(Placement.Value.ToString());
@@ -30,30 +30,32 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
-            string option = default;
-            DiffDiskPlacement? placement = default;
+            Optional<DiffDiskOptions> option = default;
+            Optional<DiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("option"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    option = property.Value.GetString();
+                    option = new DiffDiskOptions(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("placement"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     placement = new DiffDiskPlacement(property.Value.GetString());
                     continue;
                 }
             }
-            return new DiffDiskSettings(option, placement);
+            return new DiffDiskSettings(Optional.ToNullable(option), Optional.ToNullable(placement));
         }
     }
 }

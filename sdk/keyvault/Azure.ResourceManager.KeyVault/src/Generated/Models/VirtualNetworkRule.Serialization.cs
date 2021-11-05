@@ -17,12 +17,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            {
+                writer.WritePropertyName("ignoreMissingVnetServiceEndpoint");
+                writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
             string id = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,8 +36,18 @@ namespace Azure.ResourceManager.KeyVault.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("ignoreMissingVnetServiceEndpoint"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VirtualNetworkRule(id);
+            return new VirtualNetworkRule(id, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

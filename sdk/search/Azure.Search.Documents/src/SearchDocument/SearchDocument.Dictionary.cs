@@ -32,13 +32,13 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public ICollection<string> Keys => _values.Keys;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IDictionary{TKey, TValue}.Values" />
         ICollection<object> IDictionary<string, object>.Values => _values.Values;
 
         /// <inheritdoc />
         public int Count => _values.Count;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly" />
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _values.IsReadOnly;
 
         /// <inheritdoc />
@@ -47,15 +47,15 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public bool ContainsKey(string key) => _values.ContainsKey(key);
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add" />
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) =>
             SetValue(item.Key, item.Value);
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains" />
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) =>
             _values.Contains(item);
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo" />
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) =>
             _values.CopyTo(array, arrayIndex);
 
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public bool Remove(string key) => _values.Remove(key);
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove" />
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) =>
             _values.Remove(item);
 

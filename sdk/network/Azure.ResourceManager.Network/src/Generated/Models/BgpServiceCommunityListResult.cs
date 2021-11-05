@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceCommunity API service call. </summary>
-    public partial class BgpServiceCommunityListResult
+    internal partial class BgpServiceCommunityListResult
     {
         /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>
         internal BgpServiceCommunityListResult()
         {
+            Value = new ChangeTrackingList<BgpServiceCommunity>();
         }
 
         /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>

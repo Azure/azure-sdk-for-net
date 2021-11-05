@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Object to define the number of days after last modification.
+    /// Object to define the number of days after object last modification Or
+    /// last access. Properties daysAfterModificationGreaterThan and
+    /// daysAfterLastAccessTimeGreaterThan are mutually exclusive.
     /// </summary>
     public partial class DateAfterModification
     {
@@ -32,9 +34,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="daysAfterModificationGreaterThan">Value indicating the
         /// age in days after last modification</param>
-        public DateAfterModification(double daysAfterModificationGreaterThan)
+        /// <param name="daysAfterLastAccessTimeGreaterThan">Value indicating
+        /// the age in days after last blob access. This property can only be
+        /// used in conjunction with last access time tracking policy</param>
+        public DateAfterModification(double? daysAfterModificationGreaterThan = default(double?), double? daysAfterLastAccessTimeGreaterThan = default(double?))
         {
             DaysAfterModificationGreaterThan = daysAfterModificationGreaterThan;
+            DaysAfterLastAccessTimeGreaterThan = daysAfterLastAccessTimeGreaterThan;
             CustomInit();
         }
 
@@ -48,7 +54,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// modification
         /// </summary>
         [JsonProperty(PropertyName = "daysAfterModificationGreaterThan")]
-        public double DaysAfterModificationGreaterThan { get; set; }
+        public double? DaysAfterModificationGreaterThan { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating the age in days after last blob
+        /// access. This property can only be used in conjunction with last
+        /// access time tracking policy
+        /// </summary>
+        [JsonProperty(PropertyName = "daysAfterLastAccessTimeGreaterThan")]
+        public double? DaysAfterLastAccessTimeGreaterThan { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,13 +72,27 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DaysAfterModificationGreaterThan < 0)
+            if (DaysAfterModificationGreaterThan != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterModificationGreaterThan", 0);
+                if (DaysAfterModificationGreaterThan < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterModificationGreaterThan", 0);
+                }
+                if (DaysAfterModificationGreaterThan % 1 != 0)
+                {
+                    throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterModificationGreaterThan", 1);
+                }
             }
-            if (DaysAfterModificationGreaterThan % 1 != 0)
+            if (DaysAfterLastAccessTimeGreaterThan != null)
             {
-                throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterModificationGreaterThan", 1);
+                if (DaysAfterLastAccessTimeGreaterThan < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterLastAccessTimeGreaterThan", 0);
+                }
+                if (DaysAfterLastAccessTimeGreaterThan % 1 != 0)
+                {
+                    throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterLastAccessTimeGreaterThan", 1);
+                }
             }
         }
     }

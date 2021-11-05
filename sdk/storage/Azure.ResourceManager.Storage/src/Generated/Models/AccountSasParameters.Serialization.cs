@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(ResourceTypes.ToString());
             writer.WritePropertyName("signedPermission");
             writer.WriteStringValue(Permissions.ToString());
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp");
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols != null)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol");
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartTime != null)
+            if (Optional.IsDefined(SharedAccessStartTime))
             {
                 writer.WritePropertyName("signedStart");
                 writer.WriteStringValue(SharedAccessStartTime.Value, "O");
             }
             writer.WritePropertyName("signedExpiry");
             writer.WriteStringValue(SharedAccessExpiryTime, "O");
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign");
                 writer.WriteStringValue(KeyToSign);

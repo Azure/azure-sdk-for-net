@@ -71,6 +71,55 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Cancel a single trigger instance by runId.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            public static void Cancel(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, string triggerName, string runId)
+            {
+                operations.CancelAsync(resourceGroupName, factoryName, triggerName, runId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancel a single trigger instance by runId.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelAsync(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, runId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Query trigger runs.
             /// </summary>
             /// <param name='operations'>

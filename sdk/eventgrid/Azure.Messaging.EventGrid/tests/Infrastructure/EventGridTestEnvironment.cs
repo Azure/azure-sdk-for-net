@@ -8,10 +8,6 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridTestEnvironment : TestEnvironment
     {
-        public EventGridTestEnvironment() : base("eventgrid")
-        {
-        }
-
         public const string TopicKeyEnvironmentVariableName = "EVENT_GRID_TOPIC_KEY";
         public const string TopicEndpointEnvironmentVariableName = "EVENT_GRID_TOPIC_ENDPOINT";
 
@@ -24,17 +20,16 @@ namespace Azure.Messaging.EventGrid.Tests
         public const string CustomEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
         public const string CustomEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
 
-
         public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
-        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName);
+        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
 
         public string DomainHost => GetRecordedVariable(DomainEndpointEnvironmentVariableName);
-        public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName);
+        public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
 
         public string CloudEventTopicHost => GetRecordedVariable(CloudEventTopicEndpointEnvironmentVariableName);
-        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName);
+        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
 
         public string CustomEventTopicHost => GetRecordedVariable(CustomEventTopicEndpointEnvironmentVariableName);
-        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName);
+        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
     }
 }

@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListHubVirtualNetworkConnectionsResult
+    internal partial class ListHubVirtualNetworkConnectionsResult
     {
         internal static ListHubVirtualNetworkConnectionsResult DeserializeListHubVirtualNetworkConnectionsResult(JsonElement element)
         {
-            IReadOnlyList<HubVirtualNetworkConnection> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<HubVirtualNetworkConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HubVirtualNetworkConnection> array = new List<HubVirtualNetworkConnection>();
+                    List<HubVirtualNetworkConnectionData> array = new List<HubVirtualNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(item));
-                        }
+                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListHubVirtualNetworkConnectionsResult(value, nextLink);
+            return new ListHubVirtualNetworkConnectionsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

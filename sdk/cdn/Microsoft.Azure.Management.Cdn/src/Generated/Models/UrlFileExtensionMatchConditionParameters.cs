@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="operatorProperty">Describes operator to be matched.
         /// Possible values include: 'Any', 'Equal', 'Contains', 'BeginsWith',
         /// 'EndsWith', 'LessThan', 'LessThanOrEqual', 'GreaterThan',
-        /// 'GreaterThanOrEqual'</param>
-        /// <param name="matchValues">The match value for the condition of the
-        /// delivery rule</param>
+        /// 'GreaterThanOrEqual', 'RegEx'</param>
         /// <param name="negateCondition">Describes if this is negate condition
         /// or not</param>
+        /// <param name="matchValues">The match value for the condition of the
+        /// delivery rule</param>
         /// <param name="transforms">List of transforms</param>
-        public UrlFileExtensionMatchConditionParameters(string operatorProperty, IList<string> matchValues, bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
+        public UrlFileExtensionMatchConditionParameters(string operatorProperty, bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>), IList<string> transforms = default(IList<string>))
         {
             OperatorProperty = operatorProperty;
             NegateCondition = negateCondition;
@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets or sets describes operator to be matched. Possible values
         /// include: 'Any', 'Equal', 'Contains', 'BeginsWith', 'EndsWith',
-        /// 'LessThan', 'LessThanOrEqual', 'GreaterThan', 'GreaterThanOrEqual'
+        /// 'LessThan', 'LessThanOrEqual', 'GreaterThan', 'GreaterThanOrEqual',
+        /// 'RegEx'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }
@@ -107,10 +108,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (OperatorProperty == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
-            }
-            if (MatchValues == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MatchValues");
             }
         }
     }

@@ -21,6 +21,9 @@ namespace Microsoft.Azure.Management.Batch
     using System.Net;
     using System.Net.Http;
 
+    /// <summary>
+    /// Batch Client
+    /// </summary>
     public partial class BatchManagementClient : ServiceClient<BatchManagementClient>, IBatchManagementClient, IAzureClient
     {
         /// <summary>
@@ -368,7 +371,7 @@ namespace Microsoft.Azure.Management.Batch
             PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             Pool = new PoolOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-05-01";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

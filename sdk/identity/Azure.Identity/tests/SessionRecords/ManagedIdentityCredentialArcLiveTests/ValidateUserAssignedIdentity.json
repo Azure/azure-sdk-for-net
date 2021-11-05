@@ -1,0 +1,14 @@
+{
+  "Entries": [],
+  "Variables": {
+    "IDENTITYTEST_ARCTEST_ENABLE": "true",
+    "IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT": "https://aiimdssavault.vault.azure.net/",
+    "IDENTITY_ENDPOINT": "http://localhost:40342/metadata/identity/oauth2/token",
+    "IDENTITY_HEADER": null,
+    "IDENTITY_SERVER_THUMBPRINT": null,
+    "IMDS_ENDPOINT": "http://localhost:40342",
+    "MSI_ENDPOINT": null,
+    "MSI_SECRET": null,
+    "RandomSeed": "443563876"
+  }
+}

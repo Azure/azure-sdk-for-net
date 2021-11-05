@@ -39,17 +39,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// events to be queried.</param>
         /// <param name="affectedObjectFriendlyName">The affected object name
         /// of the events to be queried.</param>
+        /// <param name="affectedObjectCorrelationId">The affected object
+        /// correlationId for the events to be queried.</param>
         /// <param name="startTime">The start time of the time range within
         /// which the events are to be queried.</param>
         /// <param name="endTime">The end time of the time range within which
         /// the events are to be queried.</param>
-        public EventQueryParameter(string eventCode = default(string), string severity = default(string), string eventType = default(string), string fabricName = default(string), string affectedObjectFriendlyName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+        public EventQueryParameter(string eventCode = default(string), string severity = default(string), string eventType = default(string), string fabricName = default(string), string affectedObjectFriendlyName = default(string), string affectedObjectCorrelationId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
         {
             EventCode = eventCode;
             Severity = severity;
             EventType = eventType;
             FabricName = fabricName;
             AffectedObjectFriendlyName = affectedObjectFriendlyName;
+            AffectedObjectCorrelationId = affectedObjectCorrelationId;
             StartTime = startTime;
             EndTime = endTime;
             CustomInit();
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "affectedObjectFriendlyName")]
         public string AffectedObjectFriendlyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the affected object correlationId for the events to be
+        /// queried.
+        /// </summary>
+        [JsonProperty(PropertyName = "affectedObjectCorrelationId")]
+        public string AffectedObjectCorrelationId { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range within which the

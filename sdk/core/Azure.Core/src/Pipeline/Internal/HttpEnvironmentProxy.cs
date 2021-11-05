@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
-
     internal sealed partial class HttpEnvironmentProxy : IWebProxy
     {
         private const string EnvAllProxyUC = "ALL_PROXY";
@@ -139,7 +138,7 @@ namespace Azure.Core.Pipeline
                 catch { };
 
                 value = value.Substring(separatorIndex + 1);
-                separatorIndex = auth.IndexOf(':');
+                separatorIndex = auth.IndexOfOrdinal(':');
                 if (separatorIndex == -1)
                 {
                     user = auth;
@@ -151,7 +150,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            int ipV6AddressEnd = value.IndexOf(']');
+            int ipV6AddressEnd = value.IndexOfOrdinal(']');
             separatorIndex = value.LastIndexOf(':');
             string host;
             // No ':' or it is part of IPv6 address.
@@ -221,7 +220,6 @@ namespace Azure.Core.Pipeline
                         {
                             return true;
                         }
-
                     }
                     else
                     {

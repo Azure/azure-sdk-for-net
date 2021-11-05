@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the MetricSpecification class.
         /// </summary>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), bool? supportsInstanceLevelAggregation = default(bool?), bool? enableRegionalMdmAccount = default(bool?), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), string metricFilterPattern = default(string), bool? fillGapWithZero = default(bool?), bool? isInternal = default(bool?), IList<Dimension> dimensions = default(IList<Dimension>), string category = default(string), IList<MetricAvailability> availabilities = default(IList<MetricAvailability>), IList<string> supportedTimeGrainTypes = default(IList<string>))
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), bool? supportsInstanceLevelAggregation = default(bool?), bool? enableRegionalMdmAccount = default(bool?), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), string metricFilterPattern = default(string), bool? fillGapWithZero = default(bool?), bool? isInternal = default(bool?), IList<Dimension> dimensions = default(IList<Dimension>), string category = default(string), IList<MetricAvailability> availabilities = default(IList<MetricAvailability>), IList<string> supportedTimeGrainTypes = default(IList<string>), IList<string> supportedAggregationTypes = default(IList<string>))
         {
             Name = name;
             DisplayName = displayName;
@@ -49,6 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Category = category;
             Availabilities = availabilities;
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
+            SupportedAggregationTypes = supportedAggregationTypes;
             CustomInit();
         }
 
@@ -136,6 +137,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedTimeGrainTypes")]
         public IList<string> SupportedTimeGrainTypes { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAggregationTypes")]
+        public IList<string> SupportedAggregationTypes { get; set; }
 
     }
 }

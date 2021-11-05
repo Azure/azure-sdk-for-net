@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An array of private link service id that can be linked to a private end point with auto approved. </summary>
-    public partial class AutoApprovedPrivateLinkServicesResult
+    internal partial class AutoApprovedPrivateLinkServicesResult
     {
         /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>
         internal AutoApprovedPrivateLinkServicesResult()
         {
+            Value = new ChangeTrackingList<AutoApprovedPrivateLinkService>();
         }
 
         /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>

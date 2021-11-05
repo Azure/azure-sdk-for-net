@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of OutboundRule. </summary>
         public OutboundRule()
         {
+            FrontendIPConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of OutboundRule. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        internal OutboundRule(string id, string name, string etag, string type, int? allocatedOutboundPorts, IList<SubResource> frontendIPConfigurations, SubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
+        internal OutboundRule(string id, string name, string etag, string type, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -52,9 +55,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The number of outbound ports to be used for NAT. </summary>
         public int? AllocatedOutboundPorts { get; set; }
         /// <summary> The Frontend IP addresses of the load balancer. </summary>
-        public IList<SubResource> FrontendIPConfigurations { get; set; }
+        public IList<WritableSubResource> FrontendIPConfigurations { get; }
         /// <summary> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        public SubResource BackendAddressPool { get; set; }
+        public WritableSubResource BackendAddressPool { get; set; }
         /// <summary> The provisioning state of the outbound rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The protocol for the outbound rule in load balancer. </summary>

@@ -7,11 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Key Vault resource. </summary>
-    public partial class Resource
+    public partial class Resource : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()
@@ -20,29 +22,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Fully qualified identifier of the key vault resource. </param>
-        /// <param name="name"> Name of the key vault resource. </param>
-        /// <param name="type"> Resource type of the key vault resource. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal Resource(string id, string name, string type, string location, IDictionary<string, string> tags)
+        internal Resource(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags) : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             Location = location;
             Tags = tags;
         }
 
-        /// <summary> Fully qualified identifier of the key vault resource. </summary>
-        public string Id { get; }
-        /// <summary> Name of the key vault resource. </summary>
-        public string Name { get; }
-        /// <summary> Resource type of the key vault resource. </summary>
-        public string Type { get; }
         /// <summary> Azure location of the key vault resource. </summary>
         public string Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

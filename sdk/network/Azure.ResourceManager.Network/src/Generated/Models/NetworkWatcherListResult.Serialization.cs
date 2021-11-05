@@ -8,39 +8,34 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkWatcherListResult
+    internal partial class NetworkWatcherListResult
     {
         internal static NetworkWatcherListResult DeserializeNetworkWatcherListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkWatcher> value = default;
+            Optional<IReadOnlyList<NetworkWatcherData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkWatcher> array = new List<NetworkWatcher>();
+                    List<NetworkWatcherData> array = new List<NetworkWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkWatcher.DeserializeNetworkWatcher(item));
-                        }
+                        array.Add(NetworkWatcherData.DeserializeNetworkWatcherData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new NetworkWatcherListResult(value);
+            return new NetworkWatcherListResult(Optional.ToList(value));
         }
     }
 }

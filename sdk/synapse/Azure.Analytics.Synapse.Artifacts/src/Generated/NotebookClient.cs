@@ -21,60 +21,43 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal NotebookRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of NotebookClient for mocking. </summary>
         protected NotebookClient()
         {
         }
+
+        /// <summary> Initializes a new instance of NotebookClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public NotebookClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new NotebookRestClient(_clientDiagnostics, _pipeline, endpoint);
+        }
+
         /// <summary> Initializes a new instance of NotebookClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal NotebookClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal NotebookClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            RestClient = new NotebookRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            RestClient = new NotebookRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-        }
-
-        /// <summary> Creates or updates a Note Book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="notebook"> Note book resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotebookResource>> CreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.CreateOrUpdateNotebook");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateNotebookAsync(notebookName, notebook, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Note Book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="notebook"> Note book resource definition. </param>
-        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotebookResource> CreateOrUpdateNotebook(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.CreateOrUpdateNotebook");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateNotebook(notebookName, notebook, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Gets a Note Book. </summary>
@@ -107,42 +90,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetNotebook(notebookName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Note book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteNotebookAsync(string notebookName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.DeleteNotebook");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteNotebookAsync(notebookName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a Note book. </summary>
-        /// <param name="notebookName"> The notebook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteNotebook(string notebookName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NotebookClient.DeleteNotebook");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteNotebook(notebookName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -297,6 +244,178 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a Note Book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="notebook"> Note book resource definition. </param>
+        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
+        public virtual async Task<NotebookCreateOrUpdateNotebookOperation> StartCreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (notebook == null)
+            {
+                throw new ArgumentNullException(nameof(notebook));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartCreateOrUpdateNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateNotebookAsync(notebookName, notebook, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new NotebookCreateOrUpdateNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateNotebookRequest(notebookName, notebook, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a Note Book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="notebook"> Note book resource definition. </param>
+        /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
+        public virtual NotebookCreateOrUpdateNotebookOperation StartCreateOrUpdateNotebook(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (notebook == null)
+            {
+                throw new ArgumentNullException(nameof(notebook));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartCreateOrUpdateNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateNotebook(notebookName, notebook, ifMatch, cancellationToken);
+                return new NotebookCreateOrUpdateNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateNotebookRequest(notebookName, notebook, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Note book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> is null. </exception>
+        public virtual async Task<NotebookDeleteNotebookOperation> StartDeleteNotebookAsync(string notebookName, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartDeleteNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteNotebookAsync(notebookName, cancellationToken).ConfigureAwait(false);
+                return new NotebookDeleteNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteNotebookRequest(notebookName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a Note book. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> is null. </exception>
+        public virtual NotebookDeleteNotebookOperation StartDeleteNotebook(string notebookName, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartDeleteNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteNotebook(notebookName, cancellationToken);
+                return new NotebookDeleteNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteNotebookRequest(notebookName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a notebook. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<NotebookRenameNotebookOperation> StartRenameNotebookAsync(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameNotebookAsync(notebookName, request, cancellationToken).ConfigureAwait(false);
+                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a notebook. </summary>
+        /// <param name="notebookName"> The notebook name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="request"/> is null. </exception>
+        public virtual NotebookRenameNotebookOperation StartRenameNotebook(string notebookName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (notebookName == null)
+            {
+                throw new ArgumentNullException(nameof(notebookName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("NotebookClient.StartRenameNotebook");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameNotebook(notebookName, request, cancellationToken);
+                return new NotebookRenameNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameNotebookRequest(notebookName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

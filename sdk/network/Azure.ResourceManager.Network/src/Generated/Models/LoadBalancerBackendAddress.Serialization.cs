@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,27 +16,32 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork");
-                writer.WriteObjectValue(VirtualNetwork);
+                JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (IpAddress != null)
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet");
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
             }
-            if (NetworkInterfaceIPConfiguration != null)
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
-                writer.WritePropertyName("networkInterfaceIPConfiguration");
-                writer.WriteObjectValue(NetworkInterfaceIPConfiguration);
+                writer.WritePropertyName("loadBalancerFrontendIPConfiguration");
+                JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -43,40 +49,50 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
         {
-            string name = default;
-            VirtualNetwork virtualNetwork = default;
-            string ipAddress = default;
-            NetworkInterfaceIPConfiguration networkInterfaceIPConfiguration = default;
+            Optional<string> name = default;
+            Optional<WritableSubResource> virtualNetwork = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<string> ipAddress = default;
+            Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
+            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("virtualNetwork"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetwork = VirtualNetwork.DeserializeVirtualNetwork(property0.Value);
+                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
+                        if (property0.NameEquals("subnet"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
@@ -84,16 +100,27 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkInterfaceIPConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property0.Value);
+                            networkInterfaceIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
+                        if (property0.NameEquals("loadBalancerFrontendIPConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddress(name, virtualNetwork, ipAddress, networkInterfaceIPConfiguration);
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration);
         }
     }
 }

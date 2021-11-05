@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The types of conditions for a multi resource alert.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MultiMetricCriteria")]
     public partial class MultiMetricCriteria
     {
         /// <summary>
@@ -35,13 +34,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="timeAggregation">the criteria time aggregation
-        /// types.</param>
+        /// <param name="timeAggregation">the criteria time aggregation types.
+        /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
+        /// 'Total'</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MultiMetricCriteria(string name, string metricName, object timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        /// <param name="skipMetricValidation">Allows creating an alert rule on
+        /// a custom metric that isn't yet emitted, by causing the metric
+        /// validation to be skipped.</param>
+        public MultiMetricCriteria(string name, string metricName, string timeAggregation, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             MetricNamespace = metricNamespace;
             TimeAggregation = timeAggregation;
             Dimensions = dimensions;
+            SkipMetricValidation = skipMetricValidation;
             CustomInit();
         }
 
@@ -83,16 +87,24 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string MetricNamespace { get; set; }
 
         /// <summary>
-        /// Gets or sets the criteria time aggregation types.
+        /// Gets or sets the criteria time aggregation types. Possible values
+        /// include: 'Average', 'Count', 'Minimum', 'Maximum', 'Total'
         /// </summary>
         [JsonProperty(PropertyName = "timeAggregation")]
-        public object TimeAggregation { get; set; }
+        public string TimeAggregation { get; set; }
 
         /// <summary>
         /// Gets or sets list of dimension conditions.
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<MetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets allows creating an alert rule on a custom metric that
+        /// isn't yet emitted, by causing the metric validation to be skipped.
+        /// </summary>
+        [JsonProperty(PropertyName = "skipMetricValidation")]
+        public bool? SkipMetricValidation { get; set; }
 
         /// <summary>
         /// Validate the object.

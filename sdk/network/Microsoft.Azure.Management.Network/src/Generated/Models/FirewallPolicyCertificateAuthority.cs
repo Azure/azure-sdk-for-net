@@ -10,15 +10,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Trusted Root certificates properties for tls.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class FirewallPolicyCertificateAuthority
     {
         /// <summary>
@@ -54,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets secret Id of (base-64 encoded unencrypted pfx)
         /// 'Secret' or 'Certificate' object stored in KeyVault.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.keyVaultSecretId")]
+        [JsonProperty(PropertyName = "keyVaultSecretId")]
         public string KeyVaultSecretId { get; set; }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// API version.
+        /// Api Version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.ResourceGraph
         IOperations Operations { get; }
 
         /// <summary>
-        /// Queries the resources managed by Azure Resource Manager for all
-        /// subscriptions specified in the request.
+        /// Queries the resources managed by Azure Resource Manager for scopes
+        /// specified in the request.
         /// </summary>
         /// <param name='query'>
         /// Request specifying query and its options.

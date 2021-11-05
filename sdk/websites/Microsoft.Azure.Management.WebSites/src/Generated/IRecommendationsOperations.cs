@@ -142,10 +142,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<Recommendation>>> ListHistoryForHostingEnvironmentWithHttpMessagesAsync(string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all recommendations for an app.
+        /// Get all recommendations for a hosting environment.
         /// </summary>
         /// <remarks>
-        /// Description for Get all recommendations for an app.
+        /// Description for Get all recommendations for a hosting environment.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -555,10 +555,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<Recommendation>>> ListHistoryForHostingEnvironmentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all recommendations for an app.
+        /// Get all recommendations for a hosting environment.
         /// </summary>
         /// <remarks>
-        /// Description for Get all recommendations for an app.
+        /// Description for Get all recommendations for a hosting environment.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

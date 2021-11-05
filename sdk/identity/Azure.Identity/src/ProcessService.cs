@@ -30,8 +30,6 @@ namespace Azure.Identity
 
             public bool HasExited => _process.HasExited;
             public int ExitCode => _process.ExitCode;
-            public StreamReader StandardOutput => _process.StandardOutput;
-            public StreamReader StandardError => _process.StandardError;
 
             public ProcessStartInfo StartInfo
             {
@@ -45,8 +43,22 @@ namespace Azure.Identity
                 remove => _process.Exited -= value;
             }
 
-            public void Start() => _process.Start();
+            public event DataReceivedEventHandler OutputDataReceived
+            {
+                add => _process.OutputDataReceived += value;
+                remove => _process.OutputDataReceived -= value;
+            }
+
+            public event DataReceivedEventHandler ErrorDataReceived
+            {
+                add => _process.ErrorDataReceived += value;
+                remove => _process.ErrorDataReceived -= value;
+            }
+
+            public bool Start() => _process.Start();
             public void Kill() => _process.Kill();
+            public void BeginOutputReadLine() => _process.BeginOutputReadLine();
+            public void BeginErrorReadLine() => _process.BeginErrorReadLine();
             public void Dispose() => _process.Dispose();
         }
     }

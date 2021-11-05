@@ -3,83 +3,77 @@
 
 using System;
 using Azure.Core;
+using Moq;
 
 namespace Azure.Identity.Tests.Mock
 {
     internal class MockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
     {
-        public MockDefaultAzureCredentialFactory(CredentialPipeline pipeline) : base(pipeline) {}
+        public MockDefaultAzureCredentialFactory(CredentialPipeline pipeline) : base(pipeline) { }
 
-        public Action<TokenCredential> OnCreateEnvironmentCredential { get; set; }
-        public Action<TokenCredential> OnCreateAzureCliCredential { get; set; }
-        public Action<string, TokenCredential> OnCreateManagedIdentityCredential { get; set; }
-        public Action<string, string, TokenCredential> OnCreateSharedTokenCacheCredential { get; set; }
-        public Action<string, TokenCredential> OnCreateInteractiveBrowserCredential { get; set; }
-        public Action<string, TokenCredential> OnCreateVisualStudioCredential { get; set; }
-        public Action<string, TokenCredential> OnCreateVisualStudioCodeCredential { get; set; }
+        public Action<Mock<EnvironmentCredential>> OnCreateEnvironmentCredential { get; set; }
+        private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
+        public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
+        private Mock<AzureCliCredential> mockAzureCliCredential = new();
+        public Action<string, Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
+        private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
+        public Action<string, string, Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
+        private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
+        public Action<string, string, Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
+        private Mock<InteractiveBrowserCredential> mockInteractiveBrowserCredential = new();
+        public Action<string, Mock<VisualStudioCredential>> OnCreateVisualStudioCredential { get; set; }
+        private Mock<VisualStudioCredential> mockVisualStudioCredential = new();
+        public Action<string, Mock<VisualStudioCodeCredential>> OnCreateVisualStudioCodeCredential { get; set; }
+        private Mock<VisualStudioCodeCredential> mockVisualStudioCodeCredential = new();
+        public Action<Mock<AzurePowerShellCredential>> OnCreateAzurePowerShellCredential { get; set; }
+        private Mock<AzurePowerShellCredential> mockAzurePowershellCredential = new();
 
         public override TokenCredential CreateEnvironmentCredential()
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateEnvironmentCredential?.Invoke(cred);
-
-            return cred;
+            OnCreateEnvironmentCredential?.Invoke(mockEnvironmentCredential);
+            return mockEnvironmentCredential.Object;
         }
 
         public override TokenCredential CreateManagedIdentityCredential(string clientId)
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateManagedIdentityCredential?.Invoke(clientId, cred);
-
-            return cred;
+            OnCreateManagedIdentityCredential?.Invoke(clientId, mockManagedIdentityCredential);
+            return mockManagedIdentityCredential.Object;
         }
 
         public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, cred);
-
-            return cred;
+            OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, mockSharedTokenCacheCredential);
+            return mockSharedTokenCacheCredential.Object;
         }
 
         public override TokenCredential CreateAzureCliCredential()
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateAzureCliCredential?.Invoke(cred);
-
-            return cred;
+            OnCreateAzureCliCredential?.Invoke(mockAzureCliCredential);
+            return mockAzureCliCredential.Object;
         }
 
-        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
+        public override TokenCredential CreateAzurePowerShellCredential()
         {
-            TokenCredential cred = new MockTokenCredential();
+            OnCreateAzurePowerShellCredential?.Invoke(mockAzurePowershellCredential);
+            return mockAzurePowershellCredential.Object;
+        }
 
-            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, cred);
-
-            return cred;
+        public override TokenCredential CreateInteractiveBrowserCredential(string tenantId, string clientId)
+        {
+            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, clientId, mockInteractiveBrowserCredential);
+            return mockInteractiveBrowserCredential.Object;
         }
 
         public override TokenCredential CreateVisualStudioCredential(string tenantId)
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateVisualStudioCredential?.Invoke(tenantId, cred);
-
-            return cred;
+            OnCreateVisualStudioCredential?.Invoke(tenantId, mockVisualStudioCredential);
+            return mockVisualStudioCredential.Object;
         }
 
         public override TokenCredential CreateVisualStudioCodeCredential(string tenantId)
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateVisualStudioCodeCredential?.Invoke(tenantId, cred);
-
-            return cred;
+            OnCreateVisualStudioCodeCredential?.Invoke(tenantId, mockVisualStudioCodeCredential);
+            return mockVisualStudioCodeCredential.Object;
         }
     }
-
 }

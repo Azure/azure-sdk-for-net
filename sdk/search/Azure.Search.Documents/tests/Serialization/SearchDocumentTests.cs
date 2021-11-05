@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text.Json;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -544,47 +542,45 @@ namespace Azure.Search.Documents.Tests
                         new DateTimeOffset(2017, 1, 13, 14, 3, 0, 0, TimeSpan.FromHours(-8)).ToUniversalTime()
                     }));
 
-#if EXPERIMENTAL_SPATIAL
-        [TestCaseSource(nameof(PointValues))]
-        public void GetPoints(TestValue<PointGeometry> test) => test.Check((d, n) => d.GetPoint(n));
-        private static TestValue<PointGeometry>[] PointValues =>
+        [TestCaseSource(nameof(GeoPointValues))]
+        public void GetGeoPoints(TestValue<GeoPoint> test) => test.Check((d, n) => d.GetPoint(n));
+        private static TestValue<GeoPoint>[] GeoPointValues =>
             new[]
             {
-                TestValue<PointGeometry>.Exact(
+                TestValue<GeoPoint>.Exact(
                     "{\"type\":\"Point\",\"coordinates\":[0, 0]}",
-                    new PointGeometry(new GeometryPosition(0, 0))),
-                TestValue<PointGeometry>.Exact(
+                    new GeoPoint(new GeoPosition(0, 0))),
+                TestValue<GeoPoint>.Exact(
                     "{\"type\":\"Point\",\"coordinates\":[2, 3]}",
-                    new PointGeometry(new GeometryPosition(2, 3))),
-                TestValue<PointGeometry>.Exact(
+                    new GeoPoint(new GeoPosition(2, 3))),
+                TestValue<GeoPoint>.Exact(
                     "{\"type\":\"Point\",\"coordinates\":[2, 3, 5]}",
-                    new PointGeometry(new GeometryPosition(2, 3, 5))),
-                TestValue<PointGeometry>.Exact("null", null),
+                    new GeoPoint(new GeoPosition(2, 3, 5))),
+                TestValue<GeoPoint>.Exact("null", null),
 
-                TestValue<PointGeometry>.Fail("true"),
-                TestValue<PointGeometry>.Fail("false"),
-                TestValue<PointGeometry>.Fail("{}"),
-                TestValue<PointGeometry>.Fail("[]"),
-                TestValue<PointGeometry>.Fail("0"),
-                TestValue<PointGeometry>.Fail("1"),
-                TestValue<PointGeometry>.Fail("0.5")
+                TestValue<GeoPoint>.Fail("true"),
+                TestValue<GeoPoint>.Fail("false"),
+                TestValue<GeoPoint>.Fail("{}"),
+                TestValue<GeoPoint>.Fail("[]"),
+                TestValue<GeoPoint>.Fail("0"),
+                TestValue<GeoPoint>.Fail("1"),
+                TestValue<GeoPoint>.Fail("0.5")
             };
 
-        [TestCaseSource(nameof(PointCollectionValues))]
-        public void GetPointCollections(TestValue<IReadOnlyList<PointGeometry>> test) => test.Check((d, n) => d.GetPointCollection(n));
-        private static TestValue<IReadOnlyList<PointGeometry>>[] PointCollectionValues =>
+        [TestCaseSource(nameof(GeoPointCollectionValues))]
+        public void GetGeoPointCollections(TestValue<IReadOnlyList<GeoPoint>> test) => test.Check((d, n) => d.GetPointCollection(n));
+        private static TestValue<IReadOnlyList<GeoPoint>>[] GeoPointCollectionValues =>
             GetCollectionValues(
-                TestValue<IReadOnlyList<PointGeometry>>.Exact(
+                TestValue<IReadOnlyList<GeoPoint>>.Exact(
                     "[{\"type\":\"Point\",\"coordinates\":[0, 1]}]",
-                    new[] { new PointGeometry(new GeometryPosition(0, 1)) }),
-                TestValue<IReadOnlyList<PointGeometry>>.Exact(
+                    new[] { new GeoPoint(new GeoPosition(0, 1)) }),
+                TestValue<IReadOnlyList<GeoPoint>>.Exact(
                     "[{\"type\":\"Point\",\"coordinates\":[0, 1]},{\"type\":\"Point\",\"coordinates\":[2, 3]}]",
                     new[]
                     {
-                        new PointGeometry(new GeometryPosition(0, 1)),
-                        new PointGeometry(new GeometryPosition(2, 3))
+                        new GeoPoint(new GeoPosition(0, 1)),
+                        new GeoPoint(new GeoPosition(2, 3))
                     }));
-#endif
 
         public class Complex
         {

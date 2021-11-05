@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
         /// <param name="name"> The name of the input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InputFieldMappingEntry(string name)
         {
             if (name == null)
@@ -23,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
-            Inputs = new List<InputFieldMappingEntry>();
+            Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
@@ -36,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             Source = source;
             SourceContext = sourceContext;
-            Inputs = inputs ?? new List<InputFieldMappingEntry>();
+            Inputs = inputs;
         }
 
         /// <summary> The name of the input. </summary>

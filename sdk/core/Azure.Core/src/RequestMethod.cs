@@ -130,7 +130,7 @@ namespace Azure.Core
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return Method?.GetHashCode() ?? 0;
+            return Method.GetHashCodeOrdinal();
         }
 
         /// <summary>

@@ -8,10 +8,10 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow preview data. </summary>
-    internal partial class DataFlowDebugPreviewDataRequest
+    public partial class DataFlowDebugPreviewDataRequest
     {
         /// <summary> Initializes a new instance of DataFlowDebugPreviewDataRequest. </summary>
-        internal DataFlowDebugPreviewDataRequest()
+        public DataFlowDebugPreviewDataRequest()
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
+        public string SessionId { get; set; }
         /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; }
+        public string DataFlowName { get; set; }
         /// <summary> The output stream name. </summary>
-        public string StreamName { get; }
+        public string StreamName { get; set; }
         /// <summary> The row limit for preview request. </summary>
-        public int? RowLimits { get; }
+        public int? RowLimits { get; set; }
     }
 }

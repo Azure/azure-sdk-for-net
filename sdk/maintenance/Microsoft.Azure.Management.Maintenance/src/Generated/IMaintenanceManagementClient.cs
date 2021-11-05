@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Maintenance
 
 
         /// <summary>
+        /// Gets the IPublicMaintenanceConfigurationsOperations.
+        /// </summary>
+        IPublicMaintenanceConfigurationsOperations PublicMaintenanceConfigurations { get; }
+
+        /// <summary>
         /// Gets the IApplyUpdatesOperations.
         /// </summary>
         IApplyUpdatesOperations ApplyUpdates { get; }
@@ -85,6 +90,21 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Gets the IMaintenanceConfigurationsOperations.
         /// </summary>
         IMaintenanceConfigurationsOperations MaintenanceConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IMaintenanceConfigurationsForResourceGroupOperations.
+        /// </summary>
+        IMaintenanceConfigurationsForResourceGroupOperations MaintenanceConfigurationsForResourceGroup { get; }
+
+        /// <summary>
+        /// Gets the IApplyUpdateForResourceGroupOperations.
+        /// </summary>
+        IApplyUpdateForResourceGroupOperations ApplyUpdateForResourceGroup { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationAssignmentsWithinSubscriptionOperations.
+        /// </summary>
+        IConfigurationAssignmentsWithinSubscriptionOperations ConfigurationAssignmentsWithinSubscription { get; }
 
         /// <summary>
         /// Gets the IOperations.

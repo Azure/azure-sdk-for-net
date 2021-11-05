@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The request parameters for scheduling a run.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("RunRequest")]
     public partial class RunRequest
     {
         /// <summary>

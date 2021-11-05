@@ -15,7 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="LexicalTokenizerName"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalTokenizerName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

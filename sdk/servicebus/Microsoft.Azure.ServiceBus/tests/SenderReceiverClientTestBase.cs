@@ -19,14 +19,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Active);
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
         }
 
-        internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
+        internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount, TimeSpan timeout)
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
-            Assert.Equal(receivedMessages.Count, messageCount);
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, timeout);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Active);
+            Assert.Equal(messageCount, receivedMessages.Count);
         }
 
         internal async Task PeekLockWithAbandonTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
@@ -101,11 +103,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Receive / Abandon deferred messages
             receivedMessages = await TestUtility.ReceiveDeferredMessagesAsync(messageReceiver, sequenceNumbers);
             Assert.True(receivedMessages.Count == 5);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Deferred);
             await TestUtility.DeferMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive Again and Check delivery count
             receivedMessages = await TestUtility.ReceiveDeferredMessagesAsync(messageReceiver, sequenceNumbers);
             var count = receivedMessages.Count(message => message.SystemProperties.DeliveryCount == 3);
+            TestUtility.VaidateMessageState(receivedMessages, MessageState.Deferred);
             Assert.True(count == receivedMessages.Count);
 
             // Complete messages
@@ -253,11 +257,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 async (message, token) =>
                 {
                     TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
-                    Interlocked.Increment(ref count);
                     if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
                     {
                         await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
                     }
+                    Interlocked.Increment(ref count);
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
@@ -275,6 +279,115 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(count == messageCount);
         }
 
+        internal async Task OnMessageAsyncUnregisterHandlerLongTimeoutTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+        {
+            var count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    await Task.Delay(TimeSpan.FromSeconds(8));
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            // UnregisterMessageHandlerAsync should wait up to the provided timeout to finish the message handling tasks
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(10)); 
+            Assert.True(count == maxConcurrentCalls);
+
+            // Reregister won't have any problems
+            count = 0;
+            var remainingMessageCount = messageCount - maxConcurrentCalls;
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == remainingMessageCount)
+                {
+                    TestUtility.Log($"All '{remainingMessageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == remainingMessageCount);
+        }
+
+        internal async Task OnMessageAsyncUnregisterHandlerShortTimeoutTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+        {
+            var count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    await Task.Delay(TimeSpan.FromSeconds(8));
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(2));
+            Assert.True(count == 0);
+
+            // Reregister won't have any problems
+            count = 0;
+            var remainingMessageCount = messageCount - maxConcurrentCalls;
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+            
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == remainingMessageCount)
+                {
+                    TestUtility.Log($"All '{remainingMessageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == remainingMessageCount);
+        }
+        
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
             IMessageSender messageSender,
             IMessageReceiver messageReceiver,

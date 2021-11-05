@@ -14,30 +14,21 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            string code = default;
-            string message = default;
+            Optional<ErrorResponseBody> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    code = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    message = property.Value.GetString();
+                    error = ErrorResponseBody.DeserializeErrorResponseBody(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(code, message);
+            return new ErrorResponse(error.Value);
         }
     }
 }

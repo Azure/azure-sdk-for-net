@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the
         /// BackendServiceFabricClusterProperties class.
         /// </summary>
-        /// <param name="clientCertificatethumbprint">The client certificate
-        /// thumbprint for the management endpoint.</param>
         /// <param name="managementEndpoints">The cluster management
         /// endpoint.</param>
+        /// <param name="clientCertificateId">The client certificate id for the
+        /// management endpoint.</param>
+        /// <param name="clientCertificatethumbprint">The client certificate
+        /// thumbprint for the management endpoint. Will be ignored if
+        /// certificatesIds are provided</param>
         /// <param name="maxPartitionResolutionRetries">Maximum number of
         /// retries while attempting resolve the partition.</param>
         /// <param name="serverCertificateThumbprints">Thumbprints of
@@ -45,8 +48,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// communication</param>
         /// <param name="serverX509Names">Server X509 Certificate Names
         /// Collection</param>
-        public BackendServiceFabricClusterProperties(string clientCertificatethumbprint, IList<string> managementEndpoints, int? maxPartitionResolutionRetries = default(int?), IList<string> serverCertificateThumbprints = default(IList<string>), IList<X509CertificateName> serverX509Names = default(IList<X509CertificateName>))
+        public BackendServiceFabricClusterProperties(IList<string> managementEndpoints, string clientCertificateId = default(string), string clientCertificatethumbprint = default(string), int? maxPartitionResolutionRetries = default(int?), IList<string> serverCertificateThumbprints = default(IList<string>), IList<X509CertificateName> serverX509Names = default(IList<X509CertificateName>))
         {
+            ClientCertificateId = clientCertificateId;
             ClientCertificatethumbprint = clientCertificatethumbprint;
             MaxPartitionResolutionRetries = maxPartitionResolutionRetries;
             ManagementEndpoints = managementEndpoints;
@@ -61,8 +65,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the client certificate id for the management endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientCertificateId")]
+        public string ClientCertificateId { get; set; }
+
+        /// <summary>
         /// Gets or sets the client certificate thumbprint for the management
-        /// endpoint.
+        /// endpoint. Will be ignored if certificatesIds are provided
         /// </summary>
         [JsonProperty(PropertyName = "clientCertificatethumbprint")]
         public string ClientCertificatethumbprint { get; set; }
@@ -101,10 +111,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ClientCertificatethumbprint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ClientCertificatethumbprint");
-            }
             if (ManagementEndpoints == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ManagementEndpoints");

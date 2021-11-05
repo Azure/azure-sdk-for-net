@@ -8,45 +8,35 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostListResult
+    internal partial class DedicatedHostListResult
     {
         internal static DedicatedHostListResult DeserializeDedicatedHostListResult(JsonElement element)
         {
-            IReadOnlyList<DedicatedHost> value = default;
-            string nextLink = default;
+            IReadOnlyList<DedicatedHostData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DedicatedHost> array = new List<DedicatedHost>();
+                    List<DedicatedHostData> array = new List<DedicatedHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DedicatedHost.DeserializeDedicatedHost(item));
-                        }
+                        array.Add(DedicatedHostData.DeserializeDedicatedHostData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DedicatedHostListResult(value, nextLink);
+            return new DedicatedHostListResult(value, nextLink.Value);
         }
     }
 }

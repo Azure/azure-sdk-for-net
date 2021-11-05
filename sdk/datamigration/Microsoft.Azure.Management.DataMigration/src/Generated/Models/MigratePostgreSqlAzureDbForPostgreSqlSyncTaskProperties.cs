@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Properties for the task that migrates PostgreSQL databases to Azure
     /// Database for PostgreSQL for online migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Migrate.PostgreSql.AzureDbForPostgreSql.Sync")]
+    [Newtonsoft.Json.JsonObject("Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2")]
     public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
         /// <summary>

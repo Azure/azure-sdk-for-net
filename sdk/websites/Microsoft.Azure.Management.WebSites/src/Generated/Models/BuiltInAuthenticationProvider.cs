@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "MicrosoftAccount")]
         MicrosoftAccount,
         [EnumMember(Value = "Twitter")]
-        Twitter
+        Twitter,
+        [EnumMember(Value = "Github")]
+        Github
     }
     internal static class BuiltInAuthenticationProviderEnumExtension
     {
@@ -53,6 +55,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "MicrosoftAccount";
                 case BuiltInAuthenticationProvider.Twitter:
                     return "Twitter";
+                case BuiltInAuthenticationProvider.Github:
+                    return "Github";
             }
             return null;
         }
@@ -71,6 +75,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return BuiltInAuthenticationProvider.MicrosoftAccount;
                 case "Twitter":
                     return BuiltInAuthenticationProvider.Twitter;
+                case "Github":
+                    return BuiltInAuthenticationProvider.Github;
             }
             return null;
         }

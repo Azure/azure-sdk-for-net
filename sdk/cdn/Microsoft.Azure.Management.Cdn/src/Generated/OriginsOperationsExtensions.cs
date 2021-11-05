@@ -120,6 +120,64 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
+            /// Creates a new origin within the specified endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin that is unique within the endpoint.
+            /// </param>
+            /// <param name='origin'>
+            /// Origin properties
+            /// </param>
+            public static Origin Create(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
+            {
+                return operations.CreateAsync(resourceGroupName, profileName, endpointName, originName, origin).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new origin within the specified endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin that is unique within the endpoint.
+            /// </param>
+            /// <param name='origin'>
+            /// Origin properties
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Origin> CreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates an existing origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
@@ -172,6 +230,113 @@ namespace Microsoft.Azure.Management.Cdn
             public static async Task<Origin> UpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin which is unique within the endpoint.
+            /// </param>
+            public static void Delete(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
+            {
+                operations.DeleteAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin which is unique within the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a new origin within the specified endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin that is unique within the endpoint.
+            /// </param>
+            /// <param name='origin'>
+            /// Origin properties
+            /// </param>
+            public static Origin BeginCreate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, profileName, endpointName, originName, origin).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new origin within the specified endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin that is unique within the endpoint.
+            /// </param>
+            /// <param name='origin'>
+            /// Origin properties
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Origin> BeginCreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -233,6 +398,55 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deletes an existing origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin which is unique within the endpoint.
+            /// </param>
+            public static void BeginDelete(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin which is unique within the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

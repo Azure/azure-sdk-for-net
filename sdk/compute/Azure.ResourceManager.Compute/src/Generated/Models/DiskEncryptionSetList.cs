@@ -8,35 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List disk encryption set operation response. </summary>
-    public partial class DiskEncryptionSetList
+    internal partial class DiskEncryptionSetList
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
-        internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSet> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSetData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
-        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSet> value, string nextLink)
+        internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSetData> value, string nextLink)
         {
-            Value = value ?? new List<DiskEncryptionSet>();
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of disk encryption sets. </summary>
-        public IReadOnlyList<DiskEncryptionSet> Value { get; }
+        public IReadOnlyList<DiskEncryptionSetData> Value { get; }
         /// <summary> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </summary>
         public string NextLink { get; }
     }

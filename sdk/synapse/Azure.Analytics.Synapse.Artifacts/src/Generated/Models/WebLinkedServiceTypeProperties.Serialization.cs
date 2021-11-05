@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WebLinkedServiceTypePropertiesConverter))]
     public partial class WebLinkedServiceTypeProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -49,6 +52,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new WebLinkedServiceTypeProperties(url, authenticationType);
+        }
+
+        internal partial class WebLinkedServiceTypePropertiesConverter : JsonConverter<WebLinkedServiceTypeProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, WebLinkedServiceTypeProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WebLinkedServiceTypeProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebLinkedServiceTypeProperties(document.RootElement);
+            }
         }
     }
 }

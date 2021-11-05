@@ -6,6 +6,7 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -18,6 +19,7 @@ namespace Azure.Core.Tests
     [NonParallelizable]
     public class EventSourceTests : SyncAsyncPolicyTestBase
     {
+        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
@@ -35,8 +37,9 @@ namespace Azure.Core.Tests
 
         private TestEventListener _listener;
 
-        private string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
-        private string[] s_allowedQueryParameters = new[] { "api-version" };
+        private static string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
+        private static string[] s_allowedQueryParameters = new[] { "api-version" };
+        private static HttpMessageSanitizer _sanitizer = new HttpMessageSanitizer(s_allowedQueryParameters, s_allowedHeaders);
 
         public EventSourceTests(bool isAsync) : base(isAsync)
         {
@@ -77,7 +80,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -129,7 +132,7 @@ namespace Azure.Core.Tests
                 throw exception;
             });
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await SendRequestAsync(pipeline, request =>
@@ -148,6 +151,55 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task FailingAccessTokenBackgroundRefreshProducesEvents()
+        {
+            var credentialMre = new ManualResetEventSlim(true);
+
+            var currentTime = DateTimeOffset.UtcNow;
+            var callCount = 0;
+            var exception = new InvalidOperationException();
+
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                callCount++;
+                credentialMre.Set();
+                return callCount == 1 ? new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2)) : throw exception;
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport mockTransport = CreateMockTransport(r =>
+            {
+                credentialMre.Wait();
+                return new MockResponse(200);
+            });
+
+            var pipeline = new HttpPipeline(mockTransport, new HttpPipelinePolicy[] { policy, new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
+            await SendRequestAsync(pipeline, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("https://example.com/1"));
+                request.Headers.Add("User-Agent", "agent");
+            });
+
+            credentialMre.Reset();
+            string requestId = null;
+            await SendRequestAsync(pipeline, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("https://example.com/2"));
+                request.Headers.Add("User-Agent", "agent");
+                requestId = request.ClientRequestId;
+            });
+
+            await Task.Delay(1_000);
+
+            EventWrittenEventArgs e = _listener.SingleEventById(BackgroundRefreshFailedEvent);
+            Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
+        }
+
+        [Test]
         public async Task GettingErrorRequestProducesEvents()
         {
             var response = new MockResponse(500);
@@ -156,7 +208,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -189,7 +241,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -219,7 +271,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -240,7 +292,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -252,7 +304,6 @@ namespace Azure.Core.Tests
             AssertNoContentLogged();
         }
 
-
         [Test]
         public async Task RequestContentIsNotLoggedWhenDisabled()
         {
@@ -261,7 +312,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -450,7 +501,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -504,7 +555,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -548,7 +599,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new[] { "*" }, new[] { "*" }, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new HttpMessageSanitizer(new[] { "*" }, new[] { "*" }), "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -597,7 +648,7 @@ namespace Azure.Core.Tests
             setupRequest?.Invoke(mockResponse);
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, _sanitizer, "Test-SDK") });
 
             Response response = await SendRequestAsync(pipeline, request =>
             {
@@ -623,5 +674,30 @@ namespace Azure.Core.Tests
             return mockResponse;
         }
 
+        private class TokenCredentialStub : TokenCredential
+        {
+            public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync)
+            {
+                if (isAsync)
+                {
+#pragma warning disable 1998
+                    _getTokenAsyncHandler = async (r, c) => handler(r, c);
+#pragma warning restore 1998
+                }
+                else
+                {
+                    _getTokenHandler = handler;
+                }
+            }
+
+            private readonly Func<TokenRequestContext, CancellationToken, ValueTask<AccessToken>> _getTokenAsyncHandler;
+            private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _getTokenHandler;
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _getTokenAsyncHandler(requestContext, cancellationToken);
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _getTokenHandler(requestContext, cancellationToken);
+        }
     }
 }

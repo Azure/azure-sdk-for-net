@@ -65,10 +65,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Parameters");
             }
-            if (Parameters != null)
-            {
-                Parameters.Validate();
-            }
         }
     }
 }

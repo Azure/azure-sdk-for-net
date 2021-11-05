@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/complianceResults").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}").ToString();
-            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{complianceResultName}", System.Uri.EscapeDataString(complianceResultName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)

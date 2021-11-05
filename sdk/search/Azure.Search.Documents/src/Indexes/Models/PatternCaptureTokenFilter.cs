@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class PatternCaptureTokenFilter
     {
         /// <summary> A list of patterns to match against each token. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Patterns { get; }
     }
 }

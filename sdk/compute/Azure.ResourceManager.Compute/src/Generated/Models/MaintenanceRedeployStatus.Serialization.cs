@@ -11,64 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class MaintenanceRedeployStatus : IUtf8JsonSerializable
+    public partial class MaintenanceRedeployStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (IsCustomerInitiatedMaintenanceAllowed != null)
-            {
-                writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed");
-                writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
-            }
-            if (PreMaintenanceWindowStartTime != null)
-            {
-                writer.WritePropertyName("preMaintenanceWindowStartTime");
-                writer.WriteStringValue(PreMaintenanceWindowStartTime.Value, "O");
-            }
-            if (PreMaintenanceWindowEndTime != null)
-            {
-                writer.WritePropertyName("preMaintenanceWindowEndTime");
-                writer.WriteStringValue(PreMaintenanceWindowEndTime.Value, "O");
-            }
-            if (MaintenanceWindowStartTime != null)
-            {
-                writer.WritePropertyName("maintenanceWindowStartTime");
-                writer.WriteStringValue(MaintenanceWindowStartTime.Value, "O");
-            }
-            if (MaintenanceWindowEndTime != null)
-            {
-                writer.WritePropertyName("maintenanceWindowEndTime");
-                writer.WriteStringValue(MaintenanceWindowEndTime.Value, "O");
-            }
-            if (LastOperationResultCode != null)
-            {
-                writer.WritePropertyName("lastOperationResultCode");
-                writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
-            }
-            if (LastOperationMessage != null)
-            {
-                writer.WritePropertyName("lastOperationMessage");
-                writer.WriteStringValue(LastOperationMessage);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element)
         {
-            bool? isCustomerInitiatedMaintenanceAllowed = default;
-            DateTimeOffset? preMaintenanceWindowStartTime = default;
-            DateTimeOffset? preMaintenanceWindowEndTime = default;
-            DateTimeOffset? maintenanceWindowStartTime = default;
-            DateTimeOffset? maintenanceWindowEndTime = default;
-            MaintenanceOperationResultCodeTypes? lastOperationResultCode = default;
-            string lastOperationMessage = default;
+            Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
+            Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
+            Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
+            Optional<DateTimeOffset> maintenanceWindowStartTime = default;
+            Optional<DateTimeOffset> maintenanceWindowEndTime = default;
+            Optional<MaintenanceOperationResultCodeTypes> lastOperationResultCode = default;
+            Optional<string> lastOperationMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isCustomerInitiatedMaintenanceAllowed"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCustomerInitiatedMaintenanceAllowed = property.Value.GetBoolean();
@@ -78,6 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preMaintenanceWindowStartTime = property.Value.GetDateTimeOffset("O");
@@ -87,6 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preMaintenanceWindowEndTime = property.Value.GetDateTimeOffset("O");
@@ -96,6 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maintenanceWindowStartTime = property.Value.GetDateTimeOffset("O");
@@ -105,6 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maintenanceWindowEndTime = property.Value.GetDateTimeOffset("O");
@@ -114,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastOperationResultCode = property.Value.GetString().ToMaintenanceOperationResultCodeTypes();
@@ -121,15 +86,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("lastOperationMessage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastOperationMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new MaintenanceRedeployStatus(isCustomerInitiatedMaintenanceAllowed, preMaintenanceWindowStartTime, preMaintenanceWindowEndTime, maintenanceWindowStartTime, maintenanceWindowEndTime, lastOperationResultCode, lastOperationMessage);
+            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value);
         }
     }
 }

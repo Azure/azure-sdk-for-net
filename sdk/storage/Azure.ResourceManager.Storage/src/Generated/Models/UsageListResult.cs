@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The response from the List Usages operation. </summary>
-    public partial class UsageListResult
+    internal partial class UsageListResult
     {
         /// <summary> Initializes a new instance of UsageListResult. </summary>
         internal UsageListResult()
         {
+            Value = new ChangeTrackingList<Usage>();
         }
 
         /// <summary> Initializes a new instance of UsageListResult. </summary>

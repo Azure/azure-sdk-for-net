@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> Initializes a new instance of VMScaleSetConvertToSinglePlacementGroupInput. </summary>
-        /// <param name="activePlacementGroupId"> Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id, please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of virtual machine instances. </param>
-        internal VMScaleSetConvertToSinglePlacementGroupInput(string activePlacementGroupId)
-        {
-            ActivePlacementGroupId = activePlacementGroupId;
-        }
-
         /// <summary> Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id, please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of virtual machine instances. </summary>
         public string ActivePlacementGroupId { get; set; }
     }

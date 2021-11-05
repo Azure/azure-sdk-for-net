@@ -15,46 +15,44 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CknSecretIdentifier != null)
+            if (Optional.IsDefined(CknSecretIdentifier))
             {
                 writer.WritePropertyName("cknSecretIdentifier");
                 writer.WriteStringValue(CknSecretIdentifier);
             }
-            if (CakSecretIdentifier != null)
+            if (Optional.IsDefined(CakSecretIdentifier))
             {
                 writer.WritePropertyName("cakSecretIdentifier");
                 writer.WriteStringValue(CakSecretIdentifier);
             }
-            if (Cipher != null)
+            if (Optional.IsDefined(Cipher))
             {
                 writer.WritePropertyName("cipher");
                 writer.WriteStringValue(Cipher.Value.ToString());
+            }
+            if (Optional.IsDefined(SciState))
+            {
+                writer.WritePropertyName("sciState");
+                writer.WriteStringValue(SciState.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static ExpressRouteLinkMacSecConfig DeserializeExpressRouteLinkMacSecConfig(JsonElement element)
         {
-            string cknSecretIdentifier = default;
-            string cakSecretIdentifier = default;
-            ExpressRouteLinkMacSecCipher? cipher = default;
+            Optional<string> cknSecretIdentifier = default;
+            Optional<string> cakSecretIdentifier = default;
+            Optional<ExpressRouteLinkMacSecCipher> cipher = default;
+            Optional<ExpressRouteLinkMacSecSciState> sciState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cknSecretIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cknSecretIdentifier = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cakSecretIdentifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cakSecretIdentifier = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +60,24 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cipher = new ExpressRouteLinkMacSecCipher(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sciState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sciState = new ExpressRouteLinkMacSecSciState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier, cakSecretIdentifier, cipher);
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState));
         }
     }
 }

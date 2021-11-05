@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
         /// <param name="runId"> Identifier of a run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         internal CreateRunResponse(string runId)
         {
             if (runId == null)

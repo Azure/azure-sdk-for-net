@@ -60,5 +60,49 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse> ReplaceWithHttpMessagesAsync(WordAlterationsDTO wordAlterations, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Download alterations per Knowledgebase (QnAMaker Managed).
+        /// </summary>
+        /// <param name='kbId'>
+        /// Knowledgebase id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<WordAlterationsDTO>> GetAlterationsForKbWithHttpMessagesAsync(string kbId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Replace alterations data per Knowledgebase (QnAMaker Managed).
+        /// </summary>
+        /// <param name='kbId'>
+        /// Knowledgebase id.
+        /// </param>
+        /// <param name='wordAlterations'>
+        /// New alterations data.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> ReplaceAlterationsForKbWithHttpMessagesAsync(string kbId, WordAlterationsDTO wordAlterations, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

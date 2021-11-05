@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DiskEncryptionKey != null)
+            if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey");
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey");
                 writer.WriteObjectValue(KeyEncryptionKey);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSettingsElement DeserializeEncryptionSettingsElement(JsonElement element)
         {
-            KeyVaultAndSecretReference diskEncryptionKey = default;
-            KeyVaultAndKeyReference keyEncryptionKey = default;
+            Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
+            Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKey"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value);
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value);
                     continue;
                 }
             }
-            return new EncryptionSettingsElement(diskEncryptionKey, keyEncryptionKey);
+            return new EncryptionSettingsElement(diskEncryptionKey.Value, keyEncryptionKey.Value);
         }
     }
 }

@@ -214,6 +214,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
+        /// </summary>
+        internal static string DisposedConnectionMessageProcessorMustStop {
+            get {
+                return ResourceManager.GetString("DisposedConnectionMessageProcessorMustStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
         /// </summary>
         internal static string ExponentialRetryBackoffRange {
@@ -250,11 +259,29 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageBodyType {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageBodyType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is not a supported user property type..
         /// </summary>
         internal static string InvalidAmqpMessageProperty {
             get {
                 return ResourceManager.GetString("InvalidAmqpMessageProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBody {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBody", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace Azure.Messaging.ServiceBus {
         internal static string InvalidEncoding {
             get {
                 return ResourceManager.GetString("InvalidEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme..
+        /// </summary>
+        internal static string InvalidEndpointAddress {
+            get {
+                return ResourceManager.GetString("InvalidEndpointAddress", resourceCulture);
             }
         }
         
@@ -358,6 +394,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is not currently running. It needs to be started before it can be stopped..
+        /// </summary>
+        internal static string MessageProcessorIsNotRunning {
+            get {
+                return ResourceManager.GetString("MessageProcessorIsNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
         internal static string MessageSizeExceeded {
@@ -367,7 +412,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
+        ///   Looks up a localized string similar to The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shared Access Signature to be valid..
         /// </summary>
         internal static string MissingConnectionInformation {
             get {
@@ -385,11 +430,20 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
+        ///   Looks up a localized string similar to The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor..
         /// </summary>
         internal static string OnlyOneEntityNameMayBeSpecified {
             get {
                 return ResourceManager.GetString("OnlyOneEntityNameMayBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`..
+        /// </summary>
+        internal static string OnlyOneSharedAccessAuthorizationMayBeSpecified {
+            get {
+                return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
             }
         }
         
@@ -484,15 +538,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
-        /// </summary>
-        internal static string SettlementOperationNotSupported {
-            get {
-                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
         internal static string SharedAccessKeyIsRequired {
@@ -565,6 +610,16 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An attempt was made to reconnect the {0} sender link as part of a cross-entity transaction. This could not be completed successfully because the {1} receiver
+        ///needs to be re-established first. Attempting the transaction again will allow the correct link to be established first..
+        /// </summary>
+        internal static string TransactionReconnectionError {
+            get {
+                return ResourceManager.GetString("TransactionReconnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
         /// </summary>
         internal static string UnknownConnectionType {
@@ -579,6 +634,15 @@ namespace Azure.Messaging.ServiceBus {
         internal static string UnknownRetryMode {
             get {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The credential provided is not a supported type..
+        /// </summary>
+        internal static string UnsupportedCredential {
+            get {
+                return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
             }
         }
         

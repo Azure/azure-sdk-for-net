@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Create a new action group or update an existing one.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get an action group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Delete an action group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -128,6 +128,50 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<ActionGroupResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, ActionGroupPatchBody actionGroupPatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// </summary>
+        /// <param name='notificationRequest'>
+        /// The notification request body which includes the contact details
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TestNotificationResponse>> PostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// </summary>
+        /// <param name='notificationId'>
+        /// The notification id
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TestNotificationDetailsResponse>> GetTestNotificationsWithHttpMessagesAsync(string notificationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get a list of all action groups in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -150,7 +194,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get a list of all action groups in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -174,7 +218,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// for Email or SMS receivers.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -195,5 +239,27 @@ namespace Microsoft.Azure.Management.Monitor
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> EnableReceiverWithHttpMessagesAsync(string resourceGroupName, string actionGroupName, string receiverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// </summary>
+        /// <param name='notificationRequest'>
+        /// The notification request body which includes the contact details
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TestNotificationResponse>> BeginPostTestNotificationsWithHttpMessagesAsync(NotificationRequestBody notificationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

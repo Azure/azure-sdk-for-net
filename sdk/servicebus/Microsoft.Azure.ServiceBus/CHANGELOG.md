@@ -1,5 +1,30 @@
 # Release History
 
+## 5.1.3 (2021-04-15)
+
+Update package description to include pointer to the new Azure.Messaging.ServiceBus package and the migration guide.
+
+## 5.1.2 (2021-02-24)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.11 to take in the fix: In auto-flow mode, do not issue more credits when the receiver link is closing. 
+  This solves the bug when prefetch mode is enabled, unexpected number of messages will not be released properly so their delivery count will increase.
+- Remove unnecessary Manage claim from sender and receiver. This will fix the scenario where customized TokenProvider is not giving Manage claims [PR 18740](https://github.com/Azure/azure-sdk-for-net/pull/18740)
+- Fix Unregister and Re-Register a Message/Session Handler results in System.ObjectDisposedException [PR 18899](https://github.com/Azure/azure-sdk-for-net/pull/18899)
+
+## 5.1.1 (2021-01-12)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.9
+
+## 5.1.0 (2020-11-20)
+- Bugfix - Fixing a bug in management client that is sending atom xml elements out of order [PR 16488](https://github.com/Azure/azure-sdk-for-net/pull/16488)
+- Bugfix - Convert "Invalid operation while connection is closing" to retriable ServiceBusException [PR 17023](https://github.com/Azure/azure-sdk-for-net/pull/17023)
+
+## 5.0.0 (2020-09-11)
+### Breaking Changes
+- Setting sessionId to be same as partition key and adding validation [PR 13961](https://github.com/Azure/azure-sdk-for-net/pull/13961)
+
+### Improvements
+- Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
+- Documentation: Add `SendAsync` warning for partition entities when batching is enabled [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/11028)
+
 ## 4.1.3 (2020-04-17)
 - Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)
 - Increase version range allowed for `System.IdentityModel.Tokens.Jwt` [PR 10885](https://github.com/Azure/azure-sdk-for-net/pull/10885)

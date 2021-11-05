@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinations"> List of all destinations. </param>
         /// <param name="nextHopType"> The type of next hop (eg: ResourceId). </param>
         /// <param name="nextHop"> NextHop resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destinationType"/>, <paramref name="destinations"/>, <paramref name="nextHopType"/>, or <paramref name="nextHop"/> is null. </exception>
         public HubRoute(string name, string destinationType, IEnumerable<string> destinations, string nextHopType, string nextHop)
         {
             if (name == null)
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Name = name;
             DestinationType = destinationType;
-            Destinations = destinations ?? new List<string>();
+            Destinations = destinations;
             NextHopType = nextHopType;
             NextHop = nextHop;
         }

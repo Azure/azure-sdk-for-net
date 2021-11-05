@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 
 namespace Azure.Data.Tables
 {
@@ -23,14 +22,22 @@ namespace Azure.Data.Tables
 
             foreach (var item in tableEntityProperties)
             {
+                // Remove the ETag property, as it does not need to be serialized
+                if (item.Key == TableConstants.PropertyNames.EtagOdata || item.Key == TableConstants.PropertyNames.Timestamp)
+                {
+                    continue;
+                }
+
                 annotatedDictionary[item.Key] = item.Value;
 
                 switch (item.Value)
                 {
                     case byte[] _:
+                    case BinaryData _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
                     case long _:
+                    case ulong _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
                         annotatedDictionary[item.Key] = item.Value.ToString();
@@ -47,6 +54,8 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
 
@@ -54,24 +63,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Cleans a List of Dictionaries of its Odata type annotations, while using them to cast its entities accordingly.
-        /// </summary>
-        internal static void CastAndRemoveAnnotations(this IReadOnlyList<IDictionary<string, object>> entityList)
-        {
-            var typeAnnotationsWithKeys = new Dictionary<string, (string typeAnnotation, string annotationKey)>();
-
-            foreach (var entity in entityList)
-            {
-                entity.CastAndRemoveAnnotations(typeAnnotationsWithKeys);
-            }
-        }
-
-        /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static void CastAndRemoveAnnotations(this IDictionary<string, object> entity, Dictionary<string, (string typeAnnotation, string annotationKey)>? typeAnnotationsWithKeys = null)
+        internal static void CastAndRemoveAnnotations(this IDictionary<string, object> entity, Dictionary<string, (string TypeAnnotation, string AnnotationKey)>? typeAnnotationsWithKeys = null)
         {
-            typeAnnotationsWithKeys ??= new Dictionary<string, (string typeAnnotation, string annotationKey)>();
+            typeAnnotationsWithKeys ??= new Dictionary<string, (string TypeAnnotation, string AnnotationKey)>();
             var spanOdataSuffix = TableConstants.Odata.OdataTypeString.AsSpan();
 
             typeAnnotationsWithKeys.Clear();
@@ -83,38 +79,49 @@ namespace Azure.Data.Tables
                 if (iSuffix > 0)
                 {
                     // This property is an Odata annotation. Save it in the typeAnnoations dictionary.
-                    typeAnnotationsWithKeys[spanPropertyName.Slice(0, iSuffix).ToString()] = (typeAnnotation: (entity[propertyName] as string)!, annotationKey: propertyName);
+                    typeAnnotationsWithKeys[spanPropertyName.Slice(0, iSuffix).ToString()] = ((entity[propertyName] as string)!, propertyName);
                 }
             }
 
             // Iterate through the types that are serialized as string by default and Parse them as the correct type, as indicated by the type annotations.
             foreach (var annotation in typeAnnotationsWithKeys.Keys)
             {
-                entity[annotation] = typeAnnotationsWithKeys[annotation].typeAnnotation switch
+                entity[annotation] = typeAnnotationsWithKeys[annotation].TypeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
+                    TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
                 };
 
                 // Remove the type annotation property from the dictionary.
-                entity.Remove(typeAnnotationsWithKeys[annotation].annotationKey);
+                entity.Remove(typeAnnotationsWithKeys[annotation].AnnotationKey);
             }
+
+            // The Timestamp property is not annotated, since it is a known system property
+            // so we must cast it without a type annotation
+            if (entity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var value) && value is string)
+            {
+                entity[TableConstants.PropertyNames.Timestamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.Timestamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+            }
+
+            // Remove odata metadata.
+            entity.Remove(TableConstants.PropertyNames.OdataMetadata);
         }
 
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            var result = new List<T>();
+            var result = new List<T>(entityList.Count);
+            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
 
             foreach (var entity in entityList)
             {
-                var tableEntity = entity.ToTableEntity<T>(properties);
+                var tableEntity = entity.ToTableEntity<T>(typeInfo);
 
                 result.Add(tableEntity);
             }
@@ -125,53 +132,24 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, TablesTypeBinder.BoundTypeInfo? typeInfo = null) where T : class, ITableEntity, new()
         {
-            properties ??= typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            var result = new T();
-
-            // Iterate through each property of the entity and set them as the correct type.
-            foreach (var property in properties)
+            if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
-                if (entity.TryGetValue(property.Name, out var propertyValue))
+                var result = new T();
+                var dictionary = (IDictionary<string, object>)result;
+                entity.CastAndRemoveAnnotations();
+
+                foreach (var entProperty in entity.Keys)
                 {
-                    if (typeActions.TryGetValue(property.PropertyType, out var propertyAction))
-                    {
-                        propertyAction(property, propertyValue, result);
-                    }
-                    else
-                    {
-                        property.SetValue(result, propertyValue);
-                    }
+                    dictionary[entProperty] = entity[entProperty];
                 }
+
+                return result;
             }
 
-            // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.Etag, out var etag))
-            {
-                result.ETag = etag as string;
-            }
-            return result;
+            typeInfo ??= TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
+            return typeInfo.Deserialize<T>(entity);
         }
-
-        private static Dictionary<Type, Action<PropertyInfo, object, object>> typeActions = new Dictionary<Type, Action<PropertyInfo, object, object>>
-        {
-            {typeof(byte[]), (property, propertyValue, result) =>  property.SetValue(result, Convert.FromBase64String(propertyValue as string))},
-            {typeof(long), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
-            {typeof(long?), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
-            {typeof(double), (property, propertyValue, result) =>  property.SetValue(result, propertyValue)},
-            {typeof(double?), (property, propertyValue, result) =>  property.SetValue(result, propertyValue)},
-            {typeof(bool), (property, propertyValue, result) =>  property.SetValue(result, (bool)propertyValue)},
-            {typeof(bool?), (property, propertyValue, result) =>  property.SetValue(result, (bool?)propertyValue)},
-            {typeof(Guid), (property, propertyValue, result) =>  property.SetValue(result, Guid.Parse(propertyValue as string))},
-            {typeof(Guid?), (property, propertyValue, result) =>  property.SetValue(result, Guid.Parse(propertyValue as string))},
-            {typeof(DateTimeOffset), (property, propertyValue, result) =>  property.SetValue(result, DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))},
-            {typeof(DateTimeOffset?), (property, propertyValue, result) =>  property.SetValue(result, DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))},
-            {typeof(DateTime), (property, propertyValue, result) =>  property.SetValue(result, DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))},
-            {typeof(DateTime?), (property, propertyValue, result) =>  property.SetValue(result, DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind))},
-            {typeof(string), (property, propertyValue, result) =>  property.SetValue(result, propertyValue as string)},
-            {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
-            {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
-        };
     }
 }

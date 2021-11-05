@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">Display metadata associated with the
         /// operation.</param>
-        public ResourceProviderOperation(string name = default(string), ResourceProviderOperationDisplay display = default(ResourceProviderOperationDisplay))
+        /// <param name="isDataAction">The flag that indicates whether the
+        /// operation applies to data plane.</param>
+        public ResourceProviderOperation(string name = default(string), ResourceProviderOperationDisplay display = default(ResourceProviderOperationDisplay), bool? isDataAction = default(bool?))
         {
             Name = name;
             Display = display;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -57,6 +60,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public ResourceProviderOperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets the flag that indicates whether the operation applies to data
+        /// plane.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; private set; }
 
     }
 }

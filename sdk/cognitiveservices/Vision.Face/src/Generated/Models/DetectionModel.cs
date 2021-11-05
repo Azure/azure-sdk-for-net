@@ -18,5 +18,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     {
         public const string Detection01 = "detection_01";
         public const string Detection02 = "detection_02";
+        public const string Detection03 = "detection_03";
     }
 }

@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
         {
-            string provider = default;
-            string resource = default;
-            string operation = default;
+            Optional<string> provider = default;
+            Optional<string> resource = default;
+            Optional<string> operation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provider = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     operation = property.Value.GetString();
                     continue;
                 }
             }
-            return new OperationDisplay(provider, resource, operation);
+            return new OperationDisplay(provider.Value, resource.Value, operation.Value);
         }
     }
 }

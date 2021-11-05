@@ -1,13 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services QnAMaker SDK</AssemblyTitle>
     <AssemblyDescription>Provides access to the Microsoft Cognitive Services QnAMaker APIs.</AssemblyDescription>
     <Description>This client library provides access to the Microsoft Cognitive Services QnAMaker APIs.</Description>
-    <Version>2.0.0</Version>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;QnAMaker;QnAMaker API;QnAMaker SDK;Vision;netcore451511</PackageTags>
+    <Version>3.0.0-preview.2</Version>    
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;QnAMaker;QnAMaker API;QnAMaker SDK;QnAMakerV2;QnAMakerV5-preview.1;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[ 
-        This is SDK for QnAMaker v4 API.	
+        This is SDK for QnAMaker v4 API with custom clients for V5-preview.1.	
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

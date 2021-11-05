@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
         /// <param name="excludeLastRequest">Whether to exclude the records of
         /// the last request. The default value is true. Type: boolean (or
         /// Expression with resultType boolean).</param>
@@ -55,11 +58,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Once it is set, only data with requestId larger than the value of
         /// this property will be retrieved. The default value is 0. Type:
         /// integer (or Expression with resultType integer ).</param>
-        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object excludeLastRequest = default(object), object baseRequestId = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
+        /// <param name="customRfcReadTableFunctionModule">Specifies the custom
+        /// RFC function module that will be used to read data from SAP Table.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="sapDataColumnDelimiter">The single character that will
+        /// be used as delimiter passed to SAP RFC as well as splitting the
+        /// output data retrieved. Type: string (or Expression with resultType
+        /// string).</param>
+        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object excludeLastRequest = default(object), object baseRequestId = default(object), object customRfcReadTableFunctionModule = default(object), object sapDataColumnDelimiter = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, queryTimeout, additionalColumns)
         {
             ExcludeLastRequest = excludeLastRequest;
             BaseRequestId = baseRequestId;
+            CustomRfcReadTableFunctionModule = customRfcReadTableFunctionModule;
+            SapDataColumnDelimiter = sapDataColumnDelimiter;
             CustomInit();
         }
 
@@ -84,6 +96,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "baseRequestId")]
         public object BaseRequestId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the custom RFC function module that will be
+        /// used to read data from SAP Table. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "customRfcReadTableFunctionModule")]
+        public object CustomRfcReadTableFunctionModule { get; set; }
+
+        /// <summary>
+        /// Gets or sets the single character that will be used as delimiter
+        /// passed to SAP RFC as well as splitting the output data retrieved.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "sapDataColumnDelimiter")]
+        public object SapDataColumnDelimiter { get; set; }
 
     }
 }

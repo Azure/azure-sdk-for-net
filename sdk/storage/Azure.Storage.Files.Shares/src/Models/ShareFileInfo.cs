@@ -15,35 +15,29 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareFileInfo
     {
         /// <summary>
-        /// The internal RawStorageFileInfo.
-        /// </summary>
-        internal RawStorageFileInfo _rawStorageFileInfo;
-
-        /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
         /// </summary>
-        public ETag ETag => _rawStorageFileInfo.ETag;
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the file was last modified.
         /// </summary>
-        public DateTimeOffset LastModified => _rawStorageFileInfo.LastModified;
+        public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
-        public bool IsServerEncrypted => _rawStorageFileInfo.IsServerEncrypted;
+        public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
         /// The file's SMB properties.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
 
-        internal ShareFileInfo(RawStorageFileInfo rawStorageFileInfo)
-        {
-            _rawStorageFileInfo = rawStorageFileInfo;
-            SmbProperties = new FileSmbProperties(rawStorageFileInfo);
-        }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareFileInfo() { }
     }
 
     /// <summary>
@@ -66,18 +60,21 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId,
             string fileParentId
             )
-            => new ShareFileInfo(new RawStorageFileInfo()
+            => new ShareFileInfo
             {
                 ETag = eTag,
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
-                FilePermissionKey = filePermissionKey,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FileId = fileId,
-                FileParentId = fileParentId
-            });
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
+            };
     }
 }

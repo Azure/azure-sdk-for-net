@@ -85,5 +85,6 @@ namespace Microsoft.Azure.EventHubs.Amqp
 
         // Miscellaneous 
         public const int AmqpSessionTimeoutInSeconds = 30;
+        public static TimeSpan ConnectionIdleTimeout = TimeSpan.FromMinutes(1);
     }
 }

@@ -5,7 +5,7 @@
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
-    /// Defines extension methods for <c cref="DataType">DataType</c>.
+    /// Defines extension methods for <see cref="DataType" />.
     /// </summary>
     public static class DataTypeExtensions
     {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,20 +20,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("searchMode");
             writer.WriteStringValue(SearchMode);
-            if (SourceFields.Any())
+            writer.WritePropertyName("sourceFields");
+            writer.WriteStartArray();
+            foreach (var item in SourceFields)
             {
-                writer.WritePropertyName("sourceFields");
-                writer.WriteStartArray();
-                foreach (var item in SourceFields)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
-            else
-            {
-                writer.WriteNull("sourceFields");
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -60,14 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourceFields = array;
                     continue;

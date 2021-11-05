@@ -62,6 +62,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="httpLoggingEnabled">&lt;code&gt;true&lt;/code&gt; if
         /// HTTP logging is enabled; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="acrUseManagedIdentityCreds">Flag to use Managed
+        /// Identity Creds for ACR pull</param>
+        /// <param name="acrUserManagedIdentityID">If using user managed
+        /// identity, the user managed identity ClientId</param>
         /// <param name="logsDirectorySizeLimit">HTTP logs directory size
         /// limit.</param>
         /// <param
@@ -95,7 +99,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="virtualApplications">Virtual applications.</param>
         /// <param name="loadBalancing">Site load balancing. Possible values
         /// include: 'WeightedRoundRobin', 'LeastRequests',
-        /// 'LeastResponseTime', 'WeightedTotalTraffic', 'RequestHash'</param>
+        /// 'LeastResponseTime', 'WeightedTotalTraffic', 'RequestHash',
+        /// 'PerSiteRoundRobin'</param>
         /// <param name="experiments">This is work around for polymorphic
         /// types.</param>
         /// <param name="limits">Site limits.</param>
@@ -104,6 +109,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="autoHealRules">Auto Heal rules.</param>
         /// <param name="tracingOptions">Tracing options.</param>
         /// <param name="vnetName">Virtual Network name.</param>
+        /// <param name="vnetRouteAllEnabled">Virtual Network Route All
+        /// enabled. This causes all outbound traffic to have Virtual Network
+        /// Security Groups and User Defined Routes applied.</param>
+        /// <param name="vnetPrivatePortsCount">The number of private ports
+        /// assigned to this app. These will be assigned dynamically on
+        /// runtime.</param>
         /// <param name="cors">Cross-Origin Resource Sharing (CORS)
         /// settings.</param>
         /// <param name="push">Push endpoint settings.</param>
@@ -119,6 +130,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Id</param>
         /// <param name="xManagedServiceIdentityId">Explicit Managed Service
         /// Identity Id</param>
+        /// <param name="keyVaultReferenceIdentity">Identity to use for Key
+        /// Vault Reference authentication.</param>
         /// <param name="ipSecurityRestrictions">IP security restrictions for
         /// main.</param>
         /// <param name="scmIpSecurityRestrictions">IP security restrictions
@@ -130,13 +143,42 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="minTlsVersion">MinTlsVersion: configures the minimum
         /// version of TLS required for SSL requests. Possible values include:
         /// '1.0', '1.1', '1.2'</param>
+        /// <param name="scmMinTlsVersion">ScmMinTlsVersion: configures the
+        /// minimum version of TLS required for SSL requests for SCM site.
+        /// Possible values include: '1.0', '1.1', '1.2'</param>
         /// <param name="ftpsState">State of FTP / FTPS service. Possible
         /// values include: 'AllAllowed', 'FtpsOnly', 'Disabled'</param>
         /// <param name="preWarmedInstanceCount">Number of preWarmed instances.
         /// This setting only applies to the Consumption and Elastic
         /// Plans</param>
+        /// <param name="functionAppScaleLimit">Maximum number of workers that
+        /// a site can scale out to.
+        /// This setting only applies to the Consumption and Elastic Premium
+        /// Plans</param>
         /// <param name="healthCheckPath">Health check path</param>
-        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string powerShellVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), ApiManagementConfig apiManagementConfig = default(ApiManagementConfig), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), IList<IpSecurityRestriction> scmIpSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? scmIpSecurityRestrictionsUseMain = default(bool?), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string ftpsState = default(string), int? preWarmedInstanceCount = default(int?), string healthCheckPath = default(string))
+        /// <param name="functionsRuntimeScaleMonitoringEnabled">Gets or sets a
+        /// value indicating whether functions runtime scale monitoring is
+        /// enabled. When enabled,
+        /// the ScaleController will not monitor event sources directly, but
+        /// will instead call to the
+        /// runtime to get scale status.</param>
+        /// <param name="websiteTimeZone">Sets the time zone a site uses for
+        /// generating timestamps. Compatible with Linux and Windows App
+        /// Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence
+        /// over this config. For Linux, expects tz database values
+        /// https://www.iana.org/time-zones (for a quick reference see
+        /// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For
+        /// Windows, expects one of the time zones listed under
+        /// HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+        /// NT\CurrentVersion\Time Zones</param>
+        /// <param name="minimumElasticInstanceCount">Number of minimum
+        /// instance count for a site
+        /// This setting only applies to the Elastic Plans</param>
+        /// <param name="azureStorageAccounts">List of Azure Storage
+        /// Accounts.</param>
+        /// <param name="publicNetworkAccess">Property to allow or block all
+        /// public traffic.</param>
+        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string powerShellVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), bool? acrUseManagedIdentityCreds = default(bool?), string acrUserManagedIdentityID = default(string), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), bool? vnetRouteAllEnabled = default(bool?), int? vnetPrivatePortsCount = default(int?), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), ApiManagementConfig apiManagementConfig = default(ApiManagementConfig), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), string keyVaultReferenceIdentity = default(string), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), IList<IpSecurityRestriction> scmIpSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? scmIpSecurityRestrictionsUseMain = default(bool?), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string scmMinTlsVersion = default(string), string ftpsState = default(string), int? preWarmedInstanceCount = default(int?), int? functionAppScaleLimit = default(int?), string healthCheckPath = default(string), bool? functionsRuntimeScaleMonitoringEnabled = default(bool?), string websiteTimeZone = default(string), int? minimumElasticInstanceCount = default(int?), IDictionary<string, AzureStorageInfoValue> azureStorageAccounts = default(IDictionary<string, AzureStorageInfoValue>), string publicNetworkAccess = default(string))
             : base(id, name, kind, type)
         {
             NumberOfWorkers = numberOfWorkers;
@@ -153,6 +195,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             RemoteDebuggingEnabled = remoteDebuggingEnabled;
             RemoteDebuggingVersion = remoteDebuggingVersion;
             HttpLoggingEnabled = httpLoggingEnabled;
+            AcrUseManagedIdentityCreds = acrUseManagedIdentityCreds;
+            AcrUserManagedIdentityID = acrUserManagedIdentityID;
             LogsDirectorySizeLimit = logsDirectorySizeLimit;
             DetailedErrorLoggingEnabled = detailedErrorLoggingEnabled;
             PublishingUsername = publishingUsername;
@@ -178,6 +222,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             AutoHealRules = autoHealRules;
             TracingOptions = tracingOptions;
             VnetName = vnetName;
+            VnetRouteAllEnabled = vnetRouteAllEnabled;
+            VnetPrivatePortsCount = vnetPrivatePortsCount;
             Cors = cors;
             Push = push;
             ApiDefinition = apiDefinition;
@@ -186,14 +232,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
             LocalMySqlEnabled = localMySqlEnabled;
             ManagedServiceIdentityId = managedServiceIdentityId;
             XManagedServiceIdentityId = xManagedServiceIdentityId;
+            KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             IpSecurityRestrictions = ipSecurityRestrictions;
             ScmIpSecurityRestrictions = scmIpSecurityRestrictions;
             ScmIpSecurityRestrictionsUseMain = scmIpSecurityRestrictionsUseMain;
             Http20Enabled = http20Enabled;
             MinTlsVersion = minTlsVersion;
+            ScmMinTlsVersion = scmMinTlsVersion;
             FtpsState = ftpsState;
             PreWarmedInstanceCount = preWarmedInstanceCount;
+            FunctionAppScaleLimit = functionAppScaleLimit;
             HealthCheckPath = healthCheckPath;
+            FunctionsRuntimeScaleMonitoringEnabled = functionsRuntimeScaleMonitoringEnabled;
+            WebsiteTimeZone = websiteTimeZone;
+            MinimumElasticInstanceCount = minimumElasticInstanceCount;
+            AzureStorageAccounts = azureStorageAccounts;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -291,6 +345,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpLoggingEnabled")]
         public bool? HttpLoggingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to use Managed Identity Creds for ACR pull
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.acrUseManagedIdentityCreds")]
+        public bool? AcrUseManagedIdentityCreds { get; set; }
+
+        /// <summary>
+        /// Gets or sets if using user managed identity, the user managed
+        /// identity ClientId
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.acrUserManagedIdentityID")]
+        public string AcrUserManagedIdentityID { get; set; }
 
         /// <summary>
         /// Gets or sets HTTP logs directory size limit.
@@ -415,7 +482,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets site load balancing. Possible values include:
         /// 'WeightedRoundRobin', 'LeastRequests', 'LeastResponseTime',
-        /// 'WeightedTotalTraffic', 'RequestHash'
+        /// 'WeightedTotalTraffic', 'RequestHash', 'PerSiteRoundRobin'
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancing")]
         public SiteLoadBalancing? LoadBalancing { get; set; }
@@ -457,6 +524,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetName")]
         public string VnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual Network Route All enabled. This causes all
+        /// outbound traffic to have Virtual Network Security Groups and User
+        /// Defined Routes applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vnetRouteAllEnabled")]
+        public bool? VnetRouteAllEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of private ports assigned to this app.
+        /// These will be assigned dynamically on runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vnetPrivatePortsCount")]
+        public int? VnetPrivatePortsCount { get; set; }
 
         /// <summary>
         /// Gets or sets cross-Origin Resource Sharing (CORS) settings.
@@ -510,6 +592,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? XManagedServiceIdentityId { get; set; }
 
         /// <summary>
+        /// Gets or sets identity to use for Key Vault Reference
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultReferenceIdentity")]
+        public string KeyVaultReferenceIdentity { get; set; }
+
+        /// <summary>
         /// Gets or sets IP security restrictions for main.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipSecurityRestrictions")]
@@ -543,6 +632,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string MinTlsVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets scmMinTlsVersion: configures the minimum version of
+        /// TLS required for SSL requests for SCM site. Possible values
+        /// include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scmMinTlsVersion")]
+        public string ScmMinTlsVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets state of FTP / FTPS service. Possible values include:
         /// 'AllAllowed', 'FtpsOnly', 'Disabled'
         /// </summary>
@@ -557,10 +654,62 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? PreWarmedInstanceCount { get; set; }
 
         /// <summary>
+        /// Gets or sets maximum number of workers that a site can scale out
+        /// to.
+        /// This setting only applies to the Consumption and Elastic Premium
+        /// Plans
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.functionAppScaleLimit")]
+        public int? FunctionAppScaleLimit { get; set; }
+
+        /// <summary>
         /// Gets or sets health check path
         /// </summary>
         [JsonProperty(PropertyName = "properties.healthCheckPath")]
         public string HealthCheckPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether functions runtime scale
+        /// monitoring is enabled. When enabled,
+        /// the ScaleController will not monitor event sources directly, but
+        /// will instead call to the
+        /// runtime to get scale status.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.functionsRuntimeScaleMonitoringEnabled")]
+        public bool? FunctionsRuntimeScaleMonitoringEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets sets the time zone a site uses for generating
+        /// timestamps. Compatible with Linux and Windows App Service. Setting
+        /// the WEBSITE_TIME_ZONE app setting takes precedence over this
+        /// config. For Linux, expects tz database values
+        /// https://www.iana.org/time-zones (for a quick reference see
+        /// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For
+        /// Windows, expects one of the time zones listed under
+        /// HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+        /// NT\CurrentVersion\Time Zones
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.websiteTimeZone")]
+        public string WebsiteTimeZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets number of minimum instance count for a site
+        /// This setting only applies to the Elastic Plans
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumElasticInstanceCount")]
+        public int? MinimumElasticInstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Azure Storage Accounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureStorageAccounts")]
+        public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts { get; set; }
+
+        /// <summary>
+        /// Gets or sets property to allow or block all public traffic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -581,6 +730,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
             if (PreWarmedInstanceCount < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "PreWarmedInstanceCount", 0);
+            }
+            if (FunctionAppScaleLimit < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "FunctionAppScaleLimit", 0);
+            }
+            if (MinimumElasticInstanceCount > 20)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinimumElasticInstanceCount", 20);
+            }
+            if (MinimumElasticInstanceCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinimumElasticInstanceCount", 0);
             }
         }
     }

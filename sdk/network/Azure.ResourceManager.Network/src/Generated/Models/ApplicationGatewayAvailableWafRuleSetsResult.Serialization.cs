@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayAvailableWafRuleSetsResult DeserializeApplicationGatewayAvailableWafRuleSetsResult(JsonElement element)
         {
-            IReadOnlyList<ApplicationGatewayFirewallRuleSet> value = default;
+            Optional<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayFirewallRuleSet> array = new List<ApplicationGatewayFirewallRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item));
-                        }
+                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableWafRuleSetsResult(value);
+            return new ApplicationGatewayAvailableWafRuleSetsResult(Optional.ToList(value));
         }
     }
 }

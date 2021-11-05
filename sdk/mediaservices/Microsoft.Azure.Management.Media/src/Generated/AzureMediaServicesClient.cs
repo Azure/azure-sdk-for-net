@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Media
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The Version of the API to be used with the client request.
+        /// The version of the API to be used with the client request.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -72,11 +72,6 @@ namespace Microsoft.Azure.Management.Media
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IAccountFiltersOperations.
-        /// </summary>
-        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -87,9 +82,24 @@ namespace Microsoft.Azure.Management.Media
         public virtual IMediaservicesOperations Mediaservices { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
 
         /// <summary>
         /// Gets the IAssetsOperations.
@@ -382,10 +392,12 @@ namespace Microsoft.Azure.Management.Media
         /// </summary>
         private void Initialize()
         {
-            AccountFilters = new AccountFiltersOperations(this);
             Operations = new Operations(this);
             Mediaservices = new MediaservicesOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Locations = new LocationsOperations(this);
+            AccountFilters = new AccountFiltersOperations(this);
             Assets = new AssetsOperations(this);
             AssetFilters = new AssetFiltersOperations(this);
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
@@ -397,7 +409,7 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-07-01";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -439,12 +451,16 @@ namespace Microsoft.Azure.Management.Media
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Preset>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Codec>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Codec>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Layer>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Layer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TrackDescriptor>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TrackDescriptor>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputDefinition>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputDefinition>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Overlay>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Overlay>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Format>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Format>("@odata.type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Layer>("@odata.type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Layer>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobInput>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobInput>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ClipTime>("@odata.type"));

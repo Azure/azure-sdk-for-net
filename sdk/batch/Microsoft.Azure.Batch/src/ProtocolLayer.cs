@@ -391,7 +391,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new JobGetTaskCountsBatchRequest(this._client, cancellationToken);
 
@@ -434,6 +434,7 @@
         public Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId,
             int? priority,
+            int? maxParallelTasks,
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
@@ -441,7 +442,7 @@
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobPatchParameter(priority, onAllTasksComplete, constraints, poolInfo, metadata);
+            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, onAllTasksComplete, constraints, poolInfo, metadata);
             var request = new JobPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.PatchWithHttpMessagesAsync(
@@ -1161,10 +1162,13 @@
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
+            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime);
+            var identityRefModel = identityReference != null ? new Models.ComputeNodeIdentityReference(identityReference.ResourceId) : null;
+
+            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime, identityRefModel);
             var request = new ComputeNodeUploadBatchServiceLogsBatchRequest(this._client, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.UploadBatchServiceLogsWithHttpMessagesAsync(
@@ -1325,6 +1329,60 @@
                 lambdaCancelToken);
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+        public Task<AzureOperationResponse<Models.NodeVMExtension, Models.ComputeNodeExtensionGetHeaders>> GetComputeNodeExtension(string poolId, string nodeId, string extensionName, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var request = new ComputeNodeExtensionGetBatchRequest(_client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.GetWithHttpMessagesAsync(
+                poolId,
+                nodeId,
+                extensionName,
+                request.Options,
+                request.CustomHeaders,
+                cancellationToken
+            );
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+        public Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> ListComputeNodeExtensions(
+            string poolId,
+            string computeNodeId,
+            string skipToken,
+            BehaviorManager bhMgr,
+            DetailLevel detailLevel,
+            CancellationToken cancellationToken)
+        {
+            Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> asyncTask;
+
+            if (string.IsNullOrEmpty(skipToken))
+            {
+                var request = new ComputeNodeExtensionListBatchRequest(this._client, cancellationToken);
+
+                bhMgr = bhMgr.CreateBehaviorManagerWithDetailLevel(detailLevel);
+
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.ListWithHttpMessagesAsync(
+                    poolId,
+                    computeNodeId,
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
+            else
+            {
+                var request = new ComputeNodeExtensionListNextBatchRequest(_client, cancellationToken);
+
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.ListNextWithHttpMessagesAsync(skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
 
             return asyncTask;
         }
@@ -1809,7 +1867,7 @@
                         // enforce that the returned object is the required type
                         ValidateReturnObject(request, typeof(IBatchRequest<TResponse>));
 
-                        // any changes must be communcated back to the caller
+                        // any changes must be communicated back to the caller
                         request = (Protocol.IBatchRequest<TResponse>)proxyObj;
                     }
                 }
@@ -1854,7 +1912,7 @@
                     // enforce that the returned object is the required type
                     ValidateReturnObject(responseFromIntercept, typeof(TResponse));
 
-                    // promote the intercetor response to official response
+                    // promote the interceptor response to official response
                     response = (TResponse)responseFromIntercept;
                 }
             }

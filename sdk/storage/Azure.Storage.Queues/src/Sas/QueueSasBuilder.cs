@@ -24,6 +24,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -80,6 +87,63 @@ namespace Azure.Storage.Sas
         /// The optional name of the blob being made accessible.
         /// </summary>
         public string QueueName { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="QueueSasBuilder(QueueSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS or
+        /// <see cref="QueueSasBuilder(QueueAccountSasPermissions, DateTimeOffset)"/>
+        /// to create an Account SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public QueueSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public QueueSasBuilder(QueueSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public QueueSasBuilder(QueueAccountSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
 
         /// <summary>
         /// Sets the permissions for a queue SAS.
@@ -253,10 +317,20 @@ namespace Azure.Storage.Sas
                 }
             }
 
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
+
+        internal static QueueSasBuilder DeepCopy(QueueSasBuilder originalQueueSasBuilder)
+            => new QueueSasBuilder
+            {
+                Version = originalQueueSasBuilder.Version,
+                Protocol = originalQueueSasBuilder.Protocol,
+                StartsOn = originalQueueSasBuilder.StartsOn,
+                ExpiresOn = originalQueueSasBuilder.ExpiresOn,
+                Permissions = originalQueueSasBuilder.Permissions,
+                IPRange = originalQueueSasBuilder.IPRange,
+                Identifier = originalQueueSasBuilder.Identifier,
+                QueueName = originalQueueSasBuilder.QueueName
+            };
     }
 }

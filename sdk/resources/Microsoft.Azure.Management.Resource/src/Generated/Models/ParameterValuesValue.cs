@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The value of a parameter.
+    /// </summary>
     public partial class ParameterValuesValue
     {
         /// <summary>

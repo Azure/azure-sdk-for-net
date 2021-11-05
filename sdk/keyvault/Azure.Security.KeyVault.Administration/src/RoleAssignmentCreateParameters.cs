@@ -3,7 +3,6 @@
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <inheritdoc />
     internal partial class RoleAssignmentCreateParameters
     { }
 }

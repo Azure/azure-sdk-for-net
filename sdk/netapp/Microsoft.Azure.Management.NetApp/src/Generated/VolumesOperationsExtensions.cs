@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -41,7 +39,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='poolName'>
             /// The name of the capacity pool
             /// </param>
-            public static IEnumerable<Volume> List(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName)
+            public static IPage<Volume> List(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName)
             {
                 return operations.ListAsync(resourceGroupName, accountName, poolName).GetAwaiter().GetResult();
             }
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, poolName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -398,9 +396,12 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static void BreakReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            /// <param name='body'>
+            /// Optional body to force break the replication.
+            /// </param>
+            public static void BreakReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, BreakReplicationRequest body = default(BreakReplicationRequest))
             {
-                operations.BreakReplicationAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                operations.BreakReplicationAsync(resourceGroupName, accountName, poolName, volumeName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -424,12 +425,15 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
+            /// <param name='body'>
+            /// Optional body to force break the replication.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BreakReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BreakReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, BreakReplicationRequest body = default(BreakReplicationRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BreakReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BreakReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -496,7 +500,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -524,7 +528,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -665,6 +669,122 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task AuthorizeReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, AuthorizeRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.AuthorizeReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// ReInitialize volume replication
+            /// </summary>
+            /// <remarks>
+            /// Re-Initializes the replication connection on the destination volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            public static void ReInitializeReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            {
+                operations.ReInitializeReplicationAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// ReInitialize volume replication
+            /// </summary>
+            /// <remarks>
+            /// Re-Initializes the replication connection on the destination volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReInitializeReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ReInitializeReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Change pool for volume
+            /// </summary>
+            /// <remarks>
+            /// Moves volume to another pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='body'>
+            /// Move volume to the pool supplied in the body of the operation.
+            /// </param>
+            public static void PoolChange(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body)
+            {
+                operations.PoolChangeAsync(resourceGroupName, accountName, poolName, volumeName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Change pool for volume
+            /// </summary>
+            /// <remarks>
+            /// Moves volume to another pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='body'>
+            /// Move volume to the pool supplied in the body of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PoolChangeAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.PoolChangeWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -932,9 +1052,12 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static void BeginBreakReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            /// <param name='body'>
+            /// Optional body to force break the replication.
+            /// </param>
+            public static void BeginBreakReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, BreakReplicationRequest body = default(BreakReplicationRequest))
             {
-                operations.BeginBreakReplicationAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                operations.BeginBreakReplicationAsync(resourceGroupName, accountName, poolName, volumeName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -958,12 +1081,15 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
+            /// <param name='body'>
+            /// Optional body to force break the replication.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginBreakReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginBreakReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, BreakReplicationRequest body = default(BreakReplicationRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginBreakReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginBreakReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -972,7 +1098,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1000,7 +1126,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1141,6 +1267,162 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task BeginAuthorizeReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, AuthorizeRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginAuthorizeReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// ReInitialize volume replication
+            /// </summary>
+            /// <remarks>
+            /// Re-Initializes the replication connection on the destination volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            public static void BeginReInitializeReplication(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            {
+                operations.BeginReInitializeReplicationAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// ReInitialize volume replication
+            /// </summary>
+            /// <remarks>
+            /// Re-Initializes the replication connection on the destination volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginReInitializeReplicationAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginReInitializeReplicationWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Change pool for volume
+            /// </summary>
+            /// <remarks>
+            /// Moves volume to another pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='body'>
+            /// Move volume to the pool supplied in the body of the operation.
+            /// </param>
+            public static void BeginPoolChange(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body)
+            {
+                operations.BeginPoolChangeAsync(resourceGroupName, accountName, poolName, volumeName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Change pool for volume
+            /// </summary>
+            /// <remarks>
+            /// Moves volume to another pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='body'>
+            /// Move volume to the pool supplied in the body of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPoolChangeAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginPoolChangeWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Describe all volumes
+            /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Volume> ListNext(this IVolumesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describe all volumes
+            /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Volume>> ListNextAsync(this IVolumesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

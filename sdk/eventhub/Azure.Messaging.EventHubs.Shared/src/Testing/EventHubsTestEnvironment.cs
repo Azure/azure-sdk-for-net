@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -15,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   variables.
     /// </summary>
     ///
-    public sealed class EventHubsTestEnvironment: TestEnvironment
+    public sealed class EventHubsTestEnvironment : TestEnvironment
     {
         /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
         public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
@@ -29,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The name of the environment variable used to specify an override for the Event Hub instance to use for all tests.</summary>
         private const string EventHubNameOverrideEnvironmentVariable = "EVENTHUB_OVERRIDE_EVENT_HUB_NAME";
 
-        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
+        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
 
         /// <summary>The singleton instance of the <see cref="EventHubsTestEnvironment" />, lazily created.</summary>
@@ -38,11 +37,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveEventHubsNamespace;
 
-        /// <summary> The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung, lazily evaluated.</summary>
+        /// <summary>The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding, lazily evaluated.</summary>
         private readonly Lazy<TimeSpan> ActivePerTestExecutionLimit;
 
         /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
-        private readonly Lazy<ConnectionStringProperties> ParsedConnectionString;
+        private readonly Lazy<EventHubsConnectionStringProperties> ParsedConnectionString;
 
         /// <summary>
         ///   The shared instance of the <see cref="EventHubsTestEnvironment"/> to be used during test runs.
@@ -60,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   The environment variable value, or default, for the maximum duration, in minutes,
-        ///   that a single test is permitted to run before it is considered at-risk for being hung.
+        ///   that a single test is permitted to run before it is considered at-risk of not responding.
         /// </summary>
         ///
         public TimeSpan TestExecutionTimeLimit => ActivePerTestExecutionLimit.Value;
@@ -88,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public string FullyQualifiedNamespace => ParsedConnectionString.Value.Endpoint.Host;
+        public string FullyQualifiedNamespace => ParsedConnectionString.Value.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the Event Hub to use during Live tests.
@@ -115,12 +114,24 @@ namespace Azure.Messaging.EventHubs.Tests
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
+        ///   The Azure Service Management endpoint to be used for management plane authentication with the active cloud environment.
+        /// </summary>
+        ///
+        public new string ServiceManagementUrl => base.ServiceManagementUrl ?? "https://management.core.windows.net/";
+
+        /// <summary>
+        ///   The location of the resource manager for the active cloud environment.
+        /// </summary>
+        ///
+        public new string ResourceManagerUrl => base.ResourceManagerUrl ?? "https://management.azure.com/";
+
+        /// <summary>
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.
         /// </summary>
         ///
-        private EventHubsTestEnvironment() : base("eventhub")
+        public EventHubsTestEnvironment()
         {
-            ParsedConnectionString = new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
+            ParsedConnectionString = new Lazy<EventHubsConnectionStringProperties>(() => EventHubsConnectionStringProperties.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
             ActiveEventHubsNamespace = new Lazy<NamespaceProperties>(EnsureEventHubsNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
             ActivePerTestExecutionLimit = new Lazy<TimeSpan>(() =>
@@ -133,7 +144,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 return TimeSpan.FromMinutes(interval);
-
             }, LazyThreadSafetyMode.PublicationOnly);
         }
 
@@ -142,7 +152,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Live tests.
         /// </summary>
         ///
-        /// <value>The namespace connection string is based on the dynamic Event Hubs scope.</value>
+        /// <param name="eventHubName">The name of the Event Hub to base the connection string on.</param>
+        ///
+        /// <return>The Event Hub-level connection string.</return>
         ///
         public string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
 
@@ -160,11 +172,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (!string.IsNullOrEmpty(environmentConnectionString))
             {
-                var parsed = ConnectionStringParser.Parse(environmentConnectionString);
+                var parsed = EventHubsConnectionStringProperties.Parse(environmentConnectionString);
 
                 return new NamespaceProperties
                 (
-                    parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
+                    parsed.FullyQualifiedNamespace.Substring(0, parsed.FullyQualifiedNamespace.IndexOf('.')),
                     environmentConnectionString.Replace($";EntityPath={ parsed.EventHubName }", string.Empty),
                     shouldRemoveAtCompletion: false
                 );

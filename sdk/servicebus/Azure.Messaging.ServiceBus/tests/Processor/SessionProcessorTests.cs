@@ -6,21 +6,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
-    public class SessionProcessorTests : ServiceBusTestBase
+    public class SessionProcessorTests
     {
         [Test]
         public void CannotAddNullHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
@@ -33,9 +31,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetMessageHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
@@ -45,9 +42,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -59,9 +55,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -79,9 +74,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotRemoveHandlerThatHasNotBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -108,9 +102,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CanRemoveHandlerThatHasBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -139,27 +132,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public void ProcessorOptionsSetOnClient()
         {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
             var options = new ServiceBusSessionProcessorOptions
             {
-                AutoComplete = false,
+                AutoCompleteMessages = false,
                 MaxConcurrentSessions = 10,
                 PrefetchCount = 5,
-                ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
                 MaxConcurrentCallsPerSession = 4
             };
             var processor = client.CreateSessionProcessor("queueName", options);
-            Assert.AreEqual(options.AutoComplete, processor.AutoComplete);
+            Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
             Assert.AreEqual(options.MaxConcurrentSessions, processor.MaxConcurrentSessions);
             Assert.AreEqual(options.MaxConcurrentCallsPerSession, processor.MaxConcurrentCallsPerSession);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(options.SessionIdleTimeout, processor.SessionIdleTimeout);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.IsFalse(processor.IsClosed);
+            Assert.IsFalse(processor.IsProcessing);
         }
 
         [Test]
@@ -179,15 +175,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 () => options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(-1),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
             Assert.That(
-                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(0),
+                () => options.SessionIdleTimeout = TimeSpan.FromSeconds(0),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
             Assert.That(
-                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(-1),
+                () => options.SessionIdleTimeout = TimeSpan.FromSeconds(-1),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
 
             // should not throw
             options.PrefetchCount = 0;
-            options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
+            options.SessionIdleTimeout = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
         }
 
@@ -227,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.SetSessionStateAsync(new byte[] { });
+            await args.SetSessionStateAsync(default);
             Assert.IsFalse(msg.IsSettled);
         }
 
@@ -302,6 +298,128 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
+        }
+
+        [Test]
+        public async Task CanRaiseEventsOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            var mockReceiver = new Mock<ServiceBusSessionReceiver>();
+            mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
+            bool processMessageCalled = false;
+            bool processErrorCalled = false;
+            bool sessionOpenCalled = false;
+            bool sessionCloseCalled = false;
+
+            var processArgs = new ProcessSessionMessageEventArgs(
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId"),
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            var errorArgs = new ProcessErrorEventArgs(
+                new ServiceBusException("error", ServiceBusFailureReason.MessageSizeExceeded),
+                ServiceBusErrorSource.Abandon,
+                "namespace",
+                "entityPath",
+                CancellationToken.None);
+
+            var processSessionArgs = new ProcessSessionEventArgs(
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                processMessageCalled = true;
+                Assert.AreEqual("1", args.Message.MessageId);
+                Assert.AreEqual("sessionId", args.SessionId);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += args =>
+            {
+                processErrorCalled = true;
+                Assert.AreEqual(
+                    ServiceBusFailureReason.MessageSizeExceeded,
+                    ((ServiceBusException)args.Exception).Reason);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.AreEqual(ServiceBusErrorSource.Abandon, args.ErrorSource);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.SessionInitializingAsync += args =>
+            {
+                sessionOpenCalled = true;
+                Assert.AreEqual("sessionId", args.SessionId);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.SessionClosingAsync += args =>
+            {
+                sessionCloseCalled = true;
+                Assert.AreEqual("sessionId", args.SessionId);
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessSessionMessageAsync(processArgs);
+            await mockProcessor.OnProcessErrorAsync(errorArgs);
+            await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
+            await mockProcessor.OnSessionClosingAsync(processSessionArgs);
+
+            Assert.IsTrue(processMessageCalled);
+            Assert.IsTrue(processErrorCalled);
+            Assert.IsTrue(sessionOpenCalled);
+            Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            var mockSessionProcessor = new Mock<ServiceBusSessionProcessor>() {CallBase = true};
+
+            mockSessionProcessor.Setup(
+                p => p.InnerProcessor).Returns(mockProcessor.Object);
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(500);
+
+            await mockSessionProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class MockSessionProcessor : ServiceBusSessionProcessor
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        protected internal override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
+
+        public MockSessionProcessor() : base()
+        {
+        }
+
+        protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+        {
+            await base.OnProcessSessionMessageAsync(args);
+        }
+
+        protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        {
+            await base.OnProcessErrorAsync(args);
+        }
+
+        protected internal override async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
+        {
+            await base.OnSessionInitializingAsync(args);
+        }
+
+        protected internal override async Task OnSessionClosingAsync(ProcessSessionEventArgs args)
+        {
+            await base.OnSessionClosingAsync(args);
         }
     }
 }

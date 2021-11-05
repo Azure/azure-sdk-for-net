@@ -5,10 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Batch.FileStaging
@@ -27,10 +23,9 @@ namespace Microsoft.Azure.Batch.FileStaging
             foreach (IFileStagingProvider curFSP in filesToStage)
             {
                 Type curType = curFSP.GetType();
-                List<IFileStagingProvider> foundFileStagingProvider;
 
                 // if no bucket exists create one and register it
-                if (!bucketizedProviders.TryGetValue(curType, out foundFileStagingProvider))
+                if (!bucketizedProviders.TryGetValue(curType, out List<IFileStagingProvider> foundFileStagingProvider))
                 {
                     foundFileStagingProvider = new List<IFileStagingProvider>();
 
@@ -60,7 +55,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                     throw new ArgumentNullException(nameof(allFileStagingArtifacts));
                 }
 
-                if (allFileStagingArtifacts.Count > 0)
+                if (!allFileStagingArtifacts.IsEmpty)
                 {
                     throw new ArgumentOutOfRangeException(nameof(allFileStagingArtifacts));
                 }
@@ -74,16 +69,13 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // detect any missing staging artifacts.  Each bucket must have a staging artifact.
                 foreach (Type curProviderType in bucketByProviders.Keys)
                 {
-                    IFileStagingArtifact curProviderArtifact;
 
                     // if no artifact was passed in, instantiate one and have it added
-                    if (!allFileStagingArtifacts.TryGetValue(curProviderType, out curProviderArtifact))
+                    if (!allFileStagingArtifacts.TryGetValue(curProviderType, out IFileStagingArtifact curProviderArtifact))
                     {
                         // we need to have the staging provider create an artifact instance
                         // so first we retrieve the list of files and ask one of them
-                        List<IFileStagingProvider> filesForProviderType;
-
-                        if (bucketByProviders.TryGetValue(curProviderType, out filesForProviderType))
+                        if (bucketByProviders.TryGetValue(curProviderType, out List<IFileStagingProvider> filesForProviderType))
                         {
                             Debug.Assert(filesForProviderType.Count > 0); // to be in a bucket means there must be at least one.
 
@@ -105,9 +97,8 @@ namespace Microsoft.Azure.Batch.FileStaging
                 // add missing artifacts to collection
                 foreach (Type curProvderType in pendingArtifactsToAdd.Keys)
                 {
-                    IFileStagingArtifact curArtifact;
 
-                    if (pendingArtifactsToAdd.TryGetValue(curProvderType, out curArtifact))
+                    if (pendingArtifactsToAdd.TryGetValue(curProvderType, out IFileStagingArtifact curArtifact))
                     {
                         allFileStagingArtifacts.TryAdd(curProvderType, curArtifact);
                     }
@@ -126,9 +117,8 @@ namespace Microsoft.Azure.Batch.FileStaging
 
                     IFileStagingProvider anyInstance = curProviderFilesToStage[0];  // had to be at least one to get here.
                     Task providerTask;  // this is the async task for this provider
-                    IFileStagingArtifact stagingArtifact; // artifact for this provider
 
-                    if (allFileStagingArtifacts.TryGetValue(anyInstance.GetType(), out stagingArtifact))  // register the staging artifact
+                    if (allFileStagingArtifacts.TryGetValue(anyInstance.GetType(), out IFileStagingArtifact stagingArtifact))  // register the staging artifact
                     {
                         providerTask = anyInstance.StageFilesAsync(curProviderFilesToStage, stagingArtifact);
 

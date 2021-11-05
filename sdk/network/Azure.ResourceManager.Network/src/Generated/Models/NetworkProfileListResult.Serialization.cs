@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkProfileListResult
+    internal partial class NetworkProfileListResult
     {
         internal static NetworkProfileListResult DeserializeNetworkProfileListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkProfile> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkProfileData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkProfile> array = new List<NetworkProfile>();
+                    List<NetworkProfileData> array = new List<NetworkProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkProfile.DeserializeNetworkProfile(item));
-                        }
+                        array.Add(NetworkProfileData.DeserializeNetworkProfileData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkProfileListResult(value, nextLink);
+            return new NetworkProfileListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

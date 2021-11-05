@@ -28,29 +28,7 @@ namespace Azure.Identity
 
         public HttpClient GetHttpClient()
         {
-            return new HttpClient(new PipelineHttpMessageHandler(_pipeline));
-        }
-
-        /// <summary>
-        /// An HttpMessageHandler which delegates SendAsync to a specified HttpPipeline.
-        /// </summary>
-        private class PipelineHttpMessageHandler : HttpMessageHandler
-        {
-            private readonly HttpPipeline _pipeline;
-
-            public PipelineHttpMessageHandler(HttpPipeline pipeline)
-            {
-                _pipeline = pipeline;
-            }
-
-            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                Request pipelineRequest = await request.ToPipelineRequestAsync(_pipeline).ConfigureAwait(false);
-
-                Response pipelineResponse = await _pipeline.SendRequestAsync(pipelineRequest, cancellationToken).ConfigureAwait(false);
-
-                return pipelineResponse.ToHttpResponseMessage();
-            }
+            return new HttpClient(new HttpPipelineMessageHandler(_pipeline));
         }
     }
 }

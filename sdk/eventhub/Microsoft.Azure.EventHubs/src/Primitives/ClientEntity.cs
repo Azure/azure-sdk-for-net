@@ -127,5 +127,16 @@ namespace Microsoft.Azure.EventHubs
         {
             // NOOP
         }
+
+        /// <summary>
+        /// Throws an exception if client object is already closed.
+        /// </summary>
+        protected void ThrowIfClosed()
+        {
+            if (this.IsClosed)
+            {
+                throw new InvalidOperationException(Resources.ClientAlreadyClosed);
+            }
+        }
     }
 }

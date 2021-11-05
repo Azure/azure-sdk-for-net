@@ -26,28 +26,20 @@ namespace Azure.Graph.Rbac.Models
                     case "User": return User.DeserializeUser(element);
                 }
             }
-            string objectId = default;
-            string objectType = default;
-            DateTimeOffset? deletionTimestamp = default;
+            Optional<string> objectId = default;
+            Optional<string> objectType = default;
+            Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectType = property.Value.GetString();
                     continue;
                 }
@@ -55,23 +47,16 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DirectoryObject(objectId, objectType, deletionTimestamp, additionalProperties);
+            return new DirectoryObject(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties);
         }
     }
 }

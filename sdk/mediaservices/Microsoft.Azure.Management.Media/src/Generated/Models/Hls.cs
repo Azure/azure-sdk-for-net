@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The HLS configuration.
+    /// HTTP Live Streaming (HLS) packing setting for the live output.
     /// </summary>
     public partial class Hls
     {
@@ -29,8 +29,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the Hls class.
         /// </summary>
-        /// <param name="fragmentsPerTsSegment">The amount of fragments per
-        /// HTTP Live Streaming (HLS) segment.</param>
+        /// <param name="fragmentsPerTsSegment">The number of fragments in an
+        /// HTTP Live Streaming (HLS) TS segment in the output of the live
+        /// event. This value does not affect the packing ratio for HLS CMAF
+        /// output.</param>
         public Hls(int? fragmentsPerTsSegment = default(int?))
         {
             FragmentsPerTsSegment = fragmentsPerTsSegment;
@@ -43,8 +45,9 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the amount of fragments per HTTP Live Streaming (HLS)
-        /// segment.
+        /// Gets or sets the number of fragments in an HTTP Live Streaming
+        /// (HLS) TS segment in the output of the live event. This value does
+        /// not affect the packing ratio for HLS CMAF output.
         /// </summary>
         [JsonProperty(PropertyName = "fragmentsPerTsSegment")]
         public int? FragmentsPerTsSegment { get; set; }

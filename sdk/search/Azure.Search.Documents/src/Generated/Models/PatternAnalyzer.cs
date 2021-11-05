@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PatternAnalyzer(string name) : base(name)
         {
             if (name == null)
@@ -22,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Stopwords = new List<string>();
+            Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
@@ -38,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
             FlagsInternal = flagsInternal;
-            Stopwords = stopwords ?? new List<string>();
+            Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 

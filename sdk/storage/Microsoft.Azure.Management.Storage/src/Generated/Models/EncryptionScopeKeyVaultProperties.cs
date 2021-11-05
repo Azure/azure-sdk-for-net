@@ -37,9 +37,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// object. When applied, the encryption scope will use the key
         /// referenced by the identifier to enable customer-managed key support
         /// on this encryption scope.</param>
-        public EncryptionScopeKeyVaultProperties(string keyUri = default(string))
+        /// <param name="currentVersionedKeyIdentifier">The object identifier
+        /// of the current versioned Key Vault Key in use.</param>
+        /// <param name="lastKeyRotationTimestamp">Timestamp of last rotation
+        /// of the Key Vault Key.</param>
+        public EncryptionScopeKeyVaultProperties(string keyUri = default(string), string currentVersionedKeyIdentifier = default(string), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?))
         {
             KeyUri = keyUri;
+            CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
+            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
             CustomInit();
         }
 
@@ -56,6 +62,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyUri")]
         public string KeyUri { get; set; }
+
+        /// <summary>
+        /// Gets the object identifier of the current versioned Key Vault Key
+        /// in use.
+        /// </summary>
+        [JsonProperty(PropertyName = "currentVersionedKeyIdentifier")]
+        public string CurrentVersionedKeyIdentifier { get; private set; }
+
+        /// <summary>
+        /// Gets timestamp of last rotation of the Key Vault Key.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastKeyRotationTimestamp")]
+        public System.DateTime? LastKeyRotationTimestamp { get; private set; }
 
     }
 }

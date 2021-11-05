@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class SparkJobDefinitionsListResponse
+    [JsonConverter(typeof(SparkJobDefinitionsListResponseConverter))]
+    internal partial class SparkJobDefinitionsListResponse
     {
         internal static SparkJobDefinitionsListResponse DeserializeSparkJobDefinitionsListResponse(JsonElement element)
         {
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkJobDefinitionsListResponse(value, nextLink.Value);
+        }
+
+        internal partial class SparkJobDefinitionsListResponseConverter : JsonConverter<SparkJobDefinitionsListResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkJobDefinitionsListResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkJobDefinitionsListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkJobDefinitionsListResponse(document.RootElement);
+            }
         }
     }
 }

@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class AuthorizationRuleListResult
+    internal partial class AuthorizationRuleListResult
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {
-            IReadOnlyList<AuthorizationRule> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AuthorizationRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationRule> array = new List<AuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AuthorizationRule.DeserializeAuthorizationRule(item));
-                        }
+                        array.Add(AuthorizationRule.DeserializeAuthorizationRule(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AuthorizationRuleListResult(value, nextLink);
+            return new AuthorizationRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -26,6 +26,11 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkStatementOutput class.
         /// </summary>
+        /// <param name="status">Execution status. Possible values include:
+        /// 'ok', 'error', 'abort'</param>
+        /// <param name="executionCount">A monotonically increasing
+        /// number.</param>
+        /// <param name="data">Statement output.</param>
         public SparkStatementOutput(string status = default(string), int? executionCount = default(int?), object data = default(object))
         {
             Status = status;
@@ -40,16 +45,20 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets execution status. Possible values include: 'ok',
+        /// 'error', 'abort'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets a monotonically increasing number.
         /// </summary>
         [JsonProperty(PropertyName = "execution_count")]
         public int? ExecutionCount { get; set; }
 
         /// <summary>
+        /// Gets or sets statement output.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public object Data { get; set; }

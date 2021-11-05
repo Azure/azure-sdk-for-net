@@ -31,17 +31,15 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         /// <param name="nameAvailable">Specifies a Boolean value that
         /// indicates if the name is available.</param>
-        /// <param name="name">The name that was checked.</param>
         /// <param name="message">Message indicating an unavailable name due to
         /// a conflict, or a description of the naming rules that are
         /// violated.</param>
         /// <param name="reason">Message providing the reason why the given
         /// name is invalid. Possible values include: 'Invalid',
         /// 'AlreadyExists'</param>
-        public CheckNameResult(bool? nameAvailable = default(bool?), string name = default(string), string message = default(string), string reason = default(string))
+        public CheckNameResult(bool? nameAvailable = default(bool?), string message = default(string), string reason = default(string))
         {
             NameAvailable = nameAvailable;
-            Name = name;
             Message = message;
             Reason = reason;
             CustomInit();
@@ -58,12 +56,6 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         [JsonProperty(PropertyName = "nameAvailable")]
         public bool? NameAvailable { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name that was checked.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets message indicating an unavailable name due to a

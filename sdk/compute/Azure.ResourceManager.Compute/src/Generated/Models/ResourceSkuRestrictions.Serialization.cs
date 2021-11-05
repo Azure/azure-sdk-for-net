@@ -15,16 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkuRestrictions DeserializeResourceSkuRestrictions(JsonElement element)
         {
-            ResourceSkuRestrictionsType? type = default;
-            IReadOnlyList<string> values = default;
-            ResourceSkuRestrictionInfo restrictionInfo = default;
-            ResourceSkuRestrictionsReasonCode? reasonCode = default;
+            Optional<ResourceSkuRestrictionsType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<ResourceSkuRestrictionInfo> restrictionInfo = default;
+            Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToResourceSkuRestrictionsType();
@@ -34,19 +35,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     values = array;
                     continue;
@@ -55,6 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restrictionInfo = ResourceSkuRestrictionInfo.DeserializeResourceSkuRestrictionInfo(property.Value);
@@ -64,13 +60,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = property.Value.GetString().ToResourceSkuRestrictionsReasonCode();
                     continue;
                 }
             }
-            return new ResourceSkuRestrictions(type, values, restrictionInfo, reasonCode);
+            return new ResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
         }
     }
 }

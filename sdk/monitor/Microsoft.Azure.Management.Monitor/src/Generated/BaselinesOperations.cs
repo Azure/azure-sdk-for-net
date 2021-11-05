@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='metricnames'>
-        /// The names of the metrics (comma separated) to retrieve.
+        /// The names of the metrics (comma separated) to retrieve. Special case: If a
+        /// metricname itself has a comma in it then use %2 to indicate it. Eg:
+        /// 'Metric,Name1' should be **'Metric%2Name1'**
         /// </param>
         /// <param name='metricnamespace'>
         /// Metric namespace to query metric definitions for.
@@ -76,17 +78,20 @@ namespace Microsoft.Azure.Management.Monitor
         /// The list of sensitivities (comma separated) to retrieve.
         /// </param>
         /// <param name='filter'>
-        /// The **$filter** is used to reduce the set of metric data
-        /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and
-        /// C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or
-        /// b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq
-        /// ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq
-        /// ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the
-        /// logical or operator cannot separate two different metadata
-        /// names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C =
-        /// c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;-
-        /// Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq
-        /// ‘*’ and C eq ‘*’**.
+        /// The **$filter** is used to reduce the set of metric data returned. Example:
+        /// Metric contains metadata A, B and C. - Return all time series of C where A
+        /// = a1 and B = b1 or b2 **$filter=A eq 'a1' and B eq 'b1' or B eq 'b2' and C
+        /// eq '*'** - Invalid variant: **$filter=A eq 'a1' and B eq 'b1' and C eq '*'
+        /// or B = 'b2'** This is invalid because the logical or operator cannot
+        /// separate two different metadata names. - Return all time series where A =
+        /// a1, B = b1 and C = c1: **$filter=A eq 'a1' and B eq 'b1' and C eq 'c1'** -
+        /// Return all time series where A = a1 **$filter=A eq 'a1' and B eq '*' and C
+        /// eq '*'**. Special case: When dimension name or dimension value uses round
+        /// brackets. Eg: When dimension name is **dim (test) 1** Instead of using
+        /// $filter= "dim (test) 1 eq '*' " use **$filter= "dim %2528test%2529 1 eq '*'
+        /// "** When dimension name is **dim (test) 3** and dimension value is **dim3
+        /// (test) val** Instead of using $filter= "dim (test) 3 eq 'dim3 (test) val' "
+        /// use **$filter= "dim %2528test%2529 3 eq 'dim3 %2528test%2529 val' "**
         /// </param>
         /// <param name='resultType'>
         /// Allows retrieving only metadata of the baseline. On data request all
@@ -119,6 +124,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
             }
+            if (resourceUri != null)
+            {
+                if (resourceUri.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceUri", 1);
+                }
+            }
             string apiVersion = "2019-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -142,7 +154,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/microsoft.insights/metricBaselines").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceUri}/providers/Microsoft.Insights/metricBaselines").ToString();
             _url = _url.Replace("{resourceUri}", resourceUri);
             List<string> _queryParameters = new List<string>();
             if (metricnames != null)

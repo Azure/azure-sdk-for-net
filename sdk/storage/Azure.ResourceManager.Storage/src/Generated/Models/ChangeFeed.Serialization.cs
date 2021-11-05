@@ -15,30 +15,47 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(RetentionInDays))
+            {
+                writer.WritePropertyName("retentionInDays");
+                writer.WriteNumberValue(RetentionInDays.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ChangeFeed DeserializeChangeFeed(JsonElement element)
         {
-            bool? enabled = default;
+            Optional<bool> enabled = default;
+            Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("retentionInDays"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    retentionInDays = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ChangeFeed(enabled);
+            return new ChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
         }
     }
 }

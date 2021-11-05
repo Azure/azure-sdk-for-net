@@ -6,37 +6,21 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class UpdateResourceDefinition
+    public partial class UpdateResourceDefinition : Resource
     {
         /// <summary> Initializes a new instance of UpdateResourceDefinition. </summary>
         public UpdateResourceDefinition()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of UpdateResourceDefinition. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        internal UpdateResourceDefinition(string id, string name, string type, IDictionary<string, string> tags)
-        {
-            Id = id;
-            Name = name;
-            Type = type;
-            Tags = tags;
-        }
-
-        /// <summary> Resource Id. </summary>
-        public string Id { get; }
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

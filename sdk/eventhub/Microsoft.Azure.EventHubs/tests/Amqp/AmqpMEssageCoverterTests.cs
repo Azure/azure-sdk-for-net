@@ -37,6 +37,27 @@ namespace Microsoft.Azure.EventHubs.Tests.Amqp
             Assert.Equal("42", eventData.SystemProperties[Properties.CorrelationIdName].ToString());
         }
 
+        [Fact]
+        [DisplayTestMethodName]
+        public void ContentTypeFromAmqpMessage()
+        {
+            var message = AmqpMessage.Create(new MemoryStream(new byte[12]), true);
+            AddSection(message, SectionFlag.Properties);
+            message.Properties.ContentType = "this content type";
+            var eventData = AmqpMessageConverter.AmqpMessageToEventData(message);
+            Assert.Equal(message.Properties.ContentType.Value, eventData.ContentType);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public void ContentTypeToAmqpMessage()
+        {
+            var eventData = new EventData(new byte[10]);
+            eventData.ContentType = "this content type";
+            var message = AmqpMessageConverter.EventDataToAmqpMessage(eventData);
+            Assert.Equal(message.Properties.ContentType.Value, eventData.ContentType);
+        }
+
         // for more information please take a look at https://github.com/Azure/azure-amqp/blob/339708e6390447004c3eec8ae28e6577199a4328/test/TestCases/AmqpMessageTests.cs#L160
         private static void AddSection(AmqpMessage message, SectionFlag sections)
         {

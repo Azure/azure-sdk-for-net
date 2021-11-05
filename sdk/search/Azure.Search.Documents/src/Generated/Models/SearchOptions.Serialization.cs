@@ -17,12 +17,12 @@ namespace Azure.Search.Documents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IncludeTotalCount != null)
+            if (Optional.IsDefined(IncludeTotalCount))
             {
                 writer.WritePropertyName("count");
                 writer.WriteBooleanValue(IncludeTotalCount.Value);
             }
-            if (Facets != null)
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets");
                 writer.WriteStartArray();
@@ -32,42 +32,52 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteStringValue(Filter);
             }
-            if (HighlightFieldsRaw != null)
+            if (Optional.IsDefined(HighlightFieldsRaw))
             {
                 writer.WritePropertyName("highlight");
                 writer.WriteStringValue(HighlightFieldsRaw);
             }
-            if (HighlightPostTag != null)
+            if (Optional.IsDefined(HighlightPostTag))
             {
                 writer.WritePropertyName("highlightPostTag");
                 writer.WriteStringValue(HighlightPostTag);
             }
-            if (HighlightPreTag != null)
+            if (Optional.IsDefined(HighlightPreTag))
             {
                 writer.WritePropertyName("highlightPreTag");
                 writer.WriteStringValue(HighlightPreTag);
             }
-            if (MinimumCoverage != null)
+            if (Optional.IsDefined(MinimumCoverage))
             {
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (OrderByRaw != null)
+            if (Optional.IsDefined(OrderByRaw))
             {
                 writer.WritePropertyName("orderby");
                 writer.WriteStringValue(OrderByRaw);
             }
-            if (QueryType != null)
+            if (Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("queryType");
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
-            if (ScoringParameters != null)
+            if (Optional.IsDefined(ScoringStatistics))
+            {
+                writer.WritePropertyName("scoringStatistics");
+                writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId");
+                writer.WriteStringValue(SessionId);
+            }
+            if (Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters");
                 writer.WriteStartArray();
@@ -77,69 +87,102 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (ScoringProfile != null)
+            if (Optional.IsDefined(ScoringProfile))
             {
                 writer.WritePropertyName("scoringProfile");
                 writer.WriteStringValue(ScoringProfile);
             }
-            if (SearchText != null)
+            if (Optional.IsDefined(SearchText))
             {
                 writer.WritePropertyName("search");
                 writer.WriteStringValue(SearchText);
             }
-            if (SearchFieldsRaw != null)
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields");
                 writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (SearchMode != null)
+            if (Optional.IsDefined(SearchMode))
             {
                 writer.WritePropertyName("searchMode");
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
-            if (SelectRaw != null)
+            if (Optional.IsDefined(QueryLanguage))
+            {
+                writer.WritePropertyName("queryLanguage");
+                writer.WriteStringValue(QueryLanguage.Value.ToString());
+            }
+            if (Optional.IsDefined(QuerySpeller))
+            {
+                writer.WritePropertyName("speller");
+                writer.WriteStringValue(QuerySpeller.Value.ToString());
+            }
+            if (Optional.IsDefined(QueryAnswerRaw))
+            {
+                writer.WritePropertyName("answers");
+                writer.WriteStringValue(QueryAnswerRaw);
+            }
+            if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select");
                 writer.WriteStringValue(SelectRaw);
             }
-            if (Skip != null)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip");
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top");
                 writer.WriteNumberValue(Size.Value);
+            }
+            if (Optional.IsDefined(QueryCaptionRaw))
+            {
+                writer.WritePropertyName("captions");
+                writer.WriteStringValue(QueryCaptionRaw);
+            }
+            if (Optional.IsDefined(SemanticFieldsRaw))
+            {
+                writer.WritePropertyName("semanticFields");
+                writer.WriteStringValue(SemanticFieldsRaw);
             }
             writer.WriteEndObject();
         }
 
         internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
-            bool? count = default;
-            IList<string> facets = default;
-            string filter = default;
-            string highlight = default;
-            string highlightPostTag = default;
-            string highlightPreTag = default;
-            double? minimumCoverage = default;
-            string orderby = default;
-            SearchQueryType? queryType = default;
-            IList<string> scoringParameters = default;
-            string scoringProfile = default;
-            string search = default;
-            string searchFields = default;
-            SearchMode? searchMode = default;
-            string select = default;
-            int? skip = default;
-            int? top = default;
+            Optional<bool> count = default;
+            Optional<IList<string>> facets = default;
+            Optional<string> filter = default;
+            Optional<string> highlight = default;
+            Optional<string> highlightPostTag = default;
+            Optional<string> highlightPreTag = default;
+            Optional<double> minimumCoverage = default;
+            Optional<string> orderby = default;
+            Optional<SearchQueryType> queryType = default;
+            Optional<ScoringStatistics> scoringStatistics = default;
+            Optional<string> sessionId = default;
+            Optional<IList<string>> scoringParameters = default;
+            Optional<string> scoringProfile = default;
+            Optional<string> search = default;
+            Optional<string> searchFields = default;
+            Optional<SearchMode> searchMode = default;
+            Optional<QueryLanguage> queryLanguage = default;
+            Optional<QuerySpellerType> speller = default;
+            Optional<string> answers = default;
+            Optional<string> select = default;
+            Optional<int> skip = default;
+            Optional<int> top = default;
+            Optional<string> captions = default;
+            Optional<string> semanticFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetBoolean();
@@ -149,56 +192,34 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     facets = array;
                     continue;
                 }
                 if (property.NameEquals("filter"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filter = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlight"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     highlight = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlightPostTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     highlightPostTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlightPreTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     highlightPreTag = property.Value.GetString();
                     continue;
                 }
@@ -206,6 +227,7 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumCoverage = property.Value.GetDouble();
@@ -213,10 +235,6 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("orderby"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     orderby = property.Value.GetString();
                     continue;
                 }
@@ -224,56 +242,54 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryType = property.Value.GetString().ToSearchQueryType();
+                    continue;
+                }
+                if (property.NameEquals("scoringStatistics"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scoringStatistics = property.Value.GetString().ToScoringStatistics();
+                    continue;
+                }
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scoringParameters"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     scoringParameters = array;
                     continue;
                 }
                 if (property.NameEquals("scoringProfile"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scoringProfile = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("search"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     search = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("searchFields"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     searchFields = property.Value.GetString();
                     continue;
                 }
@@ -281,17 +297,39 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchMode = property.Value.GetString().ToSearchMode();
                     continue;
                 }
-                if (property.NameEquals("select"))
+                if (property.NameEquals("queryLanguage"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
+                    queryLanguage = new QueryLanguage(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("speller"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    speller = new QuerySpellerType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("answers"))
+                {
+                    answers = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("select"))
+                {
                     select = property.Value.GetString();
                     continue;
                 }
@@ -299,6 +337,7 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skip = property.Value.GetInt32();
@@ -308,13 +347,24 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     top = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("captions"))
+                {
+                    captions = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("semanticFields"))
+                {
+                    semanticFields = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SearchOptions(count, facets, filter, highlight, highlightPostTag, highlightPreTag, minimumCoverage, orderby, queryType, scoringParameters, scoringProfile, search, searchFields, searchMode, select, skip, top);
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value);
         }
     }
 }

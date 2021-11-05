@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BootDiagnostics != null)
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics");
                 writer.WriteObjectValue(BootDiagnostics);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiagnosticsProfile DeserializeDiagnosticsProfile(JsonElement element)
         {
-            BootDiagnostics bootDiagnostics = default;
+            Optional<BootDiagnostics> bootDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bootDiagnostics"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value);
                     continue;
                 }
             }
-            return new DiagnosticsProfile(bootDiagnostics);
+            return new DiagnosticsProfile(bootDiagnostics.Value);
         }
     }
 }

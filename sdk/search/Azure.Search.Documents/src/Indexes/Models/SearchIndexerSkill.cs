@@ -30,11 +30,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
 
         /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<InputFieldMappingEntry> Inputs { get; }
 
         /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<OutputFieldMappingEntry> Outputs { get; }
     }
 }

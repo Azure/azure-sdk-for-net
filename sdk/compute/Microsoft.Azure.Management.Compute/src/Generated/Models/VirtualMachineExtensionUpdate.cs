@@ -51,12 +51,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployment time. Once deployed, however, the extension will not
         /// upgrade minor versions unless redeployed, even with this property
         /// set to true.</param>
+        /// <param name="enableAutomaticUpgrade">Indicates whether the
+        /// extension should be automatically upgraded by the platform if there
+        /// is a newer version of the extension available.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">The extension can contain either
         /// protectedSettings or protectedSettingsFromKeyVault or no protected
         /// settings at all.</param>
-        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object))
+        /// <param name="suppressFailures">Indicates whether failures stemming
+        /// from the extension will be suppressed (Operational failures such as
+        /// not connecting to the VM will not be suppressed regardless of this
+        /// value). The default is false.</param>
+        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?))
             : base(tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -64,8 +71,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
+            SuppressFailures = suppressFailures;
             CustomInit();
         }
 
@@ -110,6 +119,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? AutoUpgradeMinorVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether the extension should be
+        /// automatically upgraded by the platform if there is a newer version
+        /// of the extension available.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAutomaticUpgrade")]
+        public bool? EnableAutomaticUpgrade { get; set; }
+
+        /// <summary>
         /// Gets or sets json formatted public settings for the extension.
         /// </summary>
         [JsonProperty(PropertyName = "properties.settings")]
@@ -121,6 +138,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectedSettings")]
         public object ProtectedSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether failures stemming from the extension
+        /// will be suppressed (Operational failures such as not connecting to
+        /// the VM will not be suppressed regardless of this value). The
+        /// default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suppressFailures")]
+        public bool? SuppressFailures { get; set; }
 
     }
 }

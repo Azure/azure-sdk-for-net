@@ -115,7 +115,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(EntityStatus.Active, getEventResponse.Status);
                     Assert.Equal(6, getEventResponse.MessageRetentionInDays);
 
-                    // Delete the Evnet Hub
+                    // Delete the Event Hub
                     EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
 
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));

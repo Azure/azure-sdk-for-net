@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// The requirements to validate customer address where the device needs to
     /// be shipped.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ValidateAddress")]
     public partial class ValidateAddress : ValidationInputRequest
     {
         /// <summary>

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProtocolType != null)
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType");
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallApplicationRuleProtocol DeserializeAzureFirewallApplicationRuleProtocol(JsonElement element)
         {
-            AzureFirewallApplicationRuleProtocolType? protocolType = default;
-            int? port = default;
+            Optional<AzureFirewallApplicationRuleProtocolType> protocolType = default;
+            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocolType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocolType = new AzureFirewallApplicationRuleProtocolType(property.Value.GetString());
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new AzureFirewallApplicationRuleProtocol(protocolType, port);
+            return new AzureFirewallApplicationRuleProtocol(Optional.ToNullable(protocolType), Optional.ToNullable(port));
         }
     }
 }

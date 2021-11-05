@@ -19,6 +19,7 @@ namespace Azure.Core.Tests
         [Theory]
         [TestCase(HttpPipelinePosition.PerCall, 1)]
         [TestCase(HttpPipelinePosition.PerRetry, 2)]
+        [TestCase(HttpPipelinePosition.BeforeTransport, 2)]
         public async Task CanAddCustomPolicy(HttpPipelinePosition position, int expectedCount)
         {
             var policy = new CounterPolicy();
@@ -38,6 +39,52 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(expectedCount, policy.ExecutionCount);
+        }
+
+        [Test]
+        public async Task CustomPolicyOrdering()
+        {
+            bool perCallRan = false;
+            bool perRetryRan = false;
+            bool beforeTransportRan = false;
+
+            var transport = new MockTransport(new MockResponse(200));
+            var options = new TestOptions();
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                perCallRan = true;
+                Assert.False(perRetryRan);
+                Assert.False(beforeTransportRan);
+            }), HttpPipelinePosition.PerCall);
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                perRetryRan = true;
+                Assert.True(perCallRan);
+                Assert.False(beforeTransportRan);
+            }), HttpPipelinePosition.PerRetry);
+
+            options.AddPolicy(new CallbackPolicy(m =>
+            {
+                beforeTransportRan = true;
+                Assert.True(perRetryRan);
+                Assert.True(perCallRan);
+            }), HttpPipelinePosition.BeforeTransport);
+
+            options.Transport = transport;
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            using Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
+
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            Assert.True(perRetryRan);
+            Assert.True(perCallRan);
+            Assert.True(beforeTransportRan);
         }
 
         [Test]
@@ -154,6 +201,21 @@ namespace Azure.Core.Tests
             }
 
             public int ExecutionCount { get; set; }
+        }
+
+        private class CallbackPolicy : HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<HttpMessage> _message;
+
+            public CallbackPolicy(Action<HttpMessage> message)
+            {
+                _message = message;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                _message(message);
+            }
         }
     }
 }

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TriggerSubscriptionOperationStatusConverter))]
     public partial class TriggerSubscriptionOperationStatus
     {
         internal static TriggerSubscriptionOperationStatus DeserializeTriggerSubscriptionOperationStatus(JsonElement element)
@@ -25,11 +28,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new EventSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
             }
             return new TriggerSubscriptionOperationStatus(triggerName.Value, Optional.ToNullable(status));
+        }
+
+        internal partial class TriggerSubscriptionOperationStatusConverter : JsonConverter<TriggerSubscriptionOperationStatus>
+        {
+            public override void Write(Utf8JsonWriter writer, TriggerSubscriptionOperationStatus model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override TriggerSubscriptionOperationStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
+            }
         }
     }
 }

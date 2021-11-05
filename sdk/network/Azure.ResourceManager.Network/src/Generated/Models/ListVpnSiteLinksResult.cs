@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVpnSiteLinksResult
+    internal partial class ListVpnSiteLinksResult
     {
         /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>
         internal ListVpnSiteLinksResult()
         {
+            Value = new ChangeTrackingList<VpnSiteLink>();
         }
 
         /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>

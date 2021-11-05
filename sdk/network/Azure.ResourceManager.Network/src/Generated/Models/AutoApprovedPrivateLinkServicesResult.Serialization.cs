@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AutoApprovedPrivateLinkServicesResult
+    internal partial class AutoApprovedPrivateLinkServicesResult
     {
         internal static AutoApprovedPrivateLinkServicesResult DeserializeAutoApprovedPrivateLinkServicesResult(JsonElement element)
         {
-            IReadOnlyList<AutoApprovedPrivateLinkService> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AutoApprovedPrivateLinkService>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutoApprovedPrivateLinkService> array = new List<AutoApprovedPrivateLinkService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(item));
-                        }
+                        array.Add(AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AutoApprovedPrivateLinkServicesResult(value, nextLink);
+            return new AutoApprovedPrivateLinkServicesResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

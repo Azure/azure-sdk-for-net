@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -21,13 +22,6 @@ namespace Azure.Messaging.EventHubs.Core
         private static readonly TimeSpan DefaultPerformExpirationPeriod = TimeSpan.FromMinutes(10);
 
         /// <summary>
-        ///   The set of active Event Hub transport-specific producers specific to a given partition;
-        ///   intended to perform delegated operations.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, PoolItem> Pool { get; }
-
-        /// <summary>
         ///   An abstracted Event Hub transport-specific producer that is associated with the
         ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
@@ -35,17 +29,11 @@ namespace Azure.Messaging.EventHubs.Core
         public TransportProducer EventHubProducer { get; }
 
         /// <summary>
-        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
-        ///   about the associated Event Hub and access to a transport-aware producer.
+        ///   The set of active Event Hub transport-specific producers specific to a given partition;
+        ///   intended to perform delegated operations.
         /// </summary>
         ///
-        private EventHubConnection Connection { get; }
-
-        /// <summary>
-        ///   The policy to use for determining retry behavior for when an operation fails.
-        /// </summary>
-        ///
-        private EventHubsRetryPolicy RetryPolicy { get; }
+        private ConcurrentDictionary<string, PoolItem> Pool { get; }
 
         /// <summary>
         ///   A reference to a <see cref="Timer" /> periodically checking every <see cref="DefaultPerformExpirationPeriod" />
@@ -55,39 +43,39 @@ namespace Azure.Messaging.EventHubs.Core
         private Timer ExpirationTimer { get; }
 
         /// <summary>
+        ///   A factory method for spawning a <see cref="TransportProducer" /> for a given partition.
+        /// </summary>
+        ///
+        private Func<string, TransportProducer> TransportProducerFactory { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="TransportProducerPool" /> class.
         /// </summary>
         ///
-        internal TransportProducerPool()
+        /// <param name="transportProducerFactory">A factory method for spawning a <see cref="TransportProducer" /> for a given partition.</param>
+        /// <param name="pool">The pool of <see cref="PoolItem" /> that is going to be used to store the partition specific <see cref="TransportProducer" />.</param>
+        /// <param name="performExpirationPeriod">The period after which <see cref="CreateExpirationTimerCallback" /> is run. Overrides <see cref="DefaultPerformExpirationPeriod" />.</param>
+        /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
+        ///
+        public TransportProducerPool(Func<string, TransportProducer> transportProducerFactory,
+                                     ConcurrentDictionary<string, PoolItem> pool = default,
+                                     TimeSpan? performExpirationPeriod = default,
+                                     TransportProducer eventHubProducer = default)
         {
+            performExpirationPeriod ??= DefaultPerformExpirationPeriod;
+
+            Pool = pool ?? new ConcurrentDictionary<string, PoolItem>();
+            EventHubProducer = eventHubProducer ?? transportProducerFactory(null);
+            TransportProducerFactory = transportProducerFactory;
+            ExpirationTimer = new Timer(CreateExpirationTimerCallback(), null, performExpirationPeriod.Value, performExpirationPeriod.Value);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TransportProducerPool" /> class.
         /// </summary>
         ///
-        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-        /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
-        /// <param name="pool">The pool of <see cref="PoolItem" /> that is going to be used to store the partition specific <see cref="TransportProducer" />.</param>
-        /// <param name="performExpirationPeriod">The period after which <see cref="CreateExpirationTimerCallback" /> is run. Overrides <see cref="DefaultPerformExpirationPeriod" />.</param>
-        /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
-        ///
-        public TransportProducerPool(EventHubConnection connection,
-                                     EventHubsRetryPolicy retryPolicy,
-                                     ConcurrentDictionary<string, PoolItem> pool = default,
-                                     TimeSpan? performExpirationPeriod = default,
-                                     TransportProducer eventHubProducer = default)
+        internal TransportProducerPool()
         {
-            Connection = connection;
-            RetryPolicy = retryPolicy;
-            Pool = pool ?? new ConcurrentDictionary<string, PoolItem>();
-            performExpirationPeriod ??= DefaultPerformExpirationPeriod;
-            EventHubProducer = eventHubProducer ?? connection.CreateTransportProducer(null, retryPolicy);
-
-            ExpirationTimer = new Timer(CreateExpirationTimerCallback(),
-                                        null,
-                                        performExpirationPeriod.Value,
-                                        performExpirationPeriod.Value);
         }
 
         /// <summary>
@@ -114,8 +102,7 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             var identifier = Guid.NewGuid().ToString();
-
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, Connection.CreateTransportProducer(id, RetryPolicy), removeAfterDuration));
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
 
             // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -124,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Core
             if (item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, Connection.CreateTransportProducer(id, RetryPolicy), removeAfterDuration));
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
@@ -141,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 // If TryRemove returned false the PoolItem would not be closed deterministically
                 // and the ExpirationTimer callback would eventually remove it from the
-                // Pool leaving to the Garbage Collector the responsability of closing
+                // Pool leaving to the Garbage Collector the responsibility of closing
                 // the TransportProducer and the AMQP link.
 
                 item.ActiveInstances.TryRemove(identifier, out _);
@@ -175,9 +162,10 @@ namespace Azure.Messaging.EventHubs.Core
             {
             }
 
-            var pendingCloses = new List<Task>();
-
-            pendingCloses.Add(EventHubProducer.CloseAsync(cancellationToken));
+            var pendingCloses = new List<Task>
+            {
+                EventHubProducer.CloseAsync(cancellationToken)
+            };
 
             foreach (var poolItem in Pool.Values)
             {
@@ -185,7 +173,6 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             Pool.Clear();
-
             await Task.WhenAll(pendingCloses).ConfigureAwait(false);
         }
 
@@ -200,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Core
         {
             return _ =>
             {
-                // Capture the timestamp to use a consistent value.
+                // Capture the time stamp to use a consistent value.
                 var now = DateTimeOffset.UtcNow;
 
                 foreach (var key in Pool.Keys.ToList())
@@ -215,9 +202,9 @@ namespace Azure.Messaging.EventHubs.Core
                                 // if there was a context switch between the if conditions
                                 // and the pool item clean up kicked in.
 
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                                poolItem.PartitionProducer.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                                poolItem.PartitionProducer.CloseAsync(CancellationToken.None).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             }
                         }
                     }
@@ -304,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   A class wrapping a <see cref="Core.TransportProducer" />, triggering a clean-up when the object is disposed.
         /// </summary>
         ///
-        internal class PooledProducer: IAsyncDisposable
+        internal class PooledProducer : IAsyncDisposable
         {
             /// <summary>
             ///   A function responsible of cleaning up the resources in use.

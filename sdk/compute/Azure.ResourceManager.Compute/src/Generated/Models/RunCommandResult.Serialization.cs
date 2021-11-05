@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RunCommandResult DeserializeRunCommandResult(JsonElement element)
         {
-            IReadOnlyList<InstanceViewStatus> value = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
-                        }
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new RunCommandResult(value);
+            return new RunCommandResult(Optional.ToList(value));
         }
     }
 }

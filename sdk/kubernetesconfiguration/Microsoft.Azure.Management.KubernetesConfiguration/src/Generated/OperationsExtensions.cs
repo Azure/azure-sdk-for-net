@@ -28,12 +28,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
-            public static IPage<ResourceProviderOperation> List(this IOperations operations, string apiVersion)
+            public static IPage<ResourceProviderOperation> List(this IOperations operations)
             {
-                return operations.ListAsync(apiVersion).GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,15 +40,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceProviderOperation>> ListAsync(this IOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceProviderOperation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

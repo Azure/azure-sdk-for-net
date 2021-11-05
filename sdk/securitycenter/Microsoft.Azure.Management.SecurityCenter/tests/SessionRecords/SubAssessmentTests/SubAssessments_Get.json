@@ -1,48 +1,42 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions%2F2f5dc369-6812-4c7b-9900-30baa10952c5%2FresourceGroups%2FsdkGroup%2Fproviders%2FMicrosoft.ContainerRegistry%2Fregistries%2FsdkRef/providers/Microsoft.Security/assessments/94829b47-fb4e-4d24-93fd-e172b5575289/subAssessments/44828267-f9c0-0e11-0372-75507a7092b1?api-version=2019-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMlMkYyZjVkYzM2OS02ODEyLTRjN2ItOTkwMC0zMGJhYTEwOTUyYzUlMkZyZXNvdXJjZUdyb3VwcyUyRnNka0dyb3VwJTJGcHJvdmlkZXJzJTJGTWljcm9zb2Z0LkNvbnRhaW5lclJlZ2lzdHJ5JTJGcmVnaXN0cmllcyUyRnNka1JlZi9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2Fzc2Vzc21lbnRzLzk0ODI5YjQ3LWZiNGUtNGQyNC05M2ZkLWUxNzJiNTU3NTI4OS9zdWJBc3Nlc3NtZW50cy80NDgyODI2Ny1mOWMwLTBlMTEtMDM3Mi03NTUwN2E3MDkyYjE/YXBpLXZlcnNpb249MjAxOS0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef/providers/Microsoft.Security/assessments/dbd0cb49-b563-45e7-9724-889e799fa648/subAssessments/d1164a35-41e9-43aa-bbc7-bfb3ae093cea?api-version=2019-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL3N1YkFzc2Vzc21lbnRzX3Nka190ZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbnRhaW5lclJlZ2lzdHJ5L3JlZ2lzdHJpZXMvc2RrUmVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvYXNzZXNzbWVudHMvZGJkMGNiNDktYjU2My00NWU3LTk3MjQtODg5ZTc5OWZhNjQ4L3N1YkFzc2Vzc21lbnRzL2QxMTY0YTM1LTQxZTktNDNhYS1iYmM3LWJmYjNhZTA5M2NlYT9hcGktdmVyc2lvbj0yMDE5LTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b633769b-e9c8-4735-8ecc-30823401409a"
+          "f4c7d6e7-0981-4ede-9b2b-82303c540a10"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.2.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Connection": [
-          "close"
-        ],
-        "Date": [
-          "Tue, 12 Nov 2019 08:06:22 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-failure-cause": [
-          "gateway"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4998"
         ],
         "x-ms-request-id": [
-          "3ff55612-875f-48a8-ab09-4f684b4da9df"
+          "f3004694-2186-4f81-a25b-c372a9f23a0b"
         ],
         "x-ms-correlation-request-id": [
-          "3ff55612-875f-48a8-ab09-4f684b4da9df"
+          "f3004694-2186-4f81-a25b-c372a9f23a0b"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191112T080622Z:3ff55612-875f-48a8-ab09-4f684b4da9df"
+          "UKSOUTH:20201104T125802Z:f3004694-2186-4f81-a25b-c372a9f23a0b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,8 +44,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 04 Nov 2020 12:58:02 GMT"
+        ],
         "Content-Length": [
-          "410"
+          "932"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,7 +57,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{ \"type\": \"Microsoft.Security\/assessments\/subAssessments\", \"id\": \"\/subscriptions\/2f5dc369-6812-4c7b-9900-30baa10952c5\/resourceGroups\/sdkGroup\/providers\/Microsoft.ContainerRegistry\/registries\/sdkRef\/providers\/Microsoft.Security\/assessments\/94829b47-fb4e-4d24-93fd-e172b5575289\/subassessments\/44828267-f9c0-0e11-0372-75507a7092b1\", \"name\": \"44828267-f9c0-0e11-0372-75507a7092b1\", \"properties\": { \"id\": \"176805\", \"displayName\": \"Debian Security Update for wget (DSA 4425-1)\", \"status\": { \"code\": \"Unhealthy\", \"severity\": \"Medium\" }, \"remediation\": \"Refer to Debian security advisory <A HREF=\\\"https:\/\/lists.debian.org\/debian-security-announce\/2019\/msg00069.html\\\" TARGET=\\\"_blank\\\">DSA 4425-1<\/A> to address this issue and obtain further details.\\n<P>Patch:<BR>\\nFollowing are links for downloading patches to fix the vulnerabilities:\\n<P> <A HREF=\\\"https:\/\/lists.debian.org\/debian-security-announce\/2019\/msg00069.html\\\" TARGET=\\\"_blank\\\">DSA 4425-1: Debian<\/A>\", \"impact\": \"This vulnerability can also be used to cause a limited denial of service in the form of interruptions in resource availability.\", \"category\": \"Debian\", \"description\": \"Debian has released security update for wget to fix the vulnerabilities.<P>\", \"timeGenerated\": \"2019-09-14T13:39:06.1129488Z\", \"resourceDetails\": { \"source\": \"Azure\", \"id\": \"\/repositories\/dotnet\/core\/sdk\/images\/sha256:fe9f8e9122d94cc2d95d51bd6c0684ea61130d8133b707ad5cb80900bf231a7c\" }, \"additionalData\": { \"assessedResourceType\": \"ContainerRegistryVulnerability\", \"type\": \"Vulnerability\", \"cvss\": { \"2.0\": { \"base\": 7.5 }, \"3.0\": { \"base\": 9.8 } }, \"patchable\": true, \"cve\": [ { \"title\": \"CVE-2019-5953\", \"link\": \"http:\/\/cve.mitre.org\/cgi-bin\/cvename.cgi?name=CVE-2019-5953\" } ], \"publishedTime\": \"2019-04-10T09:58:21Z\", \"vendorReferences\": [ { \"title\": \"DSA 4425-1\", \"link\": \"https:\/\/lists.debian.org\/debian-security-announce\/2019\/msg00069.html\" } ], \"registryHost\": \"sdkRef.azurecr.io\", \"repositoryName\": \"dotnet\/core\/sdk\", \"imageDigest\": \"sha256:fe9f8e9122d94cc2d95d51bd6c0684ea61130d8133b707ad5cb80900bf231a7c\" } } } ",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Security/assessments/subAssessments\",\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef/providers/Microsoft.Security/assessments/dbd0cb49-b563-45e7-9724-889e799fa648/subassessments/d1164a35-41e9-43aa-bbc7-bfb3ae093cea\",\r\n  \"name\": \"d1164a35-41e9-43aa-bbc7-bfb3ae093cea\",\r\n  \"properties\": {\r\n    \"status\": {\r\n      \"code\": \"Healthy\",\r\n      \"severity\": \"Unknown\"\r\n    },\r\n    \"timeGenerated\": \"2020-09-17T12:39:24.4430493Z\",\r\n    \"resourceDetails\": {\r\n      \"source\": \"Azure\",\r\n      \"id\": \"/repositories/hello-world/images/sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042\"\r\n    },\r\n    \"additionalData\": {\r\n      \"assessedResourceType\": \"ContainerRegistryVulnerability\",\r\n      \"patchable\": false,\r\n      \"publishedTime\": \"0001-01-01T00:00:00\",\r\n      \"registryHost\": \"sdkref.azurecr.io\",\r\n      \"repositoryName\": \"hello-world\",\r\n      \"imageDigest\": \"sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042\"\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

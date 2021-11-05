@@ -26,15 +26,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public RoleAssignmentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public RoleAssignmentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.3-preview")
         {
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.apiVersion = apiVersion;
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -52,6 +47,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(roleAssignmentName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -60,7 +56,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment to delete. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RoleAssignment>> DeleteAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleAssignmentName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -80,12 +77,8 @@ namespace Azure.Security.KeyVault.Administration
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        RoleAssignment value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 404:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -96,7 +89,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment to delete. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignment> Delete(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleAssignmentName"/> is null. </exception>
+        public Response Delete(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -116,12 +110,8 @@ namespace Azure.Security.KeyVault.Administration
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        RoleAssignment value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 404:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -140,6 +130,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(roleAssignmentName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -153,7 +144,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RoleAssignment>> CreateAsync(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<KeyVaultRoleAssignment>> CreateAsync(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -178,9 +170,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 201:
                     {
-                        RoleAssignment value = default;
+                        KeyVaultRoleAssignment value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
+                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +186,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignment> Create(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<KeyVaultRoleAssignment> Create(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -219,9 +212,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 201:
                     {
-                        RoleAssignment value = default;
+                        KeyVaultRoleAssignment value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
+                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -242,6 +235,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath(roleAssignmentName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -250,7 +244,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RoleAssignment>> GetAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleAssignmentName"/> is null. </exception>
+        public async Task<Response<KeyVaultRoleAssignment>> GetAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -271,9 +266,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        RoleAssignment value = default;
+                        KeyVaultRoleAssignment value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
+                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,7 +281,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignment> Get(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleAssignmentName"/> is null. </exception>
+        public Response<KeyVaultRoleAssignment> Get(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -307,9 +303,9 @@ namespace Azure.Security.KeyVault.Administration
             {
                 case 200:
                     {
-                        RoleAssignment value = default;
+                        KeyVaultRoleAssignment value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignment.DeserializeRoleAssignment(document.RootElement);
+                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,6 +329,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -341,6 +338,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleAssignmentListResult>> ListForScopeAsync(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -373,6 +371,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleAssignmentListResult> ListForScope(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -409,6 +408,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendRaw(vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -418,6 +418,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleAssignmentListResult>> ListForScopeNextPageAsync(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -455,6 +456,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/>, or <paramref name="scope"/> is null. </exception>
         public Response<RoleAssignmentListResult> ListForScopeNextPage(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

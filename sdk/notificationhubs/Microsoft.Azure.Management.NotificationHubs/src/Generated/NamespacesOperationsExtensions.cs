@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.

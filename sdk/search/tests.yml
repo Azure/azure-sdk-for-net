@@ -1,9 +1,14 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
+    TimeoutInMinutes: 240
     MaxParallel: 2
+    # TODO: change 'Preview' cloud back to public after search RP fixes deletion metadata issue
+    # https://github.com/Azure/azure-sdk-tools/issues/2216
+    Clouds: 'Preview'
+    SupportedClouds: 'Preview,UsGov,China'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

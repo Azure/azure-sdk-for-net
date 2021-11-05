@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string Minute = "Minute";
         public const string Hour = "Hour";
+        public const string Month = "Month";
     }
 }

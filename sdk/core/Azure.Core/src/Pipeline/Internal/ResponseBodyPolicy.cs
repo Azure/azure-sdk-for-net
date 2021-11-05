@@ -25,22 +25,25 @@ namespace Azure.Core.Pipeline
             _networkTimeout = networkTimeout;
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
+            ProcessAsync(message, pipeline, true);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             CancellationToken oldToken = message.CancellationToken;
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-            cts.CancelAfter(_networkTimeout);
+            var networkTimeout = _networkTimeout;
+
+            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+            {
+                networkTimeout = networkTimeoutOverride;
+            }
+
+            cts.CancelAfter(networkTimeout);
             try
             {
                 message.CancellationToken = cts.Token;
@@ -52,6 +55,11 @@ namespace Azure.Core.Pipeline
                 {
                     ProcessNext(message, pipeline);
                 }
+            }
+            catch (OperationCanceledException ex)
+            {
+                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+                throw;
             }
             finally
             {
@@ -67,9 +75,9 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                if (_networkTimeout != Timeout.InfiniteTimeSpan)
+                if (networkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    cts.Token.Register(state => ((Stream)state)?.Dispose(), responseContentStream);
+                    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
 
                 try
@@ -81,7 +89,7 @@ namespace Azure.Core.Pipeline
                     }
                     else
                     {
-                        CopyTo(responseContentStream, bufferedStream, message.CancellationToken);
+                        CopyTo(responseContentStream, bufferedStream, cts);
                     }
 
                     responseContentStream.Dispose();
@@ -89,15 +97,26 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream = bufferedStream;
                 }
                 // We dispose stream on timeout so catch and check if cancellation token was cancelled
-                catch (ObjectDisposedException)
+                catch (ObjectDisposedException ex)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+                    throw;
+                }
+                // We dispose stream on timeout so catch and check if cancellation token was cancelled
+                catch (IOException ex)
+                {
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
+                    throw;
+                }
+                catch (OperationCanceledException ex)
+                {
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;
                 }
             }
-            else if (_networkTimeout != Timeout.InfiniteTimeSpan)
+            else if (networkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, _networkTimeout);
+                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
             }
         }
 
@@ -109,7 +128,9 @@ namespace Azure.Core.Pipeline
                 while (true)
                 {
                     cancellationTokenSource.CancelAfter(_networkTimeout);
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                     int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
                     if (bytesRead == 0) break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
                 }
@@ -121,7 +142,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
+        private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
         {
             byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
             try
@@ -129,13 +150,36 @@ namespace Azure.Core.Pipeline
                 int read;
                 while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    cancellationTokenSource.CancelAfter(_networkTimeout);
                     destination.Write(buffer, 0, read);
                 }
             }
             finally
             {
+                cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
                 ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
+        /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="originalToken"/> or <paramref name="timeoutToken"/>.</summary>
+        /// <param name="originalToken">The customer provided token.</param>
+        /// <param name="timeoutToken">The linked token that is cancelled on timeout provided token.</param>
+        /// <param name="inner">The inner exception to use.</param>
+        /// <param name="timeout">The timeout used for the operation.</param>
+#pragma warning disable CA1068 // Cancellation token has to be the last parameter
+        internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken originalToken, CancellationToken timeoutToken, Exception? inner, TimeSpan timeout)
+#pragma warning restore CA1068
+        {
+            CancellationHelper.ThrowIfCancellationRequested(originalToken);
+
+            if (timeoutToken.IsCancellationRequested)
+            {
+                throw CancellationHelper.CreateOperationCanceledException(
+                    inner,
+                    timeoutToken,
+                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
+                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
         }
     }

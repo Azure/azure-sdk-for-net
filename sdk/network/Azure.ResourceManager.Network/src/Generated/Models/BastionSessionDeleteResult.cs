@@ -6,24 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for DisconnectActiveSessions. </summary>
-    public partial class BastionSessionDeleteResult
+    internal partial class BastionSessionDeleteResult
     {
         /// <summary> Initializes a new instance of BastionSessionDeleteResult. </summary>
         internal BastionSessionDeleteResult()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionSessionDeleteResult. </summary>
-        /// <param name="value"> List of sessions with their corresponding state. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BastionSessionDeleteResult(IReadOnlyList<BastionSessionState> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
+            Value = new ChangeTrackingList<BastionSessionState>();
         }
 
         /// <summary> List of sessions with their corresponding state. </summary>

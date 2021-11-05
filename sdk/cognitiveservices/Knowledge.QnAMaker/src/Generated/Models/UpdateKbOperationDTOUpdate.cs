@@ -35,8 +35,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// knowledgebase.</param>
         /// <param name="urls">List of existing URLs to be refreshed. The
         /// content will be extracted again and re-indexed.</param>
-        public UpdateKbOperationDTOUpdate(string name = default(string), IList<UpdateQnaDTO> qnaList = default(IList<UpdateQnaDTO>), IList<string> urls = default(IList<string>))
-            : base(name, qnaList, urls)
+        /// <param name="defaultAnswer">Default answer sent to user if no good
+        /// match is found in the KB.</param>
+        public UpdateKbOperationDTOUpdate(string name = default(string), IList<UpdateQnaDTO> qnaList = default(IList<UpdateQnaDTO>), IList<string> urls = default(IList<string>), string defaultAnswer = default(string))
+            : base(name, qnaList, urls, defaultAnswer)
         {
             CustomInit();
         }
@@ -46,5 +48,15 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

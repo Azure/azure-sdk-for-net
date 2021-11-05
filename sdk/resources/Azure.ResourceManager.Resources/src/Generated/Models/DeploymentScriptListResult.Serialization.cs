@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentScriptListResult
+    internal partial class DeploymentScriptListResult
     {
         internal static DeploymentScriptListResult DeserializeDeploymentScriptListResult(JsonElement element)
         {
-            IReadOnlyList<DeploymentScript> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<DeploymentScriptData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeploymentScript> array = new List<DeploymentScript>();
+                    List<DeploymentScriptData> array = new List<DeploymentScriptData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeploymentScript.DeserializeDeploymentScript(item));
-                        }
+                        array.Add(DeploymentScriptData.DeserializeDeploymentScriptData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeploymentScriptListResult(value, nextLink);
+            return new DeploymentScriptListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

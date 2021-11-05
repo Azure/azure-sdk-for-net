@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class StemmerOverrideTokenFilter
     {
         /// <summary> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Rules { get; }
     }
 }

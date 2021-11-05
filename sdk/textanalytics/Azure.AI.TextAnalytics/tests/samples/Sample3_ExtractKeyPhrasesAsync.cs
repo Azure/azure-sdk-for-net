@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -19,14 +18,27 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string document = "My cat might need to see a veterinarian.";
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+                                little sister thinks it is funny, I am worried it has the cold that I got last week.
+                                We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
+                                will be covered by the cat's insurance.
+                                It might be good to not let it sleep in my room for a while.";
 
-            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
-
-            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
-            foreach (string keyPhrase in keyPhrases)
+            try
             {
-                Console.WriteLine(keyPhrase);
+                Response<KeyPhraseCollection> response = await client.ExtractKeyPhrasesAsync(document);
+                KeyPhraseCollection keyPhrases = response.Value;
+
+                Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
+                foreach (string keyPhrase in keyPhrases)
+                {
+                    Console.WriteLine($"  {keyPhrase}");
+                }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
         }
     }

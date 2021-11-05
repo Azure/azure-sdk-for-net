@@ -103,7 +103,20 @@ namespace Microsoft.Rest.Serialization
                     var property = SelectTokenCaseInsensitive(item, expectedProperty.PropertyName);
                     if (property != null)
                     {
-                        var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                        object propertyValue;
+                        if (expectedProperty.Converter?.CanRead == true)
+                        {
+                            propertyValue = expectedProperty.Converter.ReadJson(
+                                new JTokenReader(property),
+                                expectedProperty.PropertyType,
+                                expectedProperty.ValueProvider.GetValue(result),
+                                serializer);
+                        }
+                        else
+                        {
+                            propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                        }
+
                         expectedProperty.ValueProvider.SetValue(result, propertyValue);
                     }
                 }

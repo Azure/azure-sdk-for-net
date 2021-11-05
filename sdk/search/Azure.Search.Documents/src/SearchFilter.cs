@@ -4,10 +4,8 @@
 using System;
 using System.Globalization;
 using System.Text;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core;
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
 
 namespace Azure.Search.Documents
 {
@@ -74,20 +72,21 @@ namespace Azure.Search.Documents
                     DateTimeOffset x => JsonSerialization.Date(x, formatProvider),
                     DateTime x => JsonSerialization.Date(x, formatProvider),
 
-#if EXPERIMENTAL_SPATIAL
                     // Points
-                    GeometryPosition x => EncodeGeometry(x),
-                    PointGeometry x => EncodeGeometry(x),
+                    GeoPosition x => EncodeGeography(x),
+                    GeoPoint x => EncodeGeography(x),
 
                     // Polygons
-                    LineGeometry x => EncodeGeometry(x),
-                    PolygonGeometry x => EncodeGeometry(x),
-#endif
+                    GeoLineString x => EncodeGeography(x),
+                    GeoPolygon x => EncodeGeography(x),
 
                     // Text
                     string x => Quote(x),
                     char x => Quote(x.ToString(formatProvider)),
                     StringBuilder x => Quote(x.ToString()),
+
+                    // Microsoft.Spatial types
+                    object x when SpatialProxyFactory.TryCreate(x, out GeographyProxy proxy) => proxy.ToString(),
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -109,7 +108,7 @@ namespace Azure.Search.Documents
 
             // Optimistically allocate an extra 5% for escapes
             StringBuilder builder = new StringBuilder(2 + (int)(text.Length * 1.05));
-            builder.Append("'");
+            builder.Append('\'');
             foreach (char ch in text)
             {
                 builder.Append(ch);
@@ -118,105 +117,48 @@ namespace Azure.Search.Documents
                     builder.Append(ch);
                 }
             }
-            builder.Append("'");
+            builder.Append('\'');
             return builder.ToString();
         }
 
-#if EXPERIMENTAL_SPATIAL
         /// <summary>
-        /// Convert a <see cref="GeometryPosition"/> to an OData value.
+        /// Convert a <see cref="GeoPosition"/> to an OData value.
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>The OData representation of the position.</returns>
-        private static string EncodeGeometry(GeometryPosition position)
-        {
-            const int maxLength =
-                19 +       // "geography'POINT( )'".Length
-                2 *        // Lat and Long each have:
-                   (15 +   //     Maximum precision for a double (without G17)
-                     1 +   //     Optional decimal point
-                     1);   //     Optional negative sign
-            StringBuilder odata = new StringBuilder(maxLength);
-            odata.Append("geography'POINT(");
-            odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture));
-            odata.Append(" ");
-            odata.Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
-            odata.Append(")'");
-            return odata.ToString();
-        }
+        private static string EncodeGeography(GeoPosition position) =>
+            SpatialFormatter.EncodePoint(position.Longitude, position.Latitude);
 
         /// <summary>
-        /// Convert a <see cref="PointGeometry"/> to an OData value.
+        /// Convert a <see cref="GeoPoint"/> to an OData value.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <returns>The OData representation of the point.</returns>
-        private static string EncodeGeometry(PointGeometry point)
+        private static string EncodeGeography(GeoPoint point)
         {
             Argument.AssertNotNull(point, nameof(point));
-            return EncodeGeometry(point.Position);
+            return EncodeGeography(point.Coordinates);
         }
 
         /// <summary>
-        /// Convert a <see cref="LineGeometry"/> forming a polygon to an OData
-        /// value.  A LineGeometry must have at least four
-        /// <see cref="LineGeometry.Positions"/> and the first and last must
+        /// Convert a <see cref="GeoLineString"/> forming a polygon to an OData
+        /// value.  A GeoLine must have at least four
+        /// <see cref="GeoLineString.Coordinates"/> and the first and last must
         /// match to form a searchable polygon.
         /// </summary>
         /// <param name="line">The line forming a polygon.</param>
         /// <returns>The OData representation of the line.</returns>
-        private static string EncodeGeometry(LineGeometry line)
-        {
-            Argument.AssertNotNull(line, nameof(line));
-            Argument.AssertNotNull(line.Positions, $"{nameof(line)}.{nameof(line.Positions)}");
-            if (line.Positions.Count < 4)
-            {
-                throw new ArgumentException(
-                    $"A {nameof(LineGeometry)} must have at least four {nameof(LineGeometry.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
-            }
-            else if (line.Positions[0] != line.Positions[line.Positions.Count - 1])
-            {
-                throw new ArgumentException(
-                    $"A {nameof(LineGeometry)} must have matching first and last {nameof(LineGeometry.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
-            }
-
-            Argument.AssertInRange(line.Positions?.Count ?? 0, 4, int.MaxValue, $"{nameof(line)}.{nameof(line.Positions)}");
-
-            StringBuilder odata = new StringBuilder();
-            odata.Append("geography'POLYGON((");
-            bool first = true;
-            foreach (GeometryPosition position in line.Positions)
-            {
-                if (!first) { odata.Append(","); }
-                first = false;
-                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture));
-                odata.Append(" ");
-                odata.Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
-            }
-            odata.Append("))'");
-            return odata.ToString();
-        }
+        private static string EncodeGeography(GeoLineString line) =>
+            SpatialFormatter.EncodePolygon(line);
 
         /// <summary>
-        /// Convert a <see cref="PolygonGeometry"/> to an OData value.  A
-        /// PolygonGeometry must have exactly one <see cref="PolygonGeometry.Rings"/>
+        /// Convert a <see cref="GeoPolygon"/> to an OData value.  A
+        /// GeoPolygon must have exactly one <see cref="GeoPolygon.Rings"/>
         /// to form a searchable polygon.
         /// </summary>
         /// <param name="polygon">The polygon.</param>
         /// <returns>The OData representation of the polygon.</returns>
-        private static string EncodeGeometry(PolygonGeometry polygon)
-        {
-            Argument.AssertNotNull(polygon, nameof(polygon));
-            Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
-            if (polygon.Rings.Count != 1)
-            {
-                throw new ArgumentException(
-                    $"A {nameof(PolygonGeometry)} must have exactly one {nameof(PolygonGeometry.Rings)} to form a searchable polygon.",
-                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
-            }
-            return EncodeGeometry(polygon.Rings[0]);
-        }
-#endif
+        private static string EncodeGeography(GeoPolygon polygon) =>
+            SpatialFormatter.EncodePolygon(polygon);
     }
 }

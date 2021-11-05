@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (SecureValue != null)
+            if (Optional.IsDefined(SecureValue))
             {
                 writer.WritePropertyName("secureValue");
                 writer.WriteStringValue(SecureValue);
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Resources.Models
         internal static EnvironmentVariable DeserializeEnvironmentVariable(JsonElement element)
         {
             string name = default;
-            string value = default;
-            string secureValue = default;
+            Optional<string> value = default;
+            Optional<string> secureValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,24 +44,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secureValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secureValue = property.Value.GetString();
                     continue;
                 }
             }
-            return new EnvironmentVariable(name, value, secureValue);
+            return new EnvironmentVariable(name, value.Value, secureValue.Value);
         }
     }
 }

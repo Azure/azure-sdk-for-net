@@ -19,6 +19,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        error = null;
+                        continue;
+                    }
                     error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value);
                     continue;
                 }

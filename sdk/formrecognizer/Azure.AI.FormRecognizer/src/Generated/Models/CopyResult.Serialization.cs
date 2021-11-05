@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class CopyResult
     {
@@ -28,6 +27,11 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("errors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

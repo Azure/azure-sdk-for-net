@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ScoringProfile
     {
         /// <summary> The collection of functions that influence the scoring of documents. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<ScoringFunction> Functions { get; }
     }
 }

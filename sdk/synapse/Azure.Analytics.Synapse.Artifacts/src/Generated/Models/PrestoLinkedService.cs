@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="serverVersion"/>, or <paramref name="catalog"/> is null. </exception>
         public PrestoLinkedService(object host, object serverVersion, object catalog, PrestoAuthenticationType authenticationType)
         {
             if (host == null)
@@ -46,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>

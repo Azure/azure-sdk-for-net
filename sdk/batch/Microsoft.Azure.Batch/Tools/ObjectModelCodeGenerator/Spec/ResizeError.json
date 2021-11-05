@@ -2,7 +2,7 @@
       "Name": "ResizeError",
       "ProtocolName": "Models.ResizeError",
       "SummaryComment": "An error that occurred when resizing a pool.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "IsUsedInCollections":  true,
       "Properties": [
         {

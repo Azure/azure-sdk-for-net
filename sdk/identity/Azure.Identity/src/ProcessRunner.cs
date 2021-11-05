@@ -2,26 +2,43 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable. Disposing of _process and _ctRegistration / _timeoutCtRegistration fields from outside may result in _tcs being incomplete or process handle leak.
-    internal sealed class ProcessRunner
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
+    internal sealed class ProcessRunner : IDisposable
     {
         private readonly IProcess _process;
         private readonly TimeSpan _timeout;
         private readonly TaskCompletionSource<string> _tcs;
+        private readonly TaskCompletionSource<ICollection<string>> _outputTcs;
+        private readonly TaskCompletionSource<ICollection<string>> _errorTcs;
+        private readonly ICollection<string> _outputData;
+        private readonly ICollection<string> _errorData;
+
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
+        private bool _logPII;
 
-        public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
+        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
         {
+            _logPII = logPII;
             _process = process;
             _timeout = timeout;
+
+            if (_logPII)
+            {
+                AzureIdentityEventSource.Singleton.ProcessRunnerInformational($"Running process `{process.StartInfo.FileName}' with arguments {string.Join(", ", process.StartInfo.Arguments)}");
+            }
+
+            _outputData = new List<string>();
+            _errorData = new List<string>();
+            _outputTcs = new TaskCompletionSource<ICollection<string>>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _errorTcs = new TaskCompletionSource<ICollection<string>>(TaskCreationOptions.RunContinuationsAsynchronously);
             _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             if (timeout.TotalMilliseconds >= 0)
@@ -56,27 +73,37 @@ namespace Azure.Identity
                 return;
             }
 
-            _process.Exited += (o, e) => HandleExit();
-
             _process.StartInfo.UseShellExecute = false;
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
 
+            _process.OutputDataReceived += (sender, args) => OnDataReceived(args, _outputData, _outputTcs);
+            _process.ErrorDataReceived += (sender, args) => OnDataReceived(args, _errorData, _errorTcs);
+            _process.Exited += (o, e) => _ = HandleExitAsync();
+
             _timeoutCts?.CancelAfter(_timeout);
 
-            _process.Start();
+            if (!_process.Start())
+            {
+                TrySetException(new InvalidOperationException($"Failed to start process '{_process.StartInfo.FileName}'"));
+            }
+
+            _process.BeginOutputReadLine();
+            _process.BeginErrorReadLine();
             _ctRegistration = _cancellationToken.Register(HandleCancel, false);
         }
 
-        private void HandleExit()
+        private async ValueTask HandleExitAsync()
         {
             if (_process.ExitCode == 0)
             {
-                TrySetResult(_process.StandardOutput.ReadToEnd());
+                ICollection<string> output = await _outputTcs.Task.ConfigureAwait(false);
+                TrySetResult(string.Join(Environment.NewLine, output));
             }
             else
             {
-                TrySetException(new InvalidOperationException(_process.StandardError.ReadToEnd()));
+                ICollection<string> error = await _errorTcs.Task.ConfigureAwait(false);
+                TrySetException(new InvalidOperationException(string.Join(Environment.NewLine, error)));
             }
         }
 
@@ -103,9 +130,20 @@ namespace Azure.Identity
             TrySetCanceled();
         }
 
+        private static void OnDataReceived(DataReceivedEventArgs args, ICollection<string> data, TaskCompletionSource<ICollection<string>> tcs)
+        {
+            if (args.Data != null)
+            {
+                data.Add(args.Data);
+            }
+            else
+            {
+                tcs.SetResult(data);
+            }
+        }
+
         private void TrySetResult(string result)
         {
-            DisposeProcess();
             _tcs.TrySetResult(result);
         }
 
@@ -113,7 +151,6 @@ namespace Azure.Identity
         {
             if (_cancellationToken.IsCancellationRequested)
             {
-                DisposeProcess();
                 _tcs.TrySetCanceled(_cancellationToken);
             }
 
@@ -122,12 +159,16 @@ namespace Azure.Identity
 
         private void TrySetException(Exception exception)
         {
-            DisposeProcess();
+            if (_logPII)
+            {
+                AzureIdentityEventSource.Singleton.ProcessRunnerError(exception.ToString());
+            }
             _tcs.TrySetException(exception);
         }
 
-        private void DisposeProcess()
+        public void Dispose()
         {
+            _tcs.TrySetCanceled();
             _process.Dispose();
             _ctRegistration.Dispose();
             _timeoutCts?.Dispose();

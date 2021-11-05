@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public DomainsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -66,6 +66,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -82,14 +83,7 @@ namespace Azure.Graph.Rbac
                     {
                         DomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DomainListResult.DeserializeDomainListResult(document.RootElement);
-                        }
+                        value = DomainListResult.DeserializeDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,14 +104,7 @@ namespace Azure.Graph.Rbac
                     {
                         DomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DomainListResult.DeserializeDomainListResult(document.RootElement);
-                        }
+                        value = DomainListResult.DeserializeDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,12 +125,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(domainName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets a specific domain in the current tenant. </summary>
         /// <param name="domainName"> name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public async Task<Response<Domain>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
@@ -159,14 +148,7 @@ namespace Azure.Graph.Rbac
                     {
                         Domain value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Domain.DeserializeDomain(document.RootElement);
-                        }
+                        value = Domain.DeserializeDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,6 +159,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a specific domain in the current tenant. </summary>
         /// <param name="domainName"> name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public Response<Domain> Get(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
@@ -192,14 +175,7 @@ namespace Azure.Graph.Rbac
                     {
                         Domain value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Domain.DeserializeDomain(document.RootElement);
-                        }
+                        value = Domain.DeserializeDomain(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

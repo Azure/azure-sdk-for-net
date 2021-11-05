@@ -16,57 +16,41 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static User DeserializeUser(JsonElement element)
         {
-            string immutableId = default;
-            string usageLocation = default;
-            string givenName = default;
-            string surname = default;
-            UserType? userType = default;
-            bool? accountEnabled = default;
-            string displayName = default;
-            string userPrincipalName = default;
-            string mailNickname = default;
-            string mail = default;
-            IReadOnlyList<SignInName> signInNames = default;
-            string objectId = default;
-            string objectType = default;
-            DateTimeOffset? deletionTimestamp = default;
+            Optional<string> immutableId = default;
+            Optional<string> usageLocation = default;
+            Optional<string> givenName = default;
+            Optional<string> surname = default;
+            Optional<UserType> userType = default;
+            Optional<bool> accountEnabled = default;
+            Optional<string> displayName = default;
+            Optional<string> userPrincipalName = default;
+            Optional<string> mailNickname = default;
+            Optional<string> mail = default;
+            Optional<IReadOnlyList<SignInName>> signInNames = default;
+            Optional<string> objectId = default;
+            Optional<string> objectType = default;
+            Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("immutableId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     immutableId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("usageLocation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     usageLocation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("givenName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     givenName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("surname"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     surname = property.Value.GetString();
                     continue;
                 }
@@ -74,6 +58,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userType = new UserType(property.Value.GetString());
@@ -83,6 +68,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountEnabled = property.Value.GetBoolean();
@@ -90,37 +76,21 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userPrincipalName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     userPrincipalName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("mailNickname"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mailNickname = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("mail"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mail = property.Value.GetString();
                     continue;
                 }
@@ -128,38 +98,24 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignInName> array = new List<SignInName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SignInName.DeserializeSignInName(item));
-                        }
+                        array.Add(SignInName.DeserializeSignInName(item));
                     }
                     signInNames = array;
                     continue;
                 }
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectType = property.Value.GetString();
                     continue;
                 }
@@ -167,23 +123,16 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new User(objectId, objectType, deletionTimestamp, additionalProperties, immutableId, usageLocation, givenName, surname, userType, accountEnabled, displayName, userPrincipalName, mailNickname, mail, signInNames);
+            return new User(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, immutableId.Value, usageLocation.Value, givenName.Value, surname.Value, Optional.ToNullable(userType), Optional.ToNullable(accountEnabled), displayName.Value, userPrincipalName.Value, mailNickname.Value, mail.Value, Optional.ToList(signInNames));
         }
     }
 }

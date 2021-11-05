@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
 
@@ -18,14 +19,15 @@ namespace Azure.Management.EventHub.Tests
         public async Task NamespaceKafkaCreateGetUpdateDelete()
         {
             var location = "West US";
-            var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
-            await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, location, resourceGroup);
+            var resourceGroupName = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            await sub.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
-            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
+            var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroupName, namespaceName,
                 new EHNamespace()
                 {
                     Location = location,
-                    Tags = new Dictionary<string, string>()
+                    Tags =
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
@@ -41,15 +43,15 @@ namespace Azure.Management.EventHub.Tests
             Assert.True(np.KafkaEnabled, "KafkaEnabled is false");
             DelayInTest(5);
             //get the created namespace
-            var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            var getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             if (string.Compare(getNamespaceResponse.Value.ProvisioningState, "Succeeded", true) != 0)
                 DelayInTest(5);
-            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual("Succeeded", getNamespaceResponse.Value.ProvisioningState,StringComparer.CurrentCultureIgnoreCase.ToString());
             Assert.AreEqual(location, getNamespaceResponse.Value.Location);
-            // Get all namespaces created within a resourceGroup
-            var getAllNamespacesResponse = NamespacesOperations.ListByResourceGroupAsync(resourceGroup);
+            // Get all namespaces created within a resourceGroupName
+            var getAllNamespacesResponse = NamespacesOperations.ListByResourceGroupAsync(resourceGroupName);
             Assert.NotNull(getAllNamespacesResponse);
             //Assert.True(getAllNamespacesResponse.AsPages.c >= 1);
             var getAllNamespRespList = await getAllNamespacesResponse.ToEnumerableAsync();
@@ -65,7 +67,7 @@ namespace Azure.Management.EventHub.Tests
             }
              foreach (var name in getAllNamespRespList)
             {
-                if (name.Id.Contains(resourceGroup))
+                if (name.Id.Contains(resourceGroupName))
                 {
                     isContainresourceGroup = true;
                     break;
@@ -73,7 +75,7 @@ namespace Azure.Management.EventHub.Tests
             }
             Assert.True(isContainnamespaceName);
             Assert.True(isContainresourceGroup);
-            // Get all namespaces created within the subscription irrespective of the resourceGroup
+            // Get all namespaces created within the subscription irrespective of the resourceGroupName
             getAllNamespacesResponse =NamespacesOperations.ListAsync();
             Assert.NotNull(getAllNamespacesResponse);
             bool isContainNamespacename = false;
@@ -90,20 +92,20 @@ namespace Azure.Management.EventHub.Tests
             // Update namespace tags and make the namespace critical
             var updateNamespaceParameter = new EHNamespace()
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                         {
                             {"tag3", "value3"},
                             {"tag4", "value4"}
                         }
             };
             // Will uncomment the assertions once the service is deployed
-            var updateNamespaceResponse =await NamespacesOperations.UpdateAsync(resourceGroup, namespaceName, updateNamespaceParameter);
+            var updateNamespaceResponse =await NamespacesOperations.UpdateAsync(resourceGroupName, namespaceName, updateNamespaceParameter);
             Assert.NotNull(updateNamespaceResponse);
             Assert.True(updateNamespaceResponse.Value.ProvisioningState.Equals("Active", StringComparison.CurrentCultureIgnoreCase) ||
             updateNamespaceResponse.Value.ProvisioningState.Equals("Updating", StringComparison.CurrentCultureIgnoreCase));
             Assert.AreEqual(namespaceName, updateNamespaceResponse.Value.Name);
             // Get the updated namespace and also verify the Tags.
-            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroup, namespaceName);
+            getNamespaceResponse = await NamespacesOperations.GetAsync(resourceGroupName, namespaceName);
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual(location, getNamespaceResponse.Value.Location);
             Assert.AreEqual(namespaceName, getNamespaceResponse.Value.Name);
@@ -135,7 +137,7 @@ namespace Azure.Management.EventHub.Tests
             Assert.True(isContainValue);
             DelayInTest(5);
             // Delete namespace
-            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
+            await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroupName, namespaceName));
         }
     }
 }

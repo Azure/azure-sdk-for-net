@@ -15,30 +15,37 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri");
+                writer.WriteStringValue(Uri);
             }
             writer.WriteEndObject();
         }
 
         internal static GalleryArtifactVersionSource DeserializeGalleryArtifactVersionSource(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
+            Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("uri"))
+                {
+                    uri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new GalleryArtifactVersionSource(id);
+            return new GalleryArtifactVersionSource(id.Value, uri.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace DataFactory.Tests.ScenarioTests
 {
     public class DataFactoryScenarioTests : ScenarioTestBase<DataFactoryScenarioTests>
     {
-        public Factory expectedFactory = new Factory(location: FactoryLocation);
+        public Factory expectedFactory = new Factory(location: FactoryLocation, publicNetworkAccess: "true", encryption: new EncryptionConfiguration() { VaultBaseUrl = "dummyurl", KeyName = "dummyName" });
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
@@ -40,7 +40,9 @@ namespace DataFactory.Tests.ScenarioTests
         internal static async Task Create(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, Factory expectedFactory)
         {
             AzureOperationResponse<Factory> createResponse = await client.Factories.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, expectedFactory);
-            ValidateFactory(createResponse.Body,dataFactoryName);
+            ValidateFactory(createResponse.Body, dataFactoryName);
+            Assert.Equal(createResponse.Body.PublicNetworkAccess, expectedFactory.PublicNetworkAccess);
+            Assert.Equal(createResponse.Body?.Encryption?.VaultBaseUrl, expectedFactory.Encryption?.VaultBaseUrl);
             Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
 
             AzureOperationResponse<Factory> getResponse = await client.Factories.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName);

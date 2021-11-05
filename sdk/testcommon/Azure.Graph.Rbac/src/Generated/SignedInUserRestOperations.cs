@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public SignedInUserRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -62,6 +62,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/me", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -77,14 +78,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,14 +98,7 @@ namespace Azure.Graph.Rbac
                     {
                         User value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = User.DeserializeUser(document.RootElement);
-                        }
+                        value = User.DeserializeUser(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,6 +118,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/me/ownedObjects", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -146,14 +134,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,14 +154,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,15 +172,17 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnedObjectsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -222,14 +198,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -240,6 +209,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwnedObjectsNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -255,14 +225,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,12 +242,14 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnedObjectsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -300,14 +265,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,6 +276,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwnedObjectsNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -333,14 +292,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

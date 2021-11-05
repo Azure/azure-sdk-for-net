@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -26,32 +26,47 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (OsType != null)
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OsType.Value.ToSerialString());
             }
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (EncryptionSettingsCollection != null)
+            if (Optional.IsDefined(EncryptionSettingsCollection))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
                 writer.WriteObjectValue(EncryptionSettingsCollection);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                writer.WritePropertyName("networkAccessPolicy");
+                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                writer.WritePropertyName("diskAccessId");
+                writer.WriteStringValue(DiskAccessId);
+            }
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                writer.WritePropertyName("supportsHibernation");
+                writer.WriteBooleanValue(SupportsHibernation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

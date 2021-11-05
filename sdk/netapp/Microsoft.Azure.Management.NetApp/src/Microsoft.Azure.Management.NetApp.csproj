@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
   <!-- Please do not move/edit code below this line -->
@@ -9,13 +9,27 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.5.1</Version>
+    <Version>1.14.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.5.1 relates to NetApp Files (ANF) 2019-11-01.
-          - Fix MountTarget property in Volume
-
+        Version 1.14.0 relates to NetApp Files (ANF) 2021-06-01.
+          - Added Accounts_ListBySubscription Operation
+          - Added etags to Volume, CapacityPool, NetAppAccount, BackupPolicy, SnapshotPolicy
+          - Added EncryptionType, to CapacityPool
+          - Added CloneProgress, AvsDataStore,IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs, NetworkFeatures, NetworkSiblingSetId, StorageToNetworkProximity to Volume to Volume
+          - Added read-only property BackupPolicyId to BackupPolicy and BackupPolicyPatch
+          - Added IsDefaultQuotaEnabled, DefaultUserQuotaInKiBs, DefaultGroupQuotaInKiBs to VolumePatch
+          - Added SupportedAggregationTypes, SupportedTimeGrainTypes, InternalMetricName, SourceMdmAccount, SourceMdmNamespace, enableRegionalMdmAccount, isInternal to MetricSpecification
+          - ReplicationSchedule is no longer a requred parameter in ReplicationObject
+          - Added LogSpecification to ServiceSpecification
+          - Service level adds ServiceLevel StandardZRS (Zone redundant storage service level)
+          - Added QuotaLimits to get the default and current limits for ANF subscription quotas          
+        Breakning changes:
+          - YearlyBackupsToKeep property is not supported by the service and has been removed from BackupPolicy
+          - VolumesAssigned, VolumeBackups in BackupPolicy are now readonly 
+                              
+            
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:

@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -35,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy Proxy { get; set; } = null;
+        public IWebProxy WebProxy { get; set; }
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
@@ -53,20 +52,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// The list of plugins for the client.
+        /// Gets or sets a flag that indicates whether or not transactions may span multiple
+        /// Service Bus entities.
         /// </summary>
-        internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
-
-        /// <summary>
-        /// Register a plugin to be used to alter
-        /// incoming/outgoing messages.
-        /// </summary>
-        /// <param name="plugin">The plugin instance to register.</param>
-        internal void AddPlugin(ServiceBusPlugin plugin)
-        {
-            Argument.AssertNotNull(plugin, nameof(plugin));
-            Plugins.Add(plugin);
-        }
+        ///<value>
+        /// <c>true</c>, when cross-entity transactions are enabled; <c>false</c> when
+        /// transactions are not being used or should be limited to a single entity.
+        ///</value>
+        public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -100,16 +93,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Creates a new copy of the current <see cref="ServiceBusClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
-        ///        ///
+        ///
         /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
         internal ServiceBusClientOptions Clone() =>
             new ServiceBusClientOptions
             {
                 TransportType = TransportType,
-                Proxy = Proxy,
+                WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
-                Plugins = new List<ServiceBusPlugin>(Plugins)
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions,
             };
     }
 }

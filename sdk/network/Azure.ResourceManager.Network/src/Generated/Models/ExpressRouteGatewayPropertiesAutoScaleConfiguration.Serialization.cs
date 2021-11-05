@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Bounds != null)
+            if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds");
                 writer.WriteObjectValue(Bounds);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteGatewayPropertiesAutoScaleConfiguration DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(JsonElement element)
         {
-            ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds = default;
+            Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bounds"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value);
                     continue;
                 }
             }
-            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds);
+            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds.Value);
         }
     }
 }

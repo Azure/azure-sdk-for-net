@@ -34,17 +34,17 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the PostArgsMatchConditionParameters
         /// class.
         /// </summary>
-        /// <param name="selector">Name of PostArg to be matched</param>
         /// <param name="operatorProperty">Describes operator to be matched.
         /// Possible values include: 'Any', 'Equal', 'Contains', 'BeginsWith',
         /// 'EndsWith', 'LessThan', 'LessThanOrEqual', 'GreaterThan',
-        /// 'GreaterThanOrEqual'</param>
-        /// <param name="matchValues">The match value for the condition of the
-        /// delivery rule</param>
+        /// 'GreaterThanOrEqual', 'RegEx'</param>
+        /// <param name="selector">Name of PostArg to be matched</param>
         /// <param name="negateCondition">Describes if this is negate condition
         /// or not</param>
+        /// <param name="matchValues">The match value for the condition of the
+        /// delivery rule</param>
         /// <param name="transforms">List of transforms</param>
-        public PostArgsMatchConditionParameters(string selector, string operatorProperty, IList<string> matchValues, bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
+        public PostArgsMatchConditionParameters(string operatorProperty, string selector = default(string), bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>), IList<string> transforms = default(IList<string>))
         {
             Selector = selector;
             OperatorProperty = operatorProperty;
@@ -75,7 +75,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets or sets describes operator to be matched. Possible values
         /// include: 'Any', 'Equal', 'Contains', 'BeginsWith', 'EndsWith',
-        /// 'LessThan', 'LessThanOrEqual', 'GreaterThan', 'GreaterThanOrEqual'
+        /// 'LessThan', 'LessThanOrEqual', 'GreaterThan', 'GreaterThanOrEqual',
+        /// 'RegEx'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }
@@ -111,17 +112,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Selector == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Selector");
-            }
             if (OperatorProperty == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
-            }
-            if (MatchValues == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MatchValues");
             }
         }
     }

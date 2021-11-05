@@ -8,45 +8,35 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostGroupListResult
+    internal partial class DedicatedHostGroupListResult
     {
         internal static DedicatedHostGroupListResult DeserializeDedicatedHostGroupListResult(JsonElement element)
         {
-            IReadOnlyList<DedicatedHostGroup> value = default;
-            string nextLink = default;
+            IReadOnlyList<DedicatedHostGroupData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DedicatedHostGroup> array = new List<DedicatedHostGroup>();
+                    List<DedicatedHostGroupData> array = new List<DedicatedHostGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DedicatedHostGroup.DeserializeDedicatedHostGroup(item));
-                        }
+                        array.Add(DedicatedHostGroupData.DeserializeDedicatedHostGroupData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DedicatedHostGroupListResult(value, nextLink);
+            return new DedicatedHostGroupListResult(value, nextLink.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableSetAccessPolicyHeaders
+    internal partial class TableSetAccessPolicyHeaders
     {
         private readonly Response _response;
         public TableSetAccessPolicyHeaders(Response response)

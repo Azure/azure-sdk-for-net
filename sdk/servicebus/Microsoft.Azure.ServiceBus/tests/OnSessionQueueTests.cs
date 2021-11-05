@@ -6,11 +6,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
     public class OnSessionQueueTests
     {
+        const int ExpectedMessageCount = TestSessionHandler.NumberOfSessions * TestSessionHandler.MessagesPerSession;
+
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
@@ -186,6 +189,100 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // Verify messages were received.
                     await testSessionHandler.VerifyRun();
+
+                    testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
+
+            // test UnregisterSessionHandler can wait for message handling upto the timeout user defined. 
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = autoComplete
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        queueClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        queueClient.InnerSender,
+                        queueClient.SessionPumpHost);
+
+                    // Send messages to Session first
+                    await testSessionHandler.SendSessionMessages();
+
+                    // Register handler
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 8);
+
+                    // Session handler set up has greater latency than message handler. Delay here to enable some processing time of the session pump.
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(10));
+                    Assert.True(testSessionHandler.ReceivedMessageCount == maxConcurrentCalls);
+
+                    // Reregister won't have any problems
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
+
+                    testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
+
+            // test UnregisterSessionHandler can close down in time when message handling takes longer than wait timeout user defined. 
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = autoComplete
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        queueClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        queueClient.InnerSender,
+                        queueClient.SessionPumpHost);
+
+                    // Send messages to Session first
+                    await testSessionHandler.SendSessionMessages();
+
+                    // Register handler
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 8);
+
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(2));
+                    Assert.True(testSessionHandler.ReceivedMessageCount == 0);
+
+                    // Reregister won't have any problems
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(queueClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
+
+
+                    testSessionHandler.ClearData();
                 }
                 finally
                 {

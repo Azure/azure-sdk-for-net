@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the OSVersionWrapper class.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <param name="servicePack">Service pack.</param>
+        /// <param name="servicePack">The service pack.</param>
         public OSVersionWrapper(string version = default(string), string servicePack = default(string))
         {
             Version = version;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets service pack.
+        /// Gets or sets the service pack.
         /// </summary>
         [JsonProperty(PropertyName = "servicePack")]
         public string ServicePack { get; set; }

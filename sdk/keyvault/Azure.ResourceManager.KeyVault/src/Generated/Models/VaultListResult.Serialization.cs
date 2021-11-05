@@ -8,23 +8,29 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class VaultListResult
+    internal partial class VaultListResult
     {
         internal static VaultListResult DeserializeVaultListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Vault>> value = default;
+            Optional<IReadOnlyList<VaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Vault> array = new List<Vault>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<VaultData> array = new List<VaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Vault.DeserializeVault(item));
+                        array.Add(VaultData.DeserializeVaultData(item));
                     }
                     value = array;
                     continue;

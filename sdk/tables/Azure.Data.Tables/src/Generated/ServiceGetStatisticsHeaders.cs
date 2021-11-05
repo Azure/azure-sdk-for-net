@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class ServiceGetStatisticsHeaders
+    internal partial class ServiceGetStatisticsHeaders
     {
         private readonly Response _response;
         public ServiceGetStatisticsHeaders(Response response)

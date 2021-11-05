@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LocalNetworkGatewayListResult
+    internal partial class LocalNetworkGatewayListResult
     {
         internal static LocalNetworkGatewayListResult DeserializeLocalNetworkGatewayListResult(JsonElement element)
         {
-            IReadOnlyList<LocalNetworkGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<LocalNetworkGatewayData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LocalNetworkGateway> array = new List<LocalNetworkGateway>();
+                    List<LocalNetworkGatewayData> array = new List<LocalNetworkGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LocalNetworkGateway.DeserializeLocalNetworkGateway(item));
-                        }
+                        array.Add(LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LocalNetworkGatewayListResult(value, nextLink);
+            return new LocalNetworkGatewayListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

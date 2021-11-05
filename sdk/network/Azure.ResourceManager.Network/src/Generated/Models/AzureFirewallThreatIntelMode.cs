@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallThreatIntelMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

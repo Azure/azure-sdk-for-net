@@ -5,23 +5,25 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-    <NoWarn>$(NoWarn);CA1812</NoWarn>
   </PropertyGroup>
 
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.0.0-preview.4</Version>
+    <Version>1.3.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.2.2</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
@@ -49,7 +51,9 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
 </Project>

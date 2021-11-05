@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Text;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -151,44 +151,124 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("Foo eq 'bar'", SearchFilter.Create($"Foo eq {sb}"));
         }
 
-#if EXPERIMENTAL_SPATIAL
         [Test]
         public void Points()
         {
-            GeometryPosition position = new GeometryPosition(2.0, 3.0);
+            GeoPosition position = new GeoPosition(2.0, 3.0);
             Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({position}, Foo) < 3"));
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeometryPosition(2.0, 3.0, 5.0)}, Foo) < 3"));
-            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new PointGeometry(position)}, Foo) < 3"));
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeoPosition(2.0, 3.0, 5.0)}, Foo) < 3"));
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeoPoint(position)}, Foo) < 3"));
         }
 
         [Test]
         public void Polygons()
         {
-            LineGeometry line = new LineGeometry(
+            GeoLineString line = new GeoLineString(
                 new[]
                 {
-                    new GeometryPosition(0, 0),
-                    new GeometryPosition(0, 1),
-                    new GeometryPosition(1, 1),
-                    new GeometryPosition(0, 0),
+                    new GeoPosition(0, 0),
+                    new GeoPosition(0, 1),
+                    new GeoPosition(1, 1),
+                    new GeoPosition(0, 0),
                 });
             Assert.AreEqual(
                 "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
                 SearchFilter.Create($"geo.intersects(Foo, {line})"));
 
-            PolygonGeometry polygon = new PolygonGeometry(new[] { line });
+            GeoPolygon polygon = new GeoPolygon(line.Coordinates);
             Assert.AreEqual(
                 "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
                 SearchFilter.Create($"geo.intersects(Foo, {polygon})"));
 
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new LineGeometry(new[] { new GeometryPosition(0, 0) })}"));
+                $"{new GeoLineString(new[] { new GeoPosition(0, 0) })}"));
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new LineGeometry(new[] { new GeometryPosition(0, 0), new GeometryPosition(0, 0), new GeometryPosition(0, 0), new GeometryPosition(1, 1) })}"));
+                $"{new GeoLineString(new[] { new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(1, 1) })}"));
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new PolygonGeometry(new[] { line, line })}"));
+                $"{new GeoPolygon(new[] { new GeoLinearRing(line.Coordinates), new GeoLinearRing(line.Coordinates) })}"));
         }
-#endif
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPointsData))]
+        public void MicrosoftSpatialPoints(string filter) =>
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", filter);
+
+        private static IEnumerable GetMicrosoftSpatialPointsData()
+        {
+            GeographyPoint point = GeographyPoint.Create(3.0, 2.0);
+
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({point}, Foo) < 3"));
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({GeographyPoint.Create(3.0, 2.0, 5.0)}, Foo) < 3"));
+        }
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsData))]
+        public string MicrosoftSpatialPolygons(object geography) =>
+            SearchFilter.Create($"geo.intersects(Foo, {geography})");
+
+        private static IEnumerable GetMicrosoftSpatialPolygonsData()
+        {
+            GeographyLineString line = GeographyFactory
+                .LineString(0, 0)
+                .LineTo(1, 0)
+                .LineTo(1, 1)
+                .LineTo(0, 0);
+
+            yield return new TestCaseData(line).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
+
+            GeographyPolygon polygon = GeographyFactory
+                .Polygon()
+                .Ring(0, 0)
+                .LineTo(1, 0)
+                .LineTo(1, 1)
+                .LineTo(0, 0);
+
+            yield return new TestCaseData(polygon).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
+        }
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsThrowsData))]
+        public void MicrosoftSpatialPolygonsThrows(object geography, string expectedException)
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geography}"));
+            StringAssert.StartsWith(expectedException, ex.Message);
+        }
+
+        private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()
+        {
+            // Require >= 4 points.
+            GeographyLineString line = GeographyFactory
+                .LineString(0, 0)
+                .LineTo(1, 1);
+
+            yield return new TestCaseData(
+                line,
+                "A GeographyLineString must have at least four Points to form a searchable polygon.");
+
+            // Requires that first and last points are the same.
+            line = GeographyFactory
+                .LineString(0, 0)
+                .LineTo(0, 0)
+                .LineTo(0, 0)
+                .LineTo(1, 1);
+
+            yield return new TestCaseData(
+                line,
+                "A GeographyLineString must have matching first and last Points to form a searchable polygon.");
+
+            // Require that polygons define exactly 1 ring.
+           GeographyPolygon polygon = GeographyFactory
+                .Polygon()
+                .Ring(0, 0)
+                .LineTo(0, 1)
+                .LineTo(1, 1)
+                .LineTo(0, 0)
+                .Ring(2, 2)
+                .LineTo(2, 3)
+                .LineTo(3, 3)
+                .LineTo(2, 2);
+
+            yield return new TestCaseData(
+                polygon,
+                "A GeographyPolygon must have exactly one Rings to form a searchable polygon.");
+        }
 
         [Test]
         public void OtherThrows()

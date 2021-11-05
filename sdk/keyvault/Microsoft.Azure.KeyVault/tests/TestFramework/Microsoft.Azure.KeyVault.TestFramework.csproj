@@ -13,5 +13,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+
+    <ExcludeFromProjectReferenceToConversion Include="Microsoft.Azure.Graph.RBAC" />
   </ItemGroup>
 </Project>

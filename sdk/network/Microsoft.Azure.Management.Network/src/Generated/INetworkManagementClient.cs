@@ -121,9 +121,29 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IWebCategoriesOperations.
+        /// </summary>
+        IWebCategoriesOperations WebCategories { get; }
+
+        /// <summary>
         /// Gets the IBastionHostsOperations.
         /// </summary>
         IBastionHostsOperations BastionHosts { get; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        INetworkInterfacesOperations NetworkInterfaces { get; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        /// <summary>
+        /// Gets the ICustomIPPrefixesOperations.
+        /// </summary>
+        ICustomIPPrefixesOperations CustomIPPrefixes { get; }
 
         /// <summary>
         /// Gets the IDdosCustomPoliciesOperations.
@@ -134,6 +154,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         IDdosProtectionPlansOperations DdosProtectionPlans { get; }
+
+        /// <summary>
+        /// Gets the IDscpConfigurationOperations.
+        /// </summary>
+        IDscpConfigurationOperations DscpConfiguration { get; }
 
         /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
@@ -206,6 +231,21 @@ namespace Microsoft.Azure.Management.Network
         IFirewallPolicyRuleCollectionGroupsOperations FirewallPolicyRuleCollectionGroups { get; }
 
         /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOperations FirewallPolicyIdpsSignatures { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOverridesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOverridesOperations FirewallPolicyIdpsSignaturesOverrides { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesFilterValuesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesFilterValuesOperations FirewallPolicyIdpsSignaturesFilterValues { get; }
+
+        /// <summary>
         /// Gets the IIpAllocationsOperations.
         /// </summary>
         IIpAllocationsOperations IpAllocations { get; }
@@ -261,11 +301,6 @@ namespace Microsoft.Azure.Management.Network
         INatGatewaysOperations NatGateways { get; }
 
         /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        INetworkInterfacesOperations NetworkInterfaces { get; }
-
-        /// <summary>
         /// Gets the INetworkInterfaceIPConfigurationsOperations.
         /// </summary>
         INetworkInterfaceIPConfigurationsOperations NetworkInterfaceIPConfigurations { get; }
@@ -316,6 +351,11 @@ namespace Microsoft.Azure.Management.Network
         IVirtualApplianceSkusOperations VirtualApplianceSkus { get; }
 
         /// <summary>
+        /// Gets the IInboundSecurityRuleOperations.
+        /// </summary>
+        IInboundSecurityRuleOperations InboundSecurityRule { get; }
+
+        /// <summary>
         /// Gets the INetworkWatchersOperations.
         /// </summary>
         INetworkWatchersOperations NetworkWatchers { get; }
@@ -359,11 +399,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IPrivateLinkServicesOperations.
         /// </summary>
         IPrivateLinkServicesOperations PrivateLinkServices { get; }
-
-        /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
         /// Gets the IPublicIPPrefixesOperations.
@@ -416,6 +451,11 @@ namespace Microsoft.Azure.Management.Network
         IServiceTagsOperations ServiceTags { get; }
 
         /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        IServiceTagInformationOperations ServiceTagInformation { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -459,6 +499,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
 
         /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
@@ -516,6 +561,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnGatewaysOperations VpnGateways { get; }
 
         /// <summary>
+        /// Gets the IVpnLinkConnectionsOperations.
+        /// </summary>
+        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+
+        /// <summary>
         /// Gets the IVpnConnectionsOperations.
         /// </summary>
         IVpnConnectionsOperations VpnConnections { get; }
@@ -526,9 +576,9 @@ namespace Microsoft.Azure.Management.Network
         IVpnSiteLinkConnectionsOperations VpnSiteLinkConnections { get; }
 
         /// <summary>
-        /// Gets the IVpnLinkConnectionsOperations.
+        /// Gets the INatRulesOperations.
         /// </summary>
-        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+        INatRulesOperations NatRules { get; }
 
         /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.
@@ -574,6 +624,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IHubRouteTablesOperations.
         /// </summary>
         IHubRouteTablesOperations HubRouteTables { get; }
+
+        /// <summary>
+        /// Gets the IRoutingIntentOperations.
+        /// </summary>
+        IRoutingIntentOperations RoutingIntent { get; }
 
         /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.

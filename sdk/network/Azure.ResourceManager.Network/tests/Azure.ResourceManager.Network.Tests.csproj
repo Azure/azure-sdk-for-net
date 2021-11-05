@@ -1,13 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
-    <PropertyGroup>
-    <TestHelperProjects>Resources201705;Compute201912;Storage201906;</TestHelperProjects>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="TestData\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
   </ItemGroup>
 </Project>

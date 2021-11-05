@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Performance
         private static string _json = "{\"a\":{\"b\":5}}";
 
         private static JsonElement _element = JsonDocument.Parse(_json).RootElement;
-        private static DynamicJson _dynamicJson = DynamicJson.Parse(_json);
+        private static JsonData _jsonData = JsonData.FromString(_json);
 
         [Benchmark(Baseline = true)]
         public int ReadJsonElement()
@@ -22,9 +22,9 @@ namespace Azure.Data.AppConfiguration.Performance
         }
 
         [Benchmark]
-        public int ReadDynamicJson()
+        public int ReadJsonData()
         {
-            return (int)_dynamicJson["a"]["b"];
+            return (int)_jsonData["a"]["b"];
         }
     }
 }

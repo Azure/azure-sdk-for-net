@@ -21,7 +21,7 @@ namespace ContentModeratorTests.Helpers
     public class Utilities
     {
         public Utilities(){}
-        
+
         public void WaitUntilCompleted(Task tsk)
         {
             while (!tsk.IsCompleted)
@@ -43,7 +43,7 @@ namespace ContentModeratorTests.Helpers
             return path;
         }
 
-        
+
         public static Stream GenerateStreamFromString(string s)
         {
             MemoryStream stream = new MemoryStream();
@@ -480,10 +480,9 @@ namespace ContentModeratorTests.Helpers
                 TestBase.ErrorMessage = error;
                 return string.IsNullOrEmpty(error);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
 
         }
@@ -567,8 +566,8 @@ namespace ContentModeratorTests.Helpers
 
 
         }
-        
-        
+
+
 
 
         #region EquateMethods
@@ -583,7 +582,7 @@ namespace ContentModeratorTests.Helpers
                 e1.IsImageRacyClassified.Equals(e2.IsImageRacyClassified) &&
                 e1.Result.Equals(e2.Result) &&
                 e1.AdvancedInfo.Equals(e2.AdvancedInfo) &&
-                e1.Status.Equals(e2.Status);                
+                e1.Status.Equals(e2.Status);
         }
 
         public static bool EquateFoundFaces(FoundFaces e1, FoundFaces e2)
@@ -653,9 +652,9 @@ namespace ContentModeratorTests.Helpers
                 TestBase.ErrorMessage = $"{content.GetDescription()} job : " + (string.IsNullOrEmpty(j.Id) ? "" : j.Id) + error;
                 return string.IsNullOrEmpty(error);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
 
@@ -692,11 +691,11 @@ namespace ContentModeratorTests.Helpers
                          error +="ReviewerResultTags is null ";
 
                 TestBase.ErrorMessage = $"{content.GetDescription()} review : " + (string.IsNullOrEmpty(r.ReviewId) ? "" : r.ReviewId) + error;
-                return string.IsNullOrEmpty(error);                    
+                return string.IsNullOrEmpty(error);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 
         }
@@ -733,8 +732,8 @@ namespace ContentModeratorTests.Helpers
             }
             catch (Exception e)
             {
-                TestBase.ErrorMessage = error + e.InnerException; 
-                return false; 
+                TestBase.ErrorMessage = error + e.InnerException;
+                return false;
             }
 
         }

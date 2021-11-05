@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRoutePortsLocationListResult
+    internal partial class ExpressRoutePortsLocationListResult
     {
         internal static ExpressRoutePortsLocationListResult DeserializeExpressRoutePortsLocationListResult(JsonElement element)
         {
-            IReadOnlyList<ExpressRoutePortsLocation> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRoutePortsLocation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExpressRoutePortsLocation> array = new List<ExpressRoutePortsLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(item));
-                        }
+                        array.Add(ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocationListResult(value, nextLink);
+            return new ExpressRoutePortsLocationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

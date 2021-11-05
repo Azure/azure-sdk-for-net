@@ -12,16 +12,9 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// The Resource model definition.
-    /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class Resource : IResource
     {
         /// <summary>
@@ -35,24 +28,17 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="type1">The identity type.</param>
-        /// <param name="principalId">The identity's principal id.</param>
-        /// <param name="tenantId">The identity's tenant id.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type1 = default(string), string principalId = default(string), string tenantId = default(string))
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            Location = location;
-            Tags = tags;
-            Type1 = type1;
-            PrincipalId = principalId;
-            TenantId = tenantId;
             CustomInit();
         }
 
@@ -62,65 +48,25 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets the name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets the type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
-        /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the identity type.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.type")]
-        public string Type1 { get; set; }
-
-        /// <summary>
-        /// Gets the identity's principal id.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.principalId")]
-        public string PrincipalId { get; private set; }
-
-        /// <summary>
-        /// Gets the identity's tenant id.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.tenantId")]
-        public string TenantId { get; private set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

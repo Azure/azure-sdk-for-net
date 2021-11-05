@@ -10,35 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineHealthStatus : IUtf8JsonSerializable
+    public partial class VirtualMachineHealthStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteObjectValue(Status);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static VirtualMachineHealthStatus DeserializeVirtualMachineHealthStatus(JsonElement element)
         {
-            InstanceViewStatus status = default;
+            Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineHealthStatus(status);
+            return new VirtualMachineHealthStatus(status.Value);
         }
     }
 }

@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares
         private static void AppendAttribute(string attributeName, StringBuilder stringBuilder)
         {
             stringBuilder.Append(attributeName);
-            stringBuilder.Append("|");
+            stringBuilder.Append('|');
         }
 
         /// <summary>

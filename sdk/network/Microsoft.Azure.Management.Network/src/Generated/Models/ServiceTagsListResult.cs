@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="cloud">The name of the cloud.</param>
         /// <param name="values">The list of service tag information
         /// resources.</param>
-        public ServiceTagsListResult(string name = default(string), string id = default(string), string type = default(string), string changeNumber = default(string), string cloud = default(string), IList<ServiceTagInformation> values = default(IList<ServiceTagInformation>))
+        /// <param name="nextLink">The URL to get next page of service tag
+        /// information resources.</param>
+        public ServiceTagsListResult(string name = default(string), string id = default(string), string type = default(string), string changeNumber = default(string), string cloud = default(string), IList<ServiceTagInformation> values = default(IList<ServiceTagInformation>), string nextLink = default(string))
         {
             Name = name;
             Id = id;
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ChangeNumber = changeNumber;
             Cloud = cloud;
             Values = values;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -89,6 +92,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<ServiceTagInformation> Values { get; private set; }
+
+        /// <summary>
+        /// Gets the URL to get next page of service tag information resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }

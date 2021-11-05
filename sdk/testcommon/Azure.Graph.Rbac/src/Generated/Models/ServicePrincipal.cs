@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,14 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of ServicePrincipal. </summary>
         internal ServicePrincipal()
         {
+            AlternativeNames = new ChangeTrackingList<string>();
+            AppRoles = new ChangeTrackingList<AppRole>();
+            KeyCredentials = new ChangeTrackingList<KeyCredential>();
+            Oauth2Permissions = new ChangeTrackingList<OAuth2Permission>();
+            PasswordCredentials = new ChangeTrackingList<PasswordCredential>();
+            ReplyUrls = new ChangeTrackingList<string>();
+            ServicePrincipalNames = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingList<string>();
             ObjectType = "ServicePrincipal";
         }
 

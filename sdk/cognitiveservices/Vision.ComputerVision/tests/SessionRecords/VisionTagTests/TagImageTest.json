@@ -1,48 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/tag",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL3RhZw==",
+      "RequestUri": "/vision/v3.2/tag?model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL3RhZz9tb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "186"
+          "150"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.Tags=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "169"
+        ],
         "apim-request-id": [
-          "26909baa-a2fa-42b8-b1c1-88bb8a8a558b"
+          "4c704d72-df6b-4633-907d-e9bcba6ee22f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:30 GMT"
+          "Thu, 04 Nov 2021 04:51:39 GMT"
         ],
         "Content-Length": [
-          "1234"
+          "1349"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"grass\",\r\n      \"confidence\": 0.99999940395355225\r\n    },\r\n    {\r\n      \"name\": \"outdoor\",\r\n      \"confidence\": 0.99983179569244385\r\n    },\r\n    {\r\n      \"name\": \"sky\",\r\n      \"confidence\": 0.994972825050354\r\n    },\r\n    {\r\n      \"name\": \"porch\",\r\n      \"confidence\": 0.98947829008102417\r\n    },\r\n    {\r\n      \"name\": \"house\",\r\n      \"confidence\": 0.98920285701751709\r\n    },\r\n    {\r\n      \"name\": \"window\",\r\n      \"confidence\": 0.97713863849639893\r\n    },\r\n    {\r\n      \"name\": \"building\",\r\n      \"confidence\": 0.96683275699615479\r\n    },\r\n    {\r\n      \"name\": \"plant\",\r\n      \"confidence\": 0.94835162162780762\r\n    },\r\n    {\r\n      \"name\": \"property\",\r\n      \"confidence\": 0.90106320381164551\r\n    },\r\n    {\r\n      \"name\": \"home\",\r\n      \"confidence\": 0.89013171195983887\r\n    },\r\n    {\r\n      \"name\": \"real estate\",\r\n      \"confidence\": 0.86870092153549194\r\n    },\r\n    {\r\n      \"name\": \"green\",\r\n      \"confidence\": 0.84886503219604492\r\n    },\r\n    {\r\n      \"name\": \"lawn\",\r\n      \"confidence\": 0.813782274723053\r\n    },\r\n    {\r\n      \"name\": \"yard\",\r\n      \"confidence\": 0.80104267597198486\r\n    },\r\n    {\r\n      \"name\": \"siding\",\r\n      \"confidence\": 0.79258280992507935\r\n    },\r\n    {\r\n      \"name\": \"door\",\r\n      \"confidence\": 0.74513453245162964\r\n    },\r\n    {\r\n      \"name\": \"cottage\",\r\n      \"confidence\": 0.68602359294891357\r\n    },\r\n    {\r\n      \"name\": \"tree\",\r\n      \"confidence\": 0.6667712926864624\r\n    },\r\n    {\r\n      \"name\": \"backyard\",\r\n      \"confidence\": 0.63485598564147949\r\n    },\r\n    {\r\n      \"name\": \"farmhouse\",\r\n      \"confidence\": 0.53480565547943115\r\n    },\r\n    {\r\n      \"name\": \"residential\",\r\n      \"confidence\": 0.4166470468044281\r\n    },\r\n    {\r\n      \"name\": \"grassy\",\r\n      \"confidence\": 0.40174973011016846\r\n    }\r\n  ],\r\n  \"requestId\": \"26909baa-a2fa-42b8-b1c1-88bb8a8a558b\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"grass\",\r\n      \"confidence\": 0.9968881607055664\r\n    },\r\n    {\r\n      \"name\": \"outdoor\",\r\n      \"confidence\": 0.9962877631187439\r\n    },\r\n    {\r\n      \"name\": \"building\",\r\n      \"confidence\": 0.9847874045372009\r\n    },\r\n    {\r\n      \"name\": \"plant\",\r\n      \"confidence\": 0.9815999269485474\r\n    },\r\n    {\r\n      \"name\": \"property\",\r\n      \"confidence\": 0.9783041477203369\r\n    },\r\n    {\r\n      \"name\": \"home\",\r\n      \"confidence\": 0.967095136642456\r\n    },\r\n    {\r\n      \"name\": \"house\",\r\n      \"confidence\": 0.9651638269424438\r\n    },\r\n    {\r\n      \"name\": \"real estate\",\r\n      \"confidence\": 0.9645938873291016\r\n    },\r\n    {\r\n      \"name\": \"sky\",\r\n      \"confidence\": 0.9645713567733765\r\n    },\r\n    {\r\n      \"name\": \"siding\",\r\n      \"confidence\": 0.945518970489502\r\n    },\r\n    {\r\n      \"name\": \"porch\",\r\n      \"confidence\": 0.943138599395752\r\n    },\r\n    {\r\n      \"name\": \"yard\",\r\n      \"confidence\": 0.9411703944206238\r\n    },\r\n    {\r\n      \"name\": \"cottage\",\r\n      \"confidence\": 0.9094752073287964\r\n    },\r\n    {\r\n      \"name\": \"garden buildings\",\r\n      \"confidence\": 0.8948042392730713\r\n    },\r\n    {\r\n      \"name\": \"door\",\r\n      \"confidence\": 0.8931467533111572\r\n    },\r\n    {\r\n      \"name\": \"lawn\",\r\n      \"confidence\": 0.8898786306381226\r\n    },\r\n    {\r\n      \"name\": \"window\",\r\n      \"confidence\": 0.8891065120697021\r\n    },\r\n    {\r\n      \"name\": \"farmhouse\",\r\n      \"confidence\": 0.8887302279472351\r\n    },\r\n    {\r\n      \"name\": \"tree\",\r\n      \"confidence\": 0.8828421831130981\r\n    },\r\n    {\r\n      \"name\": \"backyard\",\r\n      \"confidence\": 0.8752654790878296\r\n    },\r\n    {\r\n      \"name\": \"driveway\",\r\n      \"confidence\": 0.8506985902786255\r\n    },\r\n    {\r\n      \"name\": \"shed\",\r\n      \"confidence\": 0.8502359390258789\r\n    },\r\n    {\r\n      \"name\": \"roof\",\r\n      \"confidence\": 0.8493107557296753\r\n    },\r\n    {\r\n      \"name\": \"land lot\",\r\n      \"confidence\": 0.8448545932769775\r\n    }\r\n  ],\r\n  \"requestId\": \"4c704d72-df6b-4633-907d-e9bcba6ee22f\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

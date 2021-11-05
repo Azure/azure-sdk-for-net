@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -14,7 +12,7 @@ namespace Azure.Core.TestFramework
     [ClientTestFixture]
     public abstract class ClientTestBase
     {
-        private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
+        protected static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
 
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
@@ -38,7 +36,7 @@ namespace Azure.Core.TestFramework
 
         protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
 
-        internal object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        protected internal virtual object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
             if (client is IProxyTargetAccessor)
             {
@@ -58,7 +56,6 @@ namespace Azure.Core.TestFramework
 
                             break;
                         }
-
 
                         if (methodInfo.Name.EndsWith("Client") &&
                             methodInfo.Name.StartsWith("Get") &&
@@ -85,10 +82,14 @@ namespace Azure.Core.TestFramework
                 interceptors.AddRange(preInterceptors);
             }
 
+            interceptors.Add(new GetOriginalInterceptor(client));
+
             if (TestDiagnostics)
             {
                 interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
+
+            interceptors.Add(new InstrumentResultInterceptor(this));
 
             // Ignore the async method interceptor entirely if we're running a
             // a SyncOnly test
@@ -99,9 +100,23 @@ namespace Azure.Core.TestFramework
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
 
-            interceptors.Add(new InstrumentClientInterceptor(this));
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                clientType,
+                new[] {typeof(IInstrumented)},
+                client,
+                interceptors.ToArray());
+        }
 
-            return s_proxyGenerator.CreateClassProxyWithTarget(clientType, client, interceptors.ToArray());
+        protected internal virtual object InstrumentOperation(Type operationType, object operation)
+        {
+            return operation;
+        }
+
+        protected T GetOriginal<T>(T instrumented)
+        {
+            if (instrumented == null) throw new ArgumentNullException(nameof(instrumented));
+            var i = instrumented as IInstrumented ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
+            return (T) i.Original;
         }
     }
 }

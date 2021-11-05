@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of twin updates is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("TwinUpdatesNotInAllowedRange")]
     public partial class TwinUpdatesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

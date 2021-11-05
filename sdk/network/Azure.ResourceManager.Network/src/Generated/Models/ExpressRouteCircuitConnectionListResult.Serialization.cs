@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitConnectionListResult
+    internal partial class ExpressRouteCircuitConnectionListResult
     {
         internal static ExpressRouteCircuitConnectionListResult DeserializeExpressRouteCircuitConnectionListResult(JsonElement element)
         {
-            IReadOnlyList<ExpressRouteCircuitConnection> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExpressRouteCircuitConnection> array = new List<ExpressRouteCircuitConnection>();
+                    List<ExpressRouteCircuitConnectionData> array = new List<ExpressRouteCircuitConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ExpressRouteCircuitConnection.DeserializeExpressRouteCircuitConnection(item));
-                        }
+                        array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitConnectionListResult(value, nextLink);
+            return new ExpressRouteCircuitConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Recovery plan custom details.
+    /// Recovery plan properties.
     /// </summary>
     public partial class RecoveryPlanProperties
     {
@@ -175,10 +175,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public IList<RecoveryPlanGroup> Groups { get; set; }
 
         /// <summary>
-        /// Gets the provider id and provider specific details.
+        /// Gets or sets the provider id and provider specific details.
         /// </summary>
         [JsonProperty(PropertyName = "providerSpecificDetails")]
-        public IList<RecoveryPlanProviderSpecificDetails> ProviderSpecificDetails { get; private set; }
+        public IList<RecoveryPlanProviderSpecificDetails> ProviderSpecificDetails { get; set; }
 
     }
 }

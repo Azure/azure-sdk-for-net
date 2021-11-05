@@ -8,45 +8,35 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ProximityPlacementGroupListResult
+    internal partial class ProximityPlacementGroupListResult
     {
         internal static ProximityPlacementGroupListResult DeserializeProximityPlacementGroupListResult(JsonElement element)
         {
-            IReadOnlyList<ProximityPlacementGroup> value = default;
-            string nextLink = default;
+            IReadOnlyList<ProximityPlacementGroupData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ProximityPlacementGroup> array = new List<ProximityPlacementGroup>();
+                    List<ProximityPlacementGroupData> array = new List<ProximityPlacementGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ProximityPlacementGroup.DeserializeProximityPlacementGroup(item));
-                        }
+                        array.Add(ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProximityPlacementGroupListResult(value, nextLink);
+            return new ProximityPlacementGroupListResult(value, nextLink.Value);
         }
     }
 }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="probesFailed">The number of failed probes.</param>
         /// <param name="hops">List of hops between the source and the
         /// destination.</param>
-        public ConnectionStateSnapshot(string connectionState = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string evaluationState = default(string), int? avgLatencyInMs = default(int?), int? minLatencyInMs = default(int?), int? maxLatencyInMs = default(int?), int? probesSent = default(int?), int? probesFailed = default(int?), IList<ConnectivityHop> hops = default(IList<ConnectivityHop>))
+        public ConnectionStateSnapshot(string connectionState = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string evaluationState = default(string), long? avgLatencyInMs = default(long?), long? minLatencyInMs = default(long?), long? maxLatencyInMs = default(long?), long? probesSent = default(long?), long? probesFailed = default(long?), IList<ConnectivityHop> hops = default(IList<ConnectivityHop>))
         {
             ConnectionState = connectionState;
             StartTime = startTime;
@@ -97,31 +98,31 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets average latency in ms.
         /// </summary>
         [JsonProperty(PropertyName = "avgLatencyInMs")]
-        public int? AvgLatencyInMs { get; set; }
+        public long? AvgLatencyInMs { get; set; }
 
         /// <summary>
         /// Gets or sets minimum latency in ms.
         /// </summary>
         [JsonProperty(PropertyName = "minLatencyInMs")]
-        public int? MinLatencyInMs { get; set; }
+        public long? MinLatencyInMs { get; set; }
 
         /// <summary>
         /// Gets or sets maximum latency in ms.
         /// </summary>
         [JsonProperty(PropertyName = "maxLatencyInMs")]
-        public int? MaxLatencyInMs { get; set; }
+        public long? MaxLatencyInMs { get; set; }
 
         /// <summary>
         /// Gets or sets the number of sent probes.
         /// </summary>
         [JsonProperty(PropertyName = "probesSent")]
-        public int? ProbesSent { get; set; }
+        public long? ProbesSent { get; set; }
 
         /// <summary>
         /// Gets or sets the number of failed probes.
         /// </summary>
         [JsonProperty(PropertyName = "probesFailed")]
-        public int? ProbesFailed { get; set; }
+        public long? ProbesFailed { get; set; }
 
         /// <summary>
         /// Gets list of hops between the source and the destination.
@@ -129,5 +130,54 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "hops")]
         public IList<ConnectivityHop> Hops { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AvgLatencyInMs > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "AvgLatencyInMs", 4294967295);
+            }
+            if (AvgLatencyInMs < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AvgLatencyInMs", 0);
+            }
+            if (MinLatencyInMs > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinLatencyInMs", 4294967295);
+            }
+            if (MinLatencyInMs < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinLatencyInMs", 0);
+            }
+            if (MaxLatencyInMs > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxLatencyInMs", 4294967295);
+            }
+            if (MaxLatencyInMs < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxLatencyInMs", 0);
+            }
+            if (ProbesSent > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesSent", 4294967295);
+            }
+            if (ProbesSent < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesSent", 0);
+            }
+            if (ProbesFailed > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ProbesFailed", 4294967295);
+            }
+            if (ProbesFailed < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ProbesFailed", 0);
+            }
+        }
     }
 }

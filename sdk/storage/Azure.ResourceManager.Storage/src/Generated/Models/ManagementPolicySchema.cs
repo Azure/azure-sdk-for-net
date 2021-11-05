@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public ManagementPolicySchema(IEnumerable<ManagementPolicyRule> rules)
         {
             if (rules == null)
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         internal ManagementPolicySchema(IList<ManagementPolicyRule> rules)
         {
-            Rules = rules ?? new List<ManagementPolicyRule>();
+            Rules = rules;
         }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>

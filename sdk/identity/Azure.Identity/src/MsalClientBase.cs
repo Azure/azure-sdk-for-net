@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
     internal abstract class MsalClientBase<TClient>
         where TClient : IClientApplicationBase
     {
-        private readonly Lazy<Task> _ensureInitAsync;
+        private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        internal protected bool IsPiiLoggingEnabled { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -20,88 +20,62 @@ namespace Azure.Identity
         {
         }
 
-        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, ITokenCacheOptions cacheOptions)
+        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, bool isPiiLoggingEnabled, ITokenCacheOptions cacheOptions)
         {
+            // This validation is performed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
+            // setting AuthorityHost to a non TLS endpoint. However, the AuthorityHost can also be set by the AZURE_AUTHORITY_HOST environment
+            // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
+            // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
+            // we validate here as all other credentials will create an MSAL client.
+            Validations.ValidateAuthorityHost(pipeline.AuthorityHost);
+
+            IsPiiLoggingEnabled = isPiiLoggingEnabled;
             Pipeline = pipeline;
-
             TenantId = tenantId;
-
             ClientId = clientId;
-
-            EnablePersistentCache = cacheOptions?.EnablePersistentCache ?? false;
-
-            AllowUnencryptedCache = cacheOptions?.AllowUnencryptedCache ?? false;
-
-            _ensureInitAsync = new Lazy<Task>(InitializeAsync);
+            TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
+            _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }
 
-        protected string TenantId { get; }
+        internal string TenantId { get; }
 
-        protected string ClientId { get; }
+        internal string ClientId { get; }
 
-        protected bool EnablePersistentCache { get; }
+        internal TokenCache TokenCache { get; }
 
-        protected bool AllowUnencryptedCache { get; }
+        protected internal CredentialPipeline Pipeline { get; }
 
-        protected CredentialPipeline Pipeline { get; }
+        protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
 
-        protected TClient Client { get; private set; }
-
-        protected abstract Task<TClient> CreateClientAsync();
-
-        protected async Task EnsureInitializedAsync(bool async)
+        protected async ValueTask<TClient> GetClientAsync(bool async, CancellationToken cancellationToken)
         {
-            if (async)
+            using var asyncLock = await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
             {
-                await _ensureInitAsync.Value.ConfigureAwait(false);
+                return asyncLock.Value;
             }
-            else
+
+            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            if (TokenCache != null)
             {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _ensureInitAsync.Value.GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+                await TokenCache.RegisterCache(async, client.UserTokenCache, cancellationToken).ConfigureAwait(false);
+
+                if (client is IConfidentialClientApplication cca)
+                {
+                    await TokenCache.RegisterCache(async, cca.AppTokenCache, cancellationToken).ConfigureAwait(false);
+                }
             }
+
+            asyncLock.SetValue(client);
+            return client;
         }
 
-        private async Task InitializeAsync()
+        protected void LogMsal(LogLevel level, string message, bool isPii)
         {
-            Client = await CreateClientAsync().ConfigureAwait(false);
-
-            if (EnablePersistentCache)
+            if (!isPii || IsPiiLoggingEnabled)
             {
-                MsalCacheHelper cacheHelper;
-
-                StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, ClientId)
-                    .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                    .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, Constants.DefaultMsalTokenCacheKeyringLabel, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
-                    .Build();
-
-                try
-                {
-                    cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
-
-                    cacheHelper.VerifyPersistence();
-                }
-                catch (MsalCachePersistenceException)
-                {
-                    if (AllowUnencryptedCache)
-                    {
-                        storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, ClientId)
-                            .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                            .WithLinuxUnprotectedFile()
-                            .Build();
-
-                        cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
-
-                        cacheHelper.VerifyPersistence();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                cacheHelper.RegisterCache(Client.UserTokenCache);
+                AzureIdentityEventSource.Singleton.LogMsal(level, message);
             }
         }
     }

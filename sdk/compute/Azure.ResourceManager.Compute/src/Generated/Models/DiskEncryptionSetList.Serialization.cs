@@ -8,45 +8,35 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskEncryptionSetList
+    internal partial class DiskEncryptionSetList
     {
         internal static DiskEncryptionSetList DeserializeDiskEncryptionSetList(JsonElement element)
         {
-            IReadOnlyList<DiskEncryptionSet> value = default;
-            string nextLink = default;
+            IReadOnlyList<DiskEncryptionSetData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DiskEncryptionSet> array = new List<DiskEncryptionSet>();
+                    List<DiskEncryptionSetData> array = new List<DiskEncryptionSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DiskEncryptionSet.DeserializeDiskEncryptionSet(item));
-                        }
+                        array.Add(DiskEncryptionSetData.DeserializeDiskEncryptionSetData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DiskEncryptionSetList(value, nextLink);
+            return new DiskEncryptionSetList(value, nextLink.Value);
         }
     }
 }

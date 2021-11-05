@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Server response for Get tenant users API call. </summary>
-    public partial class UserListResult
+    internal partial class UserListResult
     {
         /// <summary> Initializes a new instance of UserListResult. </summary>
         internal UserListResult()
         {
+            Value = new ChangeTrackingList<User>();
         }
 
         /// <summary> Initializes a new instance of UserListResult. </summary>

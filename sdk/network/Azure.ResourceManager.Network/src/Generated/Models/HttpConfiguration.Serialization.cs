@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method");
-                writer.WriteStringValue(Method);
+                writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Headers != null)
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers");
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidStatusCodes != null)
+            if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
                 writer.WritePropertyName("validStatusCodes");
                 writer.WriteStartArray();

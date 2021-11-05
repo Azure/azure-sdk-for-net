@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class ServiceGetPropertiesHeaders
+    internal partial class ServiceGetPropertiesHeaders
     {
         private readonly Response _response;
         public ServiceGetPropertiesHeaders(Response response)

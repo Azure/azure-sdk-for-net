@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("country");
             writer.WriteStringValue(Country);
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city");
                 writer.WriteStringValue(City);
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element)
         {
             string country = default;
-            string state = default;
-            string city = default;
+            Optional<string> state = default;
+            Optional<string> city = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("country"))
@@ -44,24 +44,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("city"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     city = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureReachabilityReportLocation(country, state, city);
+            return new AzureReachabilityReportLocation(country, state.Value, city.Value);
         }
     }
 }

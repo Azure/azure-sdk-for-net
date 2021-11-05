@@ -39,13 +39,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="privateEndpointStateForSiteRecovery">Private endpoint
         /// state for site recovery. Possible values include: 'None',
         /// 'Enabled'</param>
-        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string))
+        /// <param name="encryption">Customer Managed Key details of the
+        /// resource.</param>
+        /// <param name="moveDetails">The details of the latest move operation
+        /// performed on the Azure Resource</param>
+        /// <param name="moveState">The State of the Resource after the move
+        /// operation. Possible values include: 'Unknown', 'InProgress',
+        /// 'PrepareFailed', 'CommitFailed', 'PrepareTimedout',
+        /// 'CommitTimedout', 'MoveSucceeded', 'Failure', 'CriticalFailure',
+        /// 'PartialSuccess'</param>
+        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption), VaultPropertiesMoveDetails moveDetails = default(VaultPropertiesMoveDetails), string moveState = default(string))
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
             PrivateEndpointConnections = privateEndpointConnections;
             PrivateEndpointStateForBackup = privateEndpointStateForBackup;
             PrivateEndpointStateForSiteRecovery = privateEndpointStateForSiteRecovery;
+            Encryption = encryption;
+            MoveDetails = moveDetails;
+            MoveState = moveState;
             CustomInit();
         }
 
@@ -84,6 +96,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateEndpointStateForSiteRecovery")]
         public string PrivateEndpointStateForSiteRecovery { get; private set; }
+
+        /// <summary>
+        /// Gets or sets customer Managed Key details of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public VaultPropertiesEncryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the details of the latest move operation performed on
+        /// the Azure Resource
+        /// </summary>
+        [JsonProperty(PropertyName = "moveDetails")]
+        public VaultPropertiesMoveDetails MoveDetails { get; set; }
+
+        /// <summary>
+        /// Gets the State of the Resource after the move operation. Possible
+        /// values include: 'Unknown', 'InProgress', 'PrepareFailed',
+        /// 'CommitFailed', 'PrepareTimedout', 'CommitTimedout',
+        /// 'MoveSucceeded', 'Failure', 'CriticalFailure', 'PartialSuccess'
+        /// </summary>
+        [JsonProperty(PropertyName = "moveState")]
+        public string MoveState { get; private set; }
 
     }
 }

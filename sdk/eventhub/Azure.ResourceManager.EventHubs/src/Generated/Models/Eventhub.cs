@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of Eventhub. </summary>
         public Eventhub()
         {
+            PartitionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Eventhub. </summary>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal Eventhub(string id, string name, string type, IList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
+        internal Eventhub(string id, string name, string type, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type)
         {
             PartitionIds = partitionIds;
             CreatedAt = createdAt;
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Current number of shards on the Event Hub. </summary>
-        public IList<string> PartitionIds { get; }
+        public IReadOnlyList<string> PartitionIds { get; }
         /// <summary> Exact time the Event Hub was created. </summary>
         public DateTimeOffset? CreatedAt { get; }
         /// <summary> The exact time the message was updated. </summary>

@@ -10,94 +10,12 @@
 
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for OperatorType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(OperatorTypeConverter))]
-    public struct OperatorType : System.IEquatable<OperatorType>
+    public static class OperatorType
     {
-        private OperatorType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly OperatorType Flux = "Flux";
-
-
-        /// <summary>
-        /// Underlying value of enum OperatorType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for OperatorType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type OperatorType
-        /// </summary>
-        public bool Equals(OperatorType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to OperatorType
-        /// </summary>
-        public static implicit operator OperatorType(string value)
-        {
-            return new OperatorType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert OperatorType to string
-        /// </summary>
-        public static implicit operator string(OperatorType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum OperatorType
-        /// </summary>
-        public static bool operator == (OperatorType e1, OperatorType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum OperatorType
-        /// </summary>
-        public static bool operator != (OperatorType e1, OperatorType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for OperatorType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is OperatorType && Equals((OperatorType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode OperatorType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Flux = "Flux";
     }
 }

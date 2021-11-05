@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
@@ -20,11 +22,9 @@ namespace Azure.Search.Documents.Indexes
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
-#if EXPERIMENTAL_SERIALIZER
         private readonly ObjectSerializer _serializer;
-#endif
 
-        private ServiceRestClient _serviceClient;
+        private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
@@ -54,6 +54,21 @@ namespace Azure.Search.Documents.Indexes
         /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
         /// </summary>
         /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="tokenCredential">
+        /// Required. The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        public SearchIndexClient(Uri endpoint, TokenCredential tokenCredential) :
+            this(endpoint, tokenCredential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexClient.
@@ -73,12 +88,69 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
-#if EXPERIMENTAL_SERIALIZER
             _serializer = options.Serializer;
-#endif
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(credential);
             _version = options.Version;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="tokenCredential">
+        /// Required. The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
+        public SearchIndexClient(
+            Uri endpoint,
+            TokenCredential tokenCredential,
+            SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            endpoint.AssertHttpsScheme(nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            options ??= new SearchClientOptions();
+            Endpoint = endpoint;
+            _serializer = options.Serializer;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = options.Build(tokenCredential);
+            _version = options.Version;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="serializer">An optional customized serializer to use for search documents.</param>
+        /// <param name="pipeline">The authenticated <see cref="HttpPipeline"/> used for sending requests to the Search Service.</param>
+        /// <param name="diagnostics">The <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used to provide tracing support for the client library.</param>
+        /// <param name="version">The REST API version of the Search Service to use when making requests.</param>
+        internal SearchIndexClient(
+            Uri endpoint,
+            ObjectSerializer serializer,
+            HttpPipeline pipeline,
+            ClientDiagnostics diagnostics,
+            SearchClientOptions.ServiceVersion version)
+        {
+            Debug.Assert(endpoint != null);
+            Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));
+            Debug.Assert(pipeline != null);
+            Debug.Assert(diagnostics != null);
+            Debug.Assert(
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
+                version <= SearchClientOptions.LatestVersion);
+
+            Endpoint = endpoint;
+            _serializer = serializer;
+            _clientDiagnostics = diagnostics;
+            _pipeline = pipeline;
+            _version = version;
         }
 
         /// <summary>
@@ -94,12 +166,12 @@ namespace Azure.Search.Documents.Indexes
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the generated <see cref="ServiceRestClient"/> to make requests.
+        /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
         /// </summary>
-        private ServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new ServiceRestClient(
+        private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -110,7 +182,7 @@ namespace Azure.Search.Documents.Indexes
         private IndexesRestClient IndexesClient => LazyInitializer.EnsureInitialized(ref _indexesClient, () => new IndexesRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -121,7 +193,7 @@ namespace Azure.Search.Documents.Indexes
         private SynonymMapsRestClient SynonymMapsClient => LazyInitializer.EnsureInitialized(ref _synonymMapsClient, () => new SynonymMapsRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -143,9 +215,7 @@ namespace Azure.Search.Documents.Indexes
             return new SearchClient(
                 Endpoint,
                 indexName,
-#if EXPERIMENTAL_SERIALIZER
                 _serializer,
-#endif
                 _pipeline,
                 _clientDiagnostics,
                 _version);
@@ -658,11 +728,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<SearchIndex> GetIndexes(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -674,13 +744,13 @@ namespace Azure.Search.Documents.Indexes
                         cancellationToken);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -692,11 +762,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -704,18 +774,18 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.All,
-                        cancellationToken)
+                            Constants.All,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -727,11 +797,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual Pageable<string> GetIndexNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -744,13 +814,13 @@ namespace Azure.Search.Documents.Indexes
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -762,11 +832,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -774,19 +844,19 @@ namespace Azure.Search.Documents.Indexes
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.NameKey,
-                        cancellationToken)
+                            Constants.NameKey,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>

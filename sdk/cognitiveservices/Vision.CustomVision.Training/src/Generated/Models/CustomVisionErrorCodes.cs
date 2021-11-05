@@ -67,6 +67,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestImageFormat = "BadRequestImageFormat";
         public const string BadRequestImageSizeBytes = "BadRequestImageSizeBytes";
         public const string BadRequestImageDimensions = "BadRequestImageDimensions";
+        public const string BadRequestImageAspectRatio = "BadRequestImageAspectRatio";
         public const string BadRequestImageExceededCount = "BadRequestImageExceededCount";
         public const string BadRequestTrainingNotNeeded = "BadRequestTrainingNotNeeded";
         public const string BadRequestTrainingNotNeededButTrainingPipelineUpdated = "BadRequestTrainingNotNeededButTrainingPipelineUpdated";
@@ -78,9 +79,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestTrainingAlreadyInProgress = "BadRequestTrainingAlreadyInProgress";
         public const string BadRequestDetectionTrainingNotAllowNegativeTag = "BadRequestDetectionTrainingNotAllowNegativeTag";
         public const string BadRequestInvalidEmailAddress = "BadRequestInvalidEmailAddress";
+        public const string BadRequestRetiredDomainNotSupportedForTraining = "BadRequestRetiredDomainNotSupportedForTraining";
         public const string BadRequestDomainNotSupportedForAdvancedTraining = "BadRequestDomainNotSupportedForAdvancedTraining";
         public const string BadRequestExportPlatformNotSupportedForAdvancedTraining = "BadRequestExportPlatformNotSupportedForAdvancedTraining";
         public const string BadRequestReservedBudgetInHoursNotEnoughForAdvancedTraining = "BadRequestReservedBudgetInHoursNotEnoughForAdvancedTraining";
+        public const string BadRequestCustomBaseModelIterationStatusNotCompleted = "BadRequestCustomBaseModelIterationStatusNotCompleted";
+        public const string BadRequestCustomBaseModelDomainNotCompatible = "BadRequestCustomBaseModelDomainNotCompatible";
+        public const string BadRequestCustomBaseModelArchitectureRetired = "BadRequestCustomBaseModelArchitectureRetired";
         public const string BadRequestExportValidationFailed = "BadRequestExportValidationFailed";
         public const string BadRequestExportAlreadyInProgress = "BadRequestExportAlreadyInProgress";
         public const string BadRequestPredictionIdsMissing = "BadRequestPredictionIdsMissing";
@@ -96,6 +101,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestOperationNotSupported = "BadRequestOperationNotSupported";
         public const string BadRequestInvalidArtifactUri = "BadRequestInvalidArtifactUri";
         public const string BadRequestCustomerManagedKeyRevoked = "BadRequestCustomerManagedKeyRevoked";
+        public const string BadRequestInvalidUri = "BadRequestInvalidUri";
         public const string BadRequestInvalid = "BadRequestInvalid";
         public const string UnsupportedMediaType = "UnsupportedMediaType";
         public const string Forbidden = "Forbidden";
@@ -145,6 +151,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string ErrorPredictionStorage = "ErrorPredictionStorage";
         public const string ErrorRegionProposal = "ErrorRegionProposal";
         public const string ErrorUnknownBaseModel = "ErrorUnknownBaseModel";
+        public const string ErrorServerTimeOut = "ErrorServerTimeOut";
         public const string ErrorInvalid = "ErrorInvalid";
     }
 }

@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DigitalTwins.Tests", "tests\Microsoft.Azure.Management.DigitalTwins.Tests.csproj", "{B94C7A88-E9F4-4238-99D7-B698EE6219F8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{4C287315-01E1-4821-8794-BF6A9C53950E}"
+	ProjectSection(SolutionItems) = preProject
+		AzSdk.RP.props = AzSdk.RP.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

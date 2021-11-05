@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkVirtualApplianceListResult
+    internal partial class NetworkVirtualApplianceListResult
     {
         internal static NetworkVirtualApplianceListResult DeserializeNetworkVirtualApplianceListResult(JsonElement element)
         {
-            IReadOnlyList<NetworkVirtualAppliance> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<NetworkVirtualApplianceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkVirtualAppliance> array = new List<NetworkVirtualAppliance>();
+                    List<NetworkVirtualApplianceData> array = new List<NetworkVirtualApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NetworkVirtualAppliance.DeserializeNetworkVirtualAppliance(item));
-                        }
+                        array.Add(NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceListResult(value, nextLink);
+            return new NetworkVirtualApplianceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

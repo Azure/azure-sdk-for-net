@@ -15,17 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableProvidersListCountry DeserializeAvailableProvidersListCountry(JsonElement element)
         {
-            string countryName = default;
-            IReadOnlyList<string> providers = default;
-            IReadOnlyList<AvailableProvidersListState> states = default;
+            Optional<string> countryName = default;
+            Optional<IReadOnlyList<string>> providers = default;
+            Optional<IReadOnlyList<AvailableProvidersListState>> states = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     countryName = property.Value.GetString();
                     continue;
                 }
@@ -33,19 +29,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     providers = array;
                     continue;
@@ -54,25 +44,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailableProvidersListState> array = new List<AvailableProvidersListState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item));
-                        }
+                        array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item));
                     }
                     states = array;
                     continue;
                 }
             }
-            return new AvailableProvidersListCountry(countryName, providers, states);
+            return new AvailableProvidersListCountry(countryName.Value, Optional.ToList(providers), Optional.ToList(states));
         }
     }
 }

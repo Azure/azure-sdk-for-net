@@ -66,12 +66,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// "messages"
         /// 3. The single category name, for example, "connections", it matches
         /// the category "connections"</param>
-        public UpstreamTemplate(string urlTemplate, string hubPattern = default(string), string eventPattern = default(string), string categoryPattern = default(string))
+        /// <param name="auth">Gets or sets the auth settings for an upstream.
+        /// If not set, no auth is used for upstream messages.</param>
+        public UpstreamTemplate(string urlTemplate, string hubPattern = default(string), string eventPattern = default(string), string categoryPattern = default(string), UpstreamAuthSettings auth = default(UpstreamAuthSettings))
         {
             HubPattern = hubPattern;
             EventPattern = eventPattern;
             CategoryPattern = categoryPattern;
             UrlTemplate = urlTemplate;
+            Auth = auth;
             CustomInit();
         }
 
@@ -131,6 +134,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "urlTemplate")]
         public string UrlTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the auth settings for an upstream. If not set, no auth
+        /// is used for upstream messages.
+        /// </summary>
+        [JsonProperty(PropertyName = "auth")]
+        public UpstreamAuthSettings Auth { get; set; }
 
         /// <summary>
         /// Validate the object.

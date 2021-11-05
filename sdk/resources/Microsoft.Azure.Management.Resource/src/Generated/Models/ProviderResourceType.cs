@@ -34,18 +34,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="resourceType">The resource type.</param>
         /// <param name="locations">The collection of locations where this
         /// resource type can be created.</param>
+        /// <param name="locationMappings">The location mappings that are
+        /// supported by this resource type.</param>
         /// <param name="aliases">The aliases that are supported by this
         /// resource type.</param>
         /// <param name="apiVersions">The API version.</param>
+        /// <param name="defaultApiVersion">The default API version.</param>
+        /// <param name="apiProfiles">The API profiles for the resource
+        /// provider.</param>
         /// <param name="capabilities">The additional capabilities offered by
         /// this resource type.</param>
         /// <param name="properties">The properties.</param>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<ProviderExtendedLocation> locationMappings = default(IList<ProviderExtendedLocation>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string defaultApiVersion = default(string), IList<ApiProfile> apiProfiles = default(IList<ApiProfile>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
+            LocationMappings = locationMappings;
             Aliases = aliases;
             ApiVersions = apiVersions;
+            DefaultApiVersion = defaultApiVersion;
+            ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
             CustomInit();
@@ -70,6 +78,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public IList<string> Locations { get; set; }
 
         /// <summary>
+        /// Gets or sets the location mappings that are supported by this
+        /// resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "locationMappings")]
+        public IList<ProviderExtendedLocation> LocationMappings { get; set; }
+
+        /// <summary>
         /// Gets or sets the aliases that are supported by this resource type.
         /// </summary>
         [JsonProperty(PropertyName = "aliases")]
@@ -80,6 +95,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "apiVersions")]
         public IList<string> ApiVersions { get; set; }
+
+        /// <summary>
+        /// Gets the default API version.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultApiVersion")]
+        public string DefaultApiVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the API profiles for the resource provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "apiProfiles")]
+        public IList<ApiProfile> ApiProfiles { get; private set; }
 
         /// <summary>
         /// Gets or sets the additional capabilities offered by this resource

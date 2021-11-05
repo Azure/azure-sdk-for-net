@@ -166,15 +166,64 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             /// Specifies whether environment is Test or Prod. Possible values include:
             /// 'Prod', 'Test'
             /// </param>
+            /// <param name='source'>
+            /// The source property filter to apply.
+            /// </param>
+            /// <param name='changedSince'>
+            /// The last changed status property filter to apply.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QnADocumentsDTO> DownloadAsync(this IKnowledgebase operations, string kbId, string environment, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QnADocumentsDTO> DownloadAsync(this IKnowledgebase operations, string kbId, string environment, string source = default(string), string changedSince = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadWithHttpMessagesAsync(kbId, environment, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(kbId, environment, source, changedSince, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// GenerateAnswer call to query knowledgebase (QnA Maker Managed).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='kbId'>
+            /// Knowledgebase id.
+            /// </param>
+            /// <param name='generateAnswerPayload'>
+            /// Post body of the request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QnASearchResultList> GenerateAnswerAsync(this IKnowledgebase operations, string kbId, QueryDTO generateAnswerPayload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GenerateAnswerWithHttpMessagesAsync(kbId, generateAnswerPayload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Train call to add suggestions to knowledgebase (QnAMaker Managed).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='kbId'>
+            /// Knowledgebase id.
+            /// </param>
+            /// <param name='trainPayload'>
+            /// Post body of the request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task TrainAsync(this IKnowledgebase operations, string kbId, FeedbackRecordsDTO trainPayload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.TrainWithHttpMessagesAsync(kbId, trainPayload, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

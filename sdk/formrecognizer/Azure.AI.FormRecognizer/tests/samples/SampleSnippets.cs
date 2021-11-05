@@ -2,58 +2,60 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Tests;
-using Azure.AI.FormRecognizer.Training;
+using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.FormRecognizer.Samples
+namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class Snippets : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
-        public void CreateFormRecognizerClient()
+        public void CreateDocumentAnalysisClient()
         {
+            #region Snippet:CreateDocumentAnalysisClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateFormRecognizerClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
             #endregion
         }
 
         [Test]
-        public void CreateFormRecognizerClientTokenCredential()
+        public void CreateDocumentAnalysisClientTokenCredential()
         {
+            #region Snippet:CreateDocumentAnalysisClientTokenCredential
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
             string endpoint = TestEnvironment.Endpoint;
-
-            #region Snippet:CreateFormRecognizerClientTokenCredential
-            //@@ string endpoint = "<endpoint>";
-            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
+#endif
+            var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
         [Test]
-        public void CreateFormTrainingClient()
+        public void CreateDocumentModelAdministrationClient()
         {
+            #region Snippet:CreateDocumentModelAdministrationClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateFormTrainingClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormTrainingClient(new Uri(endpoint), credential);
+            var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -64,12 +66,13 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
-            #region Snippet:FormRecognizerBadRequest
+            #region Snippet:DocumentAnalysisBadRequest
             try
             {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
+                await operation.WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -79,83 +82,21 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [Test]
-        public async Task RecognizeFormContentFromFile()
+        public void CreateDocumentAnalysisClients()
         {
+            #region Snippet:CreateDocumentAnalysisClients
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
+#endif
             var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
-            string invoiceFilePath = FormRecognizerTestEnvironment.CreatePath("Invoice_1.pdf");
-
-            #region Snippet:FormRecognizerRecognizeFormContentFromFile
-            using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
-            {
-                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
-                /*
-                 *
-                 */
-            }
+            var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
+            var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
             #endregion
-        }
-
-        [Test]
-        public async Task RecognizeReceiptFromFile()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
-
-            string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
-
-            #region Snippet:FormRecognizerRecognizeReceiptFromFile
-            using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
-            {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
-                /*
-                 *
-                 */
-            }
-            #endregion
-        }
-
-        [Test]
-        public async Task RecognizeCustomFormsFromFile()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
-
-            // Firstly, create a trained model we can use to recognize the custom form.
-
-            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
-
-            // Proceed with the custom form recognition.
-
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
-
-            string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
-            string modelId = model.ModelId;
-
-            #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
-            using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
-            {
-                //@@ string modelId = "<modelId>";
-
-                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
-                /*
-                 *
-                 */
-            }
-            #endregion
-
-            // Delete the model on completion to clean environment.
-            trainingClient.DeleteModel(model.ModelId);
         }
     }
 }

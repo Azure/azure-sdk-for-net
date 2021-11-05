@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class ScoringFunctionAggregationExtensions
+    internal static partial class ScoringFunctionAggregationExtensions
     {
         public static string ToSerialString(this ScoringFunctionAggregation value) => value switch
         {

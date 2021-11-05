@@ -75,9 +75,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 stringBuilder.Append("default:");
             }
             stringBuilder.Append(AccessControlType.ToString().ToLowerInvariant());
-            stringBuilder.Append(":");
+            stringBuilder.Append(':');
             stringBuilder.Append(EntityId ?? "");
-            stringBuilder.Append(":");
+            stringBuilder.Append(':');
             stringBuilder.Append(Permissions.ToSymbolicRolePermissions());
 
             return stringBuilder.ToString();

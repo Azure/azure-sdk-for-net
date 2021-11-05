@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
         /// <param name="value"> List of pipeline runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineRunsQueryResponse(IEnumerable<PipelineRun> value)
         {
             if (value == null)

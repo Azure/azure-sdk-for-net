@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 
         public string ReplyTo { get; set; }
 
-        public string Label { get; set; }
+        public string Subject { get; set; }
 
         public string SessionId { get; set; }
 
@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
             AmqpCodec.EncodeString(MessageId, buffer);
             AmqpCodec.EncodeString(To, buffer);
             AmqpCodec.EncodeString(ReplyTo, buffer);
-            AmqpCodec.EncodeString(Label, buffer);
+            AmqpCodec.EncodeString(Subject, buffer);
             AmqpCodec.EncodeString(SessionId, buffer);
             AmqpCodec.EncodeString(ReplyToSessionId, buffer);
             AmqpCodec.EncodeString(ContentType, buffer);
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 
             if (count-- > 0)
             {
-                Label = AmqpCodec.DecodeString(buffer);
+                Subject = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
                    AmqpCodec.GetStringEncodeSize(MessageId) +
                    AmqpCodec.GetStringEncodeSize(To) +
                    AmqpCodec.GetStringEncodeSize(ReplyTo) +
-                   AmqpCodec.GetStringEncodeSize(Label) +
+                   AmqpCodec.GetStringEncodeSize(Subject) +
                    AmqpCodec.GetStringEncodeSize(SessionId) +
                    AmqpCodec.GetStringEncodeSize(ReplyToSessionId) +
                    AmqpCodec.GetStringEncodeSize(ContentType) +

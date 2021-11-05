@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="matchValues"> Match value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matchVariables"/> or <paramref name="matchValues"/> is null. </exception>
         public MatchCondition(IEnumerable<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, IEnumerable<string> matchValues)
         {
             if (matchVariables == null)
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             MatchVariables = matchVariables.ToList();
             Operator = @operator;
             MatchValues = matchValues.ToList();
+            Transforms = new ChangeTrackingList<WebApplicationFirewallTransform>();
         }
 
         /// <summary> Initializes a new instance of MatchCondition. </summary>
@@ -42,10 +45,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="transforms"> List of transforms. </param>
         internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms)
         {
-            MatchVariables = matchVariables ?? new List<MatchVariable>();
+            MatchVariables = matchVariables;
             Operator = @operator;
             NegationConditon = negationConditon;
-            MatchValues = matchValues ?? new List<string>();
+            MatchValues = matchValues;
             Transforms = transforms;
         }
 
@@ -58,6 +61,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Match value. </summary>
         public IList<string> MatchValues { get; }
         /// <summary> List of transforms. </summary>
-        public IList<WebApplicationFirewallTransform> Transforms { get; set; }
+        public IList<WebApplicationFirewallTransform> Transforms { get; }
     }
 }

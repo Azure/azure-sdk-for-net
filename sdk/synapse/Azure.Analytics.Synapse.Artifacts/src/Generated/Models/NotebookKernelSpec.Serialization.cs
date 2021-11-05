@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookKernelSpecConverter))]
     public partial class NotebookKernelSpec : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -33,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string displayName = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,11 +49,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookKernelSpec(name, displayName, additionalProperties);
+        }
+
+        internal partial class NotebookKernelSpecConverter : JsonConverter<NotebookKernelSpec>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookKernelSpec model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookKernelSpec Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookKernelSpec(document.RootElement);
+            }
         }
     }
 }

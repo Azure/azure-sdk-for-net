@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EdgeNGramTokenizer
     {
         /// <summary> Character classes to keep in the tokens. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<TokenCharacterKind> TokenChars { get; }
     }
 }

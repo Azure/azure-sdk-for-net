@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string Basic = "Basic";
         public const string SshPublicKey = "SshPublicKey";
+        public const string MultiFactor = "MultiFactor";
     }
 }

@@ -15,6 +15,10 @@ namespace Azure.Core
         /// <summary>
         /// The policy would be invoked every time request is retried.
         /// </summary>
-        PerRetry
+        PerRetry,
+        /// <summary>
+        /// The policy would be invoked before the request is sent by the transport.
+        /// </summary>
+        BeforeTransport,
     }
 }

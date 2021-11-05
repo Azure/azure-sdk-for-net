@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="pattern">The pattern, either fixed string or regular
         /// expression, that evaluates the truthfulness of the
         /// condition.</param>
-        /// <param name="ignoreCase">Setting this paramter to truth value with
+        /// <param name="ignoreCase">Setting this parameter to truth value with
         /// force the pattern to do a case in-sensitive comparison.</param>
         /// <param name="negate">Setting this value as truth will force to
         /// check the negation of the condition given by the user.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Pattern { get; set; }
 
         /// <summary>
-        /// Gets or sets setting this paramter to truth value with force the
+        /// Gets or sets setting this parameter to truth value with force the
         /// pattern to do a case in-sensitive comparison.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCase")]

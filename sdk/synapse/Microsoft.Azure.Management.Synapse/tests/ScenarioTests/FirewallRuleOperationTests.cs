@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
 
             // delete firewall
             SynapseClient.IpFirewallRules.Delete(CommonData.ResourceGroupName, workspaceName, firewallRuleName);
-            var ex = Assert.Throws<ErrorContractException>(() => SynapseClient.IpFirewallRules.Get(CommonData.ResourceGroupName, workspaceName, firewallRuleName));
+            var ex = Assert.Throws<ErrorResponseException>(() => SynapseClient.IpFirewallRules.Get(CommonData.ResourceGroupName, workspaceName, firewallRuleName));
             Assert.Equal("Operation returned an invalid status code 'NotFound'", ex.Message);
         }
     }

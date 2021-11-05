@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// appears in the response.</param>
         /// <param name="tasks">Tasks information for the Software update
         /// configuration.</param>
-        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, ScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftwareUpdateConfigurationTasks tasks = default(SoftwareUpdateConfigurationTasks))
+        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, SUCScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftwareUpdateConfigurationTasks tasks = default(SoftwareUpdateConfigurationTasks))
         {
             Name = name;
             Id = id;
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// configuration
         /// </summary>
         [JsonProperty(PropertyName = "properties.scheduleInfo")]
-        public ScheduleProperties ScheduleInfo { get; set; }
+        public SUCScheduleProperties ScheduleInfo { get; set; }
 
         /// <summary>
         /// Gets provisioning state for the software update configuration,

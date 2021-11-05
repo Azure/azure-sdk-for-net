@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,17 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PublicIPAddresses != null)
+            if (Optional.IsDefined(PublicIPs))
             {
-                writer.WritePropertyName("publicIPAddresses");
-                writer.WriteStartArray();
-                foreach (var item in PublicIPAddresses)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("publicIPs");
+                writer.WriteObjectValue(PublicIPs);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress");
                 writer.WriteStringValue(PrivateIPAddress);
@@ -36,42 +30,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
-            IList<AzureFirewallPublicIPAddress> publicIPAddresses = default;
-            string privateIPAddress = default;
+            Optional<HubPublicIPAddresses> publicIPs = default;
+            Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPAddresses"))
+                if (property.NameEquals("publicIPs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureFirewallPublicIPAddress> array = new List<AzureFirewallPublicIPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item));
-                        }
-                    }
-                    publicIPAddresses = array;
+                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new HubIPAddresses(publicIPAddresses, privateIPAddress);
+            return new HubIPAddresses(publicIPs.Value, privateIPAddress.Value);
         }
     }
 }

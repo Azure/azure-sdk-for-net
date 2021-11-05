@@ -15,36 +15,47 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (WhatIfSettings != null)
+            if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings");
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            writer.WritePropertyName("template");
-            TemplateJson.WriteTo(writer);
-            if (TemplateLink != null)
+            if (Optional.IsDefined(Template))
+            {
+                writer.WritePropertyName("template");
+                writer.WriteObjectValue(Template);
+            }
+            if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink");
                 writer.WriteObjectValue(TemplateLink);
             }
-            writer.WritePropertyName("parameters");
-            ParametersJson.WriteTo(writer);
-            if (ParametersLink != null)
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters");
+                writer.WriteObjectValue(Parameters);
+            }
+            if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink");
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode");
-            writer.WriteStringValue(Mode.ToSerialString());
-            if (DebugSetting != null)
+            writer.WriteStringValue(Mode.ToString());
+            if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting");
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (OnErrorDeployment != null)
+            if (Optional.IsDefined(OnErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment");
                 writer.WriteObjectValue(OnErrorDeployment);
+            }
+            if (Optional.IsDefined(ExpressionEvaluationOptions))
+            {
+                writer.WritePropertyName("expressionEvaluationOptions");
+                writer.WriteObjectValue(ExpressionEvaluationOptions);
             }
             writer.WriteEndObject();
         }

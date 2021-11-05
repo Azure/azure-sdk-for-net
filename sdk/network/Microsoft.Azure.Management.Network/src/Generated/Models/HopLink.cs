@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="issues">List of issues.</param>
         /// <param name="context">Provides additional context on links.</param>
         /// <param name="resourceId">Resource ID.</param>
-        public HopLink(string nextHopId = default(string), string linkType = default(string), int? roundTripTimeMin = default(int?), int? roundTripTimeAvg = default(int?), int? roundTripTimeMax = default(int?), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>), IDictionary<string, string> context = default(IDictionary<string, string>), string resourceId = default(string))
+        public HopLink(string nextHopId = default(string), string linkType = default(string), long? roundTripTimeMin = default(long?), long? roundTripTimeAvg = default(long?), long? roundTripTimeMax = default(long?), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>), IDictionary<string, string> context = default(IDictionary<string, string>), string resourceId = default(string))
         {
             NextHopId = nextHopId;
             LinkType = linkType;
@@ -79,19 +79,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets minimum roundtrip time in milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roundTripTimeMin")]
-        public int? RoundTripTimeMin { get; private set; }
+        public long? RoundTripTimeMin { get; private set; }
 
         /// <summary>
         /// Gets average roundtrip time in milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roundTripTimeAvg")]
-        public int? RoundTripTimeAvg { get; private set; }
+        public long? RoundTripTimeAvg { get; private set; }
 
         /// <summary>
         /// Gets maximum roundtrip time in milliseconds.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roundTripTimeMax")]
-        public int? RoundTripTimeMax { get; private set; }
+        public long? RoundTripTimeMax { get; private set; }
 
         /// <summary>
         /// Gets list of issues.
@@ -111,5 +111,38 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RoundTripTimeMin > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMin", 4294967295);
+            }
+            if (RoundTripTimeMin < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMin", 0);
+            }
+            if (RoundTripTimeAvg > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeAvg", 4294967295);
+            }
+            if (RoundTripTimeAvg < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeAvg", 0);
+            }
+            if (RoundTripTimeMax > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RoundTripTimeMax", 4294967295);
+            }
+            if (RoundTripTimeMax < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RoundTripTimeMax", 0);
+            }
+        }
     }
 }

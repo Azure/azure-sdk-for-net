@@ -62,13 +62,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 MockBehavior.Strict,
                 new Uri("http://mock"),
                 new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -88,13 +88,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -114,13 +114,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -144,13 +144,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -173,13 +173,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
                 MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 100 },
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -207,13 +207,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             AppendSink sink = new AppendSink();
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -238,8 +238,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             AppendSink sink = new AppendSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration.Version).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
@@ -250,6 +250,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = 2
                 },
+                hashingOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -292,12 +293,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 c => c.AppendInternal(
                     IsAny<Stream>(),
                     IsAny<long>(),
-                    IsAny<byte[]>(),
-                    IsAny<string>(),
-                    IsAny<IProgress<long>>(),
+                    IsAny<DataLakeFileAppendOptions>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, byte[], string, IProgress<long>, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, DataLakeFileAppendOptions, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -368,9 +367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             public async Task<Response> AppendInternal(
                 Stream stream,
                 long offset,
-                byte[] hash,
-                string leaseId,
-                IProgress<long> progress,
+                DataLakeFileAppendOptions options,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -378,7 +375,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     await Task.Delay(25);
                 }
-                progress.Report(stream.Length);
+                options?.ProgressHandler.Report(stream.Length);
 
                 byte[] data = default;
                 if (_saveBytes)

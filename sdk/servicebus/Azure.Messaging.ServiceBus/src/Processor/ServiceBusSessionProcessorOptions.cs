@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -9,16 +10,11 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The set of options that can be specified when creating a
-    /// <see cref="ServiceBusSessionProcessor" />
-    /// to configure its behavior.
+    /// <see cref="ServiceBusSessionProcessor" /> to configure its behavior.
     /// </summary>
     public class ServiceBusSessionProcessorOptions
     {
-        /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
-        /// from a local cache rather than waiting on a service request.
-        /// </summary>
+        /// <inheritdoc cref="ServiceBusProcessorOptions.PrefetchCount"/>
         public int PrefetchCount
         {
             get
@@ -31,26 +27,36 @@ namespace Azure.Messaging.ServiceBus
                 _prefetchCount = value;
             }
         }
-        private int _prefetchCount = 0;
+        private int _prefetchCount;
 
-        /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
+
+        /// <summary>Gets or sets a value that indicates whether the processor
+        /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
+        /// handler has completed processing. If the message handler triggers an exception,
+        /// the message will not be automatically completed.
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
-
-        /// <summary>Gets or sets a value that indicates whether
-        /// the processor should automatically complete messages
-        /// after the callback has completed processing.
-        /// The default value is true.</summary>
-        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        /// <remarks>
+        /// If the message handler triggers an exception and did not settle the message,
+        /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
+        /// </remarks>
+        ///
+        /// <value><c>true</c> to complete the message automatically on successful execution of the message handler; otherwise, <c>false</c>.
+        /// The default value is <c>true</c>.</value>
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This value should be
-        /// greater than the queue's LockDuration Property.
+        /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
+        /// should be greater than the queue's LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        /// <value>The maximum duration during which session locks are automatically renewed. The default value is 5 minutes.</value>
+        /// <remarks>The session lock renewal can continue for sometime in the background
+        /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -64,28 +70,44 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>
-        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
-        public TimeSpan? MaxReceiveWaitTime
+        ///
+        /// <remarks>
+        /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
+        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
+        /// However, it will still control the amount of time each receive call waits.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        public TimeSpan? SessionIdleTimeout
         {
-            get => _maxReceiveWaitTime;
+            get => _sessionIdleTimeout;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                    Argument.AssertPositive(value.Value, nameof(SessionIdleTimeout));
                 }
 
-                _maxReceiveWaitTime = value;
+                _sessionIdleTimeout = value;
             }
         }
-        private TimeSpan? _maxReceiveWaitTime;
+        private TimeSpan? _sessionIdleTimeout;
 
-        /// <summary>Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
-        /// The default value is 8.</summary>
-        /// <value>The maximum number of concurrent sessions to process.</value>
+        /// <summary>
+        /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent sessions to process. The default value is 8.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentSessions
         {
             get => _maxConcurrentSessions;
@@ -98,10 +120,16 @@ namespace Azure.Messaging.ServiceBus
         }
         private int _maxConcurrentSessions = 8;
 
-        /// <summary>Gets or sets the maximum number of calls to the callback the processor should initiate per session.
-        /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
-        /// The default value is 1.</summary>
-        /// <value>The maximum number of concurrent calls to the callback for each session that is being processed.</value>
+        /// <summary>
+        /// Gets or sets the maximum number of concurrent calls to the message handler the processor should initiate per session.
+        /// Thus the total number of concurrent calls will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// The default value is 1.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCallsPerSession
         {
             get => _maxConcurrentCallsPerSessions;
@@ -115,12 +143,12 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
-        /// An optional list of session IDs to scope
-        /// the <see cref="ServiceBusSessionProcessor"/> to. If left
-        /// blank, the processor will not be limited to any specific
+        /// Gets an optional list of session IDs to scope
+        /// the <see cref="ServiceBusSessionProcessor"/> to. If the list is
+        /// left empty, the processor will not be limited to any specific
         /// session IDs.
         /// </summary>
-        public string[] SessionIds { get; set; }
+        public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -137,7 +165,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
@@ -146,7 +173,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
@@ -155,9 +181,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
+                MaxReceiveWaitTime = SessionIdleTimeout,
             };
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of SearchError. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchError(string message)
         {
             if (message == null)
@@ -23,6 +25,7 @@ namespace Azure.Search.Documents.Models
             }
 
             Message = message;
+            Details = new ChangeTrackingList<SearchError>();
         }
 
         /// <summary> Initializes a new instance of SearchError. </summary>

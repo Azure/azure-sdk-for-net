@@ -1,12 +1,17 @@
 variables:
   DocWardenVersion: '0.6.1'
-  DotNetCoreSDKVersion: '3.1.301'
-  DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
-  ConvertToProjectReferenceOption: ''
+  AdditionalTestArguments: ''
   skipComponentGovernanceDetection: true
+  NugetSecurityAnalysisWarningLevel: 'none'
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Debug'
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
+  CollectCoverage: false
+  DECODE_PERCENTS: false
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages/
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1

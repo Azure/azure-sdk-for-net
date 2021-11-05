@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(LinkedServiceResourceConverter))]
     public partial class LinkedServiceResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -23,15 +26,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static LinkedServiceResource DeserializeLinkedServiceResource(JsonElement element)
         {
             LinkedService properties = default;
+            Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
                     properties = LinkedService.DeserializeLinkedService(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -49,13 +57,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
             }
             return new LinkedServiceResource(id.Value, name.Value, type.Value, etag.Value, properties);
+        }
+
+        internal partial class LinkedServiceResourceConverter : JsonConverter<LinkedServiceResource>
+        {
+            public override void Write(Utf8JsonWriter writer, LinkedServiceResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override LinkedServiceResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLinkedServiceResource(document.RootElement);
+            }
         }
     }
 }

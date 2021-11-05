@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RuleId != null)
+            if (Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId");
                 writer.WriteStringValue(RuleId);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SourceContainer);
             writer.WritePropertyName("destinationContainer");
             writer.WriteStringValue(DestinationContainer);
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters");
                 writer.WriteObjectValue(Filters);
@@ -34,18 +34,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ObjectReplicationPolicyRule DeserializeObjectReplicationPolicyRule(JsonElement element)
         {
-            string ruleId = default;
+            Optional<string> ruleId = default;
             string sourceContainer = default;
             string destinationContainer = default;
-            ObjectReplicationPolicyFilter filters = default;
+            Optional<ObjectReplicationPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ruleId = property.Value.GetString();
                     continue;
                 }
@@ -63,13 +59,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value);
                     continue;
                 }
             }
-            return new ObjectReplicationPolicyRule(ruleId, sourceContainer, destinationContainer, filters);
+            return new ObjectReplicationPolicyRule(ruleId.Value, sourceContainer, destinationContainer, filters.Value);
         }
     }
 }

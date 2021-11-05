@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace Image or a custom
-    /// Azure Virtual Machine Image. To get the list of all Azure Marketplace
-    /// Image references verified by Azure Batch, see the 'List supported
-    /// Images' operation.
+    /// A reference to an Azure Virtual Machines Marketplace Image or a Shared
+    /// Image Gallery Image. To get the list of all Azure Marketplace Image
+    /// references verified by Azure Batch, see the 'List Supported Images'
+    /// operation.
     /// </summary>
     public partial class ImageReference
     {
@@ -42,15 +42,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Marketplace Image.</param>
         /// <param name="virtualMachineImageId">The ARM resource identifier of
         /// the Shared Image Gallery Image. Compute Nodes in the Pool will be
-        /// created using this Image Id. This is of the
-        /// form/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}.</param>
-        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string))
+        /// created using this Image Id. This is of the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
+        /// or
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}
+        /// for always defaulting to the latest image version.</param>
+        /// <param name="exactVersion">The specific version of the platform
+        /// image or marketplace image used to create the node. This read-only
+        /// field differs from 'version' only if the value specified for
+        /// 'version' when the pool was created was 'latest'.</param>
+        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string), string exactVersion = default(string))
         {
             Publisher = publisher;
             Offer = offer;
             Sku = sku;
             Version = version;
             VirtualMachineImageId = virtualMachineImageId;
+            ExactVersion = exactVersion;
             CustomInit();
         }
 
@@ -103,20 +111,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ARM resource identifier of the Shared Image
         /// Gallery Image. Compute Nodes in the Pool will be created using this
-        /// Image Id. This is of the
-        /// form/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}.
+        /// Image Id. This is of the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
+        /// or
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}
+        /// for always defaulting to the latest image version.
         /// </summary>
         /// <remarks>
         /// This property is mutually exclusive with other ImageReference
-        /// properties. For Virtual Machine Image it must be in the same region
-        /// and subscription as the Azure Batch account. The Shared Image
-        /// Gallery Image must have replicas in the same region as the Azure
-        /// Batch account. For information about the firewall settings for the
-        /// Batch Compute Node agent to communicate with the Batch service see
+        /// properties. The Shared Image Gallery Image must have replicas in
+        /// the same region and must be in the same subscription as the Azure
+        /// Batch account. If the image version is not specified in the
+        /// imageId, the latest version will be used. For information about the
+        /// firewall settings for the Batch Compute Node agent to communicate
+        /// with the Batch service see
         /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineImageId")]
         public string VirtualMachineImageId { get; set; }
+
+        /// <summary>
+        /// Gets the specific version of the platform image or marketplace
+        /// image used to create the node. This read-only field differs from
+        /// 'version' only if the value specified for 'version' when the pool
+        /// was created was 'latest'.
+        /// </summary>
+        [JsonProperty(PropertyName = "exactVersion")]
+        public string ExactVersion { get; private set; }
 
     }
 }

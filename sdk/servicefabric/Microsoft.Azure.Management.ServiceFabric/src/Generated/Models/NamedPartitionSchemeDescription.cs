@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// class.
         /// </summary>
         /// <param name="count">The number of partitions.</param>
-        /// <param name="names">Array of size specified by the ‘Count’
+        /// <param name="names">Array of size specified by the ‘count’
         /// parameter, for the names of the partitions.</param>
         public NamedPartitionSchemeDescription(int count, IList<string> names)
         {
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets the number of partitions.
         /// </summary>
-        [JsonProperty(PropertyName = "Count")]
+        [JsonProperty(PropertyName = "count")]
         public int Count { get; set; }
 
         /// <summary>
-        /// Gets or sets array of size specified by the ‘Count’ parameter, for
+        /// Gets or sets array of size specified by the ‘count’ parameter, for
         /// the names of the partitions.
         /// </summary>
-        [JsonProperty(PropertyName = "Names")]
+        [JsonProperty(PropertyName = "names")]
         public IList<string> Names { get; set; }
 
         /// <summary>

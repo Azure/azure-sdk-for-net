@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ManagementPolicyFilter class.
         /// </summary>
-        /// <param name="blobTypes">An array of predefined enum values. Only
-        /// blockBlob is supported.</param>
+        /// <param name="blobTypes">An array of predefined enum values.
+        /// Currently blockBlob supports all tiering and delete actions. Only
+        /// delete actions are supported for appendBlob.</param>
         /// <param name="prefixMatch">An array of strings for prefixes to be
         /// match.</param>
         /// <param name="blobIndexMatch">An array of blob index tag based
@@ -60,8 +61,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         public IList<string> PrefixMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of predefined enum values. Only blockBlob is
-        /// supported.
+        /// Gets or sets an array of predefined enum values. Currently
+        /// blockBlob supports all tiering and delete actions. Only delete
+        /// actions are supported for appendBlob.
         /// </summary>
         [JsonProperty(PropertyName = "blobTypes")]
         public IList<string> BlobTypes { get; set; }

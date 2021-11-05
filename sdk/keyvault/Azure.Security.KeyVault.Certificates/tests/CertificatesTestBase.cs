@@ -4,10 +4,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -15,11 +14,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
         CertificateClientOptions.ServiceVersion.V7_0,
-        CertificateClientOptions.ServiceVersion.V7_1_Preview)]
+        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_2,
+        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
-    public class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
+
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
@@ -29,26 +33,36 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
-
         private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentQueue<IEnumerable<CertificateContact>> _contactsToDelete = new ConcurrentQueue<IEnumerable<CertificateContact>>();
 
         private KeyVaultTestEventListener _listener;
 
-        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
 
-        internal CertificateClient GetClient(TestRecording recording = null)
+        internal CertificateClient GetClient()
         {
-            recording ??= Recording;
+            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
+                }
+            };
 
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new CertificateClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -191,35 +205,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
-        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
-        {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
-
-            try
-            {
-                if (IsAsync)
-                {
-                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
-                }
-                else
-                {
-                    while (!operation.HasCompleted)
-                    {
-                        operation.UpdateStatus(cts.Token);
-
-                        await Task.Delay(pollingInterval, cts.Token);
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
-            }
-
-            return operation.Value;
-        }
-
         protected Task WaitForDeletedCertificate(string name)
         {
             if (Mode == RecordedTestMode.Playback)
@@ -229,7 +214,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedCertificateAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for certificate '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -268,6 +262,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name), delay: PollingInterval);
             }
+        }
+
+        protected Task DelayAsync(TimeSpan? delay = null)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            delay ??= PollingInterval;
+            return Task.Delay(delay.Value);
         }
 
         protected void RegisterForCleanup(string certificateName)

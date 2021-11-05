@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SuggestDocumentsResult(IEnumerable<SuggestResult> results)
         {
             if (results == null)
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
         internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage)
         {
-            Results = results ?? new List<SuggestResult>();
+            Results = results;
             Coverage = coverage;
         }
 

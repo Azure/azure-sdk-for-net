@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'MigrationFromSqlServerToAzureDB',
         /// 'MigrationFromSqlServerToAzureMI',
         /// 'MigrationFromMySQLToAzureDBForMySQL'</param>
-        public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, string targetPlatform = default(string), ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?))
+        /// <param name="isOfflineMigration">Flag for whether or not the
+        /// migration is offline</param>
+        public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, string targetPlatform = default(string), ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?), bool? isOfflineMigration = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetPlatform = targetPlatform;
             CheckPermissionsGroup = checkPermissionsGroup;
+            IsOfflineMigration = isOfflineMigration;
             CustomInit();
         }
 
@@ -75,6 +78,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "checkPermissionsGroup")]
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether or not the migration is offline
+        /// </summary>
+        [JsonProperty(PropertyName = "isOfflineMigration")]
+        public bool? IsOfflineMigration { get; set; }
 
         /// <summary>
         /// Validate the object.

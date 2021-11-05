@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Vpn = "Vpn";
         public const string ExpressRoute = "ExpressRoute";
+        public const string LocalGateway = "LocalGateway";
     }
 }

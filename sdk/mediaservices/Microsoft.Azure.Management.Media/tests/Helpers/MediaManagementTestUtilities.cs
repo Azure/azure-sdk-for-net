@@ -31,7 +31,7 @@ namespace Media.Tests.Helpers
         };
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "West US 2";
+        public static string DefaultLocation = IsTestTenant ? null : "West Central US";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {

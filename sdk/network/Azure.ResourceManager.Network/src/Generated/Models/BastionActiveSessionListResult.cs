@@ -6,24 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetActiveSessions. </summary>
-    public partial class BastionActiveSessionListResult
+    internal partial class BastionActiveSessionListResult
     {
         /// <summary> Initializes a new instance of BastionActiveSessionListResult. </summary>
         internal BastionActiveSessionListResult()
         {
-        }
-
-        /// <summary> Initializes a new instance of BastionActiveSessionListResult. </summary>
-        /// <param name="value"> List of active sessions on the bastion. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BastionActiveSessionListResult(IReadOnlyList<BastionActiveSession> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
+            Value = new ChangeTrackingList<BastionActiveSession>();
         }
 
         /// <summary> List of active sessions on the bastion. </summary>

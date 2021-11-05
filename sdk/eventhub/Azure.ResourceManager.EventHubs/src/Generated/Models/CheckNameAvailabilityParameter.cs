@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityParameter. </summary>
         /// <param name="name"> Name to check the namespace name availability. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityParameter(string name)
         {
             if (name == null)

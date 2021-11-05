@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the fabric replication group task details.
     /// </summary>
-    public partial class FabricReplicationGroupTaskDetails : TaskTypeDetails
+    public partial class FabricReplicationGroupTaskDetails : JobTaskDetails
     {
         /// <summary>
         /// Initializes a new instance of the FabricReplicationGroupTaskDetails
@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the FabricReplicationGroupTaskDetails
         /// class.
         /// </summary>
+        /// <param name="jobTask">The job entity.</param>
         /// <param name="skippedReason">The skipped reason.</param>
         /// <param name="skippedReasonString">The skipped reason
         /// string.</param>
-        /// <param name="jobTask">The job entity.</param>
-        public FabricReplicationGroupTaskDetails(string skippedReason = default(string), string skippedReasonString = default(string), JobEntity jobTask = default(JobEntity))
+        public FabricReplicationGroupTaskDetails(JobEntity jobTask = default(JobEntity), string skippedReason = default(string), string skippedReasonString = default(string))
+            : base(jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;
-            JobTask = jobTask;
             CustomInit();
         }
 
@@ -59,12 +59,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "skippedReasonString")]
         public string SkippedReasonString { get; set; }
-
-        /// <summary>
-        /// Gets or sets the job entity.
-        /// </summary>
-        [JsonProperty(PropertyName = "jobTask")]
-        public JobEntity JobTask { get; set; }
 
     }
 }

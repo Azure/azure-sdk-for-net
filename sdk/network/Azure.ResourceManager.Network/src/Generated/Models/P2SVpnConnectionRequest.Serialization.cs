@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VpnConnectionIds != null)
+            if (Optional.IsCollectionDefined(VpnConnectionIds))
             {
                 writer.WritePropertyName("vpnConnectionIds");
                 writer.WriteStartArray();

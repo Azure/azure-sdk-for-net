@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListP2SVpnGatewaysResult
+    internal partial class ListP2SVpnGatewaysResult
     {
         internal static ListP2SVpnGatewaysResult DeserializeListP2SVpnGatewaysResult(JsonElement element)
         {
-            IReadOnlyList<P2SVpnGateway> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<P2SVpnGateway> array = new List<P2SVpnGateway>();
+                    List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(P2SVpnGateway.DeserializeP2SVpnGateway(item));
-                        }
+                        array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ListP2SVpnGatewaysResult(value, nextLink);
+            return new ListP2SVpnGatewaysResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

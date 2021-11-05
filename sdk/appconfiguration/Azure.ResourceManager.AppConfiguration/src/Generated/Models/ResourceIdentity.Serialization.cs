@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (UserAssignedIdentities != null)
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
                 writer.WriteStartObject();
@@ -32,31 +32,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PrincipalId != null)
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (TenantId != null)
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
             writer.WriteEndObject();
         }
 
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
-            IdentityType? type = default;
-            IDictionary<string, UserIdentity> userAssignedIdentities = default;
-            string principalId = default;
-            string tenantId = default;
+            Optional<IdentityType> type = default;
+            Optional<IDictionary<string, UserIdentity>> userAssignedIdentities = default;
+            Optional<string> principalId = default;
+            Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new IdentityType(property.Value.GetString());
@@ -66,43 +57,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, UserIdentity> dictionary = new Dictionary<string, UserIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, UserIdentity.DeserializeUserIdentity(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceIdentity(type, userAssignedIdentities, principalId, tenantId);
+            return new ResourceIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), principalId.Value, tenantId.Value);
         }
     }
 }

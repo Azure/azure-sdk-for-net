@@ -16,18 +16,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Topology DeserializeTopology(JsonElement element)
         {
-            string id = default;
-            DateTimeOffset? createdDateTime = default;
-            DateTimeOffset? lastModified = default;
-            IReadOnlyList<TopologyResource> resources = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<IReadOnlyList<TopologyResource>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -35,6 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdDateTime = property.Value.GetDateTimeOffset("O");
@@ -44,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("O");
@@ -53,25 +51,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TopologyResource> array = new List<TopologyResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TopologyResource.DeserializeTopologyResource(item));
-                        }
+                        array.Add(TopologyResource.DeserializeTopologyResource(item));
                     }
                     resources = array;
                     continue;
                 }
             }
-            return new Topology(id, createdDateTime, lastModified, resources);
+            return new Topology(id.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
         }
     }
 }

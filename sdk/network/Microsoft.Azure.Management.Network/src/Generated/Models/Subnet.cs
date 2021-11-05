@@ -70,16 +70,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// subnet resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="privateEndpointNetworkPolicies">Enable or Disable
-        /// apply network policies on private end point in the subnet.</param>
+        /// apply network policies on private end point in the subnet. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="privateLinkServiceNetworkPolicies">Enable or Disable
-        /// apply network policies on private link service in the
-        /// subnet.</param>
+        /// apply network policies on private link service in the subnet.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="applicationGatewayIpConfigurations">Application
+        /// gateway IP configurations of virtual network resource.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Subnet(string id = default(string), string addressPrefix = default(string), IList<string> addressPrefixes = default(IList<string>), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), SubResource natGateway = default(SubResource), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<ServiceEndpointPolicy> serviceEndpointPolicies = default(IList<ServiceEndpointPolicy>), IList<PrivateEndpoint> privateEndpoints = default(IList<PrivateEndpoint>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<IPConfigurationProfile> ipConfigurationProfiles = default(IList<IPConfigurationProfile>), IList<SubResource> ipAllocations = default(IList<SubResource>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), IList<ServiceAssociationLink> serviceAssociationLinks = default(IList<ServiceAssociationLink>), IList<Delegation> delegations = default(IList<Delegation>), string purpose = default(string), string provisioningState = default(string), string privateEndpointNetworkPolicies = default(string), string privateLinkServiceNetworkPolicies = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Resource type.</param>
+        public Subnet(string id = default(string), string addressPrefix = default(string), IList<string> addressPrefixes = default(IList<string>), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), SubResource natGateway = default(SubResource), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<ServiceEndpointPolicy> serviceEndpointPolicies = default(IList<ServiceEndpointPolicy>), IList<PrivateEndpoint> privateEndpoints = default(IList<PrivateEndpoint>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<IPConfigurationProfile> ipConfigurationProfiles = default(IList<IPConfigurationProfile>), IList<SubResource> ipAllocations = default(IList<SubResource>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), IList<ServiceAssociationLink> serviceAssociationLinks = default(IList<ServiceAssociationLink>), IList<Delegation> delegations = default(IList<Delegation>), string purpose = default(string), string provisioningState = default(string), string privateEndpointNetworkPolicies = default(string), string privateLinkServiceNetworkPolicies = default(string), IList<ApplicationGatewayIPConfiguration> applicationGatewayIpConfigurations = default(IList<ApplicationGatewayIPConfiguration>), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
@@ -100,8 +104,10 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             PrivateEndpointNetworkPolicies = privateEndpointNetworkPolicies;
             PrivateLinkServiceNetworkPolicies = privateLinkServiceNetworkPolicies;
+            ApplicationGatewayIpConfigurations = applicationGatewayIpConfigurations;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -213,17 +219,26 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets enable or Disable apply network policies on private
-        /// end point in the subnet.
+        /// end point in the subnet. Possible values include: 'Enabled',
+        /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointNetworkPolicies")]
         public string PrivateEndpointNetworkPolicies { get; set; }
 
         /// <summary>
         /// Gets or sets enable or Disable apply network policies on private
-        /// link service in the subnet.
+        /// link service in the subnet. Possible values include: 'Enabled',
+        /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceNetworkPolicies")]
         public string PrivateLinkServiceNetworkPolicies { get; set; }
+
+        /// <summary>
+        /// Gets or sets application gateway IP configurations of virtual
+        /// network resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationGatewayIpConfigurations")]
+        public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
@@ -238,6 +253,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

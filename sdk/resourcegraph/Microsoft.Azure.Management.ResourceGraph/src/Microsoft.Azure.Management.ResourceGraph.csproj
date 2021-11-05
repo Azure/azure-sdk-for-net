@@ -7,9 +7,9 @@
     <PackageId>Microsoft.Azure.Management.ResourceGraph</PackageId>
     <Description>Provides Resource Graph operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.ResourceGraph</AssemblyName>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <PackageTags>Azure;ResourceGraph;</PackageTags>
-    <PackageReleaseNotes>Result format can be table or objectArray.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for the new api-version. Users can now query by the management group scopes. Default result output is objectArray.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (WorkspaceSettings != null)
+            if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings");
                 writer.WriteObjectValue(WorkspaceSettings);
@@ -30,30 +30,32 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorOutput DeserializeConnectionMonitorOutput(JsonElement element)
         {
-            string type = default;
-            ConnectionMonitorWorkspaceSettings workspaceSettings = default;
+            Optional<OutputType> type = default;
+            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString();
+                    type = new OutputType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("workspaceSettings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceSettings = ConnectionMonitorWorkspaceSettings.DeserializeConnectionMonitorWorkspaceSettings(property.Value);
                     continue;
                 }
             }
-            return new ConnectionMonitorOutput(type, workspaceSettings);
+            return new ConnectionMonitorOutput(Optional.ToNullable(type), workspaceSettings.Value);
         }
     }
 }

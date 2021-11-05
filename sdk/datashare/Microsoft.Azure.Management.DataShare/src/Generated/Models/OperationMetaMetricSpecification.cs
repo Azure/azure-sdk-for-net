@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="displayName">localized name of the metric</param>
         /// <param name="enableRegionalMdmAccount">enable regional mdm
         /// account</param>
+        /// <param name="fillGapWithZero">fill gap with zero</param>
         /// <param name="internalMetricName">internal metric name</param>
         /// <param name="name">name of the metric</param>
         /// <param name="resourceIdDimensionNameOverride">dimension name use to
@@ -48,13 +49,14 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="supportedTimeGrainTypes">supported time grain
         /// types</param>
         /// <param name="unit">units for the metric</param>
-        public OperationMetaMetricSpecification(string aggregationType = default(string), IList<DimensionProperties> dimensions = default(IList<DimensionProperties>), string displayDescription = default(string), string displayName = default(string), string enableRegionalMdmAccount = default(string), string internalMetricName = default(string), string name = default(string), string resourceIdDimensionNameOverride = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), string unit = default(string))
+        public OperationMetaMetricSpecification(string aggregationType = default(string), IList<DimensionProperties> dimensions = default(IList<DimensionProperties>), string displayDescription = default(string), string displayName = default(string), string enableRegionalMdmAccount = default(string), bool? fillGapWithZero = default(bool?), string internalMetricName = default(string), string name = default(string), string resourceIdDimensionNameOverride = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), string unit = default(string))
         {
             AggregationType = aggregationType;
             Dimensions = dimensions;
             DisplayDescription = displayDescription;
             DisplayName = displayName;
             EnableRegionalMdmAccount = enableRegionalMdmAccount;
+            FillGapWithZero = fillGapWithZero;
             InternalMetricName = internalMetricName;
             Name = name;
             ResourceIdDimensionNameOverride = resourceIdDimensionNameOverride;
@@ -98,6 +100,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableRegionalMdmAccount")]
         public string EnableRegionalMdmAccount { get; set; }
+
+        /// <summary>
+        /// Gets or sets fill gap with zero
+        /// </summary>
+        [JsonProperty(PropertyName = "fillGapWithZero")]
+        public bool? FillGapWithZero { get; set; }
 
         /// <summary>
         /// Gets or sets internal metric name

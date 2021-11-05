@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>5.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\**\*.cs" />
+  </ItemGroup>
+  
+</Project>

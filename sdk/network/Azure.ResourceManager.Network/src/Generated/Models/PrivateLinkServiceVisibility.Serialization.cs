@@ -14,20 +14,21 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PrivateLinkServiceVisibility DeserializePrivateLinkServiceVisibility(JsonElement element)
         {
-            bool? visible = default;
+            Optional<bool> visible = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("visible"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     visible = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new PrivateLinkServiceVisibility(visible);
+            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible));
         }
     }
 }

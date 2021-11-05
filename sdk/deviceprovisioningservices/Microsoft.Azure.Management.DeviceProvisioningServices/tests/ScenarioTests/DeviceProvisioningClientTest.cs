@@ -1,9 +1,12 @@
-using System;
-using System.Linq;
+using DeviceProvisioningServices.Tests.Helpers;
+using FluentAssertions;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using DeviceProvisioningServices.Tests.Helpers;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DeviceProvisioningServices.Tests.ScenarioTests
@@ -11,143 +14,151 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
     public class DeviceProvisioningClientTest : DeviceProvisioningTestBase
     {
         [Fact]
-        public void CreateAndDelete()
+        public async Task CreateAndDelete()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using var context = MockContext.Start(GetType());
+
+            Initialize(context);
+            const string testName = "unitTestingDPSCreateUpdate";
+            ResourceGroup rg = await GetResourceGroupAsync(testName);
+
+            var availabilityInfo = await _provisioningClient.IotDpsResource
+                .CheckProvisioningServiceNameAvailabilityAsync(testName)
+                .ConfigureAwait(false);
+
+            if (availabilityInfo.NameAvailable.HasValue && !availabilityInfo.NameAvailable.Value)
             {
+                // it exists, so test the delete
+                await _provisioningClient.IotDpsResource
+                    .DeleteAsync(testName, rg.Name)
+                    .ConfigureAwait(false);
 
-                this.Initialize(context);
-                var testName = "unitTestingDPSCreateUpdate";
-                this.GetResourceGroup(testName);
+                // check the name is now available
+                availabilityInfo = await _provisioningClient.IotDpsResource
+                    .CheckProvisioningServiceNameAvailabilityAsync(testName)
+                    .ConfigureAwait(false);
+                availabilityInfo.NameAvailable.Should().BeTrue();
+            }
 
+            // try to create a DPS service
+            var createServiceDescription = new ProvisioningServiceDescription(
+                Constants.DefaultLocation,
+                new IotDpsPropertiesDescription(),
+                new IotDpsSkuInfo(
+                    Constants.DefaultSku.Name,
+                    Constants.DefaultSku.Tier,
+                    Constants.DefaultSku.Capacity));
 
-                var availabilityInfo =
-                    this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(testName));
-
-                if (!availabilityInfo.NameAvailable ?? false)
-                {
-                    //it exists, so test the delete
-                    this.provisioningClient.IotDpsResource.Delete(testName, testName);
-
-                    //check the name is now available
-                    availabilityInfo =
-                        this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(testName));
-                    Assert.True(availabilityInfo.NameAvailable);
-                }
-
-                //try to create a DPS service
-                var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
-                    new IotDpsPropertiesDescription(),
-                    new IotDpsSkuInfo(Constants.DefaultSku.Name,
-                        Constants.DefaultSku.Tier,
-                        Constants.DefaultSku.Capacity
-                    ));
-
-                var dpsInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(
+            var dpsInstance = await _provisioningClient.IotDpsResource
+                .CreateOrUpdateAsync(
+                    rg.Name,
                     testName,
-                    testName,
-                    createServiceDescription);
+                    createServiceDescription)
+                .ConfigureAwait(false);
 
-                Assert.NotNull(dpsInstance);
-                Assert.Equal(Constants.DefaultSku.Name, dpsInstance.Sku.Name);
-                Assert.Equal(testName, dpsInstance.Name);
+            dpsInstance.Should().NotBeNull();
+            dpsInstance.Sku.Name.Should().Be(Constants.DefaultSku.Name);
+            dpsInstance.Name.Should().Be(testName);
 
-                //verify item exists in list by resource group
-                var existingServices =
-                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
-                Assert.Contains(existingServices, x => x.Name == testName);
+            // verify item exists in list by resource group
+            IPage<ProvisioningServiceDescription> existingServices = await _provisioningClient.IotDpsResource
+                .ListByResourceGroupAsync(rg.Name)
+                .ConfigureAwait(false);
+            existingServices.Should().Contain(x => x.Name == testName);
 
-                //verify can find
-                var foundInstance = this.provisioningClient.IotDpsResource.Get(testName, testName);
-                Assert.NotNull(foundInstance);
-                Assert.Equal(testName, foundInstance.Name);
+            // verify can find
+            ProvisioningServiceDescription foundInstance = await _provisioningClient.IotDpsResource
+                .GetAsync(testName, testName)
+                .ConfigureAwait(false);
+            foundInstance.Should().NotBeNull();
+            foundInstance.Name.Should().Be(testName);
 
-                var attempts = Constants.ArmAttemptLimit;
-                var success = false;
-                while (attempts > 0 && !success)
+            var attempts = Constants.ArmAttemptLimit;
+            while (attempts > 0)
+            {
+                try
                 {
-                    try
-                    {
-
-                        this.provisioningClient.IotDpsResource.Delete(testName, testName);
-                        success = true;
-                    }
-                    catch
-                    {
-                        attempts--;
-                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
-                    }
+                    await _provisioningClient.IotDpsResource
+                        .DeleteAsync(testName, rg.Name)
+                        .ConfigureAwait(false);
+                    break;
                 }
-                existingServices =
-                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+                catch
+                {
+                    attempts--;
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
+                }
+            }
+            existingServices = await _provisioningClient.IotDpsResource
+                .ListByResourceGroupAsync(testName)
+                .ConfigureAwait(false);
 
-                //As long as it is gone or deleting, we're good
-                Assert.DoesNotContain(existingServices, x => x.Name == testName && x.Properties.State != "Deleting");
+            // As long as it is gone or deleting, we're good
+            existingServices.Should().NotContain(x => x.Name == testName && x.Properties.State != "Deleting");
+        }
+
+        [Fact]
+        public async Task UpdateSku()
+        {
+            using var context = MockContext.Start(GetType());
+            Initialize(context);
+            const string testName = "unitTestingDPSUpdateSku";
+            ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
+            ProvisioningServiceDescription service = await GetServiceAsync(testName, testName).ConfigureAwait(false);
+
+            // update capacity
+            service.Sku.Capacity += 1;
+
+            var attempts = Constants.ArmAttemptLimit;
+            while (attempts > 0)
+            {
+                try
+                {
+                    ProvisioningServiceDescription updatedInstance = await _provisioningClient
+                        .IotDpsResource.CreateOrUpdateAsync(
+                            rg.Name,
+                            service.Name,
+                            service)
+                        .ConfigureAwait(false);
+                    updatedInstance.Sku.Capacity.Should().Be(service.Sku.Capacity);
+                    break;
+                }
+                catch
+                {
+                    // Let ARM finish
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
+                    attempts--;
+                }
             }
         }
 
         [Fact]
-        public void UpdateSku()
+        public async Task CreateFailure()
         {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                this.Initialize(context);
-                string testName = "unitTestingDPSUpdateSku";
-                var resourceGroup = this.GetResourceGroup(testName);
-                var service = this.GetService(testName, testName);
-                //update capacity
-                service.Sku.Capacity += 1;
-                var attempts = Constants.ArmAttemptLimit;
-                var success = false;
-                while (attempts > 0 && !success)
-                {
-                    try
-                    {
-                        var updatedInstance =
-                   this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, service.Name,
-                       service);
-                        Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
-                        success = true;
-                    }
-                    catch
-                    {
-                        //Let ARM finish
-                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
-                        attempts--;
-                    }
-                }
+            using var context = MockContext.Start(GetType());
 
+            Initialize(context);
+            const string testName = "unitTestingDPSCreateUpdateInvalidName";
+            ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
 
+            // try to create a DPS service
+            var createServiceDescription = new ProvisioningServiceDescription(
+                Constants.DefaultLocation,
+                new IotDpsPropertiesDescription(),
+                new IotDpsSkuInfo(Constants.DefaultSku.Name,
+                    Constants.DefaultSku.Tier,
+                    Constants.DefaultSku.Capacity));
 
-            }
-        }
-        [Fact(Skip = "Needs re-recording")]
-        //[Fact]
-        public void CreateFailure()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-
-                this.Initialize(context);
-                var testName = "unitTestingDPSCreateUpdateInvalidName";
-                this.GetResourceGroup(testName);
-
-
-                //try to create a DPS service
-                var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
-                    new IotDpsPropertiesDescription(),
-                    new IotDpsSkuInfo(Constants.DefaultSku.Name,
-                        Constants.DefaultSku.Tier,
-                        Constants.DefaultSku.Capacity
-                    ));
-
-                var badCall = new Func<ProvisioningServiceDescription>(() => this.provisioningClient.IotDpsResource.CreateOrUpdate(
-                    testName,
-                    $"1ñ1{testName}!!!", //We dont't allow most punctuation, leading numbers, etc
+            var badCall = new Func<Task<ProvisioningServiceDescription>>(
+                () =>
+                    // force a failure by passing bad input
+                    _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
+                    rg.Name,
+                    // Must be between 3 and 64 characters, must not be a number, must be alphanumeric/dash characters, and must be unique
+                    $"Invalid {testName}",
                     createServiceDescription));
 
-                Assert.Throws<ErrorDetailsException>(badCall);
-            }
+            await badCall.Should().ThrowAsync<ErrorDetailsException>();
         }
     }
 }

@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Options that allow you to configure the management of the request sent to Key Vault.
+    /// Options that allow you to configure the <see cref="CryptographyClient"/> for local or remote operations on Key Vault.
     /// </summary>
     public class CryptographyClientOptions : ClientOptions
     {
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_3_Preview;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -31,9 +31,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             V7_0 = 0,
 
             /// <summary>
-            /// The Key Vault API version 7.1-preview.
+            /// The Key Vault API version 7.1.
             /// </summary>
-            V7_1_Preview = 1,
+            V7_1 = 1,
+
+            /// <summary>
+            /// The Key Vault API version 7.2.
+            /// </summary>
+            V7_2 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.3-preview.
+            /// </summary>
+            V7_3_Preview = 3,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -52,9 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public CryptographyClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             Version = version;
 
@@ -66,9 +74,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-                ServiceVersion.V7_1_Preview => "7.1-preview",
-
-                _ => throw new NotSupportedException($"The service version {Version} is not supported."),
+                ServiceVersion.V7_1 => "7.1",
+                ServiceVersion.V7_2 => "7.2",
+                ServiceVersion.V7_3_Preview => "7.3-preview",
+                _ => throw new ArgumentException(Version.ToString()),
             };
         }
     }

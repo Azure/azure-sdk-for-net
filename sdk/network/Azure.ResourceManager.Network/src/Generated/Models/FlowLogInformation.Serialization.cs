@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId");
             writer.WriteStringValue(TargetResourceId);
-            if (FlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration");
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy");
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format");
                 writer.WriteObjectValue(Format);
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Network.Models
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
         {
             string targetResourceId = default;
-            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
+            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
             string storageId = default;
             bool enabled = default;
-            RetentionPolicyParameters retentionPolicy = default;
-            FlowLogFormatParameters format = default;
+            Optional<RetentionPolicyParameters> retentionPolicy = default;
+            Optional<FlowLogFormatParameters> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value);
@@ -68,6 +69,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("storageId"))
@@ -84,6 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
@@ -93,6 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
@@ -102,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration, storageId, enabled, retentionPolicy, format);
+            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value);
         }
     }
 }

@@ -8,10 +8,10 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Response body structure for starting data flow debug session. </summary>
-    internal partial class StartDataFlowDebugSessionResponse
+    public partial class StartDataFlowDebugSessionResponse
     {
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionResponse. </summary>
-        internal StartDataFlowDebugSessionResponse()
+        public StartDataFlowDebugSessionResponse()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The ID of data flow debug job version. </summary>
-        public string JobVersion { get; }
+        public string JobVersion { get; set; }
     }
 }

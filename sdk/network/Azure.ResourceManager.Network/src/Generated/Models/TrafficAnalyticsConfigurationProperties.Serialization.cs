@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId");
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (WorkspaceRegion != null)
+            if (Optional.IsDefined(WorkspaceRegion))
             {
                 writer.WritePropertyName("workspaceRegion");
                 writer.WriteStringValue(WorkspaceRegion);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId");
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (TrafficAnalyticsInterval != null)
+            if (Optional.IsDefined(TrafficAnalyticsInterval))
             {
                 writer.WritePropertyName("trafficAnalyticsInterval");
                 writer.WriteNumberValue(TrafficAnalyticsInterval.Value);
@@ -45,17 +45,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TrafficAnalyticsConfigurationProperties DeserializeTrafficAnalyticsConfigurationProperties(JsonElement element)
         {
-            bool? enabled = default;
-            string workspaceId = default;
-            string workspaceRegion = default;
-            string workspaceResourceId = default;
-            int? trafficAnalyticsInterval = default;
+            Optional<bool> enabled = default;
+            Optional<string> workspaceId = default;
+            Optional<string> workspaceRegion = default;
+            Optional<string> workspaceResourceId = default;
+            Optional<int> trafficAnalyticsInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -63,28 +64,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("workspaceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("workspaceRegion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceRegion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("workspaceResourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     workspaceResourceId = property.Value.GetString();
                     continue;
                 }
@@ -92,13 +81,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficAnalyticsInterval = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new TrafficAnalyticsConfigurationProperties(enabled, workspaceId, workspaceRegion, workspaceResourceId, trafficAnalyticsInterval);
+            return new TrafficAnalyticsConfigurationProperties(Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Optional.ToNullable(trafficAnalyticsInterval));
         }
     }
 }

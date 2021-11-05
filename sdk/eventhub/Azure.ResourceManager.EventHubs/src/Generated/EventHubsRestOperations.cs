@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public EventHubsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/authorizationRules", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -92,14 +94,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,6 +107,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public Response<AuthorizationRuleListResult> ListAuthorizationRules(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -135,14 +131,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,6 +158,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -183,6 +173,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<AuthorizationRule>> CreateOrUpdateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, AuthorizationRule parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -214,14 +205,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -236,6 +220,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<AuthorizationRule> CreateOrUpdateAuthorizationRule(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, AuthorizationRule parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -267,14 +252,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,6 +279,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -310,6 +289,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public async Task<Response<AuthorizationRule>> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -337,14 +317,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,6 +331,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public Response<AuthorizationRule> GetAuthorizationRule(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -385,14 +359,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRule value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
-                        }
+                        value = AuthorizationRule.DeserializeAuthorizationRule(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,6 +386,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -428,6 +396,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public async Task<Response> DeleteAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -465,6 +434,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public Response DeleteAuthorizationRule(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -516,6 +486,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -525,6 +496,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public async Task<Response<AccessKeys>> ListKeysAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -552,14 +524,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,6 +538,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="authorizationRuleName"/> is null. </exception>
         public Response<AccessKeys> ListKeys(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -600,14 +566,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -635,6 +594,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath("/regenerateKeys", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -649,6 +609,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -680,14 +641,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -702,6 +656,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="parameters"> Parameters supplied to regenerate the AuthorizationRule Keys (PrimaryKey/SecondaryKey). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, <paramref name="authorizationRuleName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -733,14 +688,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AccessKeys.DeserializeAccessKeys(document.RootElement);
-                        }
+                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -772,6 +720,7 @@ namespace Azure.ResourceManager.EventHubs
                 uri.AppendQuery("$top", top.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -781,6 +730,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public async Task<Response<EventHubListResult>> ListByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -800,14 +750,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -821,6 +764,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public Response<EventHubListResult> ListByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -840,14 +784,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -872,6 +809,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(eventHubName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -885,6 +823,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<Eventhub>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -912,14 +851,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -933,6 +865,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<Eventhub> CreateOrUpdate(string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -960,14 +893,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -992,6 +918,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(eventHubName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1000,6 +927,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1032,6 +960,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1076,6 +1005,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(eventHubName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1084,6 +1014,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response<Eventhub>> GetAsync(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1107,14 +1038,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1127,6 +1051,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public Response<Eventhub> Get(string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1150,14 +1075,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         Eventhub value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Eventhub.DeserializeEventhub(document.RootElement);
-                        }
+                        value = Eventhub.DeserializeEventhub(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1174,6 +1092,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1183,6 +1102,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1210,14 +1130,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1231,6 +1144,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="eventHubName"/> is null. </exception>
         public Response<AuthorizationRuleListResult> ListAuthorizationRulesNextPage(string nextLink, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1258,14 +1172,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         AuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        }
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1282,6 +1189,7 @@ namespace Azure.ResourceManager.EventHubs
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1292,6 +1200,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
         public async Task<Response<EventHubListResult>> ListByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1315,14 +1224,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1337,6 +1239,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
         public Response<EventHubListResult> ListByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1360,14 +1263,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         EventHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        }
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

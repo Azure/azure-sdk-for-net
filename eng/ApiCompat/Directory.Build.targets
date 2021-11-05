@@ -1,6 +1,0 @@
-<Project>
-
-    <!-- Avoid actually building anything -->
-    <Target Name="CoreBuild" />
-    
-</Project>

@@ -45,12 +45,17 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// to evaluate the health of an application or one of its children
         /// entities.
         /// </param>
-        public ApplicationUpgradePolicy(string upgradeReplicaSetCheckTimeout = default(string), bool? forceRestart = default(bool?), ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default(ArmRollingUpgradeMonitoringPolicy), ArmApplicationHealthPolicy applicationHealthPolicy = default(ArmApplicationHealthPolicy))
+        /// <param name="upgradeMode">The mode used to monitor health during a
+        /// rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual,
+        /// and Monitored. Possible values include: 'Invalid',
+        /// 'UnmonitoredAuto', 'UnmonitoredManual', 'Monitored'</param>
+        public ApplicationUpgradePolicy(string upgradeReplicaSetCheckTimeout = default(string), bool? forceRestart = default(bool?), ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default(ArmRollingUpgradeMonitoringPolicy), ArmApplicationHealthPolicy applicationHealthPolicy = default(ArmApplicationHealthPolicy), string upgradeMode = default(string))
         {
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
             ForceRestart = forceRestart;
             RollingUpgradeMonitoringPolicy = rollingUpgradeMonitoringPolicy;
             ApplicationHealthPolicy = applicationHealthPolicy;
+            UpgradeMode = upgradeMode;
             CustomInit();
         }
 
@@ -92,6 +97,15 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "applicationHealthPolicy")]
         public ArmApplicationHealthPolicy ApplicationHealthPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the mode used to monitor health during a rolling
+        /// upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and
+        /// Monitored. Possible values include: 'Invalid', 'UnmonitoredAuto',
+        /// 'UnmonitoredManual', 'Monitored'
+        /// </summary>
+        [JsonProperty(PropertyName = "upgradeMode")]
+        public string UpgradeMode { get; set; }
 
         /// <summary>
         /// Validate the object.

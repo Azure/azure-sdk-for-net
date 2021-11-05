@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of Domain. </summary>
         /// <param name="name"> the domain name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal Domain(string name)
         {
             if (name == null)
@@ -24,7 +26,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Name = name;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Domain. </summary>
@@ -39,7 +41,7 @@ namespace Azure.Graph.Rbac.Models
             IsDefault = isDefault;
             IsVerified = isVerified;
             Name = name;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> the type of the authentication into the domain. </summary>
@@ -63,7 +65,7 @@ namespace Azure.Graph.Rbac.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

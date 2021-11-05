@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of OptionalClaims. </summary>
         public OptionalClaims()
         {
+            IdToken = new ChangeTrackingList<OptionalClaim>();
+            AccessToken = new ChangeTrackingList<OptionalClaim>();
+            SamlToken = new ChangeTrackingList<OptionalClaim>();
         }
 
         /// <summary> Initializes a new instance of OptionalClaims. </summary>
@@ -29,10 +33,10 @@ namespace Azure.Graph.Rbac.Models
         }
 
         /// <summary> Optional claims requested to be included in the id token. </summary>
-        public IList<OptionalClaim> IdToken { get; set; }
+        public IList<OptionalClaim> IdToken { get; }
         /// <summary> Optional claims requested to be included in the access token. </summary>
-        public IList<OptionalClaim> AccessToken { get; set; }
+        public IList<OptionalClaim> AccessToken { get; }
         /// <summary> Optional claims requested to be included in the saml token. </summary>
-        public IList<OptionalClaim> SamlToken { get; set; }
+        public IList<OptionalClaim> SamlToken { get; }
     }
 }

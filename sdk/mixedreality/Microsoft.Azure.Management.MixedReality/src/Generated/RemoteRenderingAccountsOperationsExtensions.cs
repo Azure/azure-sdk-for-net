@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='serial'>
-            /// serial of key to be regenerated
+            /// Serial of key to be regenerated
             /// </param>
             public static AccountKeys RegenerateKeys(this IRemoteRenderingAccountsOperations operations, string resourceGroupName, string accountName, int? serial = 1)
             {
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.MixedReality
             /// Name of an Mixed Reality Account.
             /// </param>
             /// <param name='serial'>
-            /// serial of key to be regenerated
+            /// Serial of key to be regenerated
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

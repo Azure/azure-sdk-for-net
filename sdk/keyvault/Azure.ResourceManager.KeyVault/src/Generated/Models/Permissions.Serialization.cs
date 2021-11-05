@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("keys"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<KeyPermissions> array = new List<KeyPermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -79,6 +84,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("secrets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecretPermissions> array = new List<SecretPermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -89,6 +99,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("certificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<CertificatePermissions> array = new List<CertificatePermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -99,6 +114,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("storage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<StoragePermissions> array = new List<StoragePermissions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

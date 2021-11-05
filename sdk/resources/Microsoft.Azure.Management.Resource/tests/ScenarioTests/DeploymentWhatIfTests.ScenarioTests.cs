@@ -190,7 +190,7 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(result.Changes);
 
                 WhatIfChange storageAccountChange = result.Changes.FirstOrDefault(change =>
-                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/ramokaSATestAnother"));
+                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/wendysdktestsa"));
 
                 Assert.NotNull(storageAccountChange);
                 Assert.Equal(ChangeType.Modify, storageAccountChange.ChangeType);
@@ -311,7 +311,6 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
                     Assert.Null(change.Delta);
@@ -449,7 +448,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);
@@ -479,7 +478,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);
@@ -489,7 +488,6 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
                     Assert.Null(change.Delta);
@@ -518,7 +516,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);
@@ -528,10 +526,7 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
-                    Assert.Null(change.Before);
-                    Assert.NotNull(change.After);
-                    Assert.Null(change.Delta);
+                    Assert.True(change.Before != null || change.After != null);
                 });
             }
         }
@@ -595,10 +590,8 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
-                    Assert.Null(change.Delta);
                 });
             }
         }
@@ -633,10 +626,7 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.ChangeType == ChangeType.Create);
-                    Assert.Null(change.Before);
-                    Assert.NotNull(change.After);
-                    Assert.Null(change.Delta);
+                    Assert.True(change.Before != null || change.After != null);
                 });
             }
         }

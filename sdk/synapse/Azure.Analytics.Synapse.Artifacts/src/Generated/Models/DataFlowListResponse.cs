@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of data flow resources. </summary>
-    public partial class DataFlowListResponse
+    internal partial class DataFlowListResponse
     {
         /// <summary> Initializes a new instance of DataFlowListResponse. </summary>
         /// <param name="value"> List of data flows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFlowListResponse(IEnumerable<DataFlowResource> value)
         {
             if (value == null)

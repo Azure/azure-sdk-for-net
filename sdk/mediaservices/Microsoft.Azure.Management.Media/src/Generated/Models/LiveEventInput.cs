@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The Live Event input.
+    /// The live event input.
     /// </summary>
     public partial class LiveEventInput
     {
@@ -31,18 +31,22 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEventInput class.
         /// </summary>
-        /// <param name="streamingProtocol">The streaming protocol for the Live
-        /// Event.  This is specified at creation time and cannot be updated.
+        /// <param name="streamingProtocol">The input protocol for the live
+        /// event. This is specified at creation time and cannot be updated.
         /// Possible values include: 'FragmentedMP4', 'RTMP'</param>
-        /// <param name="accessControl">The access control for LiveEvent
-        /// Input.</param>
-        /// <param name="keyFrameIntervalDuration">ISO 8601 timespan duration
-        /// of the key frame interval duration.</param>
-        /// <param name="accessToken">A unique identifier for a stream.  This
-        /// can be specified at creation time but cannot be updated.  If
-        /// omitted, the service will generate a unique value.</param>
-        /// <param name="endpoints">The input endpoints for the Live
-        /// Event.</param>
+        /// <param name="accessControl">Access control for live event
+        /// input.</param>
+        /// <param name="keyFrameIntervalDuration">ISO 8601 time duration of
+        /// the key frame interval duration of the input. This value sets the
+        /// EXT-X-TARGETDURATION property in the HLS output. For example, use
+        /// PT2S to indicate 2 seconds. Leave the value empty for encoding live
+        /// events.</param>
+        /// <param name="accessToken">A UUID in string form to uniquely
+        /// identify the stream. This can be specified at creation time but
+        /// cannot be updated. If omitted, the service will generate a unique
+        /// value.</param>
+        /// <param name="endpoints">The input endpoints for the live
+        /// event.</param>
         public LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl = default(LiveEventInputAccessControl), string keyFrameIntervalDuration = default(string), string accessToken = default(string), IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>))
         {
             StreamingProtocol = streamingProtocol;
@@ -59,7 +63,7 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the streaming protocol for the Live Event.  This is
+        /// Gets or sets the input protocol for the live event. This is
         /// specified at creation time and cannot be updated. Possible values
         /// include: 'FragmentedMP4', 'RTMP'
         /// </summary>
@@ -67,28 +71,30 @@ namespace Microsoft.Azure.Management.Media.Models
         public LiveEventInputProtocol StreamingProtocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the access control for LiveEvent Input.
+        /// Gets or sets access control for live event input.
         /// </summary>
         [JsonProperty(PropertyName = "accessControl")]
         public LiveEventInputAccessControl AccessControl { get; set; }
 
         /// <summary>
-        /// Gets or sets ISO 8601 timespan duration of the key frame interval
-        /// duration.
+        /// Gets or sets ISO 8601 time duration of the key frame interval
+        /// duration of the input. This value sets the EXT-X-TARGETDURATION
+        /// property in the HLS output. For example, use PT2S to indicate 2
+        /// seconds. Leave the value empty for encoding live events.
         /// </summary>
         [JsonProperty(PropertyName = "keyFrameIntervalDuration")]
         public string KeyFrameIntervalDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique identifier for a stream.  This can be
-        /// specified at creation time but cannot be updated.  If omitted, the
-        /// service will generate a unique value.
+        /// Gets or sets a UUID in string form to uniquely identify the stream.
+        /// This can be specified at creation time but cannot be updated. If
+        /// omitted, the service will generate a unique value.
         /// </summary>
         [JsonProperty(PropertyName = "accessToken")]
         public string AccessToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the input endpoints for the Live Event.
+        /// Gets or sets the input endpoints for the live event.
         /// </summary>
         [JsonProperty(PropertyName = "endpoints")]
         public IList<LiveEventEndpoint> Endpoints { get; set; }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -13,14 +12,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
     internal class Segment
     {
         /// <summary>
-        /// If this Segment is finalized.
-        /// </summary>
-        public virtual bool Finalized { get; private set; }
-
-        /// <summary>
         /// The time (to the nearest hour) associated with this Segment.
         /// </summary>
         public DateTimeOffset DateTime { get; private set; }
+
+        /// <summary>
+        /// The path of manifest associated with this Segment.
+        /// </summary>
+        public string ManifestPath { get; private set; }
 
         /// <summary>
         /// The Shards associated with this Segment.
@@ -41,12 +40,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
             List<Shard> shards,
             int shardIndex,
             DateTimeOffset dateTime,
-            bool finalized)
+            string manifestPath)
         {
             _shards = shards;
             _shardIndex = shardIndex;
             DateTime = dateTime;
-            Finalized = finalized;
+            ManifestPath = manifestPath;
             _finishedShards = new HashSet<int>();
         }
 
@@ -55,12 +54,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
             List<ShardCursor> shardCursors = new List<ShardCursor>();
             foreach (Shard shard in _shards)
             {
-                shardCursors.Add(shard.GetCursor());
+                var shardCursor = shard.GetCursor();
+                if (shardCursor != null)
+                {
+                    shardCursors.Add(shard.GetCursor());
+                }
             }
             return new SegmentCursor(
-                segmentDateTime: DateTime,
+                segmentPath: ManifestPath,
                 shardCursors: shardCursors,
-                shardIndex: _shardIndex);
+                currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : null);
         }
 
         public virtual async Task<List<BlobChangeFeedEvent>> GetPage(
@@ -72,7 +75,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (!HasNext())
             {
-                throw new InvalidOperationException("Segment doesn't have any more events");
+                return new List<BlobChangeFeedEvent>(capacity: 0);
             }
 
             int i = 0;

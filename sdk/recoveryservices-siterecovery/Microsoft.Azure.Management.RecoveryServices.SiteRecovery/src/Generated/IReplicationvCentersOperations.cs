@@ -53,13 +53,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// Gets the details of a registered vCenter server(Add vCenter
-        /// server.)
+        /// server).
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VCenter>> GetWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VCenter>> GetWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add vCenter.
         /// </summary>
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='addVCenterRequest'>
         /// The input to the add vCenter operation.
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VCenter>> CreateWithHttpMessagesAsync(string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VCenter>> CreateWithHttpMessagesAsync(string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Remove vCenter operation.
+        /// Remove vcenter operation.
         /// </summary>
         /// <remarks>
         /// The operation to remove(unregister) a registered vCenter server
@@ -118,8 +118,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update vCenter operation.
         /// </summary>
@@ -143,8 +143,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VCenter>> UpdateWithHttpMessagesAsync(string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VCenter>> UpdateWithHttpMessagesAsync(string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of vCenter registered under the vault.
         /// </summary>
@@ -196,8 +196,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='addVCenterRequest'>
         /// The input to the add vCenter operation.
@@ -217,9 +217,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VCenter>> BeginCreateWithHttpMessagesAsync(string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VCenter>> BeginCreateWithHttpMessagesAsync(string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Remove vCenter operation.
+        /// Remove vcenter operation.
         /// </summary>
         /// <remarks>
         /// The operation to remove(unregister) a registered vCenter server
@@ -228,8 +228,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update vCenter operation.
         /// </summary>
@@ -253,8 +253,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VCenter>> BeginUpdateWithHttpMessagesAsync(string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VCenter>> BeginUpdateWithHttpMessagesAsync(string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of vCenter registered under a fabric.
         /// </summary>

@@ -15,30 +15,47 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier");
+                writer.WriteStringValue(Tier.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerSku DeserializeLoadBalancerSku(JsonElement element)
         {
-            LoadBalancerSkuName? name = default;
+            Optional<LoadBalancerSkuName> name = default;
+            Optional<LoadBalancerSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new LoadBalancerSkuName(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tier"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tier = new LoadBalancerSkuTier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new LoadBalancerSku(name);
+            return new LoadBalancerSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }

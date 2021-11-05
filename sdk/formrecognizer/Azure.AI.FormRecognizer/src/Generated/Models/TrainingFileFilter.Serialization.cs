@@ -20,10 +20,10 @@ namespace Azure.AI.FormRecognizer.Training
                 writer.WritePropertyName("prefix");
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(IncludeSubFolders))
+            if (Optional.IsDefined(IncludeSubfolders))
             {
                 writer.WritePropertyName("includeSubFolders");
-                writer.WriteBooleanValue(IncludeSubFolders);
+                writer.WriteBooleanValue(IncludeSubfolders);
             }
             writer.WriteEndObject();
         }

@@ -21,11 +21,9 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Defines mappings between fields in the data source and corresponding target fields in the index. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<FieldMapping> FieldMappings { get; }
 
         /// <summary> Output field mappings are applied after enrichment and immediately before indexing. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<FieldMapping> OutputFieldMappings { get; }
     }
 }

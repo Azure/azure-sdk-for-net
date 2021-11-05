@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public ApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -62,6 +62,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/applications", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -72,6 +73,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new application. </summary>
         /// <param name="parameters"> The parameters for creating an application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async Task<Response<Application>> CreateAsync(ApplicationCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -87,14 +89,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,6 +100,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new application. </summary>
         /// <param name="parameters"> The parameters for creating an application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public Response<Application> Create(ApplicationCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -120,14 +116,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,6 +140,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -167,14 +157,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,14 +178,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -223,12 +199,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(applicationObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -250,6 +228,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response Delete(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -281,12 +260,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(applicationObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Get an application by object ID. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response<Application>> GetAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -302,14 +283,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -320,6 +294,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get an application by object ID. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response<Application> Get(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -335,14 +310,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,6 +331,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(applicationObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -374,6 +343,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> PatchAsync(string applicationObjectId, ApplicationUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -400,6 +370,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response Patch(string applicationObjectId, ApplicationUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -436,12 +407,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/owners", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnersAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -457,14 +430,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,6 +441,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwners(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -490,14 +457,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,6 +479,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/$links/owners", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -530,6 +491,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> AddOwnerAsync(string applicationObjectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -556,6 +518,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response AddOwner(string applicationObjectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -593,6 +556,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(ownerObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -600,6 +564,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
         public async Task<Response> RemoveOwnerAsync(string applicationObjectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -626,6 +591,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="ownerObjectId"/> is null. </exception>
         public Response RemoveOwner(string applicationObjectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -662,12 +628,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/keyCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Get the keyCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response<KeyCredentialListResult>> ListKeyCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -683,14 +651,7 @@ namespace Azure.Graph.Rbac
                     {
                         KeyCredentialListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
-                        }
+                        value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -701,6 +662,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response<KeyCredentialListResult> ListKeyCredentials(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -716,14 +678,7 @@ namespace Azure.Graph.Rbac
                     {
                         KeyCredentialListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
-                        }
+                        value = KeyCredentialListResult.DeserializeKeyCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -745,6 +700,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/keyCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -756,6 +712,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update the keyCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateKeyCredentialsAsync(string applicationObjectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -782,6 +739,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update the keyCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response UpdateKeyCredentials(string applicationObjectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -818,12 +776,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/passwordCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Get the passwordCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response<PasswordCredentialListResult>> ListPasswordCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -839,14 +799,7 @@ namespace Azure.Graph.Rbac
                     {
                         PasswordCredentialListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
-                        }
+                        value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -857,6 +810,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the passwordCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response<PasswordCredentialListResult> ListPasswordCredentials(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -872,14 +826,7 @@ namespace Azure.Graph.Rbac
                     {
                         PasswordCredentialListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
-                        }
+                        value = PasswordCredentialListResult.DeserializePasswordCredentialListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -901,6 +848,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/passwordCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -912,6 +860,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update passwordCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdatePasswordCredentialsAsync(string applicationObjectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -938,6 +887,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update passwordCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> or <paramref name="parameters"/> is null. </exception>
         public Response UpdatePasswordCredentials(string applicationObjectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -974,12 +924,14 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/objectId", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets an object id for a given application id from the current tenant. </summary>
         /// <param name="applicationID"> The application ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationID"/> is null. </exception>
         public async Task<Response<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdAsync(string applicationID, CancellationToken cancellationToken = default)
         {
             if (applicationID == null)
@@ -995,14 +947,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalObjectResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalObjectResult.DeserializeServicePrincipalObjectResult(document.RootElement);
-                        }
+                        value = ServicePrincipalObjectResult.DeserializeServicePrincipalObjectResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1013,6 +958,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets an object id for a given application id from the current tenant. </summary>
         /// <param name="applicationID"> The application ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationID"/> is null. </exception>
         public Response<ServicePrincipalObjectResult> GetServicePrincipalsIdByAppId(string applicationID, CancellationToken cancellationToken = default)
         {
             if (applicationID == null)
@@ -1028,14 +974,7 @@ namespace Azure.Graph.Rbac
                     {
                         ServicePrincipalObjectResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServicePrincipalObjectResult.DeserializeServicePrincipalObjectResult(document.RootElement);
-                        }
+                        value = ServicePrincipalObjectResult.DeserializeServicePrincipalObjectResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1053,15 +992,17 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1077,14 +1018,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1095,6 +1029,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1110,14 +1045,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1134,6 +1062,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -1141,6 +1070,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1160,14 +1090,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1179,6 +1102,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="applicationObjectId"/> is null. </exception>
         public Response<DirectoryObjectListResult> ListOwnersNextPage(string nextLink, string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1198,14 +1122,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1222,12 +1139,14 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1243,14 +1162,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1261,6 +1173,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1276,14 +1189,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

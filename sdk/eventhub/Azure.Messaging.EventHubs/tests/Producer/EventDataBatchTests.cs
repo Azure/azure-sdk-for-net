@@ -191,10 +191,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
 
             batch.Lock();
-            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
+            Assert.That(() => batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
 
             batch.Unlock();
-            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The event should have been accepted after unlocking.");
+            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The event should have been accepted after unlocking.");
         }
 
         /// <summary>
@@ -272,8 +272,12 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventData TryAddCalledWith = null;
 
             public override long MaximumSizeInBytes { get; } = 200;
+
             public override long SizeInBytes { get; } = 100;
-            public override int Count { get; } = 300;
+
+            public override TransportProducerFeatures ActiveFeatures { get; } = TransportProducerFeatures.None;
+
+            public override int Count { get; } = 400;
 
             public override void Clear() => ClearInvoked = true;
 

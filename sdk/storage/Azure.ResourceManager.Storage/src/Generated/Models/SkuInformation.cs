@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,6 +18,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal SkuInformation(SkuName name)
         {
             Name = name;
+            Locations = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<SKUCapability>();
+            Restrictions = new ChangeTrackingList<Restriction>();
         }
 
         /// <summary> Initializes a new instance of SkuInformation. </summary>

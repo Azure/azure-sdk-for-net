@@ -65,6 +65,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// whether the deferred deleted DS is to be purged soon</param>
         /// <param name="isRehydrate">Flag to identify that deferred deleted DS
         /// is to be moved into Pause state</param>
+        /// <param
+        /// name="resourceGuardOperationRequests">ResourceGuardOperationRequests
+        /// on which LAC check will be performed</param>
         /// <param name="friendlyName">Friendly name of the fileshare
         /// represented by this backup item.</param>
         /// <param name="protectionStatus">Backup status of this backup
@@ -72,30 +75,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionState">Backup state of this backup item.
         /// Possible values include: 'Invalid', 'IRPending', 'Protected',
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
-        /// <param name="healthStatus">Health status of protected item.
-        /// Possible values include: 'Passed', 'ActionRequired',
-        /// 'ActionSuggested', 'Healthy', 'TransientDegraded',
-        /// 'PersistentDegraded', 'TransientUnhealthy', 'PersistentUnhealthy',
-        /// 'Invalid'</param>
-        /// <param name="healthDetails">Health details on this backup
-        /// item.</param>
         /// <param name="lastBackupStatus">Last backup operation status.
         /// Possible values: Healthy, Unhealthy.</param>
         /// <param name="lastBackupTime">Timestamp of the last backup operation
         /// on this backup item.</param>
+        /// <param name="kpisHealths">Health details of different KPIs</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<HealthDetails> healthDetails = default(IList<HealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
+        /// <param name="healthStatus">backups running status for this backup
+        /// item. Possible values include: 'Passed', 'ActionRequired',
+        /// 'ActionSuggested', 'Invalid'</param>
+        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo), string healthStatus = default(string))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;
             ProtectionState = protectionState;
-            HealthStatus = healthStatus;
-            HealthDetails = healthDetails;
             LastBackupStatus = lastBackupStatus;
             LastBackupTime = lastBackupTime;
+            KpisHealths = kpisHealths;
             ExtendedInfo = extendedInfo;
+            HealthStatus = healthStatus;
             CustomInit();
         }
 
@@ -126,21 +126,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string ProtectionState { get; set; }
 
         /// <summary>
-        /// Gets or sets health status of protected item. Possible values
-        /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Healthy',
-        /// 'TransientDegraded', 'PersistentDegraded', 'TransientUnhealthy',
-        /// 'PersistentUnhealthy', 'Invalid'
-        /// </summary>
-        [JsonProperty(PropertyName = "healthStatus")]
-        public string HealthStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets health details on this backup item.
-        /// </summary>
-        [JsonProperty(PropertyName = "healthDetails")]
-        public IList<HealthDetails> HealthDetails { get; set; }
-
-        /// <summary>
         /// Gets or sets last backup operation status. Possible values:
         /// Healthy, Unhealthy.
         /// </summary>
@@ -155,10 +140,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public System.DateTime? LastBackupTime { get; set; }
 
         /// <summary>
+        /// Gets or sets health details of different KPIs
+        /// </summary>
+        [JsonProperty(PropertyName = "kpisHealths")]
+        public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; set; }
+
+        /// <summary>
         /// Gets or sets additional information with this backup item.
         /// </summary>
         [JsonProperty(PropertyName = "extendedInfo")]
         public AzureFileshareProtectedItemExtendedInfo ExtendedInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets backups running status for this backup item. Possible
+        /// values include: 'Passed', 'ActionRequired', 'ActionSuggested',
+        /// 'Invalid'
+        /// </summary>
+        [JsonProperty(PropertyName = "healthStatus")]
+        public string HealthStatus { get; set; }
 
     }
 }

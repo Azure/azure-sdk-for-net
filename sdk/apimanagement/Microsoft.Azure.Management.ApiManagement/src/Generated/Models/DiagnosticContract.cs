@@ -53,7 +53,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="verbosity">The verbosity level applied to traces
         /// emitted by trace policies. Possible values include: 'verbose',
         /// 'information', 'error'</param>
-        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string))
+        /// <param name="operationNameFormat">The format of the Operation Name
+        /// for Application Insights telemetries. Default is Name. Possible
+        /// values include: 'Name', 'Url'</param>
+        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string), string operationNameFormat = default(string))
             : base(id, name, type)
         {
             AlwaysLog = alwaysLog;
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             LogClientIp = logClientIp;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
+            OperationNameFormat = operationNameFormat;
             CustomInit();
         }
 
@@ -126,6 +130,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.verbosity")]
         public string Verbosity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the format of the Operation Name for Application
+        /// Insights telemetries. Default is Name. Possible values include:
+        /// 'Name', 'Url'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationNameFormat")]
+        public string OperationNameFormat { get; set; }
 
         /// <summary>
         /// Validate the object.

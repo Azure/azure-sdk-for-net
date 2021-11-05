@@ -4,7 +4,7 @@
     <_BuildNumber>$(OfficialBuildId)</_BuildNumber>
     <_BuildNumber Condition="'$(OfficialBuildId)' == ''">$([System.DateTime]::Now.ToString(yyyyMMdd)).1</_BuildNumber>
     <HasReleaseVersion>true</HasReleaseVersion>
-    <HasReleaseVersion Condition="$(Version.Contains('preview'))">false</HasReleaseVersion>
+    <HasReleaseVersion Condition="$(Version.Contains('preview')) or $(Version.Contains('beta'))">false</HasReleaseVersion>
     <_VersionInProject>$(Version)</_VersionInProject>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
     <_PrereleaseIndex>$(Version.IndexOf('-'))</_PrereleaseIndex>
     <Version Condition="$(_PrereleaseIndex) &gt; 0">$(Version.SubString(0, $(_PrereleaseIndex)))</Version>
 
-    <Version>$(Version)-dev.$(_BuildNumber)</Version>
+    <Version>$(Version)-alpha.$(_BuildNumber)</Version>
   </PropertyGroup>
 
   <!--

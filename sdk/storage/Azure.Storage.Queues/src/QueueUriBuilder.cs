@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
@@ -28,10 +29,9 @@ namespace Azure.Storage.Queues
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
-        private readonly bool _isIPStyleUri;
+        private readonly bool _isPathStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -141,6 +141,8 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueUriBuilder(Uri uri)
         {
+            uri = uri ?? throw new ArgumentNullException(nameof(uri));
+
             Scheme = uri.Scheme;
             Host = uri.Host;
             Port = uri.Port;
@@ -159,7 +161,7 @@ namespace Azure.Storage.Queues
 
                 if (uri.IsHostIPEndPointStyle())
                 {
-                    _isIPStyleUri = true;
+                    _isPathStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no queue name
@@ -257,20 +259,20 @@ namespace Azure.Storage.Queues
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
 
             if (!string.IsNullOrWhiteSpace(QueueName))
             {
-                path.Append("/").Append(QueueName);
+                path.Append('/').Append(QueueName);
                 if (Messages)
                 {
                     path.Append("/messages");
                     if (!string.IsNullOrWhiteSpace(MessageId))
                     {
-                        path.Append("/").Append(MessageId);
+                        path.Append('/').Append(MessageId);
                     }
                 }
             }
@@ -280,7 +282,7 @@ namespace Azure.Storage.Queues
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append("&"); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(sas);
             }
 

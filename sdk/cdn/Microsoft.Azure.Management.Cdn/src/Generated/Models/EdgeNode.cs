@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public EdgeNode(IList<IpAddressGroup> ipAddressGroups, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        public EdgeNode(IList<IpAddressGroup> ipAddressGroups, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             IpAddressGroups = ipAddressGroups;
             CustomInit();

@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="operation">Type of operation. Possible values include:
         /// 'Invalid', 'Register', 'UnRegister', 'ConfigureBackup', 'Backup',
         /// 'Restore', 'DisableBackup', 'DeleteBackupData',
-        /// 'CrossRegionRestore', 'Undelete'</param>
+        /// 'CrossRegionRestore', 'Undelete',
+        /// 'UpdateCustomerManagedKey'</param>
         /// <param name="jobId">JobID represents the job uniquely.</param>
         /// <param name="startTime">Job has started at this time. Value is in
         /// UTC.</param>
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Gets or sets type of operation. Possible values include: 'Invalid',
         /// 'Register', 'UnRegister', 'ConfigureBackup', 'Backup', 'Restore',
         /// 'DisableBackup', 'DeleteBackupData', 'CrossRegionRestore',
-        /// 'Undelete'
+        /// 'Undelete', 'UpdateCustomerManagedKey'
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }

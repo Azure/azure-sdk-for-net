@@ -46,6 +46,12 @@ namespace Azure.Storage.Blobs.Models
         Version = 8,
 
         /// <summary>
+        /// Flag specifying to list blobs that were deleted with
+        /// versioning enabled.
+        /// </summary>
+        DeletedWithVersions = 16,
+
+        /// <summary>
         /// Flag specifying that blobs of all states should be included.
         /// </summary>
         All = ~None

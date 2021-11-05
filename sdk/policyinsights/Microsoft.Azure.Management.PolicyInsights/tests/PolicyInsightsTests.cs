@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.PolicyInsights;
 using Microsoft.Azure.Management.PolicyInsights.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.Azure;
 using PolicyInsights.Tests.Helpers;
 using Xunit;
 
@@ -24,7 +25,8 @@ namespace PolicyInsights.Tests
         private static string PolicySetDefinitionName = "1f3afdf9-d0c9-4c3d-847f-89da613e70a8";
         private static string PolicyDefinitionName = "02a84be7-c304-421f-9bb7-5d2c26af54ad";
         private static string PolicyAssignmentName = "8e6d811f59d145db97ca9f16";
-        private static QueryOptions DefaultQueryOptions = new QueryOptions { FromProperty = DateTime.Parse("2020-03-04 00:00:00Z"), Top = 10 };
+        private static string From = "2020-07-04 00:00:00Z";
+        private static QueryOptions DefaultQueryOptions = new QueryOptions { FromProperty = DateTime.Parse(From), Top = 10 };
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -47,17 +49,23 @@ namespace PolicyInsights.Tests
 
         #region Validation
 
-        private void ValidatePolicyEventsQueryResults(PolicyEventsQueryResults queryResults)
+        private void ValidatePolicyEventsQueryResults(IPage<PolicyEvent> queryResults)
         {
             Assert.NotNull(queryResults);
 
-            Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
-            Assert.True(queryResults.Odatacount.HasValue);
-            Assert.True(queryResults.Odatacount.Value >= 0);
+            var count = queryResults.Count();
+            Assert.True(count >= 0);
 
-            Assert.NotNull(queryResults.Value);
+            if (count == 1000)
+            {
+                Assert.NotNull(queryResults.NextPageLink);
+            }
+            else
+            {
+                Assert.Null(queryResults.NextPageLink);
+            }
 
-            foreach (var policyEvent in queryResults.Value)
+            foreach (var policyEvent in queryResults)
             {
                 Assert.NotNull(policyEvent);
 
@@ -78,17 +86,23 @@ namespace PolicyInsights.Tests
             }
         }
 
-        private void ValidatePolicyStatesQueryResults(PolicyStatesQueryResults queryResults, bool expandPolicyEvaluationDetails = false)
+        private void ValidatePolicyStatesQueryResults(IPage<PolicyState> queryResults, bool expandPolicyEvaluationDetails = false)
         {
             Assert.NotNull(queryResults);
 
-            Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
-            Assert.True(queryResults.Odatacount.HasValue);
-            Assert.True(queryResults.Odatacount.Value >= 0);
+            var count = queryResults.Count();
+            Assert.True(count >= 0);
 
-            Assert.NotNull(queryResults.Value);
+            if (count == 1000)
+            {
+                Assert.NotNull(queryResults.NextPageLink);
+            }
+            else
+            {
+                Assert.Null(queryResults.NextPageLink);
+            }
 
-            foreach (var policyState in queryResults.Value)
+            foreach (var policyState in queryResults)
             {
                 Assert.NotNull(policyState);
 
@@ -219,8 +233,14 @@ namespace PolicyInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroup(ManagementGroupName, DefaultQueryOptions);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroup(
+                    ManagementGroupName,
+                    new QueryOptions { FromProperty = DateTime.Parse(From)});
                 ValidatePolicyEventsQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyEventsPage = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroupNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyEventsQueryResults(secondPolicyEventsPage);
             }
         }
 
@@ -311,8 +331,15 @@ namespace PolicyInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Latest, ManagementGroupName, DefaultQueryOptions);
-                ValidatePolicyStatesQueryResults(queryResults);
+                var policyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(
+                    PolicyStatesResource.Latest,
+                    ManagementGroupName,
+                    new QueryOptions { FromProperty = DateTime.Parse("2020-06-29 00:00:00Z")});
+                ValidatePolicyStatesQueryResults(policyStatesPage);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroupNext(nextPageLink: policyStatesPage.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -322,8 +349,15 @@ namespace PolicyInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, DefaultQueryOptions);
-                ValidatePolicyStatesQueryResults(queryResults);
+                var policyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(
+                    PolicyStatesResource.Latest,
+                    SubscriptionId,
+                    new QueryOptions { FromProperty = DateTime.Parse(From) });
+                ValidatePolicyStatesQueryResults(policyStatesPage);
+
+                // test for pagination
+                var nextpolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: policyStatesPage.NextPageLink);
+                ValidatePolicyStatesQueryResults(nextpolicyStatesPage);
             }
         }
 
@@ -416,6 +450,19 @@ namespace PolicyInsights.Tests
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Default, ManagementGroupName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                var policyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(
+                    PolicyStatesResource.Default,
+                    ManagementGroupName,
+                    new QueryOptions { FromProperty = DateTime.Parse(From) });
+                ValidatePolicyStatesQueryResults(policyStatesPage);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroupNext(nextPageLink: policyStatesPage.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
+
+                var thirdPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroupNext(nextPageLink: secondPolicyStatesPage.NextPageLink);
+                ValidatePolicyStatesQueryResults(thirdPolicyStatesPage);
             }
         }
 
@@ -646,6 +693,10 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { FromProperty = DefaultQueryOptions.FromProperty };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -658,6 +709,10 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { To = DefaultQueryOptions.To };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -670,8 +725,13 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { Top = 10 };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
-                Assert.True(10 == queryResults.Odatacount.Value);
-                Assert.True(10 == queryResults.Value.Count);
+                Assert.True(10 == queryResults.Count());
+
+                queryOptions = new QueryOptions { Top = 1001 };
+                queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+                Assert.True(1001 == queryResults.Count());
+                Assert.Null(queryResults.NextPageLink);
             }
         }
 
@@ -684,6 +744,10 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { OrderBy = "PolicyAssignmentId desc" };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -696,6 +760,10 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, ComplianceState, PolicyDefinitionGroupNames, SubscriptionId, PolicyDefinitionAction, PolicyDefinitionVersion, PolicyAssignmentVersion, PolicySetDefinitionVersion" };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -708,6 +776,15 @@ namespace PolicyInsights.Tests
                 var queryOptions = new QueryOptions { Filter = "IsCompliant eq false and PolicyDefinitionAction eq 'deny'" };
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+
+                // filter query for more results
+                queryOptions = new QueryOptions { Filter = "IsCompliant eq false or IsCompliant eq true" };
+                queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+
+                // test for pagination
+                var secondPolicyStatesPage = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionNext(nextPageLink: queryResults.NextPageLink);
+                ValidatePolicyStatesQueryResults(secondPolicyStatesPage);
             }
         }
 
@@ -722,14 +799,11 @@ namespace PolicyInsights.Tests
 
                 Assert.NotNull(queryResults);
 
-                Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
-                Assert.True(queryResults.Odatacount.HasValue);
-                Assert.True(queryResults.Odatacount.Value > 0);
+                Assert.True(queryResults.Count() >= 0);
 
-                Assert.NotNull(queryResults.Value);
-                Assert.NotEmpty(queryResults.Value);
-
-                foreach (var policyState in queryResults.Value)
+                Assert.Null(queryResults.NextPageLink);
+                
+                foreach (var policyState in queryResults)
                 {
                     Assert.NotNull(policyState);
 

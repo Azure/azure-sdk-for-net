@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetConverter))]
     public partial class Dataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -76,9 +79,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "AmazonMWSObject": return AmazonMWSObjectDataset.DeserializeAmazonMWSObjectDataset(element);
+                    case "AmazonRdsForOracleTable": return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element);
+                    case "AmazonRdsForSqlServerTable": return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element);
                     case "AmazonRedshiftTable": return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element);
+                    case "AmazonS3Object": return AmazonS3Dataset.DeserializeAmazonS3Dataset(element);
                     case "Avro": return AvroDataset.DeserializeAvroDataset(element);
+                    case "AzureBlob": return AzureBlobDataset.DeserializeAzureBlobDataset(element);
+                    case "AzureBlobFSFile": return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element);
                     case "AzureDataExplorerTable": return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element);
+                    case "AzureDataLakeStoreFile": return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element);
+                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element);
                     case "AzureMariaDBTable": return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element);
                     case "AzureMySqlTable": return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element);
                     case "AzurePostgreSqlTable": return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element);
@@ -94,6 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "CosmosDbMongoDbApiCollection": return CosmosDbMongoDbApiCollectionDataset.DeserializeCosmosDbMongoDbApiCollectionDataset(element);
                     case "CosmosDbSqlApiCollection": return CosmosDbSqlApiCollectionDataset.DeserializeCosmosDbSqlApiCollectionDataset(element);
                     case "CouchbaseTable": return CouchbaseTableDataset.DeserializeCouchbaseTableDataset(element);
+                    case "CustomDataset": return CustomDataset.DeserializeCustomDataset(element);
                     case "Db2Table": return Db2TableDataset.DeserializeDb2TableDataset(element);
                     case "DelimitedText": return DelimitedTextDataset.DeserializeDelimitedTextDataset(element);
                     case "DocumentDbCollection": return DocumentDbCollectionDataset.DeserializeDocumentDbCollectionDataset(element);
@@ -102,11 +113,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "DynamicsCrmEntity": return DynamicsCrmEntityDataset.DeserializeDynamicsCrmEntityDataset(element);
                     case "DynamicsEntity": return DynamicsEntityDataset.DeserializeDynamicsEntityDataset(element);
                     case "EloquaObject": return EloquaObjectDataset.DeserializeEloquaObjectDataset(element);
+                    case "Excel": return ExcelDataset.DeserializeExcelDataset(element);
+                    case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element);
                     case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element);
                     case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element);
                     case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element);
                     case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element);
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element);
+                    case "HttpFile": return HttpDataset.DeserializeHttpDataset(element);
                     case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element);
                     case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element);
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
@@ -116,6 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);
                     case "MicrosoftAccessTable": return MicrosoftAccessTableDataset.DeserializeMicrosoftAccessTableDataset(element);
+                    case "MongoDbAtlasCollection": return MongoDbAtlasCollectionDataset.DeserializeMongoDbAtlasCollectionDataset(element);
                     case "MongoDbCollection": return MongoDbCollectionDataset.DeserializeMongoDbCollectionDataset(element);
                     case "MongoDbV2Collection": return MongoDbV2CollectionDataset.DeserializeMongoDbV2CollectionDataset(element);
                     case "MySqlTable": return MySqlTableDataset.DeserializeMySqlTableDataset(element);
@@ -145,7 +160,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element);
+                    case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element);
+                    case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element);
                     case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element);
                     case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element);
                     case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element);
@@ -154,6 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element);
                     case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element);
                     case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element);
+                    case "Xml": return XmlDataset.DeserializeXmlDataset(element);
                     case "ZohoObject": return ZohoObjectDataset.DeserializeZohoObjectDataset(element);
                 }
             }
@@ -166,7 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -181,11 +199,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("structure"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     structure = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     schema = property.Value.GetObject();
                     continue;
                 }
@@ -196,6 +224,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -206,6 +239,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("annotations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -216,14 +254,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("folder"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Dataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties);
+        }
+
+        internal partial class DatasetConverter : JsonConverter<Dataset>
+        {
+            public override void Write(Utf8JsonWriter writer, Dataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Dataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataset(document.RootElement);
+            }
         }
     }
 }

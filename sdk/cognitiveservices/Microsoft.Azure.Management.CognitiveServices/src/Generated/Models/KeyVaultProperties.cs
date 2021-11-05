@@ -32,11 +32,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="keyName">Name of the Key from KeyVault</param>
         /// <param name="keyVersion">Version of the Key from KeyVault</param>
         /// <param name="keyVaultUri">Uri of KeyVault</param>
-        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string))
+        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string), string identityClientId = default(string))
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
+            IdentityClientId = identityClientId;
             CustomInit();
         }
 
@@ -62,6 +63,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultUri")]
         public string KeyVaultUri { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identityClientId")]
+        public string IdentityClientId { get; set; }
 
     }
 }

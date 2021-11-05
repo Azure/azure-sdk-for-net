@@ -23,6 +23,16 @@ namespace Azure.Storage.Sas
         Delete = 1,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 2,
+
+        /// <summary>
+        /// Indicates that Permanent Delete is permitted.
+        /// </summary>
+        PermanentDelete = 4,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -36,7 +46,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static partial class BlobExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.
@@ -48,6 +57,14 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobVersionSasPermissions.Delete) == BlobVersionSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & BlobVersionSasPermissions.PermanentDelete) == BlobVersionSasPermissions.PermanentDelete)
+            {
+                sb.Append(Constants.Sas.Permissions.PermanentDelete);
+            }
+            if ((permissions & BlobVersionSasPermissions.SetImmutabilityPolicy) == BlobVersionSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

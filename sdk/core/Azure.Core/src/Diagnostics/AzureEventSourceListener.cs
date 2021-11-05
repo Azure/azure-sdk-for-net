@@ -23,7 +23,6 @@ namespace Azure.Core.Diagnostics
         /// The trait value that has to be present on all event sources collected by this listener.
         /// </summary>
         public const string TraitValue = "true";
-
         private readonly List<EventSource> _eventSources = new List<EventSource>();
 
         private readonly Action<EventWrittenEventArgs, string> _log;
@@ -73,7 +72,9 @@ namespace Azure.Core.Diagnostics
                 return;
             }
 
-            _log(eventData, EventSourceEventFormatting.Format(eventData));
+            // There is a very tight race during the AzureEventSourceListener creation where EnableEvents was called
+            // and the thread producing events not observing the `_log` field assignment
+            _log?.Invoke(eventData, EventSourceEventFormatting.Format(eventData));
         }
 
         /// <summary>

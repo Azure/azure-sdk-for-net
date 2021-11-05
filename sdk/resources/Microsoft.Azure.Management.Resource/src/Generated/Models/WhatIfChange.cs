@@ -36,18 +36,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="resourceId">Resource ID</param>
         /// <param name="changeType">Type of change that will be made to the
         /// resource when the deployment is executed. Possible values include:
-        /// 'Create', 'Delete', 'Ignore', 'Deploy', 'NoChange',
-        /// 'Modify'</param>
+        /// 'Create', 'Delete', 'Ignore', 'Deploy', 'NoChange', 'Modify',
+        /// 'Unsupported'</param>
+        /// <param name="unsupportedReason">The explanation about why the
+        /// resource is unsupported by What-If.</param>
         /// <param name="before">The snapshot of the resource before the
         /// deployment is executed.</param>
         /// <param name="after">The predicted snapshot of the resource after
         /// the deployment is executed.</param>
         /// <param name="delta">The predicted changes to resource
         /// properties.</param>
-        public WhatIfChange(string resourceId, ChangeType changeType, object before = default(object), object after = default(object), IList<WhatIfPropertyChange> delta = default(IList<WhatIfPropertyChange>))
+        public WhatIfChange(string resourceId, ChangeType changeType, string unsupportedReason = default(string), object before = default(object), object after = default(object), IList<WhatIfPropertyChange> delta = default(IList<WhatIfPropertyChange>))
         {
             ResourceId = resourceId;
             ChangeType = changeType;
+            UnsupportedReason = unsupportedReason;
             Before = before;
             After = after;
             Delta = delta;
@@ -68,10 +71,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets type of change that will be made to the resource when
         /// the deployment is executed. Possible values include: 'Create',
-        /// 'Delete', 'Ignore', 'Deploy', 'NoChange', 'Modify'
+        /// 'Delete', 'Ignore', 'Deploy', 'NoChange', 'Modify', 'Unsupported'
         /// </summary>
         [JsonProperty(PropertyName = "changeType")]
         public ChangeType ChangeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the explanation about why the resource is unsupported
+        /// by What-If.
+        /// </summary>
+        [JsonProperty(PropertyName = "unsupportedReason")]
+        public string UnsupportedReason { get; set; }
 
         /// <summary>
         /// Gets or sets the snapshot of the resource before the deployment is

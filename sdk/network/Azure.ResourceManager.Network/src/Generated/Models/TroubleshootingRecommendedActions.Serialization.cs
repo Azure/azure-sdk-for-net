@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingRecommendedActions DeserializeTroubleshootingRecommendedActions(JsonElement element)
         {
-            string actionId = default;
-            string actionText = default;
-            string actionUri = default;
-            string actionUriText = default;
+            Optional<string> actionId = default;
+            Optional<string> actionText = default;
+            Optional<string> actionUri = default;
+            Optional<string> actionUriText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     actionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actionText"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     actionText = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actionUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     actionUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actionUriText"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     actionUriText = property.Value.GetString();
                     continue;
                 }
             }
-            return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText);
+            return new TroubleshootingRecommendedActions(actionId.Value, actionText.Value, actionUri.Value, actionUriText.Value);
         }
     }
 }

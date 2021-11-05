@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,23 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
         public VirtualMachineScaleSetUpdateOSDisk()
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
-        /// <param name="caching"> The caching type. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="diskSizeGB"> Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
-        /// <param name="image"> The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided, the destination VirtualHardDisk should not exist. </param>
-        /// <param name="vhdContainers"> The list of virtual hard disk container uris. </param>
-        /// <param name="managedDisk"> The managed disk parameters. </param>
-        internal VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching, bool? writeAcceleratorEnabled, int? diskSizeGB, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk)
-        {
-            Caching = caching;
-            WriteAcceleratorEnabled = writeAcceleratorEnabled;
-            DiskSizeGB = diskSizeGB;
-            Image = image;
-            VhdContainers = vhdContainers;
-            ManagedDisk = managedDisk;
+            VhdContainers = new ChangeTrackingList<string>();
         }
 
         /// <summary> The caching type. </summary>
@@ -43,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided, the destination VirtualHardDisk should not exist. </summary>
         public VirtualHardDisk Image { get; set; }
         /// <summary> The list of virtual hard disk container uris. </summary>
-        public IList<string> VhdContainers { get; set; }
+        public IList<string> VhdContainers { get; }
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
     }

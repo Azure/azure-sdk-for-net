@@ -33,12 +33,15 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="protocol">The protocol of the endpoint.</param>
         /// <param name="location">The location of the endpoint.</param>
         /// <param name="port">The port to connect to.</param>
-        public ConnectivityEndpoint(string name = default(string), string protocol = default(string), string location = default(string), int? port = default(int?))
+        /// <param name="privateIPAddress">The private ip address of the
+        /// endpoint.</param>
+        public ConnectivityEndpoint(string name = default(string), string protocol = default(string), string location = default(string), int? port = default(int?), string privateIPAddress = default(string))
         {
             Name = name;
             Protocol = protocol;
             Location = location;
             Port = port;
+            PrivateIPAddress = privateIPAddress;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "port")]
         public int? Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private ip address of the endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
 
     }
 }

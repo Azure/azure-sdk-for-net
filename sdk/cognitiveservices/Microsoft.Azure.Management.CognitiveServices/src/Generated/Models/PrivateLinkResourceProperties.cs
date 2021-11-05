@@ -34,18 +34,18 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// class.
         /// </summary>
         /// <param name="groupId">The private link resource group id.</param>
-        /// <param name="displayName">The private link resource display
-        /// name.</param>
         /// <param name="requiredMembers">The private link resource required
         /// member names.</param>
         /// <param name="requiredZoneNames">The private link resource Private
         /// link DNS zone name.</param>
-        public PrivateLinkResourceProperties(string groupId = default(string), string displayName = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
+        /// <param name="displayName">The private link resource display
+        /// name.</param>
+        public PrivateLinkResourceProperties(string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>), string displayName = default(string))
         {
             GroupId = groupId;
-            DisplayName = displayName;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -61,12 +61,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string GroupId { get; private set; }
 
         /// <summary>
-        /// Gets the private link resource display name.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; private set; }
-
-        /// <summary>
         /// Gets the private link resource required member names.
         /// </summary>
         [JsonProperty(PropertyName = "requiredMembers")]
@@ -77,6 +71,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; set; }
+
+        /// <summary>
+        /// Gets the private link resource display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; private set; }
 
     }
 }

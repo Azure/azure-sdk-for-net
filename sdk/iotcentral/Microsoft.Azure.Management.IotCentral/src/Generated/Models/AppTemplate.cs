@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,19 +33,24 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         /// <param name="manifestId">The ID of the template.</param>
         /// <param name="manifestVersion">The version of the template.</param>
-        /// <param name="appTemplateName">The name of the template.</param>
+        /// <param name="name">The name of the template.</param>
         /// <param name="title">The title of the template.</param>
         /// <param name="order">The order of the template in the templates
         /// list.</param>
         /// <param name="description">The description of the template.</param>
-        public AppTemplate(string manifestId = default(string), string manifestVersion = default(string), string appTemplateName = default(string), string title = default(string), double? order = default(double?), string description = default(string))
+        /// <param name="industry">The industry of the template.</param>
+        /// <param name="locations">A list of locations that support the
+        /// template.</param>
+        public AppTemplate(string manifestId = default(string), string manifestVersion = default(string), string name = default(string), string title = default(string), double? order = default(double?), string description = default(string), string industry = default(string), IList<AppTemplateLocations> locations = default(IList<AppTemplateLocations>))
         {
             ManifestId = manifestId;
             ManifestVersion = manifestVersion;
-            AppTemplateName = appTemplateName;
+            Name = name;
             Title = title;
             Order = order;
             Description = description;
+            Industry = industry;
+            Locations = locations;
             CustomInit();
         }
 
@@ -67,8 +74,8 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <summary>
         /// Gets the name of the template.
         /// </summary>
-        [JsonProperty(PropertyName = "appTemplateName")]
-        public string AppTemplateName { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the title of the template.
@@ -87,6 +94,18 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets the industry of the template.
+        /// </summary>
+        [JsonProperty(PropertyName = "industry")]
+        public string Industry { get; private set; }
+
+        /// <summary>
+        /// Gets a list of locations that support the template.
+        /// </summary>
+        [JsonProperty(PropertyName = "locations")]
+        public IList<AppTemplateLocations> Locations { get; private set; }
 
     }
 }

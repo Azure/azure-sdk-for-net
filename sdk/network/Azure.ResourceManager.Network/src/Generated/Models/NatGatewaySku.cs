@@ -13,17 +13,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NatGatewaySku. </summary>
         public NatGatewaySku()
         {
-            Name = "Standard";
         }
 
         /// <summary> Initializes a new instance of NatGatewaySku. </summary>
         /// <param name="name"> Name of Nat Gateway SKU. </param>
-        internal NatGatewaySku(string name)
+        internal NatGatewaySku(NatGatewaySkuName? name)
         {
             Name = name;
         }
 
         /// <summary> Name of Nat Gateway SKU. </summary>
-        public string Name { get; set; }
+        public NatGatewaySkuName? Name { get; set; }
     }
 }

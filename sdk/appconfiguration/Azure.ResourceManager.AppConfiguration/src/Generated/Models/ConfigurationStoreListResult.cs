@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The result of a request to list configuration stores. </summary>
-    public partial class ConfigurationStoreListResult
+    internal partial class ConfigurationStoreListResult
     {
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
         internal ConfigurationStoreListResult()
         {
+            Value = new ChangeTrackingList<ConfigurationStore>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>

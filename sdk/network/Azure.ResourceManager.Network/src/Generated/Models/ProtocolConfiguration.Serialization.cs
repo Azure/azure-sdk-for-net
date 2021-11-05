@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HttpConfiguration != null)
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration");
                 writer.WriteObjectValue(HttpConfiguration);

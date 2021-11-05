@@ -15,15 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of AzureAsyncOperationResult. </summary>
-        /// <param name="status"> Status of the Azure async operation. </param>
-        /// <param name="error"> Details of the error occurred during specified asynchronous operation. </param>
-        internal AzureAsyncOperationResult(NetworkOperationStatus? status, Error error)
-        {
-            Status = status;
-            Error = error;
-        }
-
         /// <summary> Status of the Azure async operation. </summary>
         public NetworkOperationStatus? Status { get; }
         /// <summary> Details of the error occurred during specified asynchronous operation. </summary>

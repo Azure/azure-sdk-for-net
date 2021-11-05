@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,64 +17,54 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (FrontendIPConfiguration != null)
+            if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration");
-                writer.WriteObjectValue(FrontendIPConfiguration);
+                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (FrontendPort != null)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort");
-                writer.WriteObjectValue(FrontendPort);
+                JsonSerializer.Serialize(writer, FrontendPort);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (SslCertificate != null)
+            if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate");
-                writer.WriteObjectValue(SslCertificate);
+                JsonSerializer.Serialize(writer, SslCertificate);
             }
-            if (RequireServerNameIndication != null)
+            if (Optional.IsDefined(SslProfile))
+            {
+                writer.WritePropertyName("sslProfile");
+                JsonSerializer.Serialize(writer, SslProfile);
+            }
+            if (Optional.IsDefined(RequireServerNameIndication))
             {
                 writer.WritePropertyName("requireServerNameIndication");
                 writer.WriteBooleanValue(RequireServerNameIndication.Value);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (CustomErrorConfigurations != null)
+            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
             {
                 writer.WritePropertyName("customErrorConfigurations");
                 writer.WriteStartArray();
@@ -83,12 +74,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallPolicy != null)
+            if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy");
-                writer.WriteObjectValue(FirewallPolicy);
+                JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (HostNames != null)
+            if (Optional.IsCollectionDefined(HostNames))
             {
                 writer.WritePropertyName("hostNames");
                 writer.WriteStartArray();
@@ -104,84 +95,77 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            SubResource frontendIPConfiguration = default;
-            SubResource frontendPort = default;
-            ApplicationGatewayProtocol? protocol = default;
-            string hostName = default;
-            SubResource sslCertificate = default;
-            bool? requireServerNameIndication = default;
-            ProvisioningState? provisioningState = default;
-            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
-            SubResource firewallPolicy = default;
-            IList<string> hostNames = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<WritableSubResource> frontendIPConfiguration = default;
+            Optional<WritableSubResource> frontendPort = default;
+            Optional<ApplicationGatewayProtocol> protocol = default;
+            Optional<string> hostName = default;
+            Optional<WritableSubResource> sslCertificate = default;
+            Optional<WritableSubResource> sslProfile = default;
+            Optional<bool> requireServerNameIndication = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
+            Optional<WritableSubResource> firewallPolicy = default;
+            Optional<IList<string>> hostNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("frontendIPConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendIPConfiguration = DeserializeSubResource(property0.Value);
+                            frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("frontendPort"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendPort = DeserializeSubResource(property0.Value);
+                            frontendPort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protocol = new ApplicationGatewayProtocol(property0.Value.GetString());
@@ -189,10 +173,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostName = property0.Value.GetString();
                             continue;
                         }
@@ -200,15 +180,27 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sslCertificate = DeserializeSubResource(property0.Value);
+                            sslCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sslProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sslProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("requireServerNameIndication"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requireServerNameIndication = property0.Value.GetBoolean();
@@ -218,6 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -227,19 +220,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
-                                }
+                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
                             }
                             customErrorConfigurations = array;
                             continue;
@@ -248,28 +235,23 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = DeserializeSubResource(property0.Value);
+                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("hostNames"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
+                                array.Add(item.GetString());
                             }
                             hostNames = array;
                             continue;
@@ -278,7 +260,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayHttpListener(id, name, etag, type, frontendIPConfiguration, frontendPort, protocol, hostName, sslCertificate, requireServerNameIndication, provisioningState, customErrorConfigurations, firewallPolicy, hostNames);
+            return new ApplicationGatewayHttpListener(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
         }
     }
 }

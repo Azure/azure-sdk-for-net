@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,40 +20,40 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(OsType.ToSerialString());
             writer.WritePropertyName("osState");
             writer.WriteStringValue(OsState.ToSerialString());
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot");
-                writer.WriteObjectValue(Snapshot);
+                JsonSerializer.Serialize(writer, Snapshot);
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk");
-                writer.WriteObjectValue(ManagedDisk);
+                JsonSerializer.Serialize(writer, ManagedDisk);
             }
-            if (BlobUri != null)
+            if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri");
                 writer.WriteStringValue(BlobUri);
             }
-            if (Caching != null)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching");
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (DiskEncryptionSet != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet");
-                writer.WriteObjectValue(DiskEncryptionSet);
+                JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
             writer.WriteEndObject();
         }
@@ -61,13 +62,13 @@ namespace Azure.ResourceManager.Compute.Models
         {
             OperatingSystemTypes osType = default;
             OperatingSystemStateTypes osState = default;
-            SubResource snapshot = default;
-            SubResource managedDisk = default;
-            string blobUri = default;
-            CachingTypes? caching = default;
-            int? diskSizeGB = default;
-            StorageAccountTypes? storageAccountType = default;
-            SubResource diskEncryptionSet = default;
+            Optional<WritableSubResource> snapshot = default;
+            Optional<WritableSubResource> managedDisk = default;
+            Optional<string> blobUri = default;
+            Optional<CachingTypes> caching = default;
+            Optional<int> diskSizeGB = default;
+            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -84,26 +85,24 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    snapshot = SubResource.DeserializeSubResource(property.Value);
+                    snapshot = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("managedDisk"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    managedDisk = SubResource.DeserializeSubResource(property.Value);
+                    managedDisk = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("blobUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blobUri = property.Value.GetString();
                     continue;
                 }
@@ -111,6 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     caching = property.Value.GetString().ToCachingTypes();
@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new StorageAccountTypes(property.Value.GetString());
@@ -138,13 +140,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ImageOSDisk(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, osType, osState);
+            return new ImageOSDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, osType, osState);
         }
     }
 }

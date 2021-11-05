@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableEntityQueryResponse
+    internal partial class TableEntityQueryResponse
     {
         internal static TableEntityQueryResponse DeserializeTableEntityQueryResponse(JsonElement element)
         {
@@ -26,6 +26,11 @@ namespace Azure.Data.Tables.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IDictionary<string, object>> array = new List<IDictionary<string, object>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

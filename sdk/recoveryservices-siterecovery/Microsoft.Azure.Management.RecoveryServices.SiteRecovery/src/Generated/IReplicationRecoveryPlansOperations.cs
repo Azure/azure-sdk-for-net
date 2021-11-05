@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Update recovery plan input
+        /// Update recovery plan input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,10 +149,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryPlan>> UpdateWithHttpMessagesAsync(string recoveryPlanName, UpdateRecoveryPlanInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Execute cancel failover of the recovery plan.
+        /// </summary>
+        /// <remarks>
+        /// The operation to cancel the failover of a recovery plan.
+        /// </remarks>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecoveryPlan>> FailoverCancelWithHttpMessagesAsync(string recoveryPlanName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Execute commit failover of the recovery plan.
         /// </summary>
         /// <remarks>
-        /// The operation to commit the fail over of a recovery plan.
+        /// The operation to commit the failover of a recovery plan.
         /// </remarks>
         /// <param name='recoveryPlanName'>
         /// Recovery plan name.
@@ -236,7 +261,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Failover input.
+        /// Recovery plan test failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -264,7 +289,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Test failover cleanup input.
+        /// Recovery plan test failover cleanup input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -286,13 +311,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Execute unplanned failover of the recovery plan.
         /// </summary>
         /// <remarks>
-        /// The operation to start the failover of a recovery plan.
+        /// The operation to start the unplanned failover of a recovery plan.
         /// </remarks>
         /// <param name='recoveryPlanName'>
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Failover input.
+        /// Recovery plan unplanned failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -370,7 +395,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Update recovery plan input
+        /// Update recovery plan input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -389,10 +414,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryPlan>> BeginUpdateWithHttpMessagesAsync(string recoveryPlanName, UpdateRecoveryPlanInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Execute cancel failover of the recovery plan.
+        /// </summary>
+        /// <remarks>
+        /// The operation to cancel the failover of a recovery plan.
+        /// </remarks>
+        /// <param name='recoveryPlanName'>
+        /// Recovery plan name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecoveryPlan>> BeginFailoverCancelWithHttpMessagesAsync(string recoveryPlanName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Execute commit failover of the recovery plan.
         /// </summary>
         /// <remarks>
-        /// The operation to commit the fail over of a recovery plan.
+        /// The operation to commit the failover of a recovery plan.
         /// </remarks>
         /// <param name='recoveryPlanName'>
         /// Recovery plan name.
@@ -476,7 +526,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Failover input.
+        /// Recovery plan test failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -504,7 +554,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Test failover cleanup input.
+        /// Recovery plan test failover cleanup input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -526,13 +576,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Execute unplanned failover of the recovery plan.
         /// </summary>
         /// <remarks>
-        /// The operation to start the failover of a recovery plan.
+        /// The operation to start the unplanned failover of a recovery plan.
         /// </remarks>
         /// <param name='recoveryPlanName'>
         /// Recovery plan name.
         /// </param>
         /// <param name='input'>
-        /// Failover input.
+        /// Recovery plan unplanned failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

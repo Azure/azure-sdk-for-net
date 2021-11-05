@@ -1,0 +1,337 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Schema Registry",
+    "version": "2020-09-01-preview",
+    "description": "Azure Schema Registry is as a central schema repository, complete with support for versioning, management, compatibility checking, and RBAC."
+  },
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": true,
+    "parameters": [
+      {
+        "$ref": "#/parameters/Endpoint"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "paths": {
+    "/$schemagroups/getSchemaById/{schema-id}": {
+      "get": {
+        "summary": "Get a registered schema by its unique ID reference.",
+        "description": "Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace.",
+        "x-ms-examples": {
+          "Get schema by ID": {
+            "$ref": "./examples/OperationSchema_GetById.json"
+          }
+        },
+        "operationId": "Schema_GetById",
+        "produces": [
+          "text/plain; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "schema-id",
+            "in": "path",
+            "description": "References specific schema in registry namespace.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema group, schema name, and version."
+              },
+              "Serialization-Type": {
+                "type": "string",
+                "description": "Serialization type for the schema being stored."
+              },
+              "Schema-Id": {
+                "type": "string",
+                "description": "References specific schema in registry namespace."
+              },
+              "Schema-Id-Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema ID."
+              },
+              "Schema-Version": {
+                "type": "integer",
+                "description": "Version of the returned schema."
+              }
+            },
+            "schema": {
+              "description": "String representation (UTF-8) of the registered schema.",
+              "type": "string"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Schema Registry service.",
+            "schema": {
+              "$ref": "#/definitions/ServiceErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/$schemagroups/{group-name}/schemas/{schema-name}": {
+      "post": {
+        "summary": "Get ID for existing schema.",
+        "description": "Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison.",
+        "x-ms-examples": {
+          "Get schema ID": {
+            "$ref": "./examples/OperationSchema_QueryIdByContent.json"
+          }
+        },
+        "operationId": "Schema_QueryIdByContent",
+        "consumes": [
+          "text/plain; charset=utf-8"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group-name",
+            "in": "path",
+            "description": "Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema-name",
+            "in": "path",
+            "description": "Name of the registered schema.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Serialization-Type",
+            "in": "header",
+            "type": "string",
+            "description": "Serialization type for the schema being registered.",
+            "required": true,
+            "enum": [
+              "avro"
+            ],
+            "x-ms-enum": {
+              "name": "SerializationType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "avro",
+                  "name": "AVRO",
+                  "description": "Avro Serialization schema type"
+                }
+              ]
+            },
+            "x-nullable": false
+          },
+          {
+            "name": "schema-content",
+            "in": "body",
+            "description": "String representation (UTF-8) of the registered schema.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema group, schema name, and version."
+              },
+              "Serialization-Type": {
+                "type": "string",
+                "description": "Serialization type for the schema being stored."
+              },
+              "Schema-Id": {
+                "type": "string",
+                "description": "References specific schema in registry namespace."
+              },
+              "Schema-Id-Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema ID."
+              },
+              "Schema-Version": {
+                "type": "integer",
+                "description": "Version of the returned schema."
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/SchemaId"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Schema Registry service.",
+            "schema": {
+              "$ref": "#/definitions/ServiceErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Register new schema",
+        "description": "Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.\n",
+        "x-ms-examples": {
+          "Register schema": {
+            "$ref": "./examples/OperationSchema_Register.json"
+          }
+        },
+        "operationId": "Schema_Register",
+        "consumes": [
+          "text/plain; charset=utf-8"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "group-name",
+            "in": "path",
+            "description": "Schema group under which schema should be registered.  Group's serialization type should match the serialization type specified in the request.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "schema-name",
+            "in": "path",
+            "description": "Name of schema being registered.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Serialization-Type",
+            "in": "header",
+            "type": "string",
+            "description": "Serialization type for the schema being registered.",
+            "required": true,
+            "enum": [
+              "avro"
+            ],
+            "x-ms-enum": {
+              "name": "SerializationType",
+              "modelAsString": true,
+              "values": [
+                {
+                  "value": "avro",
+                  "name": "AVRO",
+                  "description": "Avro Serialization schema type"
+                }
+              ]
+            },
+            "x-nullable": false
+          },
+          {
+            "name": "schema-content",
+            "in": "body",
+            "description": "String representation (UTF-8) of the schema being registered.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema group, schema name, and version."
+              },
+              "Serialization-Type": {
+                "type": "string",
+                "description": "Serialization type for the schema being registered."
+              },
+              "Schema-Id": {
+                "type": "string",
+                "description": "References specific schema in registry namespace."
+              },
+              "Schema-Id-Location": {
+                "type": "string",
+                "description": "URL location of schema, identified by schema ID."
+              },
+              "Schema-Version": {
+                "type": "integer",
+                "description": "Version of the returned schema."
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/SchemaId"
+            }
+          },
+          "default": {
+            "description": "An error response received from the Azure Schema Registry service.",
+            "schema": {
+              "$ref": "#/definitions/ServiceErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SchemaId": {
+      "type": "object",
+      "description": "JSON Object received from the registry containing schema identifiers.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Schema ID that uniquely identifies a schema in the registry namespace."
+        }
+      }
+    },
+    "ServiceErrorResponse": {
+      "description": "Error response returned from Azure Schema Registry service.",
+      "type": "string"
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Schema Registry service API version that should be used."
+    },
+    "Endpoint": {
+      "name": "endpoint",
+      "description": "The Schema Registry service endpoint, for example my-namespace.servicebus.windows.net.",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true,
+      "x-ms-parameter-location": "client"
+    }
+  }
+}

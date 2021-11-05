@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<AnalyzedTokenInfo> array = new List<AnalyzedTokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
-                        }
+                        array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
                     }
                     tokens = array;
                     continue;

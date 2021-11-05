@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal static class AccessTierExtensions
+    internal static partial class AccessTierExtensions
     {
         public static string ToSerialString(this AccessTier value) => value switch
         {

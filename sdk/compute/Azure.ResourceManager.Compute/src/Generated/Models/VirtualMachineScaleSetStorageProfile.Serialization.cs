@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference");
                 writer.WriteObjectValue(ImageReference);
             }
-            if (OsDisk != null)
+            if (Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk");
                 writer.WriteObjectValue(OsDisk);
             }
-            if (DataDisks != null)
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks");
                 writer.WriteStartArray();
@@ -41,15 +41,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetStorageProfile DeserializeVirtualMachineScaleSetStorageProfile(JsonElement element)
         {
-            ImageReference imageReference = default;
-            VirtualMachineScaleSetOSDisk osDisk = default;
-            IList<VirtualMachineScaleSetDataDisk> dataDisks = default;
+            Optional<ImageReference> imageReference = default;
+            Optional<VirtualMachineScaleSetOSDisk> osDisk = default;
+            Optional<IList<VirtualMachineScaleSetDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageReference = ImageReference.DeserializeImageReference(property.Value);
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDisk = VirtualMachineScaleSetOSDisk.DeserializeVirtualMachineScaleSetOSDisk(property.Value);
@@ -68,25 +70,19 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetDataDisk> array = new List<VirtualMachineScaleSetDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualMachineScaleSetDataDisk.DeserializeVirtualMachineScaleSetDataDisk(item));
-                        }
+                        array.Add(VirtualMachineScaleSetDataDisk.DeserializeVirtualMachineScaleSetDataDisk(item));
                     }
                     dataDisks = array;
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetStorageProfile(imageReference, osDisk, dataDisks);
+            return new VirtualMachineScaleSetStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks));
         }
     }
 }

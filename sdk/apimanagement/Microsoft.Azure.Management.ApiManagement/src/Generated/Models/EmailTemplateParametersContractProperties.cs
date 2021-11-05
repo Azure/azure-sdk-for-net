@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -65,5 +66,55 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name != null)
+            {
+                if (Name.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 256);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[A-Za-z0-9-._]+$");
+                }
+            }
+            if (Title != null)
+            {
+                if (Title.Length > 4096)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 4096);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Description, "^[A-Za-z0-9-._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Description", "^[A-Za-z0-9-._]+$");
+                }
+            }
+        }
     }
 }

@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="resourceName">The name of the service and
         /// resource.</param>
-        public AvailablePrivateEndpointType(string name = default(string), string id = default(string), string type = default(string), string resourceName = default(string))
+        /// <param name="displayName">Display name of the resource.</param>
+        public AvailablePrivateEndpointType(string name = default(string), string id = default(string), string type = default(string), string resourceName = default(string), string displayName = default(string))
         {
             Name = name;
             Id = id;
             Type = type;
             ResourceName = resourceName;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceName")]
         public string ResourceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets display name of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
 
     }
 }

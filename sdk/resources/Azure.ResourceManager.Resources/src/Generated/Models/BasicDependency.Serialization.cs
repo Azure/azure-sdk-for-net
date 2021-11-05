@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static BasicDependency DeserializeBasicDependency(JsonElement element)
         {
-            string id = default;
-            string resourceType = default;
-            string resourceName = default;
+            Optional<string> id = default;
+            Optional<string> resourceType = default;
+            Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceName = property.Value.GetString();
                     continue;
                 }
             }
-            return new BasicDependency(id, resourceType, resourceName);
+            return new BasicDependency(id.Value, resourceType.Value, resourceName.Value);
         }
     }
 }

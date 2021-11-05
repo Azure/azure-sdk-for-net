@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.TestFramework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
@@ -13,10 +14,12 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public abstract class AppConfigurationClientBase : ManagementRecordedTestBase<AppConfigurationManagementTestEnvironment>
     {
         public AppConfigurationManagementClient AppConfigurationManagementClient { get; set; }
-        public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ArmClient ArmClient { get; set; }
         public ConfigurationStoresOperations ConfigurationStoresOperations { get; set; }
         public PrivateEndpointConnectionsOperations PrivateEndpointConnectionsOperations { get; set; }
-        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public ResourceGroupCollection ResourceGroupCollection { get; set; }
+        public VirtualNetworkCollection VirtualNetworkCollection { get; set; }
+        public PrivateEndpointCollection PrivateEndpointCollection { get; set; }
         public PrivateLinkResourcesOperations PrivateLinkResourcesOperations { get; set; }
         public Operations Operations { get; set; }
         public string AzureLocation { get; set; }
@@ -27,16 +30,17 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public string TestContentType { get; set; }
         public string TestValue { get; set; }
         public string ResourceGroupPrefix { get; set; }
-        public NetworkManagementClient NetworkManagementClient { get; set; }
-        public VirtualNetworksOperations VirtualNetworksOperations { get; set; }
-        public SubnetsOperations SubnetsOperations {get;set; }
-        public PrivateEndpointsOperations PrivateEndpointsOperations { get; set; }
         protected AppConfigurationClientBase(bool isAsync)
             : base(isAsync)
         {
         }
 
-        protected void Initialize()
+        protected AppConfigurationClientBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)
+        {
+        }
+
+        protected async Task Initialize()
         {
             AzureLocation = "eastus";
             KeyUuId = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309";
@@ -45,31 +49,32 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Label = "test_label1_" + LabelUuId;
             TestContentType = "test content type";
             TestValue = "test value";
-            ResourceGroupPrefix = "Default-EventHub-";
+            ResourceGroupPrefix = "Default-AppConfiguration-";
             AppConfigurationManagementClient = GetAppConfigurationManagementClient();
             ConfigurationStoresOperations = AppConfigurationManagementClient.ConfigurationStores;
             PrivateEndpointConnectionsOperations = AppConfigurationManagementClient.PrivateEndpointConnections;
             PrivateLinkResourcesOperations = AppConfigurationManagementClient.PrivateLinkResources;
             Operations = AppConfigurationManagementClient.Operations;
-            ResourcesManagementClient = GetResourceManagementClient();
-            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
-            NetworkManagementClient = GetNetworkManagementClient();
-            VirtualNetworksOperations = NetworkManagementClient.VirtualNetworks;
-            SubnetsOperations = NetworkManagementClient.Subnets;
-            PrivateEndpointsOperations = NetworkManagementClient.PrivateEndpoints;
+            ArmClient = GetArmClient(); // TODO: use base.GetArmClient when switching to new mgmt test framework
+            Subscription sub = await ArmClient.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection = sub.GetResourceGroups();
         }
 
         internal AppConfigurationManagementClient GetAppConfigurationManagementClient()
         {
             return CreateClient<AppConfigurationManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
+                InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
         }
-        internal NetworkManagementClient GetNetworkManagementClient()
+        internal ArmClient GetArmClient()
         {
-            return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
+            var options = InstrumentClientOptions(new ArmClientOptions());
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<ArmClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
+                options);
         }
     }
 }

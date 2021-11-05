@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailablePrivateEndpointTypesResult
+    internal partial class AvailablePrivateEndpointTypesResult
     {
         internal static AvailablePrivateEndpointTypesResult DeserializeAvailablePrivateEndpointTypesResult(JsonElement element)
         {
-            IReadOnlyList<AvailablePrivateEndpointType> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AvailablePrivateEndpointType>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvailablePrivateEndpointType> array = new List<AvailablePrivateEndpointType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(item));
-                        }
+                        array.Add(AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AvailablePrivateEndpointTypesResult(value, nextLink);
+            return new AvailablePrivateEndpointTypesResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

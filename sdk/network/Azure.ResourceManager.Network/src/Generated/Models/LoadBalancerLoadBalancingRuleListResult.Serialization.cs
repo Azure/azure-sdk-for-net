@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerLoadBalancingRuleListResult
+    internal partial class LoadBalancerLoadBalancingRuleListResult
     {
         internal static LoadBalancerLoadBalancingRuleListResult DeserializeLoadBalancerLoadBalancingRuleListResult(JsonElement element)
         {
-            IReadOnlyList<LoadBalancingRule> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<LoadBalancingRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancingRule> array = new List<LoadBalancingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LoadBalancingRule.DeserializeLoadBalancingRule(item));
-                        }
+                        array.Add(LoadBalancingRule.DeserializeLoadBalancingRule(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new LoadBalancerLoadBalancingRuleListResult(value, nextLink);
+            return new LoadBalancerLoadBalancingRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

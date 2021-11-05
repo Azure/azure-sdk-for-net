@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of trigger resources. </summary>
-    public partial class TriggerListResponse
+    internal partial class TriggerListResponse
     {
         /// <summary> Initializes a new instance of TriggerListResponse. </summary>
         /// <param name="value"> List of triggers. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerListResponse(IEnumerable<TriggerResource> value)
         {
             if (value == null)

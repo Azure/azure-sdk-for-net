@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// StreamingEndpoint access control definition.
+    /// Streaming endpoint access control definition.
     /// </summary>
     public partial class StreamingEndpointAccessControl
     {
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// class.
         /// </summary>
         /// <param name="akamai">The access control of Akamai</param>
-        /// <param name="ip">The IP access control of the
-        /// StreamingEndpoint.</param>
+        /// <param name="ip">The IP access control of the streaming
+        /// endpoint.</param>
         public StreamingEndpointAccessControl(AkamaiAccessControl akamai = default(AkamaiAccessControl), IPAccessControl ip = default(IPAccessControl))
         {
             Akamai = akamai;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public AkamaiAccessControl Akamai { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP access control of the StreamingEndpoint.
+        /// Gets or sets the IP access control of the streaming endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "ip")]
         public IPAccessControl Ip { get; set; }

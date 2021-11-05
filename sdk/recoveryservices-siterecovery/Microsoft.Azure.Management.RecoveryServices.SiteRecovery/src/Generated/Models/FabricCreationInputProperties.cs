@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of site details provided during the time of site creation
+    /// Properties of site details provided during the time of site creation.
     /// </summary>
     public partial class FabricCreationInputProperties
     {

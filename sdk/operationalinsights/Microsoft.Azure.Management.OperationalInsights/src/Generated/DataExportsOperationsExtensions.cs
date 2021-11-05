@@ -204,57 +204,5 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, dataExportName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create or update a data export.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='dataExportName'>
-            /// The data export rule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a data export.
-            /// </param>
-            public static DataExport BeginCreateOrUpdate(this IDataExportsOperations operations, string resourceGroupName, string workspaceName, string dataExportName, DataExport parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, workspaceName, dataExportName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a data export.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='dataExportName'>
-            /// The data export rule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a data export.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DataExport> BeginCreateOrUpdateAsync(this IDataExportsOperations operations, string resourceGroupName, string workspaceName, string dataExportName, DataExport parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, dataExportName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

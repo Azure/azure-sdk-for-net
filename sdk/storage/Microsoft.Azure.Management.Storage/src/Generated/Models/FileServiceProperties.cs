@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the FileServiceProperties class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="cors">Specifies CORS rules for the File service. You
         /// can include up to five CorsRule elements in the request. If no
         /// CorsRule elements are included in the request body, all CORS rules
@@ -45,12 +45,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// service.</param>
         /// <param name="shareDeleteRetentionPolicy">The file service
         /// properties for share soft delete.</param>
+        /// <param name="protocolSettings">Protocol settings for file
+        /// service</param>
         /// <param name="sku">Sku name and tier.</param>
-        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Sku sku = default(Sku))
+        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), ProtocolSettings protocolSettings = default(ProtocolSettings), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Cors = cors;
             ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
+            ProtocolSettings = protocolSettings;
             Sku = sku;
             CustomInit();
         }
@@ -74,6 +77,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets protocol settings for file service
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protocolSettings")]
+        public ProtocolSettings ProtocolSettings { get; set; }
 
         /// <summary>
         /// Gets sku name and tier.

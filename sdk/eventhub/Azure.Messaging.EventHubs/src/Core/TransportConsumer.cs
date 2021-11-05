@@ -43,13 +43,19 @@ namespace Azure.Messaging.EventHubs.Core
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait for events to become available, if no events can be read from the prefetch queue.  If not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty set is returned.</returns>
         ///
-        public abstract Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
+        public abstract Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumEventCount,
                                                                     TimeSpan? maximumWaitTime,
                                                                     CancellationToken cancellationToken);
 

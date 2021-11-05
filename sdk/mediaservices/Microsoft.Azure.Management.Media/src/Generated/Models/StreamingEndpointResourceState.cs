@@ -27,16 +27,36 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// The initial state of a streaming endpoint after creation. Content
+        /// is not ready to be streamed from this endpoint.
+        /// </summary>
         public static readonly StreamingEndpointResourceState Stopped = "Stopped";
 
+        /// <summary>
+        /// The streaming endpoint is transitioning to the running state.
+        /// </summary>
         public static readonly StreamingEndpointResourceState Starting = "Starting";
 
+        /// <summary>
+        /// The streaming endpoint is running. It is able to stream content to
+        /// clients
+        /// </summary>
         public static readonly StreamingEndpointResourceState Running = "Running";
 
+        /// <summary>
+        /// The streaming endpoint is transitioning to the stopped state.
+        /// </summary>
         public static readonly StreamingEndpointResourceState Stopping = "Stopping";
 
+        /// <summary>
+        /// The streaming endpoint is being deleted.
+        /// </summary>
         public static readonly StreamingEndpointResourceState Deleting = "Deleting";
 
+        /// <summary>
+        /// The streaming endpoint is increasing or decreasing scale units.
+        /// </summary>
         public static readonly StreamingEndpointResourceState Scaling = "Scaling";
 
 

@@ -131,6 +131,8 @@ namespace Reservations.Tests.ScenarioTests
                 var operations = reservationsClient.Operation.List();
                 Assert.NotNull(operations);
                 Assert.True(operations.Any());
+                bool serviceLimitsOperationFound = false;
+
                 var enumerator = operations.GetEnumerator();
                 while (enumerator.MoveNext())
                 {
@@ -140,7 +142,14 @@ namespace Reservations.Tests.ScenarioTests
                     Assert.NotNull(operation.Display.Resource);
                     Assert.NotNull(operation.Display.Operation);
                     Assert.NotNull(operation.Display.Description);
+
+                    if(operation.Name.Contains("serviceLimits"))
+                    {
+                        serviceLimitsOperationFound = true;
+                    }
                 }
+
+                Assert.True(serviceLimitsOperationFound, "ServiceLimits Operations should be listed");
             }
         }
     }

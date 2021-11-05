@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// InMage provider specific settings
+    /// InMage provider specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("InMage")]
     public partial class InMageReplicationDetails : ReplicationProviderSpecificSettings
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="vmProtectionStateDescription">The protection state
         /// description for the vm.</param>
         /// <param name="resyncDetails">The resync details of the
-        /// machine</param>
+        /// machine.</param>
         /// <param name="retentionWindowStart">The retention window start
         /// time.</param>
         /// <param name="retentionWindowEnd">The retention window end
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="azureStorageAccountId">A value indicating the
         /// underlying Azure storage account. If the VM is not running in
         /// Azure, this value shall be set to null.</param>
-        /// <param name="datastores">The data stores of the on-premise machine
-        /// Value can be list of strings that contain data store names</param>
+        /// <param name="datastores">The datastores of the on-premise machine
+        /// Value can be list of strings that contain datastore names.</param>
         /// <param name="validationErrors">The validation errors of the
-        /// on-premise machine Value can be list of validation errors</param>
+        /// on-premise machine Value can be list of validation errors.</param>
         /// <param name="lastRpoCalculatedTime">The last RPO calculated
         /// time.</param>
         /// <param name="lastUpdateReceivedTime">The last update time received
@@ -97,7 +97,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="osVersion">The OS Version of the protected
         /// item.</param>
-        public InMageReplicationDetails(string activeSiteType = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), OSDiskDetails osDetails = default(OSDiskDetails), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails resyncDetails = default(InitialReplicationDetails), System.DateTime? retentionWindowStart = default(System.DateTime?), System.DateTime? retentionWindowEnd = default(System.DateTime?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), IList<InMageProtectedDiskDetails> protectedDisks = default(IList<InMageProtectedDiskDetails>), string ipAddress = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string masterTargetId = default(string), IDictionary<string, System.DateTime?> consistencyPoints = default(IDictionary<string, System.DateTime?>), string diskResized = default(string), string rebootAfterUpdateStatus = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), InMageAgentDetails agentDetails = default(InMageAgentDetails), string vCenterInfrastructureId = default(string), string infrastructureVmId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string discoveryType = default(string), string azureStorageAccountId = default(string), IList<string> datastores = default(IList<string>), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string))
+        /// <param name="isAdditionalStatsAvailable">A value indicating whether
+        /// additional IR stats are available or not.</param>
+        /// <param name="totalDataTransferred">The total transferred data in
+        /// bytes.</param>
+        /// <param name="totalProgressHealth">The progress health.</param>
+        public InMageReplicationDetails(string activeSiteType = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), OSDiskDetails osDetails = default(OSDiskDetails), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails resyncDetails = default(InitialReplicationDetails), System.DateTime? retentionWindowStart = default(System.DateTime?), System.DateTime? retentionWindowEnd = default(System.DateTime?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), IList<InMageProtectedDiskDetails> protectedDisks = default(IList<InMageProtectedDiskDetails>), string ipAddress = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string masterTargetId = default(string), IDictionary<string, System.DateTime?> consistencyPoints = default(IDictionary<string, System.DateTime?>), string diskResized = default(string), string rebootAfterUpdateStatus = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), InMageAgentDetails agentDetails = default(InMageAgentDetails), string vCenterInfrastructureId = default(string), string infrastructureVmId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string discoveryType = default(string), string azureStorageAccountId = default(string), IList<string> datastores = default(IList<string>), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), bool? isAdditionalStatsAvailable = default(bool?), long? totalDataTransferred = default(long?), string totalProgressHealth = default(string))
         {
             ActiveSiteType = activeSiteType;
             SourceVmCpuCount = sourceVmCpuCount;
@@ -136,6 +141,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastUpdateReceivedTime = lastUpdateReceivedTime;
             ReplicaId = replicaId;
             OsVersion = osVersion;
+            IsAdditionalStatsAvailable = isAdditionalStatsAvailable;
+            TotalDataTransferred = totalDataTransferred;
+            TotalProgressHealth = totalProgressHealth;
             CustomInit();
         }
 
@@ -196,7 +204,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string VmProtectionStateDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the resync details of the machine
+        /// Gets or sets the resync details of the machine.
         /// </summary>
         [JsonProperty(PropertyName = "resyncDetails")]
         public InitialReplicationDetails ResyncDetails { get; set; }
@@ -339,15 +347,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string AzureStorageAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the data stores of the on-premise machine Value can be
-        /// list of strings that contain data store names
+        /// Gets or sets the datastores of the on-premise machine Value can be
+        /// list of strings that contain datastore names.
         /// </summary>
         [JsonProperty(PropertyName = "datastores")]
         public IList<string> Datastores { get; set; }
 
         /// <summary>
         /// Gets or sets the validation errors of the on-premise machine Value
-        /// can be list of validation errors
+        /// can be list of validation errors.
         /// </summary>
         [JsonProperty(PropertyName = "validationErrors")]
         public IList<HealthError> ValidationErrors { get; set; }
@@ -375,6 +383,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether additional IR stats are
+        /// available or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAdditionalStatsAvailable")]
+        public bool? IsAdditionalStatsAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total transferred data in bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalDataTransferred")]
+        public long? TotalDataTransferred { get; set; }
+
+        /// <summary>
+        /// Gets or sets the progress health.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalProgressHealth")]
+        public string TotalProgressHealth { get; set; }
 
     }
 }

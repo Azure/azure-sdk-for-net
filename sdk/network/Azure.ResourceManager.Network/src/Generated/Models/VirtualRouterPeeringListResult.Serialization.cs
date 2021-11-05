@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualRouterPeeringListResult
+    internal partial class VirtualRouterPeeringListResult
     {
         internal static VirtualRouterPeeringListResult DeserializeVirtualRouterPeeringListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualRouterPeering> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualRouterPeeringData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualRouterPeering> array = new List<VirtualRouterPeering>();
+                    List<VirtualRouterPeeringData> array = new List<VirtualRouterPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualRouterPeering.DeserializeVirtualRouterPeering(item));
-                        }
+                        array.Add(VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualRouterPeeringListResult(value, nextLink);
+            return new VirtualRouterPeeringListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

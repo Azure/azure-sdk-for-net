@@ -11,10 +11,11 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Append value for a Variable of type Array. </summary>
-    public partial class AppendVariableActivity : Activity
+    public partial class AppendVariableActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
         {
             if (name == null)
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="variableName"> Name of the variable whose value needs to be appended to. </param>
         /// <param name="value"> Value to be appended. Could be a static value or Expression. </param>
         internal AppendVariableActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, string variableName, object value) : base(name, type, description, dependsOn, userProperties, additionalProperties)

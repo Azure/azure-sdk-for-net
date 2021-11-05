@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -41,7 +40,7 @@ namespace Azure.DigitalTwins.Core.Tests
             actual.Name.Should().Be(expectedRelationship);
             actual.SourceId.Should().Be(expectedSourceId);
             actual.TargetId.Should().Be(expectedTargetId);
-            actual.CustomProperties[expectedCustomPropKey].ToString().Should().Be(expectedCustomPropVal);
+            actual.Properties[expectedCustomPropKey].ToString().Should().Be(expectedCustomPropVal);
         }
     }
 }

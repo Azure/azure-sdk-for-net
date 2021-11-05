@@ -27,13 +27,42 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// This is the same as PassthroughStandard, please see description
+        /// below. This enumeration value is being deprecated.
+        /// </summary>
         public static readonly LiveEventEncodingType None = "None";
 
-        public static readonly LiveEventEncodingType Basic = "Basic";
-
+        /// <summary>
+        /// A contribution live encoder sends a single bitrate stream to the
+        /// live event and Media Services creates multiple bitrate streams. The
+        /// output cannot exceed 720p in resolution.
+        /// </summary>
         public static readonly LiveEventEncodingType Standard = "Standard";
 
+        /// <summary>
+        /// A contribution live encoder sends a single bitrate stream to the
+        /// live event and Media Services creates multiple bitrate streams. The
+        /// output cannot exceed 1080p in resolution.
+        /// </summary>
         public static readonly LiveEventEncodingType Premium1080p = "Premium1080p";
+
+        /// <summary>
+        /// The ingested stream passes through the live event from the
+        /// contribution encoder without any further processing. In the
+        /// PassthroughBasic mode, ingestion is limited to up to 5Mbps and only
+        /// 1 concurrent live output is allowed. Live transcription is not
+        /// available.
+        /// </summary>
+        public static readonly LiveEventEncodingType PassthroughBasic = "PassthroughBasic";
+
+        /// <summary>
+        /// The ingested stream passes through the live event from the
+        /// contribution encoder without any further processing. Live
+        /// transcription is available. Ingestion bitrate limits are much
+        /// higher and up to 3 concurrent live outputs are allowed.
+        /// </summary>
+        public static readonly LiveEventEncodingType PassthroughStandard = "PassthroughStandard";
 
 
         /// <summary>

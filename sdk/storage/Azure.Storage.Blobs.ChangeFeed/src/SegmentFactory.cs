@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -38,20 +36,19 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             // Models we need for later
             List<Shard> shards = new List<Shard>();
-            DateTimeOffset dateTime = manifestPath.ToDateTimeOffset().Value;
-            int shardIndex = cursor?.ShardIndex ?? 0;
+            DateTimeOffset dateTime = BlobChangeFeedExtensions.ToDateTimeOffset(manifestPath).Value;
 
             // Download segment manifest
             BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
-            BlobDownloadInfo blobDownloadInfo;
+            BlobDownloadStreamingResult blobDownloadStreamingResult;
 
             if (async)
             {
-                blobDownloadInfo = await blobClient.DownloadAsync().ConfigureAwait(false);
+                blobDownloadStreamingResult = await blobClient.DownloadStreamingAsync().ConfigureAwait(false);
             }
             else
             {
-                blobDownloadInfo = blobClient.Download();
+                blobDownloadStreamingResult = blobClient.DownloadStreaming();
             }
 
             // Parse segment manifest
@@ -59,36 +56,44 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (async)
             {
-                jsonManifest = await JsonDocument.ParseAsync(blobDownloadInfo.Content).ConfigureAwait(false);
+                jsonManifest = await JsonDocument.ParseAsync(blobDownloadStreamingResult.Content).ConfigureAwait(false);
             }
             else
             {
-                jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
+                jsonManifest = JsonDocument.Parse(blobDownloadStreamingResult.Content);
             }
 
-            // Initalized Finalized field
-            string statusString = jsonManifest.RootElement.GetProperty("status").GetString();
-            bool finalized = statusString == "Finalized";
-
-            int i = 0;
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
+                ShardCursor shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
                 Shard shard = await _shardFactory.BuildShard(
                     async,
                     shardPath,
-                    cursor?.ShardCursors?[i])
+                    shardCursor)
                     .ConfigureAwait(false);
-
-                shards.Add(shard);
-                i++;
+                if (shard.HasNext())
+                {
+                    shards.Add(shard);
+                }
             }
 
+            int shardIndex = 0;
+            string currentShardPath = cursor?.CurrentShardPath;
+            if (!string.IsNullOrWhiteSpace(currentShardPath))
+            {
+                shardIndex = shards.FindIndex(s => s.ShardPath == currentShardPath);
+                if (shardIndex < 0)
+                {
+                    // Either shard doesn't exist or cursor is pointing to end of shard. So start from beginning.
+                    shardIndex = 0;
+                }
+            }
             return new Segment(
                 shards,
                 shardIndex,
                 dateTime,
-                finalized);
+                manifestPath);
         }
     }
 }

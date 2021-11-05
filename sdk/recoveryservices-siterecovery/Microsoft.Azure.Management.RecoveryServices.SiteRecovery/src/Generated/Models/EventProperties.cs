@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="affectedObjectFriendlyName">The friendly name of the
         /// source of the event on which it is raised (for example, VM, VMM
         /// etc).</param>
+        /// <param name="affectedObjectCorrelationId">The affected object
+        /// correlationId for the event.</param>
         /// <param name="severity">The severity of the event.</param>
         /// <param name="timeOfOccurrence">The time of occurrence of the
         /// event.</param>
@@ -48,12 +50,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// settings.</param>
         /// <param name="healthErrors">The list of errors / warnings capturing
         /// details associated with the issue(s).</param>
-        public EventProperties(string eventCode = default(string), string description = default(string), string eventType = default(string), string affectedObjectFriendlyName = default(string), string severity = default(string), System.DateTime? timeOfOccurrence = default(System.DateTime?), string fabricId = default(string), EventProviderSpecificDetails providerSpecificDetails = default(EventProviderSpecificDetails), EventSpecificDetails eventSpecificDetails = default(EventSpecificDetails), IList<HealthError> healthErrors = default(IList<HealthError>))
+        public EventProperties(string eventCode = default(string), string description = default(string), string eventType = default(string), string affectedObjectFriendlyName = default(string), string affectedObjectCorrelationId = default(string), string severity = default(string), System.DateTime? timeOfOccurrence = default(System.DateTime?), string fabricId = default(string), EventProviderSpecificDetails providerSpecificDetails = default(EventProviderSpecificDetails), EventSpecificDetails eventSpecificDetails = default(EventSpecificDetails), IList<HealthError> healthErrors = default(IList<HealthError>))
         {
             EventCode = eventCode;
             Description = description;
             EventType = eventType;
             AffectedObjectFriendlyName = affectedObjectFriendlyName;
+            AffectedObjectCorrelationId = affectedObjectCorrelationId;
             Severity = severity;
             TimeOfOccurrence = timeOfOccurrence;
             FabricId = fabricId;
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "affectedObjectFriendlyName")]
         public string AffectedObjectFriendlyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the affected object correlationId for the event.
+        /// </summary>
+        [JsonProperty(PropertyName = "affectedObjectCorrelationId")]
+        public string AffectedObjectCorrelationId { get; set; }
 
         /// <summary>
         /// Gets or sets the severity of the event.

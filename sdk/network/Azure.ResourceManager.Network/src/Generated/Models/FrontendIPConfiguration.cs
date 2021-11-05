@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +18,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
         public FrontendIPConfiguration()
         {
+            Zones = new ChangeTrackingList<string>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatPools = new ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
@@ -33,8 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the Public IP resource. </param>
         /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
+        /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfiguration(string id, string name, string etag, string type, IList<string> zones, IList<SubResource> inboundNatRules, IList<SubResource> inboundNatPools, IList<SubResource> outboundRules, IList<SubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, Subnet subnet, PublicIPAddress publicIPAddress, SubResource publicIPPrefix, ProvisioningState? provisioningState) : base(id)
+        internal FrontendIPConfiguration(string id, string name, string etag, string type, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,6 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             PublicIPPrefix = publicIPPrefix;
+            GatewayLoadBalancer = gatewayLoadBalancer;
             ProvisioningState = provisioningState;
         }
 
@@ -60,15 +70,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> An array of references to inbound rules that use this frontend IP. </summary>
-        public IList<SubResource> InboundNatRules { get; }
+        public IReadOnlyList<WritableSubResource> InboundNatRules { get; }
         /// <summary> An array of references to inbound pools that use this frontend IP. </summary>
-        public IList<SubResource> InboundNatPools { get; }
+        public IReadOnlyList<WritableSubResource> InboundNatPools { get; }
         /// <summary> An array of references to outbound rules that use this frontend IP. </summary>
-        public IList<SubResource> OutboundRules { get; }
+        public IReadOnlyList<WritableSubResource> OutboundRules { get; }
         /// <summary> An array of references to load balancing rules that use this frontend IP. </summary>
-        public IList<SubResource> LoadBalancingRules { get; }
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> The private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The Private IP allocation method. </summary>
@@ -76,11 +86,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
-        public Subnet Subnet { get; set; }
+        public SubnetData Subnet { get; set; }
         /// <summary> The reference to the Public IP resource. </summary>
-        public PublicIPAddress PublicIPAddress { get; set; }
+        public PublicIPAddressData PublicIPAddress { get; set; }
         /// <summary> The reference to the Public IP Prefix resource. </summary>
-        public SubResource PublicIPPrefix { get; set; }
+        public WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> The reference to gateway load balancer frontend IP. </summary>
+        public WritableSubResource GatewayLoadBalancer { get; set; }
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

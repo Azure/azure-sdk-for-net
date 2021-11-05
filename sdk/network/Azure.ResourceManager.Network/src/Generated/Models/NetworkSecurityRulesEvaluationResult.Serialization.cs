@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkSecurityRulesEvaluationResult DeserializeNetworkSecurityRulesEvaluationResult(JsonElement element)
         {
-            string name = default;
-            bool? protocolMatched = default;
-            bool? sourceMatched = default;
-            bool? sourcePortMatched = default;
-            bool? destinationMatched = default;
-            bool? destinationPortMatched = default;
+            Optional<string> name = default;
+            Optional<bool> protocolMatched = default;
+            Optional<bool> sourceMatched = default;
+            Optional<bool> sourcePortMatched = default;
+            Optional<bool> destinationMatched = default;
+            Optional<bool> destinationPortMatched = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -35,6 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocolMatched = property.Value.GetBoolean();
@@ -44,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceMatched = property.Value.GetBoolean();
@@ -53,6 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourcePortMatched = property.Value.GetBoolean();
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationMatched = property.Value.GetBoolean();
@@ -71,13 +71,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationPortMatched = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new NetworkSecurityRulesEvaluationResult(name, protocolMatched, sourceMatched, sourcePortMatched, destinationMatched, destinationPortMatched);
+            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched));
         }
     }
 }

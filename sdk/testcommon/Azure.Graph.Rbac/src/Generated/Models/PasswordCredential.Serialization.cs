@@ -17,30 +17,30 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StartDate != null)
+            if (Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate");
                 writer.WriteStringValue(StartDate.Value, "O");
             }
-            if (EndDate != null)
+            if (Optional.IsDefined(EndDate))
             {
                 writer.WritePropertyName("endDate");
                 writer.WriteStringValue(EndDate.Value, "O");
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
                 writer.WriteStringValue(KeyId);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (CustomKeyIdentifier != null)
+            if (Optional.IsDefined(CustomKeyIdentifier))
             {
                 writer.WritePropertyName("customKeyIdentifier");
-                writer.WriteBase64StringValue(CustomKeyIdentifier);
+                writer.WriteBase64StringValue(CustomKeyIdentifier, "D");
             }
             foreach (var item in AdditionalProperties)
             {
@@ -52,19 +52,20 @@ namespace Azure.Graph.Rbac.Models
 
         internal static PasswordCredential DeserializePasswordCredential(JsonElement element)
         {
-            DateTimeOffset? startDate = default;
-            DateTimeOffset? endDate = default;
-            string keyId = default;
-            string value = default;
-            byte[] customKeyIdentifier = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> endDate = default;
+            Optional<string> keyId = default;
+            Optional<string> value = default;
+            Optional<byte[]> customKeyIdentifier = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDate = property.Value.GetDateTimeOffset("O");
@@ -74,6 +75,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endDate = property.Value.GetDateTimeOffset("O");
@@ -81,19 +83,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("keyId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
@@ -101,23 +95,16 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customKeyIdentifier = property.Value.GetBytesFromBase64();
+                    customKeyIdentifier = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PasswordCredential(startDate, endDate, keyId, value, customKeyIdentifier, additionalProperties);
+            return new PasswordCredential(Optional.ToNullable(startDate), Optional.ToNullable(endDate), keyId.Value, value.Value, customKeyIdentifier.Value, additionalProperties);
         }
     }
 }

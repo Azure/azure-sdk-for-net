@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
         public ResourceIdentity()
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
         }
 
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The type of managed identity used. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user-assigned identities. The type &apos;None&apos; will remove any identities. </summary>
         public IdentityType? Type { get; set; }
         /// <summary> The list of user-assigned identities associated with the resource. The user-assigned identity dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; }
         /// <summary> The principal id of the identity. This property will only be provided for a system-assigned identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant id associated with the resource&apos;s identity. This property will only be provided for a system-assigned identity. </summary>

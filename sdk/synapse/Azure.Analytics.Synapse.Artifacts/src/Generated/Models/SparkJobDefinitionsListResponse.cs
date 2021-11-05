@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of spark job definitions resources. </summary>
-    public partial class SparkJobDefinitionsListResponse
+    internal partial class SparkJobDefinitionsListResponse
     {
         /// <summary> Initializes a new instance of SparkJobDefinitionsListResponse. </summary>
         /// <param name="value"> List of spark job definitions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SparkJobDefinitionsListResponse(IEnumerable<SparkJobDefinitionResource> value)
         {
             if (value == null)

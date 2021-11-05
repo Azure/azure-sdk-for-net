@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ContainerService.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,16 +36,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="tenantId">The tenant id of the system assigned
         /// identity which is used by master components.</param>
         /// <param name="type">The type of identity used for the managed
-        /// cluster. Type 'SystemAssigned' will use an implicitly created
-        /// identity in master components and an auto-created user assigned
-        /// identity in MC_ resource group in agent nodes. Type 'None' will not
-        /// use MSI for the managed cluster, service principal will be used
-        /// instead. Possible values include: 'SystemAssigned', 'None'</param>
-        public ManagedClusterIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
+        /// cluster.</param>
+        /// <param name="userAssignedIdentities">The user identity associated
+        /// with the managed cluster. This identity will be used in control
+        /// plane. Only one user assigned identity is allowed.</param>
+        public ManagedClusterIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, ManagedClusterIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, ManagedClusterIdentityUserAssignedIdentitiesValue>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -68,14 +70,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets the type of identity used for the managed cluster.
-        /// Type 'SystemAssigned' will use an implicitly created identity in
-        /// master components and an auto-created user assigned identity in MC_
-        /// resource group in agent nodes. Type 'None' will not use MSI for the
-        /// managed cluster, service principal will be used instead. Possible
-        /// values include: 'SystemAssigned', 'None'
         /// </summary>
+        /// <remarks>
+        /// For more information see [use managed identities in
+        /// AKS](https://docs.microsoft.com/azure/aks/use-managed-identity).
+        /// Possible values include: 'SystemAssigned', 'UserAssigned', 'None'
+        /// </remarks>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user identity associated with the managed cluster.
+        /// This identity will be used in control plane. Only one user assigned
+        /// identity is allowed.
+        /// </summary>
+        /// <remarks>
+        /// The keys must be ARM resource IDs in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </remarks>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, ManagedClusterIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }

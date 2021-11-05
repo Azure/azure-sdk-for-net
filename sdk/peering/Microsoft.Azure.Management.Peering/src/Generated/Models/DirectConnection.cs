@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// 'Microsoft', 'Peer'</param>
         /// <param name="useForPeeringService">The flag that indicates whether
         /// or not the connection is used for peering service.</param>
+        /// <param name="microsoftTrackingId">The ID used within Microsoft's
+        /// peering provisioning system to track the connection</param>
         /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
         /// facility at which the connection has to be set up.</param>
         /// <param name="connectionState">The state of the connection. Possible
@@ -50,12 +52,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// the connection.</param>
         /// <param name="errorMessage">The error message related to the
         /// connection state, if any.</param>
-        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), string sessionAddressProvider = default(string), bool? useForPeeringService = default(bool?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string), string errorMessage = default(string))
+        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), string sessionAddressProvider = default(string), bool? useForPeeringService = default(bool?), string microsoftTrackingId = default(string), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string), string errorMessage = default(string))
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
             SessionAddressProvider = sessionAddressProvider;
             UseForPeeringService = useForPeeringService;
+            MicrosoftTrackingId = microsoftTrackingId;
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
             BgpSession = bgpSession;
@@ -94,6 +97,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "useForPeeringService")]
         public bool? UseForPeeringService { get; set; }
+
+        /// <summary>
+        /// Gets the ID used within Microsoft's peering provisioning system to
+        /// track the connection
+        /// </summary>
+        [JsonProperty(PropertyName = "microsoftTrackingId")]
+        public string MicrosoftTrackingId { get; private set; }
 
         /// <summary>
         /// Gets or sets the PeeringDB.com ID of the facility at which the

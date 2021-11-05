@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Virtual Machine Scale Set List Skus operation response. </summary>
-    public partial class VirtualMachineScaleSetListSkusResult
+    internal partial class VirtualMachineScaleSetListSkusResult
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
         /// <param name="value"> The list of skus available for the virtual machine scale set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetListSkusResult(IEnumerable<VirtualMachineScaleSetSku> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS Skus. </param>
         internal VirtualMachineScaleSetListSkusResult(IReadOnlyList<VirtualMachineScaleSetSku> value, string nextLink)
         {
-            Value = value ?? new List<VirtualMachineScaleSetSku>();
+            Value = value;
             NextLink = nextLink;
         }
 

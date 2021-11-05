@@ -1,6 +1,6 @@
 # Azure Storage Blobs Batch client library for .NET
 
-> Server Version: 2019-12-12, 2019-07-07, and 2019-02-02
+> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.  This
@@ -14,7 +14,7 @@ library allows you to batch multiple Azure Blob Storage operations in a single r
 
 Install the Azure Storage Blobs Batch client library for .NET with [NuGet][nuget]:
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Storage.Blobs.Batch
 ```
 
@@ -40,6 +40,20 @@ Batching supports two types of subrequests: SetBlobAccessTier for block blobs an
 - Batch subrequest execution is not atomic. Each subrequest is executed independently.
 - Each subrequest must be for a resource within the same storage account.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 ### Deleting blobs
@@ -58,9 +72,9 @@ container.Create();
 BlobClient foo = container.GetBlobClient("foo");
 BlobClient bar = container.GetBlobClient("bar");
 BlobClient baz = container.GetBlobClient("baz");
-foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+foo.Upload(BinaryData.FromString("Foo!"));
+bar.Upload(BinaryData.FromString("Bar!"));
+baz.Upload(BinaryData.FromString("Baz!"));
 
 // Delete all three blobs at once
 BlobBatchClient batch = service.GetBlobBatchClient();
@@ -82,9 +96,9 @@ container.Create();
 BlobClient foo = container.GetBlobClient("foo");
 BlobClient bar = container.GetBlobClient("bar");
 BlobClient baz = container.GetBlobClient("baz");
-foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+foo.Upload(BinaryData.FromString("Foo!"));
+bar.Upload(BinaryData.FromString("Bar!"));
+baz.Upload(BinaryData.FromString("Baz!"));
 
 // Set the access tier for all three blobs at once
 BlobBatchClient batch = service.GetBlobBatchClient();
@@ -107,11 +121,11 @@ container.Create();
 BlobClient foo = container.GetBlobClient("foo");
 BlobClient bar = container.GetBlobClient("bar");
 BlobClient baz = container.GetBlobClient("baz");
-foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+foo.Upload(BinaryData.FromString("Foo!"));
 foo.CreateSnapshot();
-bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+bar.Upload(BinaryData.FromString("Bar!"));
 bar.CreateSnapshot();
-baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+baz.Upload(BinaryData.FromString("Baz!"));
 
 // Create a batch with three deletes
 BlobBatchClient batchClient = service.GetBlobBatchClient();
@@ -142,7 +156,7 @@ container.Create();
 
 // Create a blob named "valid"
 BlobClient valid = container.GetBlobClient("valid");
-valid.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
+valid.Upload(BinaryData.FromString("Valid!"));
 
 // Get a reference to a blob named "invalid", but never create it
 BlobClient invalid = container.GetBlobClient("invalid");
@@ -162,7 +176,7 @@ catch (AggregateException)
 
 ## Next steps
 
-Check out our [sync](../Azure.Storage.Blobs.Batch/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs.Batch/samples/Sample03b_BatchingAsync.cs) samples for more.
+Check out our [sync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.Batch/samples/Sample03a_Batching.cs) and [async](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.Batch/samples/Sample03b_BatchingAsync.cs) samples for more.
 
 ## Contributing
 
@@ -182,7 +196,7 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs.Batch%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.Batch/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs.Batch/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs.Batch/
 [docs]: https://azure.github.io/azure-sdk-for-net/storage.html
 [rest_docs]: https://docs.microsoft.com/rest/api/storageservices/blob-service-rest-api
@@ -193,11 +207,11 @@ additional questions or comments.
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
 [storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
-[identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
+[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
-[storage_contrib]: ../CONTRIBUTING.md
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

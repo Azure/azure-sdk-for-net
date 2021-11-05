@@ -1,48 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.0/ocr?detectOrientation=true&language=de",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4wL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
+      "RequestUri": "/vision/v3.2/ocr?detectOrientation=true&language=de&model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRlJm1vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/achtung.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.8.3815.0",
+          "FxVersion/5.0.1121.47308",
           "OSName/Windows",
-          "OSVersion/10.0.18362.0",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "188"
+          "152"
         ]
       },
       "ResponseHeaders": {
+        "csp-billing-usage": [
+          "CognitiveServices.ComputerVision.OCR=1,CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "x-envoy-upstream-service-time": [
+          "153"
+        ],
         "apim-request-id": [
-          "9a712fd6-069d-483b-98a4-4eb7b8f6dcea"
+          "d1463de3-b799-4bf3-9590-6c8e91ee13f5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 22 Aug 2019 04:06:36 GMT"
+          "Thu, 04 Nov 2021 04:51:37 GMT"
         ],
         "Content-Length": [
-          "219"
+          "247"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"language\": \"de\",\r\n  \"textAngle\": 0.24434609527920675,\r\n  \"orientation\": \"Up\",\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"115,223,562,131\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"115,223,562,131\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"115,223,562,131\",\r\n              \"text\": \"ACHTUNG\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"language\": \"de\",\r\n  \"textAngle\": 0.24434609527920675,\r\n  \"orientation\": \"Up\",\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"115,223,562,131\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"115,223,562,131\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"115,223,562,131\",\r\n              \"text\": \"ACHTUNG\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

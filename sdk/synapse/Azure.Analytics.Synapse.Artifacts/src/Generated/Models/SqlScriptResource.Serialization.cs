@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SqlScriptResourceConverter))]
     public partial class SqlScriptResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
@@ -22,18 +27,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptResource DeserializeSqlScriptResource(JsonElement element)
         {
-            SqlScript properties = default;
             Optional<string> id = default;
-            Optional<string> name = default;
+            string name = default;
             Optional<string> type = default;
             Optional<string> etag = default;
+            SqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    properties = SqlScript.DeserializeSqlScript(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -54,8 +54,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    properties = SqlScript.DeserializeSqlScript(property.Value);
+                    continue;
+                }
             }
-            return new SqlScriptResource(id.Value, name.Value, type.Value, etag.Value, properties);
+            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+        }
+
+        internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>
+        {
+            public override void Write(Utf8JsonWriter writer, SqlScriptResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SqlScriptResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSqlScriptResource(document.RootElement);
+            }
         }
     }
 }

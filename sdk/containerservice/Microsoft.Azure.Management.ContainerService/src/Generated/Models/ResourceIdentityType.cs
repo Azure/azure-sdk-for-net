@@ -21,8 +21,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ResourceIdentityType
     {
+        /// <summary>
+        /// Use an implicitly created system assigned managed identity to
+        /// manage cluster resources. Master components in the control plane
+        /// such as kube-controller-manager will use the system assigned
+        /// managed identity to manipulate Azure resources.
+        /// </summary>
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
+        /// <summary>
+        /// Use a user-specified identity to manage cluster resources. Master
+        /// components in the control plane such as kube-controller-manager
+        /// will use the specified user assigned managed identity to manipulate
+        /// Azure resources.
+        /// </summary>
+        [EnumMember(Value = "UserAssigned")]
+        UserAssigned,
+        /// <summary>
+        /// Do not use a managed identity for the Managed Cluster, service
+        /// principal will be used instead.
+        /// </summary>
         [EnumMember(Value = "None")]
         None
     }
@@ -39,6 +57,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 case ResourceIdentityType.SystemAssigned:
                     return "SystemAssigned";
+                case ResourceIdentityType.UserAssigned:
+                    return "UserAssigned";
                 case ResourceIdentityType.None:
                     return "None";
             }
@@ -51,6 +71,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 case "SystemAssigned":
                     return ResourceIdentityType.SystemAssigned;
+                case "UserAssigned":
+                    return ResourceIdentityType.UserAssigned;
                 case "None":
                     return ResourceIdentityType.None;
             }

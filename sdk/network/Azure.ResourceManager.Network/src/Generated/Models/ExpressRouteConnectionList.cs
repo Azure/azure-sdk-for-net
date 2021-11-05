@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,16 +17,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteConnectionList. </summary>
         internal ExpressRouteConnectionList()
         {
+            Value = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteConnectionList. </summary>
         /// <param name="value"> The list of ExpressRoute connections. </param>
-        internal ExpressRouteConnectionList(IReadOnlyList<ExpressRouteConnection> value)
+        internal ExpressRouteConnectionList(IReadOnlyList<ExpressRouteConnectionData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of ExpressRoute connections. </summary>
-        public IReadOnlyList<ExpressRouteConnection> Value { get; }
+        public IReadOnlyList<ExpressRouteConnectionData> Value { get; }
     }
 }

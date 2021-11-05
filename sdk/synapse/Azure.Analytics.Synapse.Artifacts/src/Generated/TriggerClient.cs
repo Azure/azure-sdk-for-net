@@ -21,60 +21,43 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal TriggerRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of TriggerClient for mocking. </summary>
         protected TriggerClient()
         {
         }
+
+        /// <summary> Initializes a new instance of TriggerClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public TriggerClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new TriggerRestClient(_clientDiagnostics, _pipeline, endpoint);
+        }
+
         /// <summary> Initializes a new instance of TriggerClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal TriggerClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal TriggerClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            RestClient = new TriggerRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            RestClient = new TriggerRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-        }
-
-        /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="trigger"> Trigger resource definition. </param>
-        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerResource>> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.CreateOrUpdateTrigger");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateTriggerAsync(triggerName, trigger, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="trigger"> Trigger resource definition. </param>
-        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerResource> CreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.CreateOrUpdateTrigger");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateTrigger(triggerName, trigger, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Gets a trigger. </summary>
@@ -107,42 +90,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetTrigger(triggerName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.DeleteTrigger");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteTriggerAsync(triggerName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTrigger(string triggerName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TriggerClient.DeleteTrigger");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteTrigger(triggerName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -261,9 +208,122 @@ namespace Azure.Analytics.Synapse.Artifacts
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// <summary> Creates or updates a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="trigger"> Trigger resource definition. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
+        public virtual async Task<TriggerCreateOrUpdateTriggerOperation> StartCreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartCreateOrUpdateTrigger");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateTriggerAsync(triggerName, trigger, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new TriggerCreateOrUpdateTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateTriggerRequest(triggerName, trigger, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="trigger"> Trigger resource definition. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
+        public virtual TriggerCreateOrUpdateTriggerOperation StartCreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartCreateOrUpdateTrigger");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateTrigger(triggerName, trigger, ifMatch, cancellationToken);
+                return new TriggerCreateOrUpdateTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateTriggerRequest(triggerName, trigger, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual async Task<TriggerDeleteTriggerOperation> StartDeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartDeleteTrigger");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteTriggerAsync(triggerName, cancellationToken).ConfigureAwait(false);
+                return new TriggerDeleteTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteTriggerRequest(triggerName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual TriggerDeleteTriggerOperation StartDeleteTrigger(string triggerName, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("TriggerClient.StartDeleteTrigger");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteTrigger(triggerName, cancellationToken);
+                return new TriggerDeleteTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteTriggerRequest(triggerName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerSubscribeTriggerToEventsOperation> StartSubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -288,6 +348,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerSubscribeTriggerToEventsOperation StartSubscribeTriggerToEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -312,6 +373,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerUnsubscribeTriggerFromEventsOperation> StartUnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -336,6 +398,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerUnsubscribeTriggerFromEventsOperation StartUnsubscribeTriggerFromEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -360,6 +423,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerStartTriggerOperation> StartStartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -384,6 +448,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerStartTriggerOperation StartStartTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -408,6 +473,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<TriggerStopTriggerOperation> StartStopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -432,6 +498,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual TriggerStopTriggerOperation StartStopTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)

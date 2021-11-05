@@ -165,6 +165,114 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Starts packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to start packet capture
+            /// on gateway connection.
+            /// </param>
+            public static string StartPacketCapture(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = default(VpnConnectionPacketCaptureStartParameters))
+            {
+                return operations.StartPacketCaptureAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to start packet capture
+            /// on gateway connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> StartPacketCaptureAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = default(VpnConnectionPacketCaptureStartParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartPacketCaptureWithHttpMessagesAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Stops packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to stop packet capture on
+            /// gateway connection.
+            /// </param>
+            public static string StopPacketCapture(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = default(VpnConnectionPacketCaptureStopParameters))
+            {
+                return operations.StopPacketCaptureAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to stop packet capture on
+            /// gateway connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> StopPacketCaptureAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = default(VpnConnectionPacketCaptureStopParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StopPacketCaptureWithHttpMessagesAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves all vpn connections for a particular virtual wan vpn gateway.
             /// </summary>
             /// <param name='operations'>
@@ -299,6 +407,114 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginDeleteAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, gatewayName, connectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Starts packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to start packet capture
+            /// on gateway connection.
+            /// </param>
+            public static string BeginStartPacketCapture(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = default(VpnConnectionPacketCaptureStartParameters))
+            {
+                return operations.BeginStartPacketCaptureAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to start packet capture
+            /// on gateway connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginStartPacketCaptureAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = default(VpnConnectionPacketCaptureStartParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartPacketCaptureWithHttpMessagesAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Stops packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to stop packet capture on
+            /// gateway connection.
+            /// </param>
+            public static string BeginStopPacketCapture(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = default(VpnConnectionPacketCaptureStopParameters))
+            {
+                return operations.BeginStopPacketCaptureAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops packet capture on Vpn connection in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='vpnConnectionName'>
+            /// The name of the vpn connection.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vpn Connection packet capture parameters supplied to stop packet capture on
+            /// gateway connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginStopPacketCaptureAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = default(VpnConnectionPacketCaptureStopParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStopPacketCaptureWithHttpMessagesAsync(resourceGroupName, gatewayName, vpnConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

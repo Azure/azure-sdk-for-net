@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualApplianceNicProperties
     {
         /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
-        public VirtualApplianceNicProperties()
+        internal VirtualApplianceNicProperties()
         {
         }
 

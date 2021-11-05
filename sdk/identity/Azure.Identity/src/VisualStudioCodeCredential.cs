@@ -25,7 +25,9 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
-        private readonly MsalPublicClient _client;
+        private const string _commonTenant = "common";
+        private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -38,11 +40,12 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
 
-        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
+        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
+            IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? "common";
+            _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
+            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null, options?.IsLoggingPIIEnabled ?? false);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
@@ -62,25 +65,49 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
+
+                if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                {
+                    throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
+                }
 
                 var cloudInstance = GetAzureCloudInstance(environmentName);
-                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
+                string storedCredentials = GetStoredCredentials(environmentName);
 
+                var result = await Client
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .ConfigureAwait(false);
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+            }
+            catch (MsalUiRequiredException e)
+            {
+                throw scope.FailWrapAndThrow(
+                    new CredentialUnavailableException(
+                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account. " + Troubleshooting,
+                        e));
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e, Troubleshooting);
+            }
+        }
+
+        private string GetStoredCredentials(string environmentName)
+        {
+            try
+            {
+                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
                 if (!IsRefreshTokenString(storedCredentials))
                 {
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return storedCredentials;
             }
-            catch (MsalUiRequiredException e)
+            catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
-            }
-            catch (Exception e)
-            {
-                throw scope.FailWrapAndThrow(e);
+                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account. " + Troubleshooting, ex);
             }
         }
 
@@ -102,7 +129,7 @@ namespace Azure.Identity
         {
             var path = _vscAdapter.GetUserSettingsPath();
             tenant = _tenantId;
-            environmentName = "Azure";
+            environmentName = "AzureCloud";
 
             try
             {
@@ -146,7 +173,7 @@ namespace Azure.Identity
         private static AzureCloudInstance GetAzureCloudInstance(string name) =>
             name switch
             {
-                "Azure" => AzureCloudInstance.AzurePublic,
+                "AzureCloud" => AzureCloudInstance.AzurePublic,
                 "AzureChina" => AzureCloudInstance.AzureChina,
                 "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
                 "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,

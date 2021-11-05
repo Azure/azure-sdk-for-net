@@ -15,37 +15,25 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            string target = default;
-            IReadOnlyList<ErrorDetails> details = default;
-            string innerError = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ErrorDetails>> details = default;
+            Optional<string> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
@@ -53,34 +41,24 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorDetails> array = new List<ErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ErrorDetails.DeserializeErrorDetails(item));
-                        }
+                        array.Add(ErrorDetails.DeserializeErrorDetails(item));
                     }
                     details = array;
                     continue;
                 }
                 if (property.NameEquals("innerError"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innerError = property.Value.GetString();
                     continue;
                 }
             }
-            return new Error(code, message, target, details, innerError);
+            return new Error(code.Value, message.Value, target.Value, Optional.ToList(details), innerError.Value);
         }
     }
 }

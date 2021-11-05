@@ -155,7 +155,11 @@ namespace DataFactory.Tests.ScenarioTests
                         NodeSize = "Standard_D1_v2",
                         MaxParallelExecutionsPerNode = 1,
                         NumberOfNodes = 1,
-                        Location = "WestUS"
+                        Location = "WestUS",
+                        VNetProperties = new IntegrationRuntimeVNetProperties
+                        {
+                            SubnetId = "/subscriptions/1491d049-b7ce-4dc5-9833-d2947b0bd2e1/resourceGroups/Azure_SSIS_API/providers/Microsoft.Network/virtualNetworks/FirstVNetForAzureSSIS/subnets/TestVnetJoin"
+                        }
                     },
                     SsisProperties = new IntegrationRuntimeSsisProperties
                     {
@@ -164,7 +168,8 @@ namespace DataFactory.Tests.ScenarioTests
                             CatalogAdminUserName = Environment.GetEnvironmentVariable("CatalogAdminUsername"),
                             CatalogAdminPassword = new SecureString(Environment.GetEnvironmentVariable("CatalogAdminPassword")),
                             CatalogServerEndpoint = Environment.GetEnvironmentVariable("CatalogServerEndpoint"),
-                            CatalogPricingTier = "S1"
+                            CatalogPricingTier = "S1",
+                            DualStandbyPairName="Name"
                         },
                         DataProxyProperties = new IntegrationRuntimeDataProxyProperties
                         {
@@ -177,8 +182,12 @@ namespace DataFactory.Tests.ScenarioTests
                                 ReferenceName = "stagingLinkedService"
                             },
                             Path = "fakedPath"
+                        },
+                        Credential = new CredentialReference
+                        {
+                            ReferenceName=  "credentialReference"
                         }
-        }
+                    }
                 }
             };
 
@@ -213,6 +222,11 @@ namespace DataFactory.Tests.ScenarioTests
                     integrationRuntimeName);
                 managedStatus = status.Properties as ManagedIntegrationRuntimeStatus;
                 Assert.Equal(IntegrationRuntimeState.Stopped, managedStatus.State);
+
+                await client.IntegrationRuntimes.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(
+                   this.ResourceGroupName,
+                   this.DataFactoryName,
+                   integrationRuntimeName);
             };
 
             Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>

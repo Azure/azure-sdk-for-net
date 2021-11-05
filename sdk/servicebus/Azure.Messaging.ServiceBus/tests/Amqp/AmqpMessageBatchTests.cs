@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");
 
             batch.Clear();
-            Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)), "The size should have been reset when the batch was cleared.");
+            Assert.That(batch.SizeInBytes, Is.EqualTo(0));
         }
 
         /// <summary>
@@ -332,21 +332,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");
 
             batch.Dispose();
-            Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)), "The size should have been reset when the batch was cleared.");
+            Assert.That(batch.SizeInBytes, Is.EqualTo(0));
         }
-
-        // <summary>
-        ///   Reads the size reserved for AMQP message overhead in a batch using its private field.
-        /// </summary>
-        ///
-        /// <param name="instance">The instance to consider.</param>
-        ///
-        /// <returns>The reserved size of the batch.</returns>
-        ///
-        private static long GetReservedSize(AmqpMessageBatch instance) =>
-            (long)
-                typeof(AmqpMessageBatch)
-                    .GetField("_reservedSize", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(instance);
     }
 }

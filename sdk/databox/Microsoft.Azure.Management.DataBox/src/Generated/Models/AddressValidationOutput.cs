@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Possible values include: 'Valid', 'Invalid', 'Ambiguous'</param>
         /// <param name="alternateAddresses">List of alternate
         /// addresses.</param>
-        public AddressValidationOutput(Error error = default(Error), AddressValidationStatus? validationStatus = default(AddressValidationStatus?), IList<ShippingAddress> alternateAddresses = default(IList<ShippingAddress>))
+        public AddressValidationOutput(CloudError error = default(CloudError), AddressValidationStatus? validationStatus = default(AddressValidationStatus?), IList<ShippingAddress> alternateAddresses = default(IList<ShippingAddress>))
         {
             Error = error;
             ValidationStatus = validationStatus;
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets error code and message of validation response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.error")]
-        public Error Error { get; private set; }
+        public CloudError Error { get; private set; }
 
         /// <summary>
         /// Gets the address validation status. Possible values include:

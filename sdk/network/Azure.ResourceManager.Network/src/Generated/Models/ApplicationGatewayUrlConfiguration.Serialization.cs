@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ModifiedPath != null)
+            if (Optional.IsDefined(ModifiedPath))
             {
                 writer.WritePropertyName("modifiedPath");
                 writer.WriteStringValue(ModifiedPath);
             }
-            if (ModifiedQueryString != null)
+            if (Optional.IsDefined(ModifiedQueryString))
             {
                 writer.WritePropertyName("modifiedQueryString");
                 writer.WriteStringValue(ModifiedQueryString);
             }
-            if (Reroute != null)
+            if (Optional.IsDefined(Reroute))
             {
                 writer.WritePropertyName("reroute");
                 writer.WriteBooleanValue(Reroute.Value);
@@ -35,26 +35,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayUrlConfiguration DeserializeApplicationGatewayUrlConfiguration(JsonElement element)
         {
-            string modifiedPath = default;
-            string modifiedQueryString = default;
-            bool? reroute = default;
+            Optional<string> modifiedPath = default;
+            Optional<string> modifiedQueryString = default;
+            Optional<bool> reroute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modifiedPath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     modifiedPath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("modifiedQueryString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     modifiedQueryString = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reroute = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ApplicationGatewayUrlConfiguration(modifiedPath, modifiedQueryString, reroute);
+            return new ApplicationGatewayUrlConfiguration(modifiedPath.Value, modifiedQueryString.Value, Optional.ToNullable(reroute));
         }
     }
 }

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination");
             writer.WriteObjectValue(Destination);
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (ProtocolConfiguration != null)
+            if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration");
                 writer.WriteObjectValue(ProtocolConfiguration);
             }
-            if (PreferredIPVersion != null)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion");
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());

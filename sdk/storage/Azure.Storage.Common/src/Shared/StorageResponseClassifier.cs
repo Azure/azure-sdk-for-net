@@ -43,5 +43,35 @@ namespace Azure.Storage
             }
             return base.IsRetriableResponse(message);
         }
+
+        /// <inheritdoc />
+        public override bool IsErrorResponse(HttpMessage message)
+        {
+            switch (message.Response.Status)
+            {
+                case 409:
+                    // We're not considering Container/BlobAlreadyExists as errors when the request has conditional headers.
+                    // Convenience methods like BlobContainerClient.CreateIfNotExists will cause a lot of these responses and
+                    // we don't want them polluting AppInsights with noise.  See RequestActivityPolicy for how this is applied.
+
+                    RequestHeaders header = message.Request.Headers;
+
+                    if (header.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
+                        (error == Constants.ErrorCodes.ContainerAlreadyExists ||
+                         error == Constants.ErrorCodes.BlobAlreadyExists))
+                    {
+                        var isConditional =
+                            header.Contains(HttpHeader.Names.IfMatch) ||
+                            header.Contains(HttpHeader.Names.IfNoneMatch) ||
+                            header.Contains(HttpHeader.Names.IfModifiedSince) ||
+                            header.Contains(HttpHeader.Names.IfUnmodifiedSince);
+                        return !isConditional;
+                    }
+
+                    break;
+            }
+
+            return base.IsErrorResponse(message);
+        }
     }
 }

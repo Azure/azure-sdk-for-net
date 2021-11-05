@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,20 +31,24 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentSettings class.
         /// </summary>
-        /// <param name="cpu">Required CPU</param>
-        /// <param name="memoryInGB">Required Memory size in GB</param>
+        /// <param name="cpu">Required CPU, basic tier should be 1, standard
+        /// tier should be in range (1, 4)</param>
+        /// <param name="memoryInGB">Required Memory size in GB, basic tier
+        /// should be in range (1, 2), standard tier should be in range (1,
+        /// 8)</param>
         /// <param name="jvmOptions">JVM parameter</param>
-        /// <param name="instanceCount">Instance count</param>
+        /// <param name="netCoreMainEntryPath">The path to the .NET executable
+        /// relative to zip root</param>
         /// <param name="environmentVariables">Collection of environment
         /// variables</param>
         /// <param name="runtimeVersion">Runtime version. Possible values
-        /// include: 'Java_8', 'Java_11'</param>
-        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), string jvmOptions = default(string), int? instanceCount = default(int?), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
+        /// include: 'Java_8', 'Java_11', 'NetCore_31'</param>
+        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), string jvmOptions = default(string), string netCoreMainEntryPath = default(string), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
         {
             Cpu = cpu;
             MemoryInGB = memoryInGB;
             JvmOptions = jvmOptions;
-            InstanceCount = instanceCount;
+            NetCoreMainEntryPath = netCoreMainEntryPath;
             EnvironmentVariables = environmentVariables;
             RuntimeVersion = runtimeVersion;
             CustomInit();
@@ -57,13 +60,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required CPU
+        /// Gets or sets required CPU, basic tier should be 1, standard tier
+        /// should be in range (1, 4)
         /// </summary>
         [JsonProperty(PropertyName = "cpu")]
         public int? Cpu { get; set; }
 
         /// <summary>
-        /// Gets or sets required Memory size in GB
+        /// Gets or sets required Memory size in GB, basic tier should be in
+        /// range (1, 2), standard tier should be in range (1, 8)
         /// </summary>
         [JsonProperty(PropertyName = "memoryInGB")]
         public int? MemoryInGB { get; set; }
@@ -75,10 +80,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public string JvmOptions { get; set; }
 
         /// <summary>
-        /// Gets or sets instance count
+        /// Gets or sets the path to the .NET executable relative to zip root
         /// </summary>
-        [JsonProperty(PropertyName = "instanceCount")]
-        public int? InstanceCount { get; set; }
+        [JsonProperty(PropertyName = "netCoreMainEntryPath")]
+        public string NetCoreMainEntryPath { get; set; }
 
         /// <summary>
         /// Gets or sets collection of environment variables
@@ -88,43 +93,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 
         /// <summary>
         /// Gets or sets runtime version. Possible values include: 'Java_8',
-        /// 'Java_11'
+        /// 'Java_11', 'NetCore_31'
         /// </summary>
         [JsonProperty(PropertyName = "runtimeVersion")]
         public string RuntimeVersion { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Cpu > 4)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Cpu", 4);
-            }
-            if (Cpu < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Cpu", 1);
-            }
-            if (MemoryInGB > 8)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MemoryInGB", 8);
-            }
-            if (MemoryInGB < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MemoryInGB", 1);
-            }
-            if (InstanceCount > 20)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "InstanceCount", 20);
-            }
-            if (InstanceCount < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "InstanceCount", 1);
-            }
-        }
     }
 }

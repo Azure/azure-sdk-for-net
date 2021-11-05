@@ -12,10 +12,11 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of Notebook resources. </summary>
-    public partial class NotebookListResponse
+    internal partial class NotebookListResponse
     {
         /// <summary> Initializes a new instance of NotebookListResponse. </summary>
         /// <param name="value"> List of Notebooks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NotebookListResponse(IEnumerable<NotebookResource> value)
         {
             if (value == null)

@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// <summary>
     /// A custom alert rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("CustomAlertRule")]
     public partial class CustomAlertRule
     {
         /// <summary>

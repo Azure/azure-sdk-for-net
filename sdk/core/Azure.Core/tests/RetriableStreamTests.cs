@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task MaintainsGlobalLengthAndPosition()
         {
-            var stream1 = new MockReadStream(100, throwAfter: 50);
+            var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50);
 
             MockTransport mockTransport = CreateMockTransport(
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesntRetryNonRetryableExceptions()
         {
-            var stream1 = new MockReadStream(100, throwAfter: 50);
+            var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, exceptionType: typeof(InvalidOperationException));
 
             MockTransport mockTransport = CreateMockTransport(
@@ -125,7 +125,7 @@ namespace Azure.Core.Tests
                 Assert.Ignore();
             }
 
-            var stream1 = new MockReadStream(100);
+            var stream1 = new MockReadStream(100, canSeek: true);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 });
@@ -149,7 +149,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesOnNonCustomerCancellationToken()
         {
-            var stream1 = new MockReadStream(100, throwAfter: 50, exceptionType: typeof(OperationCanceledException));
+            var stream1 = new MockReadStream(100, throwAfter: 50, exceptionType: typeof(OperationCanceledException), canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50);
 
             MockTransport mockTransport = CreateMockTransport(
@@ -289,6 +289,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ThrowsForLengthOnNonSeekableStream()
+        {
+            Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
+                _ => new MockReadStream(100, canSeek: false),
+                _ => default,
+                new ResponseClassifier(),
+                5).Length);
+        }
+
+        [Test]
+        public void IgnoresMisbehavingStreams()
+        {
+            Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
+                _ => new NoLengthStream(canSeek: true),
+                _ => default,
+                new ResponseClassifier(),
+                5).Length);
+        }
+
+        [Test]
         public void ThrowsIfInitialRequestThrow()
         {
             Assert.Throws<InvalidOperationException>(() => RetriableStream.Create(
@@ -370,6 +390,11 @@ namespace Azure.Core.Tests
 
         private class NoLengthStream : ReadOnlyStream
         {
+            public NoLengthStream(bool canSeek = false)
+            {
+                CanSeek = canSeek;
+            }
+
             public override int Read(byte[] buffer, int offset, int count)
             {
                 throw new IOException();
@@ -381,7 +406,7 @@ namespace Azure.Core.Tests
             }
 
             public override bool CanRead { get; } = true;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length => throw new NotSupportedException();
             public override long Position { get; set; }
         }
@@ -393,12 +418,13 @@ namespace Azure.Core.Tests
             private byte _offset;
             private readonly Type _exceptionType;
 
-            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, Type exceptionType = null)
+            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, Type exceptionType = null, bool canSeek = false)
             {
                 _throwAfter = throwAfter;
                 _offset = offset;
                 _exceptionType = exceptionType ?? typeof(IOException);
                 Length = length;
+                CanSeek = canSeek;
             }
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -433,7 +459,7 @@ namespace Azure.Core.Tests
             }
 
             public override bool CanRead { get; } = true;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length { get; }
             public override long Position { get; set; }
             public bool IsDisposed { get; set; }
@@ -443,7 +469,6 @@ namespace Azure.Core.Tests
                 base.Dispose(disposing);
                 IsDisposed = true;
             }
-
         }
     }
 }

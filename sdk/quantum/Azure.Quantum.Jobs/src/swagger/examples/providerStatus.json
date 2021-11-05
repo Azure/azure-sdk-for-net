@@ -1,0 +1,88 @@
+{
+  "parameters": {
+    "resourceGroupName": "quantumResourcegroup",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "workspaceName": "quantumworkspace1"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "id": "Microsoft",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "microsoft.paralleltempering-parameterfree.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.paralleltempering.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.simulatedannealing-parameterfree.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.simulatedannealing.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.tabu-parameterfree.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.tabu.cpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.simulatedannealing-parameterfree.fpga",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              },
+              {
+                "id": "microsoft.simulatedannealing.fpga",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": null
+              }
+            ]
+          },
+          {
+            "id": "ionq",
+            "currentAvailability": "Available",
+            "targets": [
+              {
+                "id": "ionq.qpu",
+                "currentAvailability": "Available",
+                "averageQueueTime": 1679,
+                "statusPage": "https://status.ionq.co"
+              },
+              {
+                "id": "ionq.simulator",
+                "currentAvailability": "Available",
+                "averageQueueTime": 0,
+                "statusPage": "https://status.ionq.co"
+              }
+            ]
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  }
+}

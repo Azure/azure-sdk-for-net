@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ConsumerGroupListResult
+    internal partial class ConsumerGroupListResult
     {
         internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
         {
-            IReadOnlyList<ConsumerGroup> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ConsumerGroup>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConsumerGroup> array = new List<ConsumerGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConsumerGroup.DeserializeConsumerGroup(item));
-                        }
+                        array.Add(ConsumerGroup.DeserializeConsumerGroup(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConsumerGroupListResult(value, nextLink);
+            return new ConsumerGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

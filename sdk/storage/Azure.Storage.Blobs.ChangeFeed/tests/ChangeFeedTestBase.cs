@@ -12,14 +12,23 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
-    public class ChangeFeedTestBase : StorageTestBase
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04,
+        BlobClientOptions.ServiceVersion.V2020_10_02,
+        BlobClientOptions.ServiceVersion.V2020_12_06,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
+    RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+    LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+    public class ChangeFeedTestBase : StorageTestBase<StorageTestEnvironment>
     {
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 
-        public ChangeFeedTestBase(bool async) : this(async, null) { }
-
-        public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
+        public ChangeFeedTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
@@ -36,24 +45,23 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
         public BlobClientOptions GetOptions()
         {
-            var options = new BlobClientOptions
+            var options = new BlobClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
-                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingContainer> GetTestContainerAsync(
@@ -63,7 +71,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
-
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 

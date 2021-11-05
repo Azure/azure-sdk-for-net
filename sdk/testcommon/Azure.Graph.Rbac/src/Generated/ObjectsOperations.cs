@@ -21,10 +21,12 @@ namespace Azure.Graph.Rbac
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ObjectsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ObjectsOperations for mocking. </summary>
         protected ObjectsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ObjectsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -41,6 +43,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the directory objects specified in a list of object IDs. You can also specify which resource collections (users, groups, etc.) should be searched by specifying the optional types parameter. </summary>
         /// <param name="parameters"> Objects filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual AsyncPageable<DirectoryObject> GetObjectsByObjectIdsAsync(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -84,6 +87,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the directory objects specified in a list of object IDs. You can also specify which resource collections (users, groups, etc.) should be searched by specifying the optional types parameter. </summary>
         /// <param name="parameters"> Objects filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public virtual Pageable<DirectoryObject> GetObjectsByObjectIds(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -127,6 +131,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual AsyncPageable<DirectoryObject> GetObjectsByObjectIdsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -170,6 +175,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public virtual Pageable<DirectoryObject> GetObjectsByObjectIdsNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

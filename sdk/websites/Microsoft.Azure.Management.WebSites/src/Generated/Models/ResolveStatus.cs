@@ -38,7 +38,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "AccessToKeyVaultDenied")]
         AccessToKeyVaultDenied,
         [EnumMember(Value = "OtherReasons")]
-        OtherReasons
+        OtherReasons,
+        [EnumMember(Value = "FetchTimedOut")]
+        FetchTimedOut,
+        [EnumMember(Value = "UnauthorizedClient")]
+        UnauthorizedClient
     }
     internal static class ResolveStatusEnumExtension
     {
@@ -69,6 +73,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "AccessToKeyVaultDenied";
                 case ResolveStatus.OtherReasons:
                     return "OtherReasons";
+                case ResolveStatus.FetchTimedOut:
+                    return "FetchTimedOut";
+                case ResolveStatus.UnauthorizedClient:
+                    return "UnauthorizedClient";
             }
             return null;
         }
@@ -95,6 +103,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return ResolveStatus.AccessToKeyVaultDenied;
                 case "OtherReasons":
                     return ResolveStatus.OtherReasons;
+                case "FetchTimedOut":
+                    return ResolveStatus.FetchTimedOut;
+                case "UnauthorizedClient":
+                    return ResolveStatus.UnauthorizedClient;
             }
             return null;
         }

@@ -46,6 +46,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// region of a resource cannot be changed once it is created, but if
         /// an identical geo region is specified on update, the request will
         /// succeed.</param>
+        /// <param name="extendedLocation">Optional. Set the extended location
+        /// of the resource. If not set, the storage account will be created in
+        /// Azure main region. Otherwise it will be created in the specified
+        /// extended location</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used for viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -53,6 +57,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
         /// <param name="identity">The identity of the resource.</param>
+        /// <param name="publicNetworkAccess">Allow or disallow public network
+        /// access to Storage Account. Value is optional but if passed in, must
+        /// be 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="sasPolicy">SasPolicy assigned to the storage
+        /// account.</param>
+        /// <param name="keyPolicy">KeyPolicy assigned to the storage
+        /// account.</param>
         /// <param name="customDomain">User domain assigned to the storage
         /// account. Name is the CNAME source. Only one custom domain is
         /// supported per storage account at this time. To clear the existing
@@ -83,13 +95,35 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// permitted on requests to storage. The default interpretation is TLS
         /// 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1',
         /// 'TLS1_2'</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string))
+        /// <param name="allowSharedKeyAccess">Indicates whether the storage
+        /// account permits requests to be authorized with the account access
+        /// key via Shared Key. If false, then all requests, including shared
+        /// access signatures, must be authorized with Azure Active Directory
+        /// (Azure AD). The default value is null, which is equivalent to
+        /// true.</param>
+        /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
+        /// to true.</param>
+        /// <param name="allowCrossTenantReplication">Allow or disallow cross
+        /// AAD tenant object replication. The default interpretation is true
+        /// for this property.</param>
+        /// <param name="defaultToOAuthAuthentication">A boolean flag which
+        /// indicates whether the default authentication is OAuth or not. The
+        /// default interpretation is false for this property.</param>
+        /// <param name="immutableStorageWithVersioning">The property is
+        /// immutable and can only be set to true at the account creation time.
+        /// When set to true, it enables object level immutability for all the
+        /// new containers in the account by default.</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string publicNetworkAccess = default(string), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount))
         {
             Sku = sku;
             Kind = kind;
             Location = location;
+            ExtendedLocation = extendedLocation;
             Tags = tags;
             Identity = identity;
+            PublicNetworkAccess = publicNetworkAccess;
+            SasPolicy = sasPolicy;
+            KeyPolicy = keyPolicy;
             CustomDomain = customDomain;
             Encryption = encryption;
             NetworkRuleSet = networkRuleSet;
@@ -101,6 +135,11 @@ namespace Microsoft.Azure.Management.Storage.Models
             RoutingPreference = routingPreference;
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
+            AllowSharedKeyAccess = allowSharedKeyAccess;
+            EnableNfsV3 = enableNfsV3;
+            AllowCrossTenantReplication = allowCrossTenantReplication;
+            DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
+            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             CustomInit();
         }
 
@@ -134,6 +173,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Location { get; set; }
 
         /// <summary>
+        /// Gets or sets optional. Set the extended location of the resource.
+        /// If not set, the storage account will be created in Azure main
+        /// region. Otherwise it will be created in the specified extended
+        /// location
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.
         /// These tags can be used for viewing and grouping this resource
         /// (across resource groups). A maximum of 15 tags can be provided for
@@ -149,6 +197,26 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow public network access to Storage
+        /// Account. Value is optional but if passed in, must be 'Enabled' or
+        /// 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets sasPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sasPolicy")]
+        public SasPolicy SasPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyPolicy")]
+        public KeyPolicy KeyPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets user domain assigned to the storage account. Name is
@@ -232,6 +300,46 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether the storage account permits requests
+        /// to be authorized with the account access key via Shared Key. If
+        /// false, then all requests, including shared access signatures, must
+        /// be authorized with Azure Active Directory (Azure AD). The default
+        /// value is null, which is equivalent to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowSharedKeyAccess")]
+        public bool? AllowSharedKeyAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets NFS 3.0 protocol support enabled if set to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isNfsV3Enabled")]
+        public bool? EnableNfsV3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow cross AAD tenant object replication.
+        /// The default interpretation is true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowCrossTenantReplication")]
+        public bool? AllowCrossTenantReplication { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean flag which indicates whether the default
+        /// authentication is OAuth or not. The default interpretation is false
+        /// for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultToOAuthAuthentication")]
+        public bool? DefaultToOAuthAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property is immutable and can only be set to true
+        /// at the account creation time. When set to true, it enables object
+        /// level immutability for all the new containers in the account by
+        /// default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -255,6 +363,18 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 Sku.Validate();
             }
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
+            if (SasPolicy != null)
+            {
+                SasPolicy.Validate();
+            }
+            if (KeyPolicy != null)
+            {
+                KeyPolicy.Validate();
+            }
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
@@ -270,6 +390,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (AzureFilesIdentityBasedAuthentication != null)
             {
                 AzureFilesIdentityBasedAuthentication.Validate();
+            }
+            if (ImmutableStorageWithVersioning != null)
+            {
+                ImmutableStorageWithVersioning.Validate();
             }
         }
     }

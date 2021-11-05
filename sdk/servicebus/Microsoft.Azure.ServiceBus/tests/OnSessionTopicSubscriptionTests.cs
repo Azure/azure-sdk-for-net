@@ -6,11 +6,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
     public class OnSessionTopicSubscriptionTests
     {
+        const int ExpectedMessageCount = TestSessionHandler.NumberOfSessions * TestSessionHandler.MessagesPerSession;
+
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             // Expected structure: { usePartitionedTopic, useSessionTopic, maxCurrentCalls }
@@ -110,7 +113,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     var sessionHandlerOptions =
                         new SessionHandlerOptions(ExceptionReceivedHandler)
                         {
-                            MaxConcurrentSessions = 5,
+                            MaxConcurrentSessions = maxConcurrentCalls,
                             MessageWaitTimeout = TimeSpan.FromSeconds(5),
                             AutoComplete = true
                         };
@@ -129,6 +132,113 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // Verify messages were received.
                     await testSessionHandler.VerifyRun();
+
+                    testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
+
+            // test UnregisterSessionHandler can wait for message handling upto the timeout user defined. 
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                TestUtility.Log($"Topic: {topicName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicClient.TopicName,
+                    subscriptionName,
+                    ReceiveMode.PeekLock);
+
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = true
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        subscriptionClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        topicClient.InnerSender,
+                        subscriptionClient.SessionPumpHost);
+
+                    // Send messages to Session
+                    await testSessionHandler.SendSessionMessages();
+
+                    // Register handler
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 8);
+
+                    // Session handler set up has greater latency than message handler. Delay here to enable some processing time of the session pump.
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(10));
+                    Assert.True(testSessionHandler.ReceivedMessageCount == maxConcurrentCalls);
+
+                    // Reregister won't have any problems
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
+
+                    testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
+
+            // test UnregisterSessionHandler can close down in time when message handling takes longer than wait timeout user defined. 
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                TestUtility.Log($"Topic: {topicName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicClient.TopicName,
+                    subscriptionName,
+                    ReceiveMode.PeekLock);
+
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = true
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        subscriptionClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        topicClient.InnerSender,
+                        subscriptionClient.SessionPumpHost);
+
+                    // Send messages to Session
+                    await testSessionHandler.SendSessionMessages();
+
+                    // Register handler
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 8);
+
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(2));
+                    Assert.True(testSessionHandler.ReceivedMessageCount == 0);
+
+                    // Reregister won't have any problems
+                    testSessionHandler.RegisterSessionHandlerAndRecordReceivedMessageCount(subscriptionClient.ReceiveMode == ReceiveMode.PeekLock, 0);
+                    await testSessionHandler.WaitForAllMessagesReceived(ExpectedMessageCount);
+                    Assert.True(testSessionHandler.ReceivedMessageCount == ExpectedMessageCount);
+
+                    testSessionHandler.ClearData();
                 }
                 finally
                 {

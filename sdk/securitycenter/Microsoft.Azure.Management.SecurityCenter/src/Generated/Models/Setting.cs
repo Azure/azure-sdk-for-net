@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a security setting in Azure Security Center.
+    /// The kind of the security setting
     /// </summary>
-    public partial class Setting : SettingResource
+    public partial class Setting : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Setting class.

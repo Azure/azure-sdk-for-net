@@ -36,13 +36,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// among Azure Data center regions.</param>
         /// <param name="sku">SKU properties of the API Management
         /// service.</param>
+        /// <param name="zones">A list of availability zones denoting where the
+        /// resource needs to come from.</param>
         /// <param name="publicIPAddresses">Public Static Load Balanced IP
         /// addresses of the API Management service in the additional location.
-        /// Available only for Basic, Standard and Premium SKU.</param>
+        /// Available only for Basic, Standard, Premium and Isolated
+        /// SKU.</param>
         /// <param name="privateIPAddresses">Private Static Load Balanced IP
         /// addresses of the API Management service which is deployed in an
         /// Internal Virtual Network in a particular additional location.
-        /// Available only for Basic, Standard and Premium SKU.</param>
+        /// Available only for Basic, Standard, Premium and Isolated
+        /// SKU.</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration for the location.</param>
         /// <param name="gatewayRegionalUrl">Gateway URL of the API Management
@@ -50,10 +54,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="disableGateway">Property only valid for an Api
         /// Management service deployed in multiple locations. This can be used
         /// to disable the gateway in this additional location.</param>
-        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?))
+        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> zones = default(IList<string>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?))
         {
             Location = location;
             Sku = sku;
+            Zones = zones;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
@@ -81,9 +86,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public ApiManagementServiceSkuProperties Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of availability zones denoting where the
+        /// resource needs to come from.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
+
+        /// <summary>
         /// Gets public Static Load Balanced IP addresses of the API Management
         /// service in the additional location. Available only for Basic,
-        /// Standard and Premium SKU.
+        /// Standard, Premium and Isolated SKU.
         /// </summary>
         [JsonProperty(PropertyName = "publicIPAddresses")]
         public IList<string> PublicIPAddresses { get; private set; }
@@ -92,7 +104,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets private Static Load Balanced IP addresses of the API
         /// Management service which is deployed in an Internal Virtual Network
         /// in a particular additional location. Available only for Basic,
-        /// Standard and Premium SKU.
+        /// Standard, Premium and Isolated SKU.
         /// </summary>
         [JsonProperty(PropertyName = "privateIPAddresses")]
         public IList<string> PrivateIPAddresses { get; private set; }
@@ -136,6 +148,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (VirtualNetworkConfiguration != null)
+            {
+                VirtualNetworkConfiguration.Validate();
             }
         }
     }

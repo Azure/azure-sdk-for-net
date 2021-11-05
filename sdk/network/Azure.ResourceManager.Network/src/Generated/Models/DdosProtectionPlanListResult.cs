@@ -6,28 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A list of DDoS protection plans. </summary>
-    public partial class DdosProtectionPlanListResult
+    internal partial class DdosProtectionPlanListResult
     {
         /// <summary> Initializes a new instance of DdosProtectionPlanListResult. </summary>
         internal DdosProtectionPlanListResult()
         {
+            Value = new ChangeTrackingList<DdosProtectionPlanData>();
         }
 
         /// <summary> Initializes a new instance of DdosProtectionPlanListResult. </summary>
         /// <param name="value"> A list of DDoS protection plans. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal DdosProtectionPlanListResult(IReadOnlyList<DdosProtectionPlan> value, string nextLink)
+        internal DdosProtectionPlanListResult(IReadOnlyList<DdosProtectionPlanData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of DDoS protection plans. </summary>
-        public IReadOnlyList<DdosProtectionPlan> Value { get; }
+        public IReadOnlyList<DdosProtectionPlanData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

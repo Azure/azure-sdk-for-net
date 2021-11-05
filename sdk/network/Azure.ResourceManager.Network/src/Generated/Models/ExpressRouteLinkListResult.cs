@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRouteLinks API service call. </summary>
-    public partial class ExpressRouteLinkListResult
+    internal partial class ExpressRouteLinkListResult
     {
         /// <summary> Initializes a new instance of ExpressRouteLinkListResult. </summary>
         internal ExpressRouteLinkListResult()
         {
+            Value = new ChangeTrackingList<ExpressRouteLink>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteLinkListResult. </summary>

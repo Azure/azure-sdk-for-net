@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="hostName">Host name of HTTP listener.</param>
         /// <param name="sslCertificate">SSL certificate resource of an
         /// application gateway.</param>
+        /// <param name="sslProfile">SSL profile resource of the application
+        /// gateway.</param>
         /// <param name="requireServerNameIndication">Applicable only if
         /// protocol is https. Enables SNI for multi-hosting.</param>
         /// <param name="provisioningState">The provisioning state of the HTTP
@@ -62,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), IList<ApplicationGatewayCustomError> customErrorConfigurations = default(IList<ApplicationGatewayCustomError>), SubResource firewallPolicy = default(SubResource), IList<string> hostNames = default(IList<string>), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), SubResource sslProfile = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), IList<ApplicationGatewayCustomError> customErrorConfigurations = default(IList<ApplicationGatewayCustomError>), SubResource firewallPolicy = default(SubResource), IList<string> hostNames = default(IList<string>), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Protocol = protocol;
             HostName = hostName;
             SslCertificate = sslCertificate;
+            SslProfile = sslProfile;
             RequireServerNameIndication = requireServerNameIndication;
             ProvisioningState = provisioningState;
             CustomErrorConfigurations = customErrorConfigurations;
@@ -117,6 +120,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslCertificate")]
         public SubResource SslCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets SSL profile resource of the application gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sslProfile")]
+        public SubResource SslProfile { get; set; }
 
         /// <summary>
         /// Gets or sets applicable only if protocol is https. Enables SNI for

@@ -10,51 +10,14 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for IpFilterTag.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum IpFilterTag
+    public static class IpFilterTag
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "XffProxy")]
-        XffProxy
-    }
-    internal static class IpFilterTagEnumExtension
-    {
-        internal static string ToSerializedValue(this IpFilterTag? value)
-        {
-            return value == null ? null : ((IpFilterTag)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this IpFilterTag value)
-        {
-            switch( value )
-            {
-                case IpFilterTag.Default:
-                    return "Default";
-                case IpFilterTag.XffProxy:
-                    return "XffProxy";
-            }
-            return null;
-        }
-
-        internal static IpFilterTag? ParseIpFilterTag(this string value)
-        {
-            switch( value )
-            {
-                case "Default":
-                    return IpFilterTag.Default;
-                case "XffProxy":
-                    return IpFilterTag.XffProxy;
-            }
-            return null;
-        }
+        public const string Default = "Default";
+        public const string XffProxy = "XffProxy";
+        public const string ServiceTag = "ServiceTag";
     }
 }

@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Cryptography;
@@ -21,9 +20,9 @@ namespace Azure.Storage.Queues
             _encryptor = encryptor;
         }
 
-        public async Task<string> ClientSideEncryptInternal(string messageToUpload, bool async, CancellationToken cancellationToken)
+        public async Task<BinaryData> ClientSideEncryptInternal(BinaryData messageToUpload, bool async, CancellationToken cancellationToken)
         {
-            var bytesToEncrypt = Encoding.UTF8.GetBytes(messageToUpload);
+            byte[] bytesToEncrypt = messageToUpload.ToArray();
             (byte[] ciphertext, EncryptionData encryptionData) = await _encryptor.BufferedEncryptInternal(
                 new MemoryStream(bytesToEncrypt),
                 async,

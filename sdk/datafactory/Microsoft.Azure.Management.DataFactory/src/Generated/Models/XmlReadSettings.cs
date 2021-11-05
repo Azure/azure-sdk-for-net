@@ -37,17 +37,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="validationMode">Indicates what validation method is
         /// used when reading the xml files. Allowed values: 'none', 'xsd', or
         /// 'dtd'. Type: string (or Expression with resultType string).</param>
+        /// <param name="detectDataType">Indicates whether type detection is
+        /// enabled when reading the xml files. Type: boolean (or Expression
+        /// with resultType boolean).</param>
+        /// <param name="namespaces">Indicates whether namespace is enabled
+        /// when reading the xml files. Type: boolean (or Expression with
+        /// resultType boolean).</param>
         /// <param name="namespacePrefixes">Namespace uri to prefix mappings to
         /// override the prefixes in column names when namespace is enabled, if
         /// no prefix is defined for a namespace uri, the prefix of xml
         /// element/attribute name in the xml data file will be used. Example:
         /// "{"http://www.example.com/xml":"prefix"}" Type: object (or
         /// Expression with resultType object).</param>
-        public XmlReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), CompressionReadSettings compressionProperties = default(CompressionReadSettings), object validationMode = default(object), object namespacePrefixes = default(object))
+        public XmlReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), CompressionReadSettings compressionProperties = default(CompressionReadSettings), object validationMode = default(object), object detectDataType = default(object), object namespaces = default(object), object namespacePrefixes = default(object))
             : base(additionalProperties)
         {
             CompressionProperties = compressionProperties;
             ValidationMode = validationMode;
+            DetectDataType = detectDataType;
+            Namespaces = namespaces;
             NamespacePrefixes = namespacePrefixes;
             CustomInit();
         }
@@ -70,6 +78,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "validationMode")]
         public object ValidationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether type detection is enabled when
+        /// reading the xml files. Type: boolean (or Expression with resultType
+        /// boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "detectDataType")]
+        public object DetectDataType { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether namespace is enabled when reading
+        /// the xml files. Type: boolean (or Expression with resultType
+        /// boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "namespaces")]
+        public object Namespaces { get; set; }
 
         /// <summary>
         /// Gets or sets namespace uri to prefix mappings to override the

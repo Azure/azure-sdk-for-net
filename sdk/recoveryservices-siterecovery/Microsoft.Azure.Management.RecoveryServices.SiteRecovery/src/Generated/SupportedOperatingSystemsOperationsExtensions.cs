@@ -22,28 +22,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class SupportedOperatingSystemsOperationsExtensions
     {
             /// <summary>
-            /// Gets the data of supported OSes by SRS.
+            /// Gets the data of supported operating systems by SRS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static SupportedOperatingSystems Get(this ISupportedOperatingSystemsOperations operations)
+            /// <param name='instanceType'>
+            /// The instance type.
+            /// </param>
+            public static SupportedOperatingSystems Get(this ISupportedOperatingSystemsOperations operations, string instanceType = default(string))
             {
-                return operations.GetAsync().GetAwaiter().GetResult();
+                return operations.GetAsync(instanceType).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the data of supported OSes by SRS.
+            /// Gets the data of supported operating systems by SRS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='instanceType'>
+            /// The instance type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SupportedOperatingSystems> GetAsync(this ISupportedOperatingSystemsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SupportedOperatingSystems> GetAsync(this ISupportedOperatingSystemsOperations operations, string instanceType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(instanceType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

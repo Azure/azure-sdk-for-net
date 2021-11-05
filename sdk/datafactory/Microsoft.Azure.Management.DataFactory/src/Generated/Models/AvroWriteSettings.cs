@@ -37,11 +37,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// which is required in AVRO spec.</param>
         /// <param name="recordNamespace">Record namespace in the write
         /// result.</param>
-        public AvroWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string recordName = default(string), string recordNamespace = default(string))
+        /// <param name="maxRowsPerFile">Limit the written file's row count to
+        /// be smaller than or equal to the specified count. Type: integer (or
+        /// Expression with resultType integer).</param>
+        /// <param name="fileNamePrefix">Specifies the file name pattern
+        /// &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when
+        /// copy from non-file based store without partitionOptions. Type:
+        /// string (or Expression with resultType string).</param>
+        public AvroWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string recordName = default(string), string recordNamespace = default(string), object maxRowsPerFile = default(object), object fileNamePrefix = default(object))
             : base(additionalProperties)
         {
             RecordName = recordName;
             RecordNamespace = recordNamespace;
+            MaxRowsPerFile = maxRowsPerFile;
+            FileNamePrefix = fileNamePrefix;
             CustomInit();
         }
 
@@ -62,6 +71,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "recordNamespace")]
         public string RecordNamespace { get; set; }
+
+        /// <summary>
+        /// Gets or sets limit the written file's row count to be smaller than
+        /// or equal to the specified count. Type: integer (or Expression with
+        /// resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxRowsPerFile")]
+        public object MaxRowsPerFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the file name pattern
+        /// &amp;lt;fileNamePrefix&amp;gt;_&amp;lt;fileIndex&amp;gt;.&amp;lt;fileExtension&amp;gt;
+        /// when copy from non-file based store without partitionOptions. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileNamePrefix")]
+        public object FileNamePrefix { get; set; }
 
     }
 }

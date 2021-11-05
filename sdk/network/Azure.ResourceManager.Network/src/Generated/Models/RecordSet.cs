@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -13,8 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class RecordSet
     {
         /// <summary> Initializes a new instance of RecordSet. </summary>
-        public RecordSet()
+        internal RecordSet()
         {
+            IpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecordSet. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the recordset. </param>
         /// <param name="ttl"> Recordset time to live. </param>
         /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
-        internal RecordSet(string recordType, string recordSetName, string fqdn, ProvisioningState? provisioningState, int? ttl, IList<string> ipAddresses)
+        internal RecordSet(string recordType, string recordSetName, string fqdn, ProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses)
         {
             RecordType = recordType;
             RecordSetName = recordSetName;
@@ -35,16 +37,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource record type. </summary>
-        public string RecordType { get; set; }
+        public string RecordType { get; }
         /// <summary> Recordset name. </summary>
-        public string RecordSetName { get; set; }
+        public string RecordSetName { get; }
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
-        public string Fqdn { get; set; }
+        public string Fqdn { get; }
         /// <summary> The provisioning state of the recordset. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Recordset time to live. </summary>
-        public int? Ttl { get; set; }
+        public int? Ttl { get; }
         /// <summary> The private ip address of the private endpoint. </summary>
-        public IList<string> IpAddresses { get; set; }
+        public IReadOnlyList<string> IpAddresses { get; }
     }
 }

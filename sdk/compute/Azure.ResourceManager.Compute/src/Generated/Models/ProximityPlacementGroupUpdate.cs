@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the proximity placement group. </summary>
@@ -14,12 +12,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupUpdate. </summary>
         public ProximityPlacementGroupUpdate()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ProximityPlacementGroupUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        internal ProximityPlacementGroupUpdate(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

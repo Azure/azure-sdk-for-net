@@ -64,14 +64,9 @@ namespace Microsoft.Azure.Management.Storage
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
         /// </param>
-        /// <param name='cors'>
-        /// Specifies CORS rules for the File service. You can include up to
-        /// five CorsRule elements in the request. If no CorsRule elements are
-        /// included in the request body, all CORS rules will be deleted, and
-        /// CORS will be disabled for the File service.
-        /// </param>
-        /// <param name='shareDeleteRetentionPolicy'>
-        /// The file service properties for share soft delete.
+        /// <param name='parameters'>
+        /// The properties of file services in storage accounts, including CORS
+        /// (Cross-Origin Resource Sharing) rules.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -88,7 +83,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of file services in storage accounts, including
         /// CORS (Cross-Origin Resource Sharing) rules.

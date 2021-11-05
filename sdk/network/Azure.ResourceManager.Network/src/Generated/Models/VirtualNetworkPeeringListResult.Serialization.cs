@@ -8,49 +8,40 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkPeeringListResult
+    internal partial class VirtualNetworkPeeringListResult
     {
         internal static VirtualNetworkPeeringListResult DeserializeVirtualNetworkPeeringListResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkPeering> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkPeeringData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkPeering> array = new List<VirtualNetworkPeering>();
+                    List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualNetworkPeering.DeserializeVirtualNetworkPeering(item));
-                        }
+                        array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringListResult(value, nextLink);
+            return new VirtualNetworkPeeringListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

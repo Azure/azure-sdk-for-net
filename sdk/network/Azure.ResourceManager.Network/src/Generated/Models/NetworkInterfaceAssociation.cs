@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,12 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         internal NetworkInterfaceAssociation()
         {
+            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         /// <param name="id"> Network interface ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
-        internal NetworkInterfaceAssociation(string id, IReadOnlyList<SecurityRule> securityRules)
+        internal NetworkInterfaceAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules)
         {
             Id = id;
             SecurityRules = securityRules;
@@ -29,6 +32,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Network interface ID. </summary>
         public string Id { get; }
         /// <summary> Collection of custom security rules. </summary>
-        public IReadOnlyList<SecurityRule> SecurityRules { get; }
+        public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }
 }

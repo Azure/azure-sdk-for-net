@@ -14,30 +14,27 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareDirectoryInfo
     {
-        internal RawStorageDirectoryInfo _rawStorageDirectoryInfo;
-
         /// <summary>
         /// The ETag contains a value which represents the version of the directory, in quotes.
         /// </summary>
-        public ETag ETag => _rawStorageDirectoryInfo.ETag;
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns the date and time the directory was last modified. Any operation that modifies the directory or
         /// its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
-        public DateTimeOffset LastModified => _rawStorageDirectoryInfo.LastModified;
+        public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
         /// The directory's SMB properties.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
 
-        internal ShareDirectoryInfo(RawStorageDirectoryInfo rawStorageDirectoryInfo)
-        {
-            _rawStorageDirectoryInfo = rawStorageDirectoryInfo;
-            SmbProperties = new FileSmbProperties(rawStorageDirectoryInfo);
-        }
-    }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareDirectoryInfo() { }
+}
 
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.
@@ -56,19 +53,21 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset fileLastWriteTime,
             DateTimeOffset fileChangeTime,
             string fileId,
-            string fileParentId
-            )
-            => new ShareDirectoryInfo(new RawStorageDirectoryInfo
+            string fileParentId)
+            => new ShareDirectoryInfo
             {
                 ETag = eTag,
                 LastModified = lastModified,
-                FilePermissionKey = filePermissionKey,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FileId = fileId,
-                FileParentId = fileParentId
-            });
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
+            };
     }
 }

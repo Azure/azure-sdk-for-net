@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of GetMetadataActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
             if (name == null)
@@ -39,15 +40,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
         /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
-        internal GetMetadataActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<object> fieldList) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="storeSettings"> GetMetadata activity store settings. </param>
+        /// <param name="formatSettings"> GetMetadata activity format settings. </param>
+        internal GetMetadataActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<object> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;
+            StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             Type = type ?? "GetMetadata";
         }
 
@@ -55,5 +60,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>
         public IList<object> FieldList { get; }
+        /// <summary> GetMetadata activity store settings. </summary>
+        public StoreReadSettings StoreSettings { get; set; }
+        /// <summary> GetMetadata activity format settings. </summary>
+        public FormatReadSettings FormatSettings { get; set; }
     }
 }

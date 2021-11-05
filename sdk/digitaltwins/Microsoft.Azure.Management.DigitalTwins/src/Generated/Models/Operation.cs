@@ -32,10 +32,16 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="name">Operation name: {provider}/{resource}/{read |
         /// write | action | delete}</param>
         /// <param name="display">Operation properties display</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">The intended executor of the
+        /// operation.</param>
+        /// <param name="isDataAction">If the operation is a data action (for
+        /// data plane rbac).</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), bool? isDataAction = default(bool?))
         {
             Name = name;
             Display = display;
+            Origin = origin;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -56,6 +62,18 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets the intended executor of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; private set; }
+
+        /// <summary>
+        /// Gets if the operation is a data action (for data plane rbac).
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; private set; }
 
     }
 }

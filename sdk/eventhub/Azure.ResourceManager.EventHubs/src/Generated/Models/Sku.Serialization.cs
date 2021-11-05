@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity");
                 writer.WriteNumberValue(Capacity.Value);
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static Sku DeserializeSku(JsonElement element)
         {
             SkuName name = default;
-            SkuTier? tier = default;
-            int? capacity = default;
+            Optional<SkuTier> tier = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new SkuTier(property.Value.GetString());
@@ -55,13 +56,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new Sku(name, tier, capacity);
+            return new Sku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

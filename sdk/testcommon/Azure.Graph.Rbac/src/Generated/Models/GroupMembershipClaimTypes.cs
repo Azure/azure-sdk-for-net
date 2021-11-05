@@ -16,6 +16,7 @@ namespace Azure.Graph.Rbac.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="GroupMembershipClaimTypes"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GroupMembershipClaimTypes(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The result to the List Consumer Group operation. </summary>
-    public partial class ConsumerGroupListResult
+    internal partial class ConsumerGroupListResult
     {
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
         internal ConsumerGroupListResult()
         {
+            Value = new ChangeTrackingList<ConsumerGroup>();
         }
 
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>

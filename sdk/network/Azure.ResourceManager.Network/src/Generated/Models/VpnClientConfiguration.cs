@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
         public VpnClientConfiguration()
         {
+            VpnClientRootCertificates = new ChangeTrackingList<VpnClientRootCertificate>();
+            VpnClientRevokedCertificates = new ChangeTrackingList<VpnClientRevokedCertificate>();
+            VpnClientProtocols = new ChangeTrackingList<VpnClientProtocol>();
+            VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
+            VpnClientIpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            RadiusServers = new ChangeTrackingList<RadiusServer>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
@@ -22,6 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientRootCertificates"> VpnClientRootCertificate for virtual network gateway. </param>
         /// <param name="vpnClientRevokedCertificates"> VpnClientRevokedCertificate for Virtual network gateway. </param>
         /// <param name="vpnClientProtocols"> VpnClientProtocols for Virtual network gateway. </param>
+        /// <param name="vpnAuthenticationTypes"> VPN authentication types for the virtual network gateway.. </param>
         /// <param name="vpnClientIpsecPolicies"> VpnClientIpsecPolicies for virtual network gateway P2S client. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </param>
         /// <param name="radiusServerSecret"> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </param>
@@ -29,12 +37,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="aadTenant"> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="aadAudience"> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="aadIssuer"> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
-        internal VpnClientConfiguration(AddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<IpsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer)
+        internal VpnClientConfiguration(AddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IpsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
             VpnClientRevokedCertificates = vpnClientRevokedCertificates;
             VpnClientProtocols = vpnClientProtocols;
+            VpnAuthenticationTypes = vpnAuthenticationTypes;
             VpnClientIpsecPolicies = vpnClientIpsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
@@ -47,19 +56,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
         public AddressSpace VpnClientAddressPool { get; set; }
         /// <summary> VpnClientRootCertificate for virtual network gateway. </summary>
-        public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; set; }
+        public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VpnClientRevokedCertificate for Virtual network gateway. </summary>
-        public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
+        public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; }
         /// <summary> VpnClientProtocols for Virtual network gateway. </summary>
-        public IList<VpnClientProtocol> VpnClientProtocols { get; set; }
+        public IList<VpnClientProtocol> VpnClientProtocols { get; }
+        /// <summary> VPN authentication types for the virtual network gateway.. </summary>
+        public IList<VpnAuthenticationType> VpnAuthenticationTypes { get; }
         /// <summary> VpnClientIpsecPolicies for virtual network gateway P2S client. </summary>
-        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; set; }
+        public IList<IpsecPolicy> VpnClientIpsecPolicies { get; }
         /// <summary> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         public string RadiusServerAddress { get; set; }
         /// <summary> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         public string RadiusServerSecret { get; set; }
         /// <summary> The radiusServers property for multiple radius server configuration. </summary>
-        public IList<RadiusServer> RadiusServers { get; set; }
+        public IList<RadiusServer> RadiusServers { get; }
         /// <summary> The AADTenant property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>
         public string AadTenant { get; set; }
         /// <summary> The AADAudience property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </summary>

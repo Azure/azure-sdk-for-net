@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -46,11 +48,37 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// range.</param>
         /// <param name="tag">Defines what this IP filter will be used for.
         /// This is to support IP filtering on proxies. Possible values
-        /// include: 'Default', 'XffProxy'</param>
+        /// include: 'Default', 'XffProxy', 'ServiceTag'</param>
         /// <param name="priority">Priority of IP restriction rule.</param>
         /// <param name="name">IP restriction rule name.</param>
         /// <param name="description">IP restriction rule description.</param>
-        public IpSecurityRestriction(string ipAddress = default(string), string subnetMask = default(string), string vnetSubnetResourceId = default(string), int? vnetTrafficTag = default(int?), int? subnetTrafficTag = default(int?), string action = default(string), IpFilterTag? tag = default(IpFilterTag?), int? priority = default(int?), string name = default(string), string description = default(string))
+        /// <param name="headers">IP restriction rule headers.
+        /// X-Forwarded-Host
+        /// (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
+        /// The matching logic is ..
+        /// - If the property is null or empty (default), all hosts(or lack of)
+        /// are allowed.
+        /// - A value is compared using ordinal-ignore-case (excluding port
+        /// number).
+        /// - Subdomain wildcards are permitted but don't match the root
+        /// domain. For example, *.contoso.com matches the subdomain
+        /// foo.contoso.com
+        /// but not the root domain contoso.com or multi-level
+        /// foo.bar.contoso.com
+        /// - Unicode host names are allowed but are converted to Punycode for
+        /// matching.
+        ///
+        /// X-Forwarded-For
+        /// (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
+        /// The matching logic is ..
+        /// - If the property is null or empty (default), any forwarded-for
+        /// chains (or lack of) are allowed.
+        /// - If any address (excluding port number) in the chain (comma
+        /// separated) matches the CIDR defined by the property.
+        ///
+        /// X-Azure-FDID and X-FD-HealthProbe.
+        /// The matching logic is exact match.</param>
+        public IpSecurityRestriction(string ipAddress = default(string), string subnetMask = default(string), string vnetSubnetResourceId = default(string), int? vnetTrafficTag = default(int?), int? subnetTrafficTag = default(int?), string action = default(string), string tag = default(string), int? priority = default(int?), string name = default(string), string description = default(string), IDictionary<string, IList<string>> headers = default(IDictionary<string, IList<string>>))
         {
             IpAddress = ipAddress;
             SubnetMask = subnetMask;
@@ -62,6 +90,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Priority = priority;
             Name = name;
             Description = description;
+            Headers = headers;
             CustomInit();
         }
 
@@ -114,10 +143,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets defines what this IP filter will be used for. This is
         /// to support IP filtering on proxies. Possible values include:
-        /// 'Default', 'XffProxy'
+        /// 'Default', 'XffProxy', 'ServiceTag'
         /// </summary>
         [JsonProperty(PropertyName = "tag")]
-        public IpFilterTag? Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>
         /// Gets or sets priority of IP restriction rule.
@@ -136,6 +165,37 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets IP restriction rule headers.
+        /// X-Forwarded-Host
+        /// (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
+        /// The matching logic is ..
+        /// - If the property is null or empty (default), all hosts(or lack of)
+        /// are allowed.
+        /// - A value is compared using ordinal-ignore-case (excluding port
+        /// number).
+        /// - Subdomain wildcards are permitted but don't match the root
+        /// domain. For example, *.contoso.com matches the subdomain
+        /// foo.contoso.com
+        /// but not the root domain contoso.com or multi-level
+        /// foo.bar.contoso.com
+        /// - Unicode host names are allowed but are converted to Punycode for
+        /// matching.
+        ///
+        /// X-Forwarded-For
+        /// (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
+        /// The matching logic is ..
+        /// - If the property is null or empty (default), any forwarded-for
+        /// chains (or lack of) are allowed.
+        /// - If any address (excluding port number) in the chain (comma
+        /// separated) matches the CIDR defined by the property.
+        ///
+        /// X-Azure-FDID and X-FD-HealthProbe.
+        /// The matching logic is exact match.
+        /// </summary>
+        [JsonProperty(PropertyName = "headers")]
+        public IDictionary<string, IList<string>> Headers { get; set; }
 
     }
 }

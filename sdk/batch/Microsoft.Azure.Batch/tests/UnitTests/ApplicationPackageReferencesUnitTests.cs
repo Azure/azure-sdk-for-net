@@ -27,42 +27,40 @@
             const string applicationId = "blender.exe";
             const string version = "blender";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                {
+                    var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
 
-                        request.ServiceRequestFunc = (token) =>
+                    request.ServiceRequestFunc = (token) =>
+                    {
+                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
                         {
-                            var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
+                            Body = new Models.CloudPool
                             {
-                                Body = new Models.CloudPool
+                                ApplicationPackageReferences = new[]
                                 {
-                                    ApplicationPackageReferences = new[]
-                                    {
                                             new Protocol.Models.ApplicationPackageReference
                                             {
                                                  ApplicationId = applicationId,
                                                  Version = version
                                             }
-                                    },
-                                    CurrentDedicatedNodes = 4,
-                                    CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "3"),
-                                    Id = "pool-id"
                                 },
-                            };
-
-                            return Task.FromResult(response);
+                                CurrentDedicatedNodes = 4,
+                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "3"),
+                                Id = "pool-id"
+                            },
                         };
-                    });
 
-                Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                        return Task.FromResult(response);
+                    };
+                });
 
-                Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
-                Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
-            }
+            Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+
+            Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
+            Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
         }
 
         [Fact]
@@ -74,35 +72,34 @@
             const string poolId = "mock-pool";
             const string osFamily = "3";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        Protocol.BatchRequests.PoolGetBatchRequest request = (Protocol.BatchRequests.PoolGetBatchRequest)baseRequest;
-
-                        request.ServiceRequestFunc = (token) =>
-                        {
-                            var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
-                            {
-                                Body = new Protocol.Models.CloudPool
-                                {
-                                    CurrentDedicatedNodes = 4,
-                                    CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
-                                    Id = poolId
-                                }
-                            };
-                            return Task.FromResult(response);
-                        };
-                    });
-
-                Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
-
-                // At this point the pool shouldn't have any application packages
-                Assert.Null(cloudPool.ApplicationPackageReferences);
-
-                cloudPool.ApplicationPackageReferences = new[]
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
                 {
+                    Protocol.BatchRequests.PoolGetBatchRequest request = (Protocol.BatchRequests.PoolGetBatchRequest)baseRequest;
+
+                    request.ServiceRequestFunc = (token) =>
+                    {
+                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
+                        {
+                            Body = new Protocol.Models.CloudPool
+                            {
+                                CurrentDedicatedNodes = 4,
+                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
+                                Id = poolId
+                            }
+                        };
+                        return Task.FromResult(response);
+                    };
+                });
+
+            Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+
+            // At this point the pool shouldn't have any application packages
+            Assert.Null(cloudPool.ApplicationPackageReferences);
+
+            cloudPool.ApplicationPackageReferences = new[]
+            {
                     new Microsoft.Azure.Batch.ApplicationPackageReference()
                     {
                         ApplicationId = applicationId,
@@ -110,22 +107,21 @@
                     }
                 };
 
-                interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        Protocol.BatchRequests.PoolUpdatePropertiesBatchRequest request =
-                            (Protocol.BatchRequests.PoolUpdatePropertiesBatchRequest)baseRequest;
+            interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                {
+                    Protocol.BatchRequests.PoolUpdatePropertiesBatchRequest request =
+                        (Protocol.BatchRequests.PoolUpdatePropertiesBatchRequest)baseRequest;
 
                         // Need to check to see if ApplicationPackageReferences is being populated.
                         Assert.Equal(applicationId, request.Parameters.ApplicationPackageReferences[0].ApplicationId);
-                        Assert.Equal(version, request.Parameters.ApplicationPackageReferences[0].Version);
+                    Assert.Equal(version, request.Parameters.ApplicationPackageReferences[0].Version);
 
-                        request.ServiceRequestFunc = token => Task.FromResult(new AzureOperationHeaderResponse<Models.PoolUpdatePropertiesHeaders>() { Response = new HttpResponseMessage(HttpStatusCode.NoContent) });
-                    });
+                    request.ServiceRequestFunc = token => Task.FromResult(new AzureOperationHeaderResponse<Models.PoolUpdatePropertiesHeaders>() { Response = new HttpResponseMessage(HttpStatusCode.NoContent) });
+                });
 
-                // Updating application pool to contain packages.
-                await cloudPool.CommitAsync(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
-            }
+            // Updating application pool to contain packages.
+            await cloudPool.CommitAsync(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
         }
 
         [Fact]
@@ -136,16 +132,15 @@
             const string version = "blender";
             const string jobId = "mock-job";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Microsoft.Azure.Batch.PoolInformation autoPoolSpecification = new Microsoft.Azure.Batch.PoolInformation
             {
-                Microsoft.Azure.Batch.PoolInformation autoPoolSpecification = new Microsoft.Azure.Batch.PoolInformation
+                AutoPoolSpecification = new Microsoft.Azure.Batch.AutoPoolSpecification
                 {
-                    AutoPoolSpecification = new Microsoft.Azure.Batch.AutoPoolSpecification
+                    KeepAlive = false,
+                    PoolSpecification = new Microsoft.Azure.Batch.PoolSpecification
                     {
-                        KeepAlive = false,
-                        PoolSpecification = new Microsoft.Azure.Batch.PoolSpecification
-                        {
-                            ApplicationPackageReferences = new List<Microsoft.Azure.Batch.ApplicationPackageReference>
+                        ApplicationPackageReferences = new List<Microsoft.Azure.Batch.ApplicationPackageReference>
                             {
                                 new Microsoft.Azure.Batch.ApplicationPackageReference
                                 {
@@ -153,16 +148,15 @@
                                     Version = version
                                 }
                             },
-                            AutoScaleEnabled = false
-                        }
+                        AutoScaleEnabled = false
                     }
-                };
+                }
+            };
 
-                Microsoft.Azure.Batch.CloudJob cloudJob = client.JobOperations.CreateJob(jobId, autoPoolSpecification);
+            Microsoft.Azure.Batch.CloudJob cloudJob = client.JobOperations.CreateJob(jobId, autoPoolSpecification);
 
-                Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
-                Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
-            }
+            Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
+            Assert.Equal(cloudJob.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
         }
 
         [Fact]
@@ -173,52 +167,50 @@
             const string version = "blender";
             const string jobId = "mock-job";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                        {
-                            var request =
-                                (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                    {
+                        var request =
+                            (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
 
-                            request.ServiceRequestFunc = (token) =>
+                        request.ServiceRequestFunc = (token) =>
+                            {
+                                var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
                                 {
-                                    var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
+                                    Body = new Models.CloudJobSchedule
                                     {
-                                        Body = new Models.CloudJobSchedule
+                                        JobSpecification = new Protocol.Models.JobSpecification
                                         {
-                                            JobSpecification = new Protocol.Models.JobSpecification
+                                            PoolInfo = new Models.PoolInformation
                                             {
-                                                PoolInfo = new Models.PoolInformation 
+                                                AutoPoolSpecification = new Models.AutoPoolSpecification
                                                 {
-                                                    AutoPoolSpecification = new Models.AutoPoolSpecification
+                                                    Pool = new Models.PoolSpecification
                                                     {
-                                                        Pool = new Models.PoolSpecification 
+                                                        ApplicationPackageReferences = new[]
                                                         {
-                                                            ApplicationPackageReferences = new[]
-                                                            {
                                                                 new Protocol.Models.ApplicationPackageReference
                                                                 {
                                                                         ApplicationId = applicationId,
                                                                         Version = version,
                                                                 }
-                                                            },
-                                                            MaxTasksPerNode = 4
-                                                         }
+                                                        },
+                                                        TaskSlotsPerNode = 4
                                                     }
-                                                  }
-                                             }
+                                                }
+                                            }
                                         }
-                                    };
-                                    return Task.FromResult(response);
+                                    }
                                 };
-                        });
+                                return Task.FromResult(response);
+                            };
+                    });
 
-                Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+            Microsoft.Azure.Batch.CloudJobSchedule cloudJobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync(jobId, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
-                Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
-            }
+            Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().ApplicationId, applicationId);
+            Assert.Equal(cloudJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First().Version, version);
         }
 
         [Fact]
@@ -229,41 +221,39 @@
             const string version = "blender";
             const string poolName = "test-pool";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
             {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
+                var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
 
-                    request.ServiceRequestFunc = async (token) =>
+                request.ServiceRequestFunc = async (token) =>
+                {
+                    var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
                     {
-                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
+                        Body = new Models.CloudPool
                         {
-                            Body = new Models.CloudPool
+                            ApplicationPackageReferences = new[]
                             {
-                                ApplicationPackageReferences = new[]
-                                {
                                     new Protocol.Models.ApplicationPackageReference
                                         {
                                             ApplicationId = applicationId,
                                             Version = version
                                         }
-                                },
-                            }
-                        };
-
-                        Task<AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>> task = Task.FromResult(response);
-                        return await task;
+                            },
+                        }
                     };
-                });
 
-                var pool = await client.PoolOperations.GetPoolAsync(poolName, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+                    Task<AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>> task = Task.FromResult(response);
+                    return await task;
+                };
+            });
 
-                var appRefs = pool.ApplicationPackageReferences;
+            var pool = await client.PoolOperations.GetPoolAsync(poolName, additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                Assert.Equal(applicationId, appRefs[0].ApplicationId);
-                Assert.Equal(version, appRefs[0].Version);
-            }
+            var appRefs = pool.ApplicationPackageReferences;
+
+            Assert.Equal(applicationId, appRefs[0].ApplicationId);
+            Assert.Equal(version, appRefs[0].Version);
         }
 
         [Fact]
@@ -273,51 +263,49 @@
             const string applicationId = "app-1";
             const string version = "1.0";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
             {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
-                {
-                    var request = (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
+                var request = (Protocol.BatchRequest<Models.JobScheduleGetOptions, AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>>)baseRequest;
 
-                    request.ServiceRequestFunc = (token) =>
+                request.ServiceRequestFunc = (token) =>
+                {
+                    var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
                     {
-                        var response = new AzureOperationResponse<Models.CloudJobSchedule, Models.JobScheduleGetHeaders>
+                        Body = new Models.CloudJobSchedule
                         {
-                            Body = new Models.CloudJobSchedule
+                            JobSpecification = new Protocol.Models.JobSpecification
                             {
-                                JobSpecification = new Protocol.Models.JobSpecification
+                                PoolInfo = new Models.PoolInformation
                                 {
-                                    PoolInfo = new Models.PoolInformation
+                                    AutoPoolSpecification = new Protocol.Models.AutoPoolSpecification
                                     {
-                                        AutoPoolSpecification = new Protocol.Models.AutoPoolSpecification
+                                        Pool = new Models.PoolSpecification
                                         {
-                                            Pool = new Models.PoolSpecification
+                                            ApplicationPackageReferences = new List<Protocol.Models.ApplicationPackageReference>
                                             {
-                                                ApplicationPackageReferences = new List<Protocol.Models.ApplicationPackageReference>
-                                                {
                                                     new Protocol.Models.ApplicationPackageReference
                                                     {
                                                         ApplicationId = applicationId,
                                                         Version = version
                                                     }
-                                                }
                                             }
                                         }
-                                     }
+                                    }
                                 }
-                           }
-                        };
-                        return Task.FromResult(response);
+                            }
+                        }
                     };
-                });
+                    return Task.FromResult(response);
+                };
+            });
 
-                Microsoft.Azure.Batch.CloudJobSchedule jobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync("test", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+            Microsoft.Azure.Batch.CloudJobSchedule jobSchedule = await client.JobScheduleOperations.GetJobScheduleAsync("test", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                Microsoft.Azure.Batch.ApplicationPackageReference apr = jobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
+            Microsoft.Azure.Batch.ApplicationPackageReference apr = jobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.ApplicationPackageReferences.First();
 
-                Assert.Equal(apr.ApplicationId, applicationId);
-                Assert.Equal(apr.Version, version);
-            }
+            Assert.Equal(apr.ApplicationId, applicationId);
+            Assert.Equal(apr.Version, version);
         }
 
         [Fact]
@@ -329,26 +317,25 @@
             const string applicationId = "testApp";
             const string applicationVersion = "beta";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Models.CloudJob returnFakeJob = new Models.CloudJob(jobId);
+            var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(returnFakeJob));
+
+            var verifyAPRs = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskAddParameter, Models.TaskAddOptions, AzureOperationHeaderResponse<Models.TaskAddHeaders>>(
+                (parameters, options) =>
             {
-                Models.CloudJob returnFakeJob = new Models.CloudJob(jobId);
-                var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(returnFakeJob));
+                Assert.Equal(applicationId, parameters.ApplicationPackageReferences.First().ApplicationId);
+                Assert.Equal(applicationVersion, parameters.ApplicationPackageReferences.First().Version);
 
-                var verifyAPRs = ClientUnitTestCommon.SimulateServiceResponse<Models.TaskAddParameter, Models.TaskAddOptions, AzureOperationHeaderResponse<Models.TaskAddHeaders>>(
-                    (parameters, options) =>
+                return new AzureOperationHeaderResponse<Models.TaskAddHeaders>
                 {
-                    Assert.Equal(applicationId, parameters.ApplicationPackageReferences.First().ApplicationId);
-                    Assert.Equal(applicationVersion, parameters.ApplicationPackageReferences.First().Version);
+                    Response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                };
+            });
 
-                    return new AzureOperationHeaderResponse<Models.TaskAddHeaders>
-                    {
-                        Response = new HttpResponseMessage(HttpStatusCode.Accepted)
-                    };
-                });
-
-                var taskWithAPRs = new CloudTask(taskId, "cmd /c hostname")
-                {
-                    ApplicationPackageReferences = new List<ApplicationPackageReference>
+            var taskWithAPRs = new CloudTask(taskId, "cmd /c hostname")
+            {
+                ApplicationPackageReferences = new List<ApplicationPackageReference>
                     {
                         new ApplicationPackageReference
                         {
@@ -356,10 +343,9 @@
                             Version = applicationVersion
                         }
                     }
-                };
+            };
 
-                job.AddTask(taskWithAPRs, additionalBehaviors: verifyAPRs);  // assertions happen in the callback
-            }
+            job.AddTask(taskWithAPRs, additionalBehaviors: verifyAPRs);  // assertions happen in the callback
         }
 
         [Fact]
@@ -370,27 +356,25 @@
             const string applicationId = "foo";
             const string version = "beta";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Models.CloudJob protoJob = new Models.CloudJob
             {
-                Models.CloudJob protoJob = new Models.CloudJob
+                Id = jobId,
+                JobManagerTask = new Models.JobManagerTask
                 {
-                    Id = jobId,
-                    JobManagerTask = new Models.JobManagerTask
-                    {
-                        ApplicationPackageReferences = new List<Models.ApplicationPackageReference>
+                    ApplicationPackageReferences = new List<Models.ApplicationPackageReference>
                         {
                             new Models.ApplicationPackageReference
                             {
                                 Version = version, ApplicationId = applicationId
-                            } 
+                            }
                         }
-                    }
-                };
+                }
+            };
 
-                var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
-                Assert.Equal(applicationId, job.JobManagerTask.ApplicationPackageReferences.First().ApplicationId);
-                Assert.Equal(version, job.JobManagerTask.ApplicationPackageReferences.First().Version);
-            }
+            var job = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
+            Assert.Equal(applicationId, job.JobManagerTask.ApplicationPackageReferences.First().ApplicationId);
+            Assert.Equal(version, job.JobManagerTask.ApplicationPackageReferences.First().Version);
         }
 
         [Fact]
@@ -400,40 +384,38 @@
             const string applicationId = "blender.exe";
             const string version = "blender";
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                    baseRequest =>
-                    {
-                        var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                baseRequest =>
+                {
+                    var request = (Protocol.BatchRequest<Models.PoolGetOptions, AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>>)baseRequest;
 
-                        request.ServiceRequestFunc = (token) =>
+                    request.ServiceRequestFunc = (token) =>
+                    {
+                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
                         {
-                            var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
+                            Body = new Models.CloudPool
                             {
-                                Body = new Models.CloudPool
+                                ApplicationPackageReferences = new[]
                                 {
-                                    ApplicationPackageReferences = new[]
-                                    {
                                          new Protocol.Models.ApplicationPackageReference
                                          {
                                               ApplicationId = applicationId,
                                               Version = version
                                          }
-                                    }
                                 }
-                            };
-
-                            return Task.FromResult(response);
+                            }
                         };
-                    });
 
-                Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
-                Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().ApplicationId = applicationId);
-                Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().Version = version);
-                Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
-                Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
-            }
+                        return Task.FromResult(response);
+                    };
+                });
+
+            Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
+            Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().ApplicationId = applicationId);
+            Assert.Throws<InvalidOperationException>(() => cloudPool.ApplicationPackageReferences.First().Version = version);
+            Assert.Equal(cloudPool.ApplicationPackageReferences.First().Version, version);
+            Assert.Equal(cloudPool.ApplicationPackageReferences.First().ApplicationId, applicationId);
         }
     }
 }
