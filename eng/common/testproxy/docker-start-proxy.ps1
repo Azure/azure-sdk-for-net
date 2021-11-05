@@ -64,9 +64,24 @@ if ($Mode -eq "start"){
     }
     # else we need to create it
     else {
+        $attempts = 0
         Write-Host "Attempting creation of Docker host $CONTAINER_NAME"
         Write-Host "docker container create -v `"${root}:${Initial}/etc/testproxy`" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage"
-        docker container create -v "${root}:${Initial}/etc/testproxy" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
+        while($attempts -lt 3){
+            docker container create -v "${root}:${Initial}/etc/testproxy" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
+
+            if($LASTEXITCODE -ne 0){
+                continue
+            }
+            else {
+                break
+            }
+            $attempts += 1
+        }
+
+        if($LASTEXITCODE -ne 0){
+            exit(1)
+        }
     }
 
     Write-Host "Attempting start of Docker host $CONTAINER_NAME"
