@@ -2,6 +2,9 @@
 
 ## 1.0.0 (2021-11-09)
 
+### Features Added
+- Adds stable features and bug fixes from the preview releases.
+
 ## 1.0.0-beta.4 (2021-11-09)
 
 ### Features Added
