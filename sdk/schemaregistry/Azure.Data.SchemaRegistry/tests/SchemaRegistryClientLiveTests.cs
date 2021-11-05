@@ -11,7 +11,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 {
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync)
+        public SchemaRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
         }

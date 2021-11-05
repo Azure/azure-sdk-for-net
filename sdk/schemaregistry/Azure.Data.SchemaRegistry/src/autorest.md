@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-# From github.com/Azure/azure-rest-api-specs/tree/arerlend.sr.init
-# require: https://github.com/Azure/azure-rest-api-specs/blob/1e23d91e875e4464e57667639e06408cef99868d/specification/schemaregistry/data-plane/readme.md
-input-file: schemaregistry.json
+title: SchemaRegistryClient
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/72fbc9e93123bbfa8cb44042fd649e80870ce5b2/specification/schemaregistry/data-plane/Microsoft.EventHub/stable/2021-10/schemaregistry.json
 ```
