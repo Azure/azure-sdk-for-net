@@ -2,11 +2,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     public partial class ArtifactsClientOptions : Azure.Core.ClientOptions
     {
-        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_06_01_preview) { }
+        public ArtifactsClientOptions(Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Artifacts.ArtifactsClientOptions.ServiceVersion.V2021_11_01_preview) { }
         public enum ServiceVersion
         {
             V2020_12_01 = 1,
             V2021_06_01_preview = 2,
+            V2021_11_01_preview = 3,
         }
     }
     public partial class BigDataPoolsClient
@@ -4029,7 +4030,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class KqlScriptContentCurrentConnection
     {
         public KqlScriptContentCurrentConnection() { }
+        public string DatabaseName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public string PoolName { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
     public partial class KqlScriptContentMetadata
