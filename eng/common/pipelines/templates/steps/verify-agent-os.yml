@@ -19,6 +19,7 @@ steps:
   - powershell: |
       New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
       reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\FipsAlgorithmPolicy /v Enabled /t REG_DWORD /d 1 /f
+    displayName: Enable FIPS
     condition: |
       and(
         succeededOrFailed(),
@@ -29,6 +30,7 @@ steps:
   # Verify FIPS is enabled (command should throw exception)
   - powershell: |
       New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+    displayName: Verify FIPS is enabled
     ignoreLASTEXITCODE: 'true'
     condition: |
       and(
