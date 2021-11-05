@@ -1,7 +1,7 @@
 # Release History
 
 ## 5.2.0 (2021-11-05)
-- Remove uAdding MessageState property to SystemProperties [PR 25158](https://github.com/Azure/azure-sdk-for-net/pull/25158)
+- Adding MessageState property to SystemProperties [PR 25158](https://github.com/Azure/azure-sdk-for-net/pull/25158)
 - Allow receiving empty string session id sessions [PR 24570](https://github.com/Azure/azure-sdk-for-net/pull/24570)
 
 ## 5.1.3 (2021-04-15)
