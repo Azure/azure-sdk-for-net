@@ -72,7 +72,12 @@ if ($Mode -eq "start"){
 
             if($LASTEXITCODE -ne 0){
                 $attempts += 1
-                Start-Sleep -s 1
+                Start-Sleep -s 10
+
+                if($attempts -lt 3){
+                    Write-Host "Attempt $attempts failed. Retrying."
+                }
+
                 continue
             }
             else {
@@ -81,6 +86,7 @@ if ($Mode -eq "start"){
         }
 
         if($LASTEXITCODE -ne 0){
+            Write-Host "Unable to successfully create docker container. Exiting."
             exit(1)
         }
     }
