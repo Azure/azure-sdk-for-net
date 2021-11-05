@@ -32,6 +32,7 @@ steps:
       New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
     displayName: Verify FIPS is enabled
     ignoreLASTEXITCODE: 'true'
+    continueOnError: 'true'
     condition: |
       and(
         succeededOrFailed(),
