@@ -1,10 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services ComputerVision SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <Version>7.1.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>7.0.0</ApiCompatVersion>
+    <Version>7.1.0</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
