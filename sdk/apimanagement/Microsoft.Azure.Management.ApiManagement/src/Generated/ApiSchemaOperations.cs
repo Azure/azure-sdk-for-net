@@ -142,13 +142,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (top < 1)
+            if (top != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+                if (top < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+                }
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
             if (Client.ApiVersion == null)
             {
