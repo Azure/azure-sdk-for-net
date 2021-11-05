@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.IotCentral.Models
 {
 
     /// <summary>
-    /// Defines values for AppSku.
+    /// Defines values for AppState.
     /// </summary>
-    public static class AppSku
+    public static class AppState
     {
-        public const string ST0 = "ST0";
-        public const string ST1 = "ST1";
-        public const string ST2 = "ST2";
+        public const string Created = "created";
+        public const string Suspended = "suspended";
     }
 }

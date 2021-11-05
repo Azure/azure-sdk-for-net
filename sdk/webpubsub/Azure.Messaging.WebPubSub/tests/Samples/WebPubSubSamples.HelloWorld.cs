@@ -3,13 +3,11 @@
 
 using System;
 using System.IO;
-using System.Text;
-using System.Threading;
+
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.WebPubSub;
 using Azure.Rest.WebPubSub.Tests;
-using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
