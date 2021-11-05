@@ -18,7 +18,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="request"><see cref="ConnectedEventRequest"/> to get client connect request information.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to cancel the request.</param>
         /// <returns>Build a valid <see cref="WebPubSubEventResponse"/> with ConnectEventRequest.CreateResponse().</returns>
-        public abstract ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken);
+        public virtual ValueTask<WebPubSubEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
+        {
+            return default;
+        }
 
         /// <summary>
         /// User event method.
@@ -26,7 +29,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="request"><see cref="UserEventRequest"/> to get client message request information.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to cancel the request.</param>
         /// <returns>Build a valid <see cref="WebPubSubEventResponse"/> with MessageEventRequest.CreateResponse().</returns>
-        public abstract ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken);
+        public virtual ValueTask<WebPubSubEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
+        {
+            return default;
+        }
 
         /// <summary>
         /// Connected event method.
