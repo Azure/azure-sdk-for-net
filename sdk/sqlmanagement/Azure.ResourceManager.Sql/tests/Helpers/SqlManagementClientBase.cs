@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sql.Tests
             return Task.CompletedTask;
         }
 
-        protected SqlManagementClient GetSqlManagementClient()
-        {
-            return CreateClient<SqlManagementClient>(this.TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new SqlManagementClientOptions()));
-        }
+        //protected SqlManagementClient GetSqlManagementClient()
+        //{
+        //    return CreateClient<SqlManagementClient>(this.TestEnvironment.SubscriptionId,
+        //        TestEnvironment.Credential,
+        //        InstrumentClientOptions(new SqlManagementClientOptions()));
+        //}
     }
 }
