@@ -23,7 +23,7 @@ steps:
     condition: |
       and(
         succeededOrFailed(),
-        contains(variables['OSVmImage'], 'windows'),
+        contains(variables['OSVmImage'], '2019'),
         eq(variables['Container'], '')
       )
 
@@ -35,7 +35,7 @@ steps:
     condition: |
       and(
         succeededOrFailed(),
-        contains(variables['OSVmImage'], 'windows'),
+        contains(variables['OSVmImage'], '2019'),
         eq(variables['Container'], '')
       )
 
