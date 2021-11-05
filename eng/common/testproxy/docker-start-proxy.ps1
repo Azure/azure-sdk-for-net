@@ -71,12 +71,13 @@ if ($Mode -eq "start"){
             docker container create -v "${root}:${Initial}/etc/testproxy" $LinuxContainerArgs -p 5001:5001 -p 5000:5000 --name $CONTAINER_NAME $SelectedImage
 
             if($LASTEXITCODE -ne 0){
+                $attempts += 1
+                Start-Sleep -s 1
                 continue
             }
             else {
                 break
             }
-            $attempts += 1
         }
 
         if($LASTEXITCODE -ne 0){
