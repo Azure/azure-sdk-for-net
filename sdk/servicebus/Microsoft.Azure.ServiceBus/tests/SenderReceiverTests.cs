@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact] //(Skip="Flaky test. Tracked by #16265")
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task ReceiveLotOfMessagesWithoutSettling()
