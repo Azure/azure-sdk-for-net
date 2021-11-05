@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.EventHubs
         internal static ArmDisasterRecoveryData DeserializeArmDisasterRecoveryData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -55,6 +56,11 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -125,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ArmDisasterRecoveryData(id, name, type, systemData, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
+            return new ArmDisasterRecoveryData(id, name, type, location.Value, systemData, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount));
         }
     }
 }

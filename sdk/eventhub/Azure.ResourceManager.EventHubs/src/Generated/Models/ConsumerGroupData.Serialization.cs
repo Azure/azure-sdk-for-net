@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         internal static ConsumerGroupData DeserializeConsumerGroupData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ConsumerGroupData(id, name, type, systemData, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
+            return new ConsumerGroupData(id, name, type, location.Value, systemData, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
         }
     }
 }

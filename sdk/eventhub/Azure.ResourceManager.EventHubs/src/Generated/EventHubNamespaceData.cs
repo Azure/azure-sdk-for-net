@@ -48,7 +48,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
-        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, type, tags, location)
+        /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
+        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Sku sku, Identity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Encryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, type, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.EventHubs
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
+            AlternateName = alternateName;
         }
 
         /// <summary> Properties of sku resource. </summary>
@@ -103,5 +105,7 @@ namespace Azure.ResourceManager.EventHubs
         public IList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
         public bool? DisableLocalAuth { get; set; }
+        /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        public string AlternateName { get; set; }
     }
 }

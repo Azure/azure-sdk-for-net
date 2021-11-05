@@ -549,5 +549,15 @@ namespace Azure.ResourceManager.EventHubs
             return new ArmDisasterRecoveryCollection(this);
         }
         #endregion
+
+        #region SchemaGroup
+
+        /// <summary> Gets a collection of SchemaGroups in the EventHubNamespace. </summary>
+        /// <returns> An object representing collection of SchemaGroups and their operations over a EventHubNamespace. </returns>
+        public SchemaGroupCollection GetSchemaGroups()
+        {
+            return new SchemaGroupCollection(this);
+        }
+        #endregion
     }
 }

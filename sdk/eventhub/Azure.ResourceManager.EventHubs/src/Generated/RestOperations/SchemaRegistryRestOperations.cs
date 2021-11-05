@@ -17,7 +17,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal partial class PrivateEndpointConnectionsRestOperations
+    internal partial class SchemaRegistryRestOperations
     {
         private string subscriptionId;
         private Uri endpoint;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs
         private HttpPipeline _pipeline;
         private readonly string _userAgent;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionsRestOperations. </summary>
+        /// <summary> Initializes a new instance of SchemaRegistryRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="options"> The client options used to construct the current client. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PrivateEndpointConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-11-01")
+        public SchemaRegistryRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-11-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string namespaceName)
+        internal HttpMessage CreateListByNamespaceRequest(string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,20 +57,30 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendPath("/schemagroups", false);
             uri.AppendQuery("api-version", apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
-        /// <summary> Gets the available PrivateEndpointConnections within a namespace. </summary>
+        /// <summary> Gets all the Schema Groups in a Namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SchemaGroupListResult>> ListByNamespaceAsync(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -81,15 +91,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, namespaceName);
+            using var message = CreateListByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        SchemaGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,12 +107,14 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets the available PrivateEndpointConnections within a namespace. </summary>
+        /// <summary> Gets all the Schema Groups in a Namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> List(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<SchemaGroupListResult> ListByNamespace(string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,15 +125,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, namespaceName);
+            using var message = CreateListByNamespaceRequest(resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        SchemaGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string namespaceName, string schemaGroupName, SchemaGroupData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,8 +154,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/privateEndpointConnections/", false);
-            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendPath("/schemagroups/", false);
+            uri.AppendPath(schemaGroupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -155,14 +167,13 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Creates or updates PrivateEndpointConnections of service namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
-        /// <param name="parameters"> Parameters supplied to update Status of PrivateEndPoint Connection to namespace resource. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
+        /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="schemaGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<SchemaGroupData>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string schemaGroupName, SchemaGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -172,25 +183,24 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, namespaceName, privateEndpointConnectionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, namespaceName, schemaGroupName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        SchemaGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = SchemaGroupData.DeserializeSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,14 +208,13 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Creates or updates PrivateEndpointConnections of service namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
-        /// <param name="parameters"> Parameters supplied to update Status of PrivateEndPoint Connection to namespace resource. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
+        /// <param name="parameters"> Parameters supplied to create an Event Hub resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<PrivateEndpointConnectionData> CreateOrUpdate(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="schemaGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<SchemaGroupData> CreateOrUpdate(string resourceGroupName, string namespaceName, string schemaGroupName, SchemaGroupData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,25 +224,24 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, namespaceName, privateEndpointConnectionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, namespaceName, schemaGroupName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        SchemaGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = SchemaGroupData.DeserializeSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -241,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string namespaceName, string privateEndpointConnectionName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string namespaceName, string schemaGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,8 +262,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/privateEndpointConnections/", false);
-            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendPath("/schemagroups/", false);
+            uri.AppendPath(schemaGroupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -263,13 +271,12 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="schemaGroupName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string namespaceName, string schemaGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -279,17 +286,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, namespaceName, privateEndpointConnectionName);
+            using var message = CreateDeleteRequest(resourceGroupName, namespaceName, schemaGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -297,13 +303,12 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Deletes an existing namespace. This operation also removes all associated resources under the namespace. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="schemaGroupName"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string namespaceName, string schemaGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -313,17 +318,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, namespaceName, privateEndpointConnectionName);
+            using var message = CreateDeleteRequest(resourceGroupName, namespaceName, schemaGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -331,7 +335,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string namespaceName, string privateEndpointConnectionName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string namespaceName, string schemaGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -344,8 +348,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/privateEndpointConnections/", false);
-            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendPath("/schemagroups/", false);
+            uri.AppendPath(schemaGroupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -353,13 +357,12 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Gets a description for the specified Private Endpoint Connection name. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> GetAsync(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="schemaGroupName"/> is null. </exception>
+        public async Task<Response<SchemaGroupData>> GetAsync(string resourceGroupName, string namespaceName, string schemaGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -369,36 +372,35 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, namespaceName, privateEndpointConnectionName);
+            using var message = CreateGetRequest(resourceGroupName, namespaceName, schemaGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        SchemaGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = SchemaGroupData.DeserializeSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((SchemaGroupData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Gets a description for the specified Private Endpoint Connection name. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="schemaGroupName"> The Schema Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionData> Get(string resourceGroupName, string namespaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="schemaGroupName"/> is null. </exception>
+        public Response<SchemaGroupData> Get(string resourceGroupName, string namespaceName, string schemaGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -408,30 +410,30 @@ namespace Azure.ResourceManager.EventHubs
             {
                 throw new ArgumentNullException(nameof(namespaceName));
             }
-            if (privateEndpointConnectionName == null)
+            if (schemaGroupName == null)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                throw new ArgumentNullException(nameof(schemaGroupName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, namespaceName, privateEndpointConnectionName);
+            using var message = CreateGetRequest(resourceGroupName, namespaceName, schemaGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        SchemaGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = SchemaGroupData.DeserializeSchemaGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((SchemaGroupData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string namespaceName)
+        internal HttpMessage CreateListByNamespaceNextPageRequest(string nextLink, string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -445,13 +447,15 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
-        /// <summary> Gets the available PrivateEndpointConnections within a namespace. </summary>
+        /// <summary> Gets all the Schema Groups in a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SchemaGroupListResult>> ListByNamespaceNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -466,15 +470,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, namespaceName);
+            using var message = CreateListByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        SchemaGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -482,13 +486,15 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets the available PrivateEndpointConnections within a namespace. </summary>
+        /// <summary> Gets all the Schema Groups in a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="namespaceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListNextPage(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<SchemaGroupListResult> ListByNamespaceNextPage(string nextLink, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -503,15 +509,15 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentNullException(nameof(namespaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, namespaceName);
+            using var message = CreateListByNamespaceNextPageRequest(nextLink, resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        SchemaGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = SchemaGroupListResult.DeserializeSchemaGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

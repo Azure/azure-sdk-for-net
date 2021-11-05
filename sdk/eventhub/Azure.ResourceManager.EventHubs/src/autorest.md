@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
-tag: package-2021-06-preview
-require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/eventhub/resource-manager/readme.md
+tag: package-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 modelerfour:

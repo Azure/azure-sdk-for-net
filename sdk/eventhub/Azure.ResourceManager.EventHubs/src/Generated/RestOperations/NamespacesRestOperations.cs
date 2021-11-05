@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
+        public NamespacesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-11-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -719,6 +719,91 @@ namespace Azure.ResourceManager.EventHubs
                     }
                 case 404:
                     return Response.FromValue((NetworkRuleSetData)null, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListNetworkRuleSetRequest(string resourceGroupName, string namespaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/networkRuleSets", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
+            return message;
+        }
+
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        public async Task<Response<NetworkRuleSetListResult>> ListNetworkRuleSetAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
+            using var message = CreateListNetworkRuleSetRequest(resourceGroupName, namespaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetworkRuleSetListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets NetworkRuleSet for a Namespace. </summary>
+        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        public Response<NetworkRuleSetListResult> ListNetworkRuleSet(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+
+            using var message = CreateListNetworkRuleSetRequest(resourceGroupName, namespaceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetworkRuleSetListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

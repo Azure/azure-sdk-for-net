@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyType");
-            writer.WriteStringValue(KeyType.ToSerialString());
+            writer.WriteStringValue(KeyType.ToString());
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key");

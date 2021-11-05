@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,6 +38,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("archiveNameFormat");
                 writer.WriteStringValue(ArchiveNameFormat);
             }
+            if (Optional.IsDefined(DataLakeSubscriptionId))
+            {
+                writer.WritePropertyName("dataLakeSubscriptionId");
+                writer.WriteStringValue(DataLakeSubscriptionId.Value);
+            }
+            if (Optional.IsDefined(DataLakeAccountName))
+            {
+                writer.WritePropertyName("dataLakeAccountName");
+                writer.WriteStringValue(DataLakeAccountName);
+            }
+            if (Optional.IsDefined(DataLakeFolderPath))
+            {
+                writer.WritePropertyName("dataLakeFolderPath");
+                writer.WriteStringValue(DataLakeFolderPath);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -47,6 +63,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> storageAccountResourceId = default;
             Optional<string> blobContainer = default;
             Optional<string> archiveNameFormat = default;
+            Optional<Guid> dataLakeSubscriptionId = default;
+            Optional<string> dataLakeAccountName = default;
+            Optional<string> dataLakeFolderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -78,11 +97,31 @@ namespace Azure.ResourceManager.EventHubs.Models
                             archiveNameFormat = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("dataLakeSubscriptionId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataLakeSubscriptionId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataLakeAccountName"))
+                        {
+                            dataLakeAccountName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataLakeFolderPath"))
+                        {
+                            dataLakeFolderPath = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new Destination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value);
+            return new Destination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
         }
     }
 }

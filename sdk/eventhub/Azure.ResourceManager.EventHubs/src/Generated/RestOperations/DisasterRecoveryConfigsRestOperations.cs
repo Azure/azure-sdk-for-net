@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DisasterRecoveryConfigsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-01-preview")
+        public DisasterRecoveryConfigsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-11-01")
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -390,6 +390,7 @@ namespace Azure.ResourceManager.EventHubs
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -422,6 +423,7 @@ namespace Azure.ResourceManager.EventHubs
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

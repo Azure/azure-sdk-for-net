@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,64 +15,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class NetworkRuleSetData : IUtf8JsonSerializable
+    public partial class SchemaGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrustedServiceAccessEnabled))
+            if (Optional.IsCollectionDefined(GroupProperties))
             {
-                writer.WritePropertyName("trustedServiceAccessEnabled");
-                writer.WriteBooleanValue(TrustedServiceAccessEnabled.Value);
-            }
-            if (Optional.IsDefined(DefaultAction))
-            {
-                writer.WritePropertyName("defaultAction");
-                writer.WriteStringValue(DefaultAction.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
-            {
-                writer.WritePropertyName("virtualNetworkRules");
-                writer.WriteStartArray();
-                foreach (var item in VirtualNetworkRules)
+                writer.WritePropertyName("groupProperties");
+                writer.WriteStartObject();
+                foreach (var item in GroupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsDefined(SchemaCompatibility))
             {
-                writer.WritePropertyName("ipRules");
-                writer.WriteStartArray();
-                foreach (var item in IpRules)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("schemaCompatibility");
+                writer.WriteStringValue(SchemaCompatibility.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(SchemaType))
             {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WritePropertyName("schemaType");
+                writer.WriteStringValue(SchemaType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
+        internal static SchemaGroupData DeserializeSchemaGroupData(JsonElement element)
         {
             Optional<SystemData> systemData = default;
             Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<bool> trustedServiceAccessEnabled = default;
-            Optional<DefaultAction> defaultAction = default;
-            Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<NetworkRuleSetIpRules>> ipRules = default;
-            Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
+            Optional<DateTimeOffset> updatedAtUtc = default;
+            Optional<DateTimeOffset> createdAtUtc = default;
+            Optional<Guid> eTag = default;
+            Optional<IDictionary<string, string>> groupProperties = default;
+            Optional<SchemaCompatibility> schemaCompatibility = default;
+            Optional<SchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemData"))
@@ -113,71 +101,76 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("trustedServiceAccessEnabled"))
+                        if (property0.NameEquals("updatedAtUtc"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedServiceAccessEnabled = property0.Value.GetBoolean();
+                            updatedAtUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("defaultAction"))
+                        if (property0.NameEquals("createdAtUtc"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultAction = new DefaultAction(property0.Value.GetString());
+                            createdAtUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkRules"))
+                        if (property0.NameEquals("eTag"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetVirtualNetworkRules> array = new List<NetworkRuleSetVirtualNetworkRules>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkRuleSetVirtualNetworkRules.DeserializeNetworkRuleSetVirtualNetworkRules(item));
-                            }
-                            virtualNetworkRules = array;
+                            eTag = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("ipRules"))
+                        if (property0.NameEquals("groupProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetIpRules> array = new List<NetworkRuleSetIpRules>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                array.Add(NetworkRuleSetIpRules.DeserializeNetworkRuleSetIpRules(item));
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
-                            ipRules = array;
+                            groupProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("schemaCompatibility"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccessFlag(property0.Value.GetString());
+                            schemaCompatibility = new SchemaCompatibility(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("schemaType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            schemaType = new SchemaType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, location.Value, systemData, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
+            return new SchemaGroupData(id, name, type, location.Value, systemData, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
         }
     }
 }
