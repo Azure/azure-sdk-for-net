@@ -32,7 +32,7 @@ The `CredentialUnavailableException` in this scenario signifies that all the cre
 setup/configuration. You need to follow the configuration instructions for the respective credential you're looking to use via `DefaultAzureCredential` chain, so
 that the credential can work in your environment.
 
-Please follow the configuration instructions in the `Credential Unvavailable` section of hte troubleshooting guidelines below for the respective
+Please follow the configuration instructions in the `Credential Unvavailable` section of the troubleshooting guidelines below for the respective
 credential/authentication type you're looking to use via `DefaultAzureCredential`:
 
 | Credential Type |    Troubleshooting Guide |
