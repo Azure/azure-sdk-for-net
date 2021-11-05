@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("not supported yet in 2021-06-01-preview")]
+        [Ignore("not supported yet in 2021-11-01")]
         public async Task GetAvailableClusterRegions()
         {
             IReadOnlyList<AvailableCluster> availableClusters = (await DefaultSubscription.GetAvailableClusterRegionClustersAsync()).Value;
